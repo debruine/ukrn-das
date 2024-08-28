@@ -1,0 +1,20 @@
+---
+title: "Analysis"
+format: html
+---
+
+```{r}
+library(papercheck)
+library(dplyr)
+
+papers <- readRDS("subset1_papers.RDS")
+```
+
+```{r}
+das <- search_text(papers) |>
+  filter(grepl("data avail", header, TRUE), text != header)
+```
+
+
+
+

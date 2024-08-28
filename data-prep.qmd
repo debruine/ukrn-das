@@ -1,0 +1,120 @@
+---
+title: "data-prep"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(readxl)
+library(papercheck)
+```
+
+## Data Prep
+
+```{r}
+orig <- readxl::read_xlsx("Digital Science July 2024.xlsx", sheet = "GLASGOW_RETURN", guess_max = 13000)
+
+data <- orig |>
+  select(UNI_ID, PUB_DOI, UNI_DAS, PUB_DAS) |>
+  distinct()
+```
+
+```{r}
+count(data, UNI_DAS, PUB_DAS) |>
+  pivot_wider(names_from = PUB_DAS, values_from = n, values_fill = 0)
+```
+
+## Download PDFs
+
+```{r, warning=FALSE, eval = FALSE}
+downloaded <- sapply(data$UNI_ID, function(id) {
+  tryCatch({
+    if (file.exists(paste0("pdfs/", id, ".pdf"))) return(TRUE)
+        
+    unilink <- paste0("https://eprints.gla.ac.uk/", id)
+    eprint <- read_html(unilink)
+    doclink <- html_element(eprint, ".ep_document_link") |>
+      html_attr("href")
+    savepath <- file.path("pdfs", basename(doclink))
+    download.file(doclink, savepath, quiet = TRUE)
+    return(TRUE)
+  }, error = function(e) {
+    return(FALSE)
+  })
+})
+```
+
+
+
+
+## Convert to Grobid
+
+
+```{r}
+pdfs <- list.files("pdfs") |> gsub("\\.pdf", "", x= _)
+converted_xmls <- list.files("xmls") |> gsub("\\.xml", "", x= _)
+to_convert <- setdiff(pdfs, converted_xmls)
+
+converted <- lapply(to_convert, function(id) {
+  filename = paste0("pdfs/", id, ".pdf")
+  savepath = paste0("xmls/", id, ".xml")
+  fsize <- file.size(filename)
+  
+  if (fsize == 0) return("empty")
+  if (fsize > 2e+07) return("too big")
+  
+  tryCatch({
+    pdf2grobid(filename, savepath)
+    "converted"
+  }, error = function(e) { 
+    warning(id, ": ", e$message, "\n")
+    return(e$message)
+  })
+})
+```
+
+
+## Subset 1
+
+```{r, eval = FALSE}
+dl <- list.files("xmls") |> gsub("\\.xml", "", x = _)
+
+data$downloaded = (data$UNI_ID %in% dl)
+
+subset1 <- data |>
+  filter(downloaded, UNI_DAS %in% c("No", "Yes")) |>
+  slice_head(n = 100, by = c(UNI_DAS, PUB_DAS)) |>
+  mutate(
+         MANUAL_DAS = '',
+         DAS_TEXT = '',
+         DAS_LOC = '',
+         MANUAL_DAS_CAT = '',
+         DASLINKS = '')
+
+  
+write_csv(subset1, "subset1.csv")
+
+```
+
+```{r}
+# copy files to subset 
+subxml <- paste0("xmls/", subset1$UNI_ID, ".xml")
+subpdf <- paste0("pdfs/", subset1$UNI_ID, ".pdf")
+dir.create("subset_xml", FALSE)
+dir.create("subset_pdf", FALSE)
+file.copy(subxml, "subset_xml/", TRUE) -> sink
+file.copy(subpdf, "subset_pdf/", TRUE) -> sink
+```
+
+```{r}
+count(subset1, UNI_DAS, PUB_DAS) |>
+  pivot_wider(names_from = PUB_DAS, values_from = n, values_fill = 0)
+```
+
+
+```{r}
+papers <- read_grobid("subset_xml")
+saveRDS(papers, "subset1_papers.RDS")
+```
+
