@@ -3,18 +3,79 @@ title: "Analysis"
 format: html
 ---
 
-```{r}
+```{r, include = FALSE}
 library(papercheck)
-library(dplyr)
-
-papers <- readRDS("subset1_papers.RDS")
+library(tidyverse)
 ```
+
+
+```{r, include = FALSE}
+# read in data
+paper_data <- read_csv("subset1.csv", show_col_types = FALSE)
+papers <- readRDS("subset1_papers.RDS")
+
+# put all text in one table
+all_text <- search_text(papers) |>
+  mutate(UNI_ID = sub("\\.xml", "", id) |> as.numeric())
+```
+
+## Labelled Data Availability Sections
 
 ```{r}
-das <- search_text(papers) |>
-  filter(grepl("data avail", header, TRUE), text != header)
+# headers add spaces randomly
+data_avail_pattern <- "d ?a ?t ?a\\s+a ?v ?a ?i ?l ?"
+
+das_papers <- filter(all_text, 
+              grepl(data_avail_pattern, header, TRUE), 
+              text != header) |>
+  summarise(text = paste(text, collapse = " "), 
+            .by = c(UNI_ID, section, header)) |>
+  left_join(paper_data, by = "UNI_ID") |>
+  mutate(request = grepl("request", text))
+
+n_total <- nrow(paper_data)
+n_papers_with_das <- nrow(das_papers)
+
+count(das_papers, UNI_DAS, PUB_DAS) |>
+  pivot_wider(names_from = UNI_DAS, values_from = n, values_fill = 0)
 ```
 
+
+```{r}
+# this doesn't seem very useful
+data_avail <- search_text(all_text, "data .* avail") |>
+  filter(header != text) |>
+  search_text(return = "paragraph")
+```
+
+
+## Common data sources
+
+```{r}
+osf <- search_text(all_text, "osf\\.io") |>
+  search_text("data")
+osf_link <- search_text(osf, "osf\\.io/[/a-z0-9]+", return = "match")
+osf$link <- osf_link$text
+osf
+```
+
+## Data plus a link
+
+```{r}
+# links often have spaces after / or .
+#link_pattern <- "https?:// ?[a-z0-9_]*([\\./]\\s?[?a-z0-9_-]+)*[a-z0-9_-]"
+link_pattern <- "https?://[ a-z0-9_]([\\./]?\\s?[?a-z0-9_-]+)*[a-z0-9_-]"
+
+data_http <- search_text(all_text, "data") |>
+  search_text(link_pattern)
+
+link <- search_text(data_http, link_pattern, return = "match") |>
+  select(UNI_ID, link = text, div, p, s) |>
+  mutate(link = gsub("\\s", "", link))
+data_http <- left_join(data_http, link, by = c("UNI_ID", "div", "p", "s"))
+
+data_http$link
+```
 
 
 
