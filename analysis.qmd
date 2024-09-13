@@ -6,12 +6,63 @@ format: html
 ```{r, include = FALSE}
 library(papercheck)
 library(tidyverse)
+library(readxl)
 ```
 
 
 ```{r, include = FALSE}
 # read in data
-paper_data <- read_csv("subset1.csv", show_col_types = FALSE)
+
+sub_sarah <- read_xlsx("subset1_Sarah_WD.xlsx") |>
+  filter(!is.na(MANUAL_DAS)) |>
+  select(-downloaded) |>
+  select(UNI_ID, MANUAL_DAS:DASLINKS) |>
+  mutate(MANUAL_DAS = recode(MANUAL_DAS, "Yes" = TRUE, "No" = FALSE),
+         DAS_TEXT = replace_na(DAS_TEXT, "None provided"),
+         DAS_LOC = replace_na(DAS_LOC, "None provided"),
+         MANUAL_DAS_CAT = replace_na(MANUAL_DAS_CAT, "Not available"),
+         DASLINKS = replace_na(DASLINKS, "No link provided"))
+
+sub_peace <- read_xlsx("subset_Peace_WD.xlsx") |>
+  filter(!is.na(MANUAL_DAS)) |>
+  select(UNI_ID, MANUAL_DAS:DASLINKS)
+
+# investigate duplicates
+dup_peace <- semi_join(sub_peace, sub_sarah, by = "UNI_ID")
+dup_sarah <- semi_join(sub_sarah, sub_peace, by = "UNI_ID")
+
+dupes <- bind_rows(dup_peace, dup_sarah) |>
+  arrange(UNI_ID)
+
+# use peace's duplicates
+manual_data <- anti_join(sub_sarah, sub_peace, by = "UNI_ID") |>
+  bind_rows(sub_peace)
+
+paper_data <- read_csv("subset1.csv", show_col_types = FALSE) |>
+  select(UNI_ID:PUB_DAS) |> 
+  left_join(manual_data, by = "UNI_ID")
+
+```
+
+## Consistency
+
+### Uni vs manual coding
+
+```{r}
+count(paper_data, UNI_DAS, MANUAL_DAS) |>
+  pivot_wider(names_from = MANUAL_DAS, values_from = n)
+```
+
+### Pub vs manual coding
+
+```{r}
+count(paper_data, PUB_DAS, MANUAL_DAS) |>
+  pivot_wider(names_from = MANUAL_DAS, values_from = n)
+```
+
+
+
+```{r, include = FALSE}
 papers <- readRDS("subset1_papers.RDS")
 
 # put all text in one table
