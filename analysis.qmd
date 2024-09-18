@@ -1,16 +1,38 @@
 ---
-title: "Analysis"
-format: html
+title: "Data Availability Statement Analysis"
+format: 
+  html:
+    toc: true
+    df-print: paged
+    embed-resources: true
 ---
 
 ```{r, include = FALSE}
-library(papercheck)
+# devtools::install_github("scienceverse/papercheck")
+library(papercheck) 
 library(tidyverse)
 library(readxl)
 ```
 
+## Data Cleaning
 
-```{r, include = FALSE}
+### Manual DAS Categories
+
+```{r}
+sub_sarah <- read_xlsx("subset1_Sarah_WD.xlsx", range = "I1:I601")
+
+count(sub_sarah, MANUAL_DAS_CAT) |> select(n, MANUAL_DAS_CAT)
+```
+
+```{r}
+sub_peace <- read_xlsx("subset_Peace_WD.xlsx", range = "H1:H601")
+
+count(sub_peace, MANUAL_DAS_CAT) |> select(n, MANUAL_DAS_CAT)
+```
+
+### Clean Up
+
+```{r}
 # read in data
 
 sub_sarah <- read_xlsx("subset1_Sarah_WD.xlsx") |>
@@ -26,7 +48,11 @@ sub_sarah <- read_xlsx("subset1_Sarah_WD.xlsx") |>
 sub_peace <- read_xlsx("subset_Peace_WD.xlsx") |>
   filter(!is.na(MANUAL_DAS)) |>
   select(UNI_ID, MANUAL_DAS:DASLINKS)
+```
 
+### Duplicates
+
+```{r}
 # investigate duplicates
 dup_peace <- semi_join(sub_peace, sub_sarah, by = "UNI_ID")
 dup_sarah <- semi_join(sub_sarah, sub_peace, by = "UNI_ID")
@@ -34,31 +60,54 @@ dup_sarah <- semi_join(sub_sarah, sub_peace, by = "UNI_ID")
 dupes <- bind_rows(dup_peace, dup_sarah) |>
   arrange(UNI_ID)
 
+unique(dupes)
+```
+
+### Join Data
+
+```{r}
 # use peace's duplicates
 manual_data <- anti_join(sub_sarah, sub_peace, by = "UNI_ID") |>
   bind_rows(sub_peace)
 
 paper_data <- read_csv("subset1.csv", show_col_types = FALSE) |>
   select(UNI_ID:PUB_DAS) |> 
-  left_join(manual_data, by = "UNI_ID")
+  left_join(manual_data, by = "UNI_ID") |>
+  mutate(UNI_DAS = recode(UNI_DAS, "Yes" = TRUE, "No" = FALSE))
 
 ```
 
 ## Consistency
 
+### Pub/Uni vs manual coding
+
+```{r}
+count(paper_data, UNI_DAS, PUB_DAS, MANUAL_DAS) |>
+  arrange(UNI_DAS, PUB_DAS) |>
+  pivot_wider(names_from = MANUAL_DAS, values_from = n, 
+              names_prefix = "MAN_") |>
+  mutate(
+    uni_agree = ifelse(UNI_DAS, `MAN_TRUE`, `MAN_FALSE`)/100,
+    pub_agree = ifelse(PUB_DAS, `MAN_TRUE`, `MAN_FALSE`)/100
+  )
+```
+
 ### Uni vs manual coding
 
 ```{r}
 count(paper_data, UNI_DAS, MANUAL_DAS) |>
-  pivot_wider(names_from = MANUAL_DAS, values_from = n)
+  pivot_wider(names_from = MANUAL_DAS, values_from = n, 
+              names_prefix = "MANUAL_")
 ```
 
 ### Pub vs manual coding
 
 ```{r}
 count(paper_data, PUB_DAS, MANUAL_DAS) |>
-  pivot_wider(names_from = MANUAL_DAS, values_from = n)
+  pivot_wider(names_from = MANUAL_DAS, values_from = n, 
+              names_prefix = "MANUAL_")
 ```
+
 
 
 
@@ -87,7 +136,7 @@ das_papers <- filter(all_text,
 n_total <- nrow(paper_data)
 n_papers_with_das <- nrow(das_papers)
 
-count(das_papers, UNI_DAS, PUB_DAS) |>
+count(das_papers, UNI_DAS, PUB_DAS, MANUAL_DAS) |>
   pivot_wider(names_from = UNI_DAS, values_from = n, values_fill = 0)
 ```
 
@@ -115,7 +164,7 @@ osf
 ```{r}
 # links often have spaces after / or .
 #link_pattern <- "https?:// ?[a-z0-9_]*([\\./]\\s?[?a-z0-9_-]+)*[a-z0-9_-]"
-link_pattern <- "https?://[ a-z0-9_]([\\./]?\\s?[?a-z0-9_-]+)*[a-z0-9_-]"
+link_pattern <- "https?://[ a-z0-9_]([\\./]?\\s?[?a-z0-9_=-]+)*[a-z0-9_-]"
 
 data_http <- search_text(all_text, "data") |>
   search_text(link_pattern)
@@ -123,9 +172,10 @@ data_http <- search_text(all_text, "data") |>
 link <- search_text(data_http, link_pattern, return = "match") |>
   select(UNI_ID, link = text, div, p, s) |>
   mutate(link = gsub("\\s", "", link))
-data_http <- left_join(data_http, link, by = c("UNI_ID", "div", "p", "s"))
+data_http <- left_join(data_http, link, by = c("UNI_ID", "div", "p", "s")) |>
+  left_join(paper_data[, c('UNI_ID', 'DASLINKS')], by = "UNI_ID")
 
-data_http$link
+data_http |> select(UNI_ID, link, DASLINKS, text)
 ```
 
 
