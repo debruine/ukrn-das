@@ -1,0 +1,1446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">An Updated Guide to Robust Statistical Methods in Neuroscience</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Rand</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+							<email>rwilcox@usc.edu</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Psychology</orgName>
+								<orgName type="institution">University of Southern California</orgName>
+								<address>
+									<settlement>Los Angeles</settlement>
+									<country>California</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Guillaume</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">School of Psychology and Neuroscience</orgName>
+								<orgName type="department" key="dep2">College of Medical, Veterinary, and Life Sciences</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Rousselet</forename><surname>Wilcox</surname></persName>
+						</author>
+						<author>
+							<persName><surname>Wilcox</surname></persName>
+						</author>
+						<title level="a" type="main">An Updated Guide to Robust Statistical Methods in Neuroscience</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">33D4A1B43369EFD91D8412BBADE53D71</idno>
+					<idno type="DOI">10.1002/cpz1.719</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>curvature r heteroscedasticity r non-normality r outliers r skewed distributions</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>There is a vast array of new and improved methods for comparing groups and studying associations that offer the potential for substantially increasing power, providing improved control over the probability of false positives, and yielding a deeper and more nuanced understanding of data. These new techniques effectively deal with four insights into when and why conventional methods can be unsatisfactory. But for the non-statistician, this vast array of techniques for comparing groups and studying associations can seem daunting. This article briefly reviews when and why conventional methods can have relatively low power and yield misleading results. The main goal is to suggest guidelines regarding the use of modern techniques that improve upon classic approaches such as Pearson's correlation, ordinary linear regression, ANOVA, and ANCOVA. This updated version includes recent advances dealing with effect sizes, including situations where there is a covariate. The R code, figures, and accompanying notebooks have been updated as well.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">INTRODUCTION</head><p>The typical introductory statistics course covers classic methods for comparing groups (e.g., Student's t-test, ANOVA F test, and Wilcoxon-Mann-Whitney test) and studying associations (e.g., Pearson's correlation and least-squares regression). The two-sample Student's t-test and the ANOVA F test assume that sampling is from distributions with normal residuals and that the population variances are identical, which is generally known as the homoscedasticity assumption. When testing hypotheses based on the least-squares regression estimator or Pearson's correlation, similar assumptions are made; section 2.2 elaborates on the details. An issue of fundamental importance is whether violating these assumptions can have a serious detrimental impact on two key properties of a statistical test: the probability of a false positive, also known as a Type I error, and power, the probability of detecting true differences among groups and a true association among two or more variables. There is also the related issue of whether conventional methods provide enough detail regarding how groups differ as well as the nature of the true association.</p><p>There are a variety of relatively well-known techniques for dealing with non-normality and unequal variances (e.g., a rank-based method). However, by modern standards, these methods are relatively ineffective, for reasons reviewed in Section 3. More effective techniques are indicated in Section 4.</p><p>The good news is that when comparing groups that have non-normal but identical distributions, control over the Type I error probability is, in general, reasonably good when using conventional techniques. But if the groups have distributions that differ in some manner, there is now a vast literature indicating that under general conditions power can be relatively poor. In practical terms, important differences among groups might be missed (e.g., <ref type="bibr">Wilcox, 2022a</ref><ref type="bibr" target="#b51">Wilcox, , 2017))</ref>. Even when the normality assumption is true, but the population variances differ (called heteroscedasticity), power can be adversely impacted when using the ANOVA F.</p><p>Similar concerns arise when dealing with regression. Conventional methods, including rank-based techniques, perform well in terms of controlling the probability of a Type I error when there is no association. But when there is an association, conventional methods, including rank-based techniques (e.g., Spearman's rho and Kendall's tau), can have a relatively low probability of detecting an association relative to modern methods developed during the last 30 years.</p><p>Practical concerns regarding conventional methods stem from four major insights (e.g., <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a))</ref>. These insights can be briefly summarized as follows:</p><p>• When sampling from skewed distributions, much larger sample sizes might be needed to assume normality than is generally recognized. • There is now a deeper understanding of the role of outliers and how to deal with them. Some seemingly obvious strategies for dealing with outliers, based on standard training, are known to be highly unsatisfactory for reasons outlined later in the paper. • There is a substantial literature indicating that methods that assume homoscedasticity (equal variances) can yield inaccurate results when in fact there is heteroscedasticity, even when the sample sizes are quite large. • When dealing with regression, curvature refers to situations where the regression line is not straight. There is now considerable evidence that curvature is a much more serious concern than is generally recognized.</p><p>Robust methods are typically thought of as methods that provide good control over the probability of a Type I error. More broadly, robust methods are designed to deal with the problems associated with skewed distributions, outliers, heteroscedasticity, and curvature that were outlined above. There is now a vast array of new and improved methods that effectively deal with concerns associated with classic techniques (e.g., <ref type="bibr" target="#b15">Heritier, Cantoni, Copt, &amp; Victoria-Feser, 2009;</ref><ref type="bibr" target="#b24">Maronna, Martin, &amp; Yohai, 2006;</ref><ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a, to appear), to appear)</ref>. They include substantially improved methods for dealing with all four of the major insights mentioned above. Perhaps more importantly, they can provide a deeper, more accurate, and more nuanced understanding of data, as will be illustrated in Section 5.</p><p>One of the more fundamental goals among robust methods is to develop techniques that are not overly sensitive to very small changes in distribution. For instance, a slight departure from normality should not destroy power. This rules out any method based on the mean and variance (e.g., <ref type="bibr" target="#b41">Staudte &amp; Sheather, 1990;</ref><ref type="bibr" target="#b54">Wilcox, 2022</ref><ref type="bibr">Wilcox, , 2017b))</ref>. Section 2.3 illustrates this point.</p><p>Many modern, robust methods are designed to have nearly the same amount of power as conventional methods under normality, but they continue to have relatively high power under slight departures from normality where conventional techniques based on means perform poorly. There are other fundamental goals, some of which are relevant regardless of how large the sample sizes might be. But an effective description of these goals goes beyond the scope of this paper. For present purposes, the focus of this unit is on achieving relatively high power in various situations.</p><p>Another point that should be stressed has to do with standard power analyses. A common goal is to justify some choice for the sample sizes prior to obtaining any data. Note that, in effect, the goal is to address a statistical issue without any data. Typically, this is done by assuming normality and homoscedasticity, which in turn can suggest that relatively small sample sizes provide adequate power when using means. A practical concern is that violating either of these two assumptions can have a tremendous impact on power when attention is focused exclusively on comparing means. Section 2.1 illustrates this concern when dealing with measures of central tendency. Similar concerns arise when dealing with least-squares regression and Pearson's correlation. These concerns can be mitigated by using recently developed robust methods summarized here, as well as in <ref type="bibr">Wilcox (2022a, to appear)</ref>.</p><p>For books focused on the mathematical foundation of modern robust methods, see <ref type="bibr" target="#b13">Hampel, Ronchetti, Rousseeuw, and Stahel (1986)</ref>, <ref type="bibr" target="#b21">Huber and Ronchetti (2009)</ref>, <ref type="bibr" target="#b24">Maronna et al. (2006)</ref>, and <ref type="bibr" target="#b41">Staudte and Sheather (1990)</ref>. For books focused on applying robust methods, see <ref type="bibr" target="#b15">Heritier et al. (2009)</ref> and <ref type="bibr" target="#b51">Wilcox (2017</ref><ref type="bibr">Wilcox ( , 2022a, to appear), to appear)</ref>. From an applied point of view, the difficulty is not so much finding a method that effectively deals with violations of standard assumptions. Rather, for the non-statistician, the difficulty is in navigating through the many alternative techniques that might be used. This paper is an attempt to deal with this issue by providing a general guide regarding when and how modern robust methods might be used when comparing two or more groups. When dealing with regression, all the concerns associated with conventional methods for comparing groups remain, and new concerns are introduced. A few issues related to regression and correlations are covered here, but it is stressed that there are many other modern advances that have practical value. Readers interested in regression are referred to <ref type="bibr">Wilcox (2022a, to appear)</ref> and <ref type="bibr" target="#b11">Gelman, Hill, and Vehtari (2020)</ref>.</p><p>A few general points should be stressed. First, if methods based on the median, described later in this paper, give similar results to conventional methods based on means, this provides reassurance that conventional methods based on the mean are performing relatively well in terms of Type I errors and power. But when they differ, there is doubt about the validity of conventional techniques. In certain situations, conventional methods might perform well in terms of controlling the Type I error probability and providing reasonably high power. But there are general conditions under which conventional methods yield inaccurate inferences. A particular concern is that they can suffer from relatively low power in situations where more modern methods have relatively high power. More details are provided in Sections 3 and 4.</p><p>Second, the choice of method can make a substantial difference in our understanding of data. One reason is that modern methods provide alternative and interesting perspectives that more conventional methods do not address. A complication is that there is no single method that dominates in terms of power or providing a deep understanding of how groups compare. The same is true when dealing with regression and measures of association. The reality is that several methods might be needed to address even what appears as a simple problem, for instance comparing two groups <ref type="bibr" target="#b35">(Rousselet, Pernet, &amp; Wilcox, 2017)</ref>.</p><p>There is, of course, the issue of controlling the probability of one or more Type I errors when multiple tests are performed. There are many improvements for dealing with this issue (e.g., <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a))</ref>. Another strategy is to put more emphasis on exploratory studies. One could then deal with the risk of false positive results by conducting a confirmatory study aimed at determining whether significant results in an exploratory study can be replicated <ref type="bibr" target="#b45">(Wagenmakers, Wetzels, Borsboom, van der Maas, &amp; Kievit, 2012)</ref>. Otherwise, there is the danger of missing important details regarding how groups compare. One of the main messages here is that despite the lack of a single method that dominates, certain guidelines can be offered regarding how to analyze data. Modern methods for plotting data can be invaluable as well (e.g., <ref type="bibr" target="#b35">Rousselet et al., 2017;</ref><ref type="bibr">Rousselet, Foxe, &amp; Bolam, 2016;</ref><ref type="bibr" target="#b46">Weissgerber, Milic, Winham, &amp; Garovic, 2015)</ref>. They can provide important perspectives beyond the common strategy of using error bars. Complete details go beyond the scope of this paper, but Section 5 illustrates some of the more effective plots that might be used.</p><p>This unit is organized as follows. Section 2 briefly reviews when and why conventional methods can be highly unsatisfactory. This is necessary to appreciate modern technology and because standard training typically ignores these issues. Section 3 reviews common strategies aimed at salvaging standard techniques, such as testing assumptions and transforming data. The point is that by modern standards, they are relatively ineffective and cannot be recommended. Moreover, certain strategies are not technically sound. Section 3 also provides an indication of how concerns regarding conventional methods are addressed using more modern techniques. Section 4 describes strategies for comparing two independent or dependent groups that take modern advances into account. Included are some methods aimed at comparing correlations as well as methods designed to determine which independent variables are most important. Section 5 illustrates modern methods using data from several neuroscience studies. The R code and data to reproduce all the figures and text examples are available in a separate reproducibility package <ref type="bibr">(Wilcox &amp; Rousselet, 2023)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">INSIGHTS REGARDING CONVENTIONAL METHODS</head><p>This section elaborates on the concerns with conventional methods for comparing groups and studying associations stemming from the four insights previously indicated.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Skewed Distributions</head><p>A skewed distribution simply refers to a distribution that is not symmetric about some central value. An example is shown in Figure <ref type="figure" target="#fig_0">1A</ref>. Such distributions occur naturally. An example relevant to the neurosciences is given in Section 5.2. Skewed distributions are a much more serious problem for statistical inferences than once thought due to insights regarding the central limit theorem. According to this theorem, if we take multiple samples of independent observations from a distribution of any shape, the means of these samples will be normally distributed, given sufficiently large sample sizes. The problem is that, contrary to the theorem, normality is not guaranteed in all situations for sample sizes that are often presented as safe in statistics textbooks.</p><p>Consider the one-sample case. Conventional wisdom is that with a relatively small sample size, normality can be assumed under random sampling. An implicit assumption was that if the sample mean has, approximately, a normal distribution, then Student's t-test will perform reasonably well. It is now known that this is not necessarily the case <ref type="bibr">(Wilcox, 2022a)</ref>. For example, imagine that data are randomly sampled from the distribution shown in Figure <ref type="figure" target="#fig_0">1A</ref> (a lognormal distribution) and that the mean is computed based on a sample size of n = 30. Repeating this process 20,000 times, the thick black line in Figure <ref type="figure" target="#fig_0">1B</ref> shows a plot of the resulting sample means; the thin gray line is the plot of the means when sampling from a normal distribution instead. The distribution of T values (remember that the closer T is to 0, the more likely there is not a significant difference) for samples of n = 30 is indicated by the thick black line in Figure <ref type="figure" target="#fig_0">1C</ref>; the thin gray line is the distribution of T values when sampling from a normal distribution. As can be seen, the actual T distribution extends out much further to the left compared to the distribution of T under normality. That is, in this example, sampling from a skewed distribution leads to much more extreme values than expected by chance under normality, which in turn results in more false positive results than expected when the null hypothesis is true (when the populations do not differ).</p><p>Suppose the goal is to test some hypothesis at the 0.05 level. <ref type="bibr">Bradley (1978)</ref> suggests that as a general guide, control over the probability of a Type I error is minimally satisfactory if the actual level is between 0.025 and 0.075. When we test at the 0.05 level, we expect 5% of the t-tests to be significant when the null hypothesis is true. However, when sampling from the skewed distribution considered here, this is not the case: the actual Type I error probability is ∼0.116 for n = 30; see the dashed blue curve in Figure <ref type="figure">2A</ref>, which illustrates the Type I error probability as a function of sample size. The gray area indicates Bradley's criterion.</p><p>Figure <ref type="figure" target="#fig_0">1D</ref> shows the distribution of T when n = 100. Now the Type I error probability is ∼0.087, again when testing at the 0.05 level (Fig. <ref type="figure">2A</ref>). Based on Bradley's criterion, a sample size of about 160 or larger is required. <ref type="bibr">Bradley (1978)</ref> goes on to suggest that, ideally, the actual Type I error probability should be between 0.045 and 0.055. Now even an n = 600 is unsatisfactory, having an actual level ∼0.055. Even with n = 700 the level is ∼0.056. Certainly these sample sizes are rarely compatible with wet bench work.</p><p>This poor performance of the standard t-test can be improved by making inferences using medians and trimmed means instead of means. The median belongs to the class of trimmed means, which refers to the strategy of trimming a specified proportion of the smallest and largest values and averaging the values that remain. For example, if n = 10, 10% trimming involves removing the lowest and highest values and averaging the remaining data. Similarly, 20% trimming would remove the two smallest and two largest values. Based on conventional training, trimming might seem counterintuitive. In some situations, however, it can substantially increase our ability to control the Type I error probability, as illustrated next, and trimming can substantially increase power as well, for reasons to be explained.</p><p>First focus on controlling the probability of a Type I error. (Section 2.3 illustrates one of the reasons that methods based on means can have relatively low power.) Figure <ref type="figure">2A</ref> illustrates simulation results for the mean, the median, and the 20% trimmed mean, when sampling from a normal distribution and from the asymmetric (lognormal) distribution in Figure <ref type="figure" target="#fig_0">1A</ref>. Inferences based on the 20% trimmed mean were made via the method derived by <ref type="bibr" target="#b44">Tukey and McLaughlin (1963)</ref>.</p><p>Inferences based on the median were made via the method derived by <ref type="bibr" target="#b17">Hettmansperger and Sheather (1986)</ref> (the software used to apply these latter two methods is contained in the R package described at the beginning of Section 4). Under normality, the Type I error probability is close to the expected 5% for the mean and the median, but too high, at 0.065, for the 20% trimmed mean for n = 10, reaching 0.056 for n = 20. When sampling from a lognormal distribution, for the 20% trimmed mean, the Type I error probability is 0.067 for n = 30 and 0.059 for n = 100, clearly improving on the results with the mean. Using the median, the probability is already at 0.051 for n = 10.</p><p>Figure <ref type="figure">2B</ref> illustrates the association between power and sample size for the same distributions used in Figure <ref type="figure">2A</ref>. As can be seen, under normality the sample mean is best, followed closely by the 20% trimmed mean. The median is least satisfactory when dealing with a normal distribution, as expected. However, for the asymmetric (lognormal) distribution, the median performs best, and the mean performs very poorly.</p><p>A feature of random samples taken from the distribution in Figure <ref type="figure" target="#fig_0">1A</ref> is that the expected proportion of points declared to be outliers is relatively small. For skewed distributions, as we move toward situations where outliers are more common, a sample size &gt;300 can be required to achieve reasonably good control over the Type I error probability. That is, control over the Type I error probability is a function of both the degree to which a distribution is skewed and the likelihood of encountering outliers. However, there are methods that perform reasonably well with small sample sizes, as indicated in Section 4.1.</p><p>For symmetric distributions, where outliers tend to occur, the reverse can happen: the actual Type I error probability can be substantially less than the nominal level. This happens because outliers inflate the standard deviation, which in turn lowers the value of T, which in turn can negatively impact power. Section 2.3 elaborates on this issue.</p><p>In an important sense, outliers have a larger impact on the sample variance than the sample mean, which impacts the t-test. To illustrate this point, imagine that the goal is to test H 0 : μ = 1 based on the following values: 1, 1.5, 1.6, 1.8, 2, 2.2, 2.4, 2.7. Then T = 4.69, the p-value is p = .002, and the 0.95 confidence interval = [1. <ref type="bibr">45, 2.35]</ref>. Now, including the value 8, the mean increases from 1.9 to 2.58, suggesting at some level there is stronger evidence for </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B</head><p>Figure <ref type="figure">2</ref> Inferences when sampling from a normal and a skewed distribution. (A) Type I error probability as a function of sample size. The Type I error probability was computed by running a simulation with 20,000 iterations. In each iteration, sample sizes from 10 to 800 were drawn from a normal distribution and a lognormal distribution. For each combination of sample size and distribution, we applied a t-test on the mean, a test of the median, and a t-test on the 20% trimmed mean, all with alpha = 0.05. Depending on the test applied, the mean, median, or 20% trimmed mean of the population sampled from was 0. The black horizontal line marks the expected 0.05 Type I error probability. The dark gray area marks Bradley's satisfactory range. The lighter gray area marks Bradley's ideal range. When sampling from a normal distribution, all methods are close to the nominal 0.05 level, except the trimmed mean for very small sample sizes. When sampling is from a lognormal distribution, the mean and the trimmed mean give rise to too many false alarms for small sample sizes. The mean continues to give higher false positive rates than the other techniques even with n &gt; 500. (B) Power as a function of sample size. The probability of a true positive was computed by running a simulation with 20,000 iterations. In each iteration, sample sizes from 10 to 300 were drawn from a normal distribution and the lognormal distribution shown in Figure <ref type="figure" target="#fig_0">1A</ref>. For each combination of sample size and distribution, we applied a t-test on the mean, median, and the 20% trimmed mean, all with alpha = 0.05. Depending on the test applied, the mean, median, or 20% trimmed mean of the population sampled from was 0.5. The two black horizontal lines mark the 80% and 90% power thresholds. When sampling from a normal distribution, all methods require &lt;50 observations to achieve 80% power, and the mean appears to have higher power at lower sample size than the other methods. When sampling from a lognormal distribution, power drops dramatically for the mean but not for the median and the trimmed mean; power for the median actually improves. The exact pattern of results depends on the effect size and the asymmetry of the distribution we sample from, so we strongly encourage readers to perform their own detailed power analyses.</p><p>rejecting the null hypothesis. However, this outlier increases the standard deviation from 0.54 to 2.1, and now T = 2.26, p = .054 and the 0.95 confidence interval = [0.97, 4.12]. As such, knowing when to remove, or not remove, outliers can impact one's interpretation, whether the distribution is skewed or symmetrical.</p><p>Now consider the goal of comparing two independent or dependent groups and consider the situation where the groups have identical distributions. Even if the distributions are skewed, the difference scores have a symmetric distribution, and the probability of a Type I error is, in general, less than the nominal level when using conventional methods based on means. However, in addition to outliers, differences in skewness create practical concerns when using Student's t-test. Indeed, under general conditions, the two-sample Student's t-test for independent groups is not even asymptotically correct, roughly because the standard error of the difference between the sample means is not estimated correctly (e.g., <ref type="bibr" target="#b6">Cressie &amp; Whitford, 1986)</ref>. Moreover, Student's t-test can be biased. This means that the probability of rejecting the null hypothesis of equal means can be higher when the population means are equal than in situations where the population means differ. Roughly, this concern arises because the distribution of T can be skewed, and in fact the mean of T can differ from 0 even though the null hypothesis is true. Problems persist when Student's t-test is replaced by <ref type="bibr" target="#b47">Welch's (1938)</ref> method, which is designed to compare means in a manner that allows unequal variances (this is the default method in the R t.test function). Put another way, if the goal is to test the hypothesis that two groups have identical distributions, conventional methods based on means perform well in terms of controlling the Type I error probability. But if the goal is to compare the population means, and if distributions differ, conventional methods can perform poorly.</p><p>There are many techniques that perform well when dealing with skewed distributions in terms of controlling the Type I error probability, some of which are based on the usual sample median <ref type="bibr" target="#b51">(Wilcox, 2017</ref><ref type="bibr">(Wilcox, , 2022a))</ref>. Both theory and simulations indicate that as the amount of trimming increases, the ability to control the probability of a Type I error increases as well. Moreover, as illustrated in Figure <ref type="figure">2B</ref>, trimming can substantially increase power, a result that is not obvious based on conventional training. The optimal amount of trimming depends on the characteristics of the population distributions, which are unknown. Currently, the best that can be said is that the choice can make a substantial difference. The 20% trimmed mean has been studied extensively and often provides a good compromise between the two extremes: no trimming (the mean) and the maximum amount of trimming (the median).</p><p>In various situations, particularly important are inferential methods based on what are called bootstrap techniques. Two basic versions are the bootstrap-t and percentile bootstrap (see tutorials with R code in Rousselet, <ref type="bibr" target="#b36">Pernet, &amp; Wilcox, 2019</ref><ref type="bibr" target="#b37">, 2021)</ref>. Roughly, rather than assume normality, bootstrap-t methods perform a simulation using the observed data that yields an estimate of an appropriate critical value and a p-value. Values of T are generated as was done in Figure <ref type="figure" target="#fig_0">1</ref>, except that data are sampled with replacement from the observed data. In essence, bootstrap-t methods generate data-driven T distributions expected by chance if there were no effect. The percentile bootstrap proceeds in a similar manner, except that when dealing with a trimmed mean, for example, the goal is to determine the distribution of the sample trimmed mean, which can then be used to compute a p-value and a confidence interval. When comparing two independent groups based on the usual sample median, if there are tied (duplicated) values, currently the only method that performs well in simulations in terms of controlling the Type I error probability is based on a percentile bootstrap method. Section 4.1 elaborates on how this method is performed.</p><p>If the amount of trimming is close to 0, the bootstrap-t method is preferable to the percentile bootstrap method. But as the amount of trimming increases, at some point a percentile bootstrap method is preferable. This is the case with 20% trimming. It seems to be the case with 10% trimming as well, but a definitive study has not been made. Also, if the goal is to reflect the typical response, it is evident that the median or even a 20% trimmed mean might be more satisfactory. Using quantiles (percentiles) other than the median can be important as well, for reasons summarized in Section 4.2. When comparing independent groups, improvements on the Wilcoxon-Mann-Whitney (WMW) test are another possibility, which are aimed at making inferences about the probability that a random observation from the first group is less than a random observation from the second. (More details are provided in Section 3.) Additional possibilities are illustrated in Section 4 below. These methods can have substantially higher power than any method based on means. However, it is not being suggested that these methods always have more power. Rather, the point is that power can depend crucially on the conjunction of which estimator is used (for instance, the mean versus the median)   <ref type="table">20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20</ref> 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30  <ref type="bibr">20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20</ref> 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 and how a confidence interval is built (for instance, a parametric method or the percentile bootstrap). These choices are not trivial and must be considered when analyzing data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Heteroscedasticity</head><p>When using classic methods for comparing means, heteroscedasticity (unequal population variances) is a serious concern (e.g., <ref type="bibr">Brown &amp; Forsythe, 1974)</ref>. Heteroscedasticity can impact both power and the Type I error probability. The basic reason is that, under general conditions, methods that assume homoscedasticity are using an incorrect estimate of the standard error when in fact there is heteroscedasticity. Indeed, there are concerns regardless of how large the sample size might be. As we consider more and more complicated designs, heteroscedasticity becomes an increasing concern. For example, when dealing with regression, homoscedasticity means that the variance of the dependent variable does not depend on the value of the independent variable. When dealing with age and depressive symptoms, for example, homoscedasticity means that the variation in measures of depressive symptoms at age 20 is the same at age 80 or any age in between, as illustrated in Figure <ref type="figure" target="#fig_4">3</ref>. Independence implies homoscedasticity. This means that when there is independence, classic methods associated with least-squares regression, Pearson's correlation, Kendall's tau, and Spearman's rho are using a correct estimate of the standard error, which helps explain why they perform well in terms of Type I errors when there is no association. That is, when a homoscedastic method rejects, it is reasonable to conclude that there is an association, but in terms of inferring the nature of the association, these methods can perform poorly. Again, a practical concern is that when there is heteroscedasticity, homoscedastic methods use an incorrect estimate of the standard error, which can result in poor power and erroneous conclusions.</p><p>A seemingly natural way of salvaging homoscedastic methods is to test the assumption that there is homoscedasticity. But six studies found that this strategy is unsatisfactory <ref type="bibr" target="#b51">(Wilcox, 2017)</ref>. Presumably situations are encountered where this is not the case, but it is difficult and unclear how to determine when such situations are encountered.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Instead of testing homoscedasticity assumptions, a general recommendation is to always use a heteroscedastic method given the goal of comparing measures of central tendency or</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>making inferences about regression parameters as well as measures of association.</head><p>Methods that are designed to deal with heteroscedasticity are easily applied using extant software. These techniques use a correct estimate of the standard error regardless of whether the homoscedasticity assumption is true.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Outliers</head><p>Even small departures from normality can devastate power. The modern illustration of this fact stems from <ref type="bibr" target="#b43">Tukey (1960)</ref> and is based on what is generally known as a mixed normal distribution. The mixed normal considered by Tukey means that with probability 0.9, an observation is sampled from a standard normal distribution; otherwise an observation is sampled from a normal distribution having mean 0 and standard deviation 10. Figure <ref type="figure" target="#fig_5">4A</ref> shows a standard normal distribution and the mixed normal discussed by Tukey. Note that in the center of the distributions, the mixed normal is below the normal distribution. But for the two ends of the mixed normal distribution (the tails), the mixed normal lies above the normal distribution. For this reason, the mixed normal is often described as having heavy tails. In general, "heavy-tailed distributions" refers roughly to distributions where outliers are likely to occur.</p><p>Here is an important point. The standard normal has variance 1, but the mixed normal has variance 10.9. That is, the population variance can be overly sensitive to slight changes in the tails of a distribution. Consequently, even a slight departure from normality can result in relatively poor power when using any method based on the mean. To put this another way, samples from the mixed normal are more likely to result in outliers compared to samples from a standard normal distribution. As previously indicated, outliers inflate the sample variance, which can negatively impact power when using means. Another concern is that they can give a distorted and misleading summary regarding the bulk of the participants.</p><p>The first indication that heavy-tailed distributions are a concern stems from a result derived by Laplace about two centuries ago. He established that as we move from a normal distribution to a distribution more likely to generate outliers, the standard error of the usual sample median can be smaller than the standard error of the mean <ref type="bibr">(Hand, 1998)</ref>. The first empirical evidence implying that outliers might be more common than what is expected under normality was reported by Bessel (1818). To add perspective, we computed the mean, median, and a 20% trimmed mean based on 30 observations generated from a standard normal distribution. (Again, a 20% trimmed mean removes the 20% lowest and highest values and averages the remaining data.) Then we repeated this process 100,000 times. The resulting sampling distributions are shown in Figure <ref type="figure" target="#fig_5">4B</ref>. Theory tells us that under normality, the variation of the sample means is smaller than the variation among the 20% trimmed means and medians, and Figure <ref type="figure" target="#fig_5">4B</ref> provides perspective on the extent to which this is the case. Now we repeat this process, except that data are sampled from the mixed normal in Figure <ref type="figure" target="#fig_5">4A</ref>. Figure <ref type="figure" target="#fig_5">4C</ref> reports the results. As is evident, there is substantially less variation among the medians and 20% trimmed means. That is, despite trimming data, the standard errors (the standard deviations of the sampling distributions) of the median and 20% trimmed mean are substantially smaller than the standard error of the mean, contrary to what might be expected based on standard training. Of course, a more important issue is whether the median or 20% trimmed mean ever have substantially smaller standard errors based on the data encountered in research. There are numerous illustrations that this is the case (e.g., <ref type="bibr">Wilcox, 2022a, to appear)</ref>.</p><p>There is the additional complication that the amount of trimming can substantially impact power, and the ideal amount of trimming, in terms of maximizing power, can depend crucially on the nature of the unknown distributions under investigation. For instance, for the situation in Figure <ref type="figure" target="#fig_5">4C</ref>, the 20% trimmed mean performs best, with 0.71 power with n = 40; in contrast, power is 0.27 for the mean and 0.62 for the median. Roughly, a 20% trimmed mean competes reasonably well with the mean under normality. But as we move toward distributions that are more likely to generate outliers, at some point the median will have a smaller standard error than a 20% trimmed mean, though in some situations it trims too much, given the goal of minimizing the standard error. It is not being suggested that the mere presence of outliers will necessarily result in higher power when using a 20% trimmed mean or median; but simply ignoring the potential impact of outliers can be a serious practical concern.</p><p>In terms of controlling the Type I error probability, effective techniques are available for both the 20% trimmed mean and the median. Because the choice between a 20% trimmed mean and a median is not straightforward in terms of maximizing power, it is suggested that in exploratory studies, both estimators be considered. When dealing with least-squares regression or Pearson's correlation, again, outliers are a serious concern. Indeed, even a single outlier might give a highly distorted sense about the association among the bulk of the participants under study and important associations might be missed. One of the more obvious ways of dealing with this issue is to switch to Kendall's tau or Spearman's rho. However, these measures of associations do not resolve all possible concerns related to outliers. For instance, two outliers, properly placed, can give a distorted sense about the association among the bulk of the data (e.g., <ref type="bibr">Wilcox, 2017, p. 239)</ref>.</p><p>A measure of association that deals with this issue is the skipped correlation, in which outliers are detected using a projection method, these points are removed, and Pearson's correlation is computed using the remaining data. Complete details are summarized in <ref type="bibr">Wilcox (2022a)</ref>. This skipped correlation can be computed with the R function scor, and a confidence interval that allows heteroscedasticity can be computed with scorci. This function also reports a pvalue when testing the hypothesis that the correlation is equal to 0. (See Section 3.2 for a description of common mistakes when testing hypotheses and outliers are removed.) MATLAB code is available as well <ref type="bibr" target="#b29">(Pernet, Wilcox, &amp; Rousselet, 2012)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Curvature</head><p>Typically, a regression line is assumed to be straight. In some situations, this approach seems to suffice. However, it cannot be stressed too strongly that there is substantial literature indicating that this is not always the case. A simple strategy for dealing with curvature is to include a quadratic term. Let X denote the independent variable. An even more general strategy is to include X raised to the power a in the model for some appropriate choice for the exponent a. But this strategy can be unsatisfactory (e.g., <ref type="bibr">Wilcox, 2022a)</ref>. A vast array of new and improved nonparametric methods for dealing with curvature are now available, but complete details go beyond the scope of this paper. Here it is merely remarked that among the many nonparametric regression estimators that have been proposed, generally known as smoothers, two that seem to be particularly useful are <ref type="bibr" target="#b4">Cleveland's (1979)</ref> estimator, which can be applied via the R function lplot, and the running-interval smoother, which can be applied with the R function rplot. Cleveland's smoother was initially designed to estimate the mean of the dependent variable given some value of the independent variable. The R function contains an option for dealing with outliers among the dependent variable, but it currently seems that the running-interval smoother is generally better for dealing with this issue. By default, the running-interval smoother estimates the 20% trimmed mean of the dependent variable, but any other measure of central tendency can be used via the argument est. Arguments can be made that other smoothers should be given serious consideration. Readers interested in these details are referred to <ref type="bibr">Wilcox (2022a)</ref>.</p><p>There are methods for testing the hypothesis that a regression line is straight (e.g., <ref type="bibr">Wilcox, 2022a)</ref>. However, failing to reject does not provide compelling evidence that it is safe to assume that the regression line is indeed straight. It is unclear when this approach has enough power to detect situations where curvature is an important practical concern. The best advice is to plot an estimate of the regression line using a smoother. If there is any indication that curvature might be an issue, use modern methods for dealing with curvature, many of which are summarized in <ref type="bibr" target="#b51">Wilcox (2017</ref><ref type="bibr">Wilcox ( , 2022a</ref>, to appear).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">DEALING WITH VIOLATION OF ASSUMPTIONS</head><p>Based on conventional training, there are some seemingly obvious strategies for dealing with the concerns reviewed in the previous section. But by modern standards, generally these strategies are relatively ineffective. This section summarizes strategies that perform poorly, followed by a brief description of modern methods that give improved results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Testing Assumptions</head><p>A natural strategy is to test assumptions. For example, test the hypothesis that there is homoscedasticity or normality. However, many older approaches to this generally fail <ref type="bibr" target="#b51">(Wilcox, 2017</ref><ref type="bibr">(Wilcox, , 2022a))</ref>. In practical terms, all indications are that it is best to always use a heteroscedastic method when comparing measures of central tendency and when dealing with regression, as well as measures of association such as Pearson's correlation. Some good methods for testing the normality assumption are outlined in Section 4.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Outliers: Two Common Mistakes</head><p>There are two common mistakes regarding how to deal with outliers. The first is to search for outliers using the mean and standard deviation. For example, declare the value</p><formula xml:id="formula_0">X an outlier if X -X s &gt; 2, Equation 1</formula><p>where X and s are the usual sample mean and standard deviation, respectively. A problem with this strategy is that it suffers from masking, simply meaning that the very presence of outliers causes them to be missed (e.g., <ref type="bibr" target="#b33">Rousseeuw &amp; Leroy, 1987;</ref><ref type="bibr">Wilcox, 2022a</ref>).</p><p>Consider, for example, the values 1, 2, 2, 3, 4, 6, 100, and 100. The two last observations appear to be clear outliers, yet the rule given by Equation 1 fails to flag them as such. The reason is simple: the standard deviation of the sample is very large, at almost 45, because it is not robust to outliers. This is not to suggest that all outliers will be missed; this is not necessarily the case. The point is that multiple outliers might be missed that adversely affect any conventional method that might be used to compare means. Much more effective are the box plot rule and the so-called MAD (median absolute deviation to the median)-median rule.</p><p>The box plot rule is applied as follows. Let q 1 and q 2 be estimates of the lower and upper quartiles, respectively. Then the value X is declared an outlier if X &lt; q 1 -1.5(q 2 -q 1 ) or if X &gt; q 2 + 1.5(q 2 -q 1 ). As for the MAD-median rule, let X 1 ,…, X n denote a random sample and let M be the usual sample median. MAD is the median of the values |X 1 -M|,…, |X n -M|. The MAD-median rule declares the value X an outlier if Under normality, it can be shown that MAD/0.6745 estimates the standard deviation, and of course M estimates the population mean. So, the MAD-median rule is similar to using Equation 1, only rather than use a twostandard deviation rule, 2.24 is instead used, to avoid flagging too many points as outliers when dealing with a normal distribution. As an illustration, consider the values 1. <ref type="bibr">85, 1.11, 1.11, 0.37, 0.37, 1.85, 71.53, and 71.53</ref>. The MAD-median rule detects the outliers: 71.53. But the rule given by Equation <ref type="formula">1</ref>does not. The MAD-median rule is better than the box plot rule in terms of avoiding masking. If the proportion of values that are outliers is ≥25%, masking can occur when using the box plot rule. Here, for example, the box plot rule does not flag the value 71.53 as an outlier, in contrast to the MAD-median rule.</p><p>The second mistake is discarding outliers and applying some standard method for comparing means using the remaining data. This results in an incorrect estimate of the standard error, regardless of how large the sample size might be. That is, an invalid test statistic is being used. Roughly, it can be shown that if the remaining data are dependent, then they are correlated, which invalidates the derivation of the standard error. Of course, if an argument can be made that a value is invalid, discarding it is reasonable and does not lead to technical issues. For instance, a straightforward case can be made if a measurement is outside physiological bounds or if it follows a biologically non-plausible pattern over time, such as during an electrophysiological recording. But otherwise, the estimate of the standard error can be off by a factor of 2 (e.g., <ref type="bibr">Wilcox, 2017b)</ref>, which is a serious practical issue. A simple way of dealing with this issue, when using a 20% trimmed mean or median, is to use a percentile bootstrap method. (With reasonably large sample sizes, alternatives to the percentile bootstrap method can be used. They use correct estimates of the standard error and are described in <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a.) .)</ref> The main point here is that these methods are readily applied with the free software R, which is playing an increasing role in basic training. Some illustrations are given in Section 5.</p><p>It should be noted that when dealing with regression, outliers among the independent variables can be removed when testing hypotheses. But if outliers among the dependent variable are removed, conventional hypothesis testing techniques based on the least-squares estimator are no longer valid, even when there is homoscedasticity. Again, the issue is that an incorrect estimate of the standard error is being used. When using robust regression estimators that deal with outliers among the dependent variable, again a percentile bootstrap method can be used to test hypotheses. There are numerous regression estimators that effectively deal with outliers among the dependent variable, but a summary of the many details is impossible. The Theil and Sen estimator as well as the MM estimator are relatively good choices, but arguments can be made that alternative estimators deserve serious consideration. A recent advance that can make a practical difference is a method for dealing with bad leverage points. A point is a leverage point if the independent variable is flagged as an outlier. A bad leverage point is a point where the residual is an outlier as well. Even robust regression estimators can be negatively impacted by a bad leverage point. Robust analogs of Pearson's correlation that deal with bad leverage points can make a substantial difference (Wilcox, to appear).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Transform the Data</head><p>A common strategy for dealing with non-normality or heteroscedasticity is to transform the data. There are exceptions, but generally this approach is unsatisfactory. The first problem is that a transformation changes the hypothesis being tested. In effect, transformations muddy the interpretation of any comparison because a transformation of the data also transforms the construct that it measures <ref type="bibr" target="#b12">(Grayson, 2004)</ref>. Second, the transformed data can again be skewed to the point that classical techniques perform poorly (e.g., <ref type="bibr" target="#b51">Wilcox, 2017)</ref>. Third, this simple approach does not deal with outliers in a satisfactory manner (e.g., <ref type="bibr" target="#b8">Doksum &amp; Wong, 1983;</ref><ref type="bibr" target="#b31">Rasmussen, 1989)</ref>. The number of outliers might decline, but it can remain the same and even increase. A much more satisfactory strategy is to use a method such as a bootstrap method in conjunction with a 20% trimmed mean or median. This approach also deals with heteroscedasticity in a very effective manner (e.g., <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a))</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.">Use a Rank-Based Method</head><p>Standard training suggests a simple way of dealing with non-normality: use a rank-based method such as the WMW test, the Kruskal-Wallis test, or Friedman's method. The first thing to stress is that under general conditions these methods are not designed to compare medians or other measures of central tendency <ref type="bibr" target="#b10">(Fagerland &amp; Sandvik, 2009</ref><ref type="bibr" target="#b51">, Wilcox, 2017)</ref>.</p><p>Moreover, the derivation of these methods assumes that the groups have identical distributions. In particular, homoscedasticity is assumed. In practical terms, if they reject, conclude that the distributions differ. However, to get a more detailed understanding of how groups differ and by how much, alternative inferential techniques should be used in conjunction with plots such as those summarized by <ref type="bibr" target="#b35">Rousselet et al. (2017)</ref>. For example, use methods based on a trimmed mean or median. Many improved rank-based methods have been derived <ref type="bibr" target="#b2">(Brunner, Domhof, &amp; Langer, 2002)</ref>. But again, these methods are aimed at testing the hypothesis that groups have identical distributions. Important exceptions are the improvements on the WMW test (e.g., <ref type="bibr" target="#b5">Cliff, 1996;</ref><ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a))</ref>, which, as previously noted, are aimed at making inferences about the probability that a random observation from the first group is less than a random observation from the second.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.">Permutation Methods</head><p>Permutation methods have received some attention in the neuroscience literature (e.g., <ref type="bibr" target="#b30">Pernet, Latinus, Nichols, &amp; Rousselet, 2015;</ref><ref type="bibr" target="#b58">Winkler, Ridgwaym, Webster, Smith, &amp; Nichols, 2014)</ref>. Briefly, this approach is well designed to test the hypothesis that two groups have identical distributions. But based on results reported by <ref type="bibr" target="#b1">Boik (1987)</ref>, the approach cannot be recommended when comparing means. The same is true when comparing medians, for reasons summarized by <ref type="bibr" target="#b32">Romano (1990)</ref>. <ref type="bibr" target="#b3">Chung and Romano (2013)</ref> summarize general theoretical concerns and limitations. They go on to suggest a modification of the standard permutation method, but at least in some situations the method is unsatisfactory (Wilcox, 2017, section 7.7). A deep understanding of when this modification performs well needs further study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.">More Comments About the Median</head><p>In terms of power, the mean is preferable to the median or 20% trimmed mean when dealing with symmetric distributions for which outliers are rare. If the distributions are skewed, the median and 20% trimmed mean can better reflect what is typical, and improved control over the Type I error probability can be achieved. When outliers occur, there is the possibility that the mean will have a much larger standard error than the median or 20% trimmed mean. Consequently, methods based on the mean might have relatively poor power.</p><p>Note, however, that for skewed distributions, the difference between two means might be larger than the difference between the corresponding medians. As a result, even when outliers are common, it is possible that a method based on the means will have more power. In terms of maximizing power, a crude rule is to use a 20% trimmed mean, but the seemingly more important point is that no method dominates. Focusing on a single measure of central tendency might result in missing an important difference. So again, exploratory studies can be vitally important.</p><p>Even when there are tied values, it is now possible to achieve excellent control over the probability of a Type I error when using the usual sample median. For the onesample case, this can be done with using a distribution-free technique via the R function sintv2. In this technique, the actual Type I error probability can be determined exactly assuming random sampling only. When comparing two or more groups, currently the only known technique that performs well is the percentile bootstrap. Methods based on estimates of the standard error can perform poorly, even with large sample sizes. Also, when there are tied values, the distribution of the sample median does not necessarily converge to a normal distribution as the sample size increases. The very presence of tied values is not necessarily disastrous, but it is unclear how many tied values can be accommodated before disaster strikes. The percentile bootstrap method eliminates this concern.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">COMPARING GROUPS AND MEASURES OF ASSOCIATION</head><p>This section elaborates on methods aimed at comparing groups and measures of association. First, attention is focused on two independent groups. Comparing dependent groups is discussed in Section 4.4. Section 4.5 comments briefly on more complex designs. This is followed by a description of how to compare measures of association as well as a discussion of modern advances related to the analysis of covariance. Included are indications of how to apply these methods using the free software R, which now is easily the best software for applying modern methods. R is a vast and powerful software package. Certainly, MATLAB and Python could be used, but this would require writing hundreds of functions to compete with R. There are numerous books on R, but only a relatively small subset of the basic commands is needed to apply the functions described here. All recommended methods deal with heteroscedasticity. When comparing groups and distributions that differ in shape, these methods are generally better than classic methods for comparing means, which can perform poorly.</p><p>The R functions noted here are stored in the R package WRS, which can be installed as indicated at https:// github.com/ nicebread/ WRS. Alternatively, and seemingly easier, use the R command source on the file Rallfun-v41.txt, which can be downloaded from https:// dornsife.usc.edu/ labs/ rwilcox/ software/ , or https:// osf.io/ xhe8u/ , or https:// github.com/ rrwilcox/ Rallfun.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Dealing with Small Sample Sizes</head><p>When the sample sizes are very small, say ≤10 and &gt;4, conventional methods based on means are satisfactory in terms of Type I errors when the null hypothesis is that the groups have identical distributions. If the goal is to control the probability of a Type I error when the null hypothesis is that groups have equal means, extant methods can be unsatisfactory. And as previously noted, methods based on means can have poor power relative to alternative techniques.</p><p>Many of the more effective methods are based in part on the percentile bootstrap method. Consider, for example, the goal of comparing the medians of two independent groups. Let M x and M y be the sample medians for the two groups being compared and let D = M x -M y . The basic strategy is to perform a simulation based on the observed data with the goal of approximating the distribution of D, which can then be used to compute a p-value as well as a confidence interval. Let n and m denote the sample sizes for the first and second group, respectively. The percentile bootstrap method proceeds as follows. For the first group, randomly sample with replacement n observations. This yields what is generally called a bootstrap sample. For the second group, randomly sample with replacement m observations. Next, based on these bootstrap samples, compute the sample medians, say M *</p><p>x and M * y . Let D* = M * x -M * y . Repeating this process many times, a p-value (and confidence interval) can be computed based on the proportion of times D* &lt; 0 as well as the proportion of times D* = 0. (More precise details are given in <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a.) .)</ref> This method has been found to provide reasonably good control over the probability of a Type I error when both n and m are ≥5. The R function medpb2 performs this technique.</p><p>The method just described performs very well compared to alternative techniques. In fact, regardless of sample size, the percentile bootstrap method is the only known method that continues to perform reasonably well when comparing medians and when there are duplicated values (also see <ref type="bibr">Wilcox, 2022a, section 5.3)</ref>.</p><p>For the special case where the goal is to compare means, there is no method that provides reasonably accurate control over the Type I error probability for a relatively broad range of situations. In fairness, situations can be created where means perform well and indeed have higher power than methods based on a 20% trimmed mean or median. When dealing with perfectly symmetric distributions where outliers are unlikely to occur, methods that are based on means, and that allow heteroscedasticity, perform relatively well. But with small sample sizes, there is no satisfactory diagnostic tool indicating whether distributions satisfy these two conditions in an adequate manner. Generally, using means comes with the relatively high risk of poor control over the Type I error probability and relatively poor power.</p><p>Switching to a 20% trimmed mean, the method derived by Yuen (1974) performs well even when the smallest sample size is 6 <ref type="bibr" target="#b28">(Özdemir, Wilcox, &amp; Yildiztepe, 2013)</ref>. It can be applied with the R function yuen. (Yuen's method reduces to Welch's method for comparing means when there is no trimming.) When the smallest sample size is 5, it can be unsatisfactory in situations where the percentile bootstrap method, used in conjunction with the median, continues to perform reasonably well. A rough rule is that the ability to control the Type I error probability improves as the amount of trimming increases. With small sample sizes, and when the goal is to compare means, it is unknown how to control the Type I error probability reasonably well over a reasonably broad range of situations.</p><p>Another approach is to focus on P (X &lt; Y), the probability that a randomly sampled observation from the first group is less than a randomly sampled observation from the second group. This strategy is based in part on an estimate of the distribution of D = X -Y, the distribution of all pairwise differences between observations in each group.</p><p>To illustrate this point, let X 1 ,…, X n and Y 1 ,…, Y m be random samples of size n and m, respectively. Let</p><formula xml:id="formula_1">D ik = X i -Y k (i = 1, …, n; k = 1,…, m).</formula><p>Then the usual estimate of P (X &lt; Y) is simply the proportion of D ik values less</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="14">of 31</head><p>Current Protocols than 0. For instance, if X = (1, 2, 3) and Y = (1, 2.5, 4), then D = (0.0, 1.0, 2.0, -1.5, -0.5, 0.5, -3.0, -2.0, -1.0), and the estimate of P (X &lt; Y) is 4/9, the proportion of D values less than 0. Let μ x , μ y , and μ D denote the population means associated with X, Y, and D, respectively. From basic principles, μ x -μ y = μ D . That is, the difference between two means is the same as the mean of all pairwise differences. However, let θ x , θ y , and θ D denote the population medians associated with X, Y, and D, respectively. For symmetric distributions, θ x -θ y = θ D , but otherwise it is generally the case that θ x -θ y = θ D . In other words, the difference between medians is typically not the same as the median of all pairwise differences. The same is true when using any amount of trimming greater than 0. Roughly, θ x and θ y reflect the typical response for each group, while θ D reflects the typical difference between two randomly sampled participants, one from each group. Although less known, the second perspective can be instructive in many situations, for instance in a clinical setting in which we want to know what effect to expect when randomly sampling a patient and a control participant.</p><p>If two groups do not differ in any manner, P (X &lt; Y) = 0.5. Consequently, a basic goal is testing H 0 : P(X &lt; Y ) = 0.5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Equation 3</head><p>If this hypothesis is rejected, this indicates that it is reasonable to make a decision about whether P (X &lt; Y) is less than or greater than 0.5. It can be readily verified that this is the same as testing H 0 : θ D = 0.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Equation 4</head><p>Certainly P (X &lt; Y) has practical importance for reasons summarized, among others, by <ref type="bibr" target="#b5">Cliff (1996)</ref>, <ref type="bibr" target="#b38">Ruscio (2008), and</ref><ref type="bibr">Newcombe (2006)</ref>. The WMW test is based on an estimate P (X &lt; Y). However, it is unsatisfactory in terms of making inferences about this probability because the estimate of the standard error assumes that the distributions are identical. If the distributions differ, an incorrect estimate of the standard error is being used. More modern methods deal with this issue. The method derived by <ref type="bibr" target="#b5">Cliff (1996)</ref> for testing Equation 3 performs relatively well with small sample sizes and can be applied via the R function cidv2 <ref type="bibr">(Ruscio &amp; Mullens, 2012)</ref>. However, there is a complication. For skewed distributions, differences among the means, for example, can be substantially smaller or larger than differences among 20% trimmed means or medians. That is, regardless of how large the sample sizes might be, power can be substantially impacted by which measure of central tendency is used.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Comparing Quantiles</head><p>Rather than compare groups based on a single measure of central tendency, typically the mean, another approach is to compare multiple quantiles. This provides more detail about where and how the two distributions differ <ref type="bibr" target="#b35">(Rousselet et al., 2017)</ref>. For example, the typical participants might not differ very much based on the medians, but the reverse might be true among low-scoring individuals.</p><p>First consider the goal of comparing all quantiles in a manner that controls the probability of one or more Type I errors among all the tests that are performed. Assuming random sampling only, <ref type="bibr" target="#b7">Doksum and Sievers (1976)</ref> derived a method that can be applied via the R function sband. This method is based on a generalization of the Kolmogorov-Smirnov test. A negative feature is that power can be adversely affected when there are tied values and/or the goal is to compare the more extreme quantiles. A way of reducing these concerns is to compare the deciles using a percentile bootstrap method in conjunction with the quantile estimator derived by <ref type="bibr" target="#b14">Harrell and Davis (1982)</ref>. This is easily done with the R function qcomhd.</p><p>Note that if the distributions associated with X and Y do not differ, then D = X -Y will have a symmetric distribution about 0. Let x q be the qth quantile of D, 0 &lt; q &lt; 0.5. In particular, it will be the case that x q + x 1-q = 0 when X and Y have identical distributions. The median (2nd quartile) will be 0, and, for instance, the sum of the 3rd quartile (0.75 quantile) and the 1st quartile (0.25 quantile) will be 0. Thus, this sum provides yet another perspective on how distributions differ (see illustrations in <ref type="bibr" target="#b35">Rousselet et al., 2017)</ref>.</p><p>For example, consider a comparison in which an experimental group is compared to a control group based on some measure of depressive symptoms. If x 0.25 = -4 and x 0.75 = 6, then for a single randomly sampled observation from each group, there is a sense in which the experimental treatment outweighs no treatment, because positive differences (beneficial effect) tend to be larger than negative differences (detrimental effect). The hypothesis Current Protocols 26911299, 2023, 3, Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License H 0 : X q + X 1-q = 0 Equation 5 can be tested with the R function cbmhd. A confidence interval is returned as well. Current results indicate that the method provides reasonably accurate control over the Type I error probability when q = 0.25 and the sample sizes are ≥10. For q = 0.1, sample sizes ≥20 should be used <ref type="bibr" target="#b50">(Wilcox, 2012)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Eliminate Outliers and Average the Remaining Values</head><p>Rather than use means, trimmed means, or the median, another approach is to use an estimator that down-weights or eliminates outliers. For example, use the MAD-median to search for outliers, remove any that are found, and average the remaining values. This is generally known as a modified one-step Mestimator (MOM). There is a method for estimating the standard error, but currently a percentile bootstrap method seems preferable when testing hypotheses. This approach might seem preferable to using a trimmed mean or median because trimming can eliminate points that are not outliers. But this issue is far from simple. Indeed, there are indications that when testing hypotheses, the expectation is that a trimmed mean or median will perform better in terms of Type I errors and power <ref type="bibr">(Wilcox, 2022a)</ref>. However, there are exceptions: no single estimator dominates. As previously noted, an invalid strategy is to eliminate extreme values and apply conventional methods for means based on the remaining data because the wrong standard error is used. Switching to a percentile bootstrap deals with this issue when using MOM as well as related estimators. The R function pb2gen applies this method.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.">Dependent Variables</head><p>Next, consider the goal of comparing two dependent variables. That is, the variables might be correlated. Based on the random sample</p><formula xml:id="formula_2">(X 1 , Y 1 ),…, (X n , Y m ), let D i = X i -Y i (i = 1,…, n).</formula><p>Even when X and Y are correlated, μ x -μ y = μ D , the difference between the population means is equal to the mean of the difference scores. But under general conditions, this is not the case when working with trimmed means. When dealing with medians, for example, it is generally the case that θ xθ y = θ D . If the distribution of D is symmetric and light-tailed (outliers are relatively rare), the paired t-test performs reasonably well. As we move toward a skewed distribution, at some point this is no longer the case, for reasons summarized in Section 2.1. Moreover, power and control over the probability of a Type I error are also a function of the likelihood of encountering outliers.</p><p>There is a method for computing a confidence interval for θ D for which the probability of a Type I error can be determined exactly assuming random sampling only (e.g., <ref type="bibr" target="#b16">Hettmansperger &amp; McKean, 2011)</ref>. In practice, a slight modification of this method is recommended that was derived by <ref type="bibr" target="#b17">Hettmansperger and Sheather (1986)</ref>. When sample sizes are very small, this method performs very well in terms of controlling the probability of a Type I error. And in general, it is an excellent method for making inferences about θ D . The method can be applied via the R function sintv2. This is the function we used in the one-sample simulations presented in Figures <ref type="figure">2</ref> and<ref type="figure" target="#fig_6">5</ref>.</p><p>As for trimmed means, with the focus still on D, a percentile bootstrap method can be used via the R function trimpb or wmcppb. Again, with 20% trimming, reasonably good control over the Type I error probability can be achieved. With n = 20, the percentile bootstrap method is better than the non-bootstrap method derived by <ref type="bibr" target="#b44">Tukey and McLaughlin (1963)</ref>. With large enough sample sizes, the Tukey-McLaughlin method can be used in lieu of the percentile bootstrap method via the R function trimci, but it is unclear just how large the sample size must be.</p><p>In some situations, there might be interest in comparing measures of central tendencies associated with the marginal distributions rather than the difference scores. Imagine, for example, participants consist of married couples. One issue might be the typical difference between a husband and his wife, in which case difference scores would be used. Another issue might be how the typical male compares to the typical female. So now the goal would be to test H 0 : θ x = θ y , rather than H 0 : θ D = 0. The R function dmeppb tests the first of these hypotheses and performs relatively well, even when there are tied values. If the goal is to compare the marginal trimmed means, rather than to make inferences about the trimmed mean of the difference scores, use the R function dtrimpb, or use wmcppb and set the argument dif = FALSE. When dealing with a moderately large sample size, the R function yuend can be used instead, but there is no clear indication of just how large the sample size must be. A collection of quantiles can be compared with Dqcomhd and all of the quantiles can be compared via the function lband. Another approach is to use the classic sign test, which is aimed at making inferences about P (X &lt; Y). As is evident, this probability provides a useful perspective on the nature of the difference between the two dependent variables under study beyond simply comparing measures of central tendency. The R function signt performs the sign test, which by default uses the method derived by <ref type="bibr">Agresti and Coull (1998)</ref>. If the goal is to ensure that the confidence interval has probability coverage of at least 1 -α, rather than approximately equal to 1 -α, the <ref type="bibr" target="#b40">Schilling and Doi (2014)</ref> method can be used by setting the argument SD = TRUE when using the R function signt. In contrast to the Schilling and Doi method, p-values can be computed when using the Agresti and Coull technique. Another negative feature of the Schilling and Doi method is that execution time can be extremely high even with a moderately large sample size.</p><p>A criticism of the sign test is that its power might be lower than that of the Wilcoxon signed rank test. However, this issue is not straightforward. Moreover, the sign test can reject in situations where other conventional methods do not. Again, which method has the highest power depends on the characteristics of the unknown distributions generating the data. Also, in contrast to the sign test, the Wilcoxon signed rank test provides no insight into the nature of any difference that might exist without making rather restrictive assumptions about the underlying distributions. In particular, under general conditions, it does not compare medians or some other measure of central tendency as previously noted.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.">More Complex Designs</head><p>It is noted that when dealing with a oneway or higher ANOVA design, violations of the normality and homoscedasticity assumptions, associated with classic methods for means, become an even more serious issue in terms of both Type I error probabilities and power. Robust methods have been derived <ref type="bibr" target="#b51">(Wilcox, 2017</ref><ref type="bibr">(Wilcox, , 2022a))</ref>, but the many details go beyond the scope of this paper. However, a few points are worth stressing.</p><p>Momentarily assume normality and homoscedasticity. Another important insight has to do with the role of the ANOVA F test versus post hoc multiple comparison procedures such as the Tukey-Kramer method. In terms of controlling the probability of one or more Type I errors, is it necessary to first reject with the ANOVA F test? The answer is an unequivocal no. With equal sample sizes, the Tukey-Kramer method provides exact control. But if it is used only after the ANOVA F test rejects, this is no longer the case; it is lower than the nominal level <ref type="bibr">(Bernhardson, 1975)</ref>. For unequal sample sizes, the probability of one or more Type I errors is less than or equal to the nominal level when using the Tukey-Kramer method. But if it is used only after the ANOVA F test rejects, it is even lower, which can negatively impact power. More generally, if an experiment aims to test specific hypotheses involving subsets of conditions, there is no obligation to first perform an ANOVA: the analyses should focus directly on the comparisons of interest using, for instance, the functions for linear contrasts listed below. Now consider non-normality and heteroscedasticity. When performing all pairwise comparisons, for example, most modern methods are designed to control the probability of one or more Type I errors without first performing a robust analog of the ANOVA F test. There are, however, situations where a robust analog of the ANOVA F test can help increase power (e.g., <ref type="bibr">Wilcox, 2022a, section 7.4</ref>). For a one-way design in which the goal is to compare all pairs of groups, a percentile bootstrap method can be used via the R function linconpb. A non-bootstrap method is performed by lincon. For medians, use medpb. For an extension of Cliff's method, use cidmul. Methods and corresponding R functions for both two-way and three-way designs, including techniques for dependent groups, are available as well (see <ref type="bibr" target="#b51">Wilcox, 2017</ref><ref type="bibr">Wilcox, , 2022a))</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6.">Effect Size</head><p>Rather than compare groups based on some measure of location, another approach is to use some measure of effect size that is based on both a measure of location and a measure of variation. Certainly, one of the better-known approaches is Cohen's d. However, this is not robust, roughly meaning that it can miss a large effect size among the bulk of the participants. Another concern is that Cohen's d assumes homoscedasticity. A robust, heteroscedastic analog of Cohen's d is now available that is based on a trimmed mean and a Winsorized variance <ref type="bibr">(Wilcox, 2022a)</ref>. When dealing with a two-way design, methods for comparing groups based on this measure of ef-fect size have been derived and can reveal important differences among groups that may be missed by other techniques <ref type="bibr" target="#b55">(Wilcox, 2022b)</ref>.</p><p>A possible concern with heteroscedastic analogs of Cohen's d occurs when dealing with skewed distributions. Situations are encountered where, say, an effect size of -0.5 is more important than an effect size of 0.5. If, for example, the median of an experimental group corresponds to the 0.67th quantile of a control group, this might be viewed as less important compared to when the median of an experimental group corresponds to the 0.2th quantile of a control group. One way of dealing with this issue is to use a quantile shift measure of effect size <ref type="bibr">(Wilcox, 2022c)</ref>. More details about this measure of effect size can be found in Wilcox (to appear).</p><p>Another approach is to use what is called explanatory power, which reflects a generalization of the coefficient of determination. Basically, the variation in the measures of location is divided by the variance of the observed data. There are estimation issues when dealing with unequal sample sizes, but a method for dealing with this has been derived <ref type="bibr">(Wilcox, 2022a)</ref>.</p><p>For convenience, when comparing two independent groups, the R function ES.summary.CI computes six measures of effect size and reports a confidence interval for each. Included are results for P (X &lt; Y), a robust, heteroscedastic analog of Cohen's d, explanatory power, and two versions of the quantile shift measure of effect size.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.7.">Comparing Independent Correlations and Regression Slopes</head><p>Next, consider two independent groups where for each group there is interest in the strength of the association between two variables. A common goal is to test the hypothesis that the strength of association is the same for both groups.</p><p>Let ρ j (j = 1, 2) be Pearson's correlation for the jth group, and consider the goal of testing</p><formula xml:id="formula_3">H 0 : ρ 1 = ρ 2 . Equation 6</formula><p>Various methods for accomplishing this goal are known to be unsatisfactory <ref type="bibr" target="#b49">(Wilcox, 2009)</ref>. For example, one might use Fisher's r-to-z transformation, but it follows immediately from results in <ref type="bibr" target="#b9">Duncan and Layard (1973)</ref> that this approach performs poorly under general conditions. Methods that assume</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="18">of 31</head><p>Current Protocols homoscedasticity, as depicted in Figure <ref type="figure" target="#fig_5">4</ref>, can also be unsatisfactory. As previously noted, when there is an association (the variables are dependent), and there is heteroscedasticity, a practical concern is that the wrong standard error is being used when testing hypotheses about the slopes. That is, the derivation of the test statistic is valid when there is no association; independence implies homoscedasticity. But under general conditions, it is invalid when there is heteroscedasticity. This concern extends to inferences made about Pearson's correlation.</p><p>There are two methods that perform relatively well in terms of controlling the Type I error probability. The first is based on a modification of the basic percentile bootstrap method. Imagine that Equation 6 is rejected if the confidence interval for ρ 1 -ρ 2 does not contain 0. The Type I error probability depends on the width of this confidence interval. If it is too narrow, the actual Type I error probability will exceed 0.05. With small sample sizes, this is exactly what happens when using the basic percentile bootstrap method. The modification consists of widening the confidence interval for ρ 1 -ρ 2 when the sample size is small. The amount it is widened depends on the sample sizes. The method can be applied via the R function twopcor. A limitation is that this method can be used only when the Type I error is 0.05, and it does not yield a p-value.</p><p>The second approach is to use a method that estimates the standard error in a manner that deals with heteroscedasticity. When dealing with the slope of the least-squares regression line, several methods are now available for getting valid estimates of the standard error when there is heteroscedasticity <ref type="bibr">(Wilcox, 2022a)</ref>. One of these is called the HC4 estimator, which can be used to test Equation 6 via the R function twohc4cor.</p><p>As previously noted, Pearson's correlation is not robust: even a single outlier might substantially impact its value, giving a distorted sense of the strength of the association among the bulk of the points. Upon switching to Kendall's tau or Spearman's rho, now a basic percentile bootstrap method can be used to compare two independent groups, in a manner that allows heteroscedasticity, via the R function twocor. As noted in Section 2.3, the skipped correlation can be used via the R function scorci.</p><p>The slopes of regression lines can be compared as well using methods that allow heteroscedasticity. For least-squares regres-sion, use the R function ols2ci. For robust regression estimators, use reg2ci.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.8.">Comparing Correlations, the Overlapping Case</head><p>Consider a single dependent variable Y and two independent variables, X 1 and X 2 . A common and fundamental goal is to understand the relative importance of X 1 and X 2 in terms of their association with Y. A typical mistake in neuroscience is to perform two separate tests of associations, one between X 1 and Y and another between X 2 and Y, without explicitly comparing the association strengths between the independent variables (Nieuwenhuis, Forstmann, &amp; Wagenmakers, 2011). For instance, reporting that one test is significant, and the other is not, cannot be used to conclude that the associations themselves differ. A common example would be when an association is estimated between each of two brain measurements and a behavioral outcome.</p><p>There are many methods for estimating which independent variable is more important, many of which are known to be unsatisfactory (e.g., Wilcox, 2017, section 6.13). One potential strategy is to test H 0 : ρ 1 = ρ 2 , where now ρ j (j = 1, 2) is the correlation between Y and X j . This can be done with the R function TWOpov. When dealing with robust correlations, use the function twoDcorR. However, a criticism of this approach is that it does not consider the nature of the association when both independent variables are included in the model. This is a concern because the strength of the association between Y and X 1 can depend on whether X 2 is included in the model as illustrated in Section 5.4. There is now a robust method for testing the hypothesis that there is no difference in the association strength when both X 1 and X 2 are included in the model <ref type="bibr" target="#b52">(Wilcox, 2018a</ref><ref type="bibr">(Wilcox, , 2022a))</ref>. Heteroscedasticity is allowed. If, for example, there are three independent variables, one can test the hypothesis that the strength of the association for the first two independent variables is equal to the strength of the association for the third independent variable. The method can be applied with the R function regIVcom. A modification and extension of the method has been derived when there is curvature <ref type="bibr" target="#b53">(Wilcox, 2018b)</ref>, but it is limited to two independent variables.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.9.">ANCOVA</head><p>The simplest version of the analysis of covariance (ANCOVA) consists of comparing the regression lines associated with two independent groups when there is a single independent variable. The classic method makes several restrictive assumptions: (1) the regression lines are parallel; (2) for each regression line, there is homoscedasticity; (3) the variance of the dependent variable is the same for both groups; (4) there is normality of the residuals; and (5) a straight regression line provides an adequate approximation of the true association. Violating any of these assumptions is a serious practical concern. Violating two or more of these assumptions makes matters worse. There is now a vast array of more modern methods that deal with violations of these assumptions in <ref type="bibr">Wilcox (2022a, chapter 12)</ref>. These newer techniques can substantially increase power compared to the classic ANCOVA technique, and perhaps more importantly, they can provide a deeper and more accurate understanding of how the groups compare. Included are several robust, heteroscedastic measures of effect size. They include robust heteroscedastic analogs of Cohen's d, heteroscedastic analogs of the Wilcoxon-Mann-Whitney test, and an analog of the coefficient of determination <ref type="bibr">(Wilcox,</ref><ref type="bibr">to appear,</ref><ref type="bibr">chapter 10)</ref>. For methods that deal with a covariate, see <ref type="bibr">Wilcox (in press, to appear)</ref>. The many details go beyond the scope of this unit.</p><p>As noted in the introduction, curvature is a more serious concern than is generally recognized. One strategy, as a partial check on the presence of curvature, is to simply plot the regression lines associated with two groups using the R functions lplot2g and rplot2g. A better-known approach is to plot predicted values and the residuals (e.g., <ref type="bibr" target="#b25">Montgomery, Peck, &amp; Vining, 2012)</ref>. In some situations, lplot2g and rplot2g provide a better indication of the nature of any curvature <ref type="bibr">(Wilcox, to appear)</ref>. Currently there are no known situations where plotting the predicted values and the residuals provides better results. When using lplot2g and rplot2g, as well as related functions, it can be vitally important to check on the impact of removing outliers among the independent variables. This is easily done with the functions mentioned here by setting the argument xout = TRUE. If these plots suggest that curvature might be an issue, consider the R functions ancova and ancdet. This latter function applies method TAP in Wilcox (2022a, section 12.2.4) and can provide more detailed information about where and how two regression lines differ compared to the function ancova. These functions are based on methods that allow heteroscedasticity and non-normality, and they eliminate the classic assumption that the regression lines are parallel. For two independent variables, see <ref type="bibr">Wilcox (2022a, section 12.4</ref>). If there is evidence that curvature is not an issue, again there are very effective methods that allow heteroscedasticity as well as non-normality (Wilcox, 2022a, section 12.1).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">SOME ILLUSTRATIONS</head><p>Using data from several studies, this section illustrates modern methods and how they contrast. Extant results suggest that robust methods have a relatively high likelihood of maximizing power, but as previously stressed, no single method dominates. Another goal in this section is to underscore the suggestion that multiple perspectives can be important. More complete descriptions of the results, as well as the R code that was used, are available on figshare <ref type="bibr">(Wilcox &amp; Rousselet, 2023)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Spatial Acuity for Pain</head><p>The first illustration stems from <ref type="bibr" target="#b23">Mancini et al. (2014)</ref>, who reported results aimed at providing a whole-body mapping of spatial acuity for pain (also see <ref type="bibr" target="#b22">Mancini, 2016)</ref>. Here the focus is on their second experiment. Briefly, spatial acuity was assessed by measuring 2-point discrimination thresholds for both pain and touch in 11 body territories. One goal was to compare touch measures taken at different body parts: forehead, shoulder, forearm, hand, back, and thigh. Plots of the data are shown in Figure <ref type="figure" target="#fig_8">6A</ref> for the six body parts. The sample size is n = 10.</p><p>Their analyses were based on the ANOVA F test, followed by paired t-tests when the ANOVA F test indicated significance. Their significant results indicate that the distributions differ, but because the ANOVA F test is not a robust method when comparing means, there is some doubt about the nature of the differences. So, one goal is to determine in which situations robust methods give similar results. And for the non-significant results, there also is the question of whether an important difference was missed due to using the ANOVA F test and Student's t-test.</p><p>First, we describe a situation where robust methods based on a median and a 20% trimmed mean give reasonably similar results. Comparing foot and thigh pain measures based on Student's t-test, the 0.95 confidence interval is <ref type="bibr">[-0.112, 0.894]</ref>, and the p-value is 0.112. For a 20% trimmed mean, the 0.95 confidence interval is [-0.032, 0.79], and the p-value is 0.096. As for the median, the corresponding results were [-0.21, 1.085] and 0.111.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="20">of 31</head><p>Current Protocols  Next, all pairwise comparisons, based on touch, were performed for the following body parts: forehead, shoulder, forearm, hand, back, and thigh. Figure <ref type="figure" target="#fig_8">6B</ref> shows a plot of the difference scores for each pair of body parts. The probability of one or more Type I errors was controlled using an improvement on the Bonferroni method derived by <ref type="bibr" target="#b18">Hochberg (1988)</ref>. The simple strategy of using paired t-tests if the ANOVA F rejects does not control the probability of one or more Type I errors. If paired t-tests are used without controlling the probability of Type I errors, as done by <ref type="bibr" target="#b23">Mancini et al. (2014)</ref>, 14 of the 15 hypotheses are rejected (see panel C). If the probability of one or more Type I errors is controlled using Hochberg's method, the following results were obtained. Comparing means via the R function wmcp (and the argument tr = 0), 10 of the 15 hypotheses were rejected. Using medians via the R function dmedpb, 10 were rejected. As for the 20% trimmed mean, using the R function wmcppb, now 12 were rejected, illustrating the point made earlier that the choice of method can make a practical difference.</p><formula xml:id="formula_4">A -2 -1 0 1 2 F H -S F H -F A F H -H F H -B F H -T S -F A S -H S -B S -T F A -H F A -B F A -T H -B H -T B -</formula><p>It is noted that in various situations, using the sign test, the estimate of P (X &lt; Y) was equal to 1, which provides an alternative perspective regarding how the groups compare.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Receptive Fields in Early Visual Cortex</head><p>The next illustrations are based on data analyzed by <ref type="bibr" target="#b42">Talebi and Baker (2016)</ref> and presented in their Figure <ref type="figure" target="#fig_10">9</ref>. The goal was to estimate visual receptive field (RF) models of neurons from the cat visual cortex using natural image stimuli. The authors provided a rich quantification of the neurons' responses and demonstrated the existence of three functionally distinct categories of simple cells.  The total sample size is 212. There are three measures: latency, duration, and a direction selectivity index (dsi). For each measure, there are three independent categories: nonoriented (nonOri) cells (n = 101), expansive oriented (expOri) cells (n = 48), and compressive oriented (compOri) cells (n = 63). First focus on latency (A panels of Fig. <ref type="figure" target="#fig_9">7</ref>). Talebi and Baker (2016) used Student's t-test to compare means. Comparing the means for nonOri and expOri, no significant difference is found. But an issue is whether Student's t-test might be missing an important difference. The plot of the distributions shown in the top row of Figure <ref type="figure" target="#fig_9">7A</ref>, which was created with the R function g5plot, provides a partial check on this possibility. As is evident, the distributions for nonOri and expOri are very similar, suggesting that no method will yield a significant result. Using error bars is less convincing because important differences might exist when focusing instead on the median, 20% trimmed mean, or some other aspect of the distributions.</p><p>Comparing the deciles (as noted in Section 4.2) can provide a more detailed understanding of how groups differ. The second row of Figure <ref type="figure" target="#fig_9">7</ref> shows the estimated difference between the deciles for the nonOri group versus the expOri group. The vertical dashed line indicates the median. Also shown are confidence intervals (computed via the R function qcomhd) having, approximately, simultaneous probability coverage equal to 0.95. That is, the probability of one or more Type I errors is ∼0.05. The method is explained in detail in <ref type="bibr" target="#b35">Rousselet et al. (2017)</ref>. In this case, differences between the deciles are more pronounced as we move from the lower to the upper deciles, but again no significant differences are found.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="22">of 31</head><p>Current Protocols The third row shows the difference between the deciles for nonOri versus compOri; the upper ends of the confidence intervals are &lt;0. Again, the magnitude of the differences becomes more pronounced moving from low to high measures. Now all the deciles differ significantly except the 0.1 quantiles.</p><p>Next, consider durations in column B of Figure <ref type="figure" target="#fig_9">7</ref>. Comparing nonOri to expOri using means, 20% trimmed means, and medians, the corresponding p-values are 0.001, 0.005, and 0.009. Even when controlling the probability of one or more Type I errors using Hochberg's method, all three reject at the 0.01 level. The method based on means rejects at the 0.01 level, but this merely indicates that the distributions differ in some manner. To provide an indication that the groups differ in terms of some measure of central tendency, using 20% trimmed means and medians is more satisfactory. The plot in row 2 of Figure <ref type="figure" target="#fig_9">7B</ref> confirms an overall shift between the two distributions and suggests a more specific pattern, with increasing differences in the deciles beyond the median.</p><p>Comparing nonOri to compOri, significant results were again obtained using means, 20% trimmed means, and medians; the largest p-value is p = .005. In contrast, qcomhd indicates a significant difference for all of the deciles excluding the 0.1 quantile. As can be seen from the last row in Figure <ref type="figure" target="#fig_9">7B</ref>, the magnitude of the differences between the deciles increases as we move from the lower to the upper deciles. This function provides a more detailed understanding of where and how the distributions differ.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.">Mild Traumatic Brain Injury</head><p>The illustrations in this section stem from a study dealing with mild traumatic brain injury <ref type="bibr">(Almeida-Suhett et al., 2014)</ref>. Briefly, 5-to 6week-old male Sprague Dawley rats received a mild controlled cortical impact (CCI) injury. The dependent variable used here is the stereologically estimated total number of GAD-67-positive cells in the basolateral amygdala (BLA). Measures 1 and 7 days after surgery were compared to those for the sham-treated control group that received a craniotomy but no CCI injury. A portion of the analyses focused on the ipsilateral sides of the BLA. Box plots of the data are shown in Figure <ref type="figure">8</ref>. The sample sizes are 13, 9, and 8, respectively.</p><p>Almeida-Suhett et al. ( <ref type="formula">2014</ref>) compared means using an ANOVA F test followed by Bonferroni post hoc tests. Comparing both day 1 and day 7 measures for the experimental group to those of the sham group based on Student's t-test, the p-values are .0375 and &lt;.001, respectively. So, if the Bonferroni method is used, the day 1 group does not differ significantly from the sham group when testing at the 0.05 level. However, using Hochberg's improvement on the Bonferroni method, now the reverse decision is made.</p><p>Here, the day 1 group was compared again to the sham group based a percentile bootstrap method for comparing both 20% trimmed means and medians, as well as Cliff's improvement on the WMW test. The corresponding p-values are .031, .079, and .040. If 20% trimmed means are instead compared with Yuen's method, the p-value is p = .079, but due to the relatively small sample sizes, a percentile bootstrap would be expected to provide more accurate control over the Type I error probability. The main point here is that the choice between Yuen and a percentile bootstrap method can make a practical difference. The box plots suggest that sampling is from distributions that are unlikely to generate outliers, in which case a method based on the usual sample median might have relatively low power. When outliers are rare, a way of comparing medians that might have more power is to use instead the Harrell-Davis estimator mentioned in Section 4.2 in conjunction with a percentile bootstrap method. Now p = .052. Also, testing Equation <ref type="formula">8</ref>.42.4 with the R function wmwpb, p = .02. So focusing on θ D , the median of all pairwise differences, rather than the individual medians, can make a practical difference.</p><p>In summary, when comparing the sham group to the day 1 group, all the methods that perform relatively well when sample sizes are small (described in Section 4.1) reject at the 0.05 level except the percentile bootstrap method based on the usual sample median and the Harrell-Davis estimator. Taken as a whole, the results suggest that measures for the sham group are typically higher than measures based on day 1 group. As for the day 7 data, now all the methods used for the day 1 data have p-values ≤.002.</p><p>The same analyses were done using the contralateral sides of the BLA. Now the results were consistent with those based on means: none are significant for day 1. As for the day 7 measures, both conventional and robust methods indicate significant results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4.">Fractional Anisotropy and Reading Ability</head><p>The next illustrations are based on data dealing with reading skills and structural brain development <ref type="bibr" target="#b20">(Houston et al., 2014)</ref>. The general goal was to investigate maturational volume changes in brain reading regions and their association with performance on reading measures. The statistical methods used were not made explicit. Presumably they were least-squares regression or Pearson's correlation coupled with the usual Student's t-tests. The ages of the participants ranged between 6 and 16. After eliminating missing values, the sample size is n = 53. (It is unclear how Houston and colleagues dealt with missing values.)</p><p>As previously indicated, when dealing with regression, it is prudent to begin with a smoother as a partial check on whether assuming a straight regression line appears to be reasonable. Simultaneously, the potential impact of outliers needs to be considered. In exploratory studies, it is suggested that results based on both Cleveland's smoother and the running interval smoother be examined. (Quantile regression smoothers are another option that can be very useful; use the R function qsm.)</p><p>Here we begin by using the R function lplot (Cleveland's smoother) to estimate the regression line when the goal is to estimate the mean of the dependent variable for some given value of an independent variable. Figure <ref type="figure" target="#fig_10">9A</ref> shows the estimated regression line when using age to predict left corticospinal measures. Figure <ref type="figure" target="#fig_10">9B</ref> shows the estimate when a GORT fluency measure of reading ability <ref type="bibr" target="#b48">(Wiederhold &amp; Bryan, 2001</ref>) is taken to be the dependent variable. The shaded areas indicate a 0.95 confidence region that contains the true regression line. In these two situations, assuming a straight regression line seems like a reasonable approximation of the true regression line.</p><p>Figure <ref type="figure" target="#fig_10">9C</ref> shows the estimated regression line for predicting fluency with left corticospinal measures. Note the dip in the regression line. One possibility is that the dip reflects the true regression line, but another explanation is that it is due to outliers among the dependent variable. (The R function outmgv indicates that the upper fluency values are outliers.) Switching to the running interval smoother (via the R function rplot), which uses a 20% trimmed mean to estimate the typical fluency value, the regression line now appears to be quite straight (dashed line). (For more details, see the figshare file mentioned at the beginning of this section.)</p><p>The presence of curvature can depend on which variable is taken to be the independent variable. Figure <ref type="figure" target="#fig_10">9D</ref> illustrates this point by using left corticospinal measures as the dependent variable and fluency as the independent variable, in contrast to Figure <ref type="figure" target="#fig_10">9C</ref>. Note how the line increases and then curves down.</p><p>Using instead the running-interval smoother, where the goal is to estimate the 20% trimmed mean of the dependent variable, now there appears to be a distinct bend approximately at fluency = 70. For fluency &lt;70, the regression line appears to be quite straight,  and the slope was found to be significant (p = .007) based on the R function regci, which uses the robust Theil-Sen estimator by default.</p><p>(It is designed to estimate the median of the dependent variable.) For fluency &gt;70, again the regression line is reasonably straight, but now the slope is negative and does not differ significantly from 0 (p = .27). Moreover, testing the hypothesis that these two slopes are equal (via the R function reg2ci), p = .027, which provides additional evidence that there is curvature. So, a more robust smoother suggests that there is a positive association up to about fluency = 70, after which the association is much weaker and possibly nonexistent.</p><p>A common strategy for dealing with curvature is to include a quadratic term in the regression model. More generally, one might try to straighten a regression by replacing the independent variable X with X a for some suitable choice for a. However, for the situation at hand, the half slope ratio method (e.g., Wilcox, 2022a, section 11.4) does not support this strategy. It currently seems that smoothers provide a more satisfactory approach to dealing with curvature. Now consider the goal of determining whether age or left corticospinal is more important when fluency is the dependent variable. A plot of the regression surface when both independent variables are used to predict fluency suggests that the regression surface is well approximated by a plane. (Details are in the figshare document.) Testing the hypothesis that the two independent variables are equally important via the R function re-gIVcom indicates that age is more important. (This function uses the Theil-Sen estimator by default.) Moreover, the ratio of the strength of the individual associations is 53. Using leastsquares regression instead (via regIVcom but with the argument regfun = ols), again age is more important, and now the ratio of the strength of the individual associations is 9.85.</p><p>Another measure of reading ability that was used is the Woodcock-Johnson (WJ) basic reading skills composite index <ref type="bibr" target="#b59">(Woodcock, McGrew, &amp; Mather, 2001</ref>). Here we consider the extent the GORT (raw) rate score is more important than age when predicting the WJ word attack (raw) score. Pearson's correlation for the word attack score and age is 0.68 (p &lt; .001). The correlation between the GORT rate score and the word attack score is 0.79 (p &lt; .001). Comparing these correlations via the R function twohc4cor, no significant difference is found at the 0.05 level (p = .11). But when both independent variables are entered into the model, and the Theil-Sen regression estimator is again used, a significant result is obtained (p &lt; .001): the GORT rate score is estimated to be more important. In addition, the strength of the association between age and the word attack score is estimated to be close to 0. Using instead leastsquares regression, p = .02 and the correlation between age and WJ word attack score drops to 0.012. Here, both methods indicate that the GORT rate score is more important, with the result based on a robust regression estimator providing more compelling evidence that this is the case. This illustrates a point made earlier that the relative importance of the independent variables can depend on which independent variables are included in the model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">A SUGGESTED GUIDE</head><p>Keeping in mind that no single method is always best, this section suggests some broad guidelines regarding how to compare groups and study associations. This is followed by more precise details for certain special cases. For discrete data, where the number of possible values for the outcome variable is relatively small, also consider a plot of the relative frequencies. The R function splot is one possibility. When comparing two groups consider the R function splotg2. 2) Use a method that allows heteroscedasticity. If the homoscedasticity assumption is true, in general, little is lost when using a heteroscedastic method. But as the degree of heteroscedasticity increases, at some point methods that allow heteroscedasticity can make a practical difference in terms of both Type I errors and power. Put more broadly, avoid methods that use an incorrect estimate of the standard error when groups differ or when dealing with regression and there is an association. These methods include t-tests, ANOVA F tests on means, and the WMW test, as well as conventional methods for making inferences about measures of association and the parameters of the usual linear regression model. 3) Be aware of the limitations of methods based on means: they have a relatively high risk of poor control over the Type I error probability, as well as poor power. Another possible concern is that when dealing with skewed distributions, the mean might be an unsatisfactory summary of the typical response. Results based on means are not necessarily inaccurate, but relative to other methods that might be used, they pose serious practical concerns that are difficult to address. Importantly, when using means, even a significant result can yield a relatively inaccurate and unrevealing sense of how distributions differ, and a non-significant result cannot be used to conclude that distributions do not differ. 4) As a useful alternative to comparisons based on means, consider using a shift function or some other method for comparing multiple quantiles. Also consider more modern measures of effect size. Sometimes these methods can provide a deeper understanding of where and how groups differ that has practical value. There is even the possibility that they may yield</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="26">of 31</head><p>Current Protocols significant results when methods based on means, trimmed means, and medians do not. For discrete data, where the variables have a limited number of possible values, consider the R function binband. 5) When checking for outliers, use a method that avoids masking. This eliminates any method based on the mean and variance. Wilcox (2022a, section 6.4) summarizes methods designed for multivariate data.</p><p>(The R functions outpro and outmgv use methods that perform relatively well.) 6) Be aware that the choice of method can make a substantial difference. For example, non-significant results can become significant when switching from a method based on the mean to a 20% trimmed mean or median. The reverse can happen where methods based on means are significant but robust methods are not. In this latter situation, the reason might be that confidence intervals based on means are highly inaccurate. Resolving whether this is the case is difficult at best based on current technology. Consequently, it is prudent to consider the robust methods outlined in this paper. 7) When dealing with regression or measures of association, use modern methods for checking on the impact of outliers. When using regression estimators, dealing with outliers among the independent variables is straightforward via the R functions mentioned here: set the argument xout = TRUE. As for outliers among the dependent variable, use some robust regression estimator. The Theil-Sen estimator is relatively good, but arguments can be made for using certain extensions and alternative techniques. When there are one or two independent variables, and the sample size is not too small, check the plots returned by smoothers. This can be done with the R functions rplot and lplot. Again, it can be crucial to check the impact of removing outlier among the independent variables by setting the argument xout = TRUE. 8) If the goal is to compare dependent groups based on difference scores and the sample sizes are very small, say ≤10, the following options perform relatively well over a broad range of situations, in terms of controlling the Type I error probability and providing accurate confidence intervals. Each of the methods listed below provides good control over the Type I error probability. Which one has the most power depends on how the groups differ, which of course is not known.</p><p>• Use the sign test via the R function signt.</p><p>If the sample sizes are ≤10 and the goal is to ensure that the Type I error probability is less than the nominal level, set the argument SD = TRUE. Otherwise, the default method performs reasonably well. For multiple groups, use the R function signmcp. • Focus on the median of the difference scores using the R command sintv2(x-y), where × and y are R variables containing the data. For multiple groups, use the R function sintv2mcp. • Focus on a 20% trimmed mean of the difference scores using the command trimcipb(x-y). This method works reasonably well with a sample size of ≥6.</p><p>When dealing with multiple groups, use the R function dtrimpb. • Compare the quantiles of the marginal distributions via the R function lband. 9) If the goal is to compare two independent groups, and the sample sizes are ≤10, here is a list of some methods that perform relatively well in terms of Type I errors:</p><p>• Compare the medians using a percentile bootstrap method via the R function medpb2. If there are multiple groups, use the R function medcmp. • Compare the quantiles via the R function sband. • Test the hypothesis that a randomly sampled observation from the first group is less than a randomly sampled observation from the second using the R function cidv2. For multiple groups, use cidmcp. • Comparing 20% trimmed means via the R function trimpb2 performs reasonably well, but comparing medians via the R function medpb2 is a bit safer in terms of Type I errors. However, trimpb2 might have higher power. For multiple groups, use linconpb. Larger sample sizes provide many more options, particularly when dealing with more than two groups. For example, rather than comparing quantiles via the R function sband, comparing the deciles using the R function qcomhd might have a power advantage. There are multiple ways of viewing interactions in a two-way ANOVA design.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">CONCLUDING REMARKS</head><p>It is not being suggested that methods based on means should be completely abandoned or have no practical value. It is being suggested that complete reliance on conventional methods can result in a relatively uninformative understanding of how groups compare. In addition, they might provide poor control over the Type I error probability and have relatively low power. Similar concerns plague least-squares regression and Pearson's correlation.</p><p>When a method fails to reject, this leaves open the issue of whether a significant result was missed due to the method used. From this perspective, multiple tests can be informative. However, there are two competing issues that need to be considered. The first is that when testing multiple hypotheses, this can increase the probability of one or more Type I errors. Imagine, for example, that all pairs of four groups are to be compared and that all four groups have a standard normal distribution. Further imagine that each pair of groups is compared using Welch's method. The probability of at least one Type I error is approximately 0.21. With five groups, the probability of at least one Type I error is approximately 0.28. The same issue arises when multiple methods are used to compare two groups: the probability of one or more Type I errors will be &gt;0.05, but by how much is difficult to determine exactly due to the dependence among the tests that are performed. Improvements on the Bonferroni method deal with this issue (e.g., <ref type="bibr" target="#b18">Hochberg, 1988;</ref><ref type="bibr" target="#b19">Hommel, 1988)</ref> and are readily implemented via the R function p.adjust. But the more tests that are performed, the more such adjustments come at the cost of lower power. Simultaneously, ignoring multiple perspectives runs the risk of not achieving a deep understanding of how groups compare. Also, as noted in the previous section, if methods based on means are used, it is prudent to check the extent to which robust methods give similar results.</p><p>Another important issue is the implication of modern insights in terms of the massive number of published papers using conventional methods. These insights do not necessarily imply that these results are incorrect. There are conditions where classic methods perform reasonably well. But there is a clear possibility that misleading results were obtained in some situations. One of the main concerns is whether important differences or associations have been missed. Some of the illustrations in <ref type="bibr">Wilcox (2022a, to appear)</ref>, for example, reanalyzed data from studies dealing with regression where the simple act of removing outliers among the independent variable resulted in a non-significant result becoming significant at the 0.05 level. As illustrated here, non-significant results can become sig-nificant when using a more modern method for comparing measures of central tendency. There is also the possibility that a few outliers can result in a large Pearson correlation when in fact there is little or no association among the bulk of the data <ref type="bibr">(Rousselet &amp; Pernet, 2012)</ref>. <ref type="bibr" target="#b51">Wilcox (2017)</ref> mentions one unpublished study where this occurred. The issue is not whether modern robust methods can make a practical difference but, rather, how often incorrect data analysis leads to false positives.</p><p>Finally, there is much more to modern methods beyond the techniques and issues described here <ref type="bibr">(Wilcox, 2022a, to appear)</ref>. Included are additional methods for studying associations as well as substantially better techniques for dealing with ANCOVA. As mentioned in the introduction, there are introductory textbooks that include the basics of modern advances and insights. But the difficult task of modernizing basic training of neuroscientists remains. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>LITERATURE CITED</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Wilcox and Rousselet</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="28">of 31</head><p>Current Protocols</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1</head><label>1</label><figDesc>Figure 1 Sampling distributions for normal and skewed populations. (A) Example of skewed distribution. (B) Distribution of the sample mean under normality (theoretical thin line) and the actual distribution based on a simulation (n = 30). Each sample mean was computed based on 30 observations randomly sampled from the distribution shown in A. (C) and (D) Comparison of the theoretical T distribution with 29 degrees of freedom to distributions of 50,000 T values. The T values were computed from observations sampled from the distribution in A.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>BFigure 3</head><label>3</label><figDesc>Figure 3 Homoscedasticity and heteroscedasticity. (A) Homoscedasticity: the variance of the dependent variable is the same at any age. (B) Heteroscedasticity: the variance of the dependent variable depends on the age of the participants.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 4</head><label>4</label><figDesc>Figure 4Sampling distributions for normal and contaminated normal distributions. (A) Density functions for the standard normal distribution (solid line) and the mixed normal distribution (dashed line). These distributions have an obvious similarity, yet the variances are 1 and 10.9. (B) Distributions of sample means, medians, and 20% trimmed means when sampling from a normal population. (C) Distributions of sample means, medians, and 20% trimmed means when sampling from a mixed normal distribution. In panels B and C, each distribution has 100,000 values, and each of these values was obtained by computing the mean, median, or trimmed mean of 30 randomly generated observations.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 5</head><label>5</label><figDesc>Figure 5 Inferences when sampling from a normal and a contaminated normal distribution. See Figure 2 caption for details.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>26911299, 2023, 3, Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 6</head><label>6</label><figDesc>Figure 6 Data from Mancini et al. (2014). (A) Marginal distributions of thresholds at locations forehead (FH), shoulder (S), forearm (FA), hand (H), back (B), and thigh (T). Individual participants (n = 10) are shown as colored disks and lines. The medians across participants are shown in black. (B) Distributions of all pairwise differences between the conditions shown in A. In each stripchart (1D scatterplot), the black horizontal line marks the median of the differences. (C) Outcomes of different methods, using alpha = 0.05. M(nc) = parametric test on means with no correction for multiple comparisons. The other methods use the Hochberg correction. M, parametric test on means; TM, percentile bootstrap test on 20% trimmed means; MD, percentile bootstrap test on medians. The size of the disks reflects the size of the absolute differences.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 7</head><label>7</label><figDesc>Figure 7Data from<ref type="bibr" target="#b42">Talebi and Baker (2016)</ref>. (A) Cells' response latencies. (B) Cells' response durations. The top row shows estimated distributions of latency and duration measures for three categories: nonOri, expOri, and compOri. The middle and bottom rows show shift functions based on comparisons between the deciles of two groups. The deciles of one reference group are on the x axis; the difference between the deciles of the two groups is on the y axis. The black line is the difference between deciles, plotted as function of the deciles in one group. The grey lines mark the 95% bootstrap confidence interval, which is also highlighted by the grey shaded area. Middle row: Differences between deciles for nonOri versus expOri, plotted as a function of the deciles for nonOri. Bottom row: Differences between deciles for nonOri versus compOri, plotted as a function of the deciles for nonOri.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Figure 9</head><label>9</label><figDesc>Figure 9Data from<ref type="bibr" target="#b20">Houston et al. (2014)</ref>. Nonparametric estimates of the regression lines between age, fluency and left corticospinal measurements. LOESS regression lines are indicated with thick continuous black lines. The grey shaded areas mark 95% confidence bands. In panel C the thick dashed black line illustrates results from the running interval smoother, using the 20% trimmed mean.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table><row><cell>26911299, 2023, 3,</cell></row><row><cell>Current Protocols</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table><row><cell>26911299, 2023, 3,</cell></row><row><cell>Current Protocols</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table><row><cell>26911299, 2023, 3,</cell></row><row><cell>Current Protocols</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head></head><label></label><figDesc>26911299, 2023, 3, Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License Data from Almeida-Suhett et al. (2014). Boxplots for the contralateral (contra) and ipsilateral (ipsi) sides of the basolateral amygdala. Gray disks show individual observations. Black disks show sample means.</figDesc><table><row><cell></cell><cell></cell><cell>Contra</cell><cell>Ipsi</cell></row><row><cell></cell><cell></cell><cell>8000</cell></row><row><cell>number of GAD-67-positive cells</cell><cell>in the basolateral amygdala</cell><cell>3000 4000 5000 6000 7000</cell></row><row><cell></cell><cell></cell><cell>Sham Day 1 Day 7</cell><cell>Sham Day 1 Day 7</cell></row><row><cell></cell><cell></cell><cell cols="2">Conditions</cell></row><row><cell>Figure 8</cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Wilcox and Rousselet 24 of 31</head><label></label><figDesc>Downloaded from https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.719 by University Of Glasgow, Wiley Online Library on [28/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table><row><cell>Left corticospinal</cell><cell>0.46 0.56 0.58 26911299, 2023, 3, 0.44 0.48 0.50 0.52 0.54</cell></row><row><cell></cell><cell>6 7 8 9 10 11 12 13 14 15 16</cell></row><row><cell></cell><cell>Age</cell></row><row><cell></cell><cell>Current Protocols</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head></head><label></label><figDesc>Agresti, A., &amp; Coull, B. A. (1998). Approximate is better than "exact" for interval estimation of binomial proportions. American Statistician, 52, 119-126. doi: 10.2307/2685469 Almeida-Suhett, C. P., Prager, E. M., Pidoplichko, V., Figueiredo, T. H., Marini, A. M., Li, Z., …Braga, M. (2014). Reduced GABAergic inhibition in the basolateral amygdala and the development of anxiety-like behaviors after mild traumatic brain injury. PLoS One, 9, e102627.</figDesc><table /><note><p>doi: 10.1371/journal.pone.0102627 Bessel, F. W. (1818). Fundamenta Astronomiae pro anno MDCCLV deducta ex observationibus viri incomparabilis James Bradley in specula astronomica Grenovicensi per annos 1750-1762 institutis. Königsberg: Friedrich Nicolovius.</p></note></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>The authors of this article thank the authors who shared data used in Section 5.The authors also thank the referees for their many helpful comments.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are openly available in figshare.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUTHOR CONTRIBUTIONS</head><p>Rand R. Wilcox: Conceptualization, formal analysis, methodology, writingoriginal draft; Guillaume A. Rousselet: Conceptualization, methodology, software, writing-original draft.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONFLICT OF INTEREST</head><p>The authors declare no conflict of interest.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License Current Protocols 26911299</title>
+		<idno type="DOI">10.2307/2529724</idno>
+		<idno>doi: 10.2307/2529724</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions" />
+	</analytic>
+	<monogr>
+		<title level="m">See the Terms and Conditions</title>
+		<meeting><address><addrLine>by University Of Glasgow, Wiley Online Library</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley Online Library for rules of use</publisher>
+			<date type="published" when="2023">2023. 2023. 2023. 2023</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="719" to="724" />
+		</imprint>
+		<respStmt>
+			<orgName>University Of Glasgow, Wiley Online Library</orgName>
+		</respStmt>
+	</monogr>
+	<note>See the Terms and Conditions. OA articles are governed by the applicable Creative Commons License Bernhardson, C. (1975). Type I error rates when multiple comparison procedures follow a significant F test of ANOVA</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The Fisher-Pitman permutation test: A non-robust alternative to the normal theory F test when variances are heterogeneous</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Boik</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/00401706.1974.10489158</idno>
+		<idno>doi: 10.1080/00401706. 1974.10489158</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Robustness? British Journal of Mathematical and Statistical Psychology</title>
+		<editor>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Brown</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">A</forename><surname>Forsythe</surname></persName>
+		</editor>
+		<imprint>
+			<date type="published" when="1974">1987. 1978. 1974</date>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="129" to="132" />
+		</imprint>
+	</monogr>
+	<note type="report_type">Technometrics</note>
+	<note>The small sample behavior of some statistics which test the equality of several means</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Nonparametric analysis of longitudinal data in factorial experiments</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Brunner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Domhof</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Langer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2002">2002</date>
+			<publisher>Wiley</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Exact and asymptotically robust permutation tests</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Chung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Romano</surname></persName>
+		</author>
+		<idno type="DOI">10.1214/13-AOS1090</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="484" to="507" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Robust locally weighted regression and smoothing scatterplots</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Cleveland</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01621459.1979.10481038</idno>
+		<imprint>
+			<date type="published" when="1979">1979</date>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="829" to="836" />
+		</imprint>
+	</monogr>
+	<note>Journal of the American Statistical Association</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Ordinal methods for behavioral data analysis</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cliff</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<publisher>Erlbaum</publisher>
+			<pubPlace>Mahwah, NJ</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">How to use the two sample t-test</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A C</forename><surname>Cressie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Whitford</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/bimj.4710280202</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrical Journal</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="131" to="148" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Plotting with confidence: Graphical comparisons of two populations</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Doksum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Sievers</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/63.3.421</idno>
+		<idno>doi: 10</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="421" to="434" />
+			<date type="published" when="1976">1976</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Statistical tests based on transformed data</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Doksum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-W</forename><surname>Wong</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01621459.1983.10477986</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="411" to="417" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">A Monte-Carlo study of asymptotically robust tests for correlation</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">T</forename><surname>Duncan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Layard</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/60.3.551</idno>
+		<idno>doi: 10</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="page" from="551" to="558" />
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The Wilcoxon-Mann-Whitney test under scrutiny</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Fagerland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Leiv Sandvik</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/sim.3561</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics in Medicine</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="1487" to="1497" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Regression and Other Stories</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vehtari</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/9781139161879</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Analytical Methods for Social Research)</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Cambridge University Press</publisher>
+			<pubPlace>Cambridge</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Some myths and legends in quantitative psychology</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Grayson</surname></persName>
+		</author>
+		<idno type="DOI">10.1207/s15328031us0302_3</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Understanding Statistics</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="101" to="134" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Robust statistics</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">R</forename><surname>Hampel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Ronchetti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Rousseeuw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">A</forename><surname>Stahel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A History of mathematical statistics from 1750 to 1930</title>
+		<meeting><address><addrLine>New York; New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley</publisher>
+			<date type="published" when="1986">1986. 1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A new distribution-free quantile estimator</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">E</forename><surname>Harrell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Davis</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/69.3.635</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="page" from="635" to="640" />
+			<date type="published" when="1982">1982</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Heritier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cantoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Copt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M. -P</forename><surname>Victoria-Feser</surname></persName>
+		</author>
+		<title level="m">Robust methods in biostatistics</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley</publisher>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Hettmansperger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Mckean</surname></persName>
+		</author>
+		<title level="m">Robust nonparametric statistical methods</title>
+		<meeting><address><addrLine>Boca Raton, FL</addrLine></address></meeting>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+	<note>nd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Confidence interval based on interpolated order statistics</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">P</forename><surname>Hettmansperger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Sheather</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0167-7152(86)90021-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Statistical Probability Letters</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="75" to="79" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A sharper Bonferroni procedure for multiple tests of significance</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hochberg</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/75.4.800</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="800" to="802" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A stagewise rejective multiple test procedure based on a modified Bonferroni test</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hommel</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/75.2.383</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="383" to="386" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Reading skill and structural brain development</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Houston</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lebel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Katzir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">R</forename><surname>Manis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Sowell</surname></persName>
+		</author>
+		<idno type="DOI">10.1097/WNR.0000000000000121</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neuroreport</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="347" to="352" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ronchetti</surname></persName>
+		</author>
+		<title level="m">Robust statistics</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley</publisher>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+	<note>nd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">ANA_mancini14_data.zip. figshare</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mancini</surname></persName>
+		</author>
+		<ptr target="https://figshare.com/articles/ANA_mancini14_data_zip/3427766" />
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Whole-body mapping of spatial acuity for pain and touch</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mancini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bauleo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Porro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Haggard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Iannetti</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/ana.24179</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Neurology</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="917" to="924" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Maronna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">J</forename><surname>Yohai</surname></persName>
+		</author>
+		<title level="m">Robust statistics: Theory and methods</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley</publisher>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Montgomery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Peck</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vining</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+	<note>Introduction to linear regression analysis (5th</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Part 1: General issues and tail-area-based methods</title>
+		<idno type="DOI">10.1002/sim.2323</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Whitney statistic</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="543" to="557" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Erroneous analyses of interactions in neuroscience: A problem of significance</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nieuwenhuis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">U</forename><surname>Forstmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E. -J</forename><surname>Wagenmakers</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nn.2886</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Neuroscience</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="1105" to="1107" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Comparing measures of location: Some small-sample results when distributions differ in skewness and kurtosis under heterogeneity of variances</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Özdemir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Yildiztepe</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/03610918.2011.636163</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Communications in Statistics-Simulation and Computations</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="407" to="424" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Online Library for rules of use; OA articles are governed by the applicable Creative Commons License positive and power validation using a new open source matlab toolbox</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fpsyg.2012.00606</idno>
+		<idno>doi: 10.3389/fpsyg.2012.00606</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions)onWiley" />
+	</analytic>
+	<monogr>
+		<title level="m">See the Terms and Conditions</title>
+		<imprint>
+			<date type="published" when="2012">2012. 2023</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">606</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>University Of Glasgow, Wiley Online Library</orgName>
+		</respStmt>
+	</monogr>
+	<note>Robust correlation analyses: False Current Protocols 26911299</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Cluster-based computational methods for mass univariate analyses of event-related brain potentials/fields: A simulation study</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Latinus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Nichols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jneumeth.2014.08.003</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Neuroscience Methods</title>
+		<imprint>
+			<biblScope unit="volume">250</biblScope>
+			<biblScope unit="page" from="85" to="93" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Data transformation, Type I error rate and power</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Rasmussen</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/j.2044-8317.1989.tb00910.x</idno>
+	</analytic>
+	<monogr>
+		<title level="j">British Journal of Mathematical and Statistical Psychology</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="203" to="211" />
+			<date type="published" when="1989">1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">On the behavior of randomization tests without a group invariance assumption</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Romano</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01621459.1990.10474928</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="page" from="686" to="692" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">A few simple steps to improve the description of group results in neuroscience</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Rousseeuw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Leroy</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/ejn.13400</idno>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Neuroscience</title>
+		<editor>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Foxe</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Bolam</surname></persName>
+		</editor>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="2647" to="2651" />
+			<date type="published" when="1987">1987. 2016</date>
+			<publisher>Wiley</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Robust regression &amp; outlier detection</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Improving standards in brain-behavior correlation analyses</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fnhum.2012.00119</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers in Human Neuroscience</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">119</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Beyond differences in means: Robust graphical methods to compare two groups in neuroscience</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/ejn.1361013610</idno>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Neuroscience</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="1738" to="1748" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">An introduction to the bootstrap: A versatile method to make inferences by using datadriven simulations</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.31234/osf.io/h8ft7</idno>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">The Percentile Bootstrap: A Primer With Step-by-Step Instructions in R</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Pernet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/2515245920911881</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Methods and Practices in Psychological Science</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A probability-based measure of effect size: Robustness to base rates and other factors</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ruscio</surname></persName>
+		</author>
+		<idno type="DOI">10.1037/1082-989X.13.1.19</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Psychological Methods</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="19" to="30" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Confidence intervals for the probability of superiority effect size measure and the area under a receiver operating characteristic curve</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ruscio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mullen</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/00273171.2012.658329</idno>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>Multivariate Behavioral Research</publisher>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="201" to="223" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">A coverage probability approach to finding an optimal binomial confidence procedure</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schilling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Doi</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/00031305.2014.899274</idno>
+	</analytic>
+	<monogr>
+		<title level="j">American Statistician</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="133" to="145" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<title level="m" type="main">Robust estimation and testing</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">G</forename><surname>Staudte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Sheather</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1990">1990</date>
+			<publisher>Wiley</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Categorically distinct types of receptive fields in early visual cortex</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Talebi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L</forename><surname>Baker</surname><genName>Jr</genName></persName>
+		</author>
+		<idno type="DOI">10.1152/jn.00659.2015</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Neurophysiology</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="2556" to="2576" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A survey of sampling from contaminated normal distributions</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Tukey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Contributions to probability and statistics: Essays in honor of Harold Hotelling</title>
+		<editor>
+			<persName><forename type="first">I</forename><surname>Olkin</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Stanford, CA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Stanford University Press</publisher>
+			<date type="published" when="1960">1960</date>
+			<biblScope unit="page" from="448" to="485" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Less vulnerable confidence and significance procedures for location based on a single sample: Trimming/Winsorization 1</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Tukey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Mclaughlin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sankhya: The Indian Journal of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="331" to="352" />
+			<date type="published" when="1963">1963</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">An agenda for purely confirmatory research</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Wagenmakers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wetzels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Borsboom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Van Der Maas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Kievit</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/1745691612463078</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Perspectives in Psychological Science</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="632" to="638" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Beyond bar and line graphs: Time for a new data presentation paradigm</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Weissgerber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Milic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Winham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">D</forename><surname>Garovic</surname></persName>
+		</author>
+		<idno type="DOI">10.1371/journal.pbio.1002128</idno>
+	</analytic>
+	<monogr>
+		<title level="j">PLOS Biology</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">1002128</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Welch</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1938">1938</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Gray oral reading test</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Wiederhold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename><surname>Bryan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<publisher>ProEd Publishing</publisher>
+			<pubPlace>Austin, TX</pubPlace>
+		</imprint>
+	</monogr>
+	<note>th ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Comparing Pearson correlations: Dealing with heteroscedasticity and non-normality</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/03610910903289151</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Communications in Statistics-Simulation and Computation</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="2220" to="2234" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Comparing two independent groups via a quantile generalization of the Wilcoxon-Mann-Whitney test</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.22237/jmasm/1351742460</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Modern and Applied Statistical Methods</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="296" to="302" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<monogr>
+		<title level="m" type="main">Understanding and applying basic statistical methods using R</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<publisher>Wiley</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Robust regression: An inferential method for determining which independent variables are most important</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/02664763.2016.1268105</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Applied Statistics</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="100" to="111" />
+			<date type="published" when="2018">2018a)</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">An inferential method for determining which of two independent variables is most important when there is curvature</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.22237/jmasm/1525132920</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Modern and Applied Statistical Methods</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">2588</biblScope>
+			<date type="published" when="2018">2018b</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<title level="m">Introduction to robust estimation and hypothesis testing</title>
+		<meeting><address><addrLine>San Diego</addrLine></address></meeting>
+		<imprint>
+			<publisher>Academic Press</publisher>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>th ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Online Library for rules of use; OA articles are governed by the applicable Creative Commons License Wilcox, R. R. (2022c). Two-way ANOVA: Inferences about interactions based on robust measures of effect size</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/bmsp.12244</idno>
+		<idno>doi: 10.1111/bmsp.122</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions)onWiley" />
+	</analytic>
+	<monogr>
+		<title level="m">One-way and twoway ANOVA: Inferences about a robust, heteroscedastic measure of effect size. Methodology</title>
+		<imprint>
+			<date type="published" when="2022">2022b. 2023</date>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="46" to="58" />
+		</imprint>
+	</monogr>
+	<note>Wiley Online Library</note>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<title level="m">Two-way ANOVA: Inferences</title>
+		<imprint/>
+	</monogr>
+	<note>in press</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<title level="m" type="main">An updated guide to robust statistical meth-ods in neuroscience: Reproducibility package. figshare. Online resource</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Wilcox</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rousselet</surname></persName>
+		</author>
+		<idno type="DOI">10.6084/m9.figshare.21750614</idno>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Permutation inference for the general linear model</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Winkler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">R</forename><surname>Ridgwaym</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Webster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Nichols</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.neuroimage.2014.01.060</idno>
+	</analytic>
+	<monogr>
+		<title level="j">NeuroImage</title>
+		<imprint>
+			<biblScope unit="volume">92</biblScope>
+			<biblScope unit="page" from="381" to="397" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">The two sample trimmed t for unequal population variances</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Woodcock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>Mcgrew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mather</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Yuen</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/biomet/61.1.165</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrika</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="165" to="170" />
+			<date type="published" when="1974">2001. 1974</date>
+			<publisher>Riverside Publishing</publisher>
+			<pubPlace>Rolling Meadows, IL</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Woodcock Johnson-III tests of achievement</note>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">by University Of Glasgow</title>
+		<idno type="DOI">10.1002/cpz1.719</idno>
+		<idno>28/03/2023</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions" />
+	</analytic>
+	<monogr>
+		<title level="m">See the Terms and Conditions</title>
+		<imprint>
+			<publisher>on Wiley Online Library for rules of use</publisher>
+			<date type="published" when="2023">2023</date>
+			<biblScope unit="volume">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>Current Protocols 26911299. OA articles are governed by the applicable Creative Commons License</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

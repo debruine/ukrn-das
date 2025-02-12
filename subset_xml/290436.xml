@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Hiding images in noise</title>
+				<funder ref="#_umzsT44 #_mfu5R9U #_FmqM88p">
+					<orgName type="full">Engineering and Physical Sciences Research Council</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-01-30">30 Jan 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Steven</forename><surname>Johnson</surname></persName>
+							<email>steven.johnson@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Physics and Astronomy</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Alex</forename><surname>Mcmill</surname></persName>
+							<idno type="ORCID">0000-0001-6643-0618</idno>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="laboratory">Quantum Engineering Technology Labs, H. H. Wills Physics Laboratory</orgName>
+								<orgName type="institution">University of Bristol</orgName>
+								<address>
+									<postCode>BS8 1FD</postCode>
+									<settlement>Bristol</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Stefan</forename><surname>Frick</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Institut für Experimentalphysik</orgName>
+								<orgName type="institution">Universität Innsbruck</orgName>
+								<address>
+									<addrLine>Technikerstraße 25</addrLine>
+									<postCode>6020</postCode>
+									<settlement>Innsbruck</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">John</forename><surname>Rarity</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="laboratory">Quantum Engineering Technology Labs, H. H. Wills Physics Laboratory</orgName>
+								<orgName type="institution">University of Bristol</orgName>
+								<address>
+									<postCode>BS8 1FD</postCode>
+									<settlement>Bristol</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Miles</forename><surname>Padgett</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Physics and Astronomy</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Hiding images in noise</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-01-30">30 Jan 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">FE4936F3B00022526FD829949B1E7CE0</idno>
+					<idno type="DOI">10.1364/OE.480881</idno>
+					<note type="submission">Received 14 Nov 2022; revised 19 Jan 2023; accepted 20 Jan 2023;</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:53+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>A limitation of free-space optical communications is the ease with which the information can be intercepted. This limitation can be overcome by hiding the information within background optical noise. We demonstrate the transfer of images over free-space using a photon-pair source emitting two correlated beams. One of these beams contains image information, to which noise is added, and the other correlated beam is used as a heralding trigger so that the intended recipient can differentiate this image signal from the background noise. The system uses spontaneous parametric down-conversion to create photon-pairs with a wide spectral bandwidth and a gated intensified camera to extract the image from the background noise. The high-dimensionality of the image space means that the information content can be many bits per detected photon, whereas the heralding photon can be restricted to a single spatial-mode within a secure fiber which itself could be protected against interception by traditional low-dimensionality quantum key protocols.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Photon-pair sources, usually based on parametric down-conversion, have been used to enact numerous examples of quantum imaging. These examples use the signal and idlers photons in various combinations to illuminate the object and one or more detectors relying on the correlations between the photons to reveal images that neither the signal nor idler photons can do alone. An early example of this was quantum ghost imaging where the signal photon illuminates the object, the idler photon defines a position within the image that is only being revealed from the coincidence count <ref type="bibr" target="#b0">[1]</ref>. Since signal and idler beams emitted by the down-conversion need not be of the same wavelength, ghost imaging allows the object to be illuminated at one wavelength whilst the image can be recorded on a camera at a more convenient wavelength <ref type="bibr" target="#b1">[2]</ref>. Temporal objects can be recorded via temporal ghost imaging where a temporal object is reconstructed instead of a two-dimensional image by modulating the temporal signal <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b3">4]</ref>. Another example technique is quantum illumination, where the signal illuminates the object but the position of both signal and idler photon is recorded, the correlation of the two measurements reveals an image which is insensitive to both background light and detector noise <ref type="bibr" target="#b4">[5]</ref>, this approach has been demonstrated for full-field imaging <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref>.</p><p>A more recent development has built upon two-path interferometry where an object inserted into one arm of the interferometer is observable in both interference patterns which emerge. In a quantum non-linear interferometer, the beam splitters are replaced with down-conversion crystals so that the two arms of the interferometer and its two outputs have different wavelengths. An object can be inserted into one arm, illuminated at one of the two wavelengths, and the resulting interference pattern can be recorded at the other -more convenient -wavelength <ref type="bibr" target="#b9">[10]</ref>. There have been a number of experiments without imaging where correlated photons have been used to improve the capabilities of sensing systems <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b11">12]</ref>. Photon correlation has been shown within spectroscopy to enable photon counting signals to be measured <ref type="bibr" target="#b12">[13]</ref>. Correlation has also been used for temporal heralding within photon counting system for single-pixel imaging <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b14">15]</ref>. One method concealing spatial images is within speckle, it has been shown that speckle can be used to transmit information in a hidden way that is not observable to an eavesdropper <ref type="bibr" target="#b15">[16]</ref>.</p><p>These various techniques are possible because the down-converted signal and idler photons are correlated in the position, transverse momentum, generation time, energy, phase and (depending upon configuration) polarisation. Early work on single photon communication systems also showed that operation in high backgrounds could be achieved using correlations to gate each photon <ref type="bibr" target="#b16">[17]</ref> and in recent year this has been key to reducing the background induced error rates in quantum secured key distribution systems <ref type="bibr" target="#b17">[18]</ref>. This proposal moves towards a principle of multi-channel distribution of a secure key <ref type="bibr" target="#b18">[19]</ref>.</p><p>In this work rather than being motivated by developing a new type of imaging system, we are using the temporal correlation of the signal and idler photons to recover a transmitted image that has been hidden within a background of optical noise. We use the signal photons to illuminate an object at the transmitter and then relay this image to a time-gated camera in the receiver. The heralding idler photons are routed separately to the camera, their detection being used as a trigger to the camera to record the position of the signal photon and distinguish this time-correlated photon from any background noise. Indeed, we deliberately add optical background noise to the signal photons so that any potential eavesdropper, without access to the time-correlated herald, cannot identify the image-carrying photons from those noise photons within a given time period. This conditional covertness enables the image to be concealed within the time for which the image is transmitted. The high-dimensionality of the image space means that the information content can be many bits per detected photon, whereas the heralding photon can be confined to a single spatial-mode within a secure heralding fiber. Although this heralding fiber could itself be eavesdropped and used to trigger an intercept camera it would also be possible to secure this link by traditional quantum key distribution techniques, using the timing information within a lower dimensional secure link to secure the high dimensional image data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methodology</head><p>To hide an image within noise the transmitted photons must be indistinguishable from the background of optical noise. The photons are required to have a wide spectral bandwidth, such that spectral filtering cannot distinguish them; and be produced at random intervals, to ensure a temporal signal cannot be detected. A way to produce individual photon-photons with these characteristics is via spontaneous parametric down-conversion (SPDC).</p><p>Our source was based upon a laser diode pumping a ppKTP type-II non-linear crystal with a total length of 20 mm, with a chirped periodic structure providing gain over a broad spectral bandwidth of down-converted photons. Pumped with a 405 nm continuous wave (50 mW) laser, the non-linear crystal generated correlated signal and idler photons in the range of 700 nm to 950 nm <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b20">21]</ref>. The down-converted photons had orthogonal polarisation and are separated from each other using a polarising beam splitter. The 405 nm light was filtered out with a long-wave optical pass filter and the correlated photons were coupled into separate single mode optical fibers (SMF). An experimental schematic is shown in Fig. <ref type="figure">1</ref>. Within our system the heralding efficiency was defined as the number of correlated photons measured as a percentage of the total number of photons measured. When the fibers were directly connected to the detectors, the heralding efficiency was found to be 15% when measured with silicon SPAD detectors.</p><p>To transmit the image, one photon of the down-converted pair acted as the heralding photon and was coupled to a SMF (1 m) connected to a single-photon avalanche diode (SPAD) photoncounting module (Excelitas SPCM-AQRH). The other photon of the pair was coupled to a longer The diode laser and ppKTP crystal form the correlated photon source, which produces pairs of temporally correlated photons are separated by a polarising beam splitter (PBS). One of the photons enters a short optical fiber to trigger a single-photon avalanche diode (SPAD) that triggers the gated intensified camera. The other photon enters a delay line and is then incident on a DMD displaying an image that is imaged on to the camera, the digital delay within the camera is set such that the temporally correlated photon is captured during the activation of the gated intensified camera. SMF (50 m) forming a delay line, light from which was collimated and relayed to illuminate a digital micro-mirror device (DMD) acting as a programmable mask to generate the image to be transmitted. The image shown on the DMD is imaged via a pair of lenses on to the camera sensor. The camera used was an Andor iStar 334T fast gated intensified CCD, it has a programmable trigger delay, which when combined with the previously mentioned fiber delay line, was adjusted such that the gate was open for the arrival of the photon containing the image information. In principle each triggered the camera to record the position of the corresponding image photon and an image was accumulated over many such single-photon events. The maximum gate rate of the camera is ≈ 200 kHz, and the detector array was read as a single frame at 1 Hz, with the required number of these frames been summed to give an image containing the desired number of total photon events. In this system the image transmitter and the receiver system were separated by 2 metres.</p><p>A background of optical noise was produced with a broadband LED used to illuminate the camera with light of a similar spectral characteristics (600 nm-1050 nm) as the down-converted photons. The LED was controlled with a National Instruments USB-6361 multi-function I/O device, calibrated to give a known level of background light by changing the voltage applied to the LED. The calibration was performed by reducing the camera exposure time and performing a photon counting operation to enable the individual photons arriving within the frame to be spatially resolved.</p><p>To quantify extent to which images could be deliberately hidden in the noise the camera was operated in two modes: firstly, a non-heralding mode where for each image the gating voltage was high for a duration of 1 second to capture all photons incident on the camera, and secondly the heralding mode where an arriving signal from the SPAD triggered the camera gate for 10 ns, this occurred repeatedly before the images was read out. In this heralding mode the camera integrates over many single-photon event on the detector chip. Note that due to the random distribution of generated photon-pairs in time and the dead-time of the SPAD, some coincidence detection events are missed when multiple pair generation events occur in a narrow time window such that photons arrive at the detectors during the dead time.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Results</head><p>The image accumulation was repeated using both heralded and non-heralded modes of operation for a range of background light levels between zero photons-per-pixel and 38 photons-per-pixel, the results are presented in Fig. <ref type="figure" target="#fig_1">2</ref>. The presented images were acquired over a total of 50 acquisitions of 1 second with all the frames summed together. The background level was measured by removing the correlated photon source and reducing the camera acquisition time until individual photons could be resolved. The images acquired from the camera used a region of interest with size 55 × 60 pixels. The photon source was measured by the SPAD to produce photons at a rate of 5 × 10 5 photon/s, as measured by the SPAD. For the heralding mode the camera measured 1.27 photon/s in the image area when in darkness, while with the photon source active and the DMD configured to relay all incident light from the source to camera, 105 photon/s were measured by the camera. This reduction in photon number from the SPDC source and the camera is due to the loss within the optical system, the coupling light into fiber, the quantum efficiency of the SPAD (∼ 50%) and the quantum efficiency of the gated intensified camera (∼ 10%). When projecting an image using a mask the number of photons is reduced depending on the fill-factor of the mask. In the non-heralding mode, the number of photons arriving from the photon source was measured as approximately 6000 photon/s.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Non-heralded images</head><p>The system was adjusted to increase the beam size to approximately 100 pixels diameter on the camera, with a region of interest of 120 × 120 pixels. The measurement time was increased to 100 seconds due to the larger area and therefore lower photon density. The mask was changed on the DMD and recorded on the camera with a measurement time of 100 seconds, the background level was 38 photon/pixel/s. The images captured for different images shown on the DMD are shown in Fig. <ref type="figure" target="#fig_2">3</ref>. Without heralding an eavesdropper would be unable to measure the image within the same time period as the receiver due to the additional background illumination.</p><p>Optical hiding conventionally relies on cryptography to encode a hidden image within a visible image <ref type="bibr" target="#b21">[22]</ref>, within these systems there exists an encryption that enables redundancy in the image that allows for a robust reconstruction of the hidden image if a section of the visible image were blocked, however these systems respond poorly to high levels of noise within the measurement for reconstruction <ref type="bibr" target="#b22">[23]</ref>. Within our system the image is not encrypted but hidden within noise with a significantly higher signal-to-noise ratio than the cryptographic systems. For brighter photons sources there would be a reduction in the heralding efficiency due to the increase in the likelihood of measuring an accidental coincidence. However, for this measurement the limitation on the timing correlation originates from the camera temporal resolution. Faster detectors could allow better timing discrimination of the paired photons from background, and consequently improved rejection of noise and higher signal-to-noise.</p><p>Beyond the ability to securely transmit images, it is worth considering the information content of these images, which due to their many-pixel nature potentially offers an information rich approach of many bits per photon. In the extreme case, an image comprising P pixels but only a single-photon has an information content given by log(2P) bits per photon. Increasing the number of photons in a single image increases the information content, N photons giving an information content of N log(2P/N!) bits per photon. Hence, we note that the information content is maximised by having N single-photon images rather than a single image of N photons.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Conclusion</head><p>We have demonstrated that images produced from a correlated photon-pair source can be hidden within a background of optical noise. In choosing a carefully designed source with random temporal emission of photon-pairs with a wide spectral bandwidth, the image photons cannot be differentiated from the background via any temporal or wavelength filtering. The images can be recovered from the noise by using a gated camera triggered using the time-correlated photon. This transmission of images can be used for the covert communication of information in a secure way, where the information content is limited by the ability to discern photons on the camera. However, this method has shown that the image reconstruction can be performed in 60 seconds with current technology. The experimental demonstration is performed within the confines of the laboratory, but the length scales could be significantly extended. For a practical transmission the receiver would require the camera and a secure method implemented to transmit the heralding photons. As with any transmission system there would be loss and aberration due to turbulence and other environmental effects. Wavefront correction would need to be implemented, for a broadband source this would be a more complex problem than correction for a single wavelength.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>Fig.1. The diode laser and ppKTP crystal form the correlated photon source, which produces pairs of temporally correlated photons are separated by a polarising beam splitter (PBS). One of the photons enters a short optical fiber to trigger a single-photon avalanche diode (SPAD) that triggers the gated intensified camera. The other photon enters a delay line and is then incident on a DMD displaying an image that is imaged on to the camera, the digital delay within the camera is set such that the temporally correlated photon is captured during the activation of the gated intensified camera.</figDesc><graphic coords="3,126.75,93.61,358.27,122.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. The non-heralded and heralded images measured with a gated intensified camera. The measurements shown are for 50 seconds of acquisition, shown for a range of background levels where the LED voltage has been adjusted to change the background optical noise. The signal-to-noise has been calculated for each image comparing the standard deviation of the noise and the signal magnitude at the centre of the image.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. The non-heralded and non-heralded results measured with a gated intensified camera. The measurements shown are for 100 seconds of acquisition. The mask was changed after 100 seconds, demonstrating the ability to dynamically change the transmitted image, and for the image to be concealed within the background optical noise.</figDesc><graphic coords="5,363.57,222.70,51.67,51.64" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><p>Funding. <rs type="funder">Engineering and Physical Sciences Research Council</rs> (<rs type="grantNumber">EP/L015730/1</rs>, <rs type="grantNumber">EP/S026444/1</rs>, <rs type="grantNumber">EP/T00097X/1</rs>).</p></div>
+<div><head>Disclosures.</head><p>The authors declare no conflicts of interest.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_umzsT44">
+					<idno type="grant-number">EP/L015730/1</idno>
+				</org>
+				<org type="funding" xml:id="_mfu5R9U">
+					<idno type="grant-number">EP/S026444/1</idno>
+				</org>
+				<org type="funding" xml:id="_FmqM88p">
+					<idno type="grant-number">EP/T00097X/1</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data availability. Data underlying the results presented in this paper are available in <ref type="bibr" target="#b23">[24]</ref>.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Also, due to the nature of the quantum source, photon counting detectors would be required and therefore limit possible transmission rates.</p><p>The ability to hide images could be further enhanced by the applying a non-uniform and temporally varying background illumination, where this pattern noise could have a larger contribution to the effect of hiding the spatial image. the throughput of images is ultimately restricted by technological issues such as the quantum efficiency of the camera, limitation of the gating time and the dead-time of the heralding detector.</p><p>Although offering a technical level security to the transmission of images we acknowledge that, in principle, the heralding photon itself could be intercepted, used to trigger an eavesdropper's camera and then both the heralding and image photons could be re-transmitted to the intended receiver. As such the image link is no longer secure. However, we note that this flaw could be addressed by applying a standard quantum key distribution protocol to the heralding channel, where the photons could be polarisation encoded in the transmitter and decoded in the receiver whilst randomising the generation and measurement bases. Any attempt to intercept and retransmit these heralding photons would be revealed by examining the anticipated correlation in the transmitted and measured states.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Optical imaging by means of two-photon quantum entanglement</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Pittman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Shih</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Strekalov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Sergienko</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevA.52.R3429</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. A</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="3429" to="R3432" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Photon-sparse microscopy: visible light imaging using infrared illumination</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Aspden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Gemmell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Morris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Tasca</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mertens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Tanner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Kirkwood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ruggeri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Buller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Hadfield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OPTICA.2.001049</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Optica</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1049" to="1052" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Ghost imaging in the time domain</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ryczkowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Barbier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Friberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Dudley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Genty</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nphoton.2015.274</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Photonics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="167" to="170" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Temporal ghost imaging with twin photons</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Denis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Devaux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Lantz</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/2040-8986/aa587b</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Opt</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">34002</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Enhanced sensitivity of photodetection via quantum illumination</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lloyd</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.1160627</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">321</biblScope>
+			<biblScope unit="issue">5895</biblScope>
+			<biblScope unit="page" from="1463" to="1465" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Demonstrating an absolute quantum advantage in direct absorption measurement</title>
+		<author>
+			<persName><forename type="first">P.-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sabines-Chesterking</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Whittaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Joshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Birchall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcmillan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Rarity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C F</forename><surname>Matthews</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41598-017-06545-w</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">6256</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Imaging with quantum states of light</title>
+		<author>
+			<persName><forename type="first">P.-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Toninelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gregory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s42254-019-0056-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Phys</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="367" to="380" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Imaging through noise with quantum illumination</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gregory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Toninelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/sciadv.aay2652</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Adv</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Full-field quantum imaging with a single-photon avalanche diode camera</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Defienne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Charbon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Faccio</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevA.103.042608</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. A</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">42608</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Quantum imaging with undetected photons</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Lemos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Borish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Cole</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ramelow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lapkiewicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zeilinger</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nature13586</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">512</biblScope>
+			<biblScope unit="issue">7515</biblScope>
+			<biblScope unit="page" from="409" to="412" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Experimental demonstration of single photon rangefinding using parametric downconversion</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Rarity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Tapster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Seward</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/AO.29.002939</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Opt</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="2939" to="2943" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Special topic: Quantum sensing with correlated light sources</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chekhova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C F</forename><surname>Matthews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Rarity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">F</forename><surname>Oulton</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/5.0041043</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">60401</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Biphoton spectroscopy of YAG:Er 3+ crystal</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Kalachev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Kalashnikov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Kalinkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Mitrofanova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Shkalikov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">V</forename><surname>Samartsev</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/lapl.200710061</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Laser Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="722" to="725" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Heralded single-pixel imaging with high loss-resistance and noise-robustness</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jeong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S.-Y</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Ihn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Jo</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/5.0078973</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">119</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page">244002</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Single-pixel imaging with heralded single photons</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcmillan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Torre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rarity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Padgett</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OPTCON.458248</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Continuum</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="826" to="833" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Demonstration of ghost communication with an encrypted speckle</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Huang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.optlastec.2022.107926</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Laser Technol</title>
+		<imprint>
+			<biblScope unit="volume">149</biblScope>
+			<biblScope unit="page">107926</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Daylight demonstration of low-light-level communication system using correlated photon pairs</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">F</forename><surname>Seward</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Tapster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Rarity</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/0954-8998/3/4/002</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Quantum Opt</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="201" to="207" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Advances in quantum cryptography</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pirandola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">L</forename><surname>Andersen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Banchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Berta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bunandar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Colbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Englund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gehring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lupo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ottaviani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Pereira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Razavi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Shaari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tomamichel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">C</forename><surname>Usenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Vallone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Villoresi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wallden</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/AOP.361502</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Adv. Opt. Photonics</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1012" to="1236" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Ultrafast quantum key distribution using fully parallelized quantum channels</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Terhaar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rödiger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Häußler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wahl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gehring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Wolff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Beutel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Hartmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Walter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hanke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hanne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Walenta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Diedrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Perlot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tillmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Röhlicke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ahangarianabhari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Schuck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H P</forename><surname>Pernice</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.469053</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="2675" to="2688" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Quantum rangefinding</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcmillan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rarity</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.399902</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">25</biblScope>
+			<biblScope unit="page" from="37118" to="37128" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Quantum rangefinding</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frick</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Bristol</orgName>
+		</respStmt>
+	</monogr>
+	<note>Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Review on optical image hiding and watermarking techniques</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.optlastec.2018.08.011</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Laser Technol</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="370" to="380" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Optical hiding with visual cryptography</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/2040-8986/aa895e</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Opt</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">115703</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Hiding images in noise: Experimental data and analysis code</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcmillan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Torre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rarity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Padgett</surname></persName>
+		</author>
+		<idno type="DOI">10.5525/gla.researchdata.1362</idno>
+		<ptr target="http://dx.doi.org/10.5525/gla.researchdata.1362" />
+	</analytic>
+	<monogr>
+		<title level="m">Enlighten: Research Data (2022)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

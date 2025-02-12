@@ -1,0 +1,1842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Improving the Efficiency of Renewable Energy Assets by Optimizing the Matching of Supply and Demand Using a Smart Battery Scheduling Algorithm</title>
+				<funder ref="#_Ac8s8vT">
+					<orgName type="full">UK Engineering and Physical Science Research Council through DecarbonISation PAThways for Cooling and Heating (DISPATCH)</orgName>
+				</funder>
+				<funder ref="#_PQMCc9d">
+					<orgName type="full">European Union Horizon2020 Marie Skłodowska-Curie Actions</orgName>
+					<orgName type="abbreviated">MSCA</orgName>
+				</funder>
+				<funder ref="#_xwChwzn">
+					<orgName type="full">Innovate UK Knowledge Transfer Partnerships</orgName>
+					<orgName type="abbreviated">KTP</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-03-03">3 March 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><roleName>Dionysia (Denia</roleName><forename type="first">Mirko</forename><surname>Morini</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Yukun</forename><surname>Kolokotsa</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Erik</forename><surname>Hu</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Esko</forename><surname>Dahlquist</surname></persName>
+						</author>
+						<author>
+							<persName><surname>Juuso</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Philippe</forename><surname>De Bekker</surname></persName>
+							<idno type="ORCID">0000-0002-3722-5428</idno>
+							<affiliation key="aff1">
+								<orgName type="department">Faculty of Electrical Engineering, Mathematics and Computer Science (EEMCS)</orgName>
+								<orgName type="institution">Delft University of Technology</orgName>
+								<address>
+									<addrLine>Mekelweg 4</addrLine>
+									<postCode>2628 CD</postCode>
+									<settlement>Delft</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sho</forename><surname>Cremers</surname></persName>
+							<idno type="ORCID">0000-0002-0765-4723</idno>
+							<affiliation key="aff1">
+								<orgName type="department">Faculty of Electrical Engineering, Mathematics and Computer Science (EEMCS)</orgName>
+								<orgName type="institution">Delft University of Technology</orgName>
+								<address>
+									<addrLine>Mekelweg 4</addrLine>
+									<postCode>2628 CD</postCode>
+									<settlement>Delft</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">National Centre for Mathematics and Computer Science</orgName>
+								<orgName type="laboratory">CWI</orgName>
+								<address>
+									<addrLine>Science Park 123</addrLine>
+									<postCode>1098 XG</postCode>
+									<settlement>Amsterdam</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sonam</forename><surname>Norbu</surname></persName>
+							<idno type="ORCID">0000-0002-2030-1551</idno>
+							<affiliation key="aff3">
+								<orgName type="department" key="dep1">Energy and Sustainability Group</orgName>
+								<orgName type="department" key="dep2">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><surname>Flynn</surname></persName>
+							<idno type="ORCID">0000-0002-1024-3618</idno>
+							<affiliation key="aff3">
+								<orgName type="department" key="dep1">Energy and Sustainability Group</orgName>
+								<orgName type="department" key="dep2">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Valentin</forename><surname>Robu</surname></persName>
+							<idno type="ORCID">0000-0002-9280-2072</idno>
+							<affiliation key="aff1">
+								<orgName type="department">Faculty of Electrical Engineering, Mathematics and Computer Science (EEMCS)</orgName>
+								<orgName type="institution">Delft University of Technology</orgName>
+								<address>
+									<addrLine>Mekelweg 4</addrLine>
+									<postCode>2628 CD</postCode>
+									<settlement>Delft</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">National Centre for Mathematics and Computer Science</orgName>
+								<orgName type="laboratory">CWI</orgName>
+								<address>
+									<addrLine>Science Park 123</addrLine>
+									<postCode>1098 XG</postCode>
+									<settlement>Amsterdam</settlement>
+									<country key="NL">The Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<address>
+									<postCode>2425</postCode>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Improving the Efficiency of Renewable Energy Assets by Optimizing the Matching of Supply and Demand Using a Smart Battery Scheduling Algorithm</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-03-03">3 March 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">AC319554CF34267D5852FA9893043ADF</idno>
+					<idno type="DOI">10.3390/en16052425</idno>
+					<note type="submission">Received: 25 December 2022 Revised: 25 February 2023 Accepted: 27 February 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:57+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>de Bekker, P.</term>
+					<term>Cremers, S.</term>
+					<term>Norbu, S.</term>
+					<term>Flynn, D.</term>
+					<term>Robu, V battery control model</term>
+					<term>battery scheduling algorithm</term>
+					<term>energy management system</term>
+					<term>microgrid control method</term>
+					<term>renewable energy</term>
+					<term>forecasting</term>
+					<term>smart grid management</term>
+					<term>battery energy storage system</term>
+					<term>time-of-use tariff</term>
+					<term>state of charge</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Improving the Efficiency of Renewable Energy Assets by Optimizing the Matching of Supply and Demand Using a Smart Battery Scheduling Algorithm. Energies 2023,</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The renewable energy market is growing at a rapid pace and its development is fundamental for reaching global climate targets <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr">[3]</ref><ref type="bibr">[4]</ref>. Yet, advancement is not solely made by investments and expansion of renewable energy generation capacity, but also by thoroughly understanding existing energy needs in order to optimize efficiency and ultimately reduce the carbon intensity of generation and gain benefits for prosumers (small-scale consumer with microgeneration and/or storage) <ref type="bibr" target="#b3">[5,</ref><ref type="bibr" target="#b4">6]</ref>. In order to achieve this, it is vital to understand current and future energy needs, which is a challenging task due to increasing uncertainties in supply and demand from new loads (e.g., electric vehicles <ref type="bibr" target="#b5">[7,</ref><ref type="bibr" target="#b6">8]</ref>) and intermittent generations from renewable sources. Prosumer energy needs, together with the growing use of dynamic energy tariffs by utility providers, have underpinned the critical importance of battery storage technologies coupled with agile and accurate forecasting algorithms for efficient scheduling.</p><p>Furthermore, whether within mature energy markets or developing energy communities, the role of consumers and prosumers is of increasing importance due to several factors, across social, economic, and environmental metrics. Due to fuel poverty and the criticality of energy access, there is a need to improve accessibility to energy services. Economically, citizens are exposed to geopolitical influences on energy costs <ref type="bibr" target="#b7">[9]</ref>, amplifying fuel poverty and underpinning economic inflation. Environmentally, 73.2% of the global carbon emission in 2016 was by the energy sector, including the use of energy in buildings, industries, and transport. Moreover, the generation of electricity and heating in residential and commercial buildings made up 17.5% of global carbon emissions <ref type="bibr" target="#b8">[10]</ref>. Therefore, it is necessary to accelerate the local generation and storage of renewable energy.</p><p>Considering a household or a community with either individual or shared renewable energy assets, e.g., solar panels or wind turbines and battery storage, a battery scheduling algorithm should handle the matching of demand and supply of energy efficiently, i.e., maximizing renewable energy usage and minimizing energy imports (and costs) from the central grid. Besides this battery scheduling problem, there are many potential key factors in the setup of the renewable energy assets, e.g., battery type or size and individual versus shared assets, that play a role in the overall efficiency and profit gained by a battery scheduling algorithm <ref type="bibr" target="#b9">[11]</ref><ref type="bibr">[12]</ref><ref type="bibr" target="#b11">[13]</ref>.</p><p>As forecasting techniques continuously evolve and the solution space for efficiently managing energy using battery scheduling algorithms remains suboptimally covered <ref type="bibr" target="#b12">[14,</ref><ref type="bibr" target="#b13">15]</ref>, this paper studies and defines an efficient heuristic battery scheduling algorithm that can be coupled to any forecasting technique to maximize the prosumer profit. Ultimately, exploiting future knowledge should optimize the matching of supply and demand and lead towards improving the efficiency of renewable energy assets.</p><p>The particular model of the energy management system that will be considered consists of the following components:</p><p>• Solar photovoltaic(s) or wind turbine(s) encapsulated as generated power; • Battery energy storage system (BESS) of a community or household; • Household or community represented as prosumer demand; • Central grid attachment via some dynamic energy plan.</p><p>Prosumer demand can be covered by power from local renewable generation, discharging the battery or importing energy from the grid. The battery can export energy to the grid and charge via locally generated power and, moreover, excess generated power can also be sold directly to the grid. Note that, in this work, we focus on using the battery to integrate local renewable generation, not price arbitrage with the grid; hence, experimenting with charging via imports from the grid is left to future work.</p><p>The outline of this paper is as follows: Section 2 covers related work that allows the proposed smart battery scheduling algorithm to be compared and reviews the feasibility of forecasting techniques being able to deliver. Section 3 explores and defines the heuristics of the proposed smart battery scheduling algorithm. Using the materials and methods presented in Section 4, an assessment of the proposed smart battery scheduling algorithm by conducting various experiments will be demonstrated in Section 5 and debated in Section 6. Finally, Section 7 presents the conclusions and highlights future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Related Work</head><p>To be able to compare the heuristic approach of the smart battery scheduling algorithm and assess the feasibility of the forecasting techniques being able to deliver, several related research efforts are discussed in this section.</p><p>Facing the financially driven challenge of managing energy in certain battery systems has resulted in the evolution of many different techniques to achieve performance. There are two main types of approaches to battery scheduling algorithms proposed in the prior literature: optimization-based and heuristic-based.</p><p>Linear programming (LP) has been extensively studied for the battery scheduling problem. Torres et al. <ref type="bibr" target="#b14">[16]</ref> consider the optimal energy scheduling of photovoltaic (PV) and conventional energy generations in addition to a battery, and linear programming is applied to optimize the operational cost. Luna et al. <ref type="bibr" target="#b15">[17]</ref> and Elkazaz et al. <ref type="bibr" target="#b16">[18]</ref> formulate the optimal day-ahead energy scheduling of a microgrid with renewable energy sources and a battery as a mixed-integer linear programming (MILP). Similarly, Nguyen et al. <ref type="bibr" target="#b17">[19]</ref> use MILP to minimize the day-ahead operational cost of a multi-microgrid system with a demand response program. Furthermore, Couraud et al. <ref type="bibr" target="#b18">[20]</ref> also study residential battery scheduling using MILP, considering operational cost as well as battery depreciation cost. Given perfect data (i.e., perfect forecasts with no uncertainty), LP approaches can be used to determine the optimal schedule, however, they require a wide lookahead window, suffer from high computational complexity, and often assume accurate knowledge of future generation and demand. There do exist some robust optimization methods under uncertainty: for example, Zhang et al. <ref type="bibr" target="#b19">[21]</ref> consider PV output uncertainty in the energy scheduling of a multi-microgrid system. However, only fixed tariffs have been considered in their work. Other optimization methods include dynamic programming <ref type="bibr" target="#b20">[22]</ref>, quadratic programming <ref type="bibr" target="#b21">[23,</ref><ref type="bibr" target="#b22">24]</ref>, genetic algorithm <ref type="bibr" target="#b23">[25,</ref><ref type="bibr">26]</ref>, particle swarming [26-29], honey bee mating <ref type="bibr" target="#b28">[30]</ref>, as well as machine learning techniques, most notably reinforcement learning <ref type="bibr" target="#b29">[31]</ref><ref type="bibr" target="#b30">[32]</ref><ref type="bibr" target="#b31">[33]</ref>.</p><p>Though the optimization and scheduling methods have been shown to reduce importing energy as well as the total energy costs, they can be computationally costly and often rely on an accurate forecast of energy generation and demand. Rule-based algorithms are another branch of battery scheduling methods that have the advantage of being highly efficient and adaptive to incoming input (generation, demand). Fitting in this direction, and representing a key starting point for this work is the model of <ref type="bibr">Norbu et al. [34]</ref>, which presented a highly efficient and easily implementable heuristic-based battery scheduling algorithm. The algorithm can be depicted as a concise decision tree that determines whether to interact with the battery, i.e., charge or discharge, or interact with the central grid, i.e., sell or buy energy, based on the current residual power and battery state-see Figure <ref type="figure">1</ref>. The approach performs well; when not considering (forecasted) future data and using static pricing, it delivers solid results. Yet, heuristic-based methods can further benefit from incorporating predicted forecasts. Ouedraogo et al. <ref type="bibr" target="#b33">[35]</ref> show that their proposed rule-based battery scheduling method with predicted forecasting of 6 h ahead using ARMA achieved 94.9% relative performance to the baseline LP method. Given that Section 5 aims to assess the stability of the proposed smart battery scheduling algorithm not by using any actual forecasting technique but by using a range of various uncertainties based on actual data, it is critical to justify the feasibility of various uncertainties by denoting the ability of several techniques (with different complexities) used to forecast certain types of data, as explored below.</p><p>The related body of literature regarding wind predictions is as follows. O'Brien and Ralph <ref type="bibr" target="#b34">[36]</ref> found an error of 25-30% in true wind speeds for forecasts of 30 h by evaluating the performance of a wind-forecasting system that utilised a Numerical Weather Prediction (NWP) model and was operated in a similar environment as the data used in this paper. Forbes and Zampelli <ref type="bibr" target="#b35">[37]</ref> describe the accuracy of wind energy forecasts in the UK and found an energy-weighted RMSE of 32% for forecasting a day ahead. The energy trading market is leading (also in complexity) and can accurately forecast 36 h ahead at high frequencies using ensemble learning as described by Suárez-Cetrulo et al. <ref type="bibr" target="#b36">[38]</ref>, which shows several techniques obtaining a scaled RMSE and scaled mean absolute error of less than 1 × 10 -3 . Another promising long-term prediction model is demonstrated by Torabi et al. <ref type="bibr" target="#b37">[39]</ref>, a cascade neural network that is able to improve one-day-ahead forecasts by 84% and one-week-ahead predictions by 73% based on the RMSE of other already progressive prediction models. Skittides and Früh <ref type="bibr" target="#b38">[40]</ref> propose a wind forecasting tool based on Principal Component Analysis (PCA), which is trained on past data to predict wind speeds using an ensemble of dynamically similar past events, and show good performance in forecasting the wind up to 24 h ahead.</p><p>Forecasting energy consumption based on electricity consumption data provides promising results, presumably due to the nature of repetitive and alike human behaviour causing stable patterns in the data, of 62.5 h ahead with a prediction error of around 10% using the TBATS model (which forecasts time series based on multiple seasonalities) according to Gellert et al. <ref type="bibr" target="#b39">[41]</ref>. The combination of weather and load prediction alone can already decrease operation costs substantially using a hybrid machine learning strategy of Faraji et al. <ref type="bibr" target="#b40">[42]</ref>: a multilayer perceptron (MLP) artificial neural network (ANN), adaptive neuro-fuzzy inference system (ANFIS), and radial basis function (RBF) ANN.</p><p>While tariffs are often known for various types of contracts, some agile contracts or energy markets call for predicting electricity prices as future tariffs remain unknown. The energy trading sector has led to the proper development of forecasting tools in this area, even though a decade review by <ref type="bibr">Lu et al. [43]</ref> shows the serious challenge of predicting electricity prices due to many variables: economic factors, trade factors such as cross-border energy flow, policy factors, environmental factors, calendar factors such as holidays, and lastly general consumption, production, supply, storage, and capacity play a role in energy prices. Using artificial neural networks, day-ahead predictions with a mean absolute percentage error of 7.8% have been achieved <ref type="bibr" target="#b42">[44]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Heuristics of a Smart Battery Scheduling Algorithm</head><p>In this section, logical actions and properties are defined and translated into the definition of a smart battery scheduling algorithm that possesses the characteristics of the designed optimal behaviour, i.e., optimally manage energy using future knowledge. Following journal requirements, the extensive definitions of mathematical symbols used can be found in the Nomenclature.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Case Analysis</head><p>Before presenting our battery scheduling algorithm, based on the careful analysis and processing of various distinguishing scenarios, some key cases that underpin the battery scheduling algorithm developed in this paper are summarized below. This will form the basis of the algorithmic definition in Section 3.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.1.">Order of Covering Demand</head><p>Demand can be covered by power coming from the grid, generator, or battery. In this case, the order matters for optimal energy management. A solid intuitive approach directly covers demand with ("free") generated power as much as possible. To verify this behaviour, all usage cases for generated power should be examined. If indeed generated power is used first to cover demand, the flow looks as depicted in Figure <ref type="figure">2</ref>.</p><p>If generated power were to be used to charge the battery directly, the flow would be as presented in Figure <ref type="figure" target="#fig_0">3</ref>. Demand remains uncovered, thus, we need to cover it by either using the battery or importing from the grid. The battery is already charging, and by discharging it, it would be more efficient to directly cover demand using generated power. Considering a charging efficiency η c and discharging efficiency η d both in the range of [0, 1], directly covering is optimal as it does not deal with the redundant (dis)charging efficiency factor of η c • η d &lt; 1. Ultimately, this idea is redirected back to the scenario shown in Figure <ref type="figure">2</ref>.  The other option is to charge the battery using generated power while covering the demand using imported energy from the grid. This could be a valuable move, as more expensive future excess demand might be possible (Section 3.1.3 elaborates on this). However, we can still argue that covering the demand using generated power first is as optimal as the aforementioned if we charge the battery using the central grid, see Figure <ref type="figure">4</ref>. By interacting with the battery, (dis)charging inefficiency will have to take place in both scenarios, and the cost of importing energy is the same as an equal amount of energy in any circumstance needs to be imported. Consider an amount of generated power g, an amount of demand d, Method 1 being the first method shown in Figure <ref type="figure">4</ref>, and Method 2 being the second method shown. When the battery cannot be completely charged with g (battery is full at some point), consider b the possible amount for charging the battery (0 ≤ b ≤ g) and s = gb as the amount of energy that can be exported (profit). By definition, Method 1 imports d from the grid, charges the battery with b, and exports s to the grid. As suggested, Method 2 is able to achieve the same:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>?</head><formula xml:id="formula_0">• If g ≥ d,</formula><p>then Method 2 can completely cover d using g, resulting in remainder gd.</p><p>Similarly, an amount of d can be imported from the grid, resulting in a total remainder of g (= (gd) + d). The battery needs to be charged with amount b, which can be achieved using the available g, resulting in a leftover of gb = s. Thus, s can be exported to the grid. • If g &lt; d, then Method 2 covers d using g, yielding a remaining demand of dg (since g &lt; d). Similarly, an amount of d can be imported from the grid, which can be used to cover the remaining demand dg and results in g remaining (g</p><formula xml:id="formula_1">= d -(d -g)).</formula><p>The battery needs to be charged with amount b, which can be achieved using the available g, resulting in a leftover of gb = s. Thus, s can be exported to the grid.</p><p>Given that both Method 1 and Method 2 import d, charge the battery with b and export s, it can be deduced that covering the demand using generated power first remains optimal. The call to import energy from the grid (for beneficial reasons) as presented in this scenario is discussed in Section 3.1.6.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method 1</head><p>Method 2</p><p>demand battery generated power grid demand battery generated power grid = Figure 4. Covering demand using the grid and charging the battery with generated power is the same as charging the battery using the grid and covering demand using generated power, based on examining the overall (dis)charging inefficiencies and cost of importing.</p><p>Lastly, directly exporting generated power needs to be analysed. The flow of this scenario is illustrated in Figure <ref type="figure" target="#fig_1">5</ref>, in addition to an equally effective flow which instead directly covers demand using generated power. . Scenario in which generated power is directly exported to the grid. Instead of directly exporting the generated power, it can be shown to be equally effective to directly cover demand using generated power while still being able to export and import the same amount of energy (thus equal profit and loss) and discharge the battery equivalently.</p><p>To show that both methods in Figure <ref type="figure" target="#fig_1">5</ref>, from now on referred to as Method 3 (left) and Method 4 (right), are equally effective, consider an amount of generated power g and some demand d, of which some amount b comes from the battery and the remainder r is imported by the grid. By definition, Method 3 exports g, discharges b, and imports r. As suggested, Method 4 is able to achieve the same:</p><formula xml:id="formula_2">• If g ≥ d,</formula><p>then Method 4 can completely cover d using g, resulting in remainder gd.</p><p>Similarly to Method 3, r can be imported from the grid and b can be discharged, resulting in d = b + r. In total, this results in (gd) + d = g which can be exported. • If g &lt; d, then only g can be covered, resulting in a remaining demand of dg. Similarly to Method 3, r can be imported from the grid and b can be discharged, resulting in d = b + r. With this, the remaining demand dg can be covered and results in d -(dg) = g, which can be exported. Given that both Method 3 and Method 4 export g, discharge b, and import r, it can be deduced that covering the demand using generated power first remains optimal. The call to discharge battery energy to export to the grid (for beneficial reasons) as presented in this scenario is discussed in Section 3.1.2-it should never occur. Thus, covering demand using the battery while having generated power available should never occur either (and again shows the optimality of covering demand using generated power first). Then, only covering demand using imported energy while exporting generated power would be something to consider. This would only be beneficial if the export price is higher than the import price, which rationally makes no sense to occur (providers would be better off by keeping their energy); however, it can be accounted for with a simple if-statement for completeness.</p><p>Another edge case to consider is importing energy being the most optimal action when there is an energy surplus on the network and the provider decides to pay prosumers for importing energy in order to prevent blackouts <ref type="bibr">[45]</ref>, or disruptive providers trying to shift peak demand <ref type="bibr" target="#b44">[46]</ref> by paying prosumers for importing energy.</p><p>All in all, unless export prices are higher than import prices or import prices are negative (i.e., you get paid to consume energy), the optimal order of covering demand is first using generated power and then either discharging the battery or importing energy based on (forecasted) future knowledge, as explored below, to minimize loss and maximize profit (without such knowledge, discharging would seem cheaper than importing energy).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.2.">Matching Demand with Battery Capacity</head><p>When not looking into the future, the safe approach for battery scheduling algorithms, e.g., the algorithm by <ref type="bibr">Norbu et al. [34]</ref>, Figure <ref type="figure">1</ref>, is to charge as much as possible whenever there is no demand to be covered anymore. However, with future knowledge, this is not optimal, as it can miss out on selling opportunities. For example, consider some excess power α at timestamp t, i.e., the surplus of generated power compared to the demand: g(t)d(t) &gt; 0, and some (forecasted) future excess demand β at t + 1, i.e., g(t + 1)d(t + 1) &lt; 0. Moreover, excess power α is even more than the amount needed to cover excess demand β when taking into account (dis)charging inefficiencies: α &gt; |β| η c •η d . Furthermore, excess power α could charge the battery without exceeding the capacity of the battery (ω) and α is less than the maximal amount of power that can be currently charged (δ c (t)) when also taking into account charging efficiency: α • η c ≤ δ c (t) ≤ ω. Additionally, excess demand β can be covered by the battery (only when charged sufficiently), given that its discharging boundary (δ d ) multiplied by the discharging efficiency at the respective timestamp is considered to be |β| ≤ δ d (t + 1) • η d . Then, only considering these two timestamps (timespan T = 2) and starting with an empty battery, the safe approach (charging using all of α) misses out on exporting (α + β) • ∆t (i.e., the combined residual power times the duration of the timestamp = amount of export energy). In essence, the battery should never be filled more than needed with the knowledge of perfect future data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.3.">Expensive Future Excess Demand</head><p>Given some usable capacity in a battery at some t, i.e., the current state of charge is above the minimum (SoC(t) &gt; SoC min ) and discharging is possible (δ d (t) &gt; 0), and consecutive negative residual power, i.e., excess demand in the (forecasted) future that is more than the battery can cover, i.e., g(x)d(x) &lt; 0 for x ∈ X where X = {t, t + 1, . . . , t + n} and min(SoC(t),</p><formula xml:id="formula_3">∑ x∈X δ d (x) • ∆t) -∑ x∈X g(x)-d(x) η d /∆t</formula><p>&lt; 0, where future import tariffs are higher than the current import tariff, i.e., ∀x ∈ X \ {t}, it holds that τ b (t) &lt; τ b (x), it is intuitively smarter to buy energy currently at t and discharge the battery at a later moment (when import tariffs are the highest) as this reduces the total cost for covering excess demand in X.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.4.">Maximizing Profit Exported Energy</head><p>Considering some (forecasted) future where we currently are in a timespan with excess power, i.e., g(x)d(x) ≥ 0 for x ∈ X where X = {t, t + 1, . . . , m}, and as far as we can look in the future (denoted as timestamp n), excess demand timespans, i.e., g(i)d(i) &lt; 0 for i ∈ Y where Y = {m + 1, m + 2, . . . , n}, do not exist or are already known to be covered maximally by current excess power from X while still resulting in leftover energy to export, it is optimal to calculate the amount of energy that needs to be charged for possible future coverage of Y and then charge the battery at times when selling prices are as low as possible until the desired SoC is reached to ultimately export any leftover energy at the highest export prices.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.5.">Mandatory Profits and Losses</head><p>Given any α = g(t)d(t), consider β = αδ c (t) for α ≥ 0 and γ = |α|δ d (t) for α &lt; 0. Then, if β &gt; 0 or γ &gt; 0, the battery cannot handle charging or discharging this amount of residual power (α) and thus β needs to be exported or γ needs to be imported. No smart algorithm can go beyond these battery constraints, these profits or losses must occur.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.6.">Expensive Charging Exploit</head><p>Charging the battery with imported energy should be considered at any t if this is possible from a technical standpoint (intuitively, it is similar to using your phone while it charges). It is needed to truly cover all demand as cheaply as possible whenever the battery, even given perfect knowledge, is not able to. Any excess demand that needs imported energy should have, if and only if there was room to charge (RtC, in kWh per timestamp) up until the current t, charged previously at some timestamp t prev with imported energy if the import tariff (τ b ) was substantially cheaper, i.e., τ b (t prev )</p><formula xml:id="formula_4">• η c • η d &gt; τ b (t).</formula><p>When looking back at the period [t prev , t), the available import amount for t is capped at the maximum throughput for the RtC within this period and of course considering any other constraints such as the respective (dis)charging boundaries. To be more precise, RtC is the usable capacity of the battery per timestamp within the minimum and maximum limits provided by SoC min and SoC max , respectively. Any action within the lookahead window could require readjusting the RtC accordingly. For example, when charging at a timestamp t c to discharge at a later timestamp t d , the RtC needs to be reduced accordingly within the range [t c , t d ). The RtC serves a purpose in calculating the amount of energy that can "travel" between two timestamps within the lookahead window, also described as the maximum throughput. The maximum throughput is a reverse traversal of a range of timestamps where each RtC value (or any other list of values) is compared with the current global minimum, defined as ∞ at the start of the traversal, until 0 or the start of the range has been reached. Essentially, this is a boundary that needs to be taken into account by certain operations of the proposed algorithm in Section 3.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Definition of the Smart Battery Scheduling Algorithm</head><p>This section defines the smart battery scheduling algorithm, while simultaneously elaborating on the implementation of the beneficial insights and derived properties from the case analysis in Section 3.1.</p><p>Algorithmically, the idea is to process future timestamps and their data by looking back each time in a stepwise manner and rearranging the past optimally. Then, after processing the whole forecast, the most optimal action-based on the forecast data-is discovered for the current timestamp. It is important to be aware of this direction of processing and thinking in the next subsections, as the previous case analysis in Section 3.1 denotes the basis of the to-be-implemented logic in a future-orientated manner at times (and thus needs to be converted yet satisfied). Moreover, be aware that each timestamp looks at the residual power, i.e., g(t)d(t), since directly covering demand using generated power is (generally) always a first step (see Section 3.1.1), thus either the remaining excess demand or excess power is considered.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1.">Step 1: Skipping Excess Power</head><p>Any excess power within the lookahead window, i.e., g(t)d(t) ≥ 0, is skipped by the algorithm (meaning no decisions are made immediately), as then its leftover residual power can be used in future timestamps within the lookahead window which look back respectively. If no future timestamp needs or is able to use this residual power (completely), all leftover power will be exported to the central grid when post-processing the current timestamp (see Section 3.2.7). This step falls back on the idea of matching demand with battery capacity (in this case skipped excess power is potential battery capacity) optimally as presented in the case analysis in Section 3.1.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2.">Step 2: Using Battery Power</head><p>As analysed in Section 3.1.1, and also under the hypothesis that the battery is filled knowing it was needed in the future, which could be now, the first action of covering excess demand is using battery power-unless τ b (t) &lt; 0, then importing energy is optimal. Thus, any excess demand will be covered as much as possible or needed using the battery, i.e., min(δ</p><formula xml:id="formula_5">d (t) • ∆t, SoC(t) • ω, g(t)-d(t) η d /∆t</formula><p>). Do note that such actions require changes to be made for RtC, SoC, p bat d , and other variables the algorithm keeps track of. Additionally, it might seem like this step will yield suboptimal results given the possibility of expensive future excess demand as illustrated in Section 3.1.3, however, step 4 (Section 3.2.4) will satisfy said case.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3.">Step 3: Using Past Excess Power</head><p>If excess demand is still not fully covered by the previous step (2) and δ d (t) &gt; 0, the algorithm continues to look for available excess power that can be used to charge the battery between the starting timestamp of the lookahead window and the current future timestamp that is being looked at. To maximize the profit of exported energy as discussed in Section 3.1.4, the algorithm will sort any previous timestamps with g(t)d(t) &gt; 0 and δ c (t) &gt; 0 based on ascending export tariffs, such that the revenue remains as large as possible. Before that, the algorithm should also know how much energy at such timestamps can be discharged and should not consider any timestamps before other timestamps that have no room to charge, as the energy cannot reach the current timestamp due to said bottleneck. Thus, iterating back until, for some timestamp x, RtC(x) = 0 or the starting timestamp of the lookahead window is reached, a list to keep track of throughput values is generated by calculating min(RtC(t), min global ), where min global is a variable, initially set to ∞, to keep track of the minimal global throughput and t, the respective timestamp. Then, based on the aforementioned pricing strategy and (dis)charging boundaries at the respective timestamps, excess power will be charged into the battery as much as possible and needed at the available timestamps.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.4.">Step 4: Using Previously Discharged Energy</head><p>If excess demand is still not fully covered by the previous steps (2 and 3), it can only be covered by importing energy. However, instead of directly importing, the first thing to consider is the case in Section 3.1.3 that depicts a scenario with expensive future demand, which could be the case for the current timestamp (i.e., import tariff is currently higher than previous timestamps). If any previous timestamp, let us refer to such a timestamp by x, had a lower import tariff and discharged energy from the battery, it is possible to swap the discharged energy at x for imported energy and use the newly available energy in the battery, if δ d (t) &gt; 0, at the timestamp t which is currently being looked at. Additionally, it needs to be checked whether enough room to store energy is available during the period of [x, t). Then, sorted on ascending import tariffs, discharged energy is swapped as much as possible and needed to cover the demand at t.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.5.">Step 5: Using Previously Imported Energy</head><p>Besides the previous step (4), there is another possibility for additional benefit regarding the need to import energy, if the renewable energy system is set up accordingly, by preventively charging using substantially cheaper imported energy as discussed in Section 3.1.6. The algorithm should compare the benefit compared to the previous step and also, similarly to step 3, calculate how much room to charge is available and needed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.6.">Step 6: Directly Importing Energy</head><p>If excess demand is still not fully covered by the previous steps, which would be the case if it is out of control as illustrated in Section 3.1.5, or simply since buying energy at the current timestamp is the best option (left), energy needs to be imported from the grid. Similar to the first step of skipping excess power, the excess demand can be skipped and any leftover excess demand will be imported from the grid by the algorithm when post-processing the current timestamp (see Section 3.2.7).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.7.">Output of the Algorithm</head><p>After processing the steps taken by the algorithm as described above, the algorithm should return the actions for the current timestamp t (= 0 within the lookahead window, referred to as 0 la ) which are as follows:</p><p>• g(0 la ) • ∆t, denoting the leftover energy that will be exported (values in g have been al- tered to reflect actions taken within the lookahead window), referred to as opt export (t). • d(0 la ) • ∆t, denoting the leftover energy that will be imported (values in d have been altered to reflect actions taken within the lookahead window), referred to as opt import (t). • p bat c (0 la ) • ∆t, denoting the optimal amount to charge at t, referred to as opt charge (t) (which is the energy change in the battery, not the actual input). • p bat d (0 la ) • ∆t, denoting the optimal amount to discharge at t, referred to as opt discharge (t) (which is the energy change in the battery, not the actual output).</p><p>It can then be deduced that:</p><formula xml:id="formula_6">• SoC(t + 1) = SoC(t) + opt charge (t) -opt discharge (t) • Bill (cost) at t = opt import (t) • τ b (t) -opt export (t) • τ s (t)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.8.">Constraints of the Algorithm</head><p>When running the algorithm, at each t ∈ T, the following assertions are made to check if the algorithm satisfies properties that classify the algorithm as working properly: </p><formula xml:id="formula_7">0 ≤ SoC(t) • ω ≤ ω (capacity boundaries)<label>(1)</label></formula><formula xml:id="formula_8">(g(t) -d(t)) • ∆t = e s (t) -e b (t) + opt charge (t) η c -opt discharge (t) • η d<label>(3)</label></formula><p>Equation (3) checks whether more or less output has been created from some input, i.e., the residual energy at t equals the leftover energy (which will be exported or needs to be covered using imports) combined with the energy going into the battery to charge (part of the original residual energy) minus the energy coming out the battery by discharging (not part of the original residual energy) based on a supposedly optimal decision at t.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Processing an Example Scenario Using the Smart Battery Scheduling Algorithm</head><p>To possibly increase the intuitiveness behind the functioning of the algorithm beyond the power of words, a figurative systematic walkthrough of the smart battery scheduling algorithm for an example scenario with expensive future demand is presented in Figure <ref type="figure" target="#fig_2">6</ref>.</p><p>In this scenario, initially ∆t = 1, SoC init = 0, and ω = 1. The algorithm considers three timestamps when looking ahead, i.e., κ = 3. Furthermore, to simplify, efficiency is not considered (η c = η d = 1). The bottleneck of this scenario is the substantially higher import tariff at the third timestamp compared to the second timestamp (5 &gt; 1) and the lack of generated power in the first timestamp to cover all future demand. Thus, it would be optimal to import energy at the second timestamp instead of the third to reduce total cost, which a basic present-orientated battery scheduling algorithm (e.g., Figure <ref type="figure">1</ref>) does not consider as it discharges immediately and then requires to import at the third timestamp. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Methods and Data Used in Experimental Validation</head><p>In order to assess the newly introduced heuristics for a smart battery scheduling algorithm using (forecasted) future knowledge, several experiments that simulate experimental yet practical settings should be conducted. The materials and methods for such experiments are described in this section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Baseline Comparison and Generated Power Data</head><p>As a baseline for comparing the proposed heuristics of the smart battery scheduling algorithm, the battery scheduling algorithm by <ref type="bibr">Norbu et al. [34]</ref> is used. The authors of <ref type="bibr">Norbu et al. [34]</ref> also granted access to repositories containing an assemblage of code that simulates this basic battery scheduling algorithm and provides data for generated power based on calculations of UK weather data (i.e., solar and/or wind). The baseline battery scheduling algorithm will be compared to the proposed smart battery scheduling algorithm, of which a concise implementation by de Bekker <ref type="bibr" target="#b45">[47]</ref> can be utilised.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Data for Demand and Tariffs Used in Experimental Validation</head><p>Regarding data available for simulation, a collection of recorded energy demands of households connected to a smart grid during two trials, i.e., Thames Valley Vision and Low Carbon London, and dynamic tariffs from an Octopus Agile energy plan are utilized. The Thames dataset by Scottish &amp; Southern Electricity Networks <ref type="bibr" target="#b46">[48]</ref> contains 200 households over a timespan of a year (from January 2017 to December 2017) with intervals of 30 min. The London dataset by UK Power Networks <ref type="bibr" target="#b47">[49]</ref> contains 5567 households over a time span of 2.5 years (from November 2011 to February 2014) with intervals of 30 min.</p><p>Historical data of the Octopus API have been recorded by EnergyStatsUK <ref type="bibr" target="#b48">[50]</ref> and provides Octopus Agile import and export tariffs for London from roughly 2018 to 2022 with intervals of 30 min (∆t = 0.5). Given the similarity in interval frequency, all data can adequately be matched on a month-day basis. As for matching the years, unfortunately, no proper overlap is achievable in the data, thus the best remaining option for simulation is using complete years. Tariff data used are from 2020 to 2021, whereas the London and Thames data are the first complete year available, i.e., 2012 and 2017, ultimately resulting in T = 365 • 24 • 2 = 17520 time periods.</p><p>To be able to put any output of the simulated experiments into perspective, the annual energy bills for the average prosumer have been calculated for the datasets of Thames and London in Table <ref type="table">1</ref> and could also be seen as baseline annual bills for these simulated environments.</p><p>Table <ref type="table">1</ref>. Annual energy bills for the average prosumer in the simulated Thames or London environment without battery or generated power.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Setup Thames Dataset London Dataset</head><p>No Additionally, an indication of the shape of the Octopus Agile import and export tariffs used in experiments is provided in Figure <ref type="figure" target="#fig_4">7</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Battery Data Used in Experiments</head><p>As for simulating the battery, based on the research of May et al. <ref type="bibr" target="#b49">[51]</ref>, a lead-acid battery is a remarkably well-established option for energy storage and is the only BESS that is nearly entirely recycled (99% in Europe and the USA), which supports the ultimate goal of improving renewable energy assets: sustainability. Lithium-ion batteries have a problematic low rate of recyclability (less than 1%), yet as a result of rapidly developing technologies are deemed to be the future of batteries due to a longer life cycle and higher energy density <ref type="bibr">[52]</ref>. Additionally, based on the research of Kebede et al. <ref type="bibr" target="#b51">[53]</ref>, lithiumion batteries are also considered to be more techno-economically viable than lead-acid batteries. Given the mentioned advantages of lithium-ion batteries and the future potential of proper recycling as comes with battery maturity according to Yanamandra et al.</p><p>[52], lithium-ion batteries have been selected to be simulated. The technological downsides that need to be accounted for when simulating a BESS using a lithium-ion battery are a depth of discharge (DoD) of 80% and practical efficiencies of around 85% for (dis)charging the battery, according to performance tests carried out by Bila et al. <ref type="bibr" target="#b52">[54]</ref>. The aforementioned translates into the following attributes: η c = η d = 85% and SoC min = 20%. The optimal sizing of battery capacity (ω) to gain the most benefit requires taking into account many (local) factors and performing additional experiments, which is not the main focus of this paper. Instead, a wide range of battery capacities for the average prosumer are considered in the experiments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.">Simulation of Forecasting Methods</head><p>In order to be more certain that the smart battery scheduling algorithm works adequately, the robustness is tested by experimenting with erroneous future forecasts for power and demand predictions in addition to tariff predictions. As there are various techniques used to estimate the future-some more accurate or costly than others-which all deserve to be considered, a broad range of functions that alter the data uniquely have been experimented with and are clarified below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.1.">Constant Uncertainty Margins</head><p>The simplest function to quickly assess the robustness of the algorithm is a constant margin of the form y ± c • σ data in which uniformly a random value is picked for x ∈ (0, κ]. Note that the standard deviation is not within the lookahead window but the complete data to gain more stable insights.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.2.">Linear Uncertainty Margins</head><p>Future estimations often become more inaccurate as time passes, as patterns are often not that clear for longer periods. To illustrate the robustness of the smart battery scheduling algorithm with uncertainty following said characteristics, a linear function of the form y ± c • x • σ data where x ∈ (0, κ] is considered for the margins to uniformly pick a random value.</p><p>An example of the shape of such a margin function can be seen in Figure <ref type="figure" target="#fig_5">8</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.3.">Complex Uncertainty Margins</head><p>Usually, uncertainty boundaries are not constant or linear, thus, a more complex experiment is also contemplated where up until a point in the lookahead window the uncertainty converges and then starts diverging. This led to creating the following function for setting the margins to uniformly pick a random value:</p><formula xml:id="formula_9">y ± s 1 • √ x, for x &lt; r • κ = d s 1 • √ d + (s 2 /w) • (x -d) n , else<label>(4)</label></formula><p>In Equation (4), s denotes a scalar, where s 1 scales the converging function and s 2 scales the diverging function with exponent n. Another scalar is w, which can be seen as a control for the width. In the performed experiments, w is commonly defined as κd (= (1r) • κ ). The d is the timestamp within the lookahead window where the converging function is continued by the diverging function, which can also be defined as a ratio r of the lookahead window multiplied by its size κ.</p><p>This function aims to be a more naturalistic margin for the picked random values where the beginning can be fairly accurate and then shift into larger misconceptions.</p><p>An example of the shape of such a margin function can be seen in Figure <ref type="figure" target="#fig_6">9</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.">Calculating the Bill of a Community or Prosumer</head><p>When computing the cost of a community (e.g., London or Thames), this paper considers b(T) to be the bill of the total operational cost for the whole community, which is the sum of the imported and exported energy times the respective tariff for each timestamp in T, for all prosumers in the dataset:</p><formula xml:id="formula_10">b(T) = N ∑ i T ∑ t e b i (t) • τ b (t) -e s i (t) • τ s (t)<label>(5)</label></formula><p>Thus, the total operational profit is defined as -b(T) and is most suited for plotting results of the simulations as the generated power and smart energy management result in comparing profits rather than costs. For the bill of the average prosumer, the operational profit or cost for a community is divided by N, the number of households/size of the dataset, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Experimental Results</head><p>In this section, the practical performance of the proposed smart battery scheduling algorithm is assessed by conducting and describing the experiments in various settings based on the data and methods used, as discussed in Section 4.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Performance of Perfect Forecasts</head><p>To obtain an initial understanding of the performance of the newly introduced battery scheduling algorithm, the baseline algorithm and the smart battery scheduling algorithm are both simulated within the environment as described in Section 4 but in combination with perfect future knowledge (i.e., original data). Battery size and how far we look into the future (lookahead window) are not specific, thus, various values have been considered to gather a complete overview: The results of the 450 simulations are carefully summarized in Figure <ref type="figure" target="#fig_7">10</ref> by showing, for the average prosumer, the operational profit gained by the smart battery scheduling algorithm as a boxplot (based on outcomes for the various κ) per battery size. For the baseline battery scheduling algorithm, the operational profit per prosumer, i.e., -b 0 (T)/N, has been plotted per battery size as well to compare the algorithms.</p><formula xml:id="formula_11">• ω/N ∈ {0.</formula><p>All the details per κ per battery size can be seen in Appendices A and B for the London and Thames dataset, respectively. These details reveal that a lookahead window of 8-12 h nearly always outperforms the baseline battery scheduling algorithm and looking ahead 24 h was always more profitable compared to the baseline battery scheduling algorithm. Additionally, based on the annual bills when having generated power yet no battery, on average, when getting a battery, the smart battery scheduling algorithm is able to achieve between 20% to 60% more operational profit compared to the baseline battery scheduling algorithm, as shown in Table <ref type="table">2</ref>. Table <ref type="table">2</ref>. Relative operational profit for the average prosumer from using the smart algorithm over the baseline algorithm in the simulated Thames or London environment. The underlying basis for comparison is no battery and/or generated power (Table <ref type="table">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Base Comparison Thames Dataset London Dataset</head><p>No generated power and no battery Avg: +17%, Max: +21% Avg: +1%, Max: +5% Generated power and no battery Avg: +20%, Max: +24% Avg: +60%, Max: +210%</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Robustness of the Smart Battery Scheduling Algorithm</head><p>In order to be more certain that the smart battery scheduling algorithm works adequately, the robustness is tested by experimenting with erroneous future forecasts for power and demand predictions in addition to tariff predictions as described in Section 4.4. All experiments performed in this subsection consider κ ∈ {6, 8, 16, 24, 32, 40, 48, 64, 72, 96} and battery sizes similar to Section 5.1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1.">Robustness of Constant Uncertainty Margins</head><p>As for the constant c, values ranging from 0.5 up to 100,000 have been considered and the results of 3080 experiments have been summarized in Figure <ref type="figure" target="#fig_8">11</ref>.</p><p>Based on these experiments, the smart algorithm outperforms the baseline algorithm each time with complete future tariff knowledge; however, when tariff uncertainty is introduced next to power and demand uncertainty, the smart battery scheduling algorithm always only beats the baseline battery scheduling algorithm for a margin of less than or equal to one standard deviation. Thus, directly having substantial constant uncertainty in future tariffs most likely results in suboptimal output, unless more sophisticated forecasts are used as in the next experiments. Moreover, the results of this experiment indicate that by becoming a prosumer with both generated power and a battery, on average, the smart battery scheduling algorithm maximally loses only 3% operational profit with constant generation and demand uncertainty compared to perfect forecasts, as shown in Table <ref type="table">3</ref>.</p><p>Table <ref type="table">3</ref>. Relative performance of the smart algorithm with constant generation and demand uncertainty compared to perfect forecasts in the simulated Thames or London environment. The underlying basis for comparison is no battery and/or generated power (Table <ref type="table">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Base Comparison Thames Dataset London Dataset</head><p>No generated power and no battery Avg: 97%, Min: 92% Avg: 100%, Min: 98% Generated power and no battery Avg: 96%, Min: 90% Avg: 87%, Min: 65%</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2.">Robustness of Linear Uncertainty Margins</head><p>Figure <ref type="figure" target="#fig_9">12</ref> summarizes 1400 experiments using various linear margin functions in combination with various sizes for the lookahead window (κ) and various sizes for the battery per prosumer (ω/N). Interestingly, c ≤ 0.05 outperforms even the smart battery scheduling algorithm using perfect forecasts, also with tariff uncertainty. Moreover, all functions outperform the baseline battery scheduling algorithm with only power and demand uncertainty. Moreover, the results of this experiment indicate that by becoming a prosumer with both generated power and a battery, on average, the smart battery scheduling algorithm only loses 1% to 2% operational profit with linear generation and demand uncertainty compared to perfect forecasts, as shown in Table <ref type="table">4</ref>.</p><p>Table <ref type="table">4</ref>. Relative performance of the smart algorithm with linear generation and demand uncertainty compared to perfect forecasts in the simulated Thames or London environment. The underlying basis for comparison is no battery and/or generated power (Table <ref type="table">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Base Comparison Thames Dataset London Dataset</head><p>No generated power and no battery Avg: 98%, Min: 97% Avg: 99%, Min: 99% Generated power and no battery Avg: 98%, Min: 96% Avg: 84%, Min: 80%</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.3.">Robustness of Converging and Diverging Uncertainty Margins</head><p>Figure <ref type="figure" target="#fig_10">13</ref> summarizes 1400 experiments using various converging and diverging margin functions in combination with various sizes for the lookahead window (κ) and various sizes for the battery per prosumer (ω/N). The results show similar (profitable) results compared to the smart battery scheduling algorithm using perfect forecasts and remarkably tolerable tariff uncertainty compared to previous experiment types. Moreover, the results of this experiment indicate that by becoming a prosumer with both generated power and a battery, on average, the smart battery scheduling algorithm maximally loses only 1% operational profit with converging and diverging generation and demand uncertainty compared to perfect forecasts, as shown in Table <ref type="table">5</ref>.</p><p>Table <ref type="table">5</ref>. Relative performance of the smart algorithm with converging and diverging generation and demand uncertainty compared to perfect forecasts in the simulated Thames or London environment. The underlying basis for comparison is no battery and/or generated power (Table <ref type="table">1</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Base Comparison Thames Dataset London Dataset</head><p>No generated power and no battery Avg: 99%, Min: 95% Avg: 100%, Min: 98% Generated power and no battery Avg: 99%, Min: 94% Avg: 94%, Min: 65%</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Discussion</head><p>After introducing a smart battery scheduling algorithm defined in Section 3 and putting it to the test in Section 5 by simulating a manifold of scenarios based on Section 4, this section will reflect on particularities present in the conducted experiments.</p><p>Firstly, a conceivably anomalous sight of more profitable simulations with respect to the simulations using perfect forecasts can be seen in the outcomes of some experiments testing the robustness of the algorithm in Section 5.2. A probable justification for this occurrence could be that the lack of knowledge after the lookahead window causes a suboptimal decision no matter the accuracy of the forecast, as the lookahead window does not span the range of timestamps that would influence the perfect decision in retrospect. From all the detailed results of simulations for various sizes of κ with perfect forecasts, presented in Appendices A and B, the total operational cost, i.e., b(T), with respect to κ follows the shape of a positive-indexed reciprocal function, i.e., y = 1/x for x &gt; 0, and Π(T) does not decrease, which confirms that more (accurate) knowledge guides the smart algorithm to make more profitable decisions. Based on said beliefs and findings, it seems that some of the imperfect forecasts accidentally directed the decision unknowingly towards a decision that matched the supply and demand of energy more or most optimally. Therefore, it could be worth investigating uncommon actions or trends in lookahead windows of unusually computationally large size in order to assess whether using these actions based on the estimation of some machine learning techniques in small lookahead window sizes would benefit the overall efficiency of the smart battery scheduling algorithm.</p><p>Secondly, it is essential to denote limitations regarding the experiments to critically assess the proposed smart battery scheduling algorithm appropriately. Computationally speaking, the available equipment used to run simulations had an inferior level of performance to calculate the "most optimal" profit possible where κ = |T|, which would provide even finer insight into the level of performance of the simulations carried out in Section 5.2 where randomness was introduced to sample the robustness of the smart battery scheduling algorithm. Moreover, due to a lack of available data, the simulations were run on real data yet originating from different years, thus, it merely provided a sound environment to evaluate the behaviour of the proposed smart battery scheduling algorithm, whereas true-to-life data could have supplied more relatable insights into actual cost and profit differences, especially for the energy communities that were considered in this paper. From weather to demand, all variables in the setup have a sensitive correlation, as confirmed by Hernández et al. <ref type="bibr" target="#b53">[55]</ref>; thus, any output cannot be truly considered genuine or useful for any recommendations besides performance testing. It would be interesting, as then the outcomes could provide practical recommendations for the size of a battery storage unit for a particular prosumer as well. In addition, various types of tariffs could be considered to gain a perspective of the usefulness of adapting to the proposed smart battery scheduling algorithm for a particular prosumer. Essentially, actual forecasting models and more real data should be explored using the proposed battery scheduling algorithm in order to advance towards practical deployment and directly improve the efficiency of renewable energy assets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Conclusions and Further Work</head><p>In this paper, customised heuristics for a smart battery scheduling algorithm are developed to improve the utilisation of renewable energy and storage assets by efficient matching of energy supply and demand. For a theoretically optimal decision, the future should be taken into account, which realistically can be forecasted with the current state of technology. Based on the idea of having perfect knowledge in the complete range of time, the following broad principles should be taken into account:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>A battery should never be filled more than needed as otherwise the surplus of energy could have been sold.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>If battery power is considered to be utilised, while in the future excess demand needs to be covered by buying energy for a higher price than the current price, it would be beneficial to buy energy now and use battery power in the future.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>If energy can be sold to the central grid on multiple occasions, it should be sold at times when the selling price is as high as possible.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>If the battery is able to charge using imported energy from the grid, charging the battery with bought energy should be considered if it is more profitable than having to buy energy later at a substantially higher price.</p><p>• If the available generated power and battery power cannot cover the demand, there is no other option than to buy energy. Similarly, if the battery cannot be charged more or at a higher rate, energy needs to be sold to the central grid.</p><p>Based on several thousands of simulations in areas of the UK with various probable ranges of forecasts and battery sizes, the smart battery scheduling algorithm has demonstrated to gain additional profit for both theoretically perfect forecasts and plenty more realistic forecasts by exploiting the aforementioned characteristics. On average, the results show that when a prosumer uses a battery to store generated energy, the newly proposed algorithm outperforms the baseline algorithm, obtaining up to 20-60% more profit for the prosumer from his/her energy assets with perfect forecasts. With various types and levels of simulated uncertainty in generation, demand, and tariff forecasting, the proposed algorithm has shown robustness: it produces greater profit than the baseline method and only 2-12% of profit is lost compared to perfect forecasts. The performance of the proposed algorithm increases as the uncertainty decreases, showing great promise for the algorithm as the quality of forecasting keeps improving. In conclusion, the proposed smart battery scheduling algorithm can be considered a proper improvement in the efficiency of renewable energy assets and also serve as a foundation for the heuristics of smart energy management systems using forecasting techniques.</p><p>In future work, we plan to focus on exploring how other advanced techniques from machine learning and modern AI can be leveraged to design more efficient control algorithms for integrating renewable generation, demand, and battery storage, such as, for example, those coming from Bayesian reasoning, reinforcement learning, or deep learning neural nets <ref type="bibr" target="#b54">[56]</ref>. The design of intelligent scheduling algorithms for this problem, that leverage recent advances in AI and the use of forecasting data, remains a key direction for further work. Other promising directions for extending the work include better integration of the battery control with renewable forecasting (for example, wind forecasting), as well as the use of our heuristics from price arbitrage and trading with the grid, taking advantage of dynamic time-of-use prices, which are increasingly used by power system operators to encourage flexible demand. Looking further ahead, it may be fruitful to integrate our approach with other smart energy problems-for example, the control of charging of electric vehicle batteries <ref type="bibr" target="#b55">[57]</ref>, including two-directional charging in vehicle-to-grid (V2G) schemes <ref type="bibr" target="#b56">[58]</ref>. Additionally, algorithms such as ours could be used for distributed demandside response <ref type="bibr" target="#b57">[59]</ref><ref type="bibr" target="#b58">[60]</ref><ref type="bibr" target="#b59">[61]</ref>, also incorporating behavioural factors, such as perception of comfort loss by energy users <ref type="bibr" target="#b60">[62]</ref>.  </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Scenario in which generated power is used to charge the battery while demand still needs to be satisfied.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 5</head><label>5</label><figDesc>Figure 5. Scenario in which generated power is directly exported to the grid. Instead of directly exporting the generated power, it can be shown to be equally effective to directly cover demand using generated power while still being able to export and import the same amount of energy (thus equal profit and loss) and discharge the battery equivalently.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. Systematic walkthrough of the proposed smart battery scheduling algorithm for an example scenario with expensive future excess demand. The energy is imported at the lowest import tariff while discharging the battery during the highest import tariff.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>generated power and no battery b(T)/N = £15.51 b(T)/N = £349.93 Generated power and no battery b(T)/N = -£4.10 b(T)/N = -£44.02</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. Indication of the shape of Octopus Agile import and export tariffs used during simulations.</figDesc><graphic coords="12,166.39,309.17,392.87,126.87" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 8 .</head><label>8</label><figDesc>Figure 8. Example of the shape of a linear margin function on flat original data (left) and on actual power data of the London dataset (right). The blue line depicts the original power data and the orange line is an example of power forecast data within the orange uncertainty area based on the margin function.</figDesc><graphic coords="13,166.39,322.03,373.23,99.69" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 9 .</head><label>9</label><figDesc>Figure 9. Example of the shape of a converging and diverging margin function on flat original data (left) and on actual power data of the London dataset (right). The blue line depicts the original power data and the orange line is an example of power forecast data within the orange uncertainty area based on the margin function.</figDesc><graphic coords="14,166.39,94.86,373.25,100.67" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 10 .</head><label>10</label><figDesc>Figure 10. High-level comparison between operational profits of the baseline algorithm and smart algorithm for the average prosumer using various battery sizes across the lookahead amounts represented in boxplots, following the experiment described in Section 5.1.</figDesc><graphic coords="15,166.39,133.14,385.02,270.59" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 11 .</head><label>11</label><figDesc>Figure 11. High-level comparison between operational profits of the baseline algorithm and smart algorithm for the average prosumer using various battery sizes and lookahead amounts with uncertain forecasts based on constant margins. The legend in each graph applies to both graphs.</figDesc><graphic coords="16,166.39,94.86,383.06,365.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 12 .</head><label>12</label><figDesc>Figure 12. High-level comparison between operational profits of the baseline algorithm and smart algorithm for the average prosumer using various battery sizes and lookahead amounts with uncertain forecasts based on linear margins. The legend in each graph applies to both graphs.</figDesc><graphic coords="17,166.39,94.86,373.24,356.32" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Figure 13 .</head><label>13</label><figDesc>Figure13. High-level comparison between operational profits of the baseline algorithm and smart algorithm for the average prosumer using various battery sizes and lookahead amounts with uncertain forecasts based on converging and diverging margins. The legend in each graph applies to both graphs.</figDesc><graphic coords="18,166.39,94.86,373.24,356.57" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Figure A1 .</head><label>A1</label><figDesc>Figure A1. Part 1: Overview of operational profits per prosumer for the baseline and smart battery scheduling algorithm using various sizes for the lookahead window (κ) and various sizes for the battery per prosumer (ω/N) on original historical data of London.</figDesc><graphic coords="22,166.39,500.88,365.36,237.23" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Figure A2 .</head><label>A2</label><figDesc>Figure A2. Part 2: Overview of operational profits per prosumer for the baseline and smart battery scheduling algorithm using various sizes for the lookahead window (κ) and various sizes for the battery per prosumer (ω/N) on original historical data of London.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="23,166.39,271.61,369.29,354.23" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="24,166.39,94.86,369.29,232.23" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Excess power Excess demand</head><label></label><figDesc></figDesc><table><row><cell></cell><cell cols="2">generated power</cell><cell></cell><cell></cell><cell cols="2">generated power</cell></row><row><cell>completely cover</cell><cell></cell><cell cols="3">store or sell rest, depending</cell><cell>partly cover</cell><cell>use battery or grid for the rest</cell></row><row><cell>demand</cell><cell></cell><cell cols="2">on future estimations</cell><cell></cell><cell>demand</cell><cell>depending on future estimations</cell></row><row><cell>demand</cell><cell>battery</cell><cell>grid</cell><cell></cell><cell></cell><cell>demand</cell><cell>battery</cell><cell>grid</cell></row><row><cell></cell><cell cols="6">Figure 2. Scenario in which generated power is used first to cover demand, either in case of excess</cell></row><row><cell></cell><cell cols="6">power (more generated power than demand) or excess demand (less generated power than demand).</cell></row><row><cell></cell><cell></cell><cell cols="3">generated power</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="4">charge battery now for later usage or exporting,</cell></row><row><cell></cell><cell cols="2">cover using grid</cell><cell cols="3">this could be a cheaper move overall</cell></row><row><cell></cell><cell>demand</cell><cell></cell><cell>battery</cell><cell>grid</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="4">not covering using battery, would be less efficient</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="4">due to (dis)charging inefficiencies compared to then</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="3">covering using generated power directly</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 7.5, 10, 15, 30, 50} [kWh per prosumer]. • κ ∈ {2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96} [#timestamps in lookahead window].</figDesc><table /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments:</head><p>The authors would like to thank <rs type="person">Benoit Couraud</rs> for a detailed review in the final draft stage and <rs type="person">Ying Zhang</rs> for providing an implementation of the basic battery scheduling algorithm of Norbu et al. [34] and reviewing an early draft.</p></div>
+			</div>
+			<div type="funding">
+<div><p>Funding: <rs type="person">Valentin Robu</rs> acknowledges financial support from the project "<rs type="projectName">TESTBED2: Testing and Evaluating Sophisticated information and communication Technologies for enaBling scalablE smart griD Deployment</rs>", funded by the <rs type="funder">European Union Horizon2020 Marie Skłodowska-Curie Actions (MSCA)</rs> [Grant agreement number: 872172]. <rs type="person">Sonam Norbu</rs> and <rs type="person">David Flynn</rs> acknowledge the support of the <rs type="funder">Innovate UK Knowledge Transfer Partnerships (KTP)</rs> Project based at The Crichton Trust, Dumfries in partnership with the <rs type="institution">University of Glasgow</rs> (ref: <rs type="grantNumber">KTP-13052</rs>) and the support of the <rs type="funder">UK Engineering and Physical Science Research Council through DecarbonISation PAThways for Cooling and Heating (DISPATCH)</rs> project (grant <rs type="grantNumber">EP/V042955/1</rs>).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_PQMCc9d">
+					<orgName type="project" subtype="full">TESTBED2: Testing and Evaluating Sophisticated information and communication Technologies for enaBling scalablE smart griD Deployment</orgName>
+				</org>
+				<org type="funding" xml:id="_xwChwzn">
+					<idno type="grant-number">KTP-13052</idno>
+				</org>
+				<org type="funding" xml:id="_Ac8s8vT">
+					<idno type="grant-number">EP/V042955/1</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability Statement:</head><p>Restrictions apply to the availability of data utilised in this study. These data were obtained from Norbu et al. [34]  and is available via the authors.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicts of Interest:</head><p>The authors declare no conflict of interest. The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nomenclature</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix A. Detailed Results of Forecasts on London Dataset</head><p>This appendix shows the details of the experiments carried out in Section 5.1 using the London dataset to give more insight regarding how far the smart battery scheduling algorithm needed to look ahead (κ) in order to be more profitable than the baseline battery scheduling algorithm for a broad range of battery sizes. The results can be seen in Figures <ref type="figure">A1</ref> and<ref type="figure">A2</ref>. Note: BA stands for "baseline battery scheduling algorithm" and SA stands for "smart battery scheduling algorithm" in the legend. On average, a lookahead window of size κ = 16 (i.e., 8 h) outperformed the BA. For larger battery sizes, the SA beats the BA with a lookahead size of κ = 24 (i.e., 12 h).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix B. Detailed Results of Forecasts on Thames Dataset</head><p>This appendix shows the details of the experiments carried out in Section 5.1 using the Thames dataset to give more insight regarding how far the smart battery scheduling algorithm needed to look ahead (κ) in order to be more profitable than the baseline battery scheduling algorithm for a broad range of battery sizes. The results can be seen in Figures <ref type="figure">A3</ref> and<ref type="figure">A4</ref>. Note: BA stands for "baseline battery scheduling algorithm" and SA stands for "smart battery scheduling algorithm" in the legend. On average, a lookahead window of size κ = 16 (i.e., 8 h) outperformed the BA. For larger battery sizes, the greedy charging approach of the BA works so sufficiently that the SA can barely outperform BA in smaller lookahead windows. Only for substantially higher lookahead windows is the SA able to outperform BA. This makes sense, as a lot of room in the battery means that charging the battery is rarely a mistake short-term, thus, a larger lookahead window has to provide these details.  </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">BP. Statistical Review of World Energy</title>
+		<imprint>
+			<biblScope unit="volume">BP</biblScope>
+			<date type="published" when="2021">2021</date>
+			<pubPlace>London, UK</pubPlace>
+		</imprint>
+	</monogr>
+	<note type="report_type">Technical Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Renewable Energy for a Clean and Sustainable Future</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bilgen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kaygusuz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Sources</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="1119" to="1129" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">The path of the smart grid</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Farhangi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MPE.2009.934876</idno>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE Power Energy Mag</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="18" to="28" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Best Practices on Renewable Energy Self-Consumption</title>
+		<author>
+			<orgName type="collaboration">European Commission</orgName>
+		</author>
+		<ptr target="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:52015SC0141" />
+		<imprint>
+			<date type="published" when="2015-03-01">2015. 1 March 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The role of renewable energy in the global energy transformation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Gielen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Boshell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Saygin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Bazilian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Wagner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gorini</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.esr.2019.01.006</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Strategy Rev</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="38" to="50" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">PV-EV integrated home energy management using vehicle-to-home (V2H) technology and household occupant behaviors</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zafar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Slama</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.esr.2022.101001</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Strategy Rev</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<date type="published" when="2022">2022. 101001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Demand-side management strategy in a smart home using electric vehicle and hybrid renewable energy system</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chakir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Abid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tabaa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hachimi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egyr.2022.07.018</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Rep</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="383" to="393" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Surging Energy Prices in Europe in the Aftermath of the War: How to Support the Vulnerable and Speed Up the Transition Away from Fossil Fuels</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Arregui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Black</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Celasun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Iakova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mineshima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Mylonas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Parry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Teodoru</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Zhunussova</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<publisher>International Monetary Fund</publisher>
+			<pubPlace>Washington, DC, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">CO 2 and Greenhouse Gas Emissions</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ritchie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Roser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rosado</surname></persName>
+		</author>
+		<ptr target="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions" />
+		<imprint>
+			<date type="published" when="2020-12-22">2020. 22 December 2022</date>
+		</imprint>
+	</monogr>
+	<note>Our World in Data</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Electrical Energy Storage for the Grid: A Battery of Choices</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Dunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kamath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Tarascon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">334</biblScope>
+			<biblScope unit="page" from="928" to="935" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Energy storage systems-Characteristics and comparisons</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ibrahim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ilinca</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Perron</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2007.01.023</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="1221" to="1250" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Energy storage for electricity generation and related processes: Technologies appraisal and grid scale applications</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Argyrou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Christodoulides</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Kalogirou</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2018.06.044</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="page" from="804" to="821" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Optimization classification, algorithms and tools for renewable energy: A review</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Iqbal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Azam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Naeem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Khwaja</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Anpalagan</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2014.07.120</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="640" to="654" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Microgrid control methods toward achieving sustainable energy management: A bibliometric analysis for future directions</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Roslan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hannan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mannan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Muttaqi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">I</forename><surname>Mahlia</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jclepro.2022.131340</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Clean</title>
+		<imprint/>
+	</monogr>
+	<note>Prod. 2022, 348, 131340. [CrossRef</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Scheduling coupled photovoltaic, battery and conventional energy sources to maximize profit using linear programming</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Crichigno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Padilla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rivera</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.renene.2014.07.006</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="page" from="284" to="290" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Mixed-Integer-Linear-Programming-Based Energy Management System for Hybrid PV-Wind-Battery Microgrids: Modeling, Design, and Experimental Verification</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Luna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">L</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Graells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Vasquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Guerrero</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TPEL.2016.2581021</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Electron</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="2769" to="2783" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Optimization based Real-Time Home Energy Management in the Presence of Renewable Energy and Battery Energy Storage</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elkazaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sumner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pholboon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Thomas</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/sest.2019.8849105</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2019 International Conference on Smart Energy Systems and Technologies (SEST)</title>
+		<meeting>the 2019 International Conference on Smart Energy Systems and Technologies (SEST)<address><addrLine>Porto, Portugal</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019-09-11">9-11 September 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Impact of Demand Response Programs on Optimal Operation of Multi-Microgrid System. Energies</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">H</forename><surname>Bui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hussain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">M</forename><surname>Kim</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en11061452</idno>
+		<imprint>
+			<date type="published" when="1452">2018. 1452</date>
+			<biblScope unit="volume">11</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Optimal Residential Battery Scheduling with Asset Lifespan Consideration</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Couraud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Norbu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Andoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gharavi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Flynn</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/isgt-europe47291.2020.9248889</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2020 IEEE PES Innovative Smart Grid Technologies Europe (ISGT-Europe)</title>
+		<meeting>the 2020 IEEE PES Innovative Smart Grid Technologies Europe (ISGT-Europe)<address><addrLine>The Hague, The Netherlands; Piscataway, NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2020-10">October 2020. 2020</date>
+			<biblScope unit="page" from="26" to="28" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Robust optimization for energy transactions in multi-microgrids under uncertainty</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Feng</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2018.02.121</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">217</biblScope>
+			<biblScope unit="page" from="346" to="360" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Effective scheduling of residential energy storage systems under dynamic pricing</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.renene.2015.09.072</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page" from="936" to="945" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">An optimization-based approach to scheduling residential battery storage with solar PV: Assessing customer benefit</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">L</forename><surname>Ratnam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Weller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Kellett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.renene.2014.09.008</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="123" to="134" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Programming Based Optimal Power and Battery Dispatch for Grid-Connected Microgrid</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Hossain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mandal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Kamalasadan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Quadratic</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIA.2017.2782671</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Appl</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="1793" to="1805" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Optimal Charging/Discharging Scheduling of Battery Storage Systems for Distribution Systems Interconnected with Sizeable PV Generation Systems</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Teng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Q</forename><surname>Huang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="1425" to="1433" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Optimization of Day-Ahead Energy Storage System Scheduling in Microgrid Using Genetic Algorithm and Particle Swarm Optimization</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Raghavan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Maan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K B</forename><surname>Shenoy</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2020.3025673</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="173068" to="173078" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Energy scheduling of community microgrid with battery cost using particle swarm optimisation</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Hossain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">R</forename><surname>Pota</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Squartini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Guerrero</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2019.113723</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">254</biblScope>
+			<date type="published" when="2019">2019. 113723</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Operating Schedule of Battery Energy Storage System in a Time-of-Use Rate Industrial User With Wind Turbine Generators: A Multipass Iteration Particle Swarm Optimization Approach</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">Y</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="774" to="782" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<title level="m" type="main">Particle swarm optimised fuzzy controller for charging-discharging and scheduling of battery energy storage system in MG applications. Energy Rep</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Faisal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hannan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Ker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Begum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mahlia</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egyr.2020.12.007</idno>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="215" to="228" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">Renewable Energy Sources and Battery Forecasting Effects in Smart Power System Performance. Energies</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Nurmanova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Abedinia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Naderi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Ghadimi</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en12030373</idno>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">12</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Optimal Energy Management of a Grid-Tied Solar PV-Battery Microgrid: A Reinforcement Learning Approach. Energies 2021</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Muriithi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chowdhury</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en14092700</idno>
+		<imprint>
+			<date type="published" when="2700">2700</date>
+			<biblScope unit="volume">14</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Application of Reinforcement Learning Algorithm for Scheduling of Microgrid</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jayaraj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A</forename><surname>Tp</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/gcat47503.2019.8978453</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2019 Global Conference for Advancement in Technology (GCAT)</title>
+		<meeting>the 2019 Global Conference for Advancement in Technology (GCAT)<address><addrLine>Bangaluru, India; NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Piscataway</publisher>
+			<date type="published" when="2019-10-20">18-20 October 2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Investigation of Choice of State Space for Reinforcement Learning Based Battery Scheduling in Microgrid</title>
+		<author>
+			<persName><forename type="first">P</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A T</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Siyad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Santhosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rajeev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2022 IEEE International Conference on Signal Processing, Informatics, Communication and Energy Systems (SPICES)</title>
+		<meeting>the 2022 IEEE International Conference on Signal Processing, Informatics, Communication and Energy Systems (SPICES)<address><addrLine>Thiruvananthapuram, India; NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Piscataway</publisher>
+			<date type="published" when="2022-03">March 2022. 2022</date>
+			<biblScope unit="page" from="10" to="12" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Modelling the redistribution of benefits from joint investments in community energy projects</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Norbu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Couraud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Andoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Flynn</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2021.116575</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">287</biblScope>
+			<date type="published" when="2021">2021. 116575</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Comparison of Energy Management Strategies in a Microgrid with Photovoltaic/Battery System</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ouedraogo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Faggianelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pigelet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Duchaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Voyant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Notton</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/elma52514.2021.9503044</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2021 17th Conference on Electrical Machines, Drives and Power Systems (ELMA)</title>
+		<meeting>the 2021 17th Conference on Electrical Machines, Drives and Power Systems (ELMA)<address><addrLine>Sofia, Bulgaria; NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE: Piscataway</publisher>
+			<date type="published" when="2021-07-04">1-4 July 2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Operational Evaluation of a Wind-farm Forecasting System</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ralph</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egypro.2015.07.903</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Procedia</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="page" from="216" to="222" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Accuracy of wind energy forecasts in Great Britain and prospects for improvement. Util</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">F</forename><surname>Forbes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Zampelli</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jup.2020.101111</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Policy</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<date type="published" when="2020">2020. 101111</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Wind power forecasting using ensemble learning for day-ahead energy trading</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Suárez-Cetrulo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Burnham-King</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Haughton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Carbajo</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.renene.2022.04.032</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">191</biblScope>
+			<biblScope unit="page" from="685" to="698" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">A New Prediction Model Based on Cascade NN for Wind Power Prediction</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Torabi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A K</forename><surname>Mousavy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Dashti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Saeedi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Yousefi</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10614-018-9795-8</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Econ</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="page" from="1219" to="1243" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Wind forecasting using Principal Component Analysis</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Skittides</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename><surname>Früh</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.renene.2014.03.068</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="page" from="365" to="374" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Forecasting Electricity Consumption and Production in Smart Homes through</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gellert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Fiore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Florea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Chis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Palmieri</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.scs.2021.103426</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Statistical Methods. Sustain. Cities Soc</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<date type="published" when="2022">2022. 103426</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Optimal Day-Ahead Self-Scheduling and Operation of Prosumer Microgrids Using Hybrid Machine Learning-Based Weather and Load Forecasting</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Faraji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ketabi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hashemi-Dezaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shafie-Khah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P S</forename><surname>Catalao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="157284" to="157305" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Energy price prediction using data-driven models: A decade review</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cosrev.2020.100356</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Sci. Rev</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<date type="published" when="2021">2021. 100356</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Forecasting Day-Ahead Electricity Metrics with Artificial Neural Networks</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pavićević</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Popović</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page">1051</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<monogr>
+		<title level="m" type="main">You Can Get Paid to Use Electricity in Your Own Home over Bank Holiday Weekend</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hiscott</surname></persName>
+		</author>
+		<ptr target="https://www.mirror.co.uk/news/business/how-you-could-paid-use-22067181" />
+		<imprint>
+			<date type="published" when="2020-12-22">2020. 22 December 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">We Paid Customers to Use Less Power at Peak Times. Here&apos;s What Happened</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mchugh</surname></persName>
+		</author>
+		<ptr target="https://octopus.energy/blog/results-big-dirty-turn-down-trial-paid-off-peak-energy/" />
+		<imprint>
+			<date type="published" when="2022-12-22">2022. 22 December 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>De Bekker</surname></persName>
+		</author>
+		<title level="m">Smart Control Algorithm</title>
+		<imprint>
+			<date type="published" when="2022-12">v1.0.0. 2022. 22 December 2022</date>
+		</imprint>
+	</monogr>
+	<note>CrossRef</note>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<monogr>
+		<title level="m" type="main">Data Retrieved from Scottish &amp; Southern Electricity Networks</title>
+		<author>
+			<persName><forename type="first">Southern</forename><forename type="middle">Electricity</forename><surname>Scottish</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Networks</surname></persName>
+		</author>
+		<ptr target="https://ukerc.rl.ac.uk/DC/cgi-bin/edc_search.pl?WantComp=147" />
+		<imprint>
+			<date type="published" when="2018-03">2018. March 2023</date>
+		</imprint>
+	</monogr>
+	<note>Energy Consumption Data of Thames Valley Vision</note>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Data retrieved from London Datastore</title>
+		<author>
+			<persName><surname>Uk Power</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Networks</surname></persName>
+		</author>
+		<ptr target="https://data.london.gov.uk/dataset/smartmeter-energy-use-data-in-london-households" />
+	</analytic>
+	<monogr>
+		<title level="m">SmartMeter Energy Consumption Data in London Households</title>
+		<imprint>
+			<date type="published" when="2015-12-22">2015. 22 December 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Octopus Agile Tariff Data London, 2022. Data Retrieved from EnergyStatsUK</title>
+		<author>
+			<persName><surname>Energystatsuk</surname></persName>
+		</author>
+		<ptr target="https://www.energy-stats.uk/download-historical-pricing-data/" />
+		<imprint>
+			<date type="published" when="2022-12-22">22 December 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Lead batteries for utility energy storage: A review</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>May</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Davidson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Monahov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="145" to="157" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Recycling of Li-Ion and Lead Acid Batteries: A Review</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yanamandra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pinisetty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Daoud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Gupta</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s41745-021-00269-7</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Indian Inst. Sci</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="page" from="281" to="295" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Techno-economic analysis of lithium-ion and lead-acid batteries in stationary energy storage application</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Kebede</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Coosemans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Messagie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jemal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">A</forename><surname>Behabtu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Van Mierlo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Berecibar</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2021.102748</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<date type="published" when="2021">2021. 102748</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Grid connected performance of a household lithium-ion battery energy storage system</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bila</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Opathella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Venkatesh</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2016.04.001</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="178" to="185" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">A Study of the Relationship between Weather Variables and Electric Power Demand inside a Smart Grid/Smart World Framework</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hernández</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Baladrón</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Aguiar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Calavia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Carro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sánchez-Esguevillas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Cook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chinarro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gómez</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/s120911571</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="11571" to="11591" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Artificial intelligence and machine learning approaches to energy demand-side response: A systematic review</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Antonopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Couraud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kirli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Norbu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kiprakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Flynn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Elizondo-Gonzalez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wattam</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2020.109899</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">130</biblScope>
+			<biblScope unit="page">109899</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">An Online Mechanism for Multi-Unit Demand and Its Application to Plug-in Hybrid Electric Vehicle Charging</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">H</forename><surname>Gerding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Stein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Parkes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rogers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Jennings</surname></persName>
+		</author>
+		<idno type="DOI">10.1613/jair.4064</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Artif. Intell. Res. (JAIR)</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="175" to="230" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Online mechanism design for vehicle-to-grid car parks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Gerding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Stein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ceppi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 25th International Joint Conference on Artificial Intelligence (IJCAI&apos;16)</title>
+		<meeting>the 25th International Joint Conference on Artificial Intelligence (IJCAI&apos;16)<address><addrLine>New York, NY, USA; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="2016-07">July 2016. 2016</date>
+			<biblScope unit="page" from="286" to="293" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Cooperatives for demand side management</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kota</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Chalkiadakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rogers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Jennings</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 7th Conference on Prestigious Applications of Intelligent Systems (PAIS @ ECAI 2012)</title>
+		<meeting>the 7th Conference on Prestigious Applications of Intelligent Systems (PAIS @ ECAI 2012)<address><addrLine>Montpellier, France</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2012-08">August 2012</date>
+			<biblScope unit="page" from="969" to="974" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Incentivizing reliability in demand-side response</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Parkes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 25th International Joint Conference on Artificial Intelligence (IJCAI&apos;16)</title>
+		<meeting>the 25th International Joint Conference on Artificial Intelligence (IJCAI&apos;16)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2016-07">July 2016</date>
+			<biblScope unit="page" from="352" to="358" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Generalizing demand response through reward bidding</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Parkes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Robu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 16th International Conference on Autonomous Agents and Multiagent Systems</title>
+		<meeting>the 16th International Conference on Autonomous Agents and Multiagent Systems<address><addrLine>Sao Paulo, Brazil</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2017-05">May 2017</date>
+			<biblScope unit="volume">2017</biblScope>
+			<biblScope unit="page" from="60" to="68" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<monogr>
+		<title level="m" type="main">Building as a virtual power plant, magnitude and persistence of deferrable loads and human comfort implications</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Royapoor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pazhoohesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Davison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Patsios</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Walker</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.enbuild.2020.109794</idno>
+		<imprint/>
+	</monogr>
+	<note>Energy Build. 2020, 213, 109794. [CrossRef</note>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<monogr>
+		<title level="m" type="main">The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods</title>
+		<imprint>
+			<publisher>Disclaimer/Publisher&apos;s Note</publisher>
+		</imprint>
+	</monogr>
+	<note>instructions or products referred to in the content</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

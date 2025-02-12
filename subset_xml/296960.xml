@@ -1,0 +1,1342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Quantum Circuit-Width Reduction through Parameterisation and Specialisation</title>
+				<funder>
+					<orgName type="full">University of Glasgow</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-05-05">5 May 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Youssef</forename><surname>Moawad</surname></persName>
+							<idno type="ORCID">0000-0002-7292-9172</idno>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computing Science</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Wim</forename><surname>Vanderbauwhede</surname></persName>
+							<idno type="ORCID">0000-0001-6768-0037</idno>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computing Science</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">René</forename><surname>Steijl</surname></persName>
+							<email>rene.steijl@glasgow.ac.uk</email>
+							<idno type="ORCID">0000-0002-1872-8687</idno>
+							<affiliation key="aff1">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Quantum Circuit-Width Reduction through Parameterisation and Specialisation</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-05-05">5 May 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B096D83BA97547C93E148EE4D7AB304E</idno>
+					<idno type="DOI">10.3390/a16050241</idno>
+					<note type="submission">Received: 27 February 2023 Revised: 17 April 2023 Accepted: 21 April 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:00+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>quantum computing</term>
+					<term>quantum circuit model</term>
+					<term>circuit transformation</term>
+					<term>circuit width reduction</term>
+					<term>memory reduction</term>
+					<term>circuit parameterisation</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>As quantum computing technology continues to develop, the need for research into novel quantum algorithms is growing. However, such algorithms cannot yet be reliably tested on actual quantum hardware, which is still limited in several ways, including qubit coherence times, connectivity, and available qubits. To facilitate the development of novel algorithms despite this, simulators on classical computing systems are used to verify the correctness of an algorithm, and study its behaviour under different error models. In general, this involves operating on a memory space that grows exponentially with the number of qubits. In this work, we introduce quantum circuit transformations that allow for the construction of parameterised circuits for quantum algorithms. The parameterised circuits are in an ideal form to be processed by quantum compilation tools, such that the circuit can be partially evaluated prior to simulation, and a smaller specialised circuit can be constructed by eliminating fixed input qubits. We show significant reduction in the number of qubits for various quantum arithmetic circuits. Divide-by-n-bits quantum integer dividers are used as an example demonstration. It is shown that the complexity reduces from 4n + 2 to 3n + 2 qubits in the specialised versions. For quantum algorithms involving divide-by-8 arithmetic operations, a reduction by 2 8 = 256 in required memory is achieved for classical simulation, reducing the memory required from 137 GB to 0.53 GB.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>In recent years, research in Quantum Computing (QC) <ref type="bibr" target="#b0">[1]</ref> has developed into a largescale global activity aimed at creating ever more capable quantum computing hardware, as well as quantum computing applications, with the potential to revolutionise computational science. Despite this progress, current and near-future quantum computers (commonly referred to as Noisy Intermediate-Scale Quantum (NISQ)-era quantum computers <ref type="bibr" target="#b1">[2]</ref>) are still limited in their capability. Realising the potential of quantum computers requires that certain features of quantum mechanics not available in classical computing are exploited. The potential computational benefit of quantum computers relies on information being processed while encoded in a coherent quantum state in the qubit register. In NISQ-era hardware, information is encoded in a relatively small number of qubits, with limited connectivity between qubits and a limited extent of quantum error correction techniques. Quantum error correction is needed to maintain this coherent state for a sufficiently long time so that meaningful computations can be performed. Recently, quantum computers with O(100) 'noisy' qubits (e.g., prone to significant quantum errors and decoherence) have been realised <ref type="bibr" target="#b2">[3]</ref>. This is projected to grow to O(10 4 ) or O(10 5 ) <ref type="bibr" target="#b3">[4]</ref> in the coming decade. This way, future quantum hardware with more fault-tolerance can be built, where the quantum error correction is used on the many implemented qubits to create O(100) fault-tolerant or 'functional qubits' (as termed by IBM).</p><p>In addition to the challenges involved in realising quantum hardware, it is also clear that major challenges exist in devising suitable applications and algorithms for quantum computers. Theoretical aspects of quantum algorithms, as well as the implementation in terms of quantum circuits represent major research areas.</p><p>A key role in developing quantum algorithms and their realisation on quantum hardware is played by quantum computing simulation on classical computing hardware. Applications requiring a number of qubits not yet available on hardware can be evaluated provided sufficient classical computing resources are available. This type of simulation also allows to evaluate for example the performance and reliability of an algorithm in the presence of simulated quantum errors.</p><p>As reviewed later this section, the representation in a classical simulation of a coherent quantum state involving n qubits in its most general form requires 2 n degrees of freedom. This characteristic forms a key aspect of the huge potential of quantum computers ("exponential speed-ups"). At the same time, it means that even for relatively small quantum computer applications, the classical computing resources required for simulation become excessive. For illustration, the Intel Quantum Simulator <ref type="bibr" target="#b4">[5]</ref> was demonstrated recently for simulations using 42 qubits on a state-of-the-art supercomputing facility.</p><p>Reducing the computational cost of simulating quantum circuits on classical hardware forms the main motivation of the present investigation. Specifically, the present work introduces transformations to quantum algorithms represented in terms of a quantum circuit, leading to more compact representations involving fewer qubits and, thus, reduced storage needs for the simulation.</p><p>Quantum circuit transformation methods represent a broad and active research area. One type of transformations map quantum circuits to specific quantum hardware. In the quantum circuit model (detailed later), quantum algorithms can be expressed in terms of quantum gate operations, such that all qubits can access all other qubits. For more limited connectivity in specific hardware configurations, a transformation of the circuit representation is then required. Childs et al. <ref type="bibr" target="#b5">[6]</ref> present a recent review of such transformations. Another type of transformations, closer related to the present work, involves circuit transformation aimed at facilitating classical simulation on large-scale distributed memory computing facilities. Graph-based transformation techniques have been introduced by a range of researchers to achieve a reduction in memory requirements. Boixo et al. <ref type="bibr" target="#b6">[7]</ref>, Chen et al. <ref type="bibr" target="#b7">[8]</ref>, and Schutski et al. <ref type="bibr" target="#b8">[9]</ref> employ a tensor network-based approach, while Pednault et al. <ref type="bibr" target="#b9">[10]</ref> use an undirected graph model. Further transformation methods presented in the literature include the circuit partitioning scheme described by Chen et al. <ref type="bibr" target="#b10">[11]</ref> and the implicit decomposition technique described by <ref type="bibr">Li et al. [12]</ref>, transforming the original circuit into multiple, smaller transformed circuits so that communication in parallel simulations on classical computers could be reduced.</p><p>The quantum circuit transformations introduced in this work are mainly aimed at facilitating simulating quantum circuits on classical computers. Additionally, the introduced transformation can be used in quantum hardware realisations, where the qubit count reduction can be used to facilitate realisation of circuits that would not fit without the transformations introduced here. It is important to note that the output of the proposed transformation involves gate operations with multiple control qubits (as detailed later). Therefore, a subsequent transpilation step accounting for available native gates and qubit connectivity of target quantum hardware is required for quantum hardware realisations. For quantum circuit simulation on classical hardware, a similar transpilation step is often required for applications where the impact of (modelled) quantum gate errors is investigated. In the transpilation step, a well-considered trade-off between quantum circuit width and quantum circuit depth is required to avoid undoing the circuit width reduction achieved by the quantum circuit transformations introduced here. If IBM quantum hardware is used in realisation, the transformation step in IBM Qiskit <ref type="bibr" target="#b12">[13]</ref> would be performed after the transformations proposed here. Beyond IBM's Qiskit, several other tools exist that were designed to facilitate the specification and transformation of quantum circuits, e.g., Quipper <ref type="bibr" target="#b13">[14]</ref>, OpenQASM 3 <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b15">16]</ref>, Xanadu's Strawberry Fields <ref type="bibr" target="#b16">[17]</ref>, Penny-Lane <ref type="bibr" target="#b17">[18]</ref>, and Microsoft Q# <ref type="bibr" target="#b18">[19]</ref>. Xanadu's tools primarily focus on Quantum Machine Learning and compilation to photonic quantum computers; OpenQASM is an effort to standardise quantum circuit specification. While the circuit specification and manipulation techniques provided by Qiskit, Quipper, and Microsoft Q# are similar to those provided by our toolchain, these tools were developed for more general circuit transformations and do not provide a similar functionality in terms of static analysis to achieve circuit width reduction of parameterised quantum arithmetic circuits.</p><p>The transformations introduced in this work rely on the concept of identifying qubits in the circuit that can be specialised to a constant value, i.e., |0 or |1 , as explained later. If the identified qubit only acts as control qubit in the quantum gate operations in the circuit, then two independent circuits (with one fewer qubit) can be defined for both choices of the specialised qubit. This approach works independent of the application domain for which the considered quantum circuit was developed, and was used in a different context in the works on circuit partitioning <ref type="bibr" target="#b10">[11]</ref> and circuit decomposition <ref type="bibr">[12]</ref>, as mentioned previously. The second concept on which the transformations introduced in this work rely involves exploiting application domain knowledge to facilitate the identification of qubits suitable for specialisation. As explained later in this section, a wide range of practically important quantum algorithms exist where quantum arithmetic occurs as part of the larger computation. This includes the famous Shor algorithm for integer factorization <ref type="bibr" target="#b19">[20]</ref>. In typical quantum circuit implementations of arithmetic operations, the identification of qubits suitable for the specialisation outlined above is a challenging task as a result of qubits acting repeatedly as control, as well as target qubit in gate operations. However, in reversible arithmetic operations, half of the input qubits will have an unchanged state upon completion of the computation. This domain-specific feature motivated the development of transformations of arithmetic circuits to a parameterised form such that qubit specialisation can be automated in a quantum computing toolchain. This second aspect of the introduced quantum circuit transformations involving parameterisation of circuits represents the main novelty of the present work. Despite this use of domain specific knowledge, it is shown that the approach is still general enough for a wide range of quantum algorithms in the field of computational science and engineering.</p><p>In a broader context, it can be noted that program transformation algorithms are essential constituents of modern compilers for classical languages <ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref>. These are used to optimise the instructions corresponding to the original source code of a program to, e.g., minimise register use, instruction count or run time, or make optimal use of features, such as vector operations. Thus, the current work can be considered as extending the concept of program transformations to the field of quantum computing. The specific transformations presented are quantum circuit substitutions that allow static analysis tools to easily specialise circuits for fixed inputs, reducing the quantum circuit width (qubit count).</p><p>Our main motivation for reducing the number of required qubits is to reduce the classical computing resources. However, the introduced transformations can also be used to create smaller circuits for proof-of-concept demonstrations on near-future quantum hardware, and would be an integral part of any future compiler for mature quantum computers.</p><p>The rest of this section presents a brief review of quantum computing concepts, provides context in terms of the type of quantum algorithms our transformations introduced are aimed at, and presents the primary contributions of this work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.">Brief Review of Quantum Computing Essentials</head><p>In this section, some core concepts of quantum computing that are particularly relevant to this work are reviewed. A full treatment can be found in <ref type="bibr" target="#b0">[1]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.1.">Qubit Representation and Manipulation</head><p>In quantum computing, qubits are the units of information that can be manipulated. Using the Dirac notation, a single qubit can be described by two complex probability amplitudes |q = a|0</p><formula xml:id="formula_0">+ b|1 ; |a| 2 + |b| 2 = 1 (1)</formula><p>such that |a| 2 is the probability of finding the qubit in state |0 and |b| 2 is the probability of finding the qubit in state |1 . We can compose a system with two qubits by taking the tensor product of the qubits' state vectors</p><formula xml:id="formula_1">|q 0 |q 1 = |q 0 ⊗ |q 1 = a 0 a 1 |00 + a 0 b 1 |01 + b 0 a 1 |10 + b 0 b 1 |11<label>(2)</label></formula><p>showing that in this case 4 complex amplitudes define the quantum state |q 0 |q 1 where |00 , |01 , |10 , and |11 represent the four computational basis states. This concept can be extended to n qubits, such that the quantum wave function, |Ψ is defined by 2 n complex amplitudes</p><formula xml:id="formula_2">|Ψ = 2 n -1 ∑ k=0 C k |k<label>(3)</label></formula><p>where |k represent the 2 n computational basis states, with the integer value of k obtained from the binary representation of the n qubits. Another way of interpreting this is that a system of n qubits forms a 2 n -dimensional Hilbert space. In quantum mechanics, operations performed on the quantum state are represented by unitary Hermitian matrices. In the quantum circuit model, discussed in next section, these unitary operations are performed by quantum gates.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1.2.">Quantum Circuit Model</head><p>The quantum circuit model is widely used in Quantum Computing to represent quantum algorithms as a series of "quantum gate" operations acting on one or more qubits. Each of the qubits is represented by a horizontal solid line in quantum circuit diagrams, with a vertical arrangement of the multiple qubits in the register. The number of qubits and, therefore, the number of parallel lines defines the circuit width. Quantum gates are designed to either work on a single qubit ("single-qubit gates") or work on multiple qubits simultaneously ("multi-qubit gates"). The quantum computation progresses step-by-step in the horizontal direction, starting from the initial qubit register state defined on the left-hand side. The diagram in the left-hand side of Figure <ref type="figure" target="#fig_0">1</ref> shows a simple two-qubit quantum circuit with a single two-qubit gate acting on the state of qubits |q1|q0 . The example shows a controlled-NOT (CNOT) operation, where the NOT (also termed X in quantum computing) is performed on qubit |q0 conditional on qubit |q1 = |1 . This operation represent a single time instance. The X gate (X ≡ 0 1 1 0 ) has the effect of flipping a qubit in the computational basis, such that X|0 = |1 , X|1 = |0 , by swapping of the qubit's probability amplitudes. This is the analogue of the classical NOT gate. In more complex circuits, a series of such quantum gate operations is performed step-by-step. For illustration, the right-hand side of Figure <ref type="figure" target="#fig_0">1</ref> shows how a general single-qubit gate G with a negative control (here |q1 = |0 ) can be implemented using a sequence of three gate operations. The number of time slices required to run the circuit (i.e., circuit slices with gates that affect mutually exclusive qubits) defines the circuit depth. Since a quantum circuit is composed of unitary operations, every quantum circuit has an inverse. The inverse of a quantum circuit can simply be composed of the inverse of all its constituent quantum gates, applied in reverse order. The operation of applying the inverse of a circuit after "moving" useful data from the circuit is common in quantum computing, and is termed uncomputation. This is typically used to return qubits allocated to create workspace to their initial state, so that these can be re-used in subsequent parts of the circuit. The quantum circuits considered in the current work typically involve tens or hundreds of qubits, with a quantum circuit depth of tens to thousands of gate operation steps. Simulating quantum circuits with this number of qubits clearly represents a major computational challenge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2.">Context of Present Work</head><p>In recent years, significant research efforts have focused on developing quantum algorithms for computational engineering applications, including fluid dynamics, with the aim of achieving significant quantum speed-up. A promising line of investigation in the context of computational fluid dynamics focuses on developing quantum circuit implementations of lattice-based models of a range of problems <ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref><ref type="bibr" target="#b28">[29]</ref><ref type="bibr" target="#b29">[30]</ref><ref type="bibr" target="#b30">[31]</ref>. A quantum algorithm for the collisionless Boltzmann equation and its application to rarefied supersonic flows was presented by Todorova and Steijl <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b25">26]</ref>. Budinski <ref type="bibr" target="#b26">[27]</ref> introduced a quantum algorithm for the linear advection-diffusion equation based on the Lattice Boltzmann method. In this work and in the work of Todorova and Steijl <ref type="bibr" target="#b24">[25]</ref>, particle distribution functions defined in each of the lattice sites on the considered regular lattice move to a neighbouring site during subsequent time steps. The quantum circuit implementation of this step shows strong similarity with quantum modulo adders. Therefore, it can be expected that the transformations introduced here can also be extended to this type of circuits. In the Lattice Boltzmann method, a collision term appears on the right-hand side of the equation and its non-linearity for the Navier-Stokes equations in fluid dynamics was considered by Steijl <ref type="bibr" target="#b28">[29]</ref> using quantum floating-point arithmetic and using Carleman linearisation in the work of Itani and Succi <ref type="bibr" target="#b27">[28]</ref>. In the context of the Lattice Boltzmann method for fluid dynamics, in Moawad et al. <ref type="bibr" target="#b29">[30]</ref> the authors presented quantum circuit implementations of non-linear one-dimensional models. More recently, the quantum circuit implementation of multi-dimensional non-linear lattice models was presented by one of the authors <ref type="bibr" target="#b30">[31]</ref>. Both these works employed an application-specific floating-point representation with reduced precision relative to the IEEE-754 single-precision standard <ref type="bibr" target="#b31">[32]</ref>. A key feature of this ongoing work on quantum circuit implementation of lattice modelling is the reliance on a range of quantum arithmetic operations. An illustrative example is shown in Figure <ref type="figure" target="#fig_1">2</ref> where for a fixed-point definition of velocities u and v in a two-dimensional problem, the quantity u 2 + v 2 (i.e., directly related to kinetic energy) is evaluated using a shift-andadd based approach to sum contributions from u and v into the output register defining u 2 + v 2 . The quantum circuit shown in Figure <ref type="figure" target="#fig_1">2</ref> is based on the more complex circuits shown in Steijl <ref type="bibr" target="#b30">[31]</ref> that involve floating-point operations. For the current work, the modified 4-qubit full adders FA u and FA v are of particular interest. Specifically, for larger fixed-point data representations with an increased number of qubits, it is clear that the quantum circuit width often exceeds the size that can be routinely simulated using a full state vector Quantum Circuit Simulator (as discussed in more detail in Section 3). In the ongoing development of quantum algorithms for lattice-based modeling, but also many further quantum algorithms employing similar quantum arithmetic operations, the quantum circuit width is often a limiting factor. This means that for quantum algorithms involving quantum arithmetic operations, the introduction of circuit-width reduction steps on the circuit performing quantum arithmetic operations would facilitate the classical simulation of larger circuits, as well as a wider range of quantum algorithms. ) and v (defined by |qv3|qv2|qv1|qv0 ). Upon completion on right-hand side of circuit, the kinetic energy is represented by 9 qubits |ek8|ek7| . . . |ek0 . FA u and FA v are modified 4-qubit full adders and Sh performs incremental shifts on output register.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3.">Exemplar Circuit: Integer Divider</head><p>Figure <ref type="figure" target="#fig_2">3</ref> shows a top-level representation of a quantum integer divider as an illustrative example and as the target application in this work. The design shown performs a 4-step long division to create a 4-qubit quotient |out3|out2|out1|out0 from a dividend defined by a 7-qubit register and a divisor defined by a 4-qubit register |q3d|q2d|q1d|q0d . The 7-qubit dividend register comprises the original 4-qubit representation of the dividend |q3i|q2i|q1i|q0i extended by three qubits in state |0 , i.e., |qin2|qin1|qin0 . This integer divider can for example be used in fixed-point arithmetic, or as part of a floating-point divider. The key building blocks of this quantum circuit are the Comparator (indicated by C in Figure <ref type="figure" target="#fig_2">3</ref>) and its uncomputation (termed U(C) in Figure <ref type="figure" target="#fig_2">3</ref>), as well as the controlled Subtractor operations. As can be seen, once the 4-qubit register |out3|out2|out1|out0 is defined, the controlled subtractions are uncomputed using controlled add (Add in Figure <ref type="figure" target="#fig_2">3</ref>) circuits to restore all qubits to their original state, except the four qubits defining desired output. Possible quantum circuit implementations of these operations are detailed in Figure <ref type="figure" target="#fig_3">4</ref>, where the comparator is based on the subtractor circuits proposed by Xia et al. <ref type="bibr" target="#b32">[33]</ref>.  The design and quantum circuit implementation of quantum comparators has been investigated in detail in the past decade <ref type="bibr" target="#b32">[33]</ref><ref type="bibr" target="#b33">[34]</ref><ref type="bibr" target="#b34">[35]</ref><ref type="bibr" target="#b35">[36]</ref>. Often, this work was conducted in the context of quantum image processing, where the comparator circuits were employed in image binarisation. The circuits take as input two multi-qubit registers defining integers a and b in binary representation. For use in quantum long-division only a &lt; b or a ≥ b need to be identified, while some of the comparator designs also separate a = b and a &gt; b. The work of <ref type="bibr">Xia et al. al. [33]</ref> includes a brief review of past work on quantum comparators. The type of quantum comparator circuits introduced by Xia et al. <ref type="bibr" target="#b32">[33]</ref> is well-suited to the requirements of the present work since it involves a minimum number of auxiliary qubits. It was also recently used in the work of Yuan et al. <ref type="bibr" target="#b36">[37]</ref>, where the design of a fault-tolerant implementation of quantum divider was considered.</p><formula xml:id="formula_3">|out3 = |0 |out2 = |0 |out1 = |0 |out0 = |0 |q4d = |0 Sub |test = |0 C U (C) Sub Add |q3d C U (C) Sub Add |q3i C U (C) Add |q2d C U (C) |q2i |q1d |q1i |q0d |q0i |c = |0 |qin2 = |0 |qin1 = |0 |qin0 = |0</formula><formula xml:id="formula_4">M AJ U M A |test = |0 |q3d M AJ U M A |q3i |q2d M AJ U M A |q2i |q1d M AJ U M A |q1i |q0d M AJ U M A |q0i |c = |0</formula><p>It should be noted that the quantum circuit transformation steps demonstrated here using the quantum integer divider target a wider range of quantum arithmetic operations and should, therefore, benefit a significant research community working on quantum arithmetic circuits and their application within more complex algorithms. From the quantum computing literature, it is clear that work on quantum arithmetic circuits remains an active area of research, even after two decades of work. Relating to the example shown in Figure <ref type="figure" target="#fig_1">2</ref> for a quantum circuit used for evaluation of kinetic energy in fixed-point representation in a two-dimensional lattice-based model, work on the development of efficient quantum multipliers constitutes significant ongoing activity <ref type="bibr" target="#b37">[38]</ref><ref type="bibr" target="#b38">[39]</ref><ref type="bibr" target="#b39">[40]</ref>. Recent work on improved quantum circuits for addition and subtraction often focuses on fault-tolerant implementations, e.g., Orts et al. <ref type="bibr" target="#b40">[41]</ref> propose three fault-tolerant carry look-ahead adders that improve the cost in terms of quantum gates and qubits relative to previous works. Recently, a quantum circuit design for single-precision floating-point division was presented by Gayathri et al. <ref type="bibr" target="#b41">[42]</ref>. Their emphasis was on creating resource estimates in terms of number of qubits required, as well as circuit depth. This type of research work could benefit from the quantum circuit transformation introduced here as it facilitates more efficient classical simulations of the circuits.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.4.">Contributions of This Work</head><p>The main novelty and contributions of the presented work can be summarized as follows:</p><p>• Demonstration of quantum circuit width reduction transformations based on Circuit Parameterisation and Qubit Specialisation for quantum algorithms performing arithmetic operations as part of the computational work; • Demonstration of the derivation steps used in creating parameterised quantum circuits for quantum arithmetic. The formulation in parameterised form for a quantum comparator and a quantum subtractor are detailed. To the best of the authors' knowledge, these parameterised circuits have not been considered in the literature before.</p><p>The derivations detailed here also show how similar parameterisation can be applied to a wider range of arithmetic circuits; • Analysis of the quantum circuit design of integer dividers in terms of suitability for the proposed quantum circuit width transformations; • Demonstration how for the quantum divider exemplar the pre-computed and verified comparator and subtractor circuits in parameterised form can be imported into the complete quantum circuit implementation, followed by the automated selection of qubits suitable for specialisation and the automated specialisation for different userdefined inputs; • Analysis in terms of circuit complexity of specialised quantum integer divider circuits as obtained from the transformation techniques introduced. The correctness of the circuits is verified using a quantum circuit simulator.</p><p>The rest of this manuscript is structured as follows. Section 2 presents the two main types of data encoding techniques used in quantum information processing. Section 3 discusses key aspects of simulation of quantum circuits on a classical computer. The key concepts introduced in this work are outlined in Section 4. Section 5 describes the derivation of the parameterised comparator and its specialised forms. Section 6 then details the parameterised subtractor circuits. Section 7 describes the design and quantum circuit implementation of quantum integer dividers. The quantum circuit toolchain employed in this work is described in Section 8. Section 9 demonstrates the implementation of the divider in the presented toolchain and describes its specialisation and verification. The results of using the toolchain to reduce the divider are presented. Finally, Section 10 presents the conclusions and suggestions for future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Data Encoding in Quantum Information</head><p>The quantum circuit transformation approaches introduced here were designed to reduce quantum circuits performing quantum arithmetic operations. In the intended application, the quantum circuit considered represents a larger, and more general quantum algorithm were the arithmetic represents a part of the computational work. Quantum arithmetic operations typically rely on a specific type of data encoding. To explain this further, the two main data encoding approaches used in quantum information processing are summarized here.</p><p>In amplitude-based encoding , a vector of normalised complex data (of size up to <ref type="formula" target="#formula_2">3</ref>). This encoding technique is the most widely used encoding technique in quantum algorithms since it creates the most direct means of taking advantage of quantum parallelism (i.e., exponential growth of number of degrees of freedom with linear increase in the number of qubits). For this type of data encoding, the most widely used quantum circuit simulation approach on classical computers is full state vector simulation, where the 2 n complex amplitudes are all stored and the gate operations in a considered circuit lead to step-by-step modifications of these amplitudes.</p><formula xml:id="formula_5">N = 2 n ) is encoded into the amplitudes, C k in Equation (</formula><p>In the present work, the focus is on the alternative approach termed computationalbasis encoding. In this data encoding approach, the quantum algorithm is designed such that at initialisation only the complex amplitude of a single computational basis state has non-zero amplitude. After completion of the quantum algorithm the output is represented similarly by a single non-zero amplitude for one of the quantum basis states. For quantum algorithms employing the computational basis encoding a few important observations relevant to the present work can be made:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>The motivation for this type of encoding is typically performing quantum arithmetic operations; • To maintain the property that only a single computational basis state has a non-zero amplitude throughout the computation, the gates in the Quantum Circuit model are limited to quantum equivalents of logic gates (e.g., X as equivalent of NOT and Toffoli as doubly-controlled NOT). By doing so, the quantum circuit can efficiently be simulated on a classical computer using a logic-based simulator. In such a simulator, n classical bits suffice to represent the state of n qubits. Then, the controlled logic gate operations conditionally flip states between 0 and 1; • If quantum arithmetic operations are implemented in the quantum circuit model based on the Quantum Fourier Transform <ref type="bibr" target="#b42">[43,</ref><ref type="bibr" target="#b43">44]</ref>, then efficient simulation using classical logic-based simulation is not possible, since the QFT in the case of quantum arithmetic circuits temporarily moves the encoding approach to amplitude-based encoding, before finally returning an output in computational basis encoding.</p><p>Since the circuit transformation approaches introduced here target quantum arithmetic operations, key aspects of computational basis encoding were used in creating these transformation steps. Specifically, identifying qubits that throughout a quantum computation are guaranteed to remain in either state |0 or |1 relies on this type of encoding throughout the computation or at least for the considered part of the algorithm performing arithmetic operations. For more general algorithms using amplitude encoding the transformation approaches introduced cannot be employed.</p><p>Relating to the use of the transformation approaches in quantum algorithm development process, the following observations need to be made:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>The quantum arithmetic operations in circuit using computational basis encoding considered here can be efficiently simulated on a classical computer using a logic based simulator-these circuits act as classical reversible circuits when not used as part of a larger quantum algorithm; • As arithmetic blocks which operate in the computational basis are often parts of larger quantum algorithms, quantum circuit simulations often require a full-state vector simulation approach; • For quantum circuit simulations where the effect of (modeled) quantum errors are included, the full-state vector simulation approach is generally required even for algorithms operating entirely (through computation) with computational basis encoding.</p><p>Because of the essential role played by full-state vector simulation, this aspect of quantum algorithm analysis is considered in more detail in the following section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Quantum Circuit Simulation</head><p>In this section, the full-state vector simulation of quantum circuits is considered in more detail. As mentioned in Section 1.1, the quantum state of n qubits in a qubit register is defined by 2 n complex amplitudes defining the quantum wave function. In a fullstate vector quantum circuit simulator, the 2 n complex numbers are all stored in memory irrespective of the amplitude. Specifically, in cases where many of the amplitudes are zero, the potential savings offered by only storing non-zero amplitudes are not employed. During the evolution of the quantum state in the considered quantum computation, some or even all amplitudes will change in time, complicating approaches where only non-zero amplitudes are stored.</p><p>In general, to simulate the operation of a quantum gate on a full state vector, the entire memory space needs to be accessed. The access pattern depends on the index of the gate's target qubit in the quantum register. This index t is 0 for the least significant qubit in the indexing used (at the bottom of quantum circuit diagrams), while t = n -1 for the most significant qubit (at the top of quantum circuit diagrams). The memory space is accessed in pairs, where the stride between the pair elements is 2 t , for target t. Each pair is then updated by direct matrix-vector multiplication by the gate's 2 × 2 matrix. As an example of the computational work involved in quantum circuit simulation, consider the application of a general gate, G = a b c d , where a, b, c, d ∈ C, on the most-significant qubit. If the initial quantum state is defined by |Ψ 0 and the state after applying the gate by |Ψ 1 then</p><formula xml:id="formula_6">|Ψ 1 = 2 n ∑ k=0 C<label>(1)</label></formula><p>k |k</p><p>where complex amplitudes C</p><p>k are related to previous amplitudes</p><formula xml:id="formula_9">C (0) k as C (1) k = aC (0) k + bC (0) k+2 t<label>(5)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C</head><p>(1)</p><formula xml:id="formula_10">k+2 t = cC (0) k + dC (0) k+2 t for k ∈ [0, 2 n-1 -1].</formula><p>The indexing of the amplitudes in Equation <ref type="bibr" target="#b4">(5)</ref> shows that the simulation of gate operations in the quantum circuit model typically involves large memory strides. For the application of a gate on the qubit that represents the most-significant bit in terms of indexing, this stride equals half the state-vector length, i.e., 2 n-1 . In an application of a gate on the qubit representing the least-significant bit in the indexing, the stride in memory reduces to 1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Discussion of Key Concepts</head><p>A key aspect of the quantum circuit transformations presented in this work involves reducing the number of qubits by redefining the circuit for specific states of one or more qubits. To illustrate this concept, consider the reduction of a 3-qubit modulo adder. Figure <ref type="figure" target="#fig_5">5</ref> illustrates the step-by-step specialisation of the ripple-carry 3-qubit modulo adder for the specific case |a2|a1|a0 = |101 . In terms of 2's complement representation, this modulo adder can then be used to subtract 3 from a positive integer represented in binary by 2 qubits |b1|b0 . In the modulo adder, this input is set as |b2|b1|b0 with |b2 = |0 . Step 3</p><p>Step  In Figure <ref type="figure" target="#fig_5">5,</ref><ref type="figure">'</ref>Step 0' shows the Cuccaro-type modulo adder <ref type="bibr" target="#b44">[45]</ref> with the MAJ (Majority) and U MA (UnMajority and Add) blocks expanded. The 3-qubit modulo adder in its unmodified form employs three MAJ blocks on the left-hand side of the circuit shown, and three U MA blocks on the right-hand side. The steps shown in the figure are described here:</p><p>•</p><p>Step 1 : For the three most-significant qubits |a2|r2|a1 at the top of the circuit, the gate operations in the neighbouring MAJ and U MA blocks partially cancel out. Specifically, only two CNOTs remain. The CNOT with |a2 as control and |b2 target can then be reduced to a NOT on |b2 since in the specialisation shown |a2 = |1 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Step 2: |a1 = |0 is accounted for by removing the three CNOTs where |a1 acts as control.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Step 3: The actions on |a1 can be removed by replacing the two Toffoli gates that conditionally change |a1 = |0 into state |1 and the CNOT gate with |b2 as target, by a single Toffoli gate with |b2 as target and with the same control qubits as the replaced Toffoli gates.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Step 4: |a0 = |1 is accounted for first by replacing three CNOTs by three NOTs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Step 5: The three NOTs resulting from the previous step are then accounted for by modifying the control in two Toffoli gates with |a0 as target.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Step 6: |c = |0 is accounted for by removing |c as control from the two Toffoli gates with |b0 as target and removing the CNOT with |b0 as target. •</p><p>Step 7: The actions on |a0 are removed by removing the remaining two CNOTs with |a0 acting as target. The resulting circuit has no gate operations on the qubits used for specialisation and so this is the final reduced form of the circuit for these values of the specialisation qubits (|a2|a1|a0 ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Issue with Reduction-by-Specialisation</head><p>For the example application involving a quantum integer divider, an important part of the quantum arithmetic operations perform controlled subtractions during each of the long-division steps. Assuming an example 4-qubit divisor is represented in 2's complement representation by the qubits |q4d |q3d |q2d |q1d |q0d , the subtraction is assumed to be carried out by a 5-qubit ripple-carry modulo adder, as shown in the top half of Figure <ref type="figure" target="#fig_6">6</ref>. To achieve quantum circuit width reduction, the proposed transformation techniques aim to eliminate one or more of the divisor qubits (in 2's complement representation). The qubits defining the dividend are to be left unchanged, as explained later. As an illustration of a reduced circuit, the bottom half of Figure <ref type="figure" target="#fig_6">6</ref> shows the transformed ripple-carry modulo adder when the three most-significant divisor qubits, i.e., |q4d |q3d |q2d , specialised to a state of |101 . This specialisation followed similar steps to those outlined previously for the 3-qubit modulo adder in Figure <ref type="figure" target="#fig_5">5</ref>. However, this reduction-by-specialisation as shown here is challenging to automate by a quantum circuit transformation tool. A key part of this challenge is that the states of the 'constant' qubits (i.e., those for which circuit is specialised) can temporarily change during the quantum computation. This challenge to automating the reduction-by-specialisation transformations as illustrated in Figures <ref type="figure" target="#fig_5">5</ref> and<ref type="figure" target="#fig_6">6</ref> extends to more general quantum arithmetic circuit implementations where similar ripple-carry based addition or subtraction is performed, e.g., circuits where controlled additions are used in multiplications.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Our Approach: Reduction by Parameterisation</head><p>Based on this observed challenge in automating the reduction to the reduced circuit shown in bottom half of Figure <ref type="figure" target="#fig_6">6</ref>, an alternative approach is proposed here.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>First, the original quantum circuit implementation shown in the top half of Figure <ref type="figure" target="#fig_6">6</ref> is replaced with a parameterised subtractor circuit; this causes one of the inputs to the subtractor to be only used as controls and the states of its qubits will remain static throughout the entire subtractor. • Then a choice is made for the input values of the static qubits and a smaller specialised circuit can be constructed for this choice of input during the static analysis step.</p><p>In the present work, it is assumed that quantum circuits are defined using an embedded Domain Specific Language (eDSL), where the information related to the intended replacement will be provided by higher-order functions in the eDSL (i.e., functions on circuits, rather than functions on qubits). However, the proposed transformation approach is more general. It can also be applied to quantum computing tool chains that feature a staticanalysis capability, while employing an alternative approach to specifying quantum circuits. In QC research, OpenQASM <ref type="bibr" target="#b14">[15]</ref> is widely used to specify quantum circuits. The transformation approach could, e.g., be embedded in a pre-processing step where directives added to the OpenQASM specification of the quantum circuit inform the interpreter to replace the original block of gate operations with those representing the parameterised circuit. For the previously considered example specialisation, Figure <ref type="figure" target="#fig_7">7</ref> illustrates the alternative approach proposed here. The top part of the figure shows the parameterised subtractor circuit before reduction-by-specialisation. For the choice |q4d |q3d |q2d = |101 , static analysis is then used to create the reduced circuit shown in the bottom half of Figure <ref type="figure" target="#fig_7">7</ref>.</p><formula xml:id="formula_11">|q4d ′ = |1 M AJ U M A |test = |0 |q3d ′ M AJ U M A |q3i |q2d ′ M AJ U M A |q2i |q1d ′ M AJ U M A |q1i |q0d ′ M AJ U M A |q0i |c = |0 ⇓ |test |q3i |q2i |q1d ′ |q1i |q0d ′ |q0i |c = |0</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Reducing Memory Requirement in Full-State Vector Simulation</head><p>Section 3 highlighted the challenges in terms of memory requirements and strides when performing full-state simulations of quantum circuits. For quantum circuits where one or more qubits remain in a constant state throughout the quantum simulation, circuit transformations can be used to create a smaller computational problem. Here, this is illustrated for an example circuit applying the CNOT gate. For an example 3-qubit register |q2|q1|q0 , applying the CNOT gate to |q0 (least-significant qubit used in indexing of amplitudes) as target and |q2 as control, the amplitudes of the updated state vector |Ψ 1 follow as,</p><formula xml:id="formula_12">            C 000 C 001 C 010 C 011 C 100 C 101 C 110 C 111             (1) =            </formula><p>1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0</p><formula xml:id="formula_13">                        C 000 C 001 C 010 C 011 C 100 C 101 C 110 C 111             (0) (6)</formula><p>where the previously used indices k are represented in binary format for convenience. The sparsity pattern in Equation <ref type="bibr" target="#b5">(6)</ref> shows that in this case, the NOT operations only change the amplitudes in the 'lower' half of the amplitude vector corresponding to |q2 = |1 . If |q2 = |1 is fixed for a circuit, then the circuit simulation can be performed while only considering half the original problem. This principle can be extended to cases with the two most-significant qubits acting as control (now a Toffoli gate is considered) with |q0 still acting as the target, and |q1 acting as the additional control.</p><formula xml:id="formula_14">            C 000 C 001 C 010 C 011 C 100 C 101 C 110 C 111             (1) =            </formula><p>1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0</p><formula xml:id="formula_15">                        C 000 C 001 C 010 C 011 C 100 C 101 C 110 C 111             (0)<label>(7)</label></formula><p>Similarly, this approach can be extended further to NOT gates controlled by a larger number of control qubits, as well as circuits where a series of NOT and controlled-NOT operations are performed, provided the qubits acting as control remain in original state.</p><p>It should be noted that the concept of removing constant-state qubits (e.g., acting only a control qubit in controlled-gate operations) to achieve memory saving in full-state vector simulations applies equally to algorithms employing amplitude based encoding and algorithms using computational-basis encoding. The focus of the current transformation on quantum arithmetic operations in quantum algorithms is motivated by the relative ease in identifying such constant-state qubits once parameterised circuits have been introduced.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Derivation of Parameterised Comparator Circuits</head><p>In Section 1, the concept of the comparator step in quantum circuit implementations of a long-division based quantum integer divider was introduced. An example quantum circuit that performs the comparator step for two 4-qubit registers was shown in the top half of Figure <ref type="figure" target="#fig_3">4</ref>, where the quantum circuit design followed the work of Xia et al. <ref type="bibr" target="#b32">[33]</ref>. In this section, an alternative type of quantum comparator circuits will be derived that facilitates automated quantum circuit reduction steps. Specifically, the aim is to create comparator circuits where, in contrast to the quantum comparator shown in Figure <ref type="figure" target="#fig_3">4</ref>, the qubits defining the divisor in the long division will remain unchanged in the circuit and where these qubits can only acts as control qubits in quantum gate operations. For an n-qubit comparator, the derivation works as follows.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>An (n + 1)-qubit ripple-carry modulo adder of the type introduced by Cuccaro acts as starting point where subtraction of two positive numbers can be achieved by having one of the (n + 1)-qubit inputs represent an n-qubit number in 2's complement, while the second input will have its leading qubit in state |0 ; • For a specific choice of the n + 1 qubits defining the divisor in 2's complements representation, qubit specialisation steps of the type previously illustrated in Figure <ref type="figure" target="#fig_5">5</ref> for a 3-qubit modulo adder are applied; •</p><p>The reduced circuits that result from this process represent a subtraction operation by the integer value represented in negative form by the 2's complement representation; • Next, the gate operations in the reduced circuits are sorted in n + 1 groups, where each group represents gate operations affecting the state of each of the n + 1 qubits from the second (remaining) input string; • To create the comparator circuit, the group acting on the most-significant qubit of the input qubit register is selected, while the rest of the gate operations can be ignored; •</p><p>The subtractor circuits discussed in Section 6 are similarly created by using the gate operations from each of the n + 1groups identified. Since the interest is only in positive divisors defined by a qubit string with the mostsignificant qubit in state |1 , 2 n-1 specialised, reduced circuits can be defined. For n = 3 and n = 4, the top half of Figures <ref type="figure" target="#fig_8">8</ref> and<ref type="figure" target="#fig_9">9</ref>, respectively, shows these circuits for specific values of the divisor. As a final step in creating a parameterised comparator, the gate operations from these 2 n-1 specialised circuits are parameterised using the qubits defining the divisor. Two options are available here. First, the use of the n qubits defining the divisor in its original form. Alternatively, the n + 1 qubits defining the divisor in 2's complement representation can be used. Design choices made in the quantum circuit implementation of the integer divider determine which approach is the most suitable. In this work, for qubit registers where prime superscripts are used in qubit indices, the integer representation is in 2's complement representation. The next subsections show the quantum comparators for n = 3, n = 4, and n = 5 to illustrate the results of the specialisation for divisors represented by an increasing number of qubits.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Comparator Circuits for 3-Qubit Divisor</head><p>Based on the reduction in 4-qubit modulo adders, comparator circuits can be derived for quantum dividers with a 3-qubit divisor. Assuming that the divisor is defined by |q2d|q1d|q0d with |q2d = |1 , four different comparator circuits will result. The four comparator circuits are shown at the top of Figure <ref type="figure" target="#fig_8">8</ref>.</p><p>Using the three divisor qubits as parameters, a parameterised subtractor can be obtained as shown in the bottom half of Figure <ref type="figure" target="#fig_8">8</ref>. As will be explained in later sections, the quantum-circuit implementation of quantum integer dividers may employ 2's complement representation of the divisor qubits. Using the 4-qubit 2's complement representation |q3d |q2d |q1d |q0d , the comparator can be parameterised, as shown in Figure <ref type="figure" target="#fig_8">8</ref>. The leading qubit |q3d = |1 as a result of the positive value for divisor assumed here.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Comparator Circuits for 4-Qubit Divisor</head><p>Based on reduction of 5-qubit modulo adders, comparator circuits can be derived for quantum dividers with 4-qubit divisor using the same approach as in the previous section. Assuming that the divisor is defined by |q3d|q2d|q1d|q0d with |q3d = |1 , eight different comparator circuits will result. The top part of Figure <ref type="figure" target="#fig_9">9</ref> summarised the 8 comparator circuits.</p><p>The lower part of Figure <ref type="figure" target="#fig_9">9</ref> shows the parameterised comparator circuit for the 4-qubit divisor. The parameterisation is based on the 5-qubit 2's complement representation of the divisor. As before, the leading qubit |q4d in this representation is in state |1 as a result of the assumption of a positive divisor.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.">Comparator Circuits for 5-Qubit Divisor</head><p>To further illustrate the parameterised comparator circuits, and to show the increase in circuit complexity for increased number of divisor qubits, the example for 5-qubit divisors is summarized in Figure <ref type="figure" target="#fig_10">10</ref>. </p><formula xml:id="formula_16">|q5d ′ = |1 |q4d ′ |q3d ′ |q2d ′ |q1d ′ |q0d ′</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Derivation of Parameterised Subtractor Circuits</head><p>The specialisation of modulo adders used in deriving quantum comparator and subtractor circuits was detailed in Section 5. Here, parameterised subtractors for the example n = 4 (used in division by 4-qubit divisor) are detailed. As explained later in Section 7, the present work considers divider designs where the divisor is represented directly in 2's complement. For n = 4, the 5-qubit string representing the divisor in 2's complement is then considered as the basis for a parameterised 4-qubit subtractor, where, as a result of the assumed positive divisor, |q4d = |1 is guaranteed. The parameterised quantum circuit design is shown in Figure <ref type="figure" target="#fig_11">11</ref>. Clearly, the parameterised gate operations acting on the leading qubit of the input register (termed |b4 here) match the gate operations in the comparator circuit for division by a 4-qubit divisor. Comparing the quantum circuit in Figure <ref type="figure" target="#fig_11">11</ref> with the quantum circuit implementation of an equivalent ripple-carry adder/subtractor, it is apparent that the complexity of the parameterised quantum circuits is significantly larger in terms of the number of gate operations and, in particular, the number of control qubits used in the majority of gate operations. Therefore, 'complete' parameterised circuits as shown in Figure <ref type="figure" target="#fig_11">11</ref> are there to be introduced temporarily during the quantum-circuit transformation with subsequent reduction steps creating smaller, reduced circuits.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Applying Circuit Transformations to a Quantum Integer Divider</head><p>The quantum circuit implementations for integer dividers considered in this work are based on the concept of long division. Specifically, for a dividend and divisor represented by n qubits, a (2n -1)-qubit dividend register (with n -1 least significant qubits in state |0 ) is created that is then divided by the n-qubit divisor in n long-division steps. This creates an n-qubit representation of the quotient, assuming that the most significant qubit in divisor is in state |1 . This integer divider can be used in algorithms using fixed-point arithmetic. Additionally, the divider can be used as building block of a floating-point divider where n mantissa bits are used in the floating-point representation. In the quantum circuit implementation, comparator steps are performed that need an additional qubit to act as 'sign' qubit. Therefore, for n = 4, a qubit register with 8 qubits is created to hold the 7-qubit representation of dividend along with this sign qubit. Furthermore, the designs considered are based on the requirement that in the final quantum state, only the qubits representing the result will have been updated, while all other qubits remain in or return to their original state. To achieve this, after the setting the n-qubit result, the steps representing the long division need to be 'uncomputed'.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.1.">Design 1: Baseline Divider</head><p>Figure <ref type="figure" target="#fig_2">3</ref> shows the quantum circuit design of an integer divider based on the longdivision approach. The example shown divides a 7-qubit dividend by a 4-qubit divisor. The qubits in this circuit represent the following |out3|out2|out1|out0 : n qubits defining output |test : qubit defining comparator result |q4d : additional qubit needed in 2's complement |q3d|q2d|q1d|q0d : n-qubit representation of divisor |q3i|q2i|q1i|q0i : n-qubit representation of dividend |c : 'carry' qubit in modulo adder |qin2|qin1|qin0 : n -1 qubits used to create the 7-qubit dividend along with |q3i|q2i|q1i|q0i for the quantum circuit implementation illustrated in Figure <ref type="figure" target="#fig_2">3</ref> for the example n = 4, the circuit complexity in terms of required number of qubits as a function of n is,</p><formula xml:id="formula_17">n + 2 + 2n + 1 + (n -1) = 4n + 2 (8)</formula><p>for n = 4, a minimum of 18 qubits is, therefore, needed, as shown in Figure <ref type="figure" target="#fig_2">3</ref>. For n = 5, 22 qubits are required. For reference, when employing double-precision arithmetic in the simulators used in the present work, simulating circuits with 28 qubits typically requires 8 GB of memory. Increasing the dividend and divisor representation to n &gt; 6 therefore means that computational resources on a desktop work station are challenged. The quantum circuit implementation of the comparator C and subtractor Sub used in the long-division steps are detailed in Figure <ref type="figure" target="#fig_3">4</ref>. Design 1, presents the following challenges to 'reducing out' one or more of the divisor qubits:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>In the comparator C and its uncomputation U(C), the state of the divisor qubits can temporarily become changed before returning the their original state; •</p><p>The subtractor Sub involves a transformation to 2's complement formulation for divisor qubits at start and completes with a transformation from 2's complement to original representation. Along with the further temporary changes to divisor qubit states in the ripple-carry based modulo adder, this greatly complicates static analysis, as outlined previously in Section 4; • The 'downward' movement of subtractor circuit toward less significant qubits of the dividend in successive long-division steps requires re-arrangement of qubits so that the modular addition on which the subtractor Sub is based can be performed. This further complicates qubit-reduction steps.</p><p>The comparator circuit shown in Figure <ref type="figure" target="#fig_3">4</ref> can be reduced by specialisation of one or more (divisor) qubits. Reduction by two qubits is illustrated in Figure <ref type="figure" target="#fig_21">12</ref>, while a further reduction by three and four divisor qubits is shown in Figure <ref type="figure" target="#fig_21">13</ref> and Figure <ref type="figure" target="#fig_13">14</ref>, respectively. Note that, here, the divisor is represented in its original (4-qubit) form, not in 2's complement used in later designs. The reductions shown were performed manually, following the same principles outlined previously in Figure <ref type="figure" target="#fig_5">5</ref> for the example of ripplecarry modulo adders. The complexity of step-by-step reduction in these comparator circuits further supports the conclusion drawn in Section 4, that this type of reductions present a major challenge to automation and that, therefore, the alternative approach based on parameterised circuits is preferable.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.2.">Design 2: Dividend Register-Shifting Divider</head><p>As a first step to facilitating reduction-by-specialisation of divisor qubits, the second design considered here (Design 2) includes a number of important changes relative to Design 1:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>The 'downward' movement of the comparator (and its uncomputations) and subtraction steps for successive long-division steps have been removed by introducing shift operation Sh that moves the dividend register one step toward more significant qubits. The quantum circuit implementation of this Sh operation, as well as the reverse operation Ŝh (used in the uncomputation steps), was previously discussed in previous work by the authors <ref type="bibr" target="#b29">[30]</ref> and follows the work of Jayashree et al. <ref type="bibr" target="#b37">[38]</ref>; • With the changes introduced, the divisor qubits (states) remain in the same position in the qubit register throughout the computation.</p><p>The quantum circuit implementation of C (and, therefore, also U(C)), as well as Sub, remains unchanged relative to Design 1. For the quantum circuit implementation illustrated in Figure <ref type="figure" target="#fig_14">15</ref> for the example n = 4, the circuit complexity in terms of required number of qubits as a function of n is the same for Design 1, i.e., defined by Equation <ref type="bibr" target="#b7">(8)</ref>. </p><formula xml:id="formula_18">|out3 = |0 |out2 = |0 |out1 = |0 |out0 = |0 |q4d = |0 Sub Sub Sub |test = |0 C U (C) Sh C U (C) Sh C U (C) Sh C U (C) Ŝh Add Ŝh Add Ŝh Add |q3d |q3i |q2d |q2i |q1d |q1i |q0d |q0i |c = |0 |qin2 = |0 |qin1 = |0 |qin0 = |0</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.3.">Design 3: Parameterised Divider</head><p>Figure <ref type="figure" target="#fig_15">16</ref> shows a top-level overview of the third design of for a quantum circuit implementation of quantum integer division. For this Design 3, the qubits represent the following: |out3|out2|out1|out0 : n qubits defining output |test : qubit defining comparator result q4d |q3d |q2d |q1d |q0d : (n + 1)-qubit representation of divisor in 2's complement representation |q3i|q2i|q1i|q0i : n-qubit representation of dividend |c : 'carry' qubit in modulo adder |qin2|qin1|qin0 : n -1 qubits used to create the 7-qubit dividend along with |q3i|q2i|q1i|q0i Therefore, the required number of qubits as a function of n can be written as,</p><formula xml:id="formula_19">n + 1 + (n + 1) + n + 1 + (n -1) = 4n + 2<label>(9)</label></formula><p>showing that the quantum circuit width remains the same as compared with Design 1 and Design 2. The definition of the divisor qubits in terms of 2's complement means that the comparator circuit used in Design 1 and Design 2 cannot be used. Instead, an alternative comparator circuit taking the qubits defining the divisor using 2's complement is required. One possible way to create such a comparator is shown in Figure <ref type="figure" target="#fig_16">17</ref>, where the original circuit following the design of Xia et al. <ref type="bibr" target="#b32">[33]</ref> is modified such that the divisor qubits are transformed from 2's complement representation at input on the left-hand side of the circuit to the regular representation. At the end of the comparator step, the transformation to return to 2's complement representation for divisor qubits is performed. As can be seen from Figure <ref type="figure" target="#fig_16">17</ref>, the additional steps introduced related to 2's complement conversions add further complexity to the circuit, and therefore making the circuit-width transformation outlined in Figures <ref type="figure" target="#fig_21">12</ref><ref type="figure" target="#fig_21">13</ref><ref type="figure" target="#fig_13">14</ref>for the original form of the comparator even more challenging to automate. This further supports the approach outlined next, where this type of reduction is circumvented. In Design 3, the key ideas underpinning the automation of qubit reduction-byspecialisation are introduced:</p><formula xml:id="formula_20">|out3 = |0 |out2 = |0 |out1 = |0 |out0 = |0 |q4d ′ = |1 Sub Sub Sub |test = |0 C U (C) Sh C U (C) Sh C U (C) Sh C U (C) Ŝh Add Ŝh Add Ŝh Add |q3d ′ |q3i |q2d ′ |q2i |q1d ′ |q1i |q0d ′ |q0i |c = |0 |qin2 = |0 |qin1 = |0 |qin0 = |0</formula><formula xml:id="formula_21">|test = |0 |q3d ′ |q3i |q2d ′ |q2i |q1d ′ |q1i |q0d ′ |q0i |c = |0</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>For the comparator C and U(C), the original implementation is replaced by an alternative, parameterised quantum circuit implementation where divisor qubits acts as specialisation parameters;</p><p>• For the subtractor Sub, the original implementation is replaced by an alternative, parameterised quantum circuit implementation where divisor qubits acts as specialisation parameters; • Design 3 also stores divisor qubits directly in 2's complement representation. The current analysis shows that using this form of the divisor state makes the parameterisation of the comparator and subtractor more compact than with the original form of divisor.</p><p>With these changes, the states of the divisor qubits remain unchanged throughout the computation. This way, automated qubit reduction-by-specialisation becomes a realistic prospect for the tool chain used here. This will be demonstrated in Section 9.</p><p>The quantum circuit implementation of the parameterised comparator used in division by 4-qubit divisor is shown in Figure <ref type="figure" target="#fig_21">18</ref>, where the states of qubits |q3d , |q2d , |q1d and |q0d act as parameters. It should be noted that for the assumed positive divisor, |q4d = |1 in all cases. Based on this parameterisation, a parameterised quantum circuit implementation for the subtractor can be derived as outlined previously in Section 6. For the case of division by a 4-qubit divisor, Figure <ref type="figure" target="#fig_21">19</ref> shows this parameterised quantum circuit implementation. </p><formula xml:id="formula_22">|test = |0 |q3d ′ |q3i |q2d ′ |q2i |q1d ′ |q1i |q0d ′ |q0i</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.">Quantum Circuit Toolchain</head><p>One of the general goals of this research is to use reconfigurable hardware to accelerate the simulation of quantum circuits. A quantum circuit toolchain known as the Functional Quantum Toolchain (FQT) <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b45">46]</ref> was developed with the primary purpose of outputting quantum assembly in forms specialised for our custom hardware architectures. Additionally, the toolchain includes utilities for expressing quantum circuits, circuit unit testing, static analysis, and other utilities specific to hardware acceleration. A custom eDSL facilitates expression of quantum circuits. The static analysis tools are particularly relevant to the current work since these form a key part of the automated quantum circuit reduction steps introduced here.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.1.">Circuit Specification and eDSL</head><p>FQT is developed in the functional programming language Haskell <ref type="bibr" target="#b46">[47]</ref>. In FQT, a circuit (Circ) is defined as a list of gates that comprise the quantum circuit. A core set of gates is supported as primitives. Custom gates can be defined by composition of primitives. Circuits are defined by functions which return a Circ type; list concatenation (the ++ operator in the code snippets below) is used to compose more complex circuits.</p><p>At the level of our Haskell eDSL, qubits are given unique identifiers which are used as parameters for our circuit generation functions. Qu represents a single qubit identifier and QReg is an arbitrarily sized list of Qus. High-level operators allow for complex control patterns to be specified for a gate. control(s) takes one control or a list of controls to apply to a gate which follows. negControl(s) are the equivalents for negative controls. For a mix of controls and negative controls, the .== operator is provided to make specification easier. For example ([a,b,c] .== "011") (x d) applies the X gate to qubit d only when a is 0 and b and c are 1. Additional convenience operators include an inverse operator .! which gives the inverse of a quantum circuit by iterating through all gates, finding their inverse, and returning them in reverse. This is particularly useful when using the uncomputation pattern.</p><p>As a brief example of circuit specification in the eDSL, Figure <ref type="figure" target="#fig_18">20</ref> defines a specialised 4-qubit comparator circuit used to check if the input value is less than 9. Line 1 describes the type signature of the lt9q4 circuit generator, ascertaining it takes a quantum register QReg and a single qubit Qu, and returns a Circ. As QReg is an arbitrarily sized quantum register, the Line 2 pattern matches on its contents and tells the compiler to expect exactly four elements. Lines 3, 4, and 5 define and concatenate the three sub-circuits which form the comparator. Each of x, cnot, and .== are (informally) defined as 'circuit generators'. In general, a circuit generator takes any number of arguments and returns a Circ. High-level operators (including .== are defined as functions which take at least one Circ argument. The internal representation (IR) of a circuit defined in this way is simply a list of gates defined over some set of primitive gate types. Figure <ref type="figure" target="#fig_21">21</ref> shows the IR of the example 4-bit comparator, specialised for less-than-9.</p><formula xml:id="formula_23">[X test [],X test ["r3"],X r2 [],X r1 [],X r0 [],</formula><p>X test ["r3","r2","r1","r0"],X r2 [],X r0 [],X r1 []] Figure <ref type="figure" target="#fig_21">21</ref>. Specialised 4-bit comparator <ref type="bibr" target="#b8">(9)</ref> in the Toolchain IR. The X gates on r2, r1, and r0 are there to enable the negative controls on these qubits.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.2.">Static Analysis to Reduce Qubit Count</head><p>A key component of our toolchain is the static analyser, which enables reducing a circuit's depth by specialising the circuit for specific inputs for some qubits. In the presented version, the qubits to be reduced cannot have gates applied to them which change their state; they can only be used as controls or negative controls. To perform the reduction, the analyser iterates through the circuit gate-by-gate, checking if each gate's controls satisfy the input specialisation; in the case they do, their controls are modified to no longer include the specialisation qubits and they are are added to the reduced circuit. If the controls are not satisfied, the gate is not included in the final circuit.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.3.">Testing and Verification</head><p>Verification of circuits is performed by implementing unit tests that comprise the following steps. First, for the specific case considered, the quantum register is initialized in the simulator, followed by the simulation of the quantum circuit. Then, the obtained output is checked against the intended output for the specified input. The example circuits considered here employ computational basis encoding, while the gate operations are restricted to logic gates, i.e., NOT with any number of control qubits. For this type of circuits, the simulations in the verification can be performed using the logic-based simulator described earlier. For more general circuits, as well as quantum circuits defining algorithms employing amplitude-based encoding, the verification is performed using a full-statevector simulator. A QCTestSuite is defined as a set of tests with different preparations and expectations for the same circuit. It takes a string descriptor, the circuit to test, the full register over which to apply the circuit, and a list of QCTests. A QCTest is simply a string descriptor, a list of initial qubit register states, and a list of expected output qubit register states. An example of manually specifying tests suites is given in Figure <ref type="figure" target="#fig_19">22</ref>. In this example, Line 1 defines leftShiftTestSuite as a static QCTestSuite. Line 3 declares the register over which the circuit tests are to be ran. Line 4 declares the test suite itself, passing it the circuit (leftShift reg), and the register. Two test cases follow: lines 6 and 9 specify the preparations of the test cases, each preparing reg in a different state; lines 7 and 10 specify the intended output state of qubit register of the tests. Manually specifying test cases can be tedious, and for larger circuits is very impractical. However, since the testing framework is implemented and used in Haskell, native Haskell features, such as list comprehensions, enable automated test generation, as shown in Figure <ref type="figure" target="#fig_20">23</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9.">Demonstration of Reduction of Integer Divider</head><p>This section illustrates the implementation of the full long division circuit (Figure <ref type="figure" target="#fig_15">16</ref>) in the FQT toolchain and demonstrates the derivation and verification of its reduced forms.  The compare block uses a comparator circuit to set the |test = |1 qubit if the integer value of the considered 4-bit sub-string of the dividend is less than the divisor integer value. A controlled-X gate copies the result of the comparison to the output qubit for the considered long-division step. The uncomputation of the comparison is then performed to restore the test qubit to its original state.</p><p>The compare, subtract, and shift block (compareSubtractShiftBlock) uses this compare block and applies the subtraction circuit controlled by the out qubit (which now carries the result of the comparison). Finally, the left shift operator is applied to the dividend register (including |test and |qin ) to prepare the state for the next long division step. Three of these compare, subtract, and shift blocks are used (lines 9-11), each using an out qubit with the next lower significance in the |out register as the output of the comparator. The last compare block (without a subtractor) on line 12 sets the least significant out qubit. Finally, the uncomputation of the subtractions and shifts is performed on lines 13-15 by declaring three shiftUnsubtractBlocks. These blocks are defined as a right shift over the previously shifted qubits, followed by the inverse circuit of the subtractor. These operations are chained together to match the blocks in Figure <ref type="figure" target="#fig_15">16</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9.2.">Specialised Integer Divider</head><p>To specialise the circuit for particular values of the divisor, the specialisation function (specialiseQCircForQubitValues) is used, applying the static analysis methods discussed in Section 8.2 to reduce the divisor qubits. First the full circuit is created, and then passed to the specialiser, as shown in Figure <ref type="figure" target="#fig_23">25</ref>. This high-order function expects three arguments, including the qubits over which to specialise, expressed as a QReg; a bit string indicating their initial values; and the circuit to specialise. The sizes of the register and the bit string must match and the circuit must not contain gates which change the state of the specialisation qubits, otherwise an error will be thrown. In the example shown, the function generating the specialised circuit now takes an integer representing the value of b (the divisor) instead of a register bReg. On line 7, an intermediate register bReg is created to pass to the generator of the full function on line 8. On line 9, the bit register is prepared by calling the utility function paddedTwoComplementBitString to obtain the 2's complement representation of -b (as required by the long division algorithm). Finally, the specialisation function is called to generate the qubit-reduced circuit.</p><p>Figures <ref type="figure" target="#fig_24">26</ref> and<ref type="figure" target="#fig_25">27</ref> show the first blocks of a parameterised divider that has been fully specialised on the divider qubits. These are the initial comparison and subtraction blocks which set the most significant out qubit. Figure <ref type="figure" target="#fig_24">26</ref> shows the block specialised for a divisor value of 9, while Figure <ref type="figure" target="#fig_25">27</ref> shows the specialised circuit for a divisor value of 11 as illustrative examples.   </p><formula xml:id="formula_24">|out3 = |0 |out3 |out2 = |0 |out2 = |0 |out1 = |0 |out1 = |0 |out0 = |0 |out0 = |0 |test = |0 |test |q3i |q3i |q2i |q2i |q1i |q1i |q0i |q0i |c = |0 |c = |0 |qin2 = |0 |qin2 = |0 |qin1 = |0 |qin1 = |0 |qin0 = |0 |qin0 = |0</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9.3.">Results</head><p>The primary goal of this work is to introduce techniques for facilitating the reduction in quantum circuit width (required qubit count) through static analysis. In this section, results from testing the full and specialised circuits are presented.</p><p>The toolchain's testing components are used to verify the correctness of the generated dividers using the logic-based circuit simulator. Both the full divider and the specialised versions were tested.</p><p>We start by verifying the functionality of the non-specialised divider demonstrated in Figure <ref type="figure" target="#fig_15">16</ref> (Design 3). The circuit is constructed as described in the previous section by the code in Figure <ref type="figure" target="#fig_22">24</ref>. Table <ref type="table" target="#tab_3">1</ref> shows a sample from the results of running an automatically generated test suite for this circuit. The first column shows the integer division performed, while the second and third columns show the qubit register state after initialization and completion of the circuit simulation, respectively. For clarity, the final column summarizes the 4-qubit output from the long-division performed. For all cases considered, the obtained output from the quantum circuit simulator used in verification matched the intended output.</p><p>We also verify the functionality of a divider with a fully specialised divisor. It is important to note that, unlike the full divider test suite which operates only on one circuit, the specialised dividers require specific quantum circuits for each value of the divisor. Thus, several test suites are constructed (this is automated with list comprehensions, as described in Figure <ref type="figure" target="#fig_20">23</ref>), one for each divisor. Table <ref type="table" target="#tab_4">2</ref> shows the results of testing these circuits, collated from multiple test suites. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9.4.">Discussion of Results-Implication for Wider Range of Circuits</head><p>As discussed in Section 1, the present work on circuit reduction steps for quantum arithmetic operations is motivated by the fact that such arithmetic operations are often an important part of a wide range of larger and more general quantum algorithms. The development and evaluation of these larger quantum algorithms typically involves large-scale full-state vector circuit simulations, e.g., to check correctness, sensitivity of quantum gate errors and effect of quantum decoherence errors. High-performance computing resources commonly available to quantum algorithm developers typically limit the qubit count to 30-35, so that reductions of multiple qubits that are only involved in quantum arithmetic operations create much needed reduced memory requirements.</p><p>Considering the small example problems discussed here, for the integer divider the quantum circuit width was reduced from 17 qubits in the original circuit (going down to 16 when parameterised, since a carry qubit used in the Cuccaro adders could be removed) to 12 in the 'fully' reduced circuit (i.e., specialised for a specific value of divisor). For a circuit simulator using full state vector, this results in a useful reduction in memory by a factor of 32.</p><p>The FQT toolchain was also used to inspect the gate complexity of the circuits that result from the various eDSL definitions above. To summarise the results of proposed transformation, the previously considered integer division circuit for a 7-qubit dividend and 4-qubit divisor is detailed in Table <ref type="table" target="#tab_5">3</ref>. The baseline circuit uses Cuccaro modulo adders. For a 4-qubit divisor, the reduction step can then reduce the qubit count by 5 since the carry qubit from the Cuccaro adder can also be removed. The gate count reduction relative to the baseline is dependent on the particular choice of the divisor value, as shown in the table for two example values. The baseline long division circuit without parameterisation requires 674 gates to implement. The implemented parameterised long division circuit produced by the listing in Figure <ref type="figure" target="#fig_22">24</ref> requires 1612 gate operations, while the fully reduced divider generated by Figure <ref type="figure" target="#fig_23">25</ref> requires only 252 gates for the dividing by 9 example and 296 gates for dividing by 11. Today, it is feasible to simulate 20-25 qubits on a typical everyday laptop. For larger problems up to approximately 35 qubits, researchers using full-state vector simulators require distributed computing facilities often available in research centres and universities. For even larger circuit width, regional or national high-performance computing facilities are required, so that circuits simulations cannot be performed routinely in an algorithm development process where many repeated simulations are needed.</p><p>It is important to recognise that while the implemented examples here are four dividers with 4 divisor bits, the techniques described are applicable to dividers of any size. For example, the complexity analysis in Section 7.1 can be used to determine that a divider with an 8 bit divider would require a 34 qubit circuit to run (requiring over 137 GB of memory to simulate with 32-bit floating point precision). Using the described techniques, 8 qubits can be reduced, requiring only 26 qubits or 0.53 GB to be simulated. The quantum integer divider was used here for illustration purposes; the proposed reduction involving parameterisation and static analysis applies far more widely to quantum arithmetic operations.</p><p>The quantum circuits for integer arithmetic can naturally be extended to arithmetic of real numbers using fixed-point representation. Additionally, in ongoing work by one of the authors <ref type="bibr" target="#b28">[29,</ref><ref type="bibr" target="#b30">31]</ref>, arithmetic operations based on computational basis encoding is used for floating-point operations. In the interest of brevity, this was not discussed in the present work. However, the introduced quantum circuit transformations can be applied to this type of quantum circuit for floating-point arithmetic as well. This will be considered in future work.</p><p>The introduced circuit width reductions can therefore be of great benefit to algorithm developers by facilitating simulations of larger circuits on available computing resources.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="10.">Conclusions and Future Work</head><p>Quantum circuit transformation and parameterisation techniques were introduced that specifically target facilitating static analysis of quantum circuits for the purpose of circuit width reduction (reduced qubit count). Using these techniques, quantum circuits which would otherwise require excessive amounts of memory can be analysed on full state vector simulators. The introduced transformation approach can be applied to a wide range of quantum algorithms where quantum arithmetic operations form part of the computational work performed by the algorithm. The transformations are demonstrated for an exemplar quantum integer divider and its constituent parts, the comparators and subtractors. The first step in transformation involves a user-directed replacement of an quantum-circuit block performing arithmetic by a parameterised circuit performing this operation. In the next step, the presented static analysis tool can then automatically eliminate any qubits which are used only as controls for user-specified given inputs. As demonstrated for the integer divider example, using this approach, reductions in quantum circuit width can be achieved that match reductions obtained by manual reduction-by-specialisation.</p><p>While the introduced transformation approach is specific to quantum circuit operations performing arithmetic in the computational basis, it is clear that the specialised circuits can be used as building blocks in larger circuits which go beyond the computational basis. Furthermore, it is important to note that the transformation approach is not limited to the particular tool chain employed here, i.e., it is expected that other tool chains designed to perform transformations on circuits specified in other DSLs can be extended to include the transformation approach discussed here.</p><p>In future work, the introduced techniques will be extended to a wider range of quantum algorithms with embedded quantum arithmetic operations. Additionally, quantum algorithms for scientific computations using floating-point arithmetic will be targeted.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Illustration of simple two-qubit quantum circuits.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Quantum circuit design for evaluation of u 2 + v 2 based on 4-qubit fixed-point representation of velocities u (defined by |qu3|qu2|qu1|qu0 ) and v (defined by |qv3|qv2|qv1|qv0 ). Upon completion on right-hand side of circuit, the kinetic energy is represented by 9 qubits |ek8|ek7| . . . |ek0 . FA u and FA v are modified 4-qubit full adders and Sh performs incremental shifts on output register.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Quantum integer divider: top-level overview of quantum circuit implementation of quantum integer division. Example shown for 4-qubit representation of dividend, divisor, and output.C</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. Quantum integer divider: quantum circuit implementation of comparator C and subtractor Sub. Example shown for 4-qubit representation of dividend, divisor, and output. Sub-circuits on leftand right-hand side perform transforms to/from 2's complement for divisor qubits.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Initial 3 -</head><label>3</label><figDesc>qubit Modulo Adder (Step 0)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Specialised modulo 3-qubit modulo adders. Example shown for |a2|a1|a0 = |101 . Can be used to subtract 3 from integer defined by binary representation of |b2|b1|b0 .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. Illustration of reduction operation on divisor qubits in subtractor circuit. Example shows specialisation of three most-significant qubits |q4d |q3d |q2d to |101 . In reduced quantum circuit shown at bottom, the MAJ and UMA sub-circuits have been expanded for clarity.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. Illustration of automated reduction of a quantum modulo adder in parameterised form. Example shows specialisation of three most-significant qubits |q4d |q3d |q2d to |101 .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 8 .</head><label>8</label><figDesc>Figure 8. Comparator circuits for use in quantum dividers with 3-qubit divisor. Parameterisation with divisor qubits and with 2's complement representation of divisor shown in lower half.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 9 .</head><label>9</label><figDesc>Figure 9. Comparator circuits for use in quantum dividers with 4-qubit divisor. Parameterisation with 2's complement of the divisor is shown in the lower half.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Figure 10 .</head><label>10</label><figDesc>Figure 10. Parameterised comparator circuit for division by 5-qubit divisor. Parameterisation employs qubits in 2's complement representation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Figure 11 .</head><label>11</label><figDesc>Figure 11. Subtractor circuit for 4-qubit quantum divider. Gate operations are parameterised with divisor qubit state represented in 2's complement.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Figure 12 .Figure 13 .</head><label>1213</label><figDesc>Figure 12. Reduction-by-specialisation of comparator circuit introduced by Xia et al. [33]. Reduction by two qubits. |q3d|q2d|q1d = |100 |q3d|q2d|q1d = |101 . . . . . . . . . . . . . . . . . . . . .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head>Figure 14 .</head><label>14</label><figDesc>Figure14. Reduction-by-specialisation of comparator circuit introduced by Xia et al.<ref type="bibr" target="#b32">[33]</ref>. Reduction by four qubits.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><head>Figure 15 .</head><label>15</label><figDesc>Figure 15. Quantum integer divider design 2: top-level overview of quantum circuit implementation of quantum integer division. Example shown for 4-qubit representation of dividend, divisor, and output. The quantum circuit implementation of C and Sub same as in Design 1.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_15"><head>Figure 16 .</head><label>16</label><figDesc>Figure 16. Quantum integer divider Design 3: top-level overview of quantum circuit implementation of quantum integer division. Example shown for 4-qubit representation of dividend, divisor, and output. Based on parameterised quantum circuit implementation of C, U(C), and Sub.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><head>Figure 17 .</head><label>17</label><figDesc>Figure 17. 4-qubit comparator based on design of Xia et al. [33] reworked to have divisor quantum state in terms of 2's complement.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head>Figure 18 .Figure 19 .</head><label>1819</label><figDesc>Figure 18. Quantum circuit implementation of comparator C as used in Design 3 for 4-qubit representation of dividend, divisor and output.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_18"><head>Figure 20 .</head><label>20</label><figDesc>Figure 20. A specialised four-qubit less than 9 operator expressed in the FQT eDSL. On the right is the circuit diagram of the comparator for reference.</figDesc><graphic coords="24,166.39,575.78,176.78,65.14" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_19"><head>Figure 22 .</head><label>22</label><figDesc>Figure 22. Manually specifying test cases for a 4-qubit left shift operator.</figDesc><graphic coords="25,166.39,556.22,392.89,139.41" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_20"><head>Figure 23 .</head><label>23</label><figDesc>Figure 23. Automating the generation of test cases for a parameterised subtractor circuit. As binary operations such as subtraction and comparison take two inputs, to fully iterate over the possible test cases, two list comprehensions are used. To keep the code clear and maintainable, two functions are used, each using a list comprehension to iterate on one of the inputs.</figDesc><graphic coords="26,166.39,94.86,392.88,275.22" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_21"><head>9. 1 .</head><label>1</label><figDesc>Figure24illustrates the implementation of the integer divider quantum circuit presented in Figure16in the FQT eDSL. As demonstrated in the figure, the division of a 7-bit dividend by a 4-bit divisor can be composed from three compare, subtract, and shift blocks and one compare block. To return qubits acting as workspace to the original |0 state, a 3-step uncomputation of controlled subtractions (with associated reversed shifts) is performed.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_22"><head>Figure 24 .</head><label>24</label><figDesc>Figure 24. Long division operator specification.</figDesc><graphic coords="26,166.39,586.66,392.88,181.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_23"><head>Figure 25 .</head><label>25</label><figDesc>Figure 25. Specialisation of the long division circuit.</figDesc><graphic coords="27,166.39,572.79,392.88,120.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_24"><head>Figure 26 .</head><label>26</label><figDesc>Figure 26. Fully specialised quantum circuit implementation of integer division. Reduction for |q4d |q3d |q2d |q1d |q0d = |10111 represents cases where the divisor is 9. First step of long division.. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_25"><head>Figure 27 .</head><label>27</label><figDesc>Figure 27. Fully specialised quantum circuit implementation of integer division. Reduction for |q4d |q3d |q2d |q1d |q0d = |10101 represents cases where the divisor is 11. First step of long division.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 1 .</head><label>1</label><figDesc>Full Design 3 long division divider testing results sample.</figDesc><table><row><cell></cell><cell cols="2">|out3|out2|out1|out0|test|b3|a3|b2|a2|b1|a1|b0|a0|qin2|qin1|qin0</cell><cell></cell></row><row><cell>Operation</cell><cell>Input</cell><cell>Output</cell><cell>Unpacked |out</cell></row><row><cell>64/9 72/10 96/11 104/12 112/13 80/14 104/15</cell><cell>|0|0|0|0|0|0|1|1|0|1|0|1|0|0|0|0 |0|0|0|0|0|0|1|1|0|1|0|0|1|0|0|0 |0|0|0|0|0|0|1|1|1|0|0|1|0|0|0|0 |0|0|0|0|0|0|1|1|1|0|0|0|1|0|0|0 |0|0|0|0|0|0|1|0|1|1|1|1|0|0|0|0 |0|0|0|0|0|0|1|0|0|1|1|0|0|0|0|0 |0|0|0|0|0|0|1|0|1|0|0|1|1|0|0|0</cell><cell>|0|1|1|1|0|0|1|1|0|1|0|1|0|0|0|0 |0|1|1|1|0|0|1|1|0|1|0|0|1|0|0|0 |1|0|0|0|0|0|1|1|1|0|0|1|0|0|0|0 |1|0|0|0|0|0|1|1|1|0|0|0|1|0|0|0 |1|0|0|0|0|0|1|0|1|1|1|1|0|0|0|0 |0|1|0|1|0|0|1|0|0|1|1|0|0|0|0|0 |0|1|1|0|0|0|1|0|1|0|0|1|1|0|0|0</cell><cell>|0111 (7) |0111 (7) |1000 (8) |1000 (8) |1000 (8) |0101 (5) |0110 (6)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 2 .</head><label>2</label><figDesc>Specialised-divisor long division testing results sample.</figDesc><table><row><cell></cell><cell cols="2">|out3|out2|out1|out0|test|a3|a2|a1|a0|qin2|qin1|qin0</cell><cell></cell></row><row><cell>Operation</cell><cell>Input</cell><cell>Output</cell><cell>Unpacked |out</cell></row><row><cell>64/9 72/10 96/11 104/12 112/13 80/14 104/15</cell><cell>|0|0|0|0|0|1|0|0|0|0|0|0 |0|0|0|0|0|1|0|0|1|0|0|0 |0|0|0|0|0|1|1|0|0|0|0|0 |0|0|0|0|0|1|1|0|1|0|0|0 |0|0|0|0|0|1|1|1|0|0|0|0 |0|0|0|0|0|1|0|1|0|0|0|0 |0|0|0|0|0|1|1|0|1|0|0|0</cell><cell>|0|1|1|1|0|1|0|0|0|0|0|0 |0|1|1|1|0|1|0|0|1|0|0|0 |1|0|0|0|0|1|1|0|0|0|0|0 |1|0|0|0|0|1|1|0|1|0|0|0 |1|0|0|0|0|1|1|1|0|0|0|0 |0|1|0|1|0|1|0|1|0|0|0|0 |0|1|1|0|0|1|1|0|1|0|0|0</cell><cell>|0111 (7) |0111 (7) |1000 (8) |1000 (8) |1000 (8) |0101 (5) |0110 (6)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 3 .</head><label>3</label><figDesc>Summary of circuit specialisation results. The results for the reduced circuit gate count are for specific examples of the divisor being specialised to 9 and 11.</figDesc><table><row><cell>Divider</cell><cell>Comparator</cell><cell>Subtractor</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments:</head><p>The authors acknowledge financial support received from the <rs type="funder">University of Glasgow</rs> in the form of a Ph.D. scholarship for Y.M.</p></div>
+			</div>
+			<div type="funding">
+<div><p>Funding: This research received no external funding.</p></div>
+<div><head>Institutional Review Board Statement: Not applicable.</head><p>Informed Consent Statement: Not applicable.</p></div>
+			</div>
+			<listOrg type="funding">
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability Statement:</head><p>The data being made available for this work is in the form of the FQT code which generates and processes the discussed circuits. The code is available on Zenodo: https://zenodo.org/record/7645972#.Y-3-6S-l1B0 (accessed on 3 February 2023).</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Author Contributions: Circuit Transformation and Reduction Concepts, R.S.; derivation of Parameterised Comparator, Subtractor, and Divider circuits, R.S.; Project administration and supervision, R.S. and W.V.; Functional Quantum Toolchain, Y.M.; Implementation and validation of circuits, Y.M.; Writing-review and editing, W.V. All authors have read and agreed to the published version of the manuscript.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicts of Interest:</head><p>The authors declare no conflict of interest.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Abbreviations</head><p>The following abbreviations are used in this manuscript:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>QC</head><p>Quantum Computing FQT Functional Quantum Toolchain DSL Domain Specific Language eDSL Embedded Domain Specific Language</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nielsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Chuang</surname></persName>
+		</author>
+		<title level="m">Quantum Computation and Quantum Information: 10th Anniversary Edition</title>
+		<meeting><address><addrLine>Cambridge, UK</addrLine></address></meeting>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Quantum Computing in the NISQ era and beyond</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Preskill</surname></persName>
+		</author>
+		<idno type="DOI">10.22331/q-2018-08-06-79</idno>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page">79</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">IBM unveils 127-qubit computer</title>
+		<idno type="DOI">10.1088/2058-7058/34/12/16</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. World</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">IBM Quantum Roadmap to Build Quantum-Centric Supercomputers</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gambetta</surname></persName>
+		</author>
+		<ptr target="https://research.ibm.com/blog/ibm-quantum-roadmap-2025" />
+		<imprint>
+			<date type="published" when="2022-04-28">2022. 28 April 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Intel Quantum Simulator: A cloud-ready high-performance simulator of quantum circuits</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G</forename><surname>Guerreschi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hogaboam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Baruffa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">P D</forename><surname>Sawaya</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/2058-9565/ab8505</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Quantum Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">34007</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Circuit Transformations for Quantum Architectures</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Childs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Schoute</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Unsal</surname></persName>
+		</author>
+		<idno type="DOI">10.4230/LIPICS.TQC.2019.3</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the TQC 2019</title>
+		<meeting>the TQC 2019<address><addrLine>College Park, MD, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019-06-07">3-7 June 2019</date>
+			<biblScope unit="volume">135</biblScope>
+			<biblScope unit="page" from="1" to="24" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Simulation of low-depth quantum circuits as complex undirected graphical models</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Boixo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">V</forename><surname>Isakov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">N</forename><surname>Smelyanskiy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Neven</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.1712.05384</idno>
+		<idno type="arXiv">arXiv:1712.05384</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Newman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.1805.01450</idno>
+		<idno type="arXiv">arXiv:1805.01450</idno>
+		<title level="m">Classical Simulation of Intermediate-Size Quantum Circuits. arXiv</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Adaptive algorithm for quantum circuit simulation</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Schutski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lykov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Oseledets</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevA.101.042335</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. A</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="page">42335</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">E</forename><surname>Pednault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Gunnels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Nannicini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Horesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Magerlein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Solomonik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W</forename><surname>Draeger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">T</forename><surname>Holland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Wisnieff</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.1710.05867</idno>
+		<idno type="arXiv">arXiv:1710.05867</idno>
+		<title level="m">Pareto-Efficient Quantum Circuit Simulation Using Tensor Contraction Deferral</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">64-qubit quantum circuit simulation</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Xue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">C</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Bull</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="964" to="971" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Quantum Supremacy Circuit Simulation on Sunway TaihuLight</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ying</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TPDS.2019.2947511</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Parallel Distrib. Syst</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="805" to="816" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Qiskit: An Open-source Framework for Quantum Computing</title>
+		<author>
+			<persName><forename type="first">Qiskit</forename><surname>Contributors</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.2573505</idno>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+			<pubPlace>Geneva, Switzerland</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Quipper: A Scalable Quantum Programming Language</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">S</forename><surname>Green</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Lefanu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Ross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Selinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Valiron</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2499370.2462177</idno>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGPLAN Not</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="333" to="342" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">W</forename><surname>Cross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">S</forename><surname>Bishop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Smolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Gambetta</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1707.03429</idno>
+		<title level="m">Open Quantum Assembly Language</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">OpenQASM 3: A broader and deeper quantum assembly language</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">W</forename><surname>Cross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Javadi-Abhari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Alexander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>De Beaudrap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">S</forename><surname>Bishop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Heidel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Smolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Gambetta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename><surname>Johnson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Quantum Comput</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">12</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Strawberry Fields: A Software Platform for Photonic Quantum Computing</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Killoran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Izaac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Quesada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Bergholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Amy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Weedbrook</surname></persName>
+		</author>
+		<idno type="DOI">10.22331/q-2019-03-11-129</idno>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>3, 129. [CrossRef</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Automatic differentiation of hybrid quantum-classical computations</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Bergholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Izaac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schuld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gogolin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ahmed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ajith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Alam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Alonso-Linaje</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Akashnarayanan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Asadi</surname></persName>
+		</author>
+		<idno>arXiv:quant-ph/1811.04968</idno>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Language Overview and the Quantum Simulator</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hooyberghs</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-1-4842-7246-6_6</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Introducing Microsoft Quantum Computing for Developers</title>
+		<meeting><address><addrLine>Berkeley, CA, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Apress</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="121" to="167" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Algorithms for quantum computation: Discrete logarithms and factoring</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Shor</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/SFCS.1994.365700</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 35th Annual Symposium on Foundations of Computer Science</title>
+		<meeting>the 35th Annual Symposium on Foundations of Computer Science<address><addrLine>Santa Fe, NM, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1994-11">November 1994</date>
+			<biblScope unit="page" from="124" to="134" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Program transformation systems</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Partsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steinbrüggen</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/356914.356917</idno>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Comput. Surv</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="199" to="236" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">MLIR: Scaling compiler infrastructure for domain specific computation</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lattner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Amini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Bondhugula</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pienaar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Riddle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shpeisman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Vasilache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Zinenko</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2021 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)</title>
+		<meeting>the 2021 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)<address><addrLine>Seoul, Republic of Korea; Piscataway, NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2021-03-03">27 February-3 March 2021. 2021</date>
+			<biblScope unit="page" from="2" to="14" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Putting polyhedral loop transformations to work</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bastoul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Girbal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sharma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Temam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Languages and Compilers for Parallel Computing: 16th International Workshop</title>
+		<meeting>the Languages and Compilers for Parallel Computing: 16th International Workshop<address><addrLine>College Station, TX, USA; Germany</addrLine></address></meeting>
+		<imprint>
+			<publisher>Berlin/Heidelberg</publisher>
+			<date type="published" when="2003-02-04">2003. 2-4 October 2003. 2004</date>
+			<biblScope unit="page" from="209" to="225" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Making legacy Fortran code type safe through automated program transformation</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Vanderbauwhede</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11227-021-03839-9</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Supercomput</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="2988" to="3028" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Quantum Algorithm for the collisionless Boltzmann equation</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Todorova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jcp.2020.109347</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Comp. Phys</title>
+		<imprint>
+			<biblScope unit="volume">409</biblScope>
+			<date type="published" when="2020">2020. 109347</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Quantum Algorithms for Fluid Simulations</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ed</surname></persName>
+		</author>
+		<idno type="DOI">10.5772/intechopen.86685</idno>
+		<idno>978-1-78-985268-4</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Quantum Communication and Information Bulnes; Bulnes</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>IntechOpen: London, UK</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">Quantum algorithm for the advection-diffusion equation simulated with the lattice Boltzmann method. Quantum Inf. Process</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Budinski</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11128-021-02996-3</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">20</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Analysis of Carleman Linearization of Lattice Boltzmann</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Itani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Succi</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/fluids7010024</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Fluids</title>
+		<imprint>
+			<biblScope unit="volume">2022</biblScope>
+			<biblScope unit="page">24</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Quantum algorithms for nonlinear equations in fluid mechanics</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ed</surname></persName>
+		</author>
+		<idno type="DOI">10.5772/intechopen.95023</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Quantum Computing and Communications</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>IntechOpen: London, UK</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Investigating hardware acceleration for simulation of CFD quantum circuits</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Moawad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Vanderbauwhede</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fmech.2022.925637</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front. Mech. Eng</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Quantum Circuit Implementation of Multi-Dimensional Non-Linear Lattice Models</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app13010529</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Numerical Computing with IEEE Floating Point Arithmetic, 1</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Overton</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<publisher>SIAM</publisher>
+			<pubPlace>Philadelphia, PA, USA</pubPlace>
+		</imprint>
+	</monogr>
+	<note>st ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Novel multi-bit quantum comparators and their application in image binarization</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xin</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11128-019-2334-2</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Quantum Inf. Process</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">229</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Design of Quantum Comparator Based on Extended General Toffoli Gates with Multiple Targets</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shan-Zhi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Sci</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="302" to="306" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Design of Prefix-Based Optimal Reversible Comparator</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Vudadha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Phaneendra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Sreehari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Ahmed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Muthukrishnan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Srinivas</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ISVLSI.2012.49</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2012 IEEE Computer Society Annual Symposium on VLSI</title>
+		<meeting>the 2012 IEEE Computer Society Annual Symposium on VLSI<address><addrLine>Amherst, MA, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2012-08">August 2012</date>
+			<biblScope unit="page" from="201" to="206" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Optimal fault-tolerant quantum comparators for image binarization</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Orts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ortega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Cucura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Filatovas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Garzón</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11227-020-03576-5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Supercomput</title>
+		<imprint>
+			<biblScope unit="volume">77</biblScope>
+			<biblScope unit="page" from="8433" to="8444" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">A novel fault-tolerant quantum divider and its simulation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11128-022-03523-8</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Quantum Inf. Process</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Ancilla-input and garbage-output optimized design of a reversible quantum integer multiplier</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jayashree</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thapliyal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Arabnia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Agrawal</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11227-016-1676-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Supercomput</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="page" from="1477" to="1493" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Quantum circuits for Toom-Cook multiplication</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dutta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bhattacharjee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chattopadhyay</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevA.98.012311</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. A</title>
+		<imprint>
+			<biblScope unit="volume">98</biblScope>
+			<biblScope unit="page">12311</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Quantum Circuit Design of a T-count Optimized Integer Multiplier</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Munoz-Coreas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thapliyal</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TC.2018.2882774</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Comput</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="729" to="739" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Implementation of three efficient 4-digit fault-tolerant quantum carry lookahead adders</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Orts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ortega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Filatovas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Garzón</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11227-022-04401-x</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Supercomput</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="13323" to="13341" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<title level="m" type="main">T-Count Optimized Quantum Circuit Designs for Single-Precision Floating-Point Division</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gayathri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dhanalakshmi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dooly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Duraibabu</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/electronics10060703</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">703</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Addition on a Quantum Computer</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Draper</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.QUANT-PH/0008033</idno>
+		<idno type="arXiv">arXiv:quant-ph/0008033</idno>
+	</analytic>
+	<monogr>
+		<title level="j">arXiv</title>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Quantum arithmetic with the quantum Fourier transform. Quantum Inf</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ruiz-Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Garcia-Escartin</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11128-017-1603-1</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Process</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">A new quantum ripple-carry addition circuit</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Cuccaro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Draper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Kutin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">P</forename><surname>Moulton</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.QUANT-PH/0410184</idno>
+		<idno type="arXiv">arXiv:quant-ph/0410184</idno>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">Transformations for accelerator-based quantum circuit simulation in Haskell</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Moawad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Vanderbauwhede</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Steijl</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/ARXIV.2210.12703</idno>
+		<idno type="arXiv">arXiv:2210.12703</idno>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Marlow</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Haskell</surname></persName>
+		</author>
+		<ptr target="http://www.haskell.org/" />
+		<title level="m">Language Report. 2010. Available online</title>
+		<imprint>
+			<date type="published" when="2010-04-28">2010. 28 April 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+		<title level="m" type="main">The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods</title>
+		<imprint>
+			<publisher>Disclaimer/Publisher&apos;s Note</publisher>
+		</imprint>
+	</monogr>
+	<note>instructions or products referred to in the content</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

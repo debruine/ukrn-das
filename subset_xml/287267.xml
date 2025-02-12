@@ -1,0 +1,1599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Video Conferencing Tools: Comparative Study of the Experiences of Screen Reader Users and the development of more Inclusive Design Guidelines</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2022-12-22">22 December 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Barbara</forename><surname>Leporini</surname></persName>
+							<email>barbara.leporini@isti.cnr.it</email>
+						</author>
+						<author>
+							<persName><forename type="first">Marina</forename><surname>Buzzi</surname></persName>
+							<email>marina.buzzi@iit.cnr.it</email>
+						</author>
+						<author>
+							<persName><forename type="first">Marion</forename><surname>Hersh</surname></persName>
+							<email>marion.hersh@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">ISTI-CNR</orgName>
+								<address>
+									<addrLine>via Moruzzi 1-I56124 Pisa</addrLine>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">IIT-CNR</orgName>
+								<address>
+									<addrLine>via Moruzzi 1-I56124 Pisa</addrLine>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8LT</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Video Conferencing Tools: Comparative Study of the Experiences of Screen Reader Users and the development of more Inclusive Design Guidelines</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-12-22">22 December 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">700D942512EF45DA3CBD3824D4EA8603</idno>
+					<idno type="DOI">10.1145/3573012</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:46+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Videoconferencing tools</term>
+					<term>blind people</term>
+					<term>screen reader</term>
+					<term>screen reader users</term>
+					<term>guidelines</term>
+					<term>evaluation methodology</term>
+					<term>accessibility</term>
+					<term>survey</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Video conferencing tools: comparative study of the experiences of screen reader users and the development of more inclusive design guidelines. ACM Transactions on Accessible Computing,</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Video conferencing systems have been in use for a number of years <ref type="bibr" target="#b54">[55]</ref>, but it is only in the last two years that they have become part of everyday life for many people. From the start of the first lockdown, video conferencing systems have allowed us to carry out numerous activities from home, such as distance learning in schools and universities, office and many other types of work, and social interaction <ref type="bibr" target="#b32">[33]</ref>, <ref type="bibr" target="#b43">[44]</ref>, and <ref type="bibr" target="#b58">[59]</ref> that otherwise would not have been possible due to restrictions on face to face activities. These tools have evolved over the last two years, including the development of additional features and interface functionalities. However disabled people, particularly those who use assistive technologies to interact with computers and mobile devices or have other accessibility requirements, may experience difficulties accessing and using them <ref type="bibr" target="#b17">[18]</ref>, <ref type="bibr" target="#b29">[30]</ref>, <ref type="bibr" target="#b33">[34]</ref>.</p><p>Computers and technology in general are often the key enabling factors for blind people to work and achieve social integration <ref type="bibr" target="#b9">[10]</ref>. They therefore need to be fully accessible and usable for all. Despite the existence of numerous accessibility guidelines to help developers and designers create more accessible applications and web pages <ref type="bibr" target="#b60">[61]</ref> and <ref type="bibr" target="#b61">[62]</ref>, disabled users, including those who interact via screen reader <ref type="bibr" target="#b56">[57]</ref>, are still likely to experience barriers to their use <ref type="bibr" target="#b51">[52]</ref>. Studies show that the guidelines do not cover all the problems encountered by disabled users <ref type="bibr" target="#b15">[16]</ref>, <ref type="bibr" target="#b50">[51]</ref>. Visually impaired screen reader users regularly experience numerous difficulties when interacting with graphical interfaces <ref type="bibr" target="#b27">[28]</ref>.</p><p>Mobile devices may introduce additional accessibility issues when the touchscreen is accessed via screen reader <ref type="bibr" target="#b14">[15]</ref>, <ref type="bibr" target="#b21">[22]</ref>. It is therefore important to investigate how screen reader users use video conferencing tools. Popular video conferencing systems claim to meet the main W3C accessibility guidelines with only a few exceptions <ref type="bibr" target="#b38">[39]</ref>. While meeting accessibility guidelines should be strongly encouraged, studies have shown that this is not necessarily sufficient to ensure good usability by screen reader users <ref type="bibr" target="#b36">[37]</ref>, <ref type="bibr" target="#b39">[40]</ref>, <ref type="bibr" target="#b48">[49]</ref>, <ref type="bibr" target="#b59">[60]</ref>. Consequently, end-user testing is also required. This work aims to make a contribution in this context.</p><p>The study was motivated by an interest in improving blind and partially sighted people's wellbeing and ability to participate on equal terms and have equal opportunities. The importance of video conferencing tools since the first lockdown and their continuing use make their accessibility and usability an important component in ensuring the well being and participant of blind people. This led to two separate research questions relating to the ability to use (accessibility) and ease of use/satisfaction (usability). The questions are as follows: <ref type="bibr" target="#b0">1)</ref> To what extent are screen reader users able to use all the features of videoconference tools or do they experience barriers to accessing some important functions via screen reader? 2) How easy and satisfying is it for screen reader users to use videoconference tools? In particular, is interaction easy or do users experience cognitive overload and a poor and time-consuming interaction? We answered these questions in this study by investigating screen readers' experiences when interacting with three commonly used video conference tools for desktop and mobile platforms: Zoom, MS Teams and Google Meets. The approach included an inspection evaluation and analysis by accessibility experts on tool use via screen reader and keyboard (desktop) or gestures (mobile). This was followed by surveys of the experiences of blind users of these tools on desktop and mobile devices and any resulting accessibility and usability issues to investigate and corroborate or modify the results of the inspection analysis This work is an extension of the study presented in <ref type="bibr" target="#b38">[39]</ref>. It includes responses from additional participants, responses to versions of the survey for both mobile and desktop devices and a set of guidelines for designers. More specifically:</p><p>(1) The 29 responses reported in <ref type="bibr" target="#b38">[39]</ref> for the three tools on desktop/online platforms have now been increased to 65.</p><p>(2) The study of desktop/online versions of three tools in <ref type="bibr" target="#b38">[39]</ref> has been supplemented by a study of the same three tools on mobile platforms (i.e. via touchscreen devices) using the same methodology. 94 people responded to the survey on mobile video conferencing tools.</p><p>(3) A set of guidelines for designers is proposed which draws on the accessibility and usability issues identified in the two studies for screen reader users of video conferencing tools using a keyboard (desktop) or gestures (mobile). The paper is organized into 9 sections. Section 2 briefly discusses the relevant literature; section 3 introduces the context; and section 4 presents the methodology. Sections 5 and 6 respectively present the results of the inspection evaluation and the surveys. The results are discussed in section 7 and a set of guidelines for designers, aiming at improving the usability of videoconferencing tools, is presented in section 8. The paper ends with conclusions in section 9.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>Due to the COVID-19 pandemic, universities and schools around the world were physically closed and distance learning became a daily reality. This move from face-to-face to digital education forced both teachers and students to adapt to a new reality, with associated difficulties <ref type="bibr" target="#b19">[20]</ref>. Schools worldwide quickly switched to online learning adopting a variety of virtual learning environments (VLEs), such as Google Classroom, Moodle, and Blackboard to deliver virtual lessons and content <ref type="bibr" target="#b53">[54]</ref> and/or videoconferencing tools such as Zoom <ref type="bibr" target="#b55">[56]</ref>. In educational environments learning management systems have developed from static tools to include live virtual classrooms which enable remote interactions <ref type="bibr" target="#b31">[32]</ref> and cloud-based learning environments have been increasingly popular with pedagogical benefits <ref type="bibr" target="#b20">[21]</ref>, <ref type="bibr" target="#b42">[43]</ref>. Tools such as Zoom enable students to interact with teachers and classmates via smartphones, tablets and/or computers. Best practices for delivering lessons and supporting learning in virtual classrooms have been discussed in numerous studies <ref type="bibr" target="#b6">[7]</ref>, <ref type="bibr" target="#b7">[8]</ref>, and <ref type="bibr" target="#b53">[54]</ref>. It is crucial that educational content and VLEs are fully accessible to disabled students and staff. A review analyzing 14 studies in educational environments revealed many problems <ref type="bibr" target="#b53">[54]</ref>. They included reductions in academic performance due to the lack of a quiet place to study, distractions, lack of adequate access to course materials, inadequate digital skills (of both students and teachers), and insufficient network bandwidth for a good Internet connection <ref type="bibr" target="#b6">[7]</ref>, <ref type="bibr" target="#b19">[20]</ref>, <ref type="bibr" target="#b53">[54]</ref>. However, the focus of all these papers was mainly the accessibility of the educational and pedagogical content rather than the VLE or videoconferencing tools.</p><p>Zoom is one of the most commonly used videoconferencing tools worldwide, particularly in the USA. An online study of 31 university students' experience with Zoom indicated that they were not fully satisfied with their learning experience during this pandemic period. They considered that the main advantages were the flexibility of attending classes anywhere, easier interaction, written communication, and the use of multimedia. The main problems were distractions (which were common at home), poor quality interaction and feedback, poor education quality and technical difficulties <ref type="bibr" target="#b55">[56]</ref>. However, these studies do not explicitly mention and may not have included disabled students who may experience even greater difficulties than their non-disabled peers.</p><p>When interacting with videoconference systems, disabled participants can experience a variety of accessibility problems and challenges. A combination of automatic web accessibility evaluation tools and manual evaluation have been used to assess the accessibility features of three video conferencing tools in different interaction scenarios in an educational context for disabled students. Zoom was found to be the most accessible of the three tools followed by Big Blue Button and then Webex <ref type="bibr" target="#b22">[23]</ref>.</p><p>Two recent studies have investigated the accessibility challenges of video conferencing technology for the Deaf community. One study analyzed many aspects of the interaction of deaf people with the video conferencing system Zoom, highlighted barriers and challenges and suggested accessibility improvements for this population <ref type="bibr" target="#b3">[4]</ref>. The other study used interviews and co-design sessions to investigate the main accessibility barriers for Deaf and hard of hearing people who used a national sign language to communicate <ref type="bibr" target="#b52">[53]</ref>. They found that popular video conferencing platforms do not adequately consider communication and collaboration for Deaf signers and developed guidelines for conducting online research with them.</p><p>The requirements of blind users who do not have access to visual content and navigate via keyboard were first considered in <ref type="bibr" target="#b38">[39]</ref>. Accessibility considerations should cover tool use by both participants and hosts, and the accessibility of user interfaces and shared content. Blind people can miss important information and communications when this is provided in purely visual form. When analyzing meeting accessibility for blind people, it is important to note that meetings include visual content and nonverbal communication elements such as gestures, facial expressions and dynamic changes of object focus <ref type="bibr" target="#b48">[49]</ref>. The authors investigated making visual tools for brainstorming accessible and the detection and delivery of non-verbal communication cues. This is important for both face-to-face and online meetings.</p><p>Research on the accessibility of video conferencing tools is still in its infancy. Videoconferencing platforms include a set of tools that are intended to function together seamlessly but do not necessarily do so when used by blind, other disabled or older people. They offer a wide range of functions, including muting/unmuting the microphone, turning the video on/off, hand raising, sharing the screen or files and playing videos. However, tool design has not necessarily fully considered the diversity of users and modes of access. Thus, blind people may experience difficulties with 1) exploration and navigation, i.e. moving rapidly between different areas and tools, and 2) proficient and speedy use of functions such as hosting a meeting, adding participants, accepting a meeting invitation and controlling devices such as speakers and video-cameras. The available tools for navigation and exploration include access keys, tab keys, and screen reader commands.</p><p>The Worldwide Web Consortium (W3C) has published a draft document on the Accessibility of Remote Meetings <ref type="bibr" target="#b62">[63]</ref>. In addition to (standalone client) conferencing systems, the W3C group analysed several specialized remote meeting systems, including Conference/event, Educational (Learning Management Systems), Medical (eHealth) and XR (immersive remote meeting) platforms <ref type="bibr" target="#b62">[63]</ref>. However, videoconferencing tools are often preferred by disabled participants, especially blind ones, as they are better integrated with the assistive technology they are using (as discussed later in this paper).</p><p>There is legislation on making information and communication technologies (ICT) accessible to disabled people. This Microsoft provides detailed accessibility information on Teams (access key, configuration options, features, etc.) although the VPATs were not found online.</p><p>The Google Meet VPAT shows full support for most of the access criteria. However, two criteria related to screen reader interaction are only partially supported, namely 2.1.1. Keyboard and 2.4.3 focus order. In addition, there is only a web version of Google Meet, whereas Zoom and Teams can also be downloaded and locally installed as plug-ins or native desktop apps. These versions are generally more accessible via screen reader than the web versions. In addition, the provision of more options generally improves accessibility.</p><p>Zoom considers itself to be compliant, with some exceptions, with standards including the W3C While this is a positive development, it is not necessarily sufficient to provide full accessibility for all disabled people. In addition, the vendors' product web pages indicate that none of these tools is defined as fully accessible via screen reader, as there are a number of exceptions for several functions <ref type="bibr" target="#b38">[39]</ref>. The small number of existing studies confirms that videoconferencing systems are not fully accessible. Even popular chat systems such as WeChat, Hangouts, Tango, Line and Viber are not fully accessible to blind people <ref type="bibr" target="#b41">[42]</ref>. A preliminary study on the accessibility of several popular video conferencing tools for disabled people was carried out by <ref type="bibr" target="#b28">[29]</ref>. However, this is a preliminary rather than a full study, and a more systematic study of the experiences, needs and suggestions of blind people is required. Other studies have expanded knowledge in this field, such as <ref type="bibr" target="#b23">[24]</ref>, <ref type="bibr" target="#b38">[39]</ref>. However, specific guidelines based on user experience have not yet been proposed.</p><p>The W3C WAI has produced draft accessibility guidelines for developers and people choosing software for remote meetings <ref type="bibr" target="#b62">[63]</ref>. This document reports and summarizes the W3C accessibility guidelines relevant to the selection and development of remote meeting software tools and platforms to support users' access needs. Section 3.2 Creating accessible remote meeting software platforms requires software developers to ensure accessibility features and support for accessible user interfaces when designing and maintaining remote meeting systems. W3C provides several accessibility resources as well as other guidelines. This is an important initiative, but the guidelines are broad based and, for instance, lack sufficient details of accessibility and usability for screen reader users.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">BACKGROUND</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Video Conferencing Tools</head><p>Video conferencing tools enable multiple people, who are generally in different locations. to meet and collaborate at a distance without travelling by sharing audio, video, text and presentations in real time over the internet or other networks.</p><p>Due to the Covid-19 pandemic, the use of video conferencing tools has significantly and possibly exponentially increased in both employment and education <ref type="bibr" target="#b16">[17]</ref>. Some remote workers have experienced increased productivity and an enhanced work-life balance <ref type="bibr" target="#b8">[9]</ref>, <ref type="bibr" target="#b12">[13]</ref>. Others have missed face to face interactions with colleagues, found virtual meetings more tiring than face to face ones and had a poorer work-life balance as it is more difficult to make the distinction between work and other activities when they take place in the same location <ref type="bibr" target="#b30">[31]</ref>. In some cases, users with particular accessibility requirements may use audio only tools e.g. phone call to access the meeting.</p><p>Video conferencing systems have become increasingly enriched with functions and features to deliver a better experience. However, this may reduce rather than improve accessibility for disabled users, including for basic functions.</p><p>There are two main roles for managing different tasks and functions: a) Host: hosts create and manage the online meeting. They include teachers and tutors who set up and facilitate online learning activities with groups of students, including lectures, classes and group work on particular activities, and the organiser or convenor of a group of participants when the tool is used in meetings and conferences. Hosts also include students who organise online learning (or social) activities for themselves and their teachers as part of active learning. b) Participant: participants engage in meetings set up and chaired by others. They include students taking part in online learning activities and participants and collaborators taking part in a wide range of meetings and conferences.</p><p>The focus of this work is the "participant" role, as it is considerably more common.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Screen Reader Interaction</head><p>A screen reader (SR) is an assistive technology used by visually impaired people to interact with a computer or mobile device, such as a smartphone. The screen reader mediates between the user and the operating system (including its applications), assisting individuals by interpreting the user interface which is read aloud sequentially by means of a voice synthesizer, or written on a Braille display <ref type="bibr" target="#b37">[38]</ref> The screen reader announces the content displayed on the user interface once it appears on the screen, or on-demand, i.e. when the user wants to read a specific UI portion or component through a given command or by moving the system focus. For example, when a dialog box is shown on the screen, the screen reader usually reads its content automatically.</p><p>Similar behaviour occurs when a web page is loaded. Also, when the user navigates via keyboard through the Tab or Arrows keys, the system focus moves on to the interactive components (i.e. the elements with which the user can interact) such as buttons, textboxes or combo-boxes, radio buttons or checkboxes, or links, and the SR announces the object the focus is on. For instance, while navigating the toolbar by using the Alt and Arrows keys, each item is immediately read by the SR. When instead the user wants to get the title of the current window, or read the status bar, specific SR commands have to be used (e.g. the Insert+ T command to read the window title via Jaws and NVDA screen readers).</p><p>The interaction via screen reader on mobile platforms is very similar to the desktop one, except that gesture-based commands are used instead of keyboard commands.</p><p>To sum up, what is read automatically by the SR, or activated by the user with specific SR commands or by navigating the user interface, depends on interface features and the user context. The SR behaviour can vary when interacting with a web page rather than a desktop or a mobile application. The result of the keystrokes/gestures varies depending on the platform, the type of screen reader and the application it is interacting with ([5], <ref type="bibr" target="#b5">[6]</ref>, <ref type="bibr" target="#b24">[25]</ref>, <ref type="bibr" target="#b26">[27]</ref> and <ref type="bibr" target="#b45">[46]</ref>). Understanding how SR work and how screen reader users interact with user interfaces (UIs) can aid designers and developers in carrying out accessibility inspection and evaluation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">METHOD</head><p>Our methodology combined two well accepted approaches: (1) expert evaluation and (2) end-user surveys. This had the advantage of considering both the end-user and expert perspectives. Expert evaluation can be used to help designers by identifying areas of the design that need particular attention. In particular, it can contribute to (a) highlighting tasks that users are likely to have difficulties in completing, and (b) identifying interface components that may require attention to assure a good interaction. We also recognise the importance of the direct experiences of end-users, in this case screen reader users, as they are the only people who know what is and is not accessible to them. We consider it unlikely that the use of self-reported results will introduce bias since participants are unlikely to have reasons to report incorrectly and even more unlikely for large numbers of them to do so in a particular direction. The end-user survey enabled us to further investigate the accessibility and other issues identified by the inspection evaluation through consideration of the experiences of screen reader users.</p><p>Most videoconferencing tools offer both desktop and mobile versions, which generally use different operating systems. Therefore the study considered both these versions through two separate end-user surveys, one of desktop and the other of mobile devices, and different approaches to the inspection evaluation of the desktop and mobile platforms to take account of the differences in screen reader interaction mentioned in section 3.1.</p><p>Analysis of the study results and, in particular, the problems experienced and examples of good practice were used to develop guidelines for the developers of video conferencing tools.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Expert Evaluation</head><p>There are three main approaches to expert accessibility evaluation: (1) using semi-automatic tools ( <ref type="bibr" target="#b0">[1]</ref>, <ref type="bibr" target="#b2">[3]</ref>, <ref type="bibr" target="#b47">[48]</ref>); <ref type="bibr" target="#b1">(2)</ref> heuristics-based evaluation involving experts ( <ref type="bibr" target="#b25">[26]</ref> and <ref type="bibr" target="#b46">[47]</ref>); and (3) end-user testing by (screen reader) users ( <ref type="bibr" target="#b11">[12]</ref>, <ref type="bibr" target="#b18">[19]</ref> and <ref type="bibr" target="#b57">[58]</ref>). However, the focus has generally been on testing heuristics by checking whether particular criteria were implemented. For instance, <ref type="bibr" target="#b1">[2]</ref> checked the compliance of six video conferencing tools with WCAG 2.1 and 2.2 accessibility guidelines.</p><p>Our methodology goes beyond this approach in aiming to carry out an expert evaluation of screen reader user behaviour. It combines expert evaluation with testing by screen reader users. We have avoided the use of semi-automatic tools because (1) these are more oriented toward web pages/applications and (2) semi-automatic tools may not be able to detect important features such as ease of keyboard interaction or the availability of gestures, the number of steps to be performed to find and activate a function, and how the screen reader interacts with and detects the user interfaces. In fact, we do not want to limit our evaluation to detecting whether or not a button has alternative text or whether a function is simply keyboard-activated. Instead, we want to assess how the user manages to interact with the interface in a more practical and effective way. For instance, we want to consider the number of steps to be performed to find or activate a function. It is not always appropriate to use a shortcut to access a function to make it easy for the user to use and therefore accessible from the keyboard. Learning many shortcuts can be a considerable cognitive load for the user. Not all users are willing to learn numerous key combinations for many applications. It is therefore important to consider whether the interface can be navigated from the keyboard with only minimal effort by the user.</p><p>The inspection evaluation was carried out by two of the three authors, all of whom have a good understanding of the accessibility and usability of user interfaces for blind people. We consider expert evaluation by blind screen readers users who are also experts the ideal approach. Unfortunately, there are few such experts available. One of our two expert evaluators has been blind since childhood and is an expert screen reader user. The study involved the mobile versions of the three tools, the desktop versions of Zoom and Teams and the web-based version of Google Meet, as it does not have a desktop version.</p><p>It involved a cognitive walkthrough <ref type="bibr" target="#b40">[41]</ref> to detect the main issues encountered by screen reader users when carrying out tasks and critical aspects of these tasks. The screen reader Jaws for Windows 2021.2012.48 was used to interact with the user interface in the desktop environment and an IPhone X smartphone with IOS 15.5 and VoiceOver screen reader, with the Safari browser in the mobile environment.</p><p>In this study the inspection evaluation focused on identifying the crucial tasks in which a screen reader user may encounter difficulties when interacting with video conferencing tools. Only the basic functionalities of the 'participant' role were considered.</p><p>Using a video conferencing tool effectively requires participants to be able to do the following:</p><p>(1) use the input devices (turn them on/off);</p><p>(2) access status information e.g. check which devices are on/off and obtain information about the other participants;</p><p>(3) participate actively in the meeting e.g. comment verbally, share screen content, and read/write chat messages. The user should be able to obtain a variety of data and access the tool status. This is relatively easy for non-disabled users who are able to obtain information visually from the interface, but may be more difficult for screen reader users who do not have a general overview of the interface and interact via the keyboard. The functions (and tasks) considered in the evaluation are listed in table 1. They have been classified as 'action' tasks i.e. actions related to active tasks such as turning the microphone (mic) or video camera (cam) on/off; and 'awareness' tasks which mainly involve status checking activities, such as checking the on/off status of the microphone or video camera. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.1">Desktop Inspection Methodology</head><p>Desktop applications and web pages require screen reader (SR) interaction, generally via keyboard and special SR commands (see 3.1). In particular, the screen reader follows the system focus which can be managed via keyboard. Thus, the application needs to offer good system focus management and the inspection evaluation should include focus management. More specifically, evaluating each task via screen reader and keyboard involves consideration of the following:</p><p>• Use of the Tab and Arrow keys to move the focus onto the function and to explore the user interface and enable us to analyze screen reader behaviour when handling the focus. This interaction mode is very important, particularly for novice users who usually navigate through basic keys, such as the Tab and Arrows keys.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Use of the user interface shortcuts to activate functions. This simplifies screen reader and keyboard interaction and saves time and effort by reducing a potentially large number of keyboard commands to a single one. This is particularly important for tasks that are carried out frequently.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Use of screen reader commands for specific actions to get information on the user interface and function feedback (which non-disabled users generally obtain from the screen). This includes reading the window title and the status bar. These commands can be used when the focus does not work, there are no shortcuts or they do not work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>•</head><p>Analysis of the clarity and relevance of the screen reader feedback messages, both when using the Tab key to move the focus and when using shortcut keys. This is particularly useful for blind people unable to see the user interface and its status when performing and triggering certain actions. Clear, accurate feedback about the current status and task success/failure is very useful, whereas irrelevant or ambiguous messages can lead to confusion.</p><p>Particular attention was given to screen reader feedback messages to users, to evaluate whether blind screen reader users are able to perceive what is happening and obtain visually displayed information via a screen reader (or Braille display) <ref type="bibr" target="#b10">[11]</ref>. For instance, feedback that 'the microphone is on' or 'the microphone is unmuted' is easy to understand and does not require interpretation. 'Turn the microphone on' requires interpretation and more cognitive effort, particularly in meetings, as it requires interpretation. 'Turn on' or 'activate' is ambiguous, as it is unclear whether it refers to the microphone or camera.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.2">Inspection Methodology of Mobile Devices</head><p>Blind users generally use gestures on touchscreen devices, as there is rarely a hardware keyboard available. Mobile interfaces are also simpler than desktop ones due to the smaller screen. In fact, the layout of virtual classrooms on mobile devices (and mobile apps in general) requires reduced user interface information due to the smaller screen <ref type="bibr" target="#b32">[33]</ref>.</p><p>The methodology needs to consider the following:</p><p>• Use of the Left and Right flick gestures to move the focus onto the function and explore the user interface and enable us to analyze screen reader behaviour when handling the focus; • Use of the double Tap to click onto an interface element, i.e. on an interactive component (e.g. buttons, checkboxes, menu, etc.); • Detection of the positions of the main buttons to help determine whether functions such as turning on/off camera and microphone are within easy reach; • Analysis of the clarity and relevance of screen reader feedback messages, both when using the right and left flick gestures to move the focus and when using a double tap to click on an item. This includes icon and button labels, and any other text content shown in the interface. As with desktop systems, clear, accurate feedback on the current status and task success/failure is very useful in helping SR users to understand what is happening, whereas irrelevant or ambiguous messages can lead to confusion.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">End-User Surveys</head><p>A mixture of quantitative and qualitative data was collected using two questionnaires, both divided into three sections: I. user demographic data: five questions II. tool use: a separate subsection for each tool to make it easier to focus on the particular tool and allow participants to skip sections for tools they have not used. The desktop survey had four questions in each subsection and the mobile device survey had six. These questions are presented in an appendix. Both questionnaires asked about the ability to access a list of functions and how satisfied users were with the tool. The desktop questionnaire also asked how often shortcut keys were used and how easy it was to use the tool without them. The mobile device questionnaire also asked how participants accessed the tool features; how useful they found the automatic reading of screen content and their preferences for desktop, mobile and web versions of video conferencing tools. III. comments and suggestions: a single question asking for comments, descriptions of issues and suggestions for improving the three tools. Simple language was used and questions were formulated to make them easy to remember to facilitate questionnaire completion with a screen reader. This allowed users to use key presses (e.g., "h" for the Jaws screen reader) to move to the next or previous question and immediately listen to the question number. The question title was kept short, to avoid annoying the user by repeatedly reading long heading elements. This navigation structure allowed users to get to each question quickly and read only its number and a very short description. They could then read the whole question by using the arrow keys and move directly to the next question by pressing the command key. All the questions on the tools were optional. This reduced the stress of users having to find unanswered questions, but could risk some relevant questions not being answered.</p><p>Each questionnaire was made available on web-based forms using Google Docs. They were piloted with two blind people before being distributed throughout the visually impaired community in Italy using email and general and specific mailing lists of the Italian Association for the Blind.</p><p>Both quantitative and qualitative data were obtained from the end-user survey. Statistical analysis of the quantitative data included calculation of percentages, averages and standard deviations and the use of  2 to calculate statistical significance. Analysis of the qualitative data involved one stage of coding to identify the main themes, as well as searching for potential explanations of outcomes of the statistical analysis. It should be noted that further research will be required to investigate these explanations and confirm, modify or disprove them.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">RESULTS OF EXPERT EVALUATION</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Desktop Inspection Results</head><p>Table <ref type="table" target="#tab_4">2</ref> summarizes the results of the inspection evaluation for Zoom, Google Meet and Teams. For each function 'yes' in the relevant cell is used to indicate (1) the focus is supported, (2) there is a shortcut for the function, (3) screen reader (SR) feedback is appropriate and a blank that the function is not available, inaccessible or not supported. The term "partial" is used to indicate a) the process to reach an object requires many steps or is complex b) performing a task or function is not intuitive or is too complex. This action can be carried out relatively easily via keyboard and screen reader for Zoom and Google Meet. However, the procedure on Teams is quite complicated. The focus cannot be moved onto the button "participate" displayed on the screen, and the SR feedback is not useful. Joining a meeting requires multiple key presses: moving the focus via the Tab key onto the chat list (requiring multiple Tab key presses), using the arrow keys to select the message announcing that "the meeting is starting on...", pressing the Enter key twice to detect the "participate" button, and finally joining the meeting by pressing the Enter key yet again. This is hardly quick and intuitive. Another option is using SR commands to activate a virtual cursor to enable the user to explore the user interface as a web page. This allows the user to find the "participate" button and navigate many other commands. However, the user interface is quite confusing and novice and non-expert users are unlikely to be aware of this option which is by no means intuitive, or particularly easy to use.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F2. Asking to speak in a meeting.</head><p>This function is accessible in Zoom and Teams, but not in Google Meet. At the time of the surveys, it was only available for the G Suite business and education versions of Google Meet, but has subsequently been released for all versions. Only 10 users (36%) were able to use this function and seven commented on the need for additional shortcuts. Thus, screen reader users will need to make a verbal request to speak in Google Meet. They may not want to draw attention to themselves in this way and it can be difficult to find a suitable break in the meeting speech to do so. Only Zoom provides a shortcut for hand raising or lowering. The SR feedback is clear for all three tools.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F3 and F4. Turning the microphone and video camera on and off</head><p>These functions are fully accessible for the three tools tested. The focus can be moved onto the specific button, or can be used with the assigned shortcut. The SR feedback is satisfactory in Teams and Google Meet, but Zoom feedback that an action has been carried out requires a specific screen reader script to be loaded.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F5. Audio, video, file and screen sharing.</head><p>This function is used for video conference presentations and in meetings to give participants access to information. The screen reader or keyboard can be used for the "share" function with either the entire screen or a specific window selected. Sharing the screen or a window and including the audio (when supported) was straightforward, but there were issues with file sharing. In Teams this required the File Tab, which could not be easily detected with a screen reader. In Meet only the host but not participants had access to this function and could attach files to be shared in the meeting. Zoom used the Tab key and File sharing could be detected by the screen reader when exploring the chat area.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F6. Accessing shared content.</head><p>F5 sharing allows users to share content with other participants, whereas F6 accessing shared content allows users to access content shared by other participants. Unfortunately, all three tools show screen content shared by other users as an image, making it inaccessible for screen reader users. SR feedback is just the message "screen sharing by the speaker".</p><p>However, screen readers are able to detect shared PowerPoint files in Teams. In this case, the PowerPoint file content can be detected by a screen reader if the presentation has been designed to be accessible, including titles for all slides and alternative descriptions for all images. The shared content can be accessed by using the Tab key to move the focus.</p><p>F7. Using the chat.</p><p>To use the chat users need to be able to write messages and read and edit other people's messages. Zoom and Teams tools provide better support for using the chat than Google Meet. Only Zoom provides a shortcut to move into the chat area. In Teams the chat area can be reached with the Tab key and then opened using the "Show the chat" button. It can also be accessed in Teams via the focus. The user can then use the Tab or Arrow keys to move between reading messages and the edit box for writing them. This allows screen reader users to read and write text messages. However, a shortcut to open the chat area would be very useful and has been requested by several users, or instance "It would be useful to have keys to get to … the chat … faster'. Keyboard access to the "Chat" button and edit box in Google Meet is possible, but difficult with a screen reader. The lack of a shortcut to open the chat area means that a large number of steps are required and it can be difficult to carry them out and listen to the meeting at the same time. Reading messages is also more difficult in Google Meet. The screen reader is able to detect some messages, but the list of messages can only sometimes be detected, almost as if it is appearing and disappearing.</p><p>All the tools enabled users to read aloud a message written by another participant when the tool window has the focus. This is very useful, as the message is automatically read by the screen reader. However, users may find it difficult to listen to messages and speakers at the same time and therefore a function to scroll through or search previous messages would be very useful. It is very difficult to use links or copy a message in the chat in all the tools. This means the chat is considerably less useful as a source of information than it could be.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F8. Awareness of microphone and video camera status.</head><p>Users often need to know if their microphone and video camera are on or off. Unfortunately, this information cannot be obtained directly by screen reader users and has to be inferred. For instance, the user can turn the microphone or the video camera on/off by using the shortcut and obtain its status from the SR feedback. However, this is not a direct approach and requires the device status to be changed and possibly changed back again to the desired status. Alternatively, the user can move the focus to the on/off button and obtain the current label of this button. A "turn on" label means the device (microphone or video camera) is currently turned off and vice versa. However, this requires interpretation and could require numerous steps to be performed, possibly distracting the user from focusing on the speakers and the meeting.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F9. Information about participants (number, names, who is joining or leaving).</head><p>Screen reader users should have access to the same information about the other participants, including their names and the number of them, as non-disabled participants. Zoom, but not Teams and Meet, provides a shortcut to open the participant list. All three tools provide access using the Tab key (Zoom and Teams) or the Arrows key (Meet), but this approach generally requires several steps. The Arrow key can then be used to access information about a specific participant. Zoom provides the most complete and clearest information with all data presented in a meaningful order.</p><p>Teams provides similar information for each participant, but the information provided may require interpretation or the order may be inappropriate. Meet provides similar information, but it requires more interpretation and is more difficult to read. Table <ref type="table" target="#tab_5">3</ref> shows an example of the different ways in which participant information is read by the three tools. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Mobile Inspection Results</head><p>Our analysis of the use of the main functions in mobile versions of the three tools focused primarily on the effectiveness of the SR feedback, appropriate button positions and focus. We were unable to investigate specific gestures, as we would have liked to, since to the best of our knowledge none of the tools currently supports specific gestures for the main functions.</p><p>Analogously to Table <ref type="table" target="#tab_4">2</ref> (desktop inspection), in Table <ref type="table" target="#tab_6">4</ref>, 'yes' is used to indicate (1) the focus is supported, (2) optimal positioning of the element (3) screen reader (SR) feedback is appropriate and a blank that the function is not available, inaccessible or not supported. The term "partial" is used to indicate a) the process to reach an object requires many steps or is complex b) performing a task or function is not intuitive or is too complex. When carrying out different tasks via the SR VoiceOver on the smartphone, we observed the following interaction issues:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F1. Joining a meeting.</head><p>Joining a meeting is accessible via gestures for all the three tools. Joining Google Meet or Zoom by clicking on the link received by email or other messaging tools may raise some issues. The screen reader announces the names of people who join and leave the meeting. It can be very useful at the start of a meeting to know who is present. However, repeatedly hearing "Alex Smith has joined the meeting" or "Alex Smith has left the meeting", including when someone has briefly lost their internet connection, can quickly become irritating and distract attention and make it more difficult to participate in the meeting. Therefore, users should be able to customise these notifications through the application settings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F2. Raising hand.</head><p>Raising a hand does not present any particular problems. The most significant issue is locating the button, which is not always easy to find by exploring the touchscreen.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F3 and F4. Turning microphone and camera. on/off.</head><p>The microphone and camera may need to be turned on and off several times in a meeting so being able to do this using a quick gesture would benefit users. The two buttons for turning the microphone and camera on/off are relatively easy to find for all three tools. This may be slightly more difficult when Zoom is used on a larger screen (e.g. iPad mini) as the buttons are located along the top edge and are sometimes confused with the speaker icons (announced by SR as avatars). In Google Meet, Teams and Zoom on smartphones the buttons are easier to find as they are placed along the bottom edge, an area where the user is used to looking for buttons. The screen reader clearly announces "mic. on" and "mic. off" when the button is clicked. This makes the SR feedback clear and easy to understand.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F5. Screen sharing.</head><p>This task presents no particular problems. However, there may be difficulties in exiting from this function in Google Meet or Teams. This could be due to the user not being aware that the sharing function called by the IOS system appears as a separate screen.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F6. Using the chat.</head><p>Chat messages are read automatically by the screen reader in Zoom but this could interfere with listening to the speaker or vice versa. Scrolling through chat messages to read them again requires the chat button to be located, which is not particularly easy in any of the three tools and therefore requires additional user interactions. When reading message in Google Meet, but not Teams and Zoom, the screen reader announces the writer and this could become irritating.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F7. Accessing shared content.</head><p>Content sharing is unfortunately inaccessible via screen reader in all three tools due to its graphical format.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F8. Checking microphone and camera status.</head><p>The microphone and camera on/off status can be checked in Zoom and Teams by reading the labels of the corresponding buttons and this requires the user to just place their finger over the button. The screen reader output is easy to understand. Having a "microphone on" or "camera off" sign in a screen corner or other position easy to locate with a finger could improve this function. This is the case for Google Meet, which makes this feature of the mobile version more usable than the desktop (web) application.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F9. Obtaining participant info.</head><p>Information about the status of other participants can help blind people decide whether to keep the camera on or off, including copying the behaviour of other participants. Information about microphone, but not camera, status is provided in all three tools. Camera status information is better supported in Zoom.</p><p>A brief overview of some of the features of gesture-based interaction with mobile devices will now be provided. Zoom has many good features and is, for instance, the only one of the three tools that can provide screen reader users with their camera status. The screen reader announcement of the speaker's name as soon as the microphone picks up the audio is very useful when a person is actually speaking. Unfortunately, this can be triggered by the slightest noise and the associated repeated announcement of names could quickly become irritating and distracting.</p><p>The mobile version of Google Meet is more usable than the (web) desktop version. The user interface is simple, though there is some difficulty in exiting from the sharing function. This is also the case in MS Teams. The chat is not automatically announced in Google Meet as is the case in Teams, but reading and editing messages is easy once the chat area has been opened. In Teams, when the chat is open new messages are read automatically.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Interacting via Screen Reader: two Examples</head><p>In this section we are presenting two examples to illustrate the keyboard steps that screen reader users have to take to obtain simple information. These cases relate to a conversation with another participant in the chat. The first case relates to reading this participant's messages and the second obtaining information about their status.</p><p>Case I: reading messages.</p><p>In this case a screen reader (SR) user is communicating in a chat window with another participant using the Teams tool. When the chat window is opened, the focus automatically moves to the edit field ready to write a message. To identify the last message from the other participant, the SR user has to press (1) Shift+Tab to move the focus to the message list; (2) up and down arrows to scroll through the messages and allow the screen reader to read them; (3) Tab to bring the focus back to the text box. This requires three steps. While this is not a very large number, it is multiplied each time the user has to do this and soon becomes large, so having to repeat these three steps for each incoming message is not very practical. The screen reader should (a) provide a command to read, for instance, the last (ALT+1), second (ALT+2) and third last messages (ALT+3) and (b) ensure that a message is read immediately after it arrives. This is not always possible for various reasons. For example, the SR user may be writing a message at the same time as receiving a message from the other participant. The SR cannot read out both the message the user is writing and the incoming message at the same time. Therefore the user will need to ask the screen reader to read the last message. This will happen automatically if the solution (a) is applied.</p><p>Case II: knowing another participant's status.</p><p>A SR user may want to know the status of another participant they are communicating with in the chat, for instance whether they are in the meeting, not in the meeting or giving a presentation. The video conference tool provides the user with this type of information in various ways, for instance by a colour code for their name or by showing textual information or icons next to their name. The screen reader user may need to use a number of different keyboard steps to bring the focus to the point where this information is reported. Further steps will then be required to return the focus back to the editing field.</p><p>We now consider how this works in Teams. We assume that the SR user has opened the chat in a window. The focus is then on the text box ready to write a message. Before sending a message, the user would like to know that the recipient is available and is not making a presentation. If, for instance, they are giving a presentation, there is a risk of the message being seen by the audience when the screen is being shared. This type of information can be announced by the screen reader, for instance as 'available', ' communicating', 'presenting' (when screen sharing), 'absent' or 'offline'. Unfortunately, a large number of key presses is required to access the status which is shown next to the name in the list of chat names.</p><p>To obtain this type of status information, the screen reader user should (1) press the Tab key eight times or Shift+Tab nine times to bring the focus to the chat list of the names of the most recent chats. ( <ref type="formula">2</ref>) press the up or down arrow keys or the 'read current line' command to read the name followed by their status (e.g., 'Alice, presenting', 'Bob, available', or 'Charlie, "away"); (3) press the Shift+Tab eight times or Tab nine times to bring the focus back to the text box, or alternatively press the Enter key on the user's name as if activating it for the first time. It is not necessarily obvious to all users that this is what they are required to do. While it is possible to carry out these keyboard actions, this requires a large number of steps. This is difficult for users and could lead to mistakes. In this case, the solution could be (a) a specific screen reader command that reads the status i.e. it carries out all the required steps without this being visible to the user or (b) adding the status immediately next to the participant's name e.g. 'Alice, "presenting" in the title of the chat window. In the latter case, the screen reader user only needs to use the key combination that allows them to read the title of the current window. This command is available in all screen readers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">END-USER SURVEY RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Participants</head><p>65 blind people participated in the desktop study and 94 in the mobile device one. Both studies were approximately malefemale gender balanced with 31 females (47.7%) and 34 males (52.3%) in the desktop study and 45 females (47.9%) and 49 males (52.1%) in the mobile study. Six (6.4%) of the mobile participants and 10 (15.4%) of the desktop participants were partially sighted and the others were blind. All participants used screen readers and keyboards to access videoconferencing tools on both desktops and mobile devices. As figure <ref type="figure">1</ref> shows, both samples had an approximately bell-shaped age distribution with a longer tail to the left than the right and ages ranging from under 20 to 70+ years. However, the peak/mode was 40-49 years for the desktop group and 50-59 years for the mobile one. The relatively large number of participants over 70 for the mobile device, 12 (12.8%) is interesting, but further research would be required to determine whether older blind people prefer mobile devices to desktops. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">Accessing Video Conferencing Tools</head><p>Nearly all participants (96.8%) had used Zoom on mobile devices with close to 90% of them (87.3%) having used it on a desktop (87.7%). 80% had used Meet on a desktop and nearly as many, 78.7% on a mobile device. whereas only a minority had experience of Teams, 15.4% on a desktop and 9.6% on a mobile device. Table <ref type="table" target="#tab_7">5</ref> shows that for both desktop and mobile devices much higher percentages of participants had been able to access the basic functions of accessing a meeting and turning the microphone and camera on and off than were able to determine their own microphone or other participants' microphone and camera status or carry out less frequently used functions such as knowing who had raised their hand, screen sharing and file sharing. In general, a higher and sometimes much higher percentage of participants were able to access functions using Zoom than the other tools on both desktop and mobile devices, though this was not universally the case. A higher percentage of participants were able to access screen sharing and microphone status using Teams than Zoom on a desktop and camera and microphone status and the participant list using Teams on mobile devices.</p><p>The basic functions (i.e. turn on/off cam/mic, read/write chat and mic/cam status) were slightly more frequently used in Meet than in Teams, whereas more advanced functions such as Know participant mic/cam status, Write in chat and File sharing were more frequently used in Teams. Teams was mainly used by technologically skilled people i.e. 10 very expert, 20 experienced, and only one novice user in the desktop survey. This is in line with educational use in Italy where over the last two years many universities have adopted Teams video conferencing tools for lectures, meetings and exams and used its breakout features for laboratories and cooperative projects, whereas Google Meet was mainly used in primary and secondary education. This may have resulted in more experience with and greater ability to use the less frequently used functions or greater ability to overcome problems in using them. A lower percentage of participants was able to access most of the functions on each of the tools on mobile devices than desktop. However, the percentage of participants able to access file sharing on Zoom on mobile devices was twice that on desktops and slightly greater on Teams and the percentages for raising and lowering a hand were all greater on mobile than desktop. Table <ref type="table" target="#tab_8">6</ref> indicates which differences in the percentages of participants able to access particular functions on desktop and mobile platforms in table 5 are statistically significant for each of the three tools, Zoom, Teams and Meet by giving the  2 and p values. For example, the greater percentage of Desktop Zoom users (81%) who were able to read the chat compared to Mobile Zoom users (58%), was found to be statistically significant (p = 0.004722), whereas the greater percentage for Desktop Meet users (50%) compared to that for Mobile Meet users (39%) was not statistically significant (0.20498). From table 6 over two fifths (43%) of the differences between the percentages of participants able to access particular functions on desktop and mobile devices are statistically significant at the 0.05 level. The table does not include the chi squared and p values for accessing a meeting and turning the microphone on and off, as these percentages are very close to each other and to 100%. The values for Teams for writing in the chat have been modified slightly in the calculation to remove a non-zero value. The differences are statistically significant for all three tools for only one function, screen sharing. Zoom and Meet both have eight statistically significant differences, with only half of them for the same functions, and Teams only two. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">Exploration Strategies</head><p>As shown in figure <ref type="figure" target="#fig_1">3</ref>, shortcut keys were found to be useful, but not used universally. The majority of participants used shortcuts either sometimes (63.6%) or always (32.7%) on Zoom, and sometimes (73.3%) or always (20.0%) on Teams with lower percentages on Meet: 56,5% sometimes and 13.0% always. Over a fifth (30.4%) never used keyboard shortcuts on Meet. This raises the issue of why keyboard shortcut keys were so relatively popular on Zoom and so unpopular on Meet. Determining the reasons for this will require further research, but they could include Zoom having shortcut keys for more functions, greater familiarity with Zoom and consequently greater awareness of the shortcut keys.</p><p>The results on ease of navigation without shortcut keys in the next section show that the explanation is not greater difficulties in using Zoom than Meet or Teams without shortcut keys.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3">Ease of Use and Satisfaction</head><p>Figure <ref type="figure" target="#fig_3">5</ref> shows that users did not find it particularly easy to navigate without shortcuts and that a relatively high percentage, 50.9% on Zoom and 65.2% on Meet, found this neither easy nor difficult. A higher percentage of participants found Zoom easy or very easy to navigate than Meet or Teams, though the value was still low at only 30.9%. Teams was found to be the most difficult to navigate with 70.0% finding it difficult or very difficult to navigate. This could be due to less familiarity with Teams than the other two tools, but there may also be aspects of Zoom's structure which make it easier to navigate. However, a stronger conclusion is the importance for keyboard shortcuts for easy navigation. On mobile devices, in contrast to the desktop results, Teams was evaluated as easy to use (easy and very easy) by 57% of participants and Zoom and Meet as easy or very easy to use by only 25%, whereas about two thirds answered "I do not know". However few of the participants were advanced users of Teams on mobile devices, so the comparison may have included both basic and advanced functions on Zoom and Meet and only basic functions on Teams. In addition, the small number of users of Teams also complicates comparisons.</p><p>Figure <ref type="figure">6</ref>: Ease of use of Zoom (left bar) N=87, Meet (middle patterned bar) N=71 and Teams (right bar) N=7 on mobile devices Concerning user satisfaction, Figures <ref type="figure">7</ref> and<ref type="figure">8</ref> show that participants had the greatest satisfaction with Zoom on both desktop and mobile devices with two thirds (81.5%) satisfied or very satisfied with it on desktops and 73.8% on mobile devices. This was followed by Teams on desktops with just over a half (56.7%) satisfied or very satisfied, and Meet on mobile devices with just 37.5% satisfied or very satisfied. Few participants were (very) dissatisfied with any of the tools on mobile devices, indicating that many of them did not answer the question. On desktops more than a quarter, (27.6%) were dissatisfied with Meet and 16,7 % with Teams vs Zoom only 1,9%. Figure <ref type="figure" target="#fig_5">9</ref> shows that participants did not find automatically read content particularly useful. Few participants considered this (very) useful, only 12% on Zoom, 17.2% on Meet and 25% on Teams. Determining why this was found to be more useful on Teams than the other tools would require further investigation. However, we have to consider that in our sample only few participants used Teams compared to Zoom and Teams. Participant comments indicated that, for instance, 'It is irritating that the screen readers read out everyone who enters and leaves'. This participant also noted 'you can configure it in Zoom with a script but not in Meet'. However, this could be difficult for users who were not particularly experts. Concerning the preferred access devices, participants had a strong preference for using Zoom (86.2%) and to a lesser extent Meet (75.3) with an app on a computer (see figure <ref type="figure" target="#fig_6">10</ref>). Phone/tablet was a distant second, preferred by only 12.6% on Zoom and 24.7% on Meet. Only small numbers answered this question for Teams, with twice as many preferring an app on a computer to either phone/tablet or web. The difference in preferences between the two platforms was lowest for Meet which offers an "accessible" web version for both desktop and mobile devices. However, participants were probably not aware that the computer version of Meet is actually a Web application. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.4">Participant comments</head><p>Despite the much greater number of responses to the mobile devices than desktop survey, over four times as many participants commented on the tools on desktops (44 or 68%) than mobile devices (8 or 8.5%). Probably unsurprisingly, they generally commented on problems rather than features they were satisfied with. They also suggested additional functions they would find useful and commented on which tools they used, sometimes with explanations or indications of how they used them. For instance, comments from desktop participants included, 'I only use Zoom … I am not familiar with the others' and 'I use Zoom in the association and Teams and Meet at university' (mobile participants) and 'I use Google at work particularly when I work from home. I've used Zoom with JAWS for some online courses' and 'I use Zoom. I have tried Google only a few times and not tried the Microsoft tools at all.' One of the most frequently raised problems with tools on desktop devices related to the complexity of the user interface (20 participants). They considered it to have too many elements, to be difficult to navigate and time consuming. For instance, 'these tools are hellish. I never understand anything, where I am and what I need to do … Fortunately there are shortcut keys.' Another significant problem was the lack of shortcuts (24 participants) so that functions required a lot of key presses to carry out. For instance, 'It is not easy to go from one area to another in the Teams interface in a meeting … unless you use shortcuts"; "improve the interaction with shortcut keys to know the numbers of raised hands in Zoom" and 'I would like to be able to read shared content when it is presented, move quickly between the chat and the participant list and see the state of the microphone and video camera without needing to turn them on and off and use a lot of buttons to see whether they are on or off'. There was also a suggestion to standardise the shortcut keys to avoid 'confusion between platforms'.</p><p>Six participants considered the interface too difficult to learn and, sometimes, to require assistance from a sighted person. For instance, 'I need to use the tools for a bit at the start, as it's difficult to understand them initially, particularly Teams. I had to ask someone to explain how the interface is organised.' Examples of the resulting difficulties included "knowing who is speaking is a great problem" and "rereading the last message in the chat needs too many Tab and Arrow keys". These issues are clearly related, as additional shortcuts would reduce interface complexity to some extent and navigation difficulties, lack of shortcuts and interface complexity make the tools more difficult to learn. These comments are in line with the quantitative results which indicated relatively frequent use of shortcuts, particularly on Zoom, and some difficulties in navigating without them. Copying links or content from the chat also caused difficulties, for instance, 'I still find it difficult to copy a link or a written text (e.g. if a phone number is written down and I want to copy it)'. There was a suggestion of 'a function which quickly visualises links and documents and distinguished them from other chat messages'. Three participants commented on the need for flexibility "to personalise and simplify the interface", for instance, " to visualise the things you need".</p><p>Participants experienced difficulties with the focus, losing focus and orientation in the user interface on desktops and having to bring the focus back to the top of the page after the first screen, as 'it does not position itself automatically' on mobile devices. "I often lose messages in Google Meet as the screen reader loses the focus or cuts off messages." Interference between the meeting speakers and screen reader information could also cause problems. Desktop participants found the announcements of the names of participants 'joining and leaving Zoom irritating' and that the repeated announcements of participants as speakers when the microphone detected background noise could lead to loss of concentration. However, mobile device participants preferred the 'clear' announcements of 'who was speaking' on Teams to the need to 'deduce' this on Meet and Zoom. Comments on tool use on mobile devices also indicated they preferred the computer versions due to 'better control of the camera' and the ability to 'take notes … while listening', whereas it was 'awkward' to listen to a lecture on one device and take notes on another. They preferred 'to do everything on the computer'. Mobile device users also complained about having to type the link into an app when joining and one participant was denied access to Teams. Desktop participants were particularly interested in additional shortcuts to simplify and speed up their interactions (24 participants) e.g. 'I am suggesting more keyboard shortcuts .. everything should be faster and immediate' They considered shortcuts could provide fast access to grouped commands to simplify the user interface (20 participants). .In particular, they wanted shortcuts for (1) the list and number of participants, (2) list of chat messages, (3) files available to participants, (4) their microphone and camera status and the status of the virtual background, and (5) the list of participants with cameras on. Specific comments about the need for additional shortcuts included "A command to know whether the video, microphone and background are on or off would be useful. I would also like a command to know who is speaking" and "It would be useful to have some more keys, for instance to quickly have the list of participants, know whether the mic/video are active, raise a hand".</p><p>There was some overlap between desktop and mobile device users in their desire for shortcuts, as the latter were also interested in functions for rapidly knowing the speaker in Meet and Zoom, receiving more feedback and improving focus handling. Both groups of users wanted the ability to control or silence the screen reader for some functions or announcements with mobile device users wanting the option to deactivate the announcement of names and people arriving and leaving. However, two desktop users wanted to be aware of the context and 'the screen reader to read more things to enable the user to understand where they are, otherwise it is too difficult to listen to a meeting and understand what is on the screen at the same time'. Finally, six desktop users wanted tutorials, user interface commands and a description of the interface to facilitate and speed up learning it e.g. 'It would be useful to have tutorials which explain how to use video conferencing including with a screen reader'.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">DISCUSSION</head><p>65 blind people responded to the survey on videoconferencing tools on desktops and 94 to the version for mobile devices. Comparison of the survey results and those of the inspection evaluation for desktop and mobile devices showed full agreement on the main issues.</p><p>Analysis of the results showed that all three tools were generally able to provide means of accessing their main functions via keyboard or gestures with screen reader feedback. However, access was frequently not easy due to the lack of shortcuts (desktop) and the lack of specific gestures (mobile) for the main functions and other problems resulting from poor design for screen reader feedback. Clear and unambiguous feedback enables users to interact with the system and monitor the status of other users in the collaborative online environment <ref type="bibr" target="#b13">[14]</ref>. In the desktop version, Zoom was found to be the most accessible of the three tools, probably due to the numerous shortcuts available for the main functions, whereas Google Meet was preferred in the mobile version, possibly due to having a simpler interaction with the user interface than Zoom. However, all tool preferences on mobile devices were low. Table <ref type="table" target="#tab_9">7</ref> shows a summary of the accessibility features supported by desktop and mobile video conferencing tools, as determined by the inspection evaluation of the user interface. The study highlighted that none of the three tools was fully accessible via screen reader and keyboard in the desktop environment and gestures in the mobile environment. The overall preference was for Zoom on desktop. Both the questionnaire and inspection evaluation found that it was able to support the greatest number of basic functions required for participation in an online meeting. However, users reported that they were unable to use several of the functions that the inspection evaluation determined could be accessed by keyboard and screen reader, but which required a non-linear or lengthy procedure. Examples include checking other participants' status (e.g. microphone, video camera and raised hands) and accessing and using the chat.</p><p>This shows the importance of end-user testing and the need for both accessibility and usability so that functions are not just theoretically accessible, but easy and intuitive to use in practice, including by non-expert users. Long and complex procedures are likely to act as a barrier, particularly for non-expert users. User feedback was important in identifying usability issues and the inspection evaluation in explaining them. Making all functions easy and intuitive for all users makes it easier for them to focus on the meeting, what is being said and any contributions they may want to make rather than their attention being distracted and energy dissipated by difficulties in using the tools. This is particularly important for screen reader and keyboard users with minimal experience with the tools.</p><p>Comments from several users indicated they were unable to use some of the functions. This may be due to a lack of easily available information on how to use them or usability issues. Inspection evaluation showed that some information, for instance on video or microphone status, could be read next to the participant's name in the participant list. However, when there was a lot of information and each line was lengthy, participants could experience difficulties in accessing and understanding the displayed information, making it not very useful in practice. In addition, as indicated in the results section, it was not always easy to access the participant list. Searching for specific information, particularly during a meeting or trying to access the list of chat messages could require considerable cognitive effort, as the user tried to understand both the speaker(s) and the information being read by the screen reader. Non-disabled users avoid these problems by using different sensory modalities to search for information and listen to a meeting, whereas screen reader users use hearing for both. This risks cognitive overload and interference and the screen reader information making it difficult to understand the speakers or vice versa. This makes it essential that all information is easily available through a minimal number of simple steps, preferably just one, and complex mechanisms involving multiple steps are not required. Some participants found it very difficult to join Teams meetings on a desktop, as the "participation" button is not clearly visible and several steps were required to get to it. Some participants experienced difficulties in clicking on their invitation link in Zoom and Meet. In Teams shared content was partially accessible in the desktop version as a ppt file, whereas it was only possible to read the number of slides but not access the content in the mobile version.</p><p>The results of the desktop survey largely confirm those of the earlier study by Leporini et al. <ref type="bibr" target="#b38">[39]</ref> of which they form an extension. There are small differences, due to the larger sample (65 rather than 29). For reader convenience, the results of the initial study are reported in Table <ref type="table" target="#tab_10">8</ref> while table <ref type="table" target="#tab_11">9</ref> shows user preferences for the desktop video conferencing tools in this extended version. Two five-point Likert scales were used for measuring values of ease of use (on the left) and user satisfaction (on the right).  In the desktop environment, participants considered interaction and navigation with Meet and Teams not to be easy and with Zoom to be moderately easy/difficult. On a five-point Likert scale with 5 indicating greatest ease of use, mean values (M) and standard deviations (SD) were Zoom (M=3.13, SD=0.84), Google Meet (M=2.89, SD=0.64), and Teams (M=2.23; SD=0.68). A 5-point Likert scale evaluation with 5 indicating greatest satisfaction, showed that overall participants preferred Zoom (M=4.15, SD=0.69), followed by Teams (M=3.43; SD=1.10) and Meet (M=3.07, SD=0.65). Participants had a much greater range of opinions about Teams than Zoom and Meet, giving a much higher standard deviation (1.10 compared to 0.69 and 0.70 respectively).</p><p>Analogously Table <ref type="table" target="#tab_12">10</ref> shows user preferences for the mobile video conferencing tools. A five-point Likert scale of tool use on mobile devices with 5 indicating greatest ease of use, mean values (M) and standard deviations (SD) found that Teams was the easiest to use (M=3.57; SD=0.98) followed by Meet (M=3.23, SD=0.64), and Zoom (M=3.21, SD=0.63). However, the greater ease of use of Teams may have been due to responses from only a small number of mainly expert or very expert users.</p><p>A 5-point Likert scale evaluation with 5 indicating greatest satisfaction, showed that overall participants preferred Zoom (M=3.92, SD=0.70), followed by Teams (M=3.38; SD=0.92) and Meet (M=3.36, SD=0.70). Participants seem to have found the interaction via gestures on mobile devices to be simpler than keyboard interaction on the desktop version.</p><p>However, overall they preferred the desktop versions, probably due to the flexibility offered by the desktop environment.</p><p>Participants used these tools at university and at work. They needed to take notes, share content, and move between applications such as email and this can be done more rapidly and easily using a keyboard in a well known environment. Table <ref type="table" target="#tab_13">11</ref> shows that the differences in the values for Zoom, Meet and Teams are statistically significant at the 0.05 (and higher) levels for ease of use for both desktop devices for both samples, but not mobile devices. These differences are significant at the 0.05 (and higher) levels for satisfaction for both desktop and mobile devices. As shown in table 12, the differences in the values for desktop and mobile devices are only significant for both ease of use and satisfaction for Meet. The lack of significance for ease of use for Zoom and satisfaction for Teams is unsurprising due to the closeness of the means. The small number of respondents for mobile devices for ease of use for Teams may have affected the result. Tables from 13 to 18 show ease of use and satisfaction for Zoom, Meet, Teams, as expressed by users.     Overall the study indicated the importance of usability as well as accessibility. While many of the available functions could be used, particularly on Zoom, user experiences could be considerably improved and many functions made much easier to use.</p><p>Microphone and camera handling are well supported by the three tools on both platforms. However, camera control could be improved by providing information about background images and blur and helping blind participants to correctly focus their cameras on their faces. Support for camera framing would be useful and could be provided by artificial intelligence algorithms, as is already offered for instance by the camera in the Apple IOS for face centering, Access to the chat could be improved by making messages easier to read and not reading out additional content such as "Bob says…" or "Alice answered in the conversation…", as currently occurs in some Tools such as Google Meet and Teams. Messages should include only the essential content. The user interface should be organized to minimise the number of actions required to operate a function and explore the resulting content. For example, it should be possible to scroll through participants' names in one or at most two steps.</p><p>One of the difficulties in using video conferencing tools via screen reader results from the fact that all information is available through the audio channel. Consequently, users frequently need to listen to the screen reader for tool information and the speaker at the same time. This requires a lot of cognitive effort from them, again stressing the importance of minimising the number of steps required to access each function. Many other such suggestions could be provided. It should also be noted that the problems identified are due to the tools not being designed to take account of screen reader functionality and limitations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">GUIDELINES FOR DEVELOPERS</head><p>The guidelines in this section draw on the results of the study with the implementation details developed by the researchers to most effectively implement them. They are intended to support developers of video conferencing software and assistive technologies in improving accessibility and usability for screen reader users. They go beyond the W3C-WAI draft guidance for software for remote meetings <ref type="bibr" target="#b62">[63]</ref> in providing detailed guidelines related to the user interface for developers of video conferencing technologies for screen reader users.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.1">Principles</head><p>The guidelines are based on the following principles which have emerged from the research: 1. Providing easy access to the same information as non-disabled users while minimising cognitive load.</p><p>2. Providing easy to implement customisation options which do not overcomplicate the system. 3. Easy access to functions and information through shortcuts (desktop), gestures (mobile devices) or the Tab key.</p><p>4. Clear audio of both speakers, and messages and feedback from the screen reader, with the means to minimise interference between them.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.2">Guidelines</head><p>Guidelines G1 and G2 are part of a three step approach to making commands and functions easily accessible via shortcuts or gestures. This involves (a) organizing the interface into functional areas or panels; (b) making each area (or panel) accessible via keyboard or gesture; and (c) moving the system focus to the area. Step (a) is implemented through G1 and (b) and (c) through G2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G1. Partitioning the user interface to arrange and group functions and commands logically related.</head><p>Developing areas and panels (tabs) that group functions logically simplifies the interaction and the search for functions and information. Panels in the user interface can be used to group video calls, participants and chat functions.</p><p>Functions could be further grouped by type on toolbars, menus or frames in each area or panel. This logical structure will make it easier for users to remember where functions are and easily find them with a small number of key presses (G2). This will reduce cognitive load and enable users to focus on the meeting rather than looking for functions.</p><p>1. Developing common blocks e.g. areas, panels, tabs or separate windows to group functions and information by type e.g. buttons to switch microphone and camera on and off, share the screen and access chat messages. 2. Placing the most commonly used function and command buttons in easy-to-find locations, e.g. the microphone and camera on/off buttons near the bottom (or top) edge, makes it easier and quicker for users to find them, particularly on a touchscreen.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G2. Making it easy to locate the focus on all UI blocks, functions and commands and operate them via the keyboard or gestures in an effective way</head><p>The aim of this guideline is to ensure that the focus can be moved from one block to another using keyboard shortcuts or the tab key (desktop) and gestures (mobile devices) and the keyboard or gestures can be used to interact with elements of the block the focus is on. Specific design recommendations include:</p><p>1. Basic operability via keyboard e.g. with focus handling via the Tab, Ctrl+Tab and Arrows keys. 2. Basic operability via gestures, e.g. Three-finger swipe right and left to skip from a panel to the next/previous one.</p><p>3. Assigning specific shortcuts to each (frequently used) block, panel or toolbar to make it easier and quicker to access them and reduce the number of key presses required.</p><p>4. Assigning specific shortcuts or gestures to frequently used functions and commands to make it easier and quicker to access them and reduce the number of key presses required.</p><p>5. Automatically moving the focus onto a block or panel when the shortcut or gesture for this block or panel is pressed.</p><p>G3. Providing appropriate screen reader feedback on the status of input and output devices, participant information and chat content.</p><p>Since screen reader users do not have direct access to what is on the screen they require SR feedback to inform them when a function is triggered or the screen changes. Specific design recommendations include:</p><p>1. Feedback should be short and relevant e.g. short sound or very brief message to indicate an action has taken place, and avoid redundant and superfluous comments and content. 2. SR status information about input devices or other events should be easily available through shortcuts or gestures or automatically when a device is triggered. It should be very clear and not require interpretation e.g. "mic on" or "microphone is on" not "switch the microphone off".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G4. Providing SR information about the speaker and the content presented.</head><p>SR users do not automatically have access to information about the speaker or presenter and the title of any presentations, whereas this information is generally available to non-disabled people from the screen.</p><p>1. The SR should automatically or on demand provide the name of the person currently speaking or presenting (e.g. slides or videos) in a format chosen by the user.</p><p>2. To avoid repeated announcements of the speakers' names being triggered by background sounds or muttering, only sounds recognised as speech should be included (requiring voice recognition software) and a threshold volume used.</p><p>3. Any shared content should be made available. In particular, the title of any presentations should be announced and the slides available to download for the user to read.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G5. The provision of audio assistance for various tasks.</head><p>Tasks such as determining whether your face is clearly visible and appropriately framed by the video camera are difficult for screen reader users and will therefore require technological assistance. This will generally involve audio input. Recommendations include: 1. The availability of support to properly frame the user's face in the camera, including audible cues about its position relative to the screen or edge e.g. "your face is near the top edge" and feedback about background images and camera clarity. Face recognition software will be required. However, this could raise other issues, discussion of which is beyond the scope of this paper, related to the potential for recording the images of blind or other participants.</p><p>2. The use of optical character recognition (OCR) to provide information on screen content shared by speakers.</p><p>3. Mechanisms for managing (simultaneous) audio output from speakers and the screen reader. Options include left and right headphone channels or speakers for the two inputs and a function or screen reader command to switch between the two audios and regulate the volume of the SR audio independently of the main meeting.</p><p>4. A search function for the chat and participant lists to enable participants to search for e.g. chat messages from particular individuals and particular topics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G6. Options for personalising the user interface and function and commands operation</head><p>Personalisation options allow the user to set up the system to better meet their needs, for instance by determining what notifications are read automatically and which need to be turned on.</p><p>1. The option to turn notifications on and off and customize their format avoids irritation and allows users to choose whether to focus on the meeting or screen reader messages. This should include the option to turn on/off short sounds to indicate e.g. chat messages, raised hands and participants entering and leaving, and the additional information provided and its format e.g. names and text of chat messages.</p><p>2. Users should be able to customize shortcuts and gestures to avoid possible conflicts with other programs and screen reader commands and make them easy to remember and use.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.3">Examples</head><p>In the following two examples are introduced to illustrate how improvements can be applied.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chat</head><p>Access to the chat can be improved in various ways, including the following: a. A chat block or panel, which can be accessed through both keyboard shortcuts and standard focus handling via keyboard with Tab, Ctrl+Tab or F6 keys. b. Arranging the messages in a list that the focus can be directed to and can be navigated with the up and down arrow keys. c. Each message should comprise the writer's name followed by the text with the name only read the first time for multiple consecutive messages from the same participant. d. Additional information, such as the time and delivery/read status should be displayed after the message text to facilitate skipping without missing the message text and the option to turn on and off or skip over this information.</p><p>e. The option to search the list of messages for e.g. messages from a particular person or on a particular topic. f. The option to turn on and off automatic reading of incoming chat messages. This can be very useful and avoid having to move the focus when the focus is elsewhere, but could make it difficult to focus on speakers, particularly if their contributions involve technical or other details. g. Using a short and distinct sound rather than an audio message such as "message sent" to indicate a message has been sent.</p><p>h. The option to use keyboard shortcuts or gestures to copy messages and open links for making this easier to do.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Participant information</head><p>Easy access to information about other participants e.g. number, names, camera and microphone status should include: a. A participant information block or panel that can be easily accessed via a keyboard shortcut or standard keyboard focus handling with Tab, Ctrl+Tab or F6 key.</p><p>b. A list of participants which the focus can be directed to and can be navigated with the up and down arrow keys. c. Including the 'name', followed by camera and microphone on/off status e.g. Alice Smith, mic on, cam off" and "Bob, hand raised, mic on, cam off".</p><p>d. Putting participants with raised hands at the top of the list to make it easier for screen reader users chairing a meeting to find and read out their names and invite them to speak. e. An option to search the list for e.g. a particular participant or all participants with cameras on. f. A filter to choose to display only e.g. participants with raised hands or camera or microphone on.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9">CONCLUSIONS</head><p>This study has investigated the accessibility and usability of three popular video conferencing tools, Zoom, Google Meet and MS Teams, for blind people interacting via screen reader. It includes an inspection evaluation of the nine functions required for the participant role and two online surveys of tool use on desktop and mobile devices, which received 65 and 94 responses respectively.</p><p>To conclude, we are able to briefly answer our two research questions:</p><p>1) To what extent are screen reader users able to use all the features of video conferencing tools or do they experience barriers to accessing some important functions via screen reader?</p><p>2) How easy and satisfying is it for screen reader users to use video conferencing tools? In particular, is interaction easy or do users experience cognitive overload and a poor and time-consuming interaction?</p><p>As stated in the discussion and shown in table 7, all three tools provided means of accessing the main, but not all the functions. Even Zoom, which overall performed the best, was not fully accessible. Zoom and Meet had better accessibility on desktop computers, whereas that for Teams was better on mobile devices. In addition, participant comments indicated that some participants were unable to use functions, such as accessing and using the chat and checking whether other participants had a raised hand, which were accessible via keyboard and screen reader according to the inspection evaluation.</p><p>The results and in particular tables 7 and 8 showed considerable variation in satisfaction for the three tools, with satisfaction highest on Zoom on both desktop (81.5%) and mobile (73.8%) devices followed by 57.6% satisfied or very satisfied with Teams on desktop and 37.5% with Meet on mobile devices. This shows that significant percentages of participants were dissatisfied with Teams and Meet and that satisfaction with Zoom was not universal. Table <ref type="table" target="#tab_7">5</ref> and<ref type="table" target="#tab_8">6</ref> show that none of the tools was particularly easy to use on either desktops (without keyboard shortcuts) or mobile devices. Zoom was easiest to use on desktops, but only just under a third of participants found it easy or very easy to use and Teams on mobile devices (57%). The majority of participants found Zoom and Meet neither easy nor difficult to use on both desktops and mobile devices. Participant comments show that the process was often difficult and time consuming, particularly where shortcut keys were not available. The recommendations in section 8.1 indicate some of the changes required to make tool use easier, more satisfying and less stressful and cognitively demanding for users accessing them via keyboard and screenreader.</p><p>The survey results confirmed the difficulties detected by the inspection evaluation. The results indicated that Zoom was the most used videoconference tool on both desktop and mobile devices. Teams was the least used tool and mainly adopted by technologically skilled people. Participants commented that it is very difficult to use and some users needed the help of a sighted person to understand the UI (though they were expert users). However, after getting over their initial difficulties, they considered Teams to be powerful and relatively easy to use. This agrees with the results of previous studies. The level of SR complexity makes it difficult for blind users to develop adequate mental models without assistance from sighted people <ref type="bibr" target="#b34">[35]</ref> and <ref type="bibr" target="#b35">[36]</ref>. Mental models are essential in supporting users to use commands as well as interpret system actions and feedback <ref type="bibr" target="#b44">[45]</ref>.</p><p>Computers were the preferred device for accessing all the video conferencing tools, probably due to the availability of keyboard interaction and to the ability to switch easily between other applications (for taking notes, reading email, accessing instant messages) that would be complicated on smartphones/tablets.</p><p>The combination of expert evaluation and end user surveys had a number of advantages. However, the study also had several limitations. In particular, the expert evaluation was carried out by one blind and one sighted expert rather than two blind experts, few of the participants had used Teams, and the results only cover the participant and not also the host role. In addition, we did not consider the different applications and contexts in which participants were using the tools, including the types of applications, the particular screen reader used and the operating system, as well as fact that we did</p><p>not include an answer option for participants to indicate that they were not aware of a particular function on a particular tool. Most of these limitations arose from the need to keep the questionnaires a manageable length and could be investigated in further work. For instance, it might be particularly interesting to investigate disabled people's experiences as meeting hosts and the associated accessibility and usability issues.</p><p>The study highlighted both the accessibility features of the three tools and their accessibility and usability problems for screen reader users. We proposed a set of guidelines for developers of both video conferencing tools and screen reader assistive technologies. Screen reader users need to be able to access all relevant information about the interface components and events and the screen reader needs to be able to obtain appropriate information from the UI, and provide appropriate feedback to the user. The guidelines are aimed at bridging the gap between current tools and the requirements of screen reader users in order to improve their experiences and make it easier for them to use video conferencing tools.</p><p>The results of the study and guidelines should give developers a better understanding of what to consider when designing applications and lead to better screen reader user experiences. Further work will focus on the evaluation methodology applied in this study which involved both blind and sighted accessibility experts in the inspection evaluation. This will lead to a better understanding of whether and, if so, how it can most effectively be applied to help designers and others in testing tool accessibility. Though beyond the remit of this paper, there is also a need for investigation of how more blind people can be encouraged to become accessibility experts and the training and other support required.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :Figure 2 :</head><label>12</label><figDesc>Figure 1: Age distribution</figDesc><graphic coords="18,85.70,87.95,417.10,177.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Use of Shortcuts with Zoom (left bar) N=55, Meet (middle patterned bar) N=46 and Teams (right bar) N=30</figDesc><graphic coords="21,154.80,87.95,285.85,171.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: UI exploration strategies for Zoom (N=86), Meet (N=69) and Teams (N=9). Left&amp;right gesture (left linepatterned bar), finger exploration of the whole screen (middle bar chart) and a precise screen position (right pointpatterned bar)</figDesc><graphic coords="21,129.25,359.50,336.95,169.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 5 :</head><label>5</label><figDesc>Figure 5: Ease of navigation without keyboard shortcuts. Zoom (left bar) N=55, Meet (middle patterned bar) N=46 and Teams (right bar) N=30</figDesc><graphic coords="22,119.15,141.95,345.00,186.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 7 :Figure 8 :</head><label>78</label><figDesc>Figure 7: User satisfaction with Zoom (left bar) N=54, Meet (middle patterned bar) N=47 and Teams (right bar) N=30</figDesc><graphic coords="23,72.00,222.95,440.15,263.15" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 9 :</head><label>9</label><figDesc>Figure 9: Usefulness of content read automatically by SR: Zoom (left bar) N=87, Meet (middle patterned bar) N=70 and Teams (right bar) N=8</figDesc><graphic coords="25,72.00,87.95,441.10,204.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 10 :</head><label>10</label><figDesc>Figure 10: Preference for using tools on computer, phone/tablet and web: Zoom (left bar) N=87, Meet (middle patterned bar) N=73 and Teams (right bar) N=8</figDesc><graphic coords="25,111.25,427.90,360.95,181.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="24,72.00,101.50,441.10,209.05" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Web Content Accessibility Guidelines (WCAG) 2.1 AA, the revised Section 508 standards and the EN 301 549 standard. It provides downloadable VPATs for the different versions: Zoom Client App for Windows and macOS, Zoom Mobile App (for iOS and Android), Zoom Rooms and Controller, Zoom Plug-ins for Outlook for Mac OS and Windows, Web Pages and Extensions).</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>. Therefore, screen readers have become the most appreciated tool for blind people, despite requiring a certain amount of effort by the user to learn how to use them proficiently, including</figDesc><table><row><cell>advanced commands.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="8">Several screen readers have been developed over the last few years, including: Jaws for Windows</cell></row><row><cell cols="8">(http://www.freedomscientific.com/), NVDA (https://www.nvaccess.org/), for Windows, and VoiceOver</cell></row><row><cell>(https://www.apple.com/voiceover/info/guide/_1121.html)</cell><cell>for</cell><cell>IOS</cell><cell>and</cell><cell>OS</cell><cell>X,</cell><cell>and</cell><cell>Talkback</cell></row><row><cell cols="5">(https://support.google.com/accessibility/android/answer/6283677), for Android-based devices.</cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 1 :</head><label>1</label><figDesc>Tasks considered in the evaluation</figDesc><table><row><cell>Type</cell><cell>Description</cell></row><row><cell>Action</cell><cell>F1. Joining a meeting</cell></row><row><cell>Action</cell><cell>F2. Hand raising (asking to speak in a meeting)</cell></row><row><cell>Action</cell><cell>F3. Turning the microphone on/off</cell></row><row><cell>Action</cell><cell>F4. Turning the video camera on/off</cell></row><row><cell>Action</cell><cell>F5. Audio, video, file and screen sharing</cell></row><row><cell>Action</cell><cell>F6. Using the chat</cell></row><row><cell>Awareness</cell><cell>F7. Accessing the shared content</cell></row></table><note><p><p>Awareness</p>F8. Checking the microphone and video camera status Awareness F9. Obtaining participant information (number, names, who is joining or leaving)</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 2 :</head><label>2</label><figDesc>Inspection evaluation of desktop Zoom, Meet and Teams: accessibility features</figDesc><table><row><cell></cell><cell></cell><cell>Focus</cell><cell></cell><cell>Shortcut</cell><cell></cell><cell cols="2">SR feedback</cell></row><row><cell></cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams Zoom</cell><cell>Meet</cell><cell>Teams</cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell></row><row><cell>F1. Joining a</cell><cell>Yes</cell><cell>Yes</cell><cell>Partial</cell><cell></cell><cell></cell><cell>Yes</cell><cell>Yes</cell><cell>Partial</cell></row><row><cell>meeting</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 3 :</head><label>3</label><figDesc>Participant information read by the screen reader in the three tools</figDesc><table><row><cell>Tool</cell><cell>Participant information</cell></row><row><cell>Zoom</cell><cell>Alex Smith, computer audio unmuted, video on, hand raised</cell></row><row><cell></cell><cell>Bob White, computer audio muted, video off</cell></row><row><cell>Google Meet</cell><cell>Alex Smith Turn off Alex Smith's microphone button</cell></row><row><cell></cell><cell>Bob WhiteTurn off Bob White's microphone</cell></row><row><cell>Teams</cell><cell>Alex Smith's profile picture, Alex Smith, on the phone, hand raised, unmuted</cell></row><row><cell></cell><cell>Bob White's profile picture, Bob White, available, muted</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 4 :</head><label>4</label><figDesc>Inspection evaluation of mobile Zoom</figDesc><table><row><cell></cell><cell></cell><cell>Focus</cell><cell></cell><cell></cell><cell>Optimal</cell><cell></cell><cell cols="2">SR feedback</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Position</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>Zoom</cell><cell>Meet</cell><cell cols="2">Teams Zoom</cell><cell>Meet</cell><cell>Teams</cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell></row><row><cell>F1. Joining a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell></row><row><cell>meeting</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>F2. Raising hand</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell></row><row><cell>F3. Turning mic.</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell></row><row><cell>On/off</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>F4. Turning camera</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell><cell>Yes</cell></row><row><cell>on/off</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>F5. Screen sharing</cell><cell>Yes</cell><cell>Partial</cell><cell>Yes</cell><cell>Yes</cell><cell>No</cell><cell>No</cell><cell>Yes</cell><cell>Yes</cell><cell>Partial</cell></row><row><cell>F6. Using the chat</cell><cell>Partial</cell><cell>Partial</cell><cell cols="2">Partial No</cell><cell>No</cell><cell>Partial</cell><cell>Partial</cell><cell>Yes</cell><cell>Partial</cell></row><row><cell>F7. Accessing</cell><cell>No</cell><cell></cell><cell>No</cell><cell></cell><cell></cell><cell>Yes</cell><cell>No</cell><cell>No</cell><cell>No</cell></row><row><cell>shared content</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 5 :</head><label>5</label><figDesc>Percentages of participants able to access the different functions</figDesc><table><row><cell></cell><cell></cell><cell>Desktop</cell><cell></cell><cell cols="3">Mobile Device</cell></row><row><cell></cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell></row><row><cell></cell><cell>(n=91)</cell><cell>(n=75)</cell><cell>(n=9)</cell><cell>(n=57)</cell><cell>(n=52)</cell><cell>(n=31)</cell></row><row><cell>Accessing a meeting</cell><cell>100</cell><cell>100</cell><cell>97</cell><cell>100</cell><cell>99</cell><cell>100</cell></row><row><cell>Turning mic on/off</cell><cell>100</cell><cell>100</cell><cell>100</cell><cell>100</cell><cell>100</cell><cell>100</cell></row><row><cell>Turning camera on/off</cell><cell>95</cell><cell>98</cell><cell>97</cell><cell>93</cell><cell>81</cell><cell>56</cell></row><row><cell>Other participants' mic status</cell><cell>37</cell><cell>12</cell><cell>58</cell><cell>8</cell><cell>4</cell><cell>44</cell></row><row><cell>Other participants' cam status</cell><cell>35</cell><cell>12</cell><cell>26</cell><cell>4</cell><cell>3</cell><cell>22</cell></row><row><cell>Knowing your mic status</cell><cell>88</cell><cell>83</cell><cell>81</cell><cell>27</cell><cell>21</cell><cell>56</cell></row><row><cell>Knowing your cam status</cell><cell>86</cell><cell>83</cell><cell>84</cell><cell>21</cell><cell>15</cell><cell>56</cell></row><row><cell>Raising/lowering hand</cell><cell>88</cell><cell>38</cell><cell>68</cell><cell>90</cell><cell>71</cell><cell>78</cell></row><row><cell>Knowing who has raised a hand</cell><cell>30</cell><cell>10</cell><cell>29</cell><cell>20</cell><cell>11</cell><cell>33</cell></row><row><cell>Writing in chat</cell><cell>79</cell><cell>58</cell><cell>61</cell><cell>90</cell><cell>88</cell><cell>100</cell></row><row><cell>Reading chat</cell><cell>81</cell><cell>50</cell><cell>58</cell><cell>58</cell><cell>39</cell><cell>67</cell></row><row><cell>Accessing participant list</cell><cell>86</cell><cell>48</cell><cell>68</cell><cell>52</cell><cell>31</cell><cell>67</cell></row><row><cell>Screen sharing</cell><cell>54</cell><cell>48</cell><cell>61</cell><cell>31</cell><cell>8</cell><cell>11</cell></row><row><cell>File sharing</cell><cell>19</cell><cell>12</cell><cell>10</cell><cell>44</cell><cell>19</cell><cell>11</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 6 :</head><label>6</label><figDesc>Statistical significance of differences in percentages of participants able to access functions on desktop and mobile devices</figDesc><table><row><cell>Zoom ( 2 , p)</cell><cell>Meet ( 2 , p)</cell><cell>Teams ( 2 , p)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head>Table 7 :</head><label>7</label><figDesc>Summary of accessibility features supported by the desktop and mobile video conferencing tools</figDesc><table><row><cell></cell><cell cols="2">Desktop</cell><cell></cell><cell>Mobile</cell><cell></cell><cell></cell></row><row><cell>Function</cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell><cell>Zoom</cell><cell>Meet</cell><cell>Teams</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10"><head>Table 8 :</head><label>8</label><figDesc>User preferences for the initial study of desktop video conference tools (29 participants)<ref type="bibr" target="#b38">[39]</ref> </figDesc><table><row><cell>DESKTOP</cell><cell cols="2">Ease of Use</cell><cell></cell><cell cols="3">User Satisfaction</cell></row><row><cell>(29 users)</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Tools</cell><cell cols="2">Zoom Meet</cell><cell cols="3">Teams Zoom Meet</cell><cell>Teams</cell></row><row><cell>M</cell><cell>3,34</cell><cell>2,71</cell><cell>2,27</cell><cell>4,14</cell><cell>3,07</cell><cell>3,14</cell></row><row><cell>SD</cell><cell>0,72</cell><cell>0,60</cell><cell>0,70</cell><cell>0,69</cell><cell>0,65</cell><cell>1,10</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11"><head>Table 9 :</head><label>9</label><figDesc>User preferences for the desktop video conferencing tools (65 participants)</figDesc><table><row><cell>DESKTOP</cell><cell cols="2">Ease of Use</cell><cell></cell><cell cols="3">User Satisfaction</cell></row><row><cell>(65 users)</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Tools</cell><cell cols="2">Zoom Meet</cell><cell>Teams</cell><cell cols="2">Zoom Meet</cell><cell>Teams</cell></row><row><cell>M</cell><cell>3,13</cell><cell>2,89</cell><cell>2,23</cell><cell>4,15</cell><cell>3,07</cell><cell>3,43</cell></row><row><cell>SD</cell><cell>0,84</cell><cell>0,64</cell><cell>0,68</cell><cell>0,69</cell><cell>0,65</cell><cell>1,10</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12"><head>Table 10 :</head><label>10</label><figDesc>User preferences for the mobile video conferencing tools with 94 participants</figDesc><table><row><cell>MOBILE</cell><cell cols="2">Ease of Use</cell><cell></cell><cell cols="3">User Satisfaction</cell></row><row><cell>Tools</cell><cell cols="2">Zoom Meet</cell><cell>Teams</cell><cell cols="2">Zoom Meet</cell><cell>Teams</cell></row><row><cell>M</cell><cell>3,21</cell><cell>3,23</cell><cell>3,57</cell><cell>3,92</cell><cell>3,36</cell><cell>3,38</cell></row><row><cell>SD</cell><cell>0,63</cell><cell>0,64</cell><cell>0,98</cell><cell>0,70</cell><cell>0,66</cell><cell>0,92</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_13"><head>Table 11 :</head><label>11</label><figDesc>Table (2, p) for differences between values for Zoom, Meet and Teams</figDesc><table><row><cell></cell><cell>Ease of use</cell><cell>Satisfaction</cell></row><row><cell>Desktop, n=29</cell><cell>(23.045, &lt; 0.00001)</cell><cell>(26.49, 0.000025)</cell></row><row><cell>Desktop, n=65</cell><cell>(25.33, 0.000043)</cell><cell>(32.45, 0.000013)</cell></row><row><cell>Mobile, n=94</cell><cell>(4.84, 0.564249)</cell><cell>(23.53, 0.000013)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_14"><head>Table 12 :</head><label>12</label><figDesc>Table (2, p) for differences between values for desktop (n=65) and mobile (n=94)</figDesc><table><row><cell></cell><cell>Ease of use</cell><cell>Satisfaction</cell></row><row><cell>Zoom</cell><cell>(3.41, 0.33)</cell><cell>(2.89, 0.41)</cell></row><row><cell>Meet</cell><cell>(14.08, 0.0028 )</cell><cell>(11.11, 0 .011157)</cell></row><row><cell>Teams</cell><cell>(2.20, 0.33 )</cell><cell>(1.58, 0.66)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_15"><head>Table 13 :</head><label>13</label><figDesc>Zoom: Ease of use. DT = desktop, Mob = mobile device</figDesc><table><row><cell>Zoom</cell><cell></cell><cell></cell><cell>Ease of Use</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>Mean</cell></row><row><cell>DT</cell><cell>2</cell><cell>10</cell><cell>45</cell><cell>23</cell><cell>4</cell><cell>3.19</cell></row><row><cell>Mob</cell><cell>0</cell><cell>7</cell><cell>59</cell><cell>20</cell><cell>3</cell><cell>3.21</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_16"><head>Table 14 :</head><label>14</label><figDesc>Zoom: Satisfaction</figDesc><table><row><cell>Zoom</cell><cell></cell><cell></cell><cell>Satisfaction</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>Mean</cell></row><row><cell>DT</cell><cell>0</cell><cell>1</cell><cell>14</cell><cell>39</cell><cell>23</cell><cell>4.21</cell></row><row><cell>Mob</cell><cell>0</cell><cell>1</cell><cell>22</cell><cell>48</cell><cell>17</cell><cell>3.92</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_17"><head>Table 15 :</head><label>15</label><figDesc>Meet: Ease of use</figDesc><table><row><cell>Meet</cell><cell>Ease of Use</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_18"><head>Table 16 :</head><label>16</label><figDesc>Meet: Satisfaction</figDesc><table><row><cell>Meet</cell><cell></cell><cell></cell><cell>Satisfaction</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>Mean</cell></row><row><cell>DT</cell><cell>1</cell><cell>13</cell><cell>42</cell><cell>10</cell><cell>4</cell><cell>3.02</cell></row><row><cell>Mob</cell><cell>0</cell><cell>2</cell><cell>46</cell><cell>17</cell><cell>5</cell><cell>3.36</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_19"><head>Table 17 :</head><label>17</label><figDesc>Teams: Ease of use</figDesc><table><row><cell>Teams</cell><cell></cell><cell></cell><cell>Ease of Use</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>Mean</cell></row><row><cell>DT</cell><cell>4</cell><cell>24</cell><cell>11</cell><cell>2</cell><cell>0</cell><cell>2.24</cell></row><row><cell>Mob</cell><cell>0</cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>1</cell><cell>3.57</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_20"><head>Table 18 :</head><label>18</label><figDesc>Teams: Satisfaction</figDesc><table><row><cell>Teams</cell><cell></cell><cell></cell><cell>Satisfaction</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>Mean</cell></row><row><cell>DT</cell><cell>3</cell><cell>6</cell><cell>12</cell><cell>15</cell><cell>3</cell><cell>3.34</cell></row><row><cell>Mob</cell><cell>0</cell><cell>1</cell><cell>4</cell><cell>2</cell><cell>1</cell><cell>3.38</cell></row></table></figure>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX A: TOOL SECTIONS OF THE QUESTIONNAIRES</head><p>The questions here are presented for Zoom. There are identical sections of both questionnaires for MS Teams and Google Meet. With left and right (flick's gestures I explore the whole screen with one finger I look for the button in a particular screen position (e.g. the microphone in the centre of the bottom of the screen) 9. How useful from 1 (totally useless) to 5 (very useful) do you find it for the screen reader to automatically read chat messages and the names of participants entering and leaving? 10. How easy from 1 (very difficult) to 5 (very easy) do you find it to use Zoom on a smartphone/tablet? 11. How satisfied from 1 (very dissatisfied) to 5 (very satisfied) are you with Zoom? 12. Which version of Zoom do you prefer? (app on computer, smartphone/tablet, Web version, I do not know</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Tools Section for</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Tools for web accessibility evaluation</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Abascal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Arrue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Valencia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Accessibility</title>
+		<meeting><address><addrLine>London</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="479" to="503" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Method for Assessing Accessibility in Videoconference Systems</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Acosta-Vargas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Guaña-Moya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Acosta-Vargas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Villegas-Ch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Salvador-Ullauri</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Intelligent Human Systems Integration</title>
+		<meeting><address><addrLine>Cham</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2021-02">2021. February</date>
+			<biblScope unit="page" from="669" to="675" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Comparing web accessibility evaluation tools and evaluating the accessibility of webpages: proposed frameworks</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Alsaeedi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">40</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Accessibility Challenges of Video Conferencing Technology</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Anderson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Human-Computer Interaction</title>
+		<meeting><address><addrLine>Cham</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2021-07">2021, July</date>
+			<biblScope unit="page" from="185" to="194" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">Apple</forename><surname>Support</surname></persName>
+		</author>
+		<ptr target="https://support.apple.com" />
+		<title level="m">Learn VoiceOver gestures on iPhone</title>
+		<imprint>
+			<date type="published" when="2022-01-28">2022. January 28, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<author>
+			<persName><forename type="first">Apple</forename><surname>Support</surname></persName>
+		</author>
+		<ptr target="https://www.apple.com/voiceover/info/guide/_1131.html" />
+		<title level="m">VoiceOver Commands and Gestures for MAC</title>
+		<imprint>
+			<date type="published" when="2022-01-28">2022. January 28, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Student life during the COVID-19 pandemic lockdown: Europe-Wide Insights</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Barada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Doolan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">‡</forename><surname>Buriä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Krolo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tonkoviä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">‡</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ž</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+		<respStmt>
+			<orgName>Â University of Zadar</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Zoom: An Innovative Solution For The Live-Online Virtual Classroom</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Barbosa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Barbosa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">HETS Online Journal</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Bridging social distance during social distancing: exploring social talk and remote collegiality in video conferencing</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bleakley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rough</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Edwards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Doyle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Dumbleton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">.</forename><forename type="middle">.</forename><surname>Cowan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Human-Computer Interaction</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="29" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Usability tests on computer access devices for the blind and visually impaired</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bornemann-Jeske</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 5th International Conference ICCHP</title>
+		<meeting>the 5th International Conference ICCHP</meeting>
+		<imprint>
+			<date type="published" when="1996-07">1996, July</date>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="page" from="139" to="147" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">More than meets the eye: a survey of screen-reader browsing strategies</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Borodin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Bigham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dausch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">V</forename><surname>Ramakrishnan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2010 International Cross Disciplinary Conference on Web Accessibility</title>
+		<meeting>the 2010 International Cross Disciplinary Conference on Web Accessibility</meeting>
+		<imprint>
+			<date type="published" when="2010-04">2010, April</date>
+			<biblScope unit="page" from="1" to="10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A desktop usability evaluation of the facebook mobile interface using the jaws screen reader with blind users</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Brinkley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tabrizi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the human factors and ergonomics society annual meeting</title>
+		<meeting>the human factors and ergonomics society annual meeting<address><addrLine>Sage CA; Los Angeles, CA</addrLine></address></meeting>
+		<imprint>
+			<publisher>SAGE Publications</publisher>
+			<date type="published" when="2017-09">2017. September</date>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="828" to="832" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Burgan</surname></persName>
+		</author>
+		<title level="m">The Trajectory of Zoom: Analyzing the Development of Video Conferencing Software and Accessibility in an Age of Remote Work</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Accessing Google docs via screen reader</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">M</forename><surname>Penichet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Computers for Handicapped Persons</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2010-07">2010, July</date>
+			<biblScope unit="page" from="92" to="99" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Analyzing visually impaired people&apos;s touch gestures on smartphones</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Trujillo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Multimedia Tools and Applications</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="5141" to="5169" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Beyond web content accessibility guidelines: Expert accessibility reviews</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Calvo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Seyedarabi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Savva</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 7th international conference on software development and technologies for enhancing accessibility and fighting info-exclusion</title>
+		<meeting>the 7th international conference on software development and technologies for enhancing accessibility and fighting info-exclusion</meeting>
+		<imprint>
+			<date type="published" when="2016-12">2016, December</date>
+			<biblScope unit="page" from="77" to="84" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Remote learning via video conferencing technologies: Implications for research and practice</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Camilleri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Camilleri</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Technology in Society</title>
+		<imprint>
+			<biblScope unit="page">101881</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Accessibility and usability problems encountered on websites and applications in mobile devices by blind and normal-vision users</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C N</forename><surname>Carvalho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">S</forename><surname>Dias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G S</forename><surname>Reis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Freire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 33rd Annual ACM symposium on applied computing</title>
+		<meeting>the 33rd Annual ACM symposium on applied computing</meeting>
+		<imprint>
+			<date type="published" when="2018-04">2018, April</date>
+			<biblScope unit="page" from="2022" to="2029" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Using think aloud protocol with blind users: a case for inclusive usability evaluation methods</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chandrashekar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Stockman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Fels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Benedyk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 8th international ACM SIGACCESS conference on Computers and accessibility</title>
+		<meeting>the 8th international ACM SIGACCESS conference on Computers and accessibility</meeting>
+		<imprint>
+			<date type="published" when="2006-10">2006, October</date>
+			<biblScope unit="page" from="251" to="252" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">COVID-19 and higher education: first-year students&apos; expectations toward distance learning</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cicha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rizun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rutecka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Strzelecki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sustainability</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">1889</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Evaluating videoconferencing systems for the quality of the educational experience</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Correia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Distance Education</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="429" to="452" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Mobile device accessibility for the visually impaired: problems mapping and recommendations</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J P</forename><surname>Damaceno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Braga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Mena-Chalco</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Universal Access in the Information Society</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="421" to="435" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Higher Education and Virtuality from an Inclusion Approach</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Díaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Harari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Amadeo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schiavoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gómez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Osorio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Argentine Congress of Computer Science</title>
+		<meeting><address><addrLine>Cham</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="78" to="91" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Study on Accessibility of Videoconferencing Tools on Web Platforms</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ferraz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Diniz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 16th Iberian Conference on Information Systems and Technologies (CISTI)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2021-06">2021. June</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<ptr target="https://support.freedomscientific.com/Content/Documents/Manuals/JAWS/Keystrokes.pdf" />
+		<title level="m">JAWS Keystrokes</title>
+		<imprint>
+			<publisher>Freedom Scientific</publisher>
+			<date type="published" when="2022-01-28">2022. January 28, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Evaluation of e-commerce websites accessibility and usability: an e-commerce platform analysis with the inclusion of blind users</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gonçalves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rocha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Martins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Branco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Au-Yong-Oliveira</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Universal Access in the Information Society</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="567" to="583" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<ptr target="https://support.google.com/accessibility/android/answer/6151827?hl=en" />
+		<title level="m">Use TalkBack gestures</title>
+		<imprint>
+			<publisher>Google support</publisher>
+			<date type="published" when="2022-01-28">2022. January 28, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Vizlens: A robust and interactive screen reader for interfaces in the real world</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">A</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Qi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Asakawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Bigham</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 29th Annual Symposium on User Interface Software and Technology</title>
+		<meeting>the 29th Annual Symposium on User Interface Software and Technology</meeting>
+		<imprint>
+			<date type="published" when="2016-10">2016, October</date>
+			<biblScope unit="page" from="651" to="664" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Accessibility Evaluation of Video Conferencing Tools to Support Disabled People in Distance Teaching, Meetings and other Activities</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hersh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Buzzi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ICCHP</title>
+		<imprint>
+			<biblScope unit="page">133</biblScope>
+			<date type="published" when="2020-09">2020. September</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Search result exploration: a preliminary study of blind and sighted users&apos; decision making and performance</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Y</forename><surname>Ivory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Gronemyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CHI&apos;04 Extended Abstracts on Human Factors in Computing Systems</title>
+		<imprint>
+			<date type="published" when="2004-04">2004. April</date>
+			<biblScope unit="page" from="1453" to="1456" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Can you hear me now?&quot; Video conference coping strategies and experience during COVID-19 and beyond</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Johns</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">L</forename><surname>Burrows</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Rethnam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kramer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bernhardt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Work</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="10" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Karlapp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Köhlmann</surname></persName>
+		</author>
+		<title level="m">Adaptation and Evaluation of a Virtual Classroom for Blind Users. i-com</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="45" to="55" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Alternative concepts for accessible virtual classrooms for blind users</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Köhlmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Lucke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2015 IEEE 15th International Conference on Advanced Learning Technologies</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2015-07">2015, July</date>
+			<biblScope unit="page" from="413" to="417" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Digital accessibility: Challenges and opportunities</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kulkarni</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IIMB Management Review</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="91" to="98" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">How Blind Users&apos; Mental Models Affect Their Perceived Usability of an Unfamiliar Screen Reader</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Kurniawan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Sutcliffe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Blenkhorn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In InterAct</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="631" to="638" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Tactile Graphics and Strategies for Non-Visual Seeing</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Landau</surname></persName>
+		</author>
+		<idno type="DOI">10.1162/thld_a_00491</idno>
+		<ptr target="https://doi.org/10.1162/thld_a_00491" />
+	</analytic>
+	<monogr>
+		<title level="j">Thresholds</title>
+		<imprint>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="78" to="82" />
+			<date type="published" when="1999">1999. 1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">What frustrates screen reader users on the web: A study of 100 blind users</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lazar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Allen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kleinman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Malarkey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of human-computer interaction</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="247" to="269" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Evaluating a modified Google user interface via screen reader</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Andronico</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Castillo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Universal access in the information society</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="155" to="175" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Distance meetings during the covid-19 pandemic: are video conferencing tools accessible for blind people</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Buzzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hersh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 18th International Web for All Conference</title>
+		<meeting>the 18th International Web for All Conference</meeting>
+		<imprint>
+			<date type="published" when="2021-04">2021. April</date>
+			<biblScope unit="page" from="1" to="10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Criteria for usability of accessible web sites</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Leporini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Paternò</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ERCIM Workshop on User Interfaces for All</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2002">2002</date>
+			<biblScope unit="page" from="43" to="55" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">State of the art on the cognitive walkthrough method, its variants and evolutions</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mahatody</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sagar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kolski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Intl. Journal of Human-Computer Interaction</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="741" to="785" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Accessible video-call application on android for the blind</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Maneesaeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Punyabukkana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Suchato</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lecture Notes on Software Engineering</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">95</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Teachers&apos; Perceptions Regarding the Use of Google Classroom and Google Docs</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Morquin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Challoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Green</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">E-Learn: World Conference on E-Learning in Corporate, Government, Healthcare, and Higher Education</title>
+		<imprint>
+			<publisher>AACE</publisher>
+			<date type="published" when="2019-11">2019, November</date>
+			<biblScope unit="page" from="21" to="30" />
+		</imprint>
+	</monogr>
+	<note>Association for the Advancement of Computing in Education</note>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Changes in Digital Communication During the COVID-19 Global Pandemic: Implications for Digital Inequality and Future Research</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gruber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fuchs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Marler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hunsaker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Hargittai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Social Media+ Society</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">2056305120948255</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">Â The psychology of everyday things</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Norman</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1988">1988</date>
+			<publisher>Basic books</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<author>
+			<persName><surname>Nv Access</surname></persName>
+		</author>
+		<ptr target="https://www.nvaccess.org/files/nvdaTracAttachments/455/keycommands%20" />
+		<title level="m">NVDA command key quick reference</title>
+		<imprint>
+			<date type="published" when="2022-01-28">2022. January 28, 2022</date>
+		</imprint>
+	</monogr>
+	<note>with%20laptop%20keyboard%20layout</note>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Applying heuristics to accessibility inspections</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Paddison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Englefield</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Interacting with computers</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="507" to="521" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Development of Automatic Evaluation Tool for Mobile Accessibility for Android Application</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2019 International Conference on Systems of Collaboration Big Data</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2019-12">2019, December</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">When accessibility meets usability</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Powlik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">I</forename><surname>Karshmer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Universal Access in the Information Society</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="217" to="222" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Making brainstorming meetings accessible for blind users</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>F9pölzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Schnelle-Walka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pöll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Heumader</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Miesenberger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAATE Conference</title>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Guidelines Are Only Half of the Story: Accessibility Problems Encountered by Blind Users on the Web</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Power</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Freire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Petrie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Swallow</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI &apos;12)</title>
+		<meeting>the SIGCHI Conference on Human Factors in Computing Systems (CHI &apos;12)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="433" to="442" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rømen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Svanaes</surname></persName>
+		</author>
+		<title level="m">Evaluating web site accessibility: validating the WAI guidelines through usability testing with disabled users. InProceedings of the 5th Nordic conference on Human-computer interaction: building bridges (NordiCHI &apos;08)</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2008-10">2008, October</date>
+			<biblScope unit="page" from="535" to="538" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">In this online environment, we&apos;re limited&quot;: Exploring Inclusive Video Conferencing Design for Signers</title>
+		<author>
+			<persName><forename type="first">Rui</forename><surname>Xia Ang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mcdonnell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Coppola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CHI Conference on Human Factors in Computing Systems</title>
+		<imprint>
+			<date type="published" when="2022-04">2022, April</date>
+			<biblScope unit="page" from="1" to="16" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Online learning accessibility during the COVID-19 pandemic</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Russ</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hamidi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 18th International Web for All Conference</title>
+		<meeting>the 18th International Web for All Conference</meeting>
+		<imprint>
+			<date type="published" when="2021-04">2021. April</date>
+			<biblScope unit="page" from="1" to="7" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Video conferencing systems</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sabri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Prasada</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the IEEE</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="671" to="688" />
+			<date type="published" when="1985">1985</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Transitioning from face-to-face to remote learning: Students&apos; attitudes and perceptions of using Zoom during COVID-19 pandemic</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Serhan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Technology in Education and Science</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="335" to="342" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Understanding Screen-Reader Users&apos; Experiences with Online Data Visualizations</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sharif</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Chintalapati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O</forename><surname>Wobbrock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Reinecke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The 23rd International ACM SIGACCESS Conference on Computers and Accessibility</title>
+		<imprint>
+			<date type="published" when="2021-10">2021, October</date>
+			<biblScope unit="page" from="1" to="16" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Web usability evaluation with screen reader users: implementation of the partial concurrent thinking aloud technique</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Stefano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Borsci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Stamerra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognitive processing</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="263" to="272" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<monogr>
+		<author>
+			<persName><forename type="first">G</forename><surname>Suciu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Anwar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pasat</surname></persName>
+		</author>
+		<title level="m">Virtualized Video Conferencing for eLearning. eLearning &amp; Software for Education</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">2</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<monogr>
+		<title level="m" type="main">Bridging the gap: between accessibility and usability. interactions</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Theofanos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Redish</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="36" to="51" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<monogr>
+		<author>
+			<persName><surname>W3c</surname></persName>
+		</author>
+		<ptr target="https://www.w3.org/TR/WCAG21/" />
+		<title level="m">Web Content Accessibility Guidelines (WCAG) 2.1</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<monogr>
+		<ptr target="https://www.w3.org/TR/WCAG22/" />
+		<title level="m">Web Content Accessibility Guidelines (WCAG) 2.2</title>
+		<imprint>
+			<publisher>W3C</publisher>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<monogr>
+		<title level="m" type="main">Accessibility of Remote Meetings. W3C First Public Working Draft</title>
+		<ptr target="https://www.w3.org/TR/remote-meetings/" />
+		<imprint>
+			<date type="published" when="2021-10-14">2021. 14 October 2021</date>
+			<publisher>W3C</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

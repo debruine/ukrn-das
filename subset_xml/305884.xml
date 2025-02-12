@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A holistic human activity recognition optimisation using AI techniques</title>
+				<funder ref="#_5vjQzHX">
+					<orgName type="full">Engineering and Physical Sciences Research Council</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Zhenghui</forename><surname>Li</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yushi</forename><surname>Liu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Bo</forename><surname>Liu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Julien</forename><surname>Le Kernec</surname></persName>
+							<email>julien.lekernec@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Shufan</forename><surname>Yang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">School of Computing</orgName>
+								<orgName type="institution">Edinburgh Napier University</orgName>
+								<address>
+									<settlement>Edinburgh</settlement>
+									<country>UK Correspondence</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Julien</forename><surname>Le</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Et</forename><forename type="middle">Al</forename><surname>Li</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Julien</forename><surname>Le Ker</surname></persName>
+							<idno type="ORCID">0000-0003-0170-4686</idno>
+						</author>
+						<title level="a" type="main">A holistic human activity recognition optimisation using AI techniques</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">8E1C57B053D4A497433FA0A3CD27BB87</idno>
+					<idno type="DOI">10.1049/rsn2.12474</idno>
+					<note type="submission">Received: 8 July 2023 -Revised: 24 August 2023 -Accepted: 4 September 2023 -IET Radar, Sonar &amp; Navigation</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:07+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>ANN, artificial neural network</term>
+					<term>CFFN, complex field-based fusion network</term>
+					<term>CNN, convolutional neural network</term>
+					<term>HW, hardware</term>
+					<term>KNN, K nearest neighbour</term>
+					<term>LSTM, long short term memory</term>
+					<term>MLP, multilayer perceptron</term>
+					<term>SAE, stacked auto-encoder. 2</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Building on previous radar-based human activity recognition (HAR), we expand the micro-Doppler signature to 6 domains and exploit each domain with a set of handcrafted features derived from the literature and our patents. An adaptive thresholding method to isolate the region of interest is employed, which is then applied in other domains. To reduce the computational burden and accelerate the convergence to an optimal solution for classification accuracy, a holistic approach to HAR optimisation is proposed using a surrogate model-assisted differential evolutionary algorithm (SADEA-I) to jointly optimise signal processing, adaptive thresholding and classification parameters for HAR. Two distinct classification models are evaluated with holistic optimisation: SADEA-I with support vector machine classifiers (SVM) and SADEA-I with AlexNet. They achieve an accuracy of 89.41% and 93.54%, respectively. This is an improvement of ~11.3% for SVM and ~2.7% for AlexNet when compared to the performance without SADEA-I. The effectiveness of our holistic approach is validated using the University of Glasgow human radar signatures dataset. This proof of concept is significant for dimensionality reduction and computational efficiency when facing a multiplication of radar representation domains/feature spaces and transmitting/receiving channels that could be individually tuned in modern radar systems.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>Indoor human activity recognition (HAR) has grown significantly in recent years and gained substantial interest in fields, such as assisted living, smart homes and security <ref type="bibr" target="#b0">[1]</ref>. Several different sensing technologies, including wearable sensors, video-based systems, and radio frequency sensors <ref type="bibr" target="#b1">[2]</ref>, have been presented. Wearable sensors, which require to be worn constantly to be effective, can cause discomfort and have high false alarm <ref type="bibr" target="#b2">[3]</ref>. Video-based systems, such as camera, can lead to privacy invasion and disputes over image rights. It is also vulnerable to lighting conditions <ref type="bibr" target="#b0">[1]</ref>. Radio frequency sensing, especially radar, can effectively complement conventional technologies. Its contactless capabilities eliminate the need for end-users to wear, carry, or interact with any additional device, which can increase user acceptance and compliance <ref type="bibr" target="#b3">[4]</ref>. Furthermore, the absence of plain images or videos to be recorded can help address potential privacy concerns. In assisted living, radar sensors are being developed commercially by companies, such as Vayyar, Xandar Kardian. Furthermore, it is actively researched in academia <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref>.</p><p>The traditional radar-based HAR mainly focuses on the Micro-Doppler signature (MDS). The MDS allows the investigation of limb motion relative to the trunk, which constitutes the main Doppler components. It is widely utilised in radarbased HAR since it provides salient features to distinguish activities <ref type="bibr" target="#b5">[6]</ref>. Considerable research in HAR focuses on MDS, that is, the amplitude of MDS, also known as the spectrogram, using both hand-crafted features and deep learning models <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b6">7]</ref>.</p><p>In addition to the amplitude of MDS, several radar data domains and techniques are available for HAR, such as rangetime (RT), range-Doppler, MDS, Radon, Cepstrogram, Cyclostationarity <ref type="bibr" target="#b7">[8]</ref>, composite domains <ref type="bibr" target="#b8">[9]</ref> and point clouds <ref type="bibr" target="#b9">[10]</ref>. This variety of domains multiplies the data representations further by considering the complex nature of the radar matrices produced by signal processing giving rise to amplitude, phase, real, and imaginary data. Meanwhile, various preprocessing parameters, such as different sizes of short-time Fourier Transforms on the range bins in slow time, different windowing functions, different padding factors, etc., were also proposed to classify different activities <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b11">12]</ref>. Two papers <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref> based on the TI MIMO radar use point clouds for realtime classification with a robot operating system (ROS) framework. In <ref type="bibr" target="#b12">[13]</ref>, the authors extract point clouds of targets using a constant false alarm rate filter and then generate the micro-Doppler signatures on a host computer before classification with a convolutional neural network (CNN) achieving over 90% accuracy with 6 classes. In <ref type="bibr" target="#b13">[14]</ref>, the authors use an ROS framework in the 3D point clouds of 5 activities directly for classification with a CNN to extract features for each frame and a bi-LSTM neural network across 60 frames to analyse the temporal links between frames forward and backward achieving 90.47%.</p><p>Table <ref type="table">1</ref> lists a number of other papers using different datasets, different signal processing parameters and classification algorithms that were tuned manually. The obtained performances are good, but they could be better. Identifying the optimal radar data domains and their pre-processing parameters optimisation for a particular classification task becomes an intractable problem for parametric sweeping as well as exploring the most suitable combination of salient features. Expanding on our previous results <ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref>, we propose a patented adaptive thresholding approach to extract the region of interest (ROI) in multi-domain MDS with new hand-crafted features. This method is intended to delineate the ROI, that is, the targeted most relevant part of the MDS, also referred to as a 'mask'. Afterwards, the 'mask' is applied to other domains, such as a phase to emphasise the ROI in those domains, hence generating several new representations.</p><p>Optimising the pre-processing parameters for thresholding, MDS generation and the selection of the best representations to maximise classification accuracy is a challenge for parametric sweeping, since it is intractable for such problems with everexpanding parameters to tune, which is computationally expensive and time-consuming. Furthermore, some off-theshelf modern optimisation techniques, such as differential evolution (DE) <ref type="bibr" target="#b28">[29]</ref> and particle swarm optimisation <ref type="bibr" target="#b29">[30]</ref>, are still too expensive to utilise in this case. This paper investigates a holistic HAR optimisation using Surrogate Model-Assisted DE Algorithm (surrogate modelassisted differential evolutionary algorithm (SADEA-I)) <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b25">26]</ref> in which the MDS domain is used as a proof of concept before expanding this technique to a wider range of parameters and other radar data domains to include the pre-processing, domain selection, feature selection, and machine learning/deep learning joint optimisation. The specific contributions and novelty, which distinguish this work from the current state of the art, are summarised here: � This is the first proof-of-concept of the efficient self-tuning joint-optimisation of signal processing and machine learning parameters using an Evolutionary Algorithm (EA). This is a novel approach in HAR to optimise the classification accuracy automatically to find the global maximum performance in a fraction of the time required by an expert human operator. This is based on SADEA-I, as a machine learningassisted EA, employed for the efficient joint optimisation of the signal pre-processing parameters and a combination of radar representations to minimise the classification error rate through an effective global search and performance predictions to reduce the computational load. � A novel signal processing approach is proposed incorporating with our patented techniques and exploiting complex information. We introduce a radar-based HAR information processing method using adaptive thresholding that automatically produces ROI for human MDS yielding 6 different domains-Unfiltered MDS amplitude, Binary Mask, Masked phase, Masked unwrapped phase, Masked spectrogram (patent), Masked MDS complex matrix. To the best of our knowledge, phase domain has been marginally explored for radar-based HAR.</p><p>� Our approach is validated using both statistical learning based on extracted features and deep learning classifiers with vision-based algorithms. This serves to showcase the potential of this self-tuning joint-optimisation technique to enhance the performances of HAR architecture to obtain the best performances.</p><p>The goal is not to automatically reach the general maximum for HAR based on a set of tuning parameters, signal processing, and machine learning outperforming an expert operator. Note that this proof-of-concept may not be the best of all performances in the literature, but the global maximum for the given architecture, the EA is tuning. We combine both expert knowledge and artificial intelligence by setting an architecture for signal processing and classification as well as leveraging EA to efficiently self-tune the parameters jointly to optimise performances.</p><p>This paper is structured as follows: Section 2 describes the methods used in this investigation. Section 3 presents the result of optimisation, and Section 4 draws conclusions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| METHODOLOGY</head><p>Figure <ref type="figure">1</ref> provides a depiction of the complete methodology employed in our algorithm. The process commences with the raw data undergoing signal processing via the SADEA algorithm, which assists in determining the parameters during the signal processing stage. This procedure consequently leads to the generation of varying radar representations with different signal processing methodologies.</p><p>Subsequently, these radar domains are channelled either towards a hand-crafted feature extraction algorithm or directly fed into neural networks for automatic feature extraction. The hand-crafted approach utilises expert knowledge in signal processing to extract characteristic features from the radar domains, whereas the neural network method allows for automated learning and extraction of relevant features from the raw data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">| Dataset</head><p>The experiments are conducted on the University of Glasgow Radar Signature dataset <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b31">32]</ref>. A total of 1754 motion files were captured from 72 individuals aged 21-98 years old. Data acquisition was accomplished through a Frequency Modulated Continuous Wave radar system, functioning at a frequency of 5.8 GHz. This system showcased a swift pulse repetition period of 1 millisecond, a broad bandwidth of 400 MHz, and a capacity to record 128 complex samples per sweep. The radar was connected to a pair of Yagi antennas, employed for both the transmitting and receiving of signals, demonstrating an appreciable gain of approximately þ17 dBi. This dataset is summarised in Table <ref type="table">2</ref>. Note that the dataset is not balanced as the older participants did not perform the 'fall' task for their safety. The activities were chosen to be challenging from the perspective of recognition in the context of assisted living. Activities 4 and 5 are particularly difficult to recognise from one another <ref type="bibr" target="#b4">[5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">| Pre-processing</head><p>The radar raw data is converted into an RT map using a windowed Fast Fourier Transform. This window could be Hamming or Rectangular. After obtaining the RT map, the MDS is generated using a Short-Time Fourier Transform with a W s Hamming window and an F% overlapping factor on the RT map. The RT window, W and F are parameters tuned in the following steps.</p><p>Previously in <ref type="bibr" target="#b32">[33]</ref>, we found that varying the length of time of clip of MDS had an effect on the classification result. In this experiment, the radar data would be clipped into pieces with K s, and K is an optimisable parameter.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">| Adaptive thresholding method</head><p>The proposed approach <ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref> can binarise the grayscale MDS image using a specific threshold T. This method adaptively focuses on the ROI by setting a threshold and then adjusting it depending on the data included in the window being analysed. The MDS amplitude image is first converted into grayscale. Suppose that the grayscale image S contains N pixels, and the value of each pixel is represented as I (x, y), then the initial threshold μ could be expressed as Equation <ref type="bibr" target="#b0">(1)</ref>.</p><formula xml:id="formula_0">μ ¼ 1 N X Iðx;yÞ∈S Iðx; yÞ<label>ð1Þ</label></formula><p>Based on the initial threshold value μ, the grayscale spectrogram image is divided into two portions: P 1 and P 2 , where P 1 is the image region with a pixel value greater than μ and P 2 is the image area with a pixel value less than μ. Then, a new threshold T can be calculated as Equation <ref type="bibr" target="#b1">(2)</ref>.</p><formula xml:id="formula_1">T ¼ 1 2 1 N 1 X Iðx;yÞ∈p 1 Iðx; yÞ þ 1 N 2 X Iðx;yÞ∈p 2</formula><p>Iðx; yÞ</p><formula xml:id="formula_2">2 4 3 5<label>ð2Þ</label></formula><p>where N 1 and N 2 are the number of pixels in part P 1 and part P 2 , respectively.</p><p>Following the acquisition of both μ and T, their difference will be compared to a specific parameter: V. If the difference is greater than V, then T will be substituted by μ to segment the grayscale spectrogram image, and a new T will be determined using Equation <ref type="bibr" target="#b1">(2)</ref>. The procedure is repeatedly performed until the difference is less than V, thus maintaining as much ROI as possible. To investigate the impacts of the adaptive threshold, an additional offset T e is added to the calculated threshold T to obtain the final value T f (Equation (3)). Note that both V and T e are parameters tuned at the optimisation stage.</p><formula xml:id="formula_3">T f ¼ T þ T e<label>ð3Þ</label></formula><p>The grayscale spectrogram image is binarised by the T f and the process can be phrased as in Equation (4).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>bðx; yÞ</head><formula xml:id="formula_4">¼ 1; Iðx; yÞ ≥ T f 0; Iðx; yÞ &lt; T f �<label>ð4Þ</label></formula><p>where b (x, y) is the pixel value of the mask. The binarised image, called 'mask', can be used for feature extraction. The mask can also be applied to the other MDS representations to acquire a 'masked' MDS domain as Equation <ref type="bibr" target="#b4">(5)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>M masked inf ormation ¼ M mask � M other domain ð5Þ</head><p>Figure <ref type="figure">2</ref> illustrates the domains used in this paper and the process of calculating the domains. They are subsequently named: Unfiltered MDS amplitude, Binary Mask, Masked phase, Masked unwrapped phase, Masked spectrogram (patent), Masked MDS complex matrix, and labelled as MDS domains 1-6, respectively. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">| Features</head><p>User-specified features can portray the data in a salient manner, and it has been shown that it can outperform deep neural network feature extraction while reducing the computational load <ref type="bibr" target="#b33">[34]</ref>. The features used in this paper are divided into two groups. Group 1, also referred to as 'patent features', comprising 68 in total, is applied to MDS domains 2-4. Two categories are considered: the properties of the ROI and the texture of the image. They are listed in Table <ref type="table">3</ref> with the application domains. Note that despite being analytically defined, they vary from one MDS representation to the next. Group 2, also known as 'radar features', is used for Domain 1 and 6. This includes 22 features listed in Table <ref type="table">4</ref> with their application domains.</p><p>The combination process of various representations is shown in Equations ( <ref type="formula" target="#formula_5">6</ref>) and <ref type="bibr" target="#b6">(7)</ref>. y N determines whether the domainN (N ¼ 1; 2; 3; 4; 5; 6) is included (y N ¼ 1) or excluded (y N ¼ 0) from the combination process where ∩ represents the concatenation of features from different domains.</p><formula xml:id="formula_5">F domainNy N ¼ F domainN ; y N ¼ 1 ∅; y N ¼ 0 �<label>ð6Þ</label></formula><formula xml:id="formula_6">F combination ¼ F domain1y 1 ∩ F domain2y 2 ∩ … ∩ F domain6y 6<label>ð7Þ</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">| Classification</head><p>Based on the features and combination process listed above, the classification models are trained using a machine learning model and a deep learning model, respectively, which are a quadratic kernel support vector machine classifiers (SVM) <ref type="bibr" target="#b6">[7]</ref> and an AlexNet <ref type="bibr" target="#b34">[35]</ref>. Support vector machine classifiers has been used in <ref type="bibr" target="#b33">[34]</ref> outperforming deep learning and Alexnet is a light implementation of a deep network. These 2 classification methods were chosen to demonstrate that the SADEA algorithm can self-tune the signal processing and radar data domain selection with statistical learning and deep learning approaches and gauge performances against deep learning algorithms.</p><p>The machine learning operates efficiently with relatively fewer resources, thus our primary concern when selecting a model is its performance. The SVM model can achieve the best results in terms of our previous research. The option for AlexNet in our project was driven by its straightforward structure, facilitating easy understanding and implementation. The performance is also robust, and its computational efficiency attributed to its relatively smaller size. These features make it as an ideal deep learning choice for us, that is, a resource-constrained environments.</p><p>For machine learning algorithm, a 10-fold cross-validation method is used. For deep learning algorithm, an Adam T A B L E 4 Spectrogram features and their applicable domains.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Radar features</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Feature dimensions</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Applicable domains</head><p>Entropy optimiser with a fixed learning rate of 0.001 was used. To prevent it from the overfitting problem, both dropout and early stopping approaches were employed. The error rate and accuracy are measured as shown in Equations ( <ref type="formula">8</ref>) and <ref type="bibr" target="#b8">(9)</ref>. We take the error rate of each solution as the fitness value. Note that all the error rates shown in this paper are the average value of the validation over 10 folds, and with this setting a solution, a lower fitness value is a better solution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Err ¼ False Positive þ False Negative T otal number of data ð8Þ</head><p>Accuracy ¼ 1 -Err ð9Þ</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6">| Optimisation problem formulation and challenges</head><p>The 10-fold classification error rate P x (t) serves as the minimisation objective. Mathematically, the minimisation problem can be expressed as Equation <ref type="bibr" target="#b9">(10)</ref>,</p><formula xml:id="formula_7">min x P x ðtÞ<label>ð10Þ</label></formula><p>where x is a set of parameters in the HAR system that defines the system and t is the validation sample, which is randomly chosen for every function evaluation. At the optimisation stage, there are 12 parameters in total. They are divided into two groups according to whether they are continuous or not.</p><p>The first group parameter is discrete, including 'Window', 'Mask', 'Masked phase', 'Masked unwrapped phase', 'Spectrogram', 'Masked spectrogram (patent)', and 'Masked spectrogram (radar)'. They have two options: 0 and 1. For 'Window', 0 means rectangular window and 1 means Hamming window. For other six parameters, 0 means combination excludes it, and 1 means combination that includes it.</p><p>The second group parameter is continuous, including overlapping factor F (ranging from 0.5 to 0.95), time window length W (ranging from 100 to 1000), V (ranging from 0.01 to 1) and T e (ranging from -20 to 20) in the thresholding method, and clipping time K (ranging from 1.5 to 5s). Note that T e has to be integer and other parameter can be any value in the range.</p><p>Parametric sweeping is a widely used method to find the set of parameters x to optimise the classification accuracy. However, this method only works for small-scale problems due to its large computing overhead. For the targeted 12-dimensional problem with wide search ranges, where each function evaluation costs 3 min in our workstation, the computing overhead is still unaffordable even using modern intelligent optimisation techniques, for example, DE algorithm <ref type="bibr" target="#b28">[29]</ref>, genetic algorithm <ref type="bibr" target="#b35">[36]</ref>, and particle swarm optimisation <ref type="bibr" target="#b29">[30]</ref>. Hence, obtaining optimal global solutions efficiently becomes the central challenge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.7">| The SADEA algorithm and parameter settings</head><p>To the best of our knowledge, there are few off-the-shelf methods to address the above challenge in the signal processing field. The SADEA-I <ref type="bibr" target="#b36">[37,</ref><ref type="bibr" target="#b37">38]</ref>, usually applied to antenna design optimisation, is adapted for HAR. Surrogate modelassisted differential evolutionary algorithm can obtain comparable optimisation ability with the DE algorithm, which shows excellent optimisation ability, while reducing by a factor 5-10 the necessary number of function evaluations compared to using the standard DE <ref type="bibr" target="#b12">[13]</ref>. The flowchart of SADEA-I is illustrated in Figure <ref type="figure">3</ref>. The adapted SADEA-I algorithm for HAR is summarised as follows.</p><p>� Step 1: Latin Hypercube Sampling is applied to generate NP samples to form an initial database with NP exact function evaluations. � Step 2: The classification error rate is minimised until a suitable x with the lowest classification error rate among those in the database satisfy the preset error rate threshold or the total optimisation time exceeds the preset threshold. � Step 3: Obtain λ best sets of solutions as the parent population to form a child population by applying the DE mutation and crossover operations <ref type="bibr" target="#b28">[29]</ref>. � Step 4: For each child solution, obtain its training data by collecting their nearest τ known samples from the database and train Gaussian Process (GP) models <ref type="bibr" target="#b38">[39]</ref>. Predict classification error rate and uncertainty for each child solution. � Step 5: Prescreen the child population with the predicted values and prediction uncertainty using the lower confidence bound (LCB) method <ref type="bibr" target="#b39">[40,</ref><ref type="bibr" target="#b40">41]</ref> and obtain the estimated most promising candidate solution. Carry out an exact function</p><formula xml:id="formula_8">F I G U R E 3</formula><p>Hierarchical structure of the solution algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>-</p><formula xml:id="formula_9">LI ET AL.</formula><p>evaluation for it. The candidate solution and its function value are appended to the database and go back to Step 2.</p><p>In this case, Gaussian Process models are trained to predict and suggest the most promising candidate parameter set in each iteration. Hence, it significantly reduces the number of exact function evaluations needed for the search. To make GP and DE work harmoniously, the surrogate model-aware evolutionary framework is used and more details can be found in <ref type="bibr" target="#b41">[42]</ref>.</p><p>The algorithm parameters are set following <ref type="bibr" target="#b36">[37,</ref><ref type="bibr" target="#b42">43]</ref>: NP is set to be 50. Both mutation rate and crossover rate are set to be 0.8. λ is set to be the same as NP. The number of training samples τ is also set to be 50 to train GP models. In LCB prescreening, ω is set to be 2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| RESULTS AND DISCUSSION</head><p>The entire AI-driven holistic HAR system optimisation was implemented using a workstation with an AMD Ryzen 9 3900X 12-core processor (3.8 GHz) and an NVIDIA GeForce GT 710 GPU. In this study, binary parameters are treated as continuous variables with values from 0 to 1 and rounded off to the nearest integers. A reference design was based on our previous experiment <ref type="bibr" target="#b27">[28]</ref>, produced by the adaptive thresholding method with parameter sweeping on adaptive thresholding T e and feature fusion of six domains. The reference performance in this experiment is based on the human operator that achieved the classification error rate-manually tuned results- <ref type="bibr" target="#b12">[13]</ref>, which is based on the operator's domain knowledge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">| Support vector machine classifiers with adaptive thresholding for surrogate modelassisted differential evolutionary algorithm</head><p>The optimisation convergence trend is shown in Figure <ref type="figure" target="#fig_1">4</ref>. The red dotted line represents the manual design result, where the error rate is 21.98%. After 2000 function evaluations using SADEA-I, the system is optimised and achieves an error rate from 16.50% to 10.59% in three independent optimisation runs. Compared to the manually tuned reference system, the holistic approach decreases the error rate by 5.48%-11.39%.</p><p>Table <ref type="table">5</ref> illustrates the details of the optimal parameters and combinations when the optimisation algorithm converges. The result shows that for our human activity dataset, the error rate reaches the minimum with the highest overlapping factor and minimum time window length. In addition, the clipping time is 4.58 s and the adaptive thresholding parameters V and T e are 0.9166 and 3, respectively. These values were in line with the general trend found in a parametric sweeping on the different domains, which identified T e to be optimal between 0 and 5 of the adaptive threshold value for V = 0.1 <ref type="bibr" target="#b10">[11]</ref>. The effectiveness and necessity of research on thresholding are demonstrated in an improvement of ~11% using the SADEA-I method in only 2000 function evaluations (3 min per evaluation). All MDS representations were selected but Domain 1. Domain 1 (Unfiltered MDS Amplitude) is excluded from the most suitable combination, which identifies that the "raw" spectrogram is not optimal and the research on adaptive thresholding and its application in different MDS representations is essential as they all contain salient information for classification although more difficult to interpret visually.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">| AlexNet with adaptive thresholding for surrogate model-assisted differential evolutionary algorithm</head><p>For this experiment, the dataset was partitioned into three subsets: training, validation, and testing, with a ratio of 7:2:1, respectively. The performance of our experiment is evaluated on the basis of the testing set results. In alignment with the previous 10-fold cross validation results, we also carry out this experiment 10 times, considering the mean accuracy of iterations as our final performance of the algorithm.</p><p>Figure <ref type="figure" target="#fig_3">5</ref> demonstrates the optimisation convergence trend of SADEA-I with AlexNet. It also presents the result of manual design parameters on AlexNet. When combined with AlexNet, the SADEA-I is optimised in 700 function  evaluations, with averaged error rate decreased from 17.83% to 6.46%. Compared with manual design result with an error rate of 9.14%, the holistic approach can yield a worse result with an extra 8.69% error rate or decreased error rate by 2.68%. Table <ref type="table">6</ref> illustrates the details of convergence trend along with the optimal parameters and combinations realised at the point of convergence of the optimisation algorithm. The result is slightly different from the previous findings. The Hamming window continues to present the most effective option, yielding superior accuracy. The time window length has escalated to 390 ms. The adaptive thresholding parameters, V and T e , are determined to be 0.8249 and -13, respectively. The V changes to a minor but close value, while T e has exhibited significant alteration. This result indicates the success of our adaptive thresholding algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">| Discussions</head><p>Compared with SADEA-I and SVM results, SADEA-1 with AlexNet achieves further improvement of approximately 5% over merely 700 function evaluations, which reduces more than half of evaluations to convergence. All radar representations were chosen, including domain I, which highlights the enhanced interpretative capability provided by the AlexNet model. However, there is a significant change observed in the length of the time window. This variance could potentially be attributed to the influence of a higher frequency resolution, which results in a more intricate graphical representation of the data. The finer resolution provides an enriched data for the automatic extraction of features within the deep learning model, thereby augmenting its ability to identify distinctive patterns.</p><p>Table <ref type="table">7</ref> concludes the comparison of statistics of SADEA algorithms paired with different classifiers. For SADEA-I with SVM, the optimised error rate decreases from 16.50% to 10.59% with 2000 function evaluations, compared to 21.98% from a human operator. This means that SADEA-I with SVM can boost the performance of our classification by 5.48%-11.39% in 4 days compared to 3 months of manual tuning by the human operator. The second method SADEA-I with AlexNet exhibits an error rate reduction from 17.83% to 6.46% with 700 function evaluations compared to 9.14% from a human operator. We observe that the error rate with SADEA-I with AlexNet can reach a minimum error rate of 6.46%, which is 4.13% better than SADEA-I with SVM. However, the maximum error of SAEDEA-I with SVM is 1.33% better than SADEA-I with AlexNet. These statistics indicate the efficacy of the SADEA-I algorithm when interfaced with various classifiers. Deep learning models tend to be more computationally intensive, but with SADEA, it appears that the number of function evaluations are drastically reduced by 2.85 times in this case. This suggests that the SADEA algorithm boosts convergence towards optimal solutions more efficiently when combined with the deep learning algorithm, thus leading to potentially improved performance with fewer evaluations. However, note that the error rate for SADEA-I with AlexNet is more volatile (11.37%) than with SVM (5.91%). Moreover, SADEA-I with SVM did not incorporate feature selection to enhance performance at this stage. Feature selection can reduce the overall complexity and improve the performance when combined with the adaptive thresholding method <ref type="bibr" target="#b33">[34]</ref>. As we continue to refine our holistic techniques, feature selection will be included for our future plan; however, SADEA-I could not handle these many variables to tune at once. The next version of SADEA will be able to handle more tuning parameters for further optimisation. We also compare our results with different models using the same dataset <ref type="bibr" target="#b4">[5]</ref> to illustrate the potential improvements with our proposed method. Table <ref type="table">8</ref> shows that our methods can achieve good accuracy with computationally light classification algorithms and reach performances compared to deeper implementations.   This shows that our holistic approach could improve further these architectures for HAR to optimise accuracy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| CONCLUSION</head><p>In this study, SADEA-I has been applied for the efficient holistic optimisation of parameter tuning for signal data pre-processing, the radar representation selection, our patented adaptive thresholding methods, and classifiers. We assessed the performance of the holistic approach on the joint tuning of signal processing, adaptive thresholding and classification for two distinct classification models. The SVM classifier achieves an accuracy up to 89.41% after 2000 function evaluations and the AlexNet achieves an accuracy up to 93.54% after ~700 function evaluations. Notably, both classifiers displayed superior performance when contrasted with their counterparts that lacked SADEA-I algorithm. The accuracies can be improved by 11.30% and 2.68%, respectively. It also illustrates its strength on time-efficiency attributes. The results, which would conventionally require months for parametric sweeping by a human operator, are accomplished by SADEA-I within a span of 84 h. This proof-of-concept (POC) experiment on SADEA-I encompasses the whole FFT-based signal processing chain and the many representations of MDS. This POC is crucial as we mentioned many more data representation domains that can be fused for classification and optimising performances with increasing dimensionality. Furthermore, the explosion of civilian and military applications with MIMO radar and 6G sensing will further increase dimensionality with multiple channels that are all processed using a generic pre-processing chain and not tuned individually.</p><p>Building on this proof-of-concept, the model is being refined to be incorporated as an optimiser to allow other researchers to try it on their algorithms and data. We also intend to expand this research to wider time-frequency transforms with SADEA-I to further optimise the accuracy and to add objective functions to consider the computational efficiency of the different stages. In addition, this parametric search can be extended to deep learning model. For instance, parameters, such as the learning rate, which play a crucial role in how quickly or slowly a model learns, can be optimised using similar methods. By leveraging the method of parametric search, we can systematically explore different parameters and select an optimal value that allows for effective learning within a reasonable amount of time.</p><p>Furthermore, as radar costs are going down, we should tackle the remaining open challenges of target aspect angle robustness in classification and fusion with other sensing modalities to compensate with the shortcomings of individual sensors. Radar is promising in the field of assisted living, but challenges remain in terms of blind regions, obstruction in the radar path and mutual interference when several radar systems operate in the same vicinity.</p><p>T A B L E 8 Performance comparison between the proposed method and alternative methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model Accuracy (%)</head><p>VGG 19 <ref type="bibr" target="#b43">[44]</ref> 93</p><p>MobileNetV2 <ref type="bibr" target="#b44">[45]</ref> 95.43</p><p>Alexnet <ref type="bibr" target="#b45">[46]</ref>  </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>F I G U R E 2 1</head><label>21</label><figDesc>The process of obtaining micro-Doppler signature (MDS) domains.T A B L E 3 Patent features and their applicable domains.The number of total features 68Note: Bold values indicate the number of features.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>F I G U R E 4</head><label>4</label><figDesc>Convergence trend of surrogate model-assisted differential evolutionary algorithm (SADEA-I) with support vector machine classifiers (SVM) and comparison with manual design results.T A B L E 5 Tuned parameters and selected domains.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>F I G U R E 5</head><label>5</label><figDesc>Convergence trend of surrogate model-assisted differential evolutionary algorithm (SADEA-I) with AlexNet and comparison with manual design results. T A B L E 6 Tuned parameters and selected domains.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="3,50.46,495.33,494.36,201.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>Human activity recognition (HAR) review of radar data domain usage and performances.</figDesc><table><row><cell>Ref HW</cell><cell cols="2">Classification algorithm # of classes</cell><cell>Radar data domain</cell><cell cols="2">Performance metrics Best performance</cell></row><row><cell cols="2">[10] FMCW MIMO PointNetþþ, LSTM</cell><cell>8 (easy)</cell><cell>Cloud point</cell><cell>Accuracy</cell><cell>96.6% for easy set</cell></row><row><cell></cell><cell></cell><cell>12 (complex)</cell><cell></cell><cell></cell><cell>95.1% for complex set</cell></row><row><cell>[15] FMCW</cell><cell>SVM, KNN</cell><cell>6</cell><cell>Doppler-time maps, CVD</cell><cell>Accuracy</cell><cell>95.4% for HAR</cell></row><row><cell cols="2">[12] FMCW MIMO LSTM þ CNN</cell><cell>7</cell><cell>Doppler-time maps</cell><cell>Precision, recall,</cell><cell>Precision: 98%</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>F1-score, accuracy</cell><cell>Recall: 98%</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>F1-score: 98%</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Acc = 98.28%</cell></row><row><cell>[16] FMCW</cell><cell>LSTM</cell><cell>2</cell><cell>Raw radar data, range maps</cell><cell>Accuracy</cell><cell>99.56%</cell></row><row><cell>[17] FMCW</cell><cell>SAE</cell><cell>4</cell><cell cols="2">Doppler-time maps, range maps. Accuracy</cell><cell>96.4%</cell></row><row><cell cols="2">[18] FMCW MIMO ANN</cell><cell>8</cell><cell cols="2">Doppler-time maps, range maps. Accuracy</cell><cell>99.21%</cell></row><row><cell>[19] FMCW</cell><cell>CNN</cell><cell>5</cell><cell cols="2">Doppler-time maps, range maps. Accuracy</cell><cell>97.2%</cell></row><row><cell>[20] FMCW</cell><cell>Bi-LSTM</cell><cell>6</cell><cell>Doppler-time maps</cell><cell>Accuracy</cell><cell>96%</cell></row><row><cell>[21] FMCW</cell><cell>KNN</cell><cell>6</cell><cell>Doppler-time maps</cell><cell>Accuracy</cell><cell>95.5%</cell></row><row><cell>[22] FMCW</cell><cell>CFFN (CNN þ MLP)</cell><cell>6</cell><cell>Range-Doppler surface, phase</cell><cell>Accuracy</cell><cell>94%</cell></row><row><cell>[23] FMCW</cell><cell>CNN (PointNet), LSTM</cell><cell>5</cell><cell>3D could point</cell><cell>Accuracy</cell><cell>90%</cell></row><row><cell>[24] FMCW</cell><cell>MB-GAN</cell><cell>5</cell><cell>Doppler-time maps</cell><cell>Accuracy</cell><cell>89.83%</cell></row><row><cell>[24] FMCW</cell><cell>CNN þ LSTM</cell><cell>6</cell><cell>Range-Doppler maps</cell><cell>Accuracy</cell><cell>98.02%</cell></row><row><cell>[25] FMCW</cell><cell>CNN þ LSTM</cell><cell>6</cell><cell>Range-Doppler map</cell><cell>Accuracy</cell><cell>Accuracy: 96.2%</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>Recall</cell><cell>Recall: 96%</cell></row><row><cell cols="2">[13] FMCW MIMO CNN</cell><cell>6</cell><cell>Doppler time maps</cell><cell>Accuracy</cell><cell>90.68%</cell></row></table><note><p>T A B L E 1</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Summary of the dataset.</figDesc><table><row><cell>4</cell><cell>-</cell><cell></cell><cell>LI ET AL.</cell></row><row><cell cols="2">No. Activity description</cell><cell cols="2">Number of samples Data length</cell></row><row><cell>A1</cell><cell>Walking back and forth</cell><cell>312</cell><cell>5s</cell></row><row><cell>A2</cell><cell>Sitting down on a chair</cell><cell>312</cell><cell>5s</cell></row><row><cell>A3</cell><cell cols="2">Standing up from a chair 311</cell><cell>5s</cell></row><row><cell>A4</cell><cell>Picking up an object</cell><cell>311</cell><cell>5s</cell></row><row><cell>A5</cell><cell>Drinking water</cell><cell>310</cell><cell>5s</cell></row><row><cell>A6</cell><cell>Fall</cell><cell>198</cell><cell>5s</cell></row></table><note><p>T A B L E 2 17518792, 0, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/rsn2.12474 by University Of Glasgow, Wiley Online Library on [30/10/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>The number of total features 22</head><label></label><figDesc></figDesc><table><row><cell>of spectrogram</cell><cell>1 � 1</cell><cell>Domain 1 and</cell></row><row><cell>Skewness of spectrogram</cell><cell>1 � 1</cell><cell>domain 6</cell></row><row><cell>Kurtosis of spectrogram</cell><cell>1 � 1</cell><cell></cell></row><row><cell>Centroid of spectrogram</cell><cell>1 � 2</cell><cell></cell></row><row><cell>(mean and variance)</cell><cell></cell><cell></cell></row><row><cell>Bandwidth of spectrogram</cell><cell>1 � 2</cell><cell></cell></row><row><cell>(mean and variance)</cell><cell></cell><cell></cell></row><row><cell>Energy curve (mean and variance and</cell><cell>1 � 3</cell><cell></cell></row><row><cell>trapezoidal numerical integration)</cell><cell></cell><cell></cell></row><row><cell>Singular vector decomposition (mean and</cell><cell>1 � 12</cell><cell></cell></row><row><cell>variance of the</cell><cell></cell><cell></cell></row><row><cell>first three vectors of components)</cell><cell></cell><cell></cell></row></table><note><p>Note: Bold values indicate the number of features. LI ET AL.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>Statistics of the best function values obtained by SADEA with different classifiers.</figDesc><table><row><cell></cell><cell>Best</cell><cell>Worst</cell><cell>Human</cell><cell></cell></row><row><cell></cell><cell>error</cell><cell>error</cell><cell>error</cell><cell>Function</cell></row><row><cell>Method</cell><cell>rate (%)</cell><cell>rate (%)</cell><cell>rate (%)</cell><cell>evaluations</cell></row><row><cell cols="2">SADEA-I with SVM 10.59</cell><cell>16.50</cell><cell>21.98</cell><cell>2000</cell></row><row><cell>SADEA-I with</cell><cell>6.46</cell><cell>17.83</cell><cell>9.14</cell><cell>700</cell></row><row><cell>AlexNet</cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table><note><p><p><p><p>T A B L E 7</p>Abbreviation: SADEA, surrogate-model-assisted differential evolution algorithm.</p>8</p>-LI ET AL.</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>17518792, 0, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/rsn2.12474 by University Of Glasgow, Wiley Online Library on [30/10/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p>The authors are grateful to <rs type="person">Professor Muhammad Imran</rs>, <rs type="institution">University of Glasgow</rs>, supported by <rs type="funder">Engineering and Physical Sciences Research Council</rs> grant <rs type="grantNumber">EP/T021020/1</rs>, for useful discussions during conceptualisation and writing of the research.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_5vjQzHX">
+					<idno type="grant-number">EP/T021020/1</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are openly available at https://researchdata.gla.ac.uk/848/, reference number <ref type="bibr" target="#b24">[25]</ref>.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUTHOR CONTRIBUTIONS</head><p>Zhenghui Li and Yushi Liu wrote the main manuscript text and made substantial contributions to the design and analysis of proposed methodology. Julien Le Kernec and Bo Liu planned the experiment and wrote relevant text of the manuscript. Shufan Yang contributed to the paper edit and provided suggestions on data analysis and presentations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONFLICT OF INTEREST STATEMENT</head><p>The authors declare no competing interests.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Radar signal processing for sensing in assisted living: the challenges associated with real-time implementation of emerging algorithms</title>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Kernec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Signal Process. Mag</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="29" to="41" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Palipana</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3161183</idno>
+		<ptr target="https://doi.org/10.1145/3161183" />
+	</analytic>
+	<monogr>
+		<title level="j">FallDeFi. Proc. ACM Interact Mob Wearable Ubiquitous Technol</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1" to="25" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Radar signal processing for elderly fall detection: the future for in-home monitoring</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Amin</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/msp.2015.2502784</idno>
+		<ptr target="https://doi.org/10.1109/msp.2015.2502784" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Signal Process. Mag</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="71" to="80" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Radar-based human-motion recognition with deep learning: promising applications for indoor monitoring</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Z</forename><surname>Gurbuz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Amin</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/msp.2018.2890128</idno>
+		<ptr target="https://doi.org/10.1109/msp.2018.2890128" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Signal Process. Mag</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="16" to="28" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The human activity radar challenge: benchmarking based on the &apos;radar signatures of human activities&apos; dataset from Glasgow University</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/jbhi.2023.3240895</idno>
+		<ptr target="https://doi.org/10.1109/jbhi.2023.3240895" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Biomed. Heal. Inform</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1813" to="1824" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Micro-Doppler effect in radar: phenomenon, model, and simulation study</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">C</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/taes.2006.1603402</idno>
+		<ptr target="https://doi.org/10.1109/taes.2006.1603402" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Aerosp. Electron. Syst</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="2" to="21" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A survey of deep learning-based human activity recognition in radar</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Jing</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/rs11091068</idno>
+		<ptr target="https://doi.org/10.3390/rs11091068" />
+	</analytic>
+	<monogr>
+		<title level="j">Rem. Sens</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">1068</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Radar-based human activity classification with cyclostationarity</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Du</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 CIE International Conference on Radar (CIE Radar 2021</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Simulation framework for activity recognition and benchmarking in different radar geometries</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhou</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/rsn2.12049</idno>
+		<ptr target="https://doi.org/10.1049/rsn2.12049" />
+	</analytic>
+	<monogr>
+		<title level="j">IET Radar, Sonar Navig</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="390" to="401" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Pantomime: mid-air gesture recognition with sparse millimeter-wave radar point clouds</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Palipana</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3448110</idno>
+		<ptr target="https://doi.org/10.1145/3448110" />
+	</analytic>
+	<monogr>
+		<title level="j">Proc. ACM Interact Mob Wearable Ubiquitous Technol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="27" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Patient activity recognition using radar sensors and machine learning</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bhavanasi</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s00521-022-07229-x</idno>
+		<ptr target="https://doi.org/10.1007/s00521-022-07229-x" />
+	</analytic>
+	<monogr>
+		<title level="j">Neural Comput. Appl</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="16033" to="16048" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A hybrid CNN-LSTM network for the classification of human activities based on micro-Doppler radar</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Ye</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/access.2020.2971064</idno>
+		<ptr target="https://doi.org/10.1109/access.2020.2971064" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="24713" to="24720" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Real-time human motion behavior detection via CNN using mmWave radar</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Cao</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/lsens.2018.2889060</idno>
+		<ptr target="https://doi.org/10.1109/lsens.2018.2889060" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Sens. Lett</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1" to="4" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Singh</surname></persName>
+		</author>
+		<title level="m">Proceedings of the 3rd ACM Workshop on Millimeter-Wave Networks and Sensing Systems</title>
+		<meeting>the 3rd ACM Workshop on Millimeter-Wave Networks and Sensing Systems</meeting>
+		<imprint>
+			<publisher>RadHAR</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="51" to="56" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Hierarchical radar data analysis for activity and personnel recognition</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/rs12142237</idno>
+		<ptr target="https://doi.org/10.3390/rs12142237" />
+	</analytic>
+	<monogr>
+		<title level="j">Rem. Sens</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page">2237</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Activity classification using raw range and I &amp; Q radar data with long short term memory layers</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Loukas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 16th Intl Conf on Dependable, Autonomic and Secure Computing, 16th Intl Conf on Pervasive Intelligence and Computing, 4th Intl Conf on Big Data Intelligence and Computing and Cyber Science and Technology Congress</title>
+		<imprint>
+			<publisher>DASC/PiCom/DataCom/CyberSciTech</publisher>
+			<date type="published" when="2018">2018. 2018</date>
+			<biblScope unit="page" from="441" to="445" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Multiple joint-variable domains recognition of human motion</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Jokanovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Amin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Erol</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2017 IEEE Radar Conference (RadarConf)</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="948" to="0952" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Potential active shooter detection based on radar micro-Doppler and range-Doppler analysis using artificial neural network</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/jsen.2018.2879223</idno>
+		<ptr target="https://doi.org/10.1109/jsen.2018.2879223" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Sensor. J</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1052" to="1063" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Radar data cube processing for human activity recognition using multisubspace learning</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Erol</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Amin</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/taes.2019.2910980</idno>
+		<ptr target="https://doi.org/10.1109/taes.2019.2910980" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Aerosp. Electron. Syst</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="3617" to="3628" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Bi-LSTM network for multimodal continuous human activity recognition and fall detection</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/jsen.2019.2946095</idno>
+		<ptr target="https://doi.org/10.1109/jsen.2019.2946095" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Sensor. J</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1191" to="1201" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Fall detection with multi-domain features by a portable FMCW radar</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE MTT-S International Wireless Symposium (IWS)</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="1" to="3" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Complex field-based fusion network for human activities classification with radar</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IET International Radar Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="68" to="73" />
+		</imprint>
+	</monogr>
+	<note>IET IRC 2020</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Gait recognition for Co-existing multiple people using millimeter Wave sensing</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Meng</surname></persName>
+		</author>
+		<idno type="DOI">10.1609/aaai.v34i01.5430</idno>
+		<ptr target="https://doi.org/10.1609/aaai.v34i01.5430" />
+	</analytic>
+	<monogr>
+		<title level="m">Proc. AAAI Conf</title>
+		<meeting>AAAI Conf</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="849" to="856" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Physics-aware design of multi-branch GAN for human RF micro-Doppler signature synthesis</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Z</forename><surname>Gurbuz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">G</forename><surname>Amin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 IEEE Radar Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Real-time human activity classification from radar with CNN-LSTM network</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 IEEE 16th Conference on Industrial Electronics and Applications (ICIEA)</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="50" to="55" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Device for Characterizing the Actimetry of a Subject in Real Time</title>
+	</analytic>
+	<monogr>
+		<title level="j">WO</title>
+		<imprint>
+			<biblScope unit="volume">2021069518</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+		<respStmt>
+			<orgName>Centre National de la Recherche Scientifique</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Method and Device for Human Activity Classification Using Radar Micro Doppler and Phase</title>
+	</analytic>
+	<monogr>
+		<title level="j">EP</title>
+		<imprint>
+			<biblScope unit="volume">21306742</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+		<respStmt>
+			<orgName>Centre National de la Recherche Scientifique</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Human activity classification with adaptive thresholding using radar micro-Doppler</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 CIE International Conference on Radar (CIE Radar 2021</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Differential evolution--a simple and efficient heuristic for global optimization over continuous spaces</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Storn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Price</surname></persName>
+		</author>
+		<idno type="DOI">10.1023/a:1008202821328</idno>
+		<ptr target="https://doi.org/10.1023/a:1008202821328" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Global Optim</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="341" to="359" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Particle swarm optimization</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kennedy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Eberhart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICNN&apos;95-international Conference on Neural Networks</title>
+		<meeting>ICNN&apos;95-international Conference on Neural Networks</meeting>
+		<imprint>
+			<date type="published" when="1995">1995</date>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="1942" to="1948" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Radar sensing for healthcare</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Fioranelli</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/el.2019.2378</idno>
+		<ptr target="https://doi.org/10.1049/el.2019.2378" />
+	</analytic>
+	<monogr>
+		<title level="j">Electron. Lett</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="1022" to="1024" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<author>
+			<persName><forename type="first">F</forename><surname>Fioranelli</surname></persName>
+		</author>
+		<ptr target="https://researchdata.gla.ac.uk/848/" />
+		<title level="m">Radar Signatures of Human Activities</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>Data Collection</note>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Radar-based evaluation of lameness detection in ruminants: preliminary results</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Fioranelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE MTT-S 2019 International Microwave Biomedical Conference</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="1" to="4" />
+		</imprint>
+	</monogr>
+	<note>IMBioC 2019 -Proceedings</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Radar-based human activity recognition with adaptive thresholding towards resource constrained platforms</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41598-023-30631-x</idno>
+		<ptr target="https://doi.org/10.1038/s41598-023-30631-x" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">3473</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">ImageNet classification with deep convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Krizhevsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Hinton</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3065386</idno>
+		<ptr target="https://doi.org/10.1145/3065386" />
+	</analytic>
+	<monogr>
+		<title level="j">Commun. ACM</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="84" to="90" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">A genetic algorithm tutorial</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Whitley</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/bf00175354</idno>
+		<ptr target="https://doi.org/10.1007/bf00175354" />
+	</analytic>
+	<monogr>
+		<title level="j">Stat. Comput</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="65" to="85" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">An efficient method for antenna design optimization based on evolutionary computation and machine learning techniques</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tap.2013.2283605</idno>
+		<ptr target="https://doi.org/10.1109/tap.2013.2283605" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Antenn. Propag</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="7" to="18" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">SADEA-II: a generalized method for efficient global optimization of antenna design</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Koziel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Ali</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jcde.2016.11.002</idno>
+		<ptr target="https://doi.org/10.1016/j.jcde.2016.11.002" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Comput. Des. Eng</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="86" to="97" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Santner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Design and Analysis of Computer Experiments</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<date type="published" when="2003">2003</date>
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Managing approximation models in optimization</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Dennis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Torczon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Multidiscip. Des. Optim. State-of-the-Art</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="330" to="347" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Single-and multiobjective evolutionary optimization assisted by Gaussian random field metamodels</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T M</forename><surname>Emmerich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Giannakoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Naujoks</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tevc.2005.859463</idno>
+		<ptr target="https://doi.org/10.1109/tevc.2005.859463" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Evol. Comput</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="421" to="439" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">A Gaussian process surrogate model assisted evolutionary algorithm for medium scale expensive optimization problems</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G E</forename><surname>Gielen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tevc.2013.2248012</idno>
+		<ptr target="https://doi.org/10.1109/tevc.2013.2248012" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Evol. Comput</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="180" to="192" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">A parallel surrogate model assisted evolutionary algorithm for electromagnetic design optimization</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">O</forename><surname>Akinsolu</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tetci.2018.2864747</idno>
+		<ptr target="https://doi.org/10.1109/tetci.2018.2864747" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Emerg. Top. Comput. Intell</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="93" to="105" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A compact human activity classification model based on transfer learned network pruning</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IET International Radar Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1488" to="1492" />
+		</imprint>
+	</monogr>
+	<note>IET IRC 2020</note>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">A lightweight network model for human activity classifiction based on pre-trained mobilenetv2</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xiaolong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IET International Radar Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1483" to="1487" />
+		</imprint>
+	</monogr>
+	<note>IET IRC 2020</note>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Human detection and activity classification based on micro-Doppler signatures using deep convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Moon</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/lgrs.2015.2491329</idno>
+		<ptr target="https://doi.org/10.1109/lgrs.2015.2491329" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Geosci. Remote Sens. Lett</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="8" to="12" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Human activity classification with neural network using radar micro-Doppler and range signatures</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IET International Radar Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="222" to="227" />
+		</imprint>
+	</monogr>
+	<note>IET IRC 2020</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

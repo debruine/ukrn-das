@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">On guarantees, vetoes, and random dictators</title>
+				<funder ref="#_GgGrrdZ">
+					<orgName type="full">Blaise Pascal Chair of the Region Ile-de-France</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Anna</forename><surname>Bogomolnaia</surname></persName>
+							<email>anna.bogomolnaia@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution" key="instit1">University of Glasgow</orgName>
+								<orgName type="institution" key="instit2">CNRS-CES</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ron</forename><surname>Holzman</surname></persName>
+							<email>holzman@technion.ac.il</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Mathematics</orgName>
+								<orgName type="institution">Technion-Israel Institute of Technology</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+							<email>herve.moulin@glasgow.ac.uk</email>
+							<affiliation key="aff2">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">On guarantees, vetoes, and random dictators</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9F52CEE9EAEA51F914047837BC8838D2</idno>
+					<idno type="DOI">10.3982/TE4832</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:47+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Worst case</term>
+					<term>guarantees</term>
+					<term>voting by veto</term>
+					<term>random dictator. JEL classification. D63</term>
+					<term>D71</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>A mechanism guarantees a certain welfare level to its agents, if each of them can secure that level against unanimously adversarial others. How high can such a guarantee be, and what type of mechanism achieves it?</p><p>In the n-person probabilistic voting/bargaining model with p deterministic outcomes a guarantee takes the form of a probability distribution over the ranks from 1 to p. If n ≥ p, the uniform lottery is shown to be the only maximal (unimprovable) guarantee. If n &lt; p, combining (variants of) the familiar random dictator and voting by veto mechanisms yields a large family of maximal guarantees: it is exhaustive if n = 2 and almost so if p ≤ 2n.</p><p>Voting rules à la Condorcet or Borda, even in probabilistic form, are ruled out by our worst case viewpoint.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Guarantees and mechanisms</head><p>Two staples of the collective decision literature, voting by veto and the random dictator mechanism, are commonly used, informally, to simplify negotiations: the committee may agree to dismiss first a number of "obviously bad" outcomes, or to resolve disagreements by flipping a coin. We show formally that, when the goal is to offer the best ex ante protection to individual agents, the two mechanisms and their many combinations stand out in the worst case analysis.</p><p>Fix an arbitrary collective decision problem by its feasible outcomes (allocation of resources, public decision making, etc.), the domain of individual preferences and the number n of relevant agents. We evaluate a mechanism (game form) solving this problem by the guarantee it offers to the participants: this is the welfare level each one can secure in the resulting game no matter what other players know or how they will play their part. The worst case assumption is that their moves are collectively adversarial, so my guarantee is the value of the two-person zero-sum game where I play first against the rest of the world. A higher guarantee is a better default option, it encourages acceptance of and participation in the mechanism.</p><p>Question. How high can such a guarantee be, and what type of mechanism achieves it?</p><p>Guarantees test the ex ante fairness of a mechanism, from the viewpoint of an agent clueless about other participants or unwilling to engage in risky strategic moves. It is also an ex post test: an agent using a best reply to the other agents' strategies gets at least her guaranteed welfare (because she has a safe strategy achieving that level no matter what), so any Nash equilibrium of the game delivers at least that level of welfare to everyone.</p><p>The guarantee approach is far from new to economic theory (Section 2 briefly reviews the literature), but this paper is the first to use it in the probabilistic voting model, interpreted equivalently as a bargaining model. There are finitely many pure (deterministic) outcomes and we can choose a convex compromise between these by running a lottery, or allocating time shares, or dividing a budget; for clarity we use the lottery interpretation. We also maintain a symmetric treatment of agents (anonymity) and of outcomes (neutrality). Therefore, it only takes the number n of agents and p of pure outcomes to define a guarantee: it is a lottery λ over the ranks 1 to p (where rank 1 is the worst and p the best), which is feasible in the sense that for any profile of utilities of the agents we can find a lottery over pure outcomes for which every agent's expected utility is at least that from the lottery λ. <ref type="foot" target="#foot_1">1</ref> An equivalent definition for agents endowed with purely ordinal preferences plays a key role throughout; see Definitions 1 and 2 in Section 3.</p><p>The worst case viewpoint immediately rules out the usual voting methods à la Condorcet or Borda, whether in deterministic or probabilistic form. When there are three or more agents, if everyone else reports the preference opposite to mine, my worst outcome is selected. We show that it is always feasible to offer a much better guarantee to everyone. As explained below, our approach is relevant for problems involving more outcomes than agents selecting one of them: this points to small committees and direct bargaining, emphatically not to political elections.</p><p>In our model, a guarantee λ is maximal (unimprovable) if no other guarantee λ stochastically dominates λ. Our results are of two types: for some values of (n, p) we describe completely the set of maximal guarantees and simple mechanisms to implement them; for the other pairs (n, p) the structure of this set resists a full characterization, so we only construct and implement a large subset of maximal guarantees. In both cases, the guarantees at the center of our analysis, and corresponding mechanisms, are built from the three ingredients voting by veto, random priority rules, and uniformly random choice.</p><p>The simplest guarantee of all is the uniform guarantee, denoted uni(p), choosing each outcome with probability 1 p . One way to implement it is to run this lottery and ignore individual preferences entirely. A more interesting way uses uni(p) as a canonical disagreement option: to any given mechanism , we add a last round where each participant can reject the outcome proposed by and force a uniformly random choice of the final outcome.</p><p>The uniform guarantee uni(p) is maximal for any (n, p). If n ≥ p, and only then, it is the only maximal guarantee: any other guarantee is weakly worse for everyone in all problems, and sometimes strictly (the proof is easy; see Section 4).</p><p>Problems with two agents, n = 2, are not much harder to crack and the result is more interesting. A maximal guarantee is any lottery symmetric with respect to the median rank (Proposition 2, Section 4); these lotteries cover a polytope of which the vertices are easily described and implemented. To fix ideas suppose p = 6, so the polytope is a triangle with uni(6) = ( 1 6 , 1 6 , 1 6 , 1 6 , 1 6 , 1 6 ) in its center and the following vertices. The random dictator guarantee rd(2, 6) = ( 1 2 , 0, 0, 0, 0, 1 2 ) obtains as usual by tossing a fair coin and letting the winner choose a pure outcome. To implement the guarantee λ = (0, 0, 1 2 , 1 2 , 0, 0), we ask first each agent to veto two outcomes,<ref type="foot" target="#foot_3">2</ref> after which the rule picks uniformly at random a nonvetoed outcome. To implement the third vertex μ = (0, 1 2 , 0, 0, 1 2 , 0), we give one veto token to one agent and four tokens to the other, choosing the roles by tossing a fair coin (equivalently each agent gets to veto one outcome, then a random dictator completes the choice).</p><p>Our next example illustrates some of the difficulties in tackling problems with more than two agents.</p><p>Example: Three agents n = 3, six outcomes p = 6 Define the veto guarantee vt(3, 6) = (0, 1 3 , 1 3 , 1 3 , 0, 0) (recall the first coordinate is the worst rank), implemented by first giving one veto token to each agent then choosing uniformly at random one of the remaining outcomes: after the vetoing round, my worst case is that the other agents kill my two best outcomes and I kill my worst outcome; hence the rank distribution cannot be worse than vt(3, 6). Note that distributing one veto token followed by a deterministic choice implements λ = (0, 1, 0, 0, 0, 0), dominated by vt(3, 6).</p><p>The "naive" random dictator mechanism implements the guarantee λ 1 = ( 2 3 , 0, 0, 0, 0, 1 3 ): my worst case is that the two other agents pick my worst outcome. We can do better. Let each agent report (one of ) his top outcome(s); if they all agree on a choose a; if they each choose a different outcome, pick one of them with uniform probability; finally, if the choices are a, a, b, we randomize uniformly between a, b and an arbitrary third outcome c. This implements the correct random dictator guarantee rd(3, 6) = ( 1 3 , 1 3 , 0, 0, 0, 1 3 ), that dominates λ 1 . <ref type="foot" target="#foot_4">3</ref>It is easy to check directly that uni(6), rd(3, 6), and vt(3, 6) are maximal guarantees. This follows for rd(3, 6) and vt(3, 6) by inspecting respectively the left or right profile of strict ordinal preferences</p><formula xml:id="formula_0">≺ 1 a b x y z c ≺ 2 b c y z x a ≺ 3 c a z x y b ≺ 1 a x y z b c ≺ 2 b y z x c a ≺ 3 c z x y a b</formula><p>(where agent 1's worst is a and best is c). At the left profile, giving a 1 3 chance of their best outcome to each agent requires to pick a, b, or c, each with probability 1 3 : then each agent experiences exactly rd(3, 6) over her ranked outcomes, implying that any lottery λ dominating rd(3, 6) is not feasible at this profile. Similarly at the right profile, implementing vt(3, 6) implies zero probability on a, b, c, and at most (hence exactly) 1 3 on each of x, y, and z. The symmetry of these two arguments is not a coincidence: it is explained by the duality relation connecting vt(3, 6) and rd(3, 6) (Section 5).</p><p>What other guarantees are maximal for n = 3, p = 6? Convex combinations preserve feasibility but not maximality: for instance, an equal chance of the two mechanisms implementing vt(3, 6) and rd(3, 6), respectively, delivers the guarantee 1 2 vt(3, 6) + 1 2 rd(3, 6) = ( 1 6 , 1 3 , 1 6 , 1 6 , 0, 1 6 ) dominated by uni(6). But lotteries between uni(6) and vt(3, 6), or between uni(6) and rd(3, 6) are maximal. In fact, the two intervals [uni(6), vt(3, 6)] and [uni(6), rd(3, 6)] capture all maximal lotteries for n = 3, p = 6 (Theorem 1, Section 4.3).</p><p>The two intervals in the above example illustrate the typical choices faced by a designer poised to maximize individual welfare guarantees. The veto guarantee is a reasonable option when bargaining is about choosing an expensive infrastructure project, or a person to hold a position for life; the random dictator approach makes sense if we are dividing time between several public decisions, like two alternating roman consuls; the uniform guarantee stands out if we value a disagreement outcome revealing no information about individual preferences.</p><p>The punch lines We can describe the set of maximal guarantees if n = 2 or n ≥ p, as well as if there are at most two outcomes per person: if 3 ≤ n &lt; p ≤ 2n, just like in the example above, the set of maximal guarantees contains the nonconvex union of the two intervals of lotteries from the uniform guarantee uni(p) to either the veto vt(n, p) or random dictator rd(n, p) and not much more; see Theorem 1 and Proposition 3 in Section 4.</p><p>In the remaining cases n ≥ 3, p &gt; 2n, we do not know the full structure of the set of maximal guarantees but we provide some useful insights. First, this set is a nonconvex finite union of polytopes, all sharing the uniform guarantee as a vertex (Proposition 5). Second, if d is the strict integer part<ref type="foot" target="#foot_5">4</ref> of p n , we can construct 2 d such polytopes by concatenating exactly d elementary rounds of vetoes or random dictator (Theorem 2, Section 6).</p><p>We also provide simple mechanisms implementing the maximal guarantees we identify. Critical to their practical application, these mechanisms rely on ordinal preferences only, as do the agents' safe actions when they report which outcome(s) they veto, or which ones they prefer among those still in play.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Related literature</head><p>The optimal design of a mechanism under the risk averse assumption that other agents are adversarial is discussed by the early literature on implementation in several slightly different formulations: implementation in maximin <ref type="bibr" target="#b30">(Thomson (1978)</ref>, Dasgupta, Hammond, and Maskin (1979)), prudent <ref type="bibr" target="#b18">(Moulin (1981)</ref>) or protective strategies <ref type="bibr" target="#b4">(Barbera and Dutta (1982)</ref>). As explained in Section 1, our guarantees are compatible with a wide range of strategic behaviors.</p><p>Steinhaus' seminal papers <ref type="bibr" target="#b28">(Steinhaus (1949)</ref>, see also <ref type="bibr" target="#b11">Dubins and Spanier (1961)</ref>, <ref type="bibr" target="#b15">Kuhn (1967)</ref>) invented the worst case approach for cutting a cake fairly among any number of agents. His simple mechanism generalizes Divide and Choose and guarantees to each agent a fair share: one that is worth at least 1 n of the whole cake. The main focus of the subsequent literature is envy-free divisions: how to achieve one by simple cuts and queries <ref type="bibr" target="#b6">(Brams and Taylor (1995)</ref>, <ref type="bibr" target="#b25">Robertson and Webb (1998)</ref>, <ref type="bibr">Aziz and McKenzie (2016)</ref>) and proving its existence under preferences more general than additive utilities <ref type="bibr" target="#b29">(Stromquist (1980)</ref>, <ref type="bibr" target="#b32">Woodall (1980)</ref>). An exception is the recent paper of Bogomolnaia and Moulin (2020) returning to the worst case approach under very general preferences and identifying the MinMaxShare (my best share in the worst partition of the cake I can be offered) as a feasible guarantee, though not a maximal one.</p><p>The last decade saw an explosion of research to define and compute a fair allocation of indivisible items, proposing in particular a new definition of the fair share as the MaxMinShare (Budish (2011)): my worst share in the best partition of the objects I can propose. This guarantee may not be feasible <ref type="bibr" target="#b23">(Procaccia and Wang (2014)</ref>) but this happens very rarely (Kurokawa, Procaccia, and Wang (2016)); the real concern is that the mechanisms approximating this guarantee are all but simple.</p><p>Other early instances of the worst case approach are in production economies <ref type="bibr">(Moulin (1992a</ref><ref type="bibr" target="#b21">(Moulin ( , 1992b))</ref>) and in the minimal cost spanning tree problem <ref type="bibr" target="#b13">(Hougaard, Moulin, and Osterda (2010)</ref>).</p><p>The random dictator mechanism is a staple of probabilistic social choice <ref type="bibr" target="#b12">(Gibbard (1977)</ref>, <ref type="bibr" target="#b26">Sen (2011)</ref>). In axiomatic bargaining, it inspires the Raiffa solution <ref type="bibr" target="#b24">(Raiffa (1953)</ref>) and the mid-point domination axiom <ref type="bibr" target="#b27">(Sobel (1981)</ref>, <ref type="bibr" target="#b31">Thomson (1981)</ref>) satisfied by both the Nash and Kalai-Smorodinsky solutions.</p><p>Voting by veto is another early idea introduced by <ref type="bibr" target="#b22">Mueller (1978)</ref> to incentivize agents toward compromising offers: each agent makes one offer, which together with the status quo outcome makes p = n + 1 outcomes, after which they take turns to veto one outcome each (in our model the natural status quo is the uniform lottery over outcomes). This procedure is generalized in <ref type="bibr" target="#b18">Moulin (1981)</ref>. The area monotonic bargaining solution <ref type="bibr" target="#b1">(Anbarci and Bigelow (1994)</ref>, <ref type="bibr" target="#b0">Anbarci (1993)</ref>) is a direct application of voting by veto between two parties, similar to distributing p-1 2 veto tokens to each agent in our model.</p><p>A handful of recent papers discuss variants of voting by veto in the classic implementation context; see, for example, De Clippel, Eliaz, and Knight (2014), <ref type="bibr" target="#b3">Barbera and Coelho (2017)</ref>, Laslier, Nunez, and Sanver (2020). All three papers implement maximal guarantees. Closer to home, Section 4 in <ref type="bibr" target="#b14">Kirneva and Nunez (2021)</ref> explains the strategic properties of a veto mechanism implementing arbitrary compositions of our guarantee vt(n, p).</p><p>We mention finally the small literature on bargaining with cash compensations and quasilinear utilities <ref type="bibr" target="#b19">(Moulin (1985)</ref>, <ref type="bibr" target="#b8">Chun (1986)</ref>) where only the uniform guarantee is discussed, while our results unveil many more possibilities.</p><p>Organization of the paper Basic definitions are in Section 3, including guarantees, maximal or not, and their implementation in two models: first when preferences over outcomes are ordinal and agents compare lotteries by stochastic dominance; second, when they use von Neumann-Morgenstern (vNM) utilities to compare them. The two definitions are equivalent.</p><p>In Section 4, we describe and implement the maximal guarantees in the three special cases n ≥ p, n = 2, and p ≤ 2n. Section 5 introduces two technical tools critical for the proof of our two theorems: a duality operation respecting maximality and pairing voting by veto and random dictator, and the concatenation of fewer than p n of these building blocks. We derive in Section 6 the geometric structure of the set of maximal guarantees, and its subset obtained by the concatenation just mentioned; we also list a handful of open questions.</p><p>Section 7 concludes and the Appendix provides four proofs and illustrates one of our open questions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Guarantees: Definitions</head><p>Anonymity and neutrality (symmetric treatment of agents and outcomes, respectively) are hard wired in the definition of a guarantee, which only depends upon the number n of agents and p of deterministic outcomes. It is an element λ of (p), the simplex of lotteries over the ranks in [p] = {1, , p}. Here, λ 1 is the probability of the worst rank and λ p that of the best rank. We give two equivalent definitions of guarantees respectively for the case of agents with ordinal preferences or von Neumann-Morgenstern (vNM) utilities.</p><p>The set of deterministic outcomes is A with generic element a, and (A), with generic element , is the set of lotteries over A. We keep in mind the alternative interpretations of (A) as time sharing or division of a budget between the "pure" outcomes in A.</p><p>The set of agents is [n], with generic element i. Agent i's ordinal preference over A (a complete, reflexive, and transitive relation) is written i . Agent i's vNM utility over A is a vector u i in R A and u i • = a∈A u ia a is her utility at lottery . Notation. For lotteries λ ∈ (p), we write [λ]</p><formula xml:id="formula_1">k 2 k 1 instead of the sum k 2 k 1 λ t .</formula><p>The symmetric of λ with respect to the middle rank is λ:</p><formula xml:id="formula_2">λ k = λ p+1-k for all k ∈ [p].</formula><p>The rank-ordered rearrangement (aka order statistics) of u i ∈ R A is denoted u * i ∈ R p and obtained by writing the entries of u i in nondecreasing order:</p><formula xml:id="formula_3">∀k ∈ [p] : k t=1 u * it = min a∈T u ia |T ⊆ A, |T | = k</formula><p>Similarly, given the ordinal preference i the rank-ordered rearrangement of the lottery ∈ (A) is denoted * i ∈ (p) and defined as</p><formula xml:id="formula_4">∀k ∈ [p] : * i k 1 = min a∈T a |T is a k-tail of i</formula><p>where a k-tail of i is a set of agent i's k worst outcomes (not necessarily unique, due to indifferences): so * i 1 is the weight of agent i's worst outcome (or the smallest weight of i's worst outcomes), and so on.</p><p>The stochastic dominance relation (dominance for short) in (p) plays a central role throughout. We write λ μ and say that λ dominates μ if we have<ref type="foot" target="#foot_6">5</ref> </p><formula xml:id="formula_5">∀k ∈ [p] : [λ] k 1 ≤ [μ] k 1 ⇐⇒ ∀k ∈ [p] : [λ] p k ≥ [μ] p k</formula><p>Definition 1 (ordinal preferences). Given n and p, the lottery λ ∈ (p) is a guarantee at n, p if for any n-profile π of preferences π = ( i ) n i=1 on A there exists a lottery ∈ (A) such that * i λ for all i ∈ [n]. Then we say that the lottery implements λ at profile π.</p><p>Definition 2 (vNM utilities). Given n and p, the lottery λ ∈ (p) is a guarantee at n, p if for any n-profile of utilities τ = (u i ) n i=1 on A there exists a lottery ∈ (A) such that</p><formula xml:id="formula_6">• u i ≥ λ • u * i for all i ∈ [n].</formula><p>Then we say that the lottery implements λ at profile τ.</p><p>The ordinal definition is agnostic with respect to the risk attitude of the agents. The cardinal one specifies it completely. Lemma 1. Definition 1, Definition 2, and the following property are equivalent: for any vNM profile (u i ) n i=1 :</p><formula xml:id="formula_7">n i=1 u i = 0 =⇒ n i=1 λ • u * i ≤ 0 ( 1 )</formula><p>We write G(n, p) for the set of all guarantees at n, p: it is a polytope in (p).</p><p>Property (1) refers to the sum of the agents' utilities, rather than to each agent's utility separately. Thus, it naturally corresponds to a variant of the cardinal definition, where utilities are transferable among agents and treated quasilinearly. The lemma shows that a guarantee is feasible if and only if it does not distribute more than the sum of utilities does.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proof. Definition 1 =⇒ Definition 2</head><p>Fix a lottery ∈ (A) and suppose the vNM utility u i ∈ R A represents the same preference on A as i . Writing u * i , * i for the corresponding rearrangements, the identity</p><formula xml:id="formula_8">• u i = * i • u *</formula><p>i is easily checked. Fix now λ meeting Definition 1 and an arbitrary profile (u i ) n i=1 of vNM utilities, with associated ordinal preferences ( i ) n i=1 . If implements λ at ( i ) n i=1 , the relation * i λ and the identity give</p><formula xml:id="formula_9">• u i ≥ λ • u * i as desired. Definition 2 =⇒ property (1) Fix (u i ) n</formula><p>i=1 such that n i=1 u i = 0 and choose implementing λ as in Definition 2: the inequalities</p><formula xml:id="formula_10">• u i ≥ λ • u * i imply (1). Property (1) =⇒ Definition 1 We check first that (1) implies, for all (u i ) n i=1 ∈ (R A ) n , the inequality n i=1 λ • u * i ≤ max a∈A n i=1 u ia<label>(2)</label></formula><p>Fix any (u i ) n i=1 and set z = max a∈A n i=1 u ia . Writing 1 the vector with all coordinates equal to 1, we pick a profile (v i ) n i=1 such that u i ≤ v i for all i and n i=1 v ia = z for all a. Applying now (1) to (w i ) n i=1 :</p><formula xml:id="formula_11">w i = v i -z n 1, we have n i=1 λ • u * i ≤ n i=1 λ • v * i ≤ z and the claim.</formula><p>Fix now λ meeting property (2) and a preference profile</p><formula xml:id="formula_12">( i ) n i=1 . Call S i the set of utilities v i ∈ [0, 1] A representing i weakly: a i b =⇒ v ia ≥ v ib for all a, b. Note that S i</formula><p>is the closure of the set of utilities representing i exactly. By property (2) for any profile</p><formula xml:id="formula_13">(v i ) n i=1 ∈ n i=1 S i , there exists a ∈ A such that n i=1 v ia ≥ n i=1 λ • v * i , which implies min (v i ) n i=1 ∈ n i=1 S i max a∈A n i=1 v ia -λ • v * i ≥ 0</formula><p>The summation is a linear function of the variable (v i ) n i=1 varying in a convex compact, and of a. By the minimax theorem, there exists</p><formula xml:id="formula_14">∈ (A) such that n i=1 • v i ≥ n i=1 λ • v * i for all (v i ) n i=1 ∈ n i=1 S i . Taking v i = 0 for all i ≥ 2 gives • v 1 ≥ λ • v * 1 for all v 1 ∈ S 1 . Equivalently, * 1 • v * 1 ≥ λ • v *</formula><p>1 for any weakly increasing sequence v * 1 in [0, 1] p : the desired property * 1 λ follows, and the argument is the same for each i ≥ 2:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G(n, p) is a polytope (the bounded intersection of finitely many closed half-spaces)</head><p>Fix an ordinal preference profile π. In order for a guarantee λ ∈ (p) to be implemented by a lottery ∈ (A) as in Definition 1, the lottery has to satisfy a system of linear inequalities of the form</p><formula xml:id="formula_15">a ≥ λ p , b ≥ λ p , . . . , a + c ≥ λ p + λ p-1 , b + d ≥ λ p + λ p-1 , . . . , etc., a + b + • • • + z = 1, a ≥ 0, b ≥ 0, .</formula><p>. . Note that the left-hand side of this linear system is determined by the profile π, and the right-hand side is an affine function of λ. By the Farkas lemma, the existence of a solution to this system is equivalent to λ lying in the intersection of a finite collection (determined by π) of closed half-spaces. Requiring that λ satisfy this for each of the finitely many possible ordinal profiles π results in a polytope, as claimed.</p><p>If n = 2, Lemma 1 gives a simple characterization of guarantees. Check the following identity (recall λ is the symmetric of λ with respect to the middle rank):</p><formula xml:id="formula_16">∀u ∈ R A : λ • (-u) * = -λ • u * (3)</formula><p>and use it to rewrite property (1) in the case n = 2 as λ • u * ≤ λ • u * for all u. By Footnote 5, the latter is equivalent to λ λ, and thus</p><formula xml:id="formula_17">λ ∈ G(2, p) ⇐⇒ [λ] k 1 ≥ [λ] p p+1-k for all k = 1, ,<label>p 2 (4)</label></formula><p>But for n ≥ 3 it is much harder to discover a set of such inequalities representing G(n, p), or the set of its extreme points.</p><p>The implementation of a guarantee by an abstract mechanism follows in the obvious way from Definitions 1 and 2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Definition 3. A mechanism on</head><formula xml:id="formula_18">A = {a 1 , , a p }, [n] = {1,</formula><p>, n} is defined by a set of strategies X i for each i ∈ [n] and a mapping ϕ from X [n] , the Cartesian product of the sets X i , to (A). We say that implements a lottery λ ∈ (p) if for any i ∈ [n] and i agent i has a strategy</p><formula xml:id="formula_19">x i ∈ X i such that ϕ(x i , x -i ) implements λ (according to Definition 1) for all x -i ∈ X [n] i .</formula><p>The existence of this safe strategy ensures that, at any utility profile τ each player prefers (at least weakly) each Nash equilibrium outcome of the corresponding -game to the λ outcome.</p><p>It is straightforward to see that a lottery λ ∈ (p) is implementable at every preference profile (according to Definition 1) if and only if it is implementable by some mechanism (according to Definition 3). To check that a certain lottery λ on ranks is a guarantee in the sense of Definitions 1, 2, it is often convenient to describe a simple mechanism implementing it. But nonsimple mechanisms routinely deliver better equilibrium outcomes, from the welfare point of view, than a simple one. For example, the simplest implementation of the uniform guarantee uni(p) is to pick uniformly at random an outcome in A; but if is any bargaining mechanism, we also implement uni(p) by (1) playing , then (2) giving to every agent the option to force a uniform lottery on A (if she prefers this lottery to the outcome of ).</p><p>Note that the guarantee λ is anonymous and neutral by construction, but it can be implemented by mechanisms which are neither. For instance, if n = 2, p = 5, the guarantee λ = (0, 0, 1, 0, 0) is implemented by giving two veto tokens to each agent: this can happen sequentially or simultaneously. <ref type="foot" target="#foot_7">6</ref>From the welfare point of view, the guarantees of interest are those that cannot be improved, the maximal ones.</p><formula xml:id="formula_20">Definition 4. The guarantee λ ∈ G(n, p) is maximal if ∀μ ∈ G(n, p) : μ λ =⇒ μ = λ</formula><p>The set of maximal guarantees is M(n, p) ⊂ G(n, p).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Maximal guarantees in three special cases</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Case 1: n ≥ p</head><p>The uniform lottery uni(p) is always feasible and if n ≥ p it is the best guarantee. We illustrate the argument for p = 4. Pick a profile where the preferences of a subset of four agents have the familiar cyclical pattern</p><formula xml:id="formula_21">a ≺ b ≺ c ≺ d, b ≺ c ≺ d ≺ a, c ≺ d ≺ a ≺ b, and d ≺ a ≺ b ≺ c.</formula><p>Suppose that λ is a guarantee implemented by the lottery at this profile. Considering the first two preferences where a is successively the worst and best outcome gives λ 4 ≤ a ≤ λ 1 ; this is true for all outcomes so by summing up four inequalities we get</p><formula xml:id="formula_22">λ 4 ≤ 1 4 ≤ λ 1 . Definition 1 again gives [λ] 4 3 ≤ a + b ≤ [λ] 2</formula><p>1 and the same is true for the pairs b, <ref type="figure">c, c, d,</ref> and<ref type="figure">d, a: therefore, [λ] 4</ref> 3 ≤ 1 2 ≤ [λ] 2 1 . We conclude uni(p) λ.</p><p>Proposition 1. The uniform guarantee, uni(p) k = 1 p for all k ∈ [p], has the following properties:</p><p>(i) It is maximal for all n, p.</p><p>(ii) If n ≥ p it dominates every other feasible guarantee: M(n, p) = {uni(p)}.</p><formula xml:id="formula_23">(iii) If n ≥ 3 it is a vertex of G(n, p), hence of M(n, p), too.</formula><p>Intuitively, part (i) should be clear: if we start from uni(p) = ( 1 p , , 1 p ) and shift any probability mass to the right, we end up assigning higher probability to the top k ranks than to the bottom k ones (for some k). This is not feasible, because one agent's top k outcomes may be another agent's bottom ones. The intuition for part (ii) was illustrated in the p = 4 example above: when n ≥ p a full cyclical symmetry prevents us from assigning more than k p to the top k ranks, for any k. Part (iii) is similar, but a bit more technical.</p><formula xml:id="formula_24">Proof. Statement (i). The equality uni(p) • u * i = uni(p) • u i for all u i implies for any profile (u i ) n i=1 n i=1 u i = 0 =⇒ uni(p) • n i=1 u * i = 0 ( 5 )</formula><p>Suppose some μ ∈ G(n, p) dominates uni(p) and consider a profile of the form (u 1 , -u 1 , 0, , 0) where u 1 is arbitrary. Summing up the inequalities μ</p><formula xml:id="formula_25">• u * 1 ≥ uni(p) • u * 1 and μ • (-u 1 ) * ≥ uni(p) • (-u 1 ) * gives μ • u * 1 + μ • (-u 1 ) * ≥ 0.</formula><p>Because μ meets property (1) all three inequalities are equalities, and we conclude μ = uni(p).</p><p>Statement (ii). Assume n ≥ p and pick an arbitrary guarantee λ in G(n, p), and a cyclical permutation σ of A: the latter maps utility u to u σ : u σ a = u σ(a) . We pick any u and consider the profile u, u σ , u σ 2 , , u σ p-1 , 0, , 0</p><p>with np null utilities. Clearly, p-1 k=0 u σ k = γ1 for γ = a∈A u a , so we can apply property (1) to the profile (u -γ p 1, u σγ p 1, , u σ p-1 -γ p 1, 0, , 0). Together with</p><formula xml:id="formula_26">(u σ k ) * = u * for all k, this gives 0 ≥ p-1 k=0 λ • u σ k * - γ p = p λ • u * -γ =⇒ λ • u * ≤ γ p = uni(p) • u * as desired. Statement (iii). Suppose uni(p) is a convex combination of two distinct λ 1 , λ 2 in G(n, p).</formula><p>For any profile such that n i=1 u i = 0, property (1) implies n i=1 λ s • u * i ≤ 0 for s = 1, 2. Upon writing uni(p) in (5) as a convex combination of λ 1 , λ 2 , we see that the two inequalities sum to an equality therefore they are both equalities and each λ s meets (5). For n ≥ 3, only uni(p) does.</p><p>We check this claim for a generic lottery λ. Define</p><formula xml:id="formula_27">δ k = [λ] p p+1-k for k ∈ [p]</formula><p>and δ 0 = 0, then pick any three nonnegative integers k, l, m summing to p. Consider a profile of 0, 1 utilities where u 1 ; u 2 ; u 3 are equal to 1 precisely on three sets of respective sizes k, l, m partitioning A, while other utilities, if any, are identically zero. Applying (5) to this profile yields δ k + δ l + δ m = 1. It is easy to check that this simple integer version of the Cauchy equation implies δ k = k p for all k.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Case 2: n = 2</head><p>Assuming p = 6 to fix ideas we show that a maximal lottery must be symmetric. Recall from the discussion after Lemma 1 that G(2, p) is defined by the inequalities (4). We assume that λ is a maximal guarantee, and show that λ 1 = λ 6 , λ 2 = λ 5 and λ 3 = λ 4 . Indeed, (4) implies that λ 1 ≥ λ 6 ; this inequality cannot be strict, because then (λ 1ε, λ 2 + ε, λ 3 , λ 4 , λ 5 , λ 6 ) still satisfies (4) for small enough ε, contradicting the maximality of λ. Next, λ 1 = λ 6 and (4) imply that λ 2 ≥ λ 5 ; again, this cannot be strict, because then (λ 1 , λ 2ε, λ 3 + ε, λ 4 , λ 5 , λ 6 ) still satisfies (4). Finally and similarly, we can deduce the remaining equality λ 3 = λ 4 .</p><p>Proposition 2. Maximal guarantees for n = 2.</p><p>If n = 2 &lt; p, the lottery λ ∈ (p) is a maximal guarantee if and only if it is symmetric:</p><formula xml:id="formula_28">λ k = λ p+1-k for 1 ≤ k ≤ p 2 (6)</formula><p>The extreme points (vertices) of the polytope M(2, p) are the following guarantees λ t : We see that for n = 2 the maximal guarantees are the symmetric ones. Thus, to choose a maximal guarantee we only need to allocate the total probability mass among the rank pairs {1, p}, {2, p -1}, etc. The extreme allocations are those that give the entire mass to one such pair. The center of the polytope M(2, p) is the uniform guarantee uni(p), contrasting sharply with the case n ≥ 3, p &gt; n where uni(p) is a vertex of M(n, p) by Proposition 1.</p><formula xml:id="formula_29">λ t t = λ t p+1-t = 1 2 for t = 1, ,<label>p</label></formula><p>Proof. To prove the if statement, we fix λ ∈ G(2, p) and symmetric. Rewrite (6) as λ • u * = λ • u * for all u * , which by the identity (3) means λ • u * = -λ • (-u) * for all u * . The latter is property (5) for n = 2, so the maximality of λ follows as in the proof of statement (i) in Proposition 1.</p><p>To prove only if pick λ ∈ G(2, p), which means λ λ (i.e., (4)). As the dominance relation is preserved by convex combinations we have 1 2 ( λ + λ) λ where 1 2 ( λ + λ) is symmetric: thus, λ is dominated if it is not symmetric.</p><p>We let the reader check that the extreme points of the polytope defined by ( <ref type="formula">6</ref>) are the lotteries with only two ranks in their support (or just the middle rank, when p is odd).</p><p>The mechanisms implementing the vertices of M(2, p) combine in a simple way the veto and random dictator ideas. Asking one randomly chosen agent to select a pure outcome implements λ 1 = ( 1 2 , 0, , 0, 1 2 ), which we call the random dictator guarantee and denote rd(2, p) as in Section 1. Giving one veto token to each agent, then selecting one of the remaining outcomes with uniform probability implements the guarantee λ = (0, 1 p-2 , , 1 p-2 , 0), which we write vt(2, p). It is maximal, though not a vertex of M(2, p) except if p = 3 or 4.</p><p>To implement λ 2 = (0, 1 2 , 0, , 0, 1 2 , 0), we ask first each agent to veto one outcome, after which we pick a random dictator between the remaining p -2 (or possibly p -1 if the vetoes coincide) outcomes. Similarly, we implement λ t by giving t -1 veto tokens per person, then choosing a random dictator to pick one of the nonvetoed outcomes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Case 3: 3 ≤ n &lt; p ≤ 2n</head><p>We define first the guarantees vt(n, p) and rd(n, p), already introduced in the three and two agent cases. First,</p><formula xml:id="formula_30">vt(n, p) = 0, 1 p -n , , 1 p -n , n-1 0, ,<label>0</label></formula><p>is implemented by one round of veto (one token per person) followed by the uniformly random choice of a nonvetoed outcome. Next, for</p><formula xml:id="formula_31">rd(n, p) = n-1 1 n , , 1 n , 0, , 0, 1 n</formula><p>each agent reports an outcome we deem his best one, then we randomize between n different outcomes containing all the reported best outcomes of the agents. Both guarantees are maximal: generalizing the proof in the example of Section 1 for vt(3, 6) and rd(3, 6) is straightforward. <ref type="foot" target="#foot_8">7</ref> Moreover, Proposition 4 in the next section shows that, for any n, p such that n &lt; p, all lotteries in the intervals [uni(p), vt(n, p)] and [uni(p), rd(n, p)] are maximal as well. The remarkable fact is that if 3 ≤ n &lt; p ≤ 2n these two intervals capture most maximal guarantees.</p><p>Theorem 1. (i) For any n, p such that 3 ≤ n &lt; p, we have</p><formula xml:id="formula_32">uni(p), vt(n, p) ∪ uni(p), rd(n, p) ⊂ M(n, p)<label>(7)</label></formula><p>(ii) This is an equality if p ≤ 2n -2 and if p = 2n except when (n, p) = (4, 8) or (5, 10).</p><p>The hard proof of part (ii) requires the technical tools developed in the next section, and is done in the Appendix A.3.</p><p>Our next result shows why additional maximal guarantees appear in the cases excluded by statement (ii) above, and describes the full set M(n, p) in two such cases. As shown in the proof, the mechanisms used in these cases require different ideas beyond vetoes and random dictators. Moreover, the case n = 4, p = 7 exhibits extremal maximal guarantees which (unlike all previous examples) are not uniform on their support. Proposition 3. (i) If p = 2n -1 and if (n, p) = (4, 8) or (5, 10), the inclusion (7) is strict.</p><p>(ii) For n = 3, p = 5, there are two pairs of maximal guarantees on the boundary of (5): vt(3, 5), rd(3, 5) and the pair</p><formula xml:id="formula_33">λ = 1 2 , 0, 0, 1 2 , 0 ; λ = 1 3 , 0, 1 3 , 1 3 , 0</formula><p>The set M(3, 5) is the union of the four intervals joining uni(5) to these guarantees.</p><p>(iii) For n = 4, p = 7, there are three pairs of maximal guarantees on the boundary of (7): vt(4, 7), rd(4, 7) and the two pairs</p><formula xml:id="formula_34">λ = 1 2 , 0, 0, 0, 1 2 , 0, 0 ; λ = 1 5 , 1 5 , 0, 1 5 , 1 5 , 1 5 , 0 μ = 1 3 , 1 9 , 2 9 , 0, 0, 1 3 , 0 ; μ = 1 4 , 0, 1 4 , 1 4 , 1 12 , 1 6 , 0</formula><p>The set M(4, 7) is the union of the six intervals joining uni(7) to these guarantees.</p><p>The duality operator discussed in the next subsection pairs vt(n, p) with rd(n, p) as well as λ with λ and μ with μ .</p><p>Proof. Statement (i). Assume p = 2n -1. At any profile, we can choose a set of n -1 outcomes meeting (containing at least one of ) the top two outcomes of each agent. A uniform lottery over these outcomes guarantees to every agent a probability of at least 1 n-1 for his top two outcomes. Hence, there must be a maximal guarantee that does that, but neither uni(p), vt(n, p) nor rd(n, p) does this, hence neither does a convex combination of these.</p><p>For (4, 8), one checks easily that we can always choose a triple of outcomes meeting the top three outcomes of each agent in at most one element. A uniform lottery over the complement of that triple guarantees to every agent at least 2 5 for his top three outcomes, and the argument is completed as above. For (5, 10), a simple case check shows that we can choose a triple of outcomes meeting the top three outcomes of each agent. A uniform lottery over them guarantees to every agent at least 1 3 for his top three outcomes, and the argument is completed as above.</p><p>Statements (ii) and (iii). The mechanisms implementing λ and λ in each case follow the same logic as above. For λ, we can always pick two outcomes x, y meeting the top two (when (n, p) = (3, 5)) or three (when (n, p) = (4, 7)) of any agent, then we draw x and y each with probability 1 2 . For λ , we can always pick two outcomes x, y such that the worst two (when (n, p) = (3, 5)) or three (when (n, p) = (4, 7)) of any agent contain at least one of them, then we randomize uniformly over the remaining outcomes.</p><p>For the rest of the proof, which becomes quite tedious, we give only a brief outline here (details are available upon request from the authors). The mechanisms implementing μ and μ when (n, p) = (4, 7) require non-uniform lotteries tailored to the configuration of the top two and the bottom two outcomes of each agent. The maximality of λ and λ in each case and of μ and μ when (n, p) = (4, 7) is shown using suitable preference profiles, with a similar argument to that given in Section 1 for rd and vt. These facts, together with Proposition 4 in the next section, imply that the union of the intervals joining uni(p) to vt(n, p), rd(n, p), λ and λ (and also to μ and μ when (n, p) = (4, 7)) is contained in M(n, p) in each case.</p><p>To prove that this containment is actually an equality, one considers an arbitrary guarantee ν ∈ G(n, p) and shows that it is dominated by a guarantee in one of those intervals. This part breaks into cases as follows.</p><formula xml:id="formula_35">If [ν] k 1 ≥ k p for k = 1, , p -1, then ν is dominated by uni(p). If ν 1 &lt; 1 p or ν p &gt; 1 p</formula><p>, then the arguments in the corresponding cases in step 3 of the proof of Theorem 1 show that ν is dominated by a guarantee in the interval [uni(p), vt(n, p)] or [uni(p), rd(n, p)], respectively. When (n, p) = (3, 5), this leaves the cases ν 1 + ν 2 &lt; 2 5 or ν 4 + ν 5 &gt; 2 5 , where the implementation constraints for suitable profiles show that ν is dominated by a guarantee in [uni(5), λ ] or [uni(5), λ], respectively. When (n, p) = (4, 7) four cases remain:</p><formula xml:id="formula_36">ν 1 + ν 2 &lt; 2 7 , ν 1 + ν 2 + ν 3 &lt; 3 7 , ν 5 + ν 6 + ν 7 &gt; 3 7 or ν 6 + ν 7 &gt; 2 7 .</formula><p>They can be handled similarly, showing that ν is dominated by a guarantee in [uni(7), μ ], [uni(7), λ ], [uni(7), λ] or [uni(7), μ], respectively.</p><p>Note that Theorem 1 and Proposition 3 together give a full description of maximal guarantees whenever 3 ≤ n &lt; p ≤ n + 3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Duality and concatenation</head><p>The technically more involved results of this section are key to the proof of Theorem 1 and the general results in Section 6.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">A duality operation preserving M(n, p)</head><p>Although the results in this subsection apply for all n, p, they are only useful if 3 ≤ n &lt; p: we maintain this assumption from now on.</p><p>The duality operator is easy to explain if it applies to a lottery λ on the boundary ∂ (p) of the simplex (p) (at least one coordinate of λ is zero): it goes from λ to its symmetric lottery λ, then from λ to the end point in (p) of the half-line starting at λ toward uni(p). For instance, it maps vt(3, 7) = (0, 1 4 , 1 4 , 1 4 , 1 4 , 0, 0) first to μ = (0, 0, 1 4 , 1 4 , 1 4 , 1 4 , 0) then to the intersection of the half-line {μ + α(uni(p)μ)|α ≥ 0} with the boundary ∂ (p):</p><formula xml:id="formula_37">vt(3, 7) = μ + 7 3 uni(7) -μ = 1 3 , 1 3 , 0, 0, 0, 0, 1 3 = rd(3, 7)</formula><p>Note that if λ, like vt(3, 7), is uniform on its nonfull support, the same is true of its dual λ . Moreover, the support of λ is obtained from the support of λ by reversing the order on [p], then taking the complement. This explains the intuition behind this duality: If a uniform lottery on a proper subset S of A implements the guarantee λ at some preference profile, then the uniform lottery on the complement A S implements λ at the reverse preference profile. Given a lottery λ in (p) different from uni(p), the radius to λ is the interval of the half-line from uni(p) toward λ contained in (p) (it ends on the boundary ∂ (p)), containing all lotteries of the form uni(p) + δ(λuni(p)) for some δ ≥ 0. The antiradius from λ is the interval in (p) of the half-line from uni(p) away from λ, that is, the set of all lotteries of the form uni(p) + δ(uni(p)λ) for some δ ≥ 0.</p><p>If λ is a boundary lottery its dual λ is the end point of the antiradius from λ. Figure 1 illustrates this construction for p = 3.</p><p>Write the largest coordinate of a lottery as λ + = max 1≤k≤p λ k , and note that λ + &gt; 1 p because λ ∈ ∂ (p); recalling λ k = λ p+1-k , an easy computation gives</p><formula xml:id="formula_38">λ = (1 + α) uni(p) -α λ ⇐⇒ λ k = α(λ + -λ k ) for 1 ≤ k ≤ p, where α = 1 p • λ + -1 (8)</formula><p>Keeping in mind that min 1≤k≤p λ k = 0 it is easy to check the identity (λ ) = λ.</p><p>For nonboundary lotteries, we extend this definition linearly on the radius to λ μ ∈ ∂ (p) and λ = δ uni(p)</p><formula xml:id="formula_39">+ (1 -δ)μ =⇒ λ = δ uni(p) + (1 -δ)μ ,<label>(9)</label></formula><p>so that λ → λ is a proper duality in (p). In particular, vt(n, p) and rd(n, p) are dual of each other, while uni(p) is self-dual. We check that among maximal guarantees, uni(p) is the only self-dual one. By the discussion in Section 3, a feasible guarantee λ is dominated by λ. (ii) The duality operation λ → λ in (p) preserves maximal lotteries:</p><formula xml:id="formula_40">M(n, p) = M(n, p)</formula><p>For the proof, we need a technical result characterizing M(n, p) in G(n, p) by its position with respect to the polar cone of G(n, p). Notation: we write G for the polar cone of</p><formula xml:id="formula_41">G ⊂ R p : G = {z ∈ R p |∀y ∈ G : z • y ≤ 0}.</formula><p>Lemma 2. The guarantee λ ∈ G(n, p) is maximal if and only if there exists a vector z ∈ G(n, p) such that</p><formula xml:id="formula_42">p k=1 z k = 0, z 1 &lt; z 2 &lt; • • • &lt; z p and λ • z = 0.</formula><p>Proof of "if.". Fix λ in G(n, p) and z in G(n, p) as in the statement, and suppose λ is dominated by μ. As the coordinates of z increase strictly, μ λ and μ = λ imply λ • z &lt; μ • z. Now feasibility of μ and z ∈ G(n, p) give μ • z ≤ 0. This contradicts the assumption λ • z = 0.</p><p>Note that the condition p k=1 z k = 0 was not used therefore Lemma 2 remains valid without this condition. But the condition makes the "only if" part stronger. The long proof of this direction is given in Appendix A.1.</p><p>Proof of Proposition 4. Observe first that the statements in Proposition 4 hold if we replace M(n, p) by G(n, p). This follows easily from the characteristic property (1), the identity (3), and the definition (8).</p><p>Statement (i). We fix λ ∈ M(n, p) and z ∈ G(n, p) as in Lemma 2. Consider first a lottery μ = uni(p) + δ(λuni(p)) in the radius to λ: it is in G(n, p) as well by the observation above. For maximality, we use</p><formula xml:id="formula_43">p k=1 z k = 0 and λ • z = 0 to compute μ • z = (1 -δ) uni(p) • z + δλ • z = 0 and conclude μ ∈ M(n, p) by Lemma 2 again.</formula><p>Still fixing λ ∈ M(n, p) and z, we pick a lottery μ = uni(p) + δ(uni(p)λ) in the antiradius from λ; we know that μ is in G(n, p). Now for any ξ ∈ G(n, p) the observation implies that (1</p><formula xml:id="formula_44">+ δ) uni(p) -δ ξ is in G(n, p), in particular, 0 ≥ (1 + δ) uni(p) -δ ξ • z = -δ ξ • z</formula><p>where the equality uses</p><formula xml:id="formula_45">p k=1 z k = 0. Writing w = (-z p , -z p-1 , , -z 1 )</formula><p>and using the identity (3), we conclude that ξ • w ≤ 0. Thus, w is in G(n, p) , too, and it satisfies the requirements in Lemma 2 with respect to μ: μ</p><formula xml:id="formula_46">• w = -δ λ • w = δλ • z = 0,</formula><p>which proves the maximality of μ. Statement (ii) follows from statement (i) and the definition of the duality operation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">The operators VT and RD</head><p>We construct a rich family of maximal guarantees by successive compositions of two operators V T and RD mapping a guarantee λ in G(n, p) to one in G(n, p + n).</p><p>Fixing λ ∈ G(n, p), we implement V T ⊗ λ as follows: ask agents to report their worst outcome, eliminate n outcomes containing all the reported ones, then implement λ over the remaining p outcomes. The latter are ranked weakly higher than 2, , p + 1 for each agent, so we see that V T ⊗ λ is a bona fide guarantee; and that V T ⊗ λ obtains by inserting λ between one zero in rank 1 and n -1 zeros after rank p + 1.</p><p>The implementation of RD ⊗ λ is similar, but only if λ is a boundary lottery in G(n, p). Agents report their best outcome, then we pick n outcomes containing all reports; with probability nλ + nλ + +1 , we choose one of those uniformly, and with probability 1 nλ + +1 we implement λ among the remaining p outcomes.</p><p>Definition 5. Fix a lottery λ ∈ (p). We set V T ⊗ λ = (0, λ, 0, , 0) ∈ (p + n) with n -1 zeros after and one before λ. The lottery RD ⊗ λ ∈ (p + n) is given by</p><formula xml:id="formula_47">RD ⊗ λ = V T ⊗ λ (10) If λ ∈ ∂ (p)</formula><p>, we obtain RD ⊗ λ by filling uniformly n -1 ranks before λ and one after as follows:</p><formula xml:id="formula_48">RD ⊗ λ = n-1 λ + nλ + + 1 , , λ + nλ + + 1 , 1 nλ + + 1 • λ, λ + nλ + + 1 (11)</formula><p>If λ ∈ ∂ (p), we must check that the two definitions ( <ref type="formula">11</ref>) and (10) coincide. Write μ for the boundary lottery on the right-hand side of equation ( <ref type="formula">11</ref>): applying (8) and μ + = λ + nλ + +1 we get</p><formula xml:id="formula_49">μ = 1 (p + n) λ + nλ + + 1 -1 λ + nλ + + 1 1 -μ = 1 pλ + -1 λ + 1 -(λ + , λ, n-1 λ + , , λ + ) = V T ⊗ λ as desired.</formula><p>The definition implies V T ⊗ uni(p) = vt(n, p + n) and RD ⊗ uni(p) = rd(n, p + n); we give many more examples in the next subsection. Lemma 3. The composition of guarantees by V T and RD respects their feasibility and maximality. For any λ ∈ (p),</p><formula xml:id="formula_50">λ ∈ M(n, p) =⇒ V T ⊗ λ, RD ⊗ λ ∈ M(n, p + n)</formula><p>and the same statement holds by replacing M(n, p) by G(n, p) and M(n, p + n) by G(n, p + n).</p><p>For the proof, we need a second characterization of maximal guarantees; the proof, much easier than that of Lemma 2, is also in the Appendix A.2. Lemma 4. The guarantee λ ∈ G(n, p) is maximal if and only if for all k ∈ [p -1] there exists a preference profile π such that, for any lottery implementing λ at π (Definition 1) we have</p><formula xml:id="formula_51">max i∈[n] * i k 1 = [λ] k 1 (12) Proof. Proof of Lemma 3 The implementation argument above shows that V T ⊗ λ is in G(n, p) if λ is. If now λ ∈ M(n, p), we fix an index k ∈ [p -1]</formula><p>and an (n, p)-profile π ensuring property (12) as in the premises of Lemma 4. We construct the following (n, p + n) profile θ:</p><formula xml:id="formula_52">≺ 1 a 1 p π a 2 • • • a n • • • • • • π • • • • • • ≺ n a n π a 1 • • • a n-1 (13)</formula><p>where the initial profile π on p outcomes occupies the ranks 2 to p + 1, while the preferences over the n other outcomes are cyclical. If a lottery implements V T ⊗ λ at θ, it can put no weight on any a i outcome because (V T ⊗ λ) 1 = 0, therefore, the restriction of to the outcomes of π implements λ at π, so property (12) holds for ranks 2 to p + 1 as well as for the first one and the last n -1 ones.</p><p>That RD ⊗ λ is in G(n, p) respectively in M(n, p), if λ is follows from the same property for V T , using the duality relation (10) and the fact that duality respects feasibility and maximality (Proposition 4).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Canonical guarantees</head><p>Starting from the uniform guarantee, its composition by an arbitrary sequence of the operators V T and RD generates a large family of maximal guarantees: we call them canonical, because the veto and random dictator ideas stand out in the characterization results for n = 2 and p ≤ 2n (Section 4). Definition 6 (Canonical guarantees). Fix n, p, 3 ≤ n &lt; p, such that d = p-1 n and p = dn + q for some q = 1, , n. Each sequence = ( t ) h t=1 in {V T , RD} of length h, h ≤ d, defines a canonical guarantee in M(n, p) by composition of these operators starting from uni((dh)n + q), that is,</p><formula xml:id="formula_53">1 ⊗ 2 ⊗ • • • ⊗ h ⊗ uni (d -h)n + q = 1 ⊗ ( 2 ⊗ • • • ⊗ h ⊗ uni (d -h)n + q • • • where t ⊗ t+1 ⊗ • • • ⊗ h ⊗ uni((d -h)n + q) is in M(n, (d -t + 1)n + q) for all t ∈ [h].</formula><p>We write their set as C(n, p), of cardinality 2 d+1 -2.</p><p>By Lemma 3, all canonical guarantees are maximal, because the composition by each t adds n outcomes to the previous ones, they are in M(n, p). By duality (10), canonical guarantees come in dual pairs: exchanging V T and RD in each term of the sequence produces the dual guarantee.</p><p>An important observation is that each λ ∈ C(n, p) is uniform on its support therefore determined by this nonfull support. This implies that it is a vertex of G(n, p) (the proof mimics that of statement (iii) in Proposition 1); hence, also a vertex of M(n, p).</p><p>If d = 1 (p ≤ 2n) vt(n, p) and rd(n, p) are the only canonical guarantees. We give some examples where d ≥ 2, writing for brevity a canonical guarantee as 1 ⊗ 2 ⊗ • • • ⊗ h without the initial uniform lottery.</p><p>Constant sequences: the composition of h veto steps, or of h random dictator steps, gives dual guarantees of a similar shape: their support is at the extreme ranks or in the center:</p><formula xml:id="formula_54">h V T ⊗ • • • ⊗ V T = h 0, , 0, 1 p -nh , , 1 p -nh , (n-1)h 0, , 0 h RD ⊗ • • • ⊗ RD = (n-1)h 1 nh , ,<label>1 nh , 0, , 0, h 1 nh , , 1 nh</label></formula><p>A simple mechanism for the former gives h veto tokens to each agent, then randomizes uniformly between the remaining outcomes, even if there are more than pnh of those (which will only improve the guaranteed welfare). To implement the latter, we elicit from each agent her h top outcomes, then randomize uniformly between any nh outcomes containing all reported tops, adding arbitrary outcomes if the reported ones are fewer than nh. The last instruction is important: ignoring it could result in giving too much weight to someone's worst outcomes (as illustrated in the example of Section 1).</p><p>For d = 2, we have six canonical guarantees, four from the constant sequences and a dual pair from (V T , RD) and (RD, V T ). For instance, in C(3, 7):</p><formula xml:id="formula_55">V T ⊗ RD = 0, 1 3 , 1 3 , 0, 1 3 , 0, 0 ; RD ⊗ V T = 1 4 , 1 4 , 0, 1 4 , 0, 0, 1<label>4</label></formula><p>The mechanism for RD ⊗ V T selects three outcomes containing the top ones of each agent; then with probability 3/4 it picks one of those uniformly, and with probability 1/4 plays vt(3, 4) among the remaining outcomes.</p><p>Our final example is in C(3, 11) where d = 3 and we have three pairs of nonconstant sequences of length three, for instance:</p><formula xml:id="formula_56">(RD, V T , V T ) → λ = 1 5 , 1 5 , 0, 0, 1 5 , 1 5 , 0, 0, 0, 0, 1 5 (RD, V T , RD) → λ = 1 6 ,<label>1 6 , 0, 1 6 , 1 6 , 0, 0, 1 6 , 0, 0, 1 6 6.</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>General results and open problems</head><p>Theorem 1 in Section 4 tells much about the structure of M(n, p) in the case d = 1. For general values of d = p-1 n , we know only a few general facts. Lemma 2 in Proposition 3 provides our best clue. For any z ∈ G(n, p) such that G(n, p) intersects the hyperplane H = {y|z • y = 0}, the intersection H ∩ G(n, p) is a face of G(n, p), in particular a polytope. The lemma tells us that such a face defined by a vector z with increasing coordinates is a subset of M(n, p), and that all maximal guarantees obtain for some z. This proves the following. Proposition 5. For 3 ≤ n &lt; p, the set M(n, p) is a finite union of faces of the polytope G(n, p), each having uni(p) as a vertex.</p><p>Our second main result identifies a large subset of M(n, p) constructed from the canonical guarantees.</p><p>Theorem 2. Fix n, p such that 3 ≤ n &lt; p, d = p-1 n . For each sequence of length d in {V T , RD}, the canonical guarantees from the d initial subsequences<ref type="foot" target="#foot_10">8</ref> of , plus the uniform guarantee, are the vertices of a simplex of dimension d contained in M(n, p).</p><p>The proof is in the Appendix A.4. Theorem 2 describes 2 d components of M(n, p) (faces of G(n, p)). To see that this may not exhaust M(n, p), we take the simplest example not covered in Theorem 1: For general problems, the situation is more nuanced. If we need to protect at least as many individuals as there are outcomes (n ≥ p), the Uniform (Unif) guarantee drawing blindly an outcome is the only acceptable guarantee (Proposition 1). Veto and RDict play no role if the electorate is large.</p><p>By contrast, if there are at most twice as many outcomes than agents n &lt; p ≤ 2n, essentially all maximal guarantees obtained by a convex combination of Unif and Veto, or of Unif and RDict (Theorem 1).</p><p>Finally, if we have significantly more outcomes than agents (p &gt; 2n and n ≥ 3) we produce many more (exponentially more in d = p-1 n ) maximal guarantees by combining up to d elementary Veto or RDict blocks; some of their convex combinations are maximal as well (Theorem 2). But the mechanisms implementing them become increasingly opaque. A practical application of our canonical guarantees would involve at most one round of Veto with up to d -1 tokens per person followed by RDict on the nonvetoed outcomes, or the dual mechanism starting by RDict.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix: Four proofs and one mechanism</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.1 Proof of Lemma 2</head><p>We must prove the only if statement: for any λ ∈ M(n, p), we can find a vector z as in Lemma 2. Consider the following cone W in R p : </p><formula xml:id="formula_57">W = z =</formula><formula xml:id="formula_58">← → W is the convex hull of W . Moreover, the identity (i,k)∈[n]×[p] u * ik = (i,a)∈[n]×A u ia implies p k=1 z k = 0 in W therefore ← → W = G(n, p) ∩ {z| p k=1 z k = 0}.</formula><p>We fix now a maximal guarantee λ and define the subcone Z of ← → W :</p><formula xml:id="formula_59">Z = z ∈ G(n, p) p k=1 z k = 0 and λ • z = 0</formula><p>This cone is convex, and every element of Z satisfies z 1 ≤ z 2 ≤ • • • ≤ z p , because these inequalities hold in W . To prove that Z contains some z such that z 1 &lt; z 2 &lt; • • • &lt; z p , we choose in Z one z in which the number of equalities between consecutive coordinates of z is as small as possible. If there is no equality, we are done. Otherwise, assume that the first equality is z k = z k+1 . We will show the existence of some z ∈ W such that z k &lt; z k+1 and λ • z = 0; this leads to a contradiction because z + z ∈ Z has fewer equalities than z. Consider two cases.</p><p>Case 1 λ k &gt; 0 We proceed by contradiction and assume that if z ∈ W and z k &lt; z k+1 , then λ • z &lt; 0.</p><p>Call the set of profiles U = (u i ) n i=1 such that n i=1 u i = 0 and u * 1k = 0, u * 1,k+1 = 1 (15)</p><p>The corresponding vector z = n i=1 u * i is in W therefore n i=1 λ • u * i &lt; 0 for all U ∈ . We show next, again by contradiction, that the supremum of n i=1 λ • u * i over cannot be zero.</p><p>If it is, there is a sequence U s in such that the sequence n i=1 λ • u s * i converges to zero. By taking subsequences, we can make sure that for each i, the way each u s i orders the outcomes in A does not depend on s (but depends on (i)). Then for each i there is a lottery λ i on A, its coordinates a permutation of those of λ, such that λ • u s * i = λ i • u s i for all s.</p><p>Consider the polyhedron Q of n × p matrices X = [x a i ] i∈[n],a∈A defined by three sets of conditions:</p><p>In each row i, the entries are ordered the same way as in every u s i n i=1 x a i = 0 in each column a, x 1a = 0, x 1b = 1 where a and b are the outcomes ranked k and k + 1 by each u s 1 Note that Q is nonempty because it contains each matrix U s .</p><p>By construction, each X in Q defines a profile in and λ • x * i = λ i • x i for all i. Therefore, we have</p><formula xml:id="formula_60">n i=1 λ i • x i &lt; 0 for all X ∈ Q lim s→∞ n i=1 λ i • u s i = 0 for the sequence U s in Q</formula><p>This is impossible: if the closed polyhedron Q is disjoint from the hyperplane H : n i=1 λ i • x i = 0, it cannot contain points arbitrarily close to H. Thus, there is some positive ε such that for any profile U in we have n i=1 λ • u * i &lt; -ε, and we can now conclude the proof in Case 1. These inequalities imply for any profile U: Note that in (16) we can replace coordinate 1 by any coordinate i. Therefore, we have</p><formula xml:id="formula_61">n i=1 u i = 0 and u * 1k &lt; u * 1,k+1 =⇒ n i=1 λ • u * i ≤ -ε u * 1,k+1 -u * 1k (16) Indeed if u * 1,k+1 -u * 1k = 1 the profile (u 1 -u * 1k 1, u 2 + u * 1k 1, u 3 , ,<label>u</label></formula><formula xml:id="formula_62">n i=1 u i = 0 =⇒ n i=1 λ • u * i ≤ - ε n n i=1 u * i,k+1 -u * ik (<label>17</label></formula><formula xml:id="formula_63">)</formula><p>Because λ k &gt; 0, the lottery μ obtained from λ by shifting ε n or λ k , whichever is less, from λ k to λ k+1 dominates λ, and property (17) implies it is feasible.</p><p>Case 2 λ k = 0 In this case, because z ∈ ← → W it is a sum of m elements z j ∈ W , j ∈ [m], each z j defined by n utilities (u j i ) n i=1 as in (14). Note that if k &gt; 1 then u j 0 * i 0 ,k-1 &lt; u j 0 * i 0 ,k for some i 0 , j 0 . Pick such i 0 and j 0 (or arbitrary ones if k = 1). Let a ∈ A be such that u j 0 * i 0 ,k = u j 0 i 0 ,a . For some small ε &gt; 0, modify (u</p><formula xml:id="formula_64">j 0 i ) n i=1 to (u i ) n i=1 by letting u i 0 ,a = u j 0 i 0 ,a -ε, u i 1 ,a = u j 0</formula><p>i 1 ,a + ε for some i 1 = i 0 , and leaving all other utilities unchanged. Because λ k = 0 and by our choice of i 0 , j 0 , for small enough ε we have</p><formula xml:id="formula_65">n i=1 λ • u * i ≥ n i=1 λ • u j 0 * i = λ • z j 0 = 0.</formula><p>As λ is feasible, this must be an equality and, therefore, z = n i=1 u * i ∈ Z and satisfies z k &lt; z k+1 by construction.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 Proof of Lemma 4</head><p>Statement If. Pick two guarantees λ, μ in G(n, p), such that λ meets the property above while μ λ. Pick k ∈ [p -1] and a profile π as in the statement. Choose a lottery implementing μ at π and an agent i reaching the maximum in (12): we have</p><formula xml:id="formula_66">[ * i ] k 1 ≤ [μ] k 1 ≤ [λ] k 1 and [ * i ] k 1 = [λ] k 1 .</formula><p>As k was arbitrary in [p -1], we conclude μ = λ therefore λ is maximal.</p><p>Statement Only If. Suppose now that λ ∈ G(n, p) fails the property in the lemma: there is some k and some ε &gt; 0 such that at any profile π there is some lottery implementing λ at π and such that</p><formula xml:id="formula_67">max i∈[n] * i k 1 = [λ] k 1 -ε<label>(18)</label></formula><p>We show that λ is not maximal. Suppose first λ k &gt; 0 and construct λ dominating λ by shifting a weight δ, smaller than ε and λ k , from λ k to λ k+1 (and no other change). The lottery λ is still in G(n, p): at a profile π the lottery implementing λ and meeting (18) implements λ as well. Suppose next λ k = 0. Then we have for all i, * i k-1 1 </p><formula xml:id="formula_68">≤ * i k 1 ≤ [λ] k 1 -ε = [λ] k-1 1 -ε so that if λ k-</formula><formula xml:id="formula_69">≤ r ≤ k -1. Let S i = {(i -1)k + 1,</formula><p>, ik} for i = 1, , t. Also, let S i = C i ∪ {tk + 1, , p} for i = t + 1, , t + k, where the sets C i are of size kr and form the k cyclic intervals in a cyclic arrangement of S t .</p><p>Let</p><formula xml:id="formula_70">γ 1 = • • • = γ t-1 = 1, γ t = r k , γ t+1 = • • • = γ t+k = 1 k .</formula><p>These weights make S 1 , , S t+k a balanced family, and it remains to check that t + k ≤ n.</p><p>We have t</p><formula xml:id="formula_71">+ k &lt; p k + k ≤ max{ p x + x : x ∈ [2, p 2 ]} = p+4 2 . If p ≤ 2n -2, this gives t + k &lt; n + 1 as desired.</formula><p>Assume next p = 2n and 2 ≤ k ≤ n. When k divides p a partition works, so we may assume that 3 ≤ k ≤ n -1, and thus n ≥ 4. We further exclude the exceptional cases n = 4, 5 and assume n ≥ 6. If k ≤ n -2, we still have p k + k ≤ n + 1 as in the original proof. Thus, we may assume that k = n -1. We provide two variants of the construction of the balanced family, depending on parity.</p><p>Case</p><formula xml:id="formula_72">1. k = n -1 is even. Partition [p] = [2k + 2] into S, P 1 , , P k 2 +1</formula><p>where |S| = k and the other sets are pairs. Take S with weight 1, and for each P i , the union of all P j , j = i, with weight 2 k . This gives a balanced family of size k</p><formula xml:id="formula_73">2 + 2 &lt; n. Case 2. k = n -1 is odd. Partition [p] = [2k + 2] into S, T , P 1 , , P k-1<label>2</label></formula><p>where |S| = k, |T | = 3 and the other sets are pairs. Take S with weight 1, for each P i take the union of T and all P j , j = i, with weight 2 k , and for each element a of T take the union of {a} and all the P i with weight 1 k . This gives a balanced family of size k-1 2 + 4 ≤ n.</p><p>Step 2. Assume (n, p) are as in Lemma 5 and let 2 ≤ k ≤ p -2. Then for any λ ∈ G(n, p) we have [λ] k 1 ≥ k p . By duality, it suffices to show this for 2 ≤ k ≤ p 2 . Let S 1 , , S m with weights γ 1 , , γ m be a balanced family as in the lemma. Consider a profile of strict preferences in which {a j : j ∈ S i } is the set of the k worst outcomes of agent i, i = 1, , m. Let be a lottery that implements λ at this profile. Then 1</p><formula xml:id="formula_74">= a∈A a = m i=1 γ i j∈S i a j ≤ m i=1 γ i [λ] k 1 = p k [λ] k<label>1</label></formula><p>, implying the desired inequality.</p><p>Step 3. For (n, p) as in Lemma 5, we fix λ ∈ G(n, p) and show that it is dominated by a guarantee in [uni(p), vt(n, p)] ∪ [uni(p), rd(n, p)]. This will establish part (ii) of Theorem 1. We distinguish three cases.</p><p>Case 1. λ p ≥ 1 p . Set λ p = x and keep in mind that feasibility implies x ≤ 1 n . We will show that λ is dominated (weakly) by the guarantee μ ∈ [uni(p), rd(n, p)] such that μ p = x, that is,</p><formula xml:id="formula_75">μ k = x for 1 ≤ k ≤ n -1 and μ k = y for n ≤ k ≤ p -1, with nx + (p -n)y = 1.</formula><p>Set p = n + q and partition A as {a 1 , , a n } ∪ {b 1 , , b q } then consider a profile of preferences where for everyone: the a-s occupy the ranks 1 to n -1 and p and each a appears exactly once in rank p; the b-s occupy the ranks n to p -1 and the pattern of the b-s is cyclical for the first q agents. Pick a lottery implementing λ at this profile. Then a ≥ x for each a implying [λ] k 1 ≥ kx for 1 ≤ k ≤ n -1; moreover, λ p = x by assumption. It remains to show that [λ] p p-r ≤ x + ry for 1 ≤ r ≤ q -1. Indeed by summing the implementation constraints for the top r + 1 outcomes of the first q agents, we get (denoting the top outcome of agent i by a i ):</p><formula xml:id="formula_76">q[λ] p p-r ≤ q i=1 a i + r q i=1 b i = q i=1 a i + q i=1 b i + (r -1) q i=1 b i ≤ 1 -(n -q)x + (r -1)(1 -nx) = q(x + ry ) Case 2. λ 1 ≤ 1 p . Set λ 1 =</formula><p>x and p = n + q. We show similarly that λ is dominated (weakly) by the guarantee μ ∈ [uni(p), vt(n, p)] such that μ</p><formula xml:id="formula_77">1 = x: that is, μ k = x for p - n + 2 ≤ k ≤ p and μ k = y for 2 ≤ k ≤ q + 1, with nx + qy = 1.</formula><p>We consider a profile of preferences over the outcomes in {a 1 , , a n } ∪ {b 1 , , b q } where: the a-s occupy the ranks 1 and pn + 2 to p and each a appears exactly once in rank 1; the b-s occupy the ranks 2 to q + 1 and the pattern of the b-s is cyclical for the first q agents.</p><p>Then the proof mimics that in case 1 by showing first that a lottery implementing λ at this profile has [λ] p p-k+1 ≤ kx for 1 ≤ k ≤ n -1, then focusing attention on the first q + 1 ranks to show [λ] r+1 1 ≥ x + ry for 1 ≤ r ≤ q -1. We omit the details. Case 3. λ p &lt; 1 p &lt; λ 1 . Combining these inequalities with those in step 2 we see that λ is strictly dominated by uni(p).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.4 Proof of Theorem 2</head><p>We fix 1 ≤ q ≤ n such that p = dn + q and prove the statement by induction on d. It is clear for d = 1 as {V T } and {RD} are the only two sequences and the intervals [uni(p), vt(n, p)], [uni(p), rd(n, p)] are in M(n, p).</p><p>Fix d ≥ 2 and consider a sequence ∈ {V T , RD} d starting with 1 = V T . By Definition 5, the composition by V T commutes with convex combinations of 2 , 2 ⊗ 3 , . Using the notation Vex[•] for such combinations, and the simplified notation V T instead of V T ⊗ uni(pn), etc., we have</p><formula xml:id="formula_78">Vex V T , V T ⊗ 2 , , V T ⊗ 2 ⊗ • • • ⊗ d = V T ⊗ Vex uni(p -n), 2 , 2 ⊗ 3 , , 2 ⊗ • • • ⊗ d (19)</formula><p>where by the inductive assumption the second convex combination of canonical guarantees in C(n, pn) and of uni(pn) is a maximal guarantee. By Lemma 3, so is the left-hand convex combination, call it λ, and by Proposition 4 so is a convex combination of uni(p) and λ.</p><p>The proof of the inductive step for a sequence starting from RD is more involved, because RD does not commute with convex combinations, even of boundary lotteries; therefore, property (19) where RD replaces V T can only be true if the two sides use different convex combinations.</p><p>Observe first that if the lottery λ is maximal at n, pn and in ∂ (pn), then any μ ∈ Vex[rd(n, p), RD ⊗ λ] is in M(n, p) ∩ ∂ (p) as well. That μ is on the boundary is clear. By (11), μ takes the form</p><formula xml:id="formula_79">μ = n-1 α n , , α n , (1 -α)λ, α n</formula><p>Consider a profile similar to (13) in the proof of Lemma 3, where by maximality of λ we choose π ensuring property (12) in Lemma 4:</p><formula xml:id="formula_80">≺ 1 a 1 • • • a n-1 p-n π a n • • • • • • • • • π • • • ≺ n a n • • • a n-2 π a n-1</formula><p>If the lottery implements μ at this profile, we have a i = α n therefore its weight on the remaining pn outcomes in π is (1α) and the claim follows by Lemma 4 again.</p><p>We fix now an arbitrary convex combination</p><formula xml:id="formula_81">= d j=2 α j RD ⊗ 2 ⊗ • • • ⊗ j</formula><p>in G(n, p) and claim that it takes the form RD ⊗ λ where λ is some other convex combination</p><formula xml:id="formula_82">λ = d j=2 β j 2 ⊗ • • • ⊗ j .</formula><p>This claim allows us to complete the induction step as follows. By the induction hypothesis, λ is in M(n, pn), and it is easy to see (and explained in detail below) that it is on the boundary. By what we just observed, any Vex[rd(n, p), RD ⊗ λ] is also maximal; by the claim, this means that any convex combination of the guarantees corresponding to the initial subsequences of starting with RD is maximal. Finally, Proposition 4 handles the addition of the uniform guarantee.</p><p>Proof. Proof of the claim Recall that canonical guarantees are uniform on their support, which we now describe for the canonical guarantees in our sequence. We partition the ranks 1, , p into subsets S 1 , , S d+1 each of size n except for the last one of size q. The set S 1 is the support of rd(n, p) (the ranks 1 to n -1 and p). If 2 = RD, then S 2 has the ranks n to 2n -2 and p -1, and the support of RD ⊗ 2 is S 1 ∪ S 2 . If 2 = V T , then S 2 has the rank n and those from pn + 1 to p -1, and the support of</p><formula xml:id="formula_83">RD ⊗ 2 is S 1 ∪ S 3 ∪ • • • ∪ S d+1</formula><p>(the complement of S 2 ). Continuing in this fashion, each j defines a new set S j that is added to its support if j = RD, while if j = V T we add S j+1 ∪ • • • ∪ S d+1 to the support. We keep track of this construction by entering a one for sets in the support and a zero for those outside it: with the notation ε ∈ {0, 1} and ε = 1ε, our sequence in C(n, p) is described by a table as follows:</p><formula xml:id="formula_84">S 1 S 2 S 3 S 4 • • • S d S d+1 RD ⊗ 2 1 ε 2 ε 2 ε 2 • • • ε 2 ε 2 RD ⊗ 2 ⊗ 3 1 ε 2 ε 3 ε 3 • • • ε 3 ε 3 • • • • • • • • • • • • • • • • • • • • • • • • RD ⊗ 2 ⊗ • • • ⊗ d 1 ε 2 ε 3 ε 4 • • • ε d ε d</formula><p>where ε j = 1 if j = RD, ε j = 0 if j = V T .</p><p>Defining k = n k j=2 ε j + (pkn)ε k , we see in the table that k is the size of the support of 2 ⊗ • • • ⊗ k , while that of RD ⊗ 2 ⊗ • • • ⊗ k has cardinality k + n. On its support RD ⊗ 2 ⊗ • • • ⊗ k is worth 1 k +n while 2 ⊗ • • • ⊗ k is 1 k on its own support. Clearly, but critically, there is a column with only zeroes. This holds if ε 2 = 0 ( 2 = V T ), or if ε 2 = 1 but ε 3 = 0, etc., until, if ε j = 1 for all j, the last column is null. A symmetric argument shows that in addition to the first column, there is another column full of ones. The first remark implies that and λ are respectively in ∂ (p) and ∂ (pn); the second that the maximal coordinate of λ is λ + = d the last equality d j=2 β j = 1 follows. We check finally the equality = RD ⊗ λ for this choice of β. Because λ ∈ ∂ (pn) the lottery RD ⊗ λ is given by (11); in particular, it is constant on each set S k , just like . We see in the table that RD ⊗ λ equals λ + nλ + +1 in S 1 , while is worth d j=2 α j j +n so they coincide. Each entry in another column S k at row j adds ε 1 nλ + +1 β j j to RD ⊗ λ and ε α j j +n to , where ε is the coefficient of that particular entry, so the desired equality follows.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. The duality operation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>Fix now λ ∈ G(n, p) ∩ ∂ (p) and self-dual: by (8), the interval [λ, λ] contains uni(p), implying λ uni(p) λ, a contradiction because uni(p) is maximal. Definition (9) concludes the argument for λ self-dual but not in ∂ (p). Proposition 4. (i) If λ = uni(p) is a maximal guarantee, the radius to λ and the antiradius from λ (the symmetric of λ with respect to the middle rank) are contained in M(n, p).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>property (1), G(n, p) is the intersection of W with (p) therefore G(n, p) is the Minkowski sum of ← → W and R p -, where</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>Check that β is well-defined because summing the first d -1 equalities above implies nλ + nλ + + 1 =</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>1 is positive we can apply the previous argument. If λ k-1 = 0 again, we repeat this observation until we find some positive λ t , t ≤ k -2, whose existence is assured by (18). Assume first that p ≤ 2n -2 and 2 ≤ k ≤ p 2 . If k divides p, the lemma is obvious (take a partition of [p]). Suppose p = tk + r where 1</figDesc><table><row><cell></cell><cell>A.3 Proof of Theorem 1</cell><cell></cell></row><row><cell cols="3">We prove part (ii): if 3 ≤ n &lt; p and p ≤ 2n -2, or p = 2n but n = 4, 5, then any maximal</cell></row><row><cell cols="2">guarantee lies in one of the intervals [uni(p), vt(n, p)], [uni(p), rd(n, p)].</cell><cell></cell></row><row><cell></cell><cell cols="2">Step 1. Recall the following notion from the Shapley-Bondareva theorem. A family</cell></row><row><cell>S 1 ,</cell><cell>, S m of subsets of [p] is balanced if there exist positive weights γ 1 ,</cell><cell>, γ m such that</cell></row></table><note><p>i:j∈S i γ i = 1 for every j ∈ [p]. Lemma 5. Assume that p ≤ 2n -2, or p = 2n but n = 4, 5 and let 2 ≤ k ≤ p 2 . Then there exists a balanced family S 1 , , S m of subsets of [p] of size k each, such that m ≤ n.</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Theoretical Economics 18(2023)   </p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>That is the utility of her worst outcome with probability λ 1 , of her next worst outcome with probability λ</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_2"><p>, and so on.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_3"><p>Whether these choices are simultaneous or sequential has no impact on the implemented guarantee.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_4"><p>Modify the above mechanism RD as follows: if they all agree on a select the outcome uniformly between a and two other arbitrary outcomes. We still implement the guarantee rd(3, 6) but the new mechanism itself is dominated in the obvious sense by RD. 100Bogomolnaia, Holzman, and Moulin   Theoretical Economics 18 (2023)   </p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_5"><p>The largest integer strictly smaller than ...</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_6"><p>We also use the equivalent definition:∀z ∈ R p : {z1 ≤ z 2 ≤ • • • ≤ z p } =⇒ λ • z ≥ μ • z.104 Bogomolnaia, Holzman, and Moulin Theoretical Economics 18 (2023)</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_7"><p>In the simultaneous version, we can add any mechanism to select among the possibly several nonvetoed outcomes.106Bogomolnaia, Holzman, and Moulin   Theoretical Economics 18 (2023)   </p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_8"><p>For example, for rd(n, p) pick a profile with the preference a 1 ≺ • • • ≺ a n-1 ≺ B ≺ a n and the n -1 others obtained by a cyclical permutation of the a i -s leaving the block B fixed.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_9"><p>Theoretical Economics 18 (2023)On guarantees, vetoes, and random dictators 111</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_10"><p>That is, the guarantees 1 , 1 ⊗ 2 , 1 ⊗ 2 ⊗ 3 , etc.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="9" xml:id="foot_11"><p>We thank an anonymous referee for suggesting that this may be the case.118Bogomolnaia, Holzman, and Moulin   Theoretical Economics 18 (2023)   </p></note>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><p>We are grateful for the comments of seminar participants in the <rs type="institution">University Paris 1, Lancaster, Oxford, and Ashoka Universities</rs>. We thank two anonymous referees for their comments, which helped to substantially improve the exposition. Moulin's research was supported by a <rs type="funder">Blaise Pascal Chair of the Region Ile-de-France</rs>, <rs type="grantNumber">2020-2021</rs>. Work done during a Holzman's visit at <rs type="institution">Princeton University</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_GgGrrdZ">
+					<idno type="grant-number">2020-2021</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>n = 3, p = 7, so d = 2. Theorem 2 describes four triangles of maximal guarantees coming in dual pairs. The uniform lottery is always a vertex and the other two vertices are canonical guarantees: sequence vertex 1 vertex 2 V T , V T (0, 1 4 , 1 4 , 1 4 , 1 4 , 0, 0) (0, 0, 1, 0, 0, 0, 0) RD, RD</p><p>( 1 3 , 1 3 , 0, 0, 0, 0, 1 3 )</p><p>where the dual pairs are the top two and the bottom two rows. In addition to these four triangles, the maximal set M(3, 7) also contains two intervals, joining uni(7) to each of the following two dual noncanonical guarantees:</p><p>In general, we keep in mind that many more guarantees than the ones described in Theorem 2 are maximal. Pick any noncanonical guarantee λ in M(n, p) ∩ ∂ (p), for instance, those described in Proposition 3 or in the previous paragraph: by Lemma 3, successive compositions of λ with V T and/or RD generate, for any</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conjectures and open questions</head><p>We conjecture that no convex combinations of canonical guarantees other than those described in Theorem 2 (i.e., corresponding to nested sequences in {V T , RD}) can produce a maximal lottery.</p><p>We conjecture that the maximal dimension of a simplicial component of M(n, p) is d = p-1 n . We do not know how to evaluate the number of such components, which we know is at least 2 d .</p><p>Finally, we give an example in Appendix A.5 of a three person mechanism implementing several noncomparable guarantees: it offers a two item menu of guarantees among which the agents can choose. 9 We do not know how long a menu of guarantees can be, given n and p.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Concluding comments</head><p>Our results provide a formal vindication of the role of Voting by Veto (Veto) and Random Dictator (RDict) as ex ante protections of each individual decision-maker's welfare. But much depends on the comparison of n (the number of agents) and p (the number of outcomes).</p><p>Our message is especially clear for bargaining situations between only two agents, n = 2: then the vertices of the set of maximal guarantees simply combine a round of Veto (possibly with multiple veto tokens) followed by one of RDict (Proposition 2).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.5 A mechanism implementing several guarantees</head><p>Let n = 3, p = 5, and λ = ( 1 2 , 0, 0, 1 2 , 0) and μ = ( 1 4 , 1 4 , 1 2 , 0, 0). Note that λ is maximal while μ is a guarantee undominated by λ. We construct a mechanism implementing both λ and μ.</p><p>Each agent i can either name a pair L i of outcomes that he likes, or a single outcome d i that he dislikes. Then the mechanism selects a set S of outcomes and performs a uniform lottery over its members. In cases 1-3 below, |S| = 2, while in case 4, |S| = 4.</p><p>Case 1: All three agents name pairs they like. Then we take S to be a pair that meets each of the three named pairs. Case 2: All three agents name outcomes they dislike. Then we take S to be a pair avoiding the three named outcomes.</p><p>Case 3: Two agents name pairs they like, say L 1 and L 2 , while the third agent names an outcome d 3 he dislikes. Then we take S to be a pair meeting L 1 and L 2 while avoiding d 3 .</p><p>Case 4: One agent names a pair he likes, say L 1 , while the other two agents name outcomes they dislike. Then we take S to be a set of four outcomes containing L 1 .</p><p>It is easy to check that an agent naming his top two outcomes as the ones he likes guarantees himself at least λ, while an agent naming his bottom outcome as the one he dislikes guarantees himself at least μ.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Noncooperative foundations of the area monotonic solution</title>
+		<author>
+			<persName><forename type="first">Nejat</forename><surname>Anbarci</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Quarterly Journal of Economics</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="page" from="245" to="258" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The area monotonic solution to the cooperative bargaining problem</title>
+		<author>
+			<persName><forename type="first">Nejat</forename><surname>Anbarci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">P</forename><surname>Bigelow</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Math. Soc. Sciences</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="133" to="142" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A discrete and bounded envy-free cake cutting mechanism for any number of agents</title>
+		<author>
+			<persName><forename type="first">Haris</forename><surname>Aziz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Mackenzie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 57th Annual Symposium on Foundations of Computer Science (FOCS)</title>
+		<meeting><address><addrLine>New Brunswick, NJ, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2016-10">2016. Oct. 2016</date>
+			<biblScope unit="page" from="9" to="11" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Balancing the power to appoint officers</title>
+		<author>
+			<persName><forename type="first">Salvador</forename><surname>Barbera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Danilo</forename><surname>Coelho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Games and Economic Behavior</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="page" from="189" to="203" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Implementability via protective equilibria</title>
+		<author>
+			<persName><forename type="first">Salvador</forename><surname>Barbera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bhaskar</forename><surname>Dutta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Mathematical Economics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="49" to="65" />
+			<date type="published" when="1982">1982</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">v3[econ.TH]. (Guarantees in fair division: general or monotone preferences, forthcoming</title>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Bogomolnaia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1911.10009</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Maths Operations Research</title>
+		<imprint>
+			<date type="published" when="2020-09">2020. Sep 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">An envy-free cake division protocol</title>
+		<author>
+			<persName><forename type="first">Steven</forename><forename type="middle">J</forename><surname>Brams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alan</forename><forename type="middle">D</forename><surname>Taylor</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">American Math. Monthly</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="page" from="9" to="18" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">The combinatorial assignment problem: Approximate competitive equilibrium from equal incomes</title>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Budish</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Polit. Econ</title>
+		<imprint>
+			<biblScope unit="volume">119</biblScope>
+			<biblScope unit="page" from="1061" to="1103" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The solidarity axiom for quasi-linear social choice problems</title>
+		<author>
+			<persName><forename type="first">Youngsub</forename><surname>Chun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Social Choice and Welfare</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="297" to="310" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The implementation of social choice rules: Some general results on incentive compatibility</title>
+		<author>
+			<persName><forename type="first">Partha</forename><surname>Dasgupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Hammond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Maskin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Review of Economic Studies</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="185" to="216" />
+			<date type="published" when="1979">1979</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">On the selection of arbitrators</title>
+		<author>
+			<persName><forename type="first">De</forename><surname>Clippel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kfir</forename><surname>Geoffroy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Brian</forename><surname>Eliaz</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Knight</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">American Economic Review</title>
+		<imprint>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="page" from="3434" to="3458" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">How to cut a cake fairly</title>
+		<author>
+			<persName><forename type="first">Lester</forename><forename type="middle">E</forename><surname>Dubins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Edwin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Spanier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Mathematical Monthly</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="1" to="17" />
+			<date type="published" when="1961">1961</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Manipulation of schemes that mix voting with chance</title>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Gibbard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econometrica</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="665" to="681" />
+			<date type="published" when="1977">1977</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Decentralized pricing in minimum cost spanning trees</title>
+		<author>
+			<persName><forename type="first">Jens</forename><surname>Hougaard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lars</forename><forename type="middle">Peter</forename><surname>Leth Hervé Moulin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Osterda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Economic Theory</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="293" to="306" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">On coordination in selection committees</title>
+		<author>
+			<persName><forename type="first">Margarita</forename><surname>Kirneva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matias</forename><surname>Nunez</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">On games of fair division</title>
+		<author>
+			<persName><forename type="first">Harold</forename><forename type="middle">W</forename><surname>Kuhn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Essays in Mathematical Economics in Honour of Oskar Morgenstern</title>
+		<imprint>
+			<publisher>Princeton University Press</publisher>
+			<date type="published" when="1967">1967</date>
+			<biblScope unit="page" from="29" to="37" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">When can the maximin share guarantee be guaranteed?</title>
+		<author>
+			<persName><surname>Kurokawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ariel</forename><forename type="middle">D</forename><surname>David</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Junxing</forename><surname>Procaccia</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 30th AAAI Conference on Artificial Intelligence (AAAI)</title>
+		<meeting>the 30th AAAI Conference on Artificial Intelligence (AAAI)</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="523" to="529" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">A solution to the twoperson implementation problem</title>
+		<author>
+			<persName><forename type="first">Jean</forename><surname>Laslier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matias</forename><surname>Francois</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Remzi</forename><surname>Nunez</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sanver</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>halshs-02173504v3</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Prudence versus sophistication in voting strategy</title>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Economic Theory</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="398" to="412" />
+			<date type="published" when="1981">1981</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Egalitarianism and utilitarianism in quasi-linear bargaining</title>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econometrica</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="page" from="49" to="68" />
+			<date type="published" when="1985">1985</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">All sorry to disagree: A general principle for the provision of non-rival goods</title>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Scandinavian Journal of Economics</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="page" from="37" to="51" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Welfare bounds in the cooperative production problem</title>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Moulin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Games and Economic Behavior</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="373" to="401" />
+			<date type="published" when="1992">1992b</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Voting by veto</title>
+		<author>
+			<persName><forename type="first">Dennis</forename><forename type="middle">C</forename><surname>Mueller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Public Economics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="57" to="75" />
+			<date type="published" when="1978">1978</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Fair enough: Guaranteeing approximate maximin shares</title>
+		<author>
+			<persName><forename type="first">Ariel</forename><forename type="middle">D</forename><surname>Procaccia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Junxing</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 14th ACM Conference on Economics and Computation EC&apos;14</title>
+		<meeting>the 14th ACM Conference on Economics and Computation EC&apos;14</meeting>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="675" to="692" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Arbitration schemes for generalized two-person games</title>
+		<author>
+			<persName><forename type="first">Howard</forename><surname>Raiffa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Contributions to the Theory of Games II</title>
+		<editor>
+			<persName><forename type="first">Harold</forename><forename type="middle">W</forename><surname>Kuhn</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Albert</forename><forename type="middle">W</forename><surname>Tucker</surname></persName>
+		</editor>
+		<imprint>
+			<publisher>Princeton University Press</publisher>
+			<date type="published" when="1953">1953</date>
+		</imprint>
+	</monogr>
+	<note>Annals of Mathematics Studies</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">Cake Cutting Algorithms: Be Fair if You Can</title>
+		<author>
+			<persName><forename type="first">Jack</forename><surname>Robertson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">William</forename><surname>Webb</surname></persName>
+		</author>
+		<editor>A. K. Peters</editor>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">The Gibbard random dictatorship theorem: A generalization and a new proof</title>
+		<author>
+			<persName><forename type="first">Arunava</forename><surname>Sen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">SERIEs</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="515" to="527" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Distortion of utilities and the bargaining problem</title>
+		<author>
+			<persName><forename type="first">Joel</forename><surname>Sobel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econometrica</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="597" to="619" />
+			<date type="published" when="1981">1981</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Sur la division pragmatique</title>
+		<author>
+			<persName><forename type="first">Hugo</forename><surname>Steinhaus</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econometrica (supplement)</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="315" to="319" />
+			<date type="published" when="1949">1949</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">How to cut a cake fairly</title>
+		<author>
+			<persName><forename type="first">Walter</forename><surname>Stromquist</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Amer. Math. Monthly</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page" from="640" to="644" />
+			<date type="published" when="1980">1980</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Maximin strategies and elicitation of preferences</title>
+		<author>
+			<persName><forename type="first">William</forename><surname>Thomson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">University of Minnesota</title>
+		<imprint>
+			<date type="published" when="1978">1978</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A class of solutions to bargaining problem</title>
+		<author>
+			<persName><forename type="first">William</forename><surname>Thomson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Economic Theory</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="431" to="441" />
+			<date type="published" when="1981">1981</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Dividing a cake fairly</title>
+		<author>
+			<persName><forename type="first">Douglas</forename><forename type="middle">R</forename><surname>Woodall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Mathematical Analysis and Applications</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="233" to="247" />
+			<date type="published" when="1980">1980</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">Simon Board handled this manuscript. Manuscript received 14 April, 2021; final version accepted 30 March</title>
+		<imprint>
+			<date type="published" when="2022-04-01">2022. 1 April, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

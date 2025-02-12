@@ -1,0 +1,1877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Programming with Mailbox Types</title>
+				<funder ref="#_AZGAhEW">
+					<orgName type="full">EPSRC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+							<email>simon.fowler@glasgow.ac.uk</email>
+							<idno type="ORCID">0000-0001-5143-5475</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Duncan</surname></persName>
+						</author>
+						<author>
+							<persName><surname>Attard</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+							<email>simon.gay@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Phil</forename><surname>Trinder</surname></persName>
+							<email>phil.trinder@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Duncan</forename><forename type="middle">Paul</forename><surname>Attard</surname></persName>
+							<email>duncan.attard@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">FRANCISZEK SOWUL</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff6">
+								<orgName type="institution">Duncan Paul Attard</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Programming with Mailbox Types</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">D2A3B5D00B4BD146BE17231242641DDE</idno>
+					<idno type="DOI">10.1145/3607832</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:02+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The asynchronous and unidirectional communication model supported by mailboxes is a key reason for the success of actor languages like Erlang and Elixir for implementing reliable and scalable distributed systems. While many actors may send messages to some actor, only the actor may (selectively) receive from its mailbox. Although actors eliminate many of the issues stemming from shared memory concurrency, they remain vulnerable to communication errors such as protocol violations and deadlocks.</p><p>Mailbox types are a novel behavioural type system for mailboxes first introduced for a process calculus by de'Liguoro and Padovani in 2018, which capture the contents of a mailbox as a commutative regular expression. Due to aliasing and nested evaluation contexts, moving from a process calculus to a programming language is challenging. This paper presents Pat, the first programming language design incorporating mailbox types, and describes an algorithmic type system. We make essential use of quasi-linear typing to tame some of the complexity introduced by aliasing. Our algorithmic type system is necessarily co-contextual, achieved through a novel use of backwards bidirectional typing, and we prove it sound and complete with respect to our declarative type system. We implement a prototype type checker, and use it to demonstrate the expressiveness of Pat on a factory automation case study and a series of examples from the Savina actor benchmark suite.</p><p>CCS Concepts: • Software and its engineering → Concurrent programming languages; Functional languages.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Software is increasingly concurrent and distributed, but coordinating concurrent computations introduces a host of additional correctness issues like communication mismatches and deadlocks. Communication-centric languages such as Go, Erlang, and Elixir make it possible to avoid many of the issues stemming from shared memory concurrency by structuring applications as lightweight processes that communicate through explicit message passing. There are two main classes of  <ref type="bibr" target="#b22">[Fowler et al. 2017]</ref> communication-centric language. In channel-based languages like Go or Rust, processes communicate over channels, where a send in one process is paired with a receive in the recipient process.</p><p>In actor languages like Erlang or Elixir, a message is sent to the mailbox of the recipient process, which is an incoming message queue; in certain actor languages, the recipient can choose which message from the mailbox to handle next.</p><p>Although communication-centric languages eliminate many coordination issues, some remain. For example, a process may still receive a message that it is not equipped to handle, or wait for a message that it will never receive. Such communication errors often occur sporadically and unpredictably after deployment, making them difficult to locate and fix.</p><p>Behavioural type systems <ref type="bibr" target="#b36">[Hüttel et al. 2016</ref>] encode correct communication behaviour to support correct-by-construction concurrency. Behavioural type systems, in particular session types <ref type="bibr" target="#b30">[Honda 1993;</ref><ref type="bibr" target="#b31">Honda et al. 1998;</ref><ref type="bibr" target="#b60">Takeuchi et al. 1994]</ref>, have been extensively applied to specify communication protocols in channel-based languages <ref type="bibr" target="#b3">[Ancona et al. 2016</ref>]. There has, however, been far less application of behavioural typing to actor languages. Existing work either imposes restrictions on the actor model to retrofit session types <ref type="bibr" target="#b28">[Harvey et al. 2021;</ref><ref type="bibr" target="#b45">Mostrous and Vasconcelos 2011;</ref><ref type="bibr">Tabone and</ref><ref type="bibr">Francalanza 2021, 2022]</ref> or relies on dynamic typing <ref type="bibr">[Neykova and Yoshida 2017b]</ref>. We discuss these systems further in §7.</p><p>Our approach is based on mailbox types, a behavioural type system for mailboxes first introduced in the context of a process calculus <ref type="bibr" target="#b13">[de'Liguoro and Padovani 2018]</ref>. We present the first programming language design incorporating mailbox types and we detail an algorithmic type system, an implementation, and a range of benchmarks and a factory case study. Due to aliasing and nested evaluation contexts, the move from a process calculus to a programming language is challenging. We make essential and novel use of quasi-linear typing <ref type="bibr" target="#b15">[Ennals et al. 2004;</ref><ref type="bibr" target="#b40">Kobayashi 1999]</ref> to tame some of the complexity introduced by aliasing, and our algorithmic type system is necessarily co-contextual <ref type="bibr" target="#b16">[Erdweg et al. 2015;</ref><ref type="bibr" target="#b41">Kuci et al. 2017]</ref>, achieved through a novel use of backwards bidirectional typing <ref type="bibr" target="#b65">[Zeilberger 2015</ref>].</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">Channel vs. Actor Communication</head><p>Channel-based languages comprise anonymous processes that communicate over named channels, whereas actor-based languages comprise named processes each equipped with a mailbox. Figure <ref type="figure" target="#fig_0">1</ref> contrasts the approaches, and is taken from a detailed comparison <ref type="bibr" target="#b22">[Fowler et al. 2017]</ref>.</p><p>Actor languages have proven to be effective for implementing reliable and scalable distributed systems <ref type="bibr" target="#b62">[Trinder et al. 2017]</ref>. Communication in actor languages is asynchronous and unidirectional: many actors may send messages to an actor , whereas only may receive from its mailbox. Mailboxes provide data locality as each message is stored with the process that will handle it. Since channel-based languages allow channel names to be sent, they must either sacrifice locality and reduce performance, or rely on complex distributed algorithms <ref type="bibr" target="#b7">[Chaudhuri 2009;</ref><ref type="bibr" target="#b35">Hu et al. 2008</ref>].</p><p>Although it is straightforward to add a type system to channel-based languages, adding a type system to actor languages is less straightforward, as process names (process IDs or PIDs) must be parameterised by a type that supports all messages that can be received. The type is therefore less precise, requiring subtyping <ref type="bibr" target="#b29">[He et al. 2014]</ref> or synchronisation <ref type="bibr" target="#b11">[de Boer et al. 2007;</ref><ref type="bibr" target="#b61">Tasharofi et al. 2013]</ref> to avoid a total loss of modularity <ref type="bibr" target="#b22">[Fowler et al. 2017]</ref>.</p><p>The situation becomes even more pronounced when considering behavioural type systems: communication errors might be prevented by giving one end of a channel the session type !Int.!Int.?Bool.End (send two integers, and receive a Boolean), and the other end the dual type ?Int.?Int.!Bool.End. Behavioural type systems for actor languages are much less straightforward due to the asymmetric communication model. In practice, designers of session type systems for actor languages either emulate session-typed channels <ref type="bibr" target="#b45">[Mostrous and Vasconcelos 2011]</ref>, or use multiparty session types to govern the communication actions performed by a process, requiring a fixed communication topology <ref type="bibr">[Neykova and Yoshida 2017b]</ref>.</p><p>1.2 Mailbox Types de'Liguoro and <ref type="bibr">Padovani [2018]</ref> observe that session types require a strict ordering of messages, whereas most actor systems use selective receive to process messages out-of-order. Concentrating on unordered interactions enables behavioural typing for mailboxes with many writers.</p><p>Mailbox typing by example: a future variable. Rather than reasoning about the behaviour of a process, mailbox types reason about the contents of a mailbox. Consider a future variable, which is a placeholder in a concurrent computation. A future can receive many get messages that are only fulfilled after a put message initialises the future with a value. After the future is initialised, it fulfils all get messages by sending its value; a second put message is explicitly disallowed. We can implement a future straightforwardly in Erlang: The empty _ future function awaits a put message to set the value of the future (lines 2-4), and transitions to the full _ future state. A full _ future receives get messages (lines 6-12) containing a process ID used to reply with the future's value. The client function spawns a future (line 14), sends a put message followed by a get message (lines 15-16), and awaits the result (lines 17-20). The program prints the number 5.</p><p>Several communication errors can arise in this example:</p><p>• Protocol violation. Sending two put messages to the future will result in a runtime error.</p><p>• Unexpected message. Sending a message other than get or put to the future will silently succeed, but the message will never be retrieved, resulting in a memory leak. • Forgotten reply. If the future fails to send a reply message after receiving a get message the client will be left waiting forever. • Self-deadlock. If the client attempts to receive a reply message before sending a get message it will be left waiting forever. All of the above issues can be solved by mailbox typing. We can write the following types:</p><formula xml:id="formula_0">EmptyFuture ≜ ?(Put[Int] ⊙ ★Get[ClientSend]) FullFuture ≜ ?★Get[ClientSend] ClientSend ≜ !Reply[Int] ClientRecv ≜ ?Reply[Int]</formula><p>A mailbox type combines a capability (either ! for an output capability, analogous to a PID in Erlang; or ? for an input capability) with a pattern. A pattern is a commutative regular expression: in the context of a send mailbox type, the pattern will describe the messages that must be sent; in the context of a receive mailbox type, it describes the messages that the mailbox may contain.</p><p>A mailbox name (e.g., Future) may have different types at different points in the program. EmptyFuture types an input capability of an empty future mailbox, and denotes that the mailbox may contain a single Put message with an Int payload, and potentially many (★) Get messages each with a ClientSend payload. FullFuture types an input capability of the future after a Put message has been received, and requires that the mailbox only contains Get messages. ClientSend is an output mailbox type which requires that a Reply message must be sent; ClientRecv is an input capability for receiving the Reply. For each mailbox name, sends and receives must "balance out": if a message is sent, it must eventually be received.</p><p>de <ref type="bibr">'Liguoro and Padovani [2018]</ref> introduce a small extension of the asynchronous -calculus <ref type="bibr" target="#b2">[Amadio et al. 1998</ref>], which they call the mailbox calculus, and endow it with mailbox types. They express the Future example in the mailbox calculus as follows, where the mailbox is denoted self.</p><formula xml:id="formula_1">emptyFuture(self) ≜ self?Put( ) . fullFuture(self, x) fullFuture(self, x) ≜ free self . done + self?Get(sender) . (sender ! Reply[ ] ∥ fullFuture(self, x) ) + self ? Put( ) . fail self ( future) (emptyFuture(future) ∥ future ! Put[5] ∥ ( self) (future ! Get[self] ∥ (self ? Reply( ) . free self . print(intToString( ) ) )</formula><p>A process calculus is useful for expressing the essence of concurrent computation, but there is a large gap between a process calculus and a programming language design, the biggest being the separation of static and dynamic terms. A programming language specifies the program that a user writes, whereas a process calculus provides a snapshot of the system at a given time. A particular difference comes with name generation: in a process calculus, we can write name restrictions directly; in a programming language, we instead have a language construct (like new) which is evaluated to create a fresh name at runtime. Further complexities come with nested evaluation contexts, sequential evaluation, and aliasing. We explore these challenges in greater detail in §2.</p><p>We propose Pat<ref type="foot" target="#foot_1">1</ref> , a first-order programming language that supports mailbox types, in which we express the future example as follows (self is again the mailbox).</p><formula xml:id="formula_2">def emptyFuture(self : EmptyFuture): 1 { guard self : Put ⊙ ★Get { receive Put[ ] from self ↦ → fullFuture(self, x) } } def fullFuture(self : FullFuture, value : Int): 1 { guard self : ★Get { free ↦ → ( ) receive Get[user] from self ↦ → user ! Reply[value]; fullFuture(self, value) } } def client( ): 1 { let future = new in spawn emptyFuture(future); let self = new in future ! Put[5]; future ! Get[self]; guard self : Reply { receive Reply[result] from self ↦ → free self; print(intToString(result) ) } }</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Special Delivery</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>191:5</head><p>The Pat program has a similar structure to the Erlang example with client, emptyFuture and fullFuture functions, and the mailbox types are similar to those in the mailbox calculus specification. There are, however, some differences compared with the Erlang future. The first is that in Pat mailboxes are first-class: we create a new mailbox with new, and receive from it using the guard expression. A guard acts on a mailbox and may contain several guards: free ↦ → frees the mailbox if there are no other references to it and evaluates ; and receive m[ -→ ] from y ↦ → retrieves a message with tag m from the mailbox, binding its payloads to -→ and re-binding the mailbox variable (with an updated type) to y in continuation . There is also fail denoting that a mailbox is in an invalid state, but the type system ensures that this guard is never evaluated. In the above code, free self is syntactic sugar (see §3).</p><p>Pat has all of the characteristics of a programming language, unlike the mailbox calculus. Static and dynamic terms are distinguished, i.e., we do not need to write name restrictions with dynamic names known a priori. Pat provides let-bindings, which enable full sequential composition along with nested evaluation contexts; and we have data types and return types. Crucially all of the concurrency errors described earlier result in a type error, i.e. protocol violations, unexpected messages, forgotten replies, and self-deadlocks are all detected statically.</p><p>Contributions. Despite being a convincing proposal for behavioural typing for actor languages, mailbox typing has received little attention since its introduction in 2018. The overarching contribution of this paper, therefore, is the first design and implementation of a concurrent programming language with support for mailbox types. Concretely, we make four main contributions:</p><p>(1) We introduce a declarative type system for Pat ( §3), a first-order programming language with support for mailbox types, making essential and novel use of quasi-linear types. We show type preservation, mailbox conformance, and a progress result. (2) We introduce a co-contextual algorithmic type system for Pat ( §4), making use of backwards bidirectional typing. We prove that the algorithmic type system is sound and complete with respect to the declarative type system. (3) We extend Pat with sum and product types; interfaces; and higher-order functions ( §5). (4) We detail our implementation ( §6), and demonstrate the expressiveness of Pat by encoding all of the examples from de'Liguoro and <ref type="bibr">Padovani [2018]</ref>, and 10 of the 11 Savina benchmarks [Imam and Sarkar 2014] used by <ref type="bibr">Neykova and Yoshida [2017b]</ref> in their evaluation of multiparty session types for actor languages ( §6.2). Our tool is available as an artifact and on GitHub (https://www.github.com/SimonJF/mbcheck). The extended version <ref type="bibr">[Fowler et al. 2023b</ref>] contains further details and full proofs. Session typing was originally studied in the context of process calculi (e.g., <ref type="bibr" target="#b31">[Honda et al. 1998;</ref><ref type="bibr" target="#b63">Vasconcelos 2012]</ref>), but later work <ref type="bibr">[Fowler et al. 2023c;</ref><ref type="bibr" target="#b24">Gay and Vasconcelos 2010;</ref><ref type="bibr" target="#b64">Wadler 2014</ref>] introduced session types for languages based on the linear -calculus. The more relaxed view of linearity in the mailbox calculus makes language integration far more challenging. A mailbox name may be used several times to send messages, but only once to receive a message. The intuition is that while sends simply add messages to a mailbox, it is a receive that determines the future behaviour of the actor. To illustrate, Fig. <ref type="figure">2</ref> shows a fragment of the future example from §1 with two sends to the future mailbox (lines 5 and</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">MAILBOX TYPES IN A PROGRAMMING LANGUAGE: WHAT ARE THE ISSUES?</head><formula xml:id="formula_3">1 def client( ): 1 { 2 let future =</formula><formula xml:id="formula_4">def useA erFree1( : ?★Msg[1]): 1 { guard : ★Msg { receive Msg[ ] from ↦ → ! Msg[]; useA erFree1( ) free ↦ → ! Msg[] } } (a) Using old name def useA erFree2( : ?★Msg[1]): 1 { let = in guard : ★Msg { receive Msg[ ] from ↦ → ! Msg[]; useA erFree2( ) free ↦ → ! Msg[] } } (b) Renaming def useA erFree3( : ?★Msg[1]): 1 { let _ = guard : ★Msg { receive Msg[ ] from ↦ → ! Msg[]; useA erFree3( ) free ↦ → ! Msg[] } in ! Msg[] }</formula><p>(c) Evaluation contexts Fig. <ref type="figure">3</ref>. Use-a er-free via aliasing 6), and a single receive (line 8). In the mailbox calculus, a name remains constant and cannot be aliased; this is at odds with idiomatic programming where expressions are aliased with let bindings or function application. Moreover functional languages provide nested evaluation contexts and sequential evaluation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Challenge: Mailbox Name Aliasing</head><p>Ensuring appropriate mailbox use is challenging in the presence of aliasing: for example, we can write a function that attempts to use a mailbox after it has been freed (Fig. <ref type="figure">3a</ref>). Unlike in our situation, use-after-free errors are not an issue with a fully linear type system, since we cannot use a resource after it has been consumed.</p><p>We could require that a name cannot be used after it has been guarded upon by insisting that the subject and body of a guard expression are typable under disjoint type environments. Indeed, such an approach correctly rules out the error in Fig. <ref type="figure">3a</ref>, but the check can easily be circumvented. Fig. <ref type="figure">3b</ref> aliases the output capability for the mailbox, and the new name prevents the typechecker from realising that it has been used in the body of the guard. Similarly, Fig. <ref type="figure">3c</ref> uses nested evaluation contexts, meaning that the next use of a mailbox variable is not necessarily contained within a subexpression of the guard.</p><p>Much of the intricacy arises from using a mailbox name many times as an output capability. In each process, we can avoid the problems above using three principles:</p><p>(1) No two distinct variables should represent the same underlying mailbox name.</p><p>(2) Once let-bound to a different name, a mailbox variable is considered out-of scope.</p><p>(3) A mailbox name cannot be used after it has been used in a guard expression.</p><p>These principles ensure syntactic hygiene: the first and second handle the disconnect between static names and their dynamic counterparts, allowing us to reason that two syntactically distinct variables indeed refer to different mailboxes. The third ensures that a mailbox name is correctly 'consumed' by a guard expression, allowing us to correctly update its type.</p><p>Aliasing through communication. Consider the following example, where mailbox receives the message m[ ], where is already free in the continuation of the receive clause:</p><formula xml:id="formula_5">← m[ ] ∥ guard : m { receive m[ ] from y ↦ → ! n[ ]; free } -→ ! n[ ]; free</formula><p>Here, although the code suggests that and are distinct, aliasing is introduced through communication (violating principle 1).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Mailbox Calculus Solution: Dependency Graphs</head><p>The mailbox calculus uses a dependency graph (DG) both to avoid issues with aliasing and to eliminate cyclic dependencies and hence deadlocks. As an example, the mailbox calculus process ( )( )( ! m[ ] ∥ free b ∥ a?m[ ] . free a) would have DG ( )( )({ , }) due to the dependency arising from sending over .</p><formula xml:id="formula_6">let = new in let = new in ! m[ ]; spawn (free ); guard : m { receive m[ ] from a ↦ → free }</formula><p>Alas, a language implementation cannot use this approach as it relies on knowing runtime names directly. To see why, consider the Pat program on the left, which evaluates to an analogous configuration. The first issue is how to create a scoped DG from new: one option is to introduce a scoped construct let mailbox in , but this approach fails as soon as we rename using a let-binder.</p><p>A more robust approach is to follow <ref type="bibr" target="#b0">Ahmed et al. [2007]</ref> and <ref type="bibr" target="#b52">Padovani [2019]</ref> and endow mailbox types with a type-level identity by giving new an existential type and introducing a scoped unpack construct. However there still remain two issues: first, it is unclear how to extend DGs to capture the more complex scoping and sequencing induced by nested contexts. Second, each mailbox type would require an identity (e.g. ! Msg) which becomes too restrictive, since we would need to include identities in message payload types when communicating names. As an example, each client of the Future example from §1 would require a separate message type.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">The Pat Solution:</head><p>asi-Linear Typing The many-sender, single-receiver pattern is closely linked to quasi-linear typing <ref type="bibr" target="#b40">[Kobayashi 1999</ref>]; our formulation is closer to that of <ref type="bibr" target="#b15">Ennals et al. [2004]</ref>. Quasi-linear types were originally designed to overcome some limitations of full linear types in the context of memory management and programming convenience and allow a value to be used once as a first-class (returnable) value, but several times as a second-class value <ref type="bibr" target="#b48">[Osvald et al. 2016]</ref>. A second-class value can be consumed within an expression, for example as the subject of a send operation, but cannot escape the scope in which it is defined.</p><p>This distinction maps directly onto the many-writer, single-reader communication model used by the mailbox calculus. We augment mailbox types with a usage: either •, a returnable reference that allows a type to appear in the return type of an expression; or •, a 'second-class' reference. The subject of a guard must be returnable. With usage information we can ensure that:</p><p>(1) there is only one returnable reference for each mailbox name in a process (2) only returnable references can be renamed, avoiding problems with aliasing (3) the returnable reference is the final lexical use of a mailbox name in a process Quasi-linear types rule out all three of the previous examples. In useA erFree, is consumed by the guard expression and cannot be used thereafter. In useA erFree2, since is the subject of a let binding, it must be returnable and therefore cannot be used in the body of the binding. In useA erFree3, since is used as the subject of a guard expression, that use must be first-class and therefore the last lexical occurrence of , ruling out the use of in the outer evaluation context. Quasi-linear typing cannot account for inter-process deadlocks, but can still rule out self-deadlocks.</p><p>Ruling out aliasing through communication. Quasi-linear types alone do not safeguard against introducing aliasing through communication, and we cannot use DGs for the reasons stated above. However, treating all received names as second-class, coupled with some simple syntactic restrictions (e.g. by ensuring that either all message payloads or all variables free in the body of the receive clause have base types) eliminates unsafe aliasing.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mailbox types</head><p>,</p><formula xml:id="formula_7">::= ! | ? Mailbox patterns , ::= 0 | 1 | m | ⊕ | ⊙ | ★ Base types ::= 1 | Int | String | • • • Types , ::= | Usage annotations ::= • | • Usage-annotated types , ::= | Variables , , Definition names Definitions ::= def ( ---→ : ): { } Values , ::= | Terms , , ::= | let : = in | ( - → ) | spawn | new | ! m[ - → ] | guard : { - → } Guards ::= fail | free ↦ → | receive m[ - → ] from ↦ → Type environments Γ ::= • | Γ, :</formula><p>Fig. <ref type="figure">4</ref>. The syntax of Pat, a core language with mailbox types Summary. Quasi-linear types and the lightweight syntactic checks outlined above ensure that mailboxes are used safely in a concurrent language that allows aliasing, and obviate the need for the static global dependency graph used in the mailbox calculus. We show that the checks are not excessively restrictive by expressing all of the examples shown by de'Liguoro and <ref type="bibr">Padovani [2018]</ref>, and 10 of the 11 Savina benchmarks [Imam and Sarkar 2014] used by <ref type="bibr">Neykova and Yoshida [2017b]</ref> to demonstrate expressiveness of behavioural type systems for actor languages ( §6.2).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">PAT: A CORE LANGUAGE WITH MAILBOX TYPES</head><p>This section introduces Pat, a core first-order programming language with mailbox types, along with a declarative type system and an operational semantics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Syntax</head><p>Figure <ref type="figure">4</ref> shows the syntax for Pat. We defer discussion of types to §3.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Programs and definitions. A program (S,</head><p>-→ , ) consists of a signature S which maps message tags to payload types; a set of definitions ; and an initial term . Each definition def ( ---→ : ): { } is a function with name , annotated arguments ---→ : , return type , and body . We write P ( ) to retrieve the definition for function , and P (m) to retrieve the payload types for message m.</p><p>Values. It is convenient for typing to introduce a syntactic distinction between values and computations, inspired by fine-grain call-by-value <ref type="bibr" target="#b42">[Levy et al. 2003</ref>]. Values , include variables and constants ; we assume that the set of constants includes at least the unit value () of type 1.</p><p>Terms. The functional fragment of the language is largely standard. Every value is a term. The only evaluation context is let : = in , which evaluates term of type , binding its result to in continuation . The type annotation is a technical convenience and is not necessary in our implementation ( §3). Function application ( -→ ) applies function to arguments -→ . As usual, we use ; as sugar for let : 1 = in , where does not occur in .</p><p>In the concurrent fragment of the language, spawn spawns term as a separate process, and new creates a fresh mailbox name. Term ! m[ -→ ] sends message m with payloads -→ to mailbox .</p><p>The guard : { -→ } expression asserts that mailbox contains pattern , and invokes a guard in -→ . The fail guard is triggered when an unexpected message has arrived; free ↦ → is triggered when a mailbox is empty and there are no more references to it in the system; and receive m[ -→ ] from ↦ → is triggered when the mailbox contains a message with tag m, binding its payloads to -→ and continuation mailbox with updated mailbox type to in continuation term . We write free as syntactic sugar for guard : 1 {free ↦ → ()}, and fail as syntactic sugar for guard : 0 {fail}. We require that each clause within a guard expression is unique.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Type System</head><p>This section describes a declarative type system for Pat. We begin by discussing mailbox types in more depth, in particular showing how to define subtyping and equivalence.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">Types.</head><p>A mailbox type consists of a capability, either output ! or input ?, and a pattern. A system can contain multiple references to a mailbox as an output capability, but only one as an input capability. A pattern is a commutative regular expression, i.e., a regular expression where composition is unordered. The 1 pattern is the unit of pattern composition ⊙, denoting the empty mailbox. The 0 pattern denotes the unreliable mailbox, which has received an unexpected message. It is not possible to send to, or receive from, an unreliable mailbox, but we will show that reduction does not cause a mailbox to become unreliable. The pattern m denotes a mailbox containing a single message m<ref type="foot" target="#foot_3">2</ref> . Pattern choice ⊕ denotes that the mailbox contains either messages conforming to pattern or . Pattern composition ⊙ denotes that the mailbox contains messages pertaining to and (in either order). Finally, ★ denotes replication of , so ★m denotes that the mailbox can contain zero or more instances of message m. Mailbox patterns obey the usual laws of commutative regular expressions: 1 is the unit for ⊙, while 0 is the unit for ⊕ and is cancelling for ⊙. Composition ⊙ is associative, commutative, and distributes over ⊕; and ⊕ is associative and commutative.</p><p>Pattern semantics. It follows that different syntactic representations of patterns may have the same meaning, e.g. patterns 1 ⊕ 0 ⊕ (m ⊙ n) and 1 ⊕ (n ⊙ m). Following [de'Liguoro and Padovani 2018], we define a set-of-multisets semantics for mailbox patterns; the intuition is that each multiset defines a configuration of messages that could be present in the mailbox. For example the semantic representation of both of the patterns above is {⟨⟩, ⟨m, n⟩}. We let A, B range over multisets.</p><formula xml:id="formula_8">0 = ∅ 1 = {⟨⟩} ⊕ = ∪ ⊙ = {A ⊎ B | A ∈ , B ∈ } m = {⟨m⟩} ★ = 1 ∪ ∪ ⊙ ∪ • • •</formula><p>The pattern 0 is interpreted as an empty set; 1 as the empty multiset; ⊕ as set union; ⊙ as pointwise multiset union; m as the singleton multiset; and ★ as the infinite set containing any number of concatenations of interpretations of .</p><p>Usage annotations. A type can be a base type , or a mailbox type . As discussed in §2, quasilinearity is used to avoid aliasing issues. Usage-annotated types , annotate mailbox types with a usage: either second class (•), or returnable (•). There are no restrictions on the use of a base type. Only values with a returnable type can be returned from an evaluation frame.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">Operations on</head><p>Types. We say that a type is returnable, written returnable( ), if is a base type or a returnable mailbox type • . The ⌊-⌋ operator ensures that a type is returnable, while the ⌈-⌉ operator ensures that a mailbox type is second-class:</p><formula xml:id="formula_9">⌊ ⌋ = ⌊ ⌋ = • ⌈ ⌉ = ⌈ ⌉ = •</formula><p>We also extend the operators to usage-annotated types (e.g. ⌈ • ⌉ = • ) and type environments.</p><p>Subtyping. With a semantics defined, we can consider subtyping. A pattern is included in a pattern , written ⊑ , if every multiset in the semantics of also occurs in the semantics of pattern , i.e., ⊑ ≜ ⊆ .</p><p>Definition 3.1 (Subtyping). The subtyping relation is defined by the following rules:</p><formula xml:id="formula_10">≤ ⊑ 1 ≤ 2 ? 1 ≤ ? 2 ⊑ 1 ≤ 2 ! 1 ≤ ! 2</formula><p>Usage subtyping is defined as the smallest reflexive operator defined by axioms ≤ and • ≤ •. We write ≃ if both ≤ and ≤ , i.e. either , are the same base type, or are mailbox types with the same capability and pattern semantics.</p><p>Base types are subtypes of themselves. As with previous accounts of subtyping in actor languages <ref type="bibr" target="#b29">[He et al. 2014]</ref>, subtyping is covariant for mailbox types with a receive capability: a mailbox can safely be replaced with another that can receive more messages. Likewise subtyping is contravariant for mailboxes with a send capability: a mailbox can safely be replaced with another that can send a smaller set of messages. Intuitively, as returnable usages are more powerful than second-class usages, returnable types can be used when only a second-class type is required.</p><p>Following de'Liguoro and <ref type="bibr">Padovani [2018]</ref> we introduce names for particular classes of mailbox types. Intuitively, relevant mailbox names must be used, whereas irrelevant names need not be. Likewise reliable and usable names can be used, whereas unreliable and unusable names cannot. Definition 3.2 (Relevant, Reliable, Usable). A mailbox type is relevant if ̸ ≤ !1, and irrelevant otherwise; reliable if ̸ ≤ ?0 and unreliable otherwise; and usable if ̸ ≤ !0 and unusable otherwise. Definition 3.3 (Unrestricted and Linear Types). We say that a type is unrestricted, written un( ), if = , or = !1 • . Otherwise, we say that is linear.</p><p>Our type system ensures that variables with a linear type must be used, whereas variables with an unrestricted type can be discarded. We extend subtyping to type environments, making it possible to combine type environments, as in <ref type="bibr" target="#b10">[Crafa and Padovani 2017;</ref><ref type="bibr" target="#b13">de'Liguoro and Padovani 2018]</ref>.</p><p>Definition 3.4 (Environment subtyping). Environment subtyping Γ 1 ≤ Γ 2 is defined as follows:</p><formula xml:id="formula_11">• ≤ • un( ) ∉ dom(Γ ′ ) Γ ≤ Γ ′ Γ, : ≤ Γ ′ ≤ Γ ≤ Γ ′ Γ, : ≤ Γ ′ , :</formula><p>We include a notion of weakening into the subtyping relation, so an environment Γ can be a subtype environment of Γ ′ if it contains additional entries of unrestricted type.</p><p>Type combination. Mailbox types ensure that sends and receives "balance out", meaning that every send is matched with a receive. For example, using a mailbox at type !Put and ?(Put ⊙ ★Get) results in a mailbox type ?(★Get). The key technical device used to achieve this goal is type combination: combining a mailbox type ! and a mailbox type ! results in an output mailbox type which must send both and ; combining an input and an output capability results in an input capability that no longer needs to receive the output pattern. We can also combine identical base types. Note that it is not possible to combine two input capabilities as this would permit simultaneous reads of the same mailbox. Definition 3.5 (Type combination). Type combination ⊞ is the commutative partial binary operator defined by the following axioms: Following <ref type="bibr" target="#b10">Crafa and Padovani [2017]</ref>, it is convenient to identify types up to commutativity and associativity, e.g. we do not distinguish between ?(A ⊙ B) • and ?(B ⊙ A) • . We may however need to use subtyping to rewrite a type into a form that allows two mailbox types to be combined (e.g. to combine !A and ?(★A), we would need to use subtyping to rewrite the latter type to ?(A ⊙ ★A)).</p><formula xml:id="formula_12">⊞ = ! ⊞ ! = !( ⊙ ) ! ⊞ ?( ⊙ ) = ? ?( ⊙ ) ⊞ ! = ? Proc. ACM</formula><p>The following usage combination is not commutative as a • variable use must occur before a • use (ensuring that the returnable use is the variable's last lexical occurrence). Furthermore, note that • ⊲ • is undefined (ensuring that there is only one returnable instance of a variable per thread).</p><p>Definition 3.6 (Usage combination). The usage combination operator is the partial binary operator defined by the axioms</p><formula xml:id="formula_13">• ⊲ • = • and • ⊲ • = •.</formula><p>We can now define usage-annotated type and environment combination.</p><p>Definition 3.7 (Usage-annotated type combination). The usage-annotated type combination operator ⊲ is the binary operator defined by the axioms ⊲ = and 1 ⊲ 2 = ( ⊞ ) 1 ⊲ 2 . Definition 3.8 (Environment combination (Γ)). Usage-annotated environment combination Γ 1 ⊲ Γ 2 is the smallest partial operator on type environments closed under the following rules: 3.2.3 Typing Rules. Fig. <ref type="figure">5</ref> shows the declarative typing rules for Pat. As the system is declarative it helps to read the rules top-down.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Programs and definitions.</head><p>A program is typable if all of its definitions are typable, and its body has unit type. A definition def ( ---→ : ): { } is typable if has type under environment ---→ : .</p><p>Terms. Term typing has the judgement Γ ⊢ P : , which states that when defined in the context of program P, under environment Γ, term has type . We omit the P parameter in the rules for readability. Rule T-Var types a variable in a singleton environment; we account for weakening in T-Sub. Rule T-Const types a constant under an empty environment; we assume an implicit schema mapping constants to types, and assume at least the unit value () of type 1. Rule T-App types function application according to the definition in P. Each argument must be typable under a disjoint type environment to avoid aliasing mailbox names in the body of the function.</p><p>Rule T-Let types sequential composition. The subject of the let expression must be returnable; since Γ 1 ⊲ Γ 2 is defined, we know that if the subject (typable using Γ 1 ) contains a returnable variable, then it cannot appear in Γ 2 . This avoids aliasing and use-after-free errors.</p><p>Rule T-Spawn types spawning a term of unit type as a new process. The type environment used to type can contain any number of returnable, but the conclusion of the rule 'masks' any returnable types as second-class. Intuitively, this is because there is no need to impose an ordering on how a variable is used in a separate process: while within a single process a guard on some name should not precede a send on , there is no such restriction if the two expressions are executing T-App</p><formula xml:id="formula_14">P ( ) = def ( ---→ : ): { } (Γ ⊢ : ) ∈1.. Γ 1 + • • • + Γ ⊢ ( 1 , . . . , ) : T-Let Γ 1 ⊢ : ⌊ ⌋ Γ 2 , : ⌊ ⌋ ⊢ : Γ 1 ⊲ Γ 2 ⊢ let : = in : T-Spawn Γ ⊢ : 1 ⌈Γ⌉ ⊢ spawn : 1 T-New • ⊢ new : ?1 • T-Send P (m) = - → Γ ⊢ : !m • (Γ ′ ⊢ : ⌈ ⌉ ) ∈1.. Γ + Γ ′ 1 + . . . + Γ ′ ⊢ ! m[ - → ] : 1 T-Guard Γ 1 ⊢ : ? • Γ 2 ⊢ - → : :: ⊑ ⊨ Γ 1 + Γ 2 ⊢ guard : { - → } : T-Sub Γ ≤ Γ ′ ≤ Γ ′ ⊢ : Γ ⊢ :</formula><p>Typing rules for guards Γ ⊢ P -→ : :: Γ ⊢ P : :: Demanding that the mailbox is returnable rules out use-after-free errors since we cannot use the mailbox name in the continuation. The second premise states that under type environment Γ 2 , guards -→ all return a value of type and correspond to pattern . The third premise requires that the pattern assertion is contained within . The final premise, ⊨ , ensures that is in pattern normal form: the pattern should be a disjunction of pattern literals. That is 0, 1, or m ⊙ , where is equivalent to without message m.</p><formula xml:id="formula_15">TG-GuardSeq (Γ ⊢ : :: ) Γ ⊢ - → : :: 1 ⊕ . . . ⊕ TG-Fail Γ ⊢ fail : :: 0 TG-Free Γ ⊢ : Γ ⊢ free ↦ → : :: 1 TG-Recv P (m) = - → base( - → ) ∨ base(Γ) Γ, : ? • , - → : --→ ⌈ ⌉ ⊢ : Γ ⊢ receive m[ - → ] from ↦ → : :: m⊙ Pattern residual / m 0 / m ≜ 0 1 / m ≜ 0 m / m ≜ 1 m ≠ n m / n ≜ 0 ( ⊕ ) / m ≜ ( / m) ⊕ ( / m) ( ⊙ ) / m ≜ ( ( / m) ⊙ ) ⊕ ( ⊙ ( / m) ) Pattern normal form (PNF) ⊨ lit ⊨ ⊨ lit 0 ⊨ lit 1 ≃ / m ⊨ lit m ⊙ ⊨ lit 1 ⊨ lit 2 ⊨ 1 ⊕ 2 ⊨ lit ⊨ Fig.</formula><p>Finally, rule T-Sub allows the use of subtyping. Subtyping on type environments is crucial when constructing derivations, e.g. two patterns may have the same semantics but differ syntactically. Applying T-Sub makes it possible to rewrite mailbox types so that they can be combined by the type combination operators. We also allow the usual use of subsumption on return types, e.g. allowing a value with a subtype of a function argument to be used.</p><p>Guards. Rule TG-GuardSeq types a sequence of guards, ensuring that each guard is typable under the same type environment and with the same return type. Rule TG-Fail types a failure guard: since the type system will ensure that such a guard is never evaluated, it can have any type environment and any type, and is typable under pattern literal 0. Rule TG-Free types a guard of the form free ↦ → , where has type . Finally, rule TG-Recv types a guard of the form receive m[ -→ ] from ↦ → , that retrieves a message with tag m from the mailbox, binding its payloads (whose types are retrieved from the signature for message m) to -→ , and re-binding the mailbox to with an updated type in continuation . The payloads are made usable rather than returnable, as otherwise the payloads could interfere with the names in the enclosing context.</p><p>Pattern residual. The pattern residual / m calculates the pattern after m is consumed, and corresponds to the Brzozowski derivative <ref type="bibr" target="#b6">[Brzozowski 1964</ref>] over a commutative regular expression. The residual of 0, 1, or n (where n ≠ m) with respect to a message tag m is the unreliable type 0. The derivative of m with respect to m is 1. The derivative operator distributes over ⊕, and the derivative of concatenation is the disjunction of the derivative of each subpattern.</p><p>Example. We end this section by showing the derivation for the client definition from the future example in §1, which creates a future and self mailbox, initialises the future with a number, and then requests and prints the result. In the following, we abbreviate future to f, self to , and result to . We assume that the program includes a signature S = [Put ↦ → Int, Get ↦ → !Reply, Reply ↦ → Int], and the emptyFuture and fullFuture definitions from §1. We split the derivation into three subderivations. Since it is easier to read derivations top-down, we start by typing the guard expression. In the following, we refer to the receive guard as , and name the first derivation D 1 :</p><formula xml:id="formula_16">s : ?(Reply ⊙ 1) • ⊢ s : ?(Reply ⊙ 1) • s : ?1 • ⊢ s : ?1 • s : ?1 • ⊢ free s : 1 r : Int ⊢ print(intToString(r) ) : 1 s : ?1 • , r : Int ⊢ free s; print(intToString(r) ) : 1 • ⊢ receive Reply[r] from s ↦ → free s; print(intToString(r) ) : 1 :: Reply ⊙ 1 Reply ⊑ Reply ⊙ 1 ⊨ Reply ⊙ 1 s : ?(Reply ⊙ 1) • ⊢ guard s : Reply { } : 1</formula><p>The type of the s mailbox in the subject of the guard expression is ?(Reply ⊙ 1) • denoting that the mailbox can contain a Reply message and will then be empty. The receive guard binds at type ?1 • and at Int, freeing and using in the print expression. The Reply annotation on the guard is a subpattern of the pattern of . The above derivation is used within derivation D 2 :</p><formula xml:id="formula_17">f : !Put • ⊢ f : !Put • • ⊢ 5 : Int f : !Put • ⊢ f ! Put[5] : 1 f : !Get • ⊢ f : !Get • f : !Get • ⊢ f : !Get • s : !Reply • ⊢ s : !Reply • f : !Get • , s : !Reply • ⊢ f ! Get[s] : 1 D 1 f : !Get • , s : ?1 • ⊢ f ! Get[s]; guard s : Reply { } : 1 f : !(Put ⊙ Get) • , s : ?1 • ⊢ f ! Put[5]; f ! Get[s]; guard s : Reply { • • •} : 1</formula><p>Here f is used to send a Put and then a Get with s of type !Reply • as payload. As the two sends to the f message are sequentially composed, the type of f at the root of the subderivation is !(Put ⊙ Get) • . Since s is used at type ?(Reply ⊙ 1) • in D 1 , the send and receive patterns balance out to the empty mailbox type ?1 • . Finally, we can construct the derivation for the entire term:</p><formula xml:id="formula_18">• ⊢ new : ?1 • f : ?(Put ⊙ ★Get) • ⊢ emptyFuture(f) : 1 f : ?(Put ⊙ ★Get) • ⊢ spawn emptyFuture(f) : 1 f : ?( (Put ⊙ Get) ⊙ 1) • ⊢ spawn emptyFuture(f) : 1 • ⊢ new : ?1 • D 2 f : !(Put ⊙ Get) • ⊢ let s = new in f ! Put[5]; • • • : 1 f : ?1 • ⊢ spawn emptyFuture(f); let s = new in f ! Put[5]; • • • : 1 • ⊢ let f = new in spawn emptyFuture(f); let s = new in f ! Put[5]; f ! Get[s]; guard s : Reply { receive Reply[r] from s ↦ → free s; print(intToString(r) ) } : 1</formula><p>Since we let-bind f to new, f must have type ?1 • . Definition emptyFuture requires an argument of type ?(Put ⊙ ★Get) • ; since the function application appears in the body of the spawn we can mask the usage annotation to •, and use environment subtyping to rewrite the type of f to ?((Put ⊙ Get) ⊙ 1) • . This then balances out with the use of f in D 2 , completing the derivation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Operational Semantics</head><p>Figure <ref type="figure" target="#fig_3">6</ref> shows the runtime syntax and reduction rules for Pat. We extend values with runtime names . The concurrent semantics of the language is described as a nondeterministic reduction relation on a language of configurations, which resemble terms in the -calculus. A thread , Σ evaluates term with frame stack</p><formula xml:id="formula_19">Σ (discussed shortly). Configuration ← m[ - → ] is a message m[ - →</formula><p>] in mailbox ; name restriction ( )C binds name in C; and C ∥ D denotes the parallel composition of C and D. Structural congruence ≡ (omitted) is standard, capturing scope extrusion and the associativity and commutativity of parallel composition. The semantics envisages a single static term (i.e., program text) to be evaluated in the context of an empty frame stack:</p><p>, .</p><p>Frame stacks. We use frame stacks <ref type="bibr" target="#b15">[Ennals et al. 2004;</ref><ref type="bibr" target="#b55">Pitts 1998</ref>] rather than evaluation contexts for technical convenience. A frame ⟨ , ⟩ is a pair of a variable and a continuation , where is free in . A frame stack is an ordered sequence of frames, where denotes the empty stack.</p><p>Reduction rules. Frame stacks are best demonstrated by the E-Let and E-Return rules: intuitively, let : = in evaluates , binding the result to in . The rule adds a fresh frame ⟨ , ⟩ to the top of a frame stack, and evaluates . Conversely, E-Return returns into the parent frame: if the top frame is ⟨ , ⟩, then we can evaluate the continuation with substituted for . Rule E-App evaluates the body of function with arguments -→ substituted for the parameters -→ .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Runtime syntax</head><p>Runtime names Names , , Rule E-Spawn spawns a computation as a fresh process, with an empty frame stack. Rule E-Free allows a name to be garbage collected if it is not contained in any other thread, evaluating the continuation of the free guard. Finally, rule E-Recv handles receiving a message from a mailbox, binding the payload values to -→ and updated mailbox name to in continuation . The remaining rules are administrative.</p><formula xml:id="formula_20">::= | Frames ::= ⟨ , ⟩ Frame stacks Σ ::= | • Σ Guard contexts G ::= -→ 1 • [ ] • -→ 2 Configurations C, D ::= , Σ | ← m[ - → ] | C ∥ D | ( ) C Runtime type environments Δ ::= • | Δ, : Reduction rules C -→ P D E-Let let : = in , Σ -→ , ⟨ , ⟩ • Σ E-Return , ⟨ , ⟩ • Σ -→ { / }, Σ E-App ( - → ), Σ -→ { - → / - → }, Σ (if P ( ) = def ( ---→ : ): { } ) E-New new, Σ -→ ( ) ( , Σ ) ( is fresh) E-Send ! m[ - → ], Σ -→ ( ), Σ ∥ ← m[ - → ] E-Spawn spawn , Σ -→ ( ), Σ ∥ , E-Free ( ) ( guard : { G [free ↦ → ] }, Σ ) -→ , Σ E-Recv guard : { G [receive m[ - → ] from ↦ → ] }, Σ ∥ ← m[ - → ] -→ { - → / - → , / }, Σ E-Nu C -→ D ( ) C -→ ( ) D E-Par C -→ C ′ C ∥ D -→ C ′ ∥ D E-Struct C ≡ C ′ C ′ -→ D ′ D ′ ≡ D C -→ D</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Metatheory</head><p>3.4.1 Runtime Typing. To prove metatheoretical properties about Pat we introduce a type system on configurations; this type system is used only for reasoning and is not required for typechecking.</p><p>Runtime type environments. The runtime typing rules make use of a type environment Δ that maps variables to types that do not contain usage information. Usage information is inherently only useful in constraining sequential uses of a mailbox variable, where guards are blocking, whereas it makes little sense to constrain concurrent usages of a variable. Runtime type environment combination on Δ 1 ⊲⊳ Δ 2 is similar to usage-annotated type environment combination but with two differences: it is commutative to account for the unordered nature of parallel threads, and type combination does not include usage information. Definition 3.10 (Environment combination (Δ)). Environment combination Δ 1 ⊲⊳ Δ 2 is the smallest partial commutative binary operator on type environments closed under the following rules:</p><formula xml:id="formula_21">• ⊲⊳ • = • ∉ dom(Δ 2 ) Δ 1 ⊲⊳ Δ 2 = Δ (Δ 1 , : ) ⊲⊳ Δ 2 = Δ, : ∉ dom(Δ 1 ) Δ 1 ⊲⊳ Δ 2 = Δ Δ 1 ⊲⊳ (Δ 2 , : ) = Δ, : Δ 1 ⊲⊳ Δ 2 = Δ (Δ 1 , : ) ⊲⊳ (Δ 2 , : ) = Δ, :( ⊞ )</formula><p>Disjoint combination on runtime type environments Δ 1 + Δ 2 (omitted) is defined analogously to disjoint combination on Γ. Runtime typing rules. Figure <ref type="figure" target="#fig_4">7</ref> shows the runtime typing rules. Rule TC-Nu types a name restriction if the name is of type ?1; in turn this ensures that sends and receives on the mailbox "balance out" across threads. Rule TC-Par allows configurations C and D to be composed in parallel if they are typable under combinable runtime type environments. Rule TC-Message types a message configuration</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Configuration Typing</head><formula xml:id="formula_22">Δ ⊢ C TC-Nu Δ, : ?1 ⊢ C Δ ⊢ ( ) C TC-Par Δ 1 ⊢ C Δ 2 ⊢ D Δ 1 ⊲⊳ Δ 2 ⊢ C ∥ D TC-Message ( ⌈Δ ⌉ ⊢ : ) ∈1.. - → ≤ ⌈ P (m) ⌉ Δ 1 + . . . + Δ , : !m ⊢ ← m[ - → ] TC-Thread ⌊Δ⌋ = Γ 1 ⊲ Γ 2 Γ 1 ⊢ : Γ 2 ⊢ ▶ Σ Δ ⊢ , Σ TC-Subs Δ ≤ Δ ′ Δ ′ ⊢ C Δ ⊢ C Frame Stack Typing Γ ⊢ ▶ Σ • ⊢ ▶ Γ 1 , : ⊢ : returnable( ) Γ 2 ⊢ ▶ Σ Γ 1 ⊲ Γ 2 ⊢ ▶ ⟨ , ⟩ • Σ</formula><formula xml:id="formula_23">← m[ - → ].</formula><p>Name of type !m cannot appear in any of the values sent as a payload. Each payload value must be a subtype of the type defined by the message signature, under the second-class lifting of a disjoint runtime type environment. Rule TC-Subs allows subtyping on runtime type environments; the subtyping relation Δ ≤ Δ ′ is analogous to subtyping on Γ.</p><p>Thread and frame stack typing. Rule TC-Thread types a thread, which is a pair of a currentlyevaluating term, typable under an environment Γ 1 , and a stack frame, typable under an environment Γ 2 . The combination Γ 1 ⊲ Γ 2 should result in the returnable lifting of Δ: intuitively, we should be able to use every mailbox variable in Δ as returnable in the thread. TC-Thread makes use of the frame stack typing judgement Γ ⊢ ▶ Σ (inspired by <ref type="bibr" target="#b15">[Ennals et al. 2004]</ref>), which can be read "under type environment Γ, given a value of type , frame stack Σ is well-typed". The empty frame stack is typable under the empty environment given any type. A non-empty frame stack ⟨ , ⟩ • Σ is well-typed if has some returnable type , given a variable of type . The remainder of the stack must then be well-typed given . We combine the environments used for typing the head term and the remainder of the stack using ⊲ as we wish to account for sequential uses of a mailbox; for example, in the term ! m[ ]; ! n[ ], would have type !(m ⊙ n) • .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.2">Properties.</head><p>We can now state some metatheoretical results. Proofs can be found in the extended version <ref type="bibr">[Fowler et al. 2023b</ref>]. Typability is preserved by reduction; the proof is nontrivial since we must do extensive reasoning about environment combination. Progress. To prove a progress result for Pat, we begin with some auxiliary definitions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Definition 3.13 (Message set).</head><p>A message set M is a configuration of the form:</p><formula xml:id="formula_24">1 ← m 1 [ - → 1 ] ∥ • • • ∥ ← m [ - → ].</formula><p>We say that a message set M contains a message m for if Next, we classify canonical forms, which give us a global view of a configuration. Every well typed process is structurally congruent to a canonical form.</p><formula xml:id="formula_25">M ≡ ← m[ - → ] ∥ M ′ .</formula><formula xml:id="formula_26">Definition 3.14 (Canonical form). A configuration C is in canonical form if it is of the form: ( 1 ) • • • ( )( 1 , Σ 1 ∥ • • • ∥ , Σ ∥ M)</formula><p>Definition 3.15 (Waiting). We say that a term is waiting on mailbox for a message with tag m, written waiting( , , m), if can be written guard :</p><formula xml:id="formula_27">{G [receive m[ ] from ↦ → ]}.</formula><p>Let fv(-) denote the set of free variables in a term or frame stack Σ. We can then use canonical forms to characterise a progress result: either each thread can reduce, has reduced to a value, or is waiting for a message which has not yet been sent by a different thread.</p><p>Theorem 3.16 (Partial Progress). Suppose ⊢ P and • ⊢ P C where C is in canonical form:</p><formula xml:id="formula_28">C = ( 1 ) • • • ( )( 1 , Σ 1 ∥ • • • , Σ ∥ M)</formula><p>Then for each , either: A key consequence of Theorem 3.16 is the absence of self-deadlocks: since we can only guard on a returnable mailbox, and a returnable name must be the last occurrence in the thread, it cannot be that the guard expression is blocking a send to the same mailbox in the same thread. As we cannot use dependency graphs ( §2.2), our progress result does not rule out inter-process deadlocks.</p><formula xml:id="formula_29">• there exist ′ , Σ ′ such that , Σ -→ ′ , Σ ′ ;</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">ALGORITHMIC TYPING</head><p>Writing a typechecker based on Pat's declarative typing rules is challenging due to nondeterministic context splits, environment subtyping, and pattern inclusion. MC 2 <ref type="bibr">[Padovani 2018b</ref>] is a typechecker for the mailbox calculus, based on a typechecker for concurrent object usage protocols <ref type="bibr">[Padovani 2018c</ref>]. The MC 2 type system has, however, not been formalised. We adopt several ideas from MC 2 , especially algorithmic type combination, and adapt the approach for a programming language.</p><p>Type system overview. Our algorithmic type system takes a co-contextual <ref type="bibr" target="#b16">[Erdweg et al. 2015]</ref> approach: rather than taking a type environment as an input to the type-checking algorithm, we produce a type environment as an output. The intuition is that (read bottom-up), splitting an environment into two sub-environments is more difficult than merging two environments inferred from subexpressions. We also generate inclusion constraints on patterns to be solved later.</p><p>Bidirectional type systems <ref type="bibr" target="#b14">[Dunfield and Krishnaswami 2022;</ref><ref type="bibr" target="#b54">Pierce and Turner 2000</ref>] split typing rules into two classes: those that synthesise a type for a term (Γ ⊢ ⇒ ), and those that check that a term has type (Γ ⊢ ⇐ ). Bidirectional type systems are syntax-directed and amenable to implementation. We use a co-contextual variant of bidirectional typing first introduced by <ref type="bibr" target="#b65">Zeilberger [2015]</ref>. The main twist is the variable rule, which becomes a checking rule and records the given variable-type mapping in the inferred environment.</p><formula xml:id="formula_30">Unrestrictedness unr( ) ▶ Φ unr( ) ▶ ∅ unr(! • ) ▶ {1 &lt;: } Subtyping 1 ≤ 2 ≤ ▶ Φ ≤ • ≤ • ≤ ▶ ∅ 1 ≤ 2 ! 1 ≤ ! 2 ▶ &lt;: 1 ≤ 2 ? 1 ≤ ? 2 ▶ &lt;: Type join 1 2 ▶ ; Φ 1 2 ▶ ; Φ ! ! ▶ !( ⊙ ); ∅ fresh ! ? ▶ ? ; { ( ⊙ ) &lt;: } fresh ? ! ▶ ? ; { ( ⊙ ) &lt;: } 1 2 ▶ ; Φ 1 1 2 2 ▶ 1 ⊲ 2 ; Φ ▶ ; ∅ Type merge 1 ⊓ 2 ▶ ; Φ 1 ⊓ 2 ▶ ; Φ ! ⊓ ! ▶ !( ⊕ ); ∅ fresh ? ⊓ ? ▶ ? ; { &lt;: , &lt;: } 1 ⊓ 2 ▶ ; Φ 1 1 ⊓ 2 2 ▶ max( 1 , 2 ) ; Φ ⊓ ▶ ; ∅</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Algorithmic Type System</head><p>Extended syntax and annotation. A key difference in comparison to the declarative type system is the addition of pattern variables , that act as a placeholder for part of a pattern and are generated during typechecking. We can then generate and solve inclusion constraints on patterns. Figure <ref type="figure" target="#fig_6">8</ref> shows the extended syntax used in the algorithmic system.</p><p>Constraints. An important challenge for the algorithmic type system is determining whether one pattern is included within another: e.g. m ⊑ ★m. Given that patterns may contain pattern variables, we may need to defer inclusion checking until more pattern variables are known, so we introduce inclusion constraints &lt;: which require that pattern is included in pattern .</p><p>Fig. <ref type="figure" target="#fig_8">9</ref> shows the algorithmic type combination operators.</p><p>Unrestrictedness and subtyping. The algorithmic unrestrictedness operation unr( ) ▶ Φ states that is unrestricted subject to constraints Φ, and the definition reflects the fact that a type is unrestricted in the declarative system if it is a base type or a subtype of !1 • . Algorithmic subtyping is similar: a base type is a subtype of itself, and we check that two mailbox types with the same capability are subtypes of each other by generating a contravariant constraint for a send type, and a covariant constraint for a receive type.</p><p>Algorithmic type join. Declarative mailbox typing relies on the subtyping rule to manipulate types into a form where they can be combined with the type combination operators, e.g., ! ⊞ ?( ⊙ ) = ? . The algorithmic type system cannot apply the same technique as it does not know, a priori, the form of each pattern. Instead, the algorithmic type join operation allows the combination of two mailbox types irrespective of their syntactic form. Combining two send types is the same as in the declarative system, but combining a send type with a receive type (and vice versa) is more interesting: say we wish to combine ! and ? . In this case, we generate a fresh pattern variable ; the result is ? along with the constraint that ( ⊙ ) &lt;: : namely, that the send pattern concatenated with the fresh pattern variable is included in the pattern .</p><p>As an example, joining !m and ?(n ⊙ m) produces a receive mailbox type ? and a constraint (m ⊙ ) &lt;:(n ⊙ m), for which a valid solution is ↦ → n, and hence the expected combined type ?n.</p><p>Algorithmic type merge. In the declarative type system branching control flow requires that each branch is typable under the same type environment (using the T-Subs rule). The algorithmic type system instead generates constraints that ensure that each type is used consistently across branches using the algorithmic type merge operation 1 ⊓ 2 ▶ ; Φ. Two base types are merged if they are identical. In the case of mailbox types, the function takes the maximum usage annotation, so max(•, •) = •. It ensures that when merging two output capabilities the patterns are combined using pattern disjunction. Conversely merging two input capabilities generates a new pattern variable that must be included in both merged patterns.</p><p>Algorithmic environment combination. We can extend the algorithmic type operations to type environments; the (omitted) rules are adaptations of the corresponding declarative operations. Notably, when combining two environments used in branching control flow such as conditionals where an output mailbox ! is used in one environment but not the other, the resulting type is !( ⊕ 1) to signify the choice of not sending on the mailbox name.</p><p>Nullable type environments. Checking a fail guard produces a null environment ⊤ which can be composed with any other type environment, as shown by the following definition: Definition 4.1 (Nullable environment combination). For each combination operator ★ ∈ { , ⊓, +} we extend environment combination to nullable type environments, Ψ 1 ★ Ψ 2 ▶ Ψ; Φ by extending each environment combination operation with the following rules:</p><formula xml:id="formula_31">⊤ ★ ⊤ ▶ ⊤; ∅ ⊤ ★ Θ ▶ Θ; ∅ Θ ★ ⊤ ▶ Θ; ∅</formula><p>Nullable type environments are a supertype of every defined type environment: Θ ≤ ⊤.</p><p>Figure <ref type="figure" target="#fig_0">10</ref> shows the Pat algorithmic typing of programs, definitions and terms. The key idea is to remain in checking mode for as long as possible, in order to propagate type information to the variable rule and construct a type environment. We write Θ --→ for { :</p><formula xml:id="formula_32">| : ∈ Θ ∧ ∉ - → }.</formula><p>Synthesis. Our synthesis judgement has the form ⇒ P ▶ Θ; Φ, which can be read "synthesise type for term under program P, producing type environment Θ and constraints Φ". Here, and P are inputs of the judgement, whereas , Θ, and Φ are outputs. The checking judgement ⇐ P ▶ Θ; Φ can be read "check that term has type under program P, producing type environment Θ and constraints Φ". Here, , P, and are inputs of the judgement, whereas Θ and Φ are outputs. As in the declarative system we omit the P annotation in the rules for readability.</p><p>Rule TS-Const assigns a known base type to a constant, and rule TS-New synthesises a type ?1 • (analogous to T-New); both rules produce an empty environment and constraint set.</p><p>Rule TS-Spawn checks that the given computation has the unit type, synthesises type 1, and infers a type environment Θ and constraint set Φ. Like T-Spawn in the declarative system, the usability annotations are masked as usable since usability restrictions are process-local.</p><p>Message sending ! m[ -→ ] is a side-effecting operation, and so we synthesise type 1. Rule TS-Send first looks up the payload types -→ in the signature, and checks that message target has mailbox type !m • . In performing this check, the type system will produce environment Θ ′ that</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Metatheory</head><p>We can now establish that the algorithmic type system is sound and complete with respect to the declarative type system. We begin by introducing the notion of pattern substitutions and solutions.</p><p>A pattern substitution Ξ is a mapping from type variables to (fully-defined) patterns ; applying Ξ to a pattern substitutes all occurrences of a type variable for Ξ( ). We extend application of pattern substitutions to types and environments. We write pv( ) for the set of pattern variables in a pattern and extend it to types and environments. Definition 4.2 (Pattern solution). A pattern substitution Ξ is a pattern solution for a constraint set Φ (or solves Φ) if pv(Φ) ⊆ dom(Ξ) and for each &lt;: ∈ Ξ, we have that Ξ( ) ⊑ Ξ( ). A solution Ξ is a usable solution if its range does not contain any pattern equivalent to 0.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.1">Algorithmic Soundness.</head><p>Definition 4.3 (Covering solution). We say that a pattern substitution Ξ is a covering solution for a derivation ⇒ P ▶ Θ; Φ or ⇐ P ▶ Θ; Φ if given ⊢ P ⊲ Φ ′ , it is the case that Ξ is a usable solution for Φ ∪ Φ ′ such that pv( ) ∪ pv(P) ⊆ dom(Ξ).</p><p>If a term is well typed in the algorithmic system then, given a covering solution, the term is also well typed in the declarative system.</p><p>Theorem 4.4 (Algorithmic Soundness).</p><p>• If Ξ is a covering solution for ⇒ P ▶ Θ; Φ, then Ξ(Θ) ⊢ Ξ( P ) : Ξ( ).</p><p>• If Ξ is a covering solution for ⇐ P ▶ Θ; Φ, then Ξ(Θ) ⊢ Ξ( P ) : Ξ( ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.2">Algorithmic Completeness.</head><p>We also obtain a completeness result, but only for the checking direction. This is because the type system requires type information to construct a type environment.</p><p>In practice the lack of a completeness result for synthesis is unproblematic since all functions have return type annotations, and therefore the only terms typable in the declarative system but unsynthesisable are top-level terms containing free variables. In the following we assume that program P is closed, i.e. no definitions or message payloads contain type variables.</p><p>Theorem 4.5 (Algorithmic Completeness). If ⊢ P where P is closed, and Γ ⊢ P : , then there exist some Θ, Φ and usable solution Ξ of Φ such that ⇐ P ▶ Θ; Φ where Γ ≤ Ξ(Θ).</p><p>An unannotated let binding let = in is also typable by the algorithmic type system if either occurs free in , or the type of is synthesisable; in practice this encompasses both base types and linear usages of mailbox types, i.e. the vast majority of use cases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Constraint Solving</head><p>Constraint solving is covered in depth by <ref type="bibr">Padovani [2018c]</ref>, so we provide an informal overview: Identify and group bounds A pattern bound is of the form &lt;: i.e. a constraint whose righthand-side is a pattern variable. We firstly group all pattern bounds using pattern disjunction, e.g. a constraint set { &lt;: , &lt;: , 1 &lt;: 1} would result in the constraint ⊕ &lt;: . Calculate closed-form solutions <ref type="bibr" target="#b33">Hopkins and Kozen [1999]</ref> define a closed-form solution for a set of pattern bounds ( &lt;: ) : there exists a solution for each such that ∉ pv( ). We can then substitute each closed pattern through the system to eliminate all pattern variables in the remaining constraints and obtain a system of closed inclusion constraints. Translate to Presburger formulae and check satisfiability Finally, we translate the closed constraints into Presburger formulae. Commutative regular expressions, and therefore patterns, can be expressed as semilinear sets <ref type="bibr" target="#b53">[Parikh 1966</ref>] that describe Presburger formulae <ref type="bibr" target="#b26">[Ginsburg and Spanier 1966]</ref>. Since checking the satisfiability of a Presburger formula is decidable, an external solver like Z3 <ref type="bibr" target="#b12">[de Moura and Bjørner 2008]</ref> can be used to determine whether each constraint holds. In our case, we use Z3's quantifier elimination pass and its quantifier-free linear integer arithmetic solver.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">EXTENSIONS</head><p>It is straightforward to extend Pat with product and sum types, and by using contextual typing information prior to constraint generation, we can add higher-order functions and interfaces that allow finer-grained alias analysis. The formalisation can be found in the extended version.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Product and Sum Types</head><p>Product and sum constructors are checking cases, and must contain only returnable components since we must be able to safely substitute their contents in any context. As with let expressions we can omit annotations on elimination forms, i.e. let ( , ) = in or case of { ↦ → ; ↦ → }, provided that and are used in their continuations, or the sum or product consists of base types.</p><p>An advantage of adding product types is that we can avoid nested guard clauses, as we can return both a received value and an updated mailbox name. Figure <ref type="figure" target="#fig_0">12a</ref> receives two integers and returns their sum using nested guard expressions, whereas Figure <ref type="figure" target="#fig_0">12b</ref> uses products instead.</p><p>Since product types can only contain returnable components, they cannot be used to replace -ary argument sequences in function definitions and receive clauses.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Using Contextual Type Information</head><p>A co-contextual approach is required to generate the pattern inclusion constraints. Sometimes, however, it is useful to have contextual type information before the constraint generation pass. Consider applying a first-class function: ( ( : Int): Int . )(5). Although the annotated expression allows us to synthesise a type and use a rule similar to TS-App, the lack of contextual type information means that the approach fails as soon as we stray from applying function literals as in let = ( ( : Int): Int . ) in (5)). A typical backwards bidirectional typing approach requires synthesising function argument types, but this is too inflexible in our setting as each mailbox name argument would need a type annotation.</p><p>In the base system a global signature maps message tags to payload types. While technically convenient, this is inflexible. First, distinct entities may wish to use the same mailbox tags with different payload types. For example, a client may send a Login message containing credentials to a server, which may then send a Login message containing the credentials and a timestamp to a session management server. Second, we need a syntactic check on a receive guard to avoid aliasing, as outlined in §2: either the received payloads or free variables in the guard body must be base types. This conservative check rules out innocuous cases such as in Figure <ref type="figure" target="#fig_0">12c</ref>, which waits for messages from two actors before signalling them to continue.</p><p>With contextual information we can associate each mailbox name with an interface , which maps tags to payload types, and allows us to syntactically distinguish different kinds of mailboxes (e.g. a future and its client). Since a name cannot have two interfaces at once, we can loosen our syntactic check on receive guards to require only that the interfaces of mailbox names in the payloads and free variables differ, as typing guarantees that they will refer to different mailboxes.</p><p>We implement the above extensions via a contextual type-directed translation: we annotate function applications with the type of the function (i.e. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">IMPLEMENTATION AND EXPRESSIVENESS</head><p>We outline the implementation of a prototype type checker written in OCaml, and evidence the expressiveness of Pat via a selection of example programs taken from the literature. We first show that using quasi-linear typing in place of dependency graphs (cf. §2.  <ref type="bibr">Neykova and Yoshida [2017b]</ref>. Finally, we encode a case study provided by an industrial partner that develops control software for factories.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Implementation Overview</head><p>Pat programs are type checked in a six-phase pipeline: lexing and parsing; desugaring, which expands the sugared form of guards (i.e. rewrites free as guard : 1 {free ↦ → ()} and fail as guard : 0 {fail}) and adds omitted pattern variables; IR conversion, which transforms the surface language (supporting nested expressions) to our explicitly-sequenced intermediate representation; contextual type-checking, which supports the contextual extensions from §5.2; constraint generation; and constraint solving. The Pat typechecker operates in two modes that determine how receive guards are type checked. Strict mode uses the lightweight syntactic checks outlined in §3 and §4, whereas interface mode uses interface type information ( §5.2) to relax these checks. This means that every Pat program accepted in strict mode is also accepted in interface mode.  <ref type="bibr">2014, Table 1, No. 1-4, 6, 7, 12, 14-16]</ref> used in <ref type="bibr">[Neykova and Yoshida 2017b]</ref>. The table indicates whether a Pat program can be checked in strict (denoted by •), in addition to interface mode (denoted by •). We report the mean typechecking time, excluding phases 1-3 of the pipeline. Measurements are made on a MacBook M1 Pro with 16GB of memory, running macOS 13.2 and OCaml 5.0, and averaging over 1000 repetitions. The examples reveal the benefits of mailbox typing. Runtime checks, such as manual error handling ( §1.2) are unnecessary since errors (e.g. unexpected messages) are statically ruled out by the type system. Mailbox types also have an edge over session typing tools for actor systems, e.g. <ref type="bibr">[Neykova and Yoshida 2017b;</ref><ref type="bibr" target="#b59">Tabone and Francalanza 2022]</ref> where developers typically specify protocols in external tools and write code to accommodate the session typing framework. In contrast, mailbox typing naturally fits idiomatic actor programming. This flexibility does not incur high typechecking runtime (see Tbl. 1). The aim of benchmarking typechecking time is to show that mailbox typechecking is not prohibitively expensive, rather than to claim comparative results. Comparisons with other implementations of (non-mailbox-typed versions of) the benchmarks written in other languages are unlikely to strengthen our results as the benchmark source code would be different, and we would be measuring e.g. Java's entire type system implementation rather than the essence of the typechecking algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">Expressiveness and Typechecking Time</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.2">Case Study.</head><p>Finally we describe a real-world use case written by Actyx AG<ref type="foot" target="#foot_5">3</ref> , who develop control software for factories. The use case captures a scenario where multiple robots on a factory floor acquire parts from a warehouse that provides access through a single door. Robots negotiate with the door to gain entry into the warehouse and obtain the part they require. The behaviour of our three entities, Robot, Door, and Warehouse is shown in Fig. <ref type="figure" target="#fig_11">13</ref>. Our concrete syntax closely follows the core calculus of §3, without requiring that pattern variables in mailbox types are specified explicitly. Type checking our case study relies on contextual type information (see §5), and takes ≈89.6 ms.</p><p>We give an excerpt of our Warehouse process (below) that maps the interactions of its lifeline in Fig. <ref type="figure" target="#fig_11">13</ref>. In its initial state, empty, the Warehouse expects a Prepare message (if there are Robots in the system), or none (if no Robot requests access), expressed as the guard Prepare + 1 on line 2. When a part is requested, the Warehouse transitions to the state engaged, where it awaits a Deliver message from the Door and notifies the Robot via a Delivered message (lines 9-15). Subsequent interactions that the Warehouse undertakes with the Door and Robot are detailed in the extended version. Note that our type system enables us to be precise with respect to the messages mailboxes receive. Specifically, the guard on line 2 expects at most one Prepare message, capturing the mutual exclusion requirement between Robots, whereas the guard on line 10 expects exactly Deliver. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">RELATED WORK</head><p>Behaviourally-typed actors. The asymmetric nature of mailboxes makes developing behavioural type systems for actor languages challenging. <ref type="bibr" target="#b45">Mostrous and Vasconcelos [2011]</ref> investigate session typing for Core Erlang, using selective message reception and unique references to encode sessiontyped channels. <ref type="bibr">Tabone and</ref><ref type="bibr">Francalanza [2021, 2022]</ref> develop a tool that statically checks Elixir <ref type="bibr" target="#b38">[Jurić 2019</ref>] actors against binary session types to prove session fidelity. <ref type="bibr">Neykova and Yoshida [2017b]</ref> propose a programming model for dynamically checking actor communication against multiparty session types <ref type="bibr" target="#b32">[Honda et al. 2016]</ref>, later implemented in Erlang by <ref type="bibr" target="#b18">Fowler [2016]</ref>. <ref type="bibr">Neykova and Yoshida [2017a]</ref> show how causality information in global types can support efficient recovery strategies. <ref type="bibr" target="#b28">Harvey et al. [2021]</ref> use multiparty session types with explicit connection actions <ref type="bibr" target="#b34">[Hu and Yoshida 2017]</ref> to give strong guarantees about actors that support runtime adaptation, but an actor can only participate in one session at a time. Using session types to structure communication requires specifying point-to-point interactions, typically using different libraries and formalisms. In contrast, our mailbox typing approach naturally fits idiomatic actor programming paradigms. <ref type="bibr" target="#b4">Bagherzadeh and Rajan [2017]</ref> define a type system for active objects <ref type="bibr" target="#b11">[de Boer et al. 2007</ref>] which can rule out data races; this work targets an imperative calculus and is not validated via an implementation. <ref type="bibr" target="#b39">Kamburjan et al. [2016]</ref> apply session-based reasoning to a core active object calculus where types encode remote calls and future resolutions; communication correctness is ensured by static checks against session automata <ref type="bibr" target="#b5">[Bollig et al. 2013]</ref>.</p><p>Mailbox types are inspired by behavioural type systems <ref type="bibr" target="#b10">[Crafa and Padovani 2017]</ref> for the objective join calculus <ref type="bibr" target="#b17">[Fournet and Gonthier 1996]</ref>. The technique can be implemented in Java using code generation via matching automata <ref type="bibr" target="#b25">[Gerbo and Padovani 2019]</ref>, and dependency graphs</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig.1. Channel-and actor-based languages<ref type="bibr" target="#b22">[Fowler et al. 2017]</ref> </figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Pat operational semantics</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Pat runtime typing</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head></head><label></label><figDesc>Theorem 3.11 (Preservation). If ⊢ P, and Γ ⊢ P C with Γ reliable, and C -→ P D, then Γ ⊢ P D.Preservation implies mailbox conformance: the property that a configuration will never evaluate to a singleton failure guard. To state mailbox conformance, it is useful to define the notion of a configuration context H ::= ( )H | H ∥ C | [ ],Σ , that allows us to focus on a single thread. Corollary 3.12 (Mailbox Conformance). If ⊢ P and Γ ⊢ P C with Γ reliable, then C ̸ -→ * H [fail ].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. Pat syntax extended for algorithmic typing</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>or • is a value and Σ = ; or • waiting( , , m ) where M does not contain a message m for and ∉ fv( -→ ) ∪ fv(Σ ), where -→ are the guard clauses of .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 9 .</head><label>9</label><figDesc>Fig. 9. Pat algorithmic type operations</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head></head><label></label><figDesc>allows us to synthesise the function type. Users specify an interface when creating a mailbox (new[ ]); our pass then annotates sends and guards with interface information (i.e. ! m[ -→ ] and guard : { -→ }) for use in constraint generation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head></head><label></label><figDesc>Tbl. 1 lists the examples implemented in Pat. Examples 1-6 are the mailbox calculus examples from [de'Liguoro and Padovani 2018, Ex. 1-3, and Sec. 4.1-4.3]. Examples 7-16 are the selection of Savina benchmarks [Imam and Sarkar</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig. 13 .</head><label>13</label><figDesc>Fig. 13. Factory use case 6.2.1 Benchmarks. Tbl. 1 shows that all but one of the mailbox calculus examples from [de'Liguoro and Padovani 2018] can be checked in strict mode. The Savina examples capture typical concurrent programming patterns, namely, master-worker (K-Fork, Fibonacci, Log Map), client-server (Ping Pong, Counter), and peer-to-peer (Big), and common network topologies such as star (Philosopher, Smokers, Transaction) and ring (Thread Ring). Most of these programs require contextual type information (8, 9, and 12-16) to type check. As Pat does not yet support recursive types, we instead emulate fixed collections using definition parameters in examples 8, 10, 12-16. We could not encode the Sleeping Barber [Neykova and Yoshida 2017b, Ex. 8] example since the number of collection elements varies throughout execution.The examples reveal the benefits of mailbox typing. Runtime checks, such as manual error handling ( §1.2) are unnecessary since errors (e.g. unexpected messages) are statically ruled out by the type system. Mailbox types also have an edge over session typing tools for actor systems, e.g.[Neykova and  Yoshida 2017b;<ref type="bibr" target="#b59">Tabone and Francalanza 2022]</ref> where developers typically specify protocols in external tools and write code to accommodate the session typing framework. In contrast, mailbox typing naturally fits idiomatic actor programming. This flexibility does not incur high typechecking runtime (see Tbl. 1). The aim of benchmarking typechecking time is to show that mailbox typechecking is not prohibitively expensive, rather than to claim comparative results. Comparisons with other implementations of (non-mailbox-typed versions of) the benchmarks written in other languages are unlikely to strengthen our results as the benchmark source code would be different, and we would be measuring e.g. Java's entire type system implementation rather than the essence of the typechecking algorithm.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>19</head><label></label><figDesc>def empty(self: wh?): Unit { 2 guard self: Prepare + def engaged(self: wh?): Unit { 10 guard self: Deliver { 11 receive Deliver(robot, door) from self 12 robot ! Delivered(self, door);</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Put[5]; future ! Get[self];</head><label></label><figDesc></figDesc><table><row><cell></cell><cell>new in</cell></row><row><cell cols="2">3 spawn emptyFuture(future);</cell></row><row><cell cols="2">4 let self = new in</cell></row><row><cell cols="2">5 future ! 6 guard self : Reply {</cell></row><row><cell>7</cell><cell>receive Reply[result] from self ↦ →</cell></row><row><cell>8</cell><cell>free self;</cell></row><row><cell>9</cell><cell>print(intToString(result) )</cell></row><row><cell>10</cell><cell>}</cell></row><row><cell>11 }</cell><cell></cell></row><row><cell cols="2">Fig. 2. Send and receive uses of future</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>5. Pat declarative term typing in concurrent processes. Rule T-New creates a fresh mailbox with type ?1 • , since subsequent sends and receives must "balance out" to an empty mailbox. Value must be a reference with type !m • , meaning that it can be used to send message m. The mailbox only needs to be second-class, but subtyping means that we can also send to a first-class name. All payloads -→ must be subtypes of the types defined by the signature for message m, and payloads must be typable under separate environments to avoid aliasing when receiving a message. Unlike in session-typed functional programming languages, sending is a side-effecting operation of type 1, and the behavioural typing is accounted for in environment composition.</figDesc><table><row><cell>Rule T-Send types a send expression ! m[ → -], where a message m with payloads mailbox . Special Delivery</cell><cell>-→ is sent to a 191:13</cell></row></table><note><p>Rule T-Guard types the expression guard : { -→ }, that retrieves from mailbox with some pattern using guards -→ . The first premise ensures that under a type environment Γ 1 , mailbox has type ? • : the mailbox should have a receive capability with pattern , and must be returnable. Proc. ACM Program. Lang., Vol. 7, No. ICFP, Article 191. Publication date: August 2023.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head></head><label></label><figDesc>Tbl. 1. Typechecking concurrent actor examples in Pat</figDesc><table><row><cell>#</cell><cell>Name</cell><cell>Description</cell><cell cols="2">Strict Time (ms)</cell></row><row><cell cols="3">Original mailbox calculus models taken from de'Liguoro and Padovani [2018]</cell><cell></cell><cell></cell></row><row><cell>1</cell><cell>Lock</cell><cell>Concurrent lock modelling mutual exclusion</cell><cell>•</cell><cell>28.5</cell></row><row><cell>2</cell><cell>Future</cell><cell>Future variable that is written to once and read multiple times</cell><cell>•</cell><cell>22.5</cell></row><row><cell>3</cell><cell>Account</cell><cell>Concurrent accounts exchanging debit and credit instructions</cell><cell>•</cell><cell>19.5</cell></row><row><cell>4</cell><cell>AccountF</cell><cell>Concurrent accounts where debit instructions are effected via futures</cell><cell>•</cell><cell>33.5</cell></row><row><cell cols="3">5 Master-Worker Master-worker parallel network</cell><cell>•</cell><cell>29.0</cell></row><row><cell cols="3">6 Session Types Session-typed communicating actors using one arbiter</cell><cell>•</cell><cell>75.5</cell></row><row><cell cols="4">Selected micro-benchmarks adapted from Imam and Sarkar [2014], based on Neykova and Yoshida [2017b]</cell><cell></cell></row><row><cell>7</cell><cell>Ping Pong</cell><cell>Process pair exchanging ping and pong messages</cell><cell>•</cell><cell>24.6</cell></row><row><cell>8</cell><cell>Thread Ring</cell><cell>Ring network where actors cyclically relay one token with counter</cell><cell>•</cell><cell>37.2</cell></row><row><cell>9</cell><cell>Counter</cell><cell>One actor sending messages to a second that sums the count,</cell><cell>•</cell><cell>29.8</cell></row><row><cell>10</cell><cell>K-Fork</cell><cell>Fork-join pattern where a central actor delegates requests to workers</cell><cell>•</cell><cell>7.1</cell></row><row><cell>11</cell><cell>Fibonacci</cell><cell>Fibonacci server delegating terms ( -1) and ( -2) to parallel actors</cell><cell>•</cell><cell>27.1</cell></row><row><cell>12</cell><cell>Big</cell><cell>Peer-to-peer network where actors exchange messages randomly</cell><cell>•</cell><cell>62.8</cell></row><row><cell>13</cell><cell>Philosopher</cell><cell>Dining philosophers problem</cell><cell>•</cell><cell>57.1</cell></row><row><cell>14</cell><cell>Smokers</cell><cell>Centralised network where one arbiter allocates messages to actors</cell><cell>•</cell><cell>31.3</cell></row><row><cell>15</cell><cell>Log Map</cell><cell>Computes the term +1 = • (1 -) by delegating to parallel actors</cell><cell>•</cell><cell>57.9</cell></row><row><cell>16</cell><cell>Transaction</cell><cell>Request-reply actor communication initiated by a central teller actor</cell><cell>•</cell><cell>46.7</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head></head><label></label><figDesc>3) does not prevent Pat from expressing all of the examples in [de'Liguoro and Padovani 2018]. The Savina benchmarks [Imam and Sarkar 2014] capture typical concurrent communication patterns and are used both to compare actor languages and to demonstrate expressiveness; we show that Pat can express 10 of the 11 Savina expressiveness benchmarks used by</figDesc><table /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Proc. ACM Program. Lang., Vol. 7, No. ICFP, Article 191. Publication date: August 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>https://en.wikipedia.org/wiki/Postman_Pat Proc. ACM Program. Lang., Vol. 7, No. ICFP, Article 191. Publication date: August</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2023" xml:id="foot_2"><p></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_3"><p>Unlike in §1, our formalism does not pair a message tag with its payload; instead, tags are associated with payload types via the program signature. This design choice allows us to more easily compare the declarative system with the algorithmic system in §4, and unlike [de'Liguoro and Padovani 2018] means we need not define types and subtyping coinductively. Proc. ACM Program. Lang., Vol. 7, No. ICFP, Article 191. Publication date: August 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_4"><p>• ⊲ • = • ∉ dom(Γ 2 ) Γ 1 ⊲ Γ 2 = Γ (Γ 1 , : ) ⊲ Γ 2 = Γ, : ∉ dom(Γ 1 ) Γ 1 ⊲ Γ 2 = Γ Γ 1 ⊲ (Γ 2 , : ) = Γ, : Γ 1 ⊲ Γ 2 = Γ (Γ 1 , : ) ⊲ (Γ 2 , : ) = Γ, : ( ⊲ )We use usage-annotated type combination when combining the types of two variables used in subsequent evaluation frames (i.e. in the subject and body of a let expression). We also require disjoint combination, where two environments are only able to share variables of base type: Definition 3.9 (Disjoint environment combination). Disjoint environment combination Γ 1 + Γ 2 is the smallest partial operator on type environments closed under the following rules:• + • = • ∉ dom(Γ 2 ) Γ 1 + Γ 2 = Γ Γ 1 , : + Γ 2 = Γ, : ∉ dom(Γ 1 ) Γ 1 + Γ 2 = ΓΓ 1 + Γ 2 , : = Γ, :Γ 1 + Γ 2 = ΓΓ 1 , : + Γ 2 , : = Γ, :</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_5"><p>https://www.actyx.com Proc. ACM Program. Lang., Vol. 7, No. ICFP, Article 191. Publication date: August 2023.</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>We thank the anonymous ICFP reviewers and Artifact Evaluation Committee, as well as our STARDUST colleagues for their helpful comments. Thanks also to <rs type="person">Roland Kuhn</rs> for discussion of the case study. This work was supported by <rs type="funder">EPSRC</rs> Grant <rs type="grantNumber">EP/T014628/1</rs> (STARDUST).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_AZGAhEW">
+					<idno type="grant-number">EP/T014628/1</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>A typechecker for Pat, evaluated by the ICFP'23 Artifact Evaluation Committee, is available on Zenodo [Fowler et al. 2023a].</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Constraint generation for programs and definitions</head><p>⊢ P ⊲ Φ ⊢ P def ( --→ :</p><p>Constraint generation (synthesis) ⇒ P ▶ Θ; Φ</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TS-Const</head><p>has base type contains an entry mapping the variable in to the desired mailbox type !m • . Next, the algorithm checks each payload value against the payload type described by the signature. The resulting environment is the algorithmic disjoint combination of the environments produced by checking each payload, and the resulting constraint set is the union of all generated constraints. Function application is similar: rule TS-App looks up the type signature for function and checks that all arguments have the expected types. The resulting environment is again the disjoint combination of the environments, and the constraint set is the union of all generated constraints.</p><p>Checking. Rule TC-Var checks that a variable has type , producing a type environment : . The TC-Let rule checks that a let-binding let : = in has type : first, we check that has type ⌊ ⌋ noting that only values of returnable type may be returned, producing environment Θ 1 and constraints Φ 1 . Next we check that the body has type , producing environment Θ 2 and Φ 2 . The next step is to check whether the types of the variable inferred in Θ 2 corresponds with the annotation. The check meta-function ensures that if is not contained within Θ 2 , then the type of is unrestricted; and conversely if is contained within Θ 2 , then the annotation is a subtype of the inferred type as the annotation is a lower bound on what the body can expect of .</p><p>Rule TC-Guard checks that a guard expression guard : { -→ } has return type . TCG-Guards set Φ 1 , and pattern in pattern normal form. Next, the rule checks that the mailbox name has type ? • , producing environment Θ ′ and constraint set Φ 2 . Finally, the rule calculates the disjoint combination of Ψ and Θ ′ , producing final environment Θ and constraints Φ 3 . Finally, rule TC-Sub states that if a term is synthesisable with type , where is a subtype of , then is checkable with type . The resulting environment is that produced by synthesising the type for , and the resulting constraint set is the union of the synthesis and subtyping constraints.</p><p>Un-annotated let expressions. Although our core calculus assumes an annotation on let expressions, this is unnecessary if the let-bound variable is used in the continuation , or has a synthesisable type. Specifically, TC-LetNoAnn1 allows us to check the type of the continuation and inspect the produced environment for the type of , which can be used to check . Similarly, TC-LetNoAnn2 allows us to type a let-binding where is not used in the continuation, as long as the type of is synthesisable and unrestricted.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TC-LetNoAnn1</head><p>We use the explicitly-typed representation in the core calculus for simplicity and uniformity, however the implementation follows the above approach to avoid needless annotations.</p><p>Guards. Figure <ref type="figure">11</ref> shows the typing rules for guards; the judgement { } ⇐ ▶ Ψ; Φ; can be read "Check that guard has type , producing environment Ψ, constraints Φ, and closed pattern literal in pattern normal form with respect to ". Rule TCG-Guards types a guard sequence, producing the algorithmic merge of all environments and the sum of all produced patterns. Rule TCG-Fail types the fail guard with any type and produces a null type environment, empty constraint set, and pattern 0. Rule TCG-Free checks that guard free ↦ → has type by checking that has type ; the guard produces pattern 1.</p><p>Finally, rule TCG-Recv checks that a receive guard receive m[ -→ ] from ↦ → has type . First, the rule checks that has type , producing environment Θ ′ , : ? • and constraint set Φ 1 ; since a mailbox type with input capability is linear, it must be present in the inferred environment. Next, the rule checks that the inferred types for -→ in Θ ′ are compatible with the payloads for m declared in the signature, producing constraint set Φ 2 . As with the declarative rule, to rule out unsafe aliasing either the payloads or inferred environment must consist only of base types. The resulting environment is Θ (i.e., the inferred environment without the mailbox variable or any payloads). The resulting constraint set is the union of Φ 1 and Φ 2 along with an additional constraint which ensures that / m is included in , allowing us to produce the closed PNF literal m ⊙ ( / m).</p><p>Special Delivery 191:27 can rule out deadlocks <ref type="bibr">[Padovani 2018a</ref>], but the authors do not consider a programming language design. <ref type="bibr" target="#b57">Scalas et al. [2019]</ref> define a behavioural type system for Scala actors. Types are written in a domain-specific language, and type-level model checking determines safety and liveness properties.</p><p>Their system focuses on the behaviour of a process, rather than the state of the mailbox.</p><p>Session-typed functional languages. Session types <ref type="bibr" target="#b30">[Honda 1993;</ref><ref type="bibr" target="#b31">Honda et al. 1998</ref>] were originally considered in the setting of process calculi; <ref type="bibr" target="#b24">Gay and Vasconcelos [2010]</ref> were first to integrate session types in a functional language by building on the linear -calculus, and their approach has been adopted by several other works (e.g. <ref type="bibr" target="#b1">[Almeida et al. 2022;</ref><ref type="bibr" target="#b43">Lindley and Morris 2015]</ref>). Linear types are insufficient for mailbox typing since we require multiple uses of a mailbox name as a sender; we believe our use of quasi-linearity for behavioural typing is novel, and we conjecture that it could be used to support other paradigms (e.g. broadcast) that require non-linear variable use.</p><p>Co-contextual typing. Co-contextual typing <ref type="bibr" target="#b16">[Erdweg et al. 2015</ref>] was originally introduced to support efficient incremental type-checking, and has also been used to support intrinsically-typed compilation <ref type="bibr" target="#b56">[Rouvoet et al. 2021]</ref>. <ref type="bibr" target="#b49">Padovani [2014]</ref> uses a co-contextual type algorithm for the linear -calculus with sums, products, and recursive types; and <ref type="bibr" target="#b9">Ciccone and Padovani [2022]</ref> use it when analysing fair termination properties. Backwards bidirectional typing <ref type="bibr" target="#b65">[Zeilberger 2015</ref>] is a co-contextual formulation of bidirectional typing, and we are first to use it in a language implementation. Co-contextual typing has parallels with the co-de Bruijn nameless variable representation <ref type="bibr" target="#b44">[McBride 2018]</ref>, where subterms are annotated with the variables they contain.</p><p>Safety via static analysis. <ref type="bibr" target="#b8">Christakis and Sagonas [2011]</ref> implement a static analyser for Erlang that detects errors such as receiving from an empty mailbox, payload mismatches, redundant patterns, and orphan messages. All of these issues can be detected with mailbox types, which also allow us to specify the mailbox state. <ref type="bibr" target="#b27">Harrison [2018]</ref> implements an approach incorporating both typechecking and static analysis to detect errors such as orphan messages and redundant patterns.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">CONCLUSION AND FUTURE WORK</head><p>Concurrent and distributed applications can harbour subtle and insidious bugs, including protocol violations and deadlocks. Behavioural types ensure correct-by-construction communication-centric software, but are difficult to apply to actor languages. We have proposed the first language design incorporating mailbox types which characterise mailbox communication. The multiple-writer, single-reader nature of mailbox-oriented messaging makes the integration of mailbox types in programming languages highly challenging. We have addressed these challenges through a novel use of quasi-linear types and have formalised and implemented an algorithmic type system based on backwards bidirectional typing ( §4), proving it to be sound and complete with respect to the declarative type system ( §3). Our approach can flexibly express common communication patterns (e.g. master-worker) and a real-world case study based on factory automation.</p><p>Future work. We are investigating implementing mailbox types in a tool for mainstream actor languages, e.g. Erlang; in parallel, we are investigating how languages with first-class mailboxes can be compiled to standard actor languages in order to leverage mature runtimes. We plan to consider finer-grained inter-process alias control, and co-contextual typing with type constraints (as well as pattern constraints), enabling us to study more advanced language features, e.g. polymorphism.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">L 3 : A Linear Language with Locations</title>
+		<author>
+			<persName><forename type="first">Amal</forename><surname>Ahmed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Fluet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Greg</forename><surname>Morrisett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fundam. Informaticae</title>
+		<imprint>
+			<biblScope unit="volume">77</biblScope>
+			<biblScope unit="page" from="397" to="449" />
+			<date type="published" when="2007">2007. 2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Polymorphic lambda calculus with context-free session types</title>
+		<author>
+			<persName><forename type="first">Bernardo</forename><surname>Almeida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreia</forename><surname>Mordido</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Thiemann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vasco</forename><forename type="middle">T</forename><surname>Vasconcelos</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0304-3975(83)90059-2</idno>
+		<ptr target="https://doi.org/10.1016/0304-3975(83)90059-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Comput</title>
+		<imprint>
+			<biblScope unit="volume">289</biblScope>
+			<biblScope unit="page">104948</biblScope>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+	<note>Part</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">On Bisimulations for the Asynchronous pi-Calculus</title>
+		<author>
+			<persName><forename type="first">Roberto</forename><forename type="middle">M</forename><surname>Amadio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilaria</forename><surname>Castellani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Davide</forename><surname>Sangiorgi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0304-3975(97)00223-5</idno>
+		<ptr target="https://doi.org/10.1016/S0304-3975(97)00223-5" />
+	</analytic>
+	<monogr>
+		<title level="j">Theor. Comput. Sci</title>
+		<imprint>
+			<biblScope unit="volume">195</biblScope>
+			<biblScope unit="page" from="291" to="324" />
+			<date type="published" when="1998">1998. 1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Davide</forename><surname>Ancona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Viviana</forename><surname>Bono</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mario</forename><surname>Bravetti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joana</forename><surname>Campos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giuseppe</forename><surname>Castagna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pierre-Malo</forename><surname>Deniélou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nils</forename><surname>Gesbert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><surname>Giachino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raymond</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Einar</forename><surname>Broch Johnsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francisco</forename><surname>Martins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Viviana</forename><surname>Mascardi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fabrizio</forename><surname>Montesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rumyana</forename><surname>Neykova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vasco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Vasconcelos</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yoshida</surname></persName>
+		</author>
+		<idno type="DOI">10.1561/2500000031</idno>
+		<ptr target="https://doi.org/10.1561/2500000031" />
+	</analytic>
+	<monogr>
+		<title level="j">Behavioral Types in Programming Languages. Found. Trends Program. Lang</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="95" to="230" />
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Order types: static reasoning about message races in asynchronous message passing concurrency</title>
+		<author>
+			<persName><forename type="first">Mehdi</forename><surname>Bagherzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hridesh</forename><surname>Rajan</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3141834.3141837</idno>
+		<ptr target="https://doi.org/10.1145/3141834.3141837" />
+	</analytic>
+	<monogr>
+		<title level="m">AGERE!@SPLASH</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="21" to="30" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">A Fresh Approach to Learning Register Automata</title>
+		<author>
+			<persName><forename type="first">Benedikt</forename><surname>Bollig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Habermehl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Martin</forename><surname>Leucker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Monmege</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-642-38771-5_12</idno>
+		<ptr target="https://doi.org/10.1007/978-3-642-38771-5_12" />
+	</analytic>
+	<monogr>
+		<title level="m">Developments in Language Theory</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">7907</biblScope>
+			<biblScope unit="page" from="118" to="130" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Derivatives of regular expressions</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Janusz</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Brzozowski</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/321239.321249</idno>
+		<ptr target="https://doi.org/10.1145/321239.321249" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the ACM (JACM)</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="481" to="494" />
+			<date type="published" when="1964">1964. 1964</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">A Concurrent ML library in Concurrent Haskell</title>
+		<author>
+			<persName><forename type="first">Avik</forename><surname>Chaudhuri</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/1596550.1596589</idno>
+		<ptr target="https://doi.org/10.1145/1596550.1596589" />
+	</analytic>
+	<monogr>
+		<title level="m">ICFP. ACM</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="269" to="280" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Detection of Asynchronous Message Passing Errors Using Static Analysis</title>
+		<author>
+			<persName><forename type="first">Maria</forename><surname>Christakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Konstantinos</forename><surname>Sagonas</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/1140335.1140356</idno>
+		<ptr target="https://doi.org/10.1145/1140335.1140356" />
+	</analytic>
+	<monogr>
+		<title level="m">PADL</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">6539</biblScope>
+			<biblScope unit="page" from="5" to="18" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Fair termination of binary sessions</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Ciccone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3498666</idno>
+		<ptr target="https://doi.org/10.1145/3498666" />
+	</analytic>
+	<monogr>
+		<title level="j">Proc. ACM Program. Lang</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="1" to="30" />
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+	<note>POPL</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The Chemical Approach to Typestate-Oriented Programming</title>
+		<author>
+			<persName><forename type="first">Silvia</forename><surname>Crafa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3064849</idno>
+		<ptr target="https://doi.org/10.1145/3064849" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Program. Lang. Syst</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page">45</biblScope>
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A Complete Guide to the Future</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frank</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dave</forename><surname>De Boer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Einar Broch</forename><surname>Clarke</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Johnsen</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-540-71316-6_22</idno>
+		<ptr target="https://doi.org/10.1007/978-3-540-71316-6_22" />
+	</analytic>
+	<monogr>
+		<title level="m">ESOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">4421</biblScope>
+			<biblScope unit="page" from="316" to="330" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">An Efficient SMT Solver</title>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Mendonça De Moura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nikolaj</forename><forename type="middle">S</forename><surname>Bjørner</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-540-78800-3_24</idno>
+		<ptr target="https://doi.org/10.1007/978-3-540-78800-3_24" />
+	</analytic>
+	<monogr>
+		<title level="m">TACAS</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="337" to="340" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Mailbox Types for Unordered Interactions</title>
+		<author>
+			<persName><forename type="first">Ugo</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">'</forename><surname>Liguoro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.4230/LIPIcs.ECOOP.2018.15</idno>
+		<ptr target="https://doi.org/10.4230/LIPIcs.ECOOP.2018.15" />
+	</analytic>
+	<monogr>
+		<title level="m">Schloss Dagstuhl -Leibniz-Zentrum für Informatik</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page">28</biblScope>
+		</imprint>
+	</monogr>
+	<note>ECOOP (LIPIcs</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Jana</forename><surname>Dunfield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Neel</forename><surname>Krishnaswami</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3450952</idno>
+		<ptr target="https://doi.org/10.1145/3450952" />
+	</analytic>
+	<monogr>
+		<title level="j">Bidirectional Typing. ACM Comput. Surv</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Linear Types for Packet Processing</title>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Ennals</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Sharp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alan</forename><surname>Mycroft</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-540-24725-8_15</idno>
+		<ptr target="https://doi.org/10.1007/978-3-540-24725-8_15" />
+	</analytic>
+	<monogr>
+		<title level="m">ESOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">2986</biblScope>
+			<biblScope unit="page" from="204" to="218" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A co-contextual formulation of type rules and its application to incremental type checking</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Erdweg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oliver</forename><surname>Bracevac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edlira</forename><surname>Kuci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthias</forename><surname>Krebs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mira</forename><surname>Mezini</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2814270.2814277</idno>
+		<ptr target="https://doi.org/10.1145/2814270.2814277" />
+	</analytic>
+	<monogr>
+		<title level="m">OOPSLA</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="880" to="897" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">The Reflexive CHAM and the Join-Calculus</title>
+		<author>
+			<persName><forename type="first">Cédric</forename><surname>Fournet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Georges</forename><surname>Gonthier</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/237721.237805</idno>
+		<ptr target="https://doi.org/10.1145/237721.237805" />
+	</analytic>
+	<monogr>
+		<title level="m">POPL</title>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="1996">1996</date>
+			<biblScope unit="page" from="372" to="385" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">An Erlang Implementation of Multiparty Session Actors</title>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<idno type="DOI">10.4204/EPTCS.223.3</idno>
+		<ptr target="https://doi.org/10.4204/EPTCS.223.3" />
+	</analytic>
+	<monogr>
+		<title level="m">ICE (EPTCS</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">223</biblScope>
+			<biblScope unit="page" from="36" to="50" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">2023a. Artifact for &quot;Special Delivery: Programming with Mailbox Types</title>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Duncan</forename><forename type="middle">Paul</forename><surname>Attard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franciszek</forename><surname>Sowul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phil</forename><surname>Trinder</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.8126809</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.8126809" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Duncan</forename><forename type="middle">Paul</forename><surname>Attard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franciszek</forename><surname>Sowul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phil</forename><surname>Trinder</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2306.12935[cs.PL]</idno>
+		<title level="m">Special Delivery: Programming with Mailbox Types (Extended Version)</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Separating Sessions Smoothly</title>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wen</forename><surname>Kokke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ornela</forename><surname>Dardha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sam</forename><surname>Lindley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Garrett</forename><surname>Morris</surname></persName>
+		</author>
+		<idno type="DOI">10.46298/lmcs-19(3:3)2023</idno>
+		<ptr target="https://doi.org/10.46298/lmcs-19(3:3)2023" />
+	</analytic>
+	<monogr>
+		<title level="j">Logical Methods in Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">3</biblScope>
+			<date type="published" when="2023">2023. 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Mixing Metaphors: Actors as Channels and Channels as Actors</title>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sam</forename><surname>Lindley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><surname>Wadler</surname></persName>
+		</author>
+		<idno type="DOI">10.4230/LIPIcs.ECOOP.2017.11</idno>
+		<ptr target="https://doi.org/10.4230/LIPIcs.ECOOP.2017.11" />
+	</analytic>
+	<monogr>
+		<title level="m">ECOOP (LIPIcs</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. ACM Program. Lang</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">29</biblScope>
+			<date type="published" when="2023-08">August 2023</date>
+		</imprint>
+	</monogr>
+	<note>Special Delivery</note>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Linear type theory for asynchronous session types</title>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thudichum</forename><surname>Vasco</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vasconcelos</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/S0956796809990268</idno>
+		<ptr target="https://doi.org/10.1017/S0956796809990268" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Funct. Program</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="19" to="50" />
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Concurrent Typestate-Oriented Programming in Java</title>
+		<author>
+			<persName><forename type="first">Rosita</forename><surname>Gerbo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.4204/EPTCS.291.3</idno>
+		<ptr target="https://doi.org/10.4204/EPTCS.291.3" />
+	</analytic>
+	<monogr>
+		<title level="m">PLACES@ETAPS (EPTCS</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">291</biblScope>
+			<biblScope unit="page" from="24" to="34" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Semigroups, Presburger formulas, and languages</title>
+		<author>
+			<persName><forename type="first">Seymour</forename><surname>Ginsburg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edwin</forename><surname>Spanier</surname></persName>
+		</author>
+		<idno type="DOI">10.2307/2271032</idno>
+		<ptr target="https://doi.org/10.2307/2271032" />
+	</analytic>
+	<monogr>
+		<title level="j">Pacific journal of Mathematics</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="285" to="296" />
+			<date type="published" when="1966">1966. 1966</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Automatic detection of core Erlang message passing errors</title>
+		<author>
+			<persName><forename type="first">Joseph</forename><forename type="middle">R</forename><surname>Harrison</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3239332.3242765</idno>
+		<ptr target="https://doi.org/10.1145/3239332.3242765" />
+	</analytic>
+	<monogr>
+		<title level="m">Erlang Workshop</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="37" to="48" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Multiparty Session Types for Safe Runtime Adaptation in an Actor Language</title>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Harvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ornela</forename><surname>Dardha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECOOP (LIPIcs</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">194</biblScope>
+			<biblScope unit="page">30</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Typecasting actors: from Akka to TAkka</title>
+		<author>
+			<persName><forename type="first">Jiansen</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><surname>Wadler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><forename type="middle">W</forename><surname>Trinder</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2637647.2637651</idno>
+		<ptr target="https://doi.org/10.1145/2637647.2637651" />
+	</analytic>
+	<monogr>
+		<title level="m">SCALA@ECOOP</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="23" to="33" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Types for Dyadic Interaction</title>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Honda</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/3-540-57208-2_35</idno>
+		<ptr target="https://doi.org/10.1007/3-540-57208-2_35" />
+	</analytic>
+	<monogr>
+		<title level="m">CONCUR</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1993">1993</date>
+			<biblScope unit="volume">715</biblScope>
+			<biblScope unit="page" from="509" to="523" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Language Primitives and Type Discipline for Structured Communication-Based Programming</title>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Honda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vasco</forename><surname>Thudichum Vasconcelos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Makoto</forename><surname>Kubo</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BFb0053567</idno>
+		<ptr target="https://doi.org/10.1007/BFb0053567" />
+	</analytic>
+	<monogr>
+		<title level="m">ESOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="volume">1381</biblScope>
+			<biblScope unit="page" from="122" to="138" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Multiparty Asynchronous Session Types</title>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Honda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marco</forename><surname>Carbone</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2827695</idno>
+		<ptr target="https://doi.org/10.1145/2827695" />
+	</analytic>
+	<monogr>
+		<title level="j">J. ACM</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Parikh&apos;s Theorem in Commutative Kleene Algebra</title>
+		<author>
+			<persName><forename type="first">Mark</forename><forename type="middle">W</forename><surname>Hopkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dexter</forename><surname>Kozen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/LICS.1999.782634</idno>
+		<ptr target="https://doi.org/10.1109/LICS.1999.782634" />
+	</analytic>
+	<monogr>
+		<title level="m">LICS</title>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="page" from="394" to="401" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Explicit Connection Actions in Multiparty Session Types</title>
+		<author>
+			<persName><forename type="first">Raymond</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-642-21464-6_7</idno>
+		<ptr target="https://doi.org/10.1007/978-3-642-21464-6_7" />
+	</analytic>
+	<monogr>
+		<title level="m">FASE</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">10202</biblScope>
+			<biblScope unit="page" from="116" to="133" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Session-Based Distributed Programming in Java</title>
+		<author>
+			<persName><forename type="first">Raymond</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Honda</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-540-70592-5_22</idno>
+		<ptr target="https://doi.org/10.1007/978-3-540-70592-5_22" />
+	</analytic>
+	<monogr>
+		<title level="m">ECOOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="volume">5142</biblScope>
+			<biblScope unit="page" from="516" to="541" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Foundations of Session Types and Behavioural Contracts</title>
+		<author>
+			<persName><forename type="first">Hans</forename><surname>Hüttel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivan</forename><surname>Lanese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vasco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luís</forename><surname>Vasconcelos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marco</forename><surname>Caires</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pierre-Malo</forename><surname>Carbone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dimitris</forename><surname>Deniélou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Mostrous</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">António</forename><surname>Padovani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emilio</forename><surname>Ravara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hugo</forename><forename type="middle">Torres</forename><surname>Tuosto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gianluigi</forename><surname>Vieira</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Zavattaro</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2873052</idno>
+		<ptr target="https://doi.org/10.1145/2873052" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Comput. Surv</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1" to="3" />
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Savina -An Actor Benchmark Suite: Enabling Empirical Evaluation of Actor Libraries</title>
+		<author>
+			<persName><forename type="first">Mahmood</forename><surname>Shams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivek</forename><surname>Imam</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Sarkar</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2687357.2687368</idno>
+		<ptr target="https://doi.org/10.1145/2687357.2687368" />
+	</analytic>
+	<monogr>
+		<title level="m">AGERE!@SPLASH</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="67" to="80" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<author>
+			<persName><forename type="first">Saša</forename><surname>Jurić</surname></persName>
+		</author>
+		<title level="m">Elixir in Action. Manning</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Session-Based Compositional Analysis for Actor-Based Languages Using Futures</title>
+		<author>
+			<persName><forename type="first">Eduard</forename><surname>Kamburjan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Crystal</forename><surname>Chang Din</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tzu-Chun</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-319-47846-3_19</idno>
+		<ptr target="https://doi.org/10.1007/978-3-319-47846-3_19" />
+	</analytic>
+	<monogr>
+		<title level="m">ICFEM</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">10009</biblScope>
+			<biblScope unit="page" from="296" to="312" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Quasi-Linear Types</title>
+		<author>
+			<persName><forename type="first">Naoki</forename><surname>Kobayashi</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/292540.292546</idno>
+		<ptr target="https://doi.org/10.1145/292540.292546" />
+	</analytic>
+	<monogr>
+		<title level="m">POPL. ACM</title>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="page" from="29" to="42" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">A Co-contextual Type Checker for Featherweight Java</title>
+		<author>
+			<persName><forename type="first">Edlira</forename><surname>Kuci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Erdweg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oliver</forename><surname>Bracevac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andi</forename><surname>Bejleri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mira</forename><surname>Mezini</surname></persName>
+		</author>
+		<idno type="DOI">10.4230/LIPIcs.ECOOP.2017.18</idno>
+		<ptr target="https://doi.org/10.4230/LIPIcs.ECOOP.2017.18" />
+	</analytic>
+	<monogr>
+		<title level="m">ECOOP (LIPIcs</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="1" to="18" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Modelling environments in call-by-value programming languages</title>
+		<author>
+			<persName><forename type="first">Levy</forename><surname>Paul Blain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Power</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hayo</forename><surname>Thielecke</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0890-5401(03)00088-9</idno>
+		<ptr target="https://doi.org/10.1016/S0890-5401(03)00088-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Information and Computation</title>
+		<imprint>
+			<biblScope unit="volume">185</biblScope>
+			<biblScope unit="page" from="182" to="210" />
+			<date type="published" when="2003">2003. 2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A Semantics for Propositions as Sessions</title>
+		<author>
+			<persName><forename type="first">Sam</forename><surname>Lindley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Garrett</forename><surname>Morris</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-662-46669-8_23</idno>
+		<ptr target="https://doi.org/10.1007/978-3-662-46669-8_23" />
+	</analytic>
+	<monogr>
+		<title level="m">ESOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="volume">9032</biblScope>
+			<biblScope unit="page" from="560" to="584" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Everybody&apos;s Got To Be Somewhere</title>
+		<author>
+			<persName><forename type="first">Conor</forename><surname>Mcbride</surname></persName>
+		</author>
+		<idno type="DOI">10.4204/EPTCS.275.6</idno>
+		<ptr target="https://doi.org/10.4204/EPTCS.275.6" />
+	</analytic>
+	<monogr>
+		<title level="m">MSFP@FSCD</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">275</biblScope>
+			<biblScope unit="page" from="53" to="69" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Session Typing for a Featherweight Erlang</title>
+		<author>
+			<persName><forename type="first">Dimitris</forename><surname>Mostrous</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thudichum</forename><surname>Vasco</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vasconcelos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">COORDINATION</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">6721</biblScope>
+			<biblScope unit="page" from="95" to="109" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Let it recover: multiparty protocol-induced recovery</title>
+		<author>
+			<persName><forename type="first">Rumyana</forename><surname>Neykova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3033019.3033031</idno>
+		<ptr target="https://doi.org/10.1145/3033019.3033031" />
+	</analytic>
+	<monogr>
+		<title level="m">CC. ACM</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="98" to="108" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Multiparty Session Actors</title>
+		<author>
+			<persName><forename type="first">Rumyana</forename><surname>Neykova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<idno type="DOI">10.23638/LMCS-13(1:17)2017</idno>
+		<ptr target="https://doi.org/10.23638/LMCS-13(1:17)2017" />
+	</analytic>
+	<monogr>
+		<title level="j">Logical Methods in Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Gentrification gone too far? affordable 2nd-class values for fun and (co-)effect</title>
+		<author>
+			<persName><forename type="first">Leo</forename><surname>Osvald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Grégory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xilun</forename><surname>Essertel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lilliam</forename><forename type="middle">I</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tiark</forename><surname>González Alayón</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Rompf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">OOPSLA</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="234" to="251" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Type Reconstruction for the Linear -Calculus with Composite and Equi-Recursive Types</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-642-54830-7_6</idno>
+		<ptr target="https://doi.org/10.1007/978-3-642-54830-7_6" />
+	</analytic>
+	<monogr>
+		<title level="m">FoSSaCS</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="volume">8412</biblScope>
+			<biblScope unit="page" from="88" to="102" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Deadlock-Free Typestate-Oriented Programming</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.22152/programming-journal.org/2018/2/15</idno>
+		<ptr target="https://doi.org/10.22152/programming-journal.org/2018/2/15" />
+	</analytic>
+	<monogr>
+		<title level="j">Art Sci. Eng. Program</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page">15</biblScope>
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">A type checking algorithm for concurrent object protocols</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jlamp.2018.06.001</idno>
+		<ptr target="https://doi.org/10.1016/j.jlamp.2018.06.001" />
+	</analytic>
+	<monogr>
+		<title level="m">Mailbox Calculus Checker</title>
+		<editor>
+			<persName><forename type="first">Simon</forename><surname>Fowler</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Duncan</forename><surname>Paul A Ard</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Franciszek</forename><surname>Sowul</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Simon</forename><forename type="middle">J</forename><surname>Gay</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Phil</forename><surname>Trinder</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</editor>
+		<imprint>
+			<date type="published" when="2018">2018. 2018. 2018</date>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="16" to="35" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Context-Free Session Type Inference</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Padovani</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3229062</idno>
+		<ptr target="https://doi.org/10.1145/3229062" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Program. Lang. Syst</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page">37</biblScope>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">On Context-Free Languages</title>
+		<author>
+			<persName><forename type="first">Rohit</forename><surname>Parikh</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/321356.321364</idno>
+		<ptr target="https://doi.org/10.1145/321356.321364" />
+	</analytic>
+	<monogr>
+		<title level="j">J. ACM</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="570" to="581" />
+			<date type="published" when="1966">1966. 1966</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Local type inference</title>
+		<author>
+			<persName><forename type="first">Benjamin</forename><forename type="middle">C</forename><surname>Pierce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">N</forename><surname>Turner</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/345099.345100</idno>
+		<ptr target="https://doi.org/10.1145/345099.345100" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Program. Lang. Syst</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="1" to="44" />
+			<date type="published" when="2000">2000. 2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Existential Types: Logical Relations and Operational Equivalence</title>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">M</forename><surname>Pitts</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BFb0055063</idno>
+		<ptr target="https://doi.org/10.1007/BFb0055063" />
+	</analytic>
+	<monogr>
+		<title level="m">ICALP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="volume">1443</biblScope>
+			<biblScope unit="page" from="309" to="326" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Intrinsically typed compilation with nameless labels</title>
+		<author>
+			<persName><forename type="first">Arjen</forename><surname>Rouvoet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robbert</forename><surname>Krebbers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eelco</forename><surname>Visser</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3434303</idno>
+		<ptr target="https://doi.org/10.1145/3434303" />
+	</analytic>
+	<monogr>
+		<title level="j">Proc. ACM Program. Lang</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="28" />
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+	<note>POPL</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Verifying message-passing programs with dependent behavioural types</title>
+		<author>
+			<persName><forename type="first">Alceste</forename><surname>Scalas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nobuko</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elias</forename><surname>Benussi</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3314221.3322484</idno>
+		<ptr target="https://doi.org/10.1145/3314221.3322484" />
+	</analytic>
+	<monogr>
+		<title level="m">PLDI</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="502" to="516" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Session types in Elixir</title>
+		<author>
+			<persName><forename type="first">Gerard</forename><surname>Tabone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adrian</forename><surname>Francalanza</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3486601.3486708</idno>
+		<ptr target="https://doi.org/10.1145/3486601.3486708" />
+	</analytic>
+	<monogr>
+		<title level="m">AGERE!@SPLASH</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="12" to="23" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Session Fidelity for ElixirST: A Session-Based Type System for Elixir Modules</title>
+		<author>
+			<persName><forename type="first">Gerard</forename><surname>Tabone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adrian</forename><surname>Francalanza</surname></persName>
+		</author>
+		<idno type="DOI">10.4204/EPTCS.365.2</idno>
+		<ptr target="https://doi.org/10.4204/EPTCS.365.2" />
+	</analytic>
+	<monogr>
+		<title level="m">ICE (EPTCS</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">365</biblScope>
+			<biblScope unit="page" from="17" to="36" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">An Interaction-based Language and its Typing System</title>
+		<author>
+			<persName><forename type="first">Kaku</forename><surname>Takeuchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Honda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Makoto</forename><surname>Kubo</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/3-540-58184-7_118</idno>
+		<ptr target="https://doi.org/10.1007/3-540-58184-7_118" />
+	</analytic>
+	<monogr>
+		<title level="m">PARLE</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1994">1994</date>
+			<biblScope unit="volume">817</biblScope>
+			<biblScope unit="page" from="398" to="413" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Why Do Scala Developers Mix the Actor Model with other Concurrency Models?</title>
+		<author>
+			<persName><forename type="first">Samira</forename><surname>Tasharofi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Dinges</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ralph</forename><forename type="middle">E</forename><surname>Johnson</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-642-39038-8_13</idno>
+		<ptr target="https://doi.org/10.1007/978-3-642-39038-8_13" />
+	</analytic>
+	<monogr>
+		<title level="m">ECOOP</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">7920</biblScope>
+			<biblScope unit="page" from="302" to="326" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Scaling reliably: Improving the scalability of the Erlang distributed actor platform</title>
+		<author>
+			<persName><forename type="first">Phil</forename><surname>Trinder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Natalia</forename><surname>Chechina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nikolaos</forename><surname>Papaspyrou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Konstantinos</forename><surname>Sagonas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Thompson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stavros</forename><surname>Aronis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Baker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eva</forename><surname>Bihari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olivier</forename><surname>Boudeville</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3107937</idno>
+		<ptr target="https://doi.org/10.1145/3107937" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Programming Languages and Systems (TOPLAS)</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="1" to="46" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Fundamentals of session types</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vasco</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Vasconcelos</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ic.2012.05.002</idno>
+		<idno>05.002</idno>
+		<ptr target="https://doi.org/10.1016/j.ic.2012" />
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Comput</title>
+		<imprint>
+			<biblScope unit="volume">217</biblScope>
+			<biblScope unit="page" from="52" to="70" />
+			<date type="published" when="2012">2012. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Propositions as sessions</title>
+		<author>
+			<persName><forename type="first">Philip</forename><surname>Wadler</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/S095679681400001X</idno>
+		<ptr target="https://doi.org/10.1017/S095679681400001X" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Funct. Program</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="384" to="418" />
+			<date type="published" when="2014-02">2014. 2-3 (2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Balanced polymorphism and linear lambda calculus</title>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Zeilberger</surname></persName>
+		</author>
+		<idno>2023-03-01</idno>
+		<ptr target="http://noamz.org/papers/linprin.pdf" />
+	</analytic>
+	<monogr>
+		<title level="m">TYPES</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="2023" to="2026" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

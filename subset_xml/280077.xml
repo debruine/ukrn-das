@@ -1,0 +1,1560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">ColBERT-PRF: Semantic Pseudo-Relevance Feedback for Dense Passage and Document Retrieval *</title>
+				<funder>
+					<orgName type="full">Ministry of Education of P.R. China</orgName>
+				</funder>
+				<funder ref="#_Bfa6scA">
+					<orgName type="full">EPSRC</orgName>
+				</funder>
+				<funder ref="#_tPTHTxB">
+					<orgName type="full">China Scholarship Council</orgName>
+					<orgName type="abbreviated">CSC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2022-10-24">24 October 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Xiao</forename><surname>Wang</surname></persName>
+							<email>x.wang.8@research.gla.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Pisa</orgName>
+								<address>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="department">IADH OUNIS</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff6">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff7">
+								<orgName type="institution" key="instit1">Nicola Tonellotto</orgName>
+								<orgName type="institution" key="instit2">University of Pisa</orgName>
+								<address>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff8">
+								<orgName type="department">Iadh Ounis</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">ColBERT-PRF: Semantic Pseudo-Relevance Feedback for Dense Passage and Document Retrieval *</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-10-24">24 October 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">2EF8778C250A94A1226C1B037AD18D78</idno>
+					<idno type="DOI">10.1145/nnnnnnn.nnnnnnn</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:54+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Pseudo-relevance feedback mechanisms, from Rocchio to the relevance models, have shown the usefulness of expanding and reweighting the users' initial queries using information occurring in an initial set of retrieved documents, known as the pseudo-relevant set. Recently, dense retrieval -through the use of neural contextual language models such as BERT for analysing the documents' and queries' contents and computing their relevance scores -has shown a promising performance on several information retrieval tasks still relying on the traditional inverted index for identifying documents relevant to a query. Two different dense retrieval families have emerged: the use of single embedded representations for each passage and query, e.g., using BERT's [CLS] token, or via multiple representations, e.g., using an embedding for each token of the query and document (exemplified by ColBERT). In this work, we conduct the first study into the potential for multiple representation dense retrieval to be enhanced using pseudo-relevance feedback and present our proposed approach ColBERT-PRF. In particular, based on the pseudo-relevant set of documents identified using a first-pass dense retrieval, ColBERT-PRF extracts the representative feedback embeddings from the document embeddings of the pseudo-relevant set. Among the representative feedback embeddings, the embeddings that most highly discriminate among documents are employed as the expansion embeddings, which are then added to the original query representation. We show that these additional expansion embeddings both enhance the effectiveness of a reranking of the initial query results as well as an additional dense retrieval operation. Indeed, experiments on the MSMARCO passage ranking dataset show that MAP can be improved by upto 26% on the TREC 2019 query set and 10% on the TREC 2020 query set by the application of our proposed ColBERT-PRF method on a ColBERT dense retrieval approach. We further validate the effectiveness of our proposed pseudo-relevance feedback technique for a dense retrieval model on MSMARCO document ranking and TREC Robust04 document ranking tasks. For instance, ColBERT-PRF exhibits upto 21% and 14% improvement in MAP over the ColBERT E2E model on the MSMARCO document ranking TREC 2019 and TREC 2020 query sets, respectively. Additionally, we study the effectiveness of variants of the ColBERT-PRF model with different weighting methods. Finally, we show that ColBERT-PRF can be made more efficient, attaining upto 4.54x speedup over the default ColBERT-PRF model, and with little impact on effectiveness, through the application of approximate scoring and different clustering methods. CCS Concepts: • Information systems → Information retrieval query processing; Information retrieval.</p><p>Additional Key Words and Phrases: Query Expansion; Pseudo-Relevance Feedback; BERT; Dense Retrieval ACM Reference Format: Xiao Wang, Craig Macdonald, Nicola Tonellotto, and Iadh Ounis. 2022. ColBERT-PRF: Semantic Pseudo-Relevance Feedback for Dense Passage and Document Retrieval. ACM Trans. Web 1, 1 (September 2022), 40 pages. https://doi.org/10.1145/nnnnnnn.nnnnnnn</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>When searching for information, users often formulate queries in a different way to the relevant documents. For instance, a user may search for information about "surname meaning" using a query "where do last names come from". However, a relevant document may describe the "last name" using "family name" or "surname" and may use terms such as "originate" or "history" instead of "come from". Thus, a relevant document and the user query might form a lexical mismatch gap during retrieval, which must be bridged for effective retrieval.</p><p>Query expansion approaches, which rewrite the user's query, have been shown to be an effective approach to alleviate the vocabulary discrepancies between the user query and the relevant documents, by modifying the user's original query to improve the retrieval effectiveness. Many approaches follow the pseudo-relevance feedback (PRF) paradigm -such as Rocchio's algorithm <ref type="bibr" target="#b38">[37]</ref>, the RM3 relevance language model [1], or the DFR query expansion models <ref type="bibr" target="#b5">[4]</ref> -where terms appearing in the top-ranked documents for the initial query are used to expand it. Query expansion (QE) approaches have also found a useful role when integrated with effective BERT-based neural reranking models, by providing a high quality set of candidate documents obtained using the expanded query, which can then be reranked <ref type="bibr" target="#b36">[35,</ref><ref type="bibr" target="#b43">42,</ref><ref type="bibr" target="#b48">47]</ref>.</p><p>On the other hand, many studies have focused on the use of static word embeddings, such as Word2Vec, within query expansion methods <ref type="bibr" target="#b13">[12,</ref><ref type="bibr" target="#b20">19,</ref><ref type="bibr" target="#b40">39,</ref><ref type="bibr" target="#b41">40]</ref>. Indeed, most of the existing embeddingbased QE methods <ref type="bibr" target="#b13">[12,</ref><ref type="bibr" target="#b20">19,</ref><ref type="bibr" target="#b40">39,</ref><ref type="bibr" target="#b41">40,</ref><ref type="bibr" target="#b50">49]</ref> are based on static embeddings, where a word embedding is always the same within different sentences, and hence they do not address contextualised language models such as BERT. Recently, CEQE <ref type="bibr" target="#b30">[29]</ref> was proposed, which makes use of contextualised BERT embeddings for query expansion. The resulting refined query representation is then used for a further round of retrieval using a traditional (sparse) inverted index. In contrast, in this paper, we focus on implementing contextualised embedding-based query expansion for dense retrieval.</p><p>Indeed, the BERT models have demonstrated further promise in being a suitable basis for dense retrieval. In particular, instead of using a classical inverted index, in dense retrieval, the documents and queries are represented using embeddings. Then, the documents can be retrieved using an approximate nearest neighbour algorithm -as exemplified by the FAISS toolkit <ref type="bibr" target="#b16">[15]</ref>. Two distinct families of approaches have emerged: single representation dense retrieval and multiple representation dense retrieval. In single representation dense retrieval, as used by DPR <ref type="bibr" target="#b17">[16]</ref> and ANCE <ref type="bibr" target="#b47">[46]</ref>, each query or document is represented entirely by the single embedding of the [CLS] (classification) token computed by BERT. Query-document relevance is estimated in terms of the similarity of the corresponding [CLS] embeddings. In contrast, in multiple representation dense retrieval -as proposed by ColBERT <ref type="bibr" target="#b18">[17]</ref> -each term of the queries and documents is represented by a single embedding. For each query embedding, one per query term, the nearest document token embeddings are identified using an approximate nearest neighbour search, before a final re-scoring to obtain exact relevance estimations. Although it has been found that performing information retrieval based on the contextualised representation of the query and document can alleviate both the lexical mismatch, for instance, "last name" and "surname" and the semantic mismatch, for instance, "I like an apple" and "I like Apple airpods" <ref type="bibr" target="#b37">[36]</ref>. We argue that, as users issue the query prior to the access to the relevant documents, the users' queries can still be insufficiently well represented within the dense retrieval paradigm, and as a consequence, this representation can be improved by access to a pseudo-relevant set.</p><p>Indeed, in this work, we are concerned with applying pseudo-relevance feedback in a multiple representation dense retrieval setting. Indeed, as retrieval uses multiple representations, this allows additional useful embeddings to be appended to the query representation. Furthermore, the exact scoring stage provides the document embeddings in response to the original query, which can be used as pseudo-relevance information. Thus, in this work, we propose a pseudo-relevance feedback mechanism called ColBERT-PRF for dense retrieval. In particular, as embeddings cannot be counted, ColBERT-PRF applies clustering to the embeddings occurring in the pseudo-relevant set, and then identifies the most discriminative embeddings among the cluster centroids. These centroids are then appended to the embeddings of the original query. ColBERT-PRF is focussed on multiple representation dense retrieval settings; However, compared to existing work, our approach is the first work to apply pseudo-relevance feedback to any form of dense retrieval setting; moreover, among the existing approaches applying deep learning for pseudo-relevance feedback, our work in this paper is the first that can improve the recall of the candidate set by re-executing the expanded query representation upon the dense retrieval index, and thereby identify more relevant documents that can be highly ranked for the user. In summary, a preliminary version of this paper appeared in ICTIR 2021 <ref type="bibr" target="#b45">[44]</ref> which made the following contributions: (1) we propose a novel contextualised pseudo-relevance feedback mechanism for multiple representation dense retrieval; (2) we cluster and rank the feedback document embeddings for selecting candidate expansion embeddings; (3) we evaluate our proposed contextualised PRF model in both ranking and reranking settings. In this work, we extend our previous work and thus make the following additional contributions: <ref type="bibr" target="#b5">(4)</ref> we demonstrate the effectiveness of ColBERT-PRF model on document ranking tasks, using the MSMARCO document test collection and the TREC Robust04 test collections; <ref type="bibr" target="#b6">(5)</ref> We further investigate the effectiveness of ColBERT-PRF by varying the selection of the expansion embeddings. <ref type="bibr" target="#b7">(6)</ref> We thoroughly investigate the trade-off between the effectiveness and the efficiency of ColBERT-PRF.</p><p>The remainder of this paper is as follows: Section 2 positions this work among existing approaches to pseudo-relevance feedback; Section 3 describes a multi-representation dense retrieval, while Section 4 presents our proposed dense PRF method. Next, we discuss the effectiveness of ColBERT-PRF for passage ranking task and for document ranking task in Section 5 and Section 6, respectively. Next, we discuss the usefulness of different weighting methods for measuring the informativeness of the expansion embeddings of ColBERT-PRF in Section 7. In Section 8, we study efficient variants of ColBERT-PRF. Finally, we provide concluding remarks and a discussion of future directions in Section 9.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>Pseudo-relevance feedback approaches have a long history in Information Retrieval (IR) going back to Rocchio <ref type="bibr" target="#b38">[37]</ref> who generated refined query reformulations through linear combinations of the sparse vectors, e.g., containing term frequency information representing the query and the topranked feedback documents. Refined classical PRF models, such as Divergence from Randomness's Bo1 <ref type="bibr" target="#b5">[4]</ref>, KL <ref type="bibr" target="#b2">[2]</ref>, and RM3 relevance models [1] have demonstrated their effectiveness on many test collections. Typically, these models identify and weight feedback terms that are frequent in the feedback documents and infrequent in the corpus, by exploiting statistical information about the occurrence of terms in the documents and in the whole collection. In all cases, the reformulated query is then re-executed on the traditional (so-called sparse) inverted index.</p><p>Recently, deep learning solutions based on transformer networks have been used to enrich the statistical information about terms by rewriting or expanding the collection of documents. For instance, DeepCT <ref type="bibr" target="#b11">[10]</ref> reweights terms occurring in the documents according to a fine-tuned BERT model to highlight important terms. This results in augmented document representations, which can be indexed using a traditional inverted indexer. Similarly, doc2query <ref type="bibr" target="#b34">[33]</ref> and its more modern variant docT5query <ref type="bibr" target="#b33">[32]</ref> apply text-to-text translation models to each document in the collection to suggest queries that may be relevant to the document. When the suggested queries are indexed along with the original document, the retrieval effectiveness is enhanced.</p><p>More recently, instead of leveraging (augmented) statistical information such as the in-document and collection frequency of terms to model a query or a document, dense representations, also known as embeddings, are becoming commonplace. Embeddings encode terms in queries and documents by learning a vector representation for each term, which takes into account the word semantic and context. Instead of identifying the related terms in the pseudo-relevance feedback documents using statistical methods, embedding-based query expansion methods <ref type="bibr" target="#b13">[12,</ref><ref type="bibr" target="#b20">19,</ref><ref type="bibr" target="#b40">39,</ref><ref type="bibr" target="#b41">40,</ref><ref type="bibr" target="#b50">49]</ref> expand a query with terms that are closest to the query terms in the word embedding space. However, the expansion terms may not be sufficiently informative to distinguish relevant documents from non-relevant documents -for instance, the embedding of "grows" may be closest to "grow" in the embedding space, but adding "grows" to the query may not help to identify more relevant documents. Moreover, all these embedding-based method are based on non-contextualised embeddings, where a word embedding is always the same within different sentences, and hence they do not address contextualised language models. Pre-trained contextualised language models such as BERT <ref type="bibr" target="#b12">[11]</ref> have brought large effectiveness improvements over prior art in information retrieval tasks. In particular, deep learning is able to successfully exploit general language features in order to capture the contextual semantic signals allowing to better estimate the relevance of documents w.r.t. a given query.</p><p>Query expansion approaches have been used for generating a high quality pool of candidate documents to be reranked by effective BERT-based neural reranking models <ref type="bibr" target="#b36">[35,</ref><ref type="bibr" target="#b43">42,</ref><ref type="bibr" target="#b48">47]</ref>. However the use of BERT models directly within the pseudo-relevance feedback mechanism has seen comparatively little use in the literature. The current approaches leveraging the BERT contextualised embeddings for PRF are Neural PRF <ref type="bibr" target="#b21">[20]</ref>, BERT-QE <ref type="bibr" target="#b52">[51]</ref> and CEQE <ref type="bibr" target="#b30">[29]</ref>.</p><p>In particular, Neural PRF uses neural ranking models, such as DRMM <ref type="bibr" target="#b15">[14]</ref> and KNRM <ref type="bibr" target="#b46">[45]</ref>, to score the similarity of a document to a top-ranked feedback document. BERT-QE is conceptually similar to Neural PRF, but it measures the similarity of each document w.r.t. feedback chunks that are extracted from the top-ranked feedback documents. This results in an expensive application of many BERT computations -approximately 11× as many GPU operations than a simple BERT reranker <ref type="bibr" target="#b52">[51]</ref>. Both Neural PRF and BERT-QE approaches leverage contextualised language models to rerank an initial ranking of documents retrieved by a preliminary sparse retrieval system. However, they cannot identify any new relevant documents from the collection that were not retrieved in the initial ranking.</p><p>Meanwhile, Rocchio's relevance feedback algorithm has also been implemented for a learned sparse index by SNRM <ref type="bibr" target="#b51">[50]</ref>. However, this model relies on a sparse index representation, which looses the advantages of dense retrieval. CEQE exploits BERT to compute contextualised representations for the query as well as for the terms in the top-ranked feedback documents, and then selects as expansion terms those which are the closest to the query embeddings according to some similarity measure. In contrast to Neural PRF and BERT-QE, CEQE is used to generate a new query of terms for execution upon a traditional (sparse) inverted index. This means that the contextual meaning of an expansion term is lost -for instance, a polysemous word added to the query can result in a topic drift.</p><p>In contrast to the aforementioned approaches, our proposed ColBERT-PRF approach can be exploited in a dense retrieval system, both in end-to-end ranking and reranking scenarios. Dense retrieval approaches, exemplified by ANCE <ref type="bibr" target="#b47">[46]</ref> and ColBERT <ref type="bibr" target="#b18">[17]</ref>, are of increasing interest, due to their use of the BERT embedding(s) for representing queries and documents. By using directly the BERT embeddings for retrieval, topic drifts for polysemous words can be avoided. Concurrently to our work, ANCE-PRF <ref type="bibr" target="#b23">[22,</ref><ref type="bibr" target="#b49">48]</ref> has been proposed to improve the effectiveness for a single representation ANCE model by retraining the query encoder using pseudo-relevance feedback information. In contrast, our work doesn't require any further training. To the best of our knowledge, ColBERT-PRF is the first work investigating PRF for a multiple representation dense retrieval setting.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">MULTI REPRESENTATION DENSE RETRIEVAL</head><p>The queries and documents are represented by tokens from a vocabulary 𝑉 . Each token occurrence has a contextualised real-valued vector with dimension 𝑑, called an embedding. More formally, let 𝑓 : 𝑉 𝑛 → R 𝑛×𝑑 be a function mapping a sequence of terms {𝑡 1 , . Khattab &amp; Zaharia <ref type="bibr" target="#b18">[17]</ref> recommended that the number of query embeddings be 32, with extra [MASK] tokens being used as query augmentation. Indeed, these mask tokens are a differentiable mechanism that allows documents to gain score contributions from embeddings that do not actually occur in the query, but which the model assumes could be present in the query. In practice, as we later show in Section 4.4, the [MASK] embeddings are very similar to embeddings of the existing query tokens, and hence cannot be considered as a form of query expansion. Moreover, they do not make use of pseudo-relevance feedback information obtained from the top-ranked documents of the original query, which has repeatedly been shown to be an effective source to improve query representations.</p><p>The similarity of two embeddings is computed by the dot product. Hence, for a query 𝑞 and a document 𝑑, their similarity score 𝑠 (𝑞, 𝑑) is obtained by summing the maximum similarity between the query token embeddings and the document token embeddings <ref type="bibr" target="#b18">[17]</ref>:</p><formula xml:id="formula_0">𝑠 (𝑞, 𝑑) = |𝑞 | ∑︁ 𝑖=1 max 𝑗=1,...,|𝑑 | 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗<label>(1)</label></formula><p>Indeed, Formal et al. <ref type="bibr" target="#b14">[13]</ref> showed that the dot product 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗 used by ColBERT implicitly encapsulates token importance, by giving higher scores to tokens that have higher IDF values.</p><p>To obtain a first set of candidate documents, Khattab &amp; Zaharia <ref type="bibr" target="#b18">[17]</ref> make use of FAISS, an approximate nearest neighbour search library, on the pre-computed document embeddings. Conceptually, FAISS allows to retrieve the 𝑘 ′ documents containing the nearest neighbour document embeddings to a query embedding 𝜙 𝑞 𝑖 , i.e., it provides a function F 𝑑 (𝜙 𝑞 𝑖 , 𝑘 ′ ) -→ (𝑑, . . . ) that returns a list of 𝑘 ′ documents, sorted in decreasing approximate scores.</p><p>However, these approximate scores are insufficient for accurately depicting the similarity scores of the documents, hence the accurate final document scores are computed using Equation (1) in a second pass. Typically, for each query embedding, the nearest 𝑘 ′ = 1, 000 documents are identified. The set formed by the union of these documents are reranked<ref type="foot" target="#foot_1">1</ref> using Equation (1). A separate index data structure (typically in memory) is used to store the uncompressed embeddings for each document. To the best of our knowledge, ColBERT <ref type="bibr" target="#b18">[17]</ref> exemplifies the implementation of an end-to-end IR system that uses multiple representation. Algorithm 1 summarises the ColBERT retrieval algorithm for the end-to-end dense retrieval approach proposed by Khattab &amp; Zaharia, while the top part of Table <ref type="table" target="#tab_1">1</ref> summarises the notation for the main components of the algorithm.</p><p>The easy access to the document embeddings used by ColBERT provides an excellent basis for our dense retrieval pseudo-relevance feedback approach. Indeed, while the use of embeddings in ColBERT addresses the vocabulary mismatch problem, we argue that identifying more related embeddings from the top-ranked documents may help to further refine the document ranking. In </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">DENSE PSEUDO-RELEVANCE FEEDBACK</head><p>The aim of a pseudo-relevance feedback approach is typically to generate a refined query representation by analysing the text of the feedback documents. In our proposed ColBERT-PRF approach, we are inspired by conventional PRF approaches such as Bo1 <ref type="bibr" target="#b5">[4]</ref> and RM3 [1], which assume that good expansion terms will occur frequently in the feedback set (and hence are somehow representative of the information need underlying the query), but infrequent in the collection as a whole (therefore are sufficiently discriminative). Therefore, we aim to encapsulate these intuitions while operating in the contextualised embedding space R 𝑑 , where the exact counting of frequencies is not actually possible. In particular, by operating entirely in the embedding space rather than directly on tokens, we conjecture that we can identify similar embeddings (corresponding to tokens with similar contexts), which can be added to the query representation for improved effectiveness. <ref type="foot" target="#foot_3">2</ref>The bottom part of Table <ref type="table" target="#tab_1">1</ref> summarises the main notations that we use in describing ColBERT-PRF.</p><p>In this section, we detail how we identify representative (centroid) embeddings from the feedback documents (Section 4.1), how we ensure that those centroid embeddings are sufficiently discriminative (Section 4.2), and how we apply these discriminative representative centroid embeddings for (re)ranking (Section 4.3). We conclude with an illustrative example (Section 4.4) and a discussion of the novelty of ColBERT-PRF (Section 4.5).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Representative Embeddings in Feedback Documents</head><p>First, we need to identify representative embeddings {𝜐 1 , . . . , 𝜐 𝐾 } among all embeddings in the feedback documents set. A typical "sparse" PRF approach -such as RM3 -would count the frequency of terms occurring in the feedback set to identify representative ones. However, in a dense embedded setting, the document embeddings are not countable. Instead, we resort to clustering to identify patterns in the embedding space that are representative of embeddings.</p><p>Specifically, let Φ(𝑞, 𝑓 𝑏 ) be the set of all document embeddings from the 𝑓 𝑏 top-ranked feedback documents. Then, we apply a clustering approach, e.g., the KMeans clustering algorithm, to Φ(𝑞, 𝑓 𝑏 ): {𝜐 1 , .., 𝜐 𝐾 } = Clustering 𝐾, Φ(𝑞, 𝑓 𝑏 ) .</p><p>(</p><formula xml:id="formula_1">)<label>2</label></formula><p>By applying the clustering algorithm, we obtain 𝐾 representative centroid embeddings of the feedback documents. The embeddings forming each cluster may or may not correspond to the exact same tokens spread across the feedback documents. In this way, a cluster can represent one or more tokens that appear in similar contexts, rather than a particular exact token. This is a key advantage of ColBERT-PRF. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Identifying Discriminative Embeddings among Representative Embeddings</head><p>Many of the 𝐾 representative embeddings may represent stopwords and therefore are not sufficiently informative when retrieving documents. Typically, identifying informative and discriminative expansion terms from feedback documents would involve examining the collection frequency or the document frequency of the constituent terms <ref type="bibr" target="#b7">[6,</ref><ref type="bibr" target="#b39">38]</ref>. However, there may not be a one-to-one relationship between query/centroid embeddings and actual tokens, hence we seek to map each centroid 𝜐 𝑖 to a possible token 𝑡.</p><p>We resort to FAISS to achieve this, through the function F 𝑡 (𝜐 𝑖 , 𝑟 ) -→ (𝑡, . . .) that, given the centroid embedding 𝜐 𝑖 and 𝑟 , returns the list of the 𝑟 token ids corresponding to the 𝑟 closest document embeddings to the centroid. <ref type="foot" target="#foot_4">3</ref> From a probabilistic viewpoint, the likelihood 𝑃 (𝑡 |𝜐 𝑖 ) of a token 𝑡 given an embedding 𝜐 𝑖 can be obtained as:</p><formula xml:id="formula_2">𝑃 (𝑡 |𝜐 𝑖 ) = 1 𝑟 ∑︁ 𝜏 ∈ F 𝑡 (𝜐 𝑖 ,𝑟 ) 1[𝜏 = 𝑡],<label>(3)</label></formula><p>where 1[] is the indicator function.</p><p>For simplicity, we choose the most likely token id, i.e., 𝑡 𝑖 = arg max 𝑡 𝑃 (𝑡 |𝜐 𝑖 ). Mapping back to a token id allows us to make use of Inverse Document Frequency (IDF), which can be pre-recorded for each token id. The importance 𝜎 𝑖 of a centroid embedding 𝜐 𝑖 is obtained using a traditional IDF formula <ref type="foot" target="#foot_5">4</ref> :</p><formula xml:id="formula_3">𝜎 𝑖 = log 𝑁 +1 𝑁 𝑖 +1</formula><p>, where 𝑁 𝑖 is the number of passages containing the token 𝑡 𝑖 and 𝑁 is the total number of passages in the collection. While this approximation of embedding informativeness is obtained by mapping back to tokens, as we shall show, it is very effective. In addition, we will discuss different derivations of a tailored informativeness measure in Section 7, including Inverse Collection Term Frequency and Mean Cosine Similarity methods. Finally, we select the 𝑓 𝑒 most informative centroids as expansion embeddings based on the 𝜎 𝑖 importance scores as follows:</p><formula xml:id="formula_4">𝐹 𝑒 = TopScoring (𝜐 1 , 𝜎 1 ), . . . , (𝜐 𝐾 , 𝜎 𝐾 ) , 𝑓 𝑒<label>(4)</label></formula><p>where TopScoring(𝐴, 𝑐) returns the 𝑐 elements of 𝐴 with the highest importance score. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Ranking and</head><p>where 𝛽 &gt; 0 is a parameter weighting the contribution of the expansion embeddings, and the score produced by each expansion embedding is further weighted by the IDF weight of its most likely token, 𝜎 𝑖 . Note that Equation (5) can be applied to rerank the documents obtained from the initial query, or as part of a full re-execution of the full dense retrieval operation including the additional 𝑓 𝑒 expansion embeddings. In both ranking and reranking, ColBERT-PRF has 4 parameters: 𝑓 𝑏 , the number of feedback documents; 𝐾, the number of clusters; 𝑓 𝑒 ≤ 𝐾, the number of expansion embeddings; and 𝛽, the importance of the expansion embeddings during scoring. Figure <ref type="figure" target="#fig_0">1</ref> presents the five stages of ColBERT-PRF in its ranking configuration. Furthermore, we provide the pseudo-code of our proposed ColBERT PRF ReRanker in Algorithm 2. The ColBERT-PRF Ranker can be easily obtained by inserting lines 3-4 of Algorithm 1 at line 10 of Algorithm 2 to perform retrieval using both the original query embeddings and the expansion embeddings, and similarly adapting the max-sim scoring in Eq. (1) to encapsulate the original query embeddings as well as the expansion embeddings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Illustrative Example</head><p>We now illustrate the effect of ColBERT-PRF upon one query from the TREC 2019 Deep Learning track, 'do goldfish grow'. We use PCA to quantize the 128-dimension embeddings into 2 dimensions purely to allow visualisation. Firstly, Figure <ref type="figure" target="#fig_3">2</ref>(a) shows the embeddings of the original query (black   We can see that the cluster centroids with high IDF correspond to the original query tokens ('gold', '##fish', 'grow'), as well as the related terms ('tank', 'size'). In contrast, a centroid with low  IDF is 'the'. This illustrates the utility of our proposed ColBERT-PRF approach in using KMeans to identify representative clusters of embeddings, as well as using IDF to differentiate useful clusters. Furthermore, Figure <ref type="figure" target="#fig_3">2</ref>(b) also includes, marked by an × and denoted 'tank (war)', the embedding for the word 'tank' when placed in the passage "While the soldiers advanced, the tank bombarded the troops with artillery". It can be seen that, even in the highly compressed PCA space, the 'tank' centroid embedding is distinct from the embedding of 'tank (war)'. This shows the utility of ColBERT-PRF when operating in the embedding space, as the PRF process for the query 'do goldfish grow' will not retrieve documents containing 'tank (war)', but will focus on a fish-related context, thereby dealing with the polysemous nature of a word such as 'tank'. To the best of our knowledge, this is a unique feature of ColBERT-PRF among PRF approaches.</p><formula xml:id="formula_6">𝑡 𝑖 ← arg max 𝑡 1 𝑟 𝜏 ∈ F 𝑡 (𝜐 𝑖 ,𝑟 ) 1[𝜏 = 𝑡] 7 𝜎 𝑖 ← log 𝑁 +1 𝑁 𝑖 +1 8 𝑉 ← 𝑉 ∪ (𝜐 𝑖 , 𝜎 𝑖 ) 9 𝐹 𝑒 ←TopScoring(𝑉 , 𝑓 𝑒 ) 10 𝐵 ← ∅ 11 for (𝑑, 𝑠) in 𝐴 do 12 𝑠 ← 𝑠 + 𝛽 (𝜐 𝑖 ,𝜎 𝑖 ) ∈𝐹 𝑒 max 𝑗=1,...,|𝑑 | 𝜎 𝑖 𝜐 𝑇 𝑖 𝜙 𝑑 𝑗 13 𝐵 ← 𝐵 ∪ (𝑑, 𝑠)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Discussion</head><p>To the best of our knowledge ColBERT-PRF is the first investigation of pseudo-relevance feedback for multiple representation dense retrieval. Existing works on neural pseudo-relevance feedback, such as Neural PRF <ref type="bibr" target="#b21">[20]</ref> and BERT-QE <ref type="bibr" target="#b52">[51]</ref> only function as rerankers. Other approaches such as DeepCT <ref type="bibr" target="#b11">[10]</ref> and doc2query <ref type="bibr" target="#b33">[32,</ref><ref type="bibr" target="#b34">33]</ref> use neural models to augment documents before indexing using a traditional inverted index. CEQE <ref type="bibr" target="#b30">[29]</ref> generates words to expand the initial query, which is then executed on the inverted index. However, returning the BERT embeddings back to textual word forms can result in polysemous words negatively affecting retrieval. In contrast, ColBERT-PRF operates entirely on an existing dense index representation (without augmenting documents), and can function for both ranking as well as reranking. By retrieving using feedback embeddings directly, ColBERT-PRF addresses polysemous words (such as 'tank', illustrated above). It is also of note that it also requires no additional neural network training beyond that of ColBERT. Indeed, while ANCE-PRF requires further training of the refined query encoder, ColBERT-PRF does not require any further retraining. Furthermore, compared to the single embedding of ANCE-PRF, ColBERT-PRF is also more explainable in nature, as the expansion embeddings can be mapped to tokens (as shown in Figure <ref type="figure" target="#fig_3">2</ref>), and their contribution to document scoring can be examined, as we will show in Section 5.3.4.</p><p>In the following, we first show the retrieval effectiveness of ColBERT-PRF for passage ranking and document ranking tasks in Section 5 and Section 6, respectively. In particular, in Section 5, we examine the characteristics of ColBERT-PRF, including how ColBERT-PRF addresses polysemous words, how ColBERT-PRF demonstrates compared with the traditional query expansion techniques and how to quantify the extent of the semantic matching ability of ColBERT-PRF. Next, we discuss three variants of ColBERT-PRF with different discriminative power measure methods in Section 7, and we address the effectiveness and efficiency trade-off of ColBERT-PRF in Section 8.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">PASSAGE RANKING EFFECTIVENESS OF COLBERT-PRF</head><p>In this section, we analyse the performance of ColBERT-PRF for passage ranking. In particular, we evaluated the performance of ColBERT-PRF on TREC 2019 and TREC 2020 query sets. Section 5.1 describes the research question addressed by our passage ranking experiments. The experimental setup and the obtained results are detailed in Section 5.2 and Section 5.3, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Research Questions</head><p>Our passage ranking experiments address the three following research questions:</p><p>• RQ1: Can a multiple representation dense retrieval approach be enhanced by pseudo-relevance feedback, i.e., can ColBERT-PRF outperform ColBERT dense retrieval? per query) and the TREC 2020 Deep Learning track topics (54 topics with an average of 210.85 relevance judgements per query) from TRECDL passage ranking task. We omit topics from the MSMARCO Dev set, which have only sparse judgements, ∼1.1 per query. Indeed, pseudo-relevance feedback approaches are known to be not effective on test collections with few judged passages <ref type="bibr" target="#b3">[3]</ref>.</p><p>We report the commonly used metrics for the TREC 2019 and TREC 2020 query sets following the corresponding track overview papers <ref type="bibr" target="#b8">[7,</ref><ref type="bibr" target="#b9">8]</ref>: we report mean reciprocal rank (MRR) and normalised discounted cumulative gain (NDCG) calculated at rank 10, as well as Recall and Mean Average Precision (MAP) at rank 1000 <ref type="bibr" target="#b9">[8]</ref>. For the MRR, MAP and Recall metrics, we treat passages with label grade 1 as non-relevant, following <ref type="bibr" target="#b8">[7,</ref><ref type="bibr" target="#b9">8]</ref>. In addition, we also report the Mean Response Time (MRT) for each retrieval system. For significance testing, we use the paired t-test (𝑝 &lt; 0.05) and apply the Holm-Bonferroni multiple testing correction.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2">Implementation and Settings.</head><p>We conduct experiments using PyTerrier <ref type="bibr" target="#b26">[25]</ref> and, in particular using our PyTerrier_ColBERT plugin <ref type="foot" target="#foot_6">5</ref> , which includes ColBERT-PRF as well as our adaptations of the ColBERT source code. ColBERT and ColBERT-PRF are expressed as PyTerrier transformer operations -the source code of the ColBERF-PRF ranker and re-ranker pipelines is shown in the Appendix A.2.</p><p>In terms of the ColBERT configuration, we train ColBERT upon the MSMARCO passage ranking triples file for 44,000 batches, applying the parameters specified by Khattab &amp; Zaharia in <ref type="bibr" target="#b18">[17]</ref>: Maximum document length is set to 180 tokens and queries are encoded into 32 query embeddings (including [MASK] tokens); We encode all passages to a FAISS index that has been trained using 5% of all embeddings; At retrieval time, FAISS retrieves 𝑘 ′ = 1000 passage embeddings for every query embedding. ColBERT-PRF is implemented using the KMeans implementation <ref type="bibr" target="#b6">[5]</ref> of sci-kit learn (sklearn). For query expansion settings, we follow the default settings of Terrier <ref type="bibr" target="#b35">[34]</ref>, which is 10 expansion terms obtained from 3 feedback passages; we follow the same default setting for ColBERT-PRF, additionally using representative values, namely 𝐾 = 24 clusters<ref type="foot" target="#foot_7">6</ref> , and 𝛽 = {0.5, 1} for the weight of the expansion embeddings. We later show the impact of these parameters when we address RQ3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.3">Baselines.</head><p>To test the effectiveness of our proposed dense PRF approach, we compare with five families of baseline models, for which we vary the use of a BERT-based reranker (namely BERT or ColBERT). For the BERT reranker, we use OpenNIR <ref type="bibr" target="#b25">[24]</ref> and capreolus/ bert-base-msmarco fine-tuned model from <ref type="bibr" target="#b22">[21]</ref>. For the ColBERT reranker, unless otherwise noted, we use the existing pre-indexed ColBERT representation of passages for efficient reranking. The five families are: Lexical Retrieval Approaches: These are traditional retrieval models using a sparse inverted index, with and without BERT and ColBERT rerankers, namely: (i) BM25 (ii) BM25+BERT (iii) BM25+ColBERT, (iv) BM25+RM3, (v) BM25+RM3+BERT and (vi) BM25+RM3+ColBERT. Neural Augmentation Approaches: These use neural components to augment the (sparse) inverted index: (i) BM25+DeepCT and (ii) BM25+docT5query, both without and with BERT and ColBERT rerankers. For BM25+docT5query+ColBERT, the ColBERT reranker is applied on expanded passage texts encoded at querying time, rather than the indexed ColBERT representation. The response time for BM25+docT5query+ColBERT reflects this difference. Dense Retrieval Models: This family consists of the dense retrieval approaches: (i) ANCE: The ANCE <ref type="bibr" target="#b47">[46]</ref> model is a single representation dense retrieval model. We use the trained models provided by the authors trained on MSMARCO training data. (ii) ANCE-PRF: The ANCE-PRF <ref type="bibr" target="#b49">[48]</ref> is a PRF variant of ANCE model -we use the results released by the authors. (iii) ColBERT E2E: ColBERT end-to-end (E2E) <ref type="bibr" target="#b18">[17]</ref> is the dense retrieval version of ColBERT, as defined in Section 3. BERT-QE Models: We apply BERT-QE <ref type="bibr" target="#b52">[51]</ref> on top of a strong sparse baseline and our dense retrieval baseline, ColBERT E2E, i.e., (i) BM25+RM3+ColBERT+BERT-QE and (ii) ColBERT E2E+BERT-QE; Where possible, we use the ColBERT index for scoring passages; for identifying the top scoring chunks within passages, we use ColBERT in a slower "text" mode, i.e., without using the index. For the BERT-QE parameters, we follow the settings in <ref type="bibr" target="#b52">[51]</ref>, in particular using the recommended settings of 𝛼 = 0.4 and 𝛽 = 0.9, which are also the most effective on MSMARCO. Indeed, to the best our knowledge, this is the first application of BERT-QE upon dense retrieval, the first application of BERT-QE on MSMARCO and the first application using ColBERT. We did attempt to apply BERT-QE using the BERT re-ranker, but we found it to be ineffective on MSMARCO, and exhibiting a response time exceeding 30 seconds per query, hence we omit it from our experiments. CEQE Models: This family consists of three CEQE variants <ref type="bibr" target="#b30">[29]</ref>, i.e., CEQE-Max, CEQE-Centroid, and CEQE-Mul. We apply each CEQE query expansion variant on top of the documents retrieved by BM25. Compared with the original CEQE, we apply the pipeline BM25 + RM3 + BM25 rather than the Dirichlet LM + RM3 + BM25 pipeline for generating the expansion terms.</p><p>For reproducibility, ColBERT-PRF and the baselines results are available in our virtual appendix <ref type="foot" target="#foot_8">7</ref> .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Passage Ranking Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.</head><p>3.1 Results for RQ1 -Overall Effectiveness of ColBERT-PRF. In this section, we examine the effectiveness of a pseudo-relevance feedback technique for the ColBERT dense retrieval model on passage ranking task. On analysing Table <ref type="table" target="#tab_4">2</ref>, we first note that the ColBERT dense retrieval approach outperforms the single representation based dense retrieval models, i.e., ANCE and its PRF variant ANCE-PRF for all metrics on both test query sets, probably because the single representation used in ANCE provides limited information for matching queries and documents <ref type="bibr" target="#b24">[23]</ref>. In particular, compared with ANCE-PRF, ColBERT-PRF shows markedly improvement on all metrics for both query sets and shows significant improvement in terms of MAP on TREC 2019 and NDCG@10 on TREC 2020. This indicates that the PRF mechanism that explicitly expands query with expansion embeddings to refine the query representation is superior to implicitly learning from PRF information to form a better query representation.</p><p>Based on this, we then compare the performances of our proposed ColBERT-PRF models, instantiated as ColBERT-PRF Ranker &amp; ColBERT-PRF ReRanker, with the more effective ColBERT E2E model. We find that both the Ranker and ReRanker models outperform ColBERT E2E on all the metrics for both used query sets. Typically, on the TREC 2019 test queries, both the Ranker and ReRanker models exhibit significant improvements in terms of MAP over the ColBERT E2E model. In particular, we observe a 26% increase in MAP on TREC 2019 <ref type="foot" target="#foot_9">8</ref> and 10% for TREC 2020 over ColBERT E2E for the ColBERT-PRF Ranker. In addition, both ColBERT-PRF Ranker and ReRanker exhibit significant improvements over ColBERT E2E in terms of NDCG@10 on TREC 2019 queries.</p><p>The high effectiveness of ColBERT-PRF anker (which is indeed higher than ColBERT-PRF ReRanker) can be explained in that the expanded query obtained using the PRF process introduces more relevant passages, thus it increases recall after re-executing the query on the dense index. As can be seen from Table <ref type="table" target="#tab_4">2</ref>, ColBERT-PRF Ranker exhibits significant improvements over both ANCE and ColBERT E2E models on Recall. On the other hand, the effectiveness of ColBERT-PRF ReRanker also suggests that the expanded query provides a better query representation, which can which can better rank documents in the existing candidate set. Overall, in response to RQ1, we conclude that our proposed ColBERT-PRF model is effective compared to the ColBERT E2E dense retrieval model. For RQ2(a), we compare the ColBERT-PRF Ranker and ReRanker models with the lexical retrieval approaches. For both query sets, both Ranker and ReRanker provide significant improvements on all evaluation measures compared to the BM25 and BM25+RM3 models. This is mainly due to the more effective contexualised representation employed in the ColBERT-PRF models than the traditional sparse representation used in the lexical retrieval approaches. Furthermore, both ColBERT-PRF Ranker and ReRanker outperform the sparse retrieval approaches when reranked by either the BERT or the ColBERT models -e.g., BM25+(Col)BERT and BM25+RM3+(Col)BERT -on all metrics. In particular, ColBERT-PRF Ranker exhibits marked improvements over the BM25 with BERT or ColBERT reranking approach for MAP on the TREC 2019 queries. This indicates that our query expansion in the contextualised embedding space produces query representations that result in improved retrieval effectiveness. Hence, in answer to RQ2(a), we find that our proposed ColBERT-PRF models show significant improvements in retrieval effectiveness over sparse baselines.</p><p>To further gauge the extent of improvements brought by the PRF additional information in the sparse retrieval and the dense retrieval paradigms, we compare the amount of performance improvements in terms of MAP for ColBERT-PRF vs. ColBERT, ANCE-PRF vs. ANCE, and BM25+RM3 vs. BM25 in Figure <ref type="figure" target="#fig_5">3</ref>. We observe that more queries improved, and by a larger margin, by ColBERT-PRF compared to both RM3 and ANCE-PRF. Furthermore, from Figure <ref type="figure" target="#fig_5">3</ref>, we find that among the failed queries for ColBERT-PRF, most of these queries also failed for the ANCE-PRF and RM3 approaches. These queries are hard queries that may struggle to be improved by a PRF technique. On the other hand, in Table <ref type="table" target="#tab_6">3</ref>, we present the number of queries whose performances are improved, unchanged and degraded when comparing a retrieval system with and without a PRF mechanism applied. We find that ColBERT-PRF has the highest number of improved queries and the lowest number of degraded queries. In the bottom half of Table <ref type="table" target="#tab_6">3</ref>, we compute Spearman's 𝜌 correlation coefficient between the performance improvements of different PRF methods -a high positive correlation coefficient would be indicative that the two methods demonstrate a similar effect on different types of queries. From Table <ref type="table" target="#tab_6">3</ref>, we see that the correlation coefficient between ColBERT-PRF vs. ColBERT and ANCE-PRF vs. ANCE is highest among all the compared pairs (0.41). Overall, this tells us that while there is no strong correlations between the queries improved by applying PRF to each baseline, ColBERT-PRF and ANCE-PRF are the most correlated pair. Indeed, only moderate correlations are observed, showing that the approaches improve different queries. Moreover, from Figure <ref type="figure" target="#fig_5">3</ref> we see that ColBERT-PRF improves more queries and with further margin than ANCE-PRF. For RQ2(b), on analysing the neural augmentation approaches, we observe that both the DeepCT and docT5query neural components could lead to effectiveness improvements over the corresponding lexical retrieval models without neural augmentation. However, despite their improved effectiveness, our proposed ColBERT-PRF models exhibit marked improvements over the neural augmentation approaches. Specifically, on the TREC 2019 query set, ColBERT-PRF Ranker significantly outperforms 4 out of 6 neural augmentation baselines and the BM25+DeepCT baseline on MAP. Meanwhile, both ColBERT-PRF Ranker and ReRanker exhibit significant improvements over BM25+DeepCT and BM25+docT5query on MAP for TREC 2020 queries, and exhibit improvements upto 9.5% improvements over neural augmentation approaches with neural re-ranking (e.g., MAP 0.4671→0.5116). On analysing these comparisons, the effectiveness of the ColBERT-PRF models indicates that the query representation enrichment in a contextualised embedding space leads to a higher effectiveness performance than the sparse representation passage enrichment. Thus, in response to RQ2(b), the ColBERT-PRF models exhibit markedly higher performances than the neural augmentation approaches.  We further compare the ColBERT-PRF models with the recently proposed BERT-QE Reranking model. In particular, we provide results when using BERT-QE to rerank both BM25+RM3 as well as ColBERT E2E. Before comparing the ColBERT-PRF models with the BERT-QE rerankers, we first note that BERT-QE doesn't provide benefit to MAP on either query set, but can lead to a marginal improvement for NDCG@10 and MRR@10. However, the BERT-QE reranker models still underperform compared to our ColBERT-PRF models. Indeed, ColBERT E2E+BERT-QE exhibits a performance significantly lower than both ColBERT-PRF Ranker and ReRanker on the TREC 2019 query set. Hence, in response to RQ2(c), we find that the ColBERT-PRF models significantly outperform the BERT-QE reranking models.</p><p>Finally, we consider the mean response times reported in Table <ref type="table" target="#tab_4">2</ref>, noting that ColBERT PRF exhibits higher response times than other ColBERT-based baselines, and similar to BERT-based re-rankers. There are several reasons for ColBERT PRF's speed: Firstly, the KMeans clustering of the feedback embeddings is conducted online, and the scikit-learn implementation we used is fairly slow -we tried other markedly faster KMeans implementations, but they were limited in terms of effectiveness (particularly for MAP), perhaps due to the lack of the KMeans++ initialisation procedure <ref type="bibr" target="#b6">[5]</ref>, which scikit-learn adopts; Secondly ColBERT PRF adds more expansion embeddings to the queryfor the ranking setup, each feedback embedding can potentially cause a further 𝑘 ′ = 1000 passages to be scored -further tuning of ColBERT's 𝑘 ′ parameter may allow efficiency improvements for ColBERT-PRF without much loss of effectiveness, at least for the first retrieval stage.Based on this, we further investigate how to attain more of a balance between the effectiveness and the efficiency in leveraging techniques such as approximate scoring technique <ref type="bibr" target="#b27">[26]</ref> and other clustering algorithms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.3">Results for RQ3 -Impact of ColBERT-PRF Parameters.</head><p>To address RQ3, we investigate the impact of the parameters of ColBERT-PRF. In particular, when varying the values of a specific hyper-parameter type, we fix all the other hyper-parameters to their default setting, i.e. 𝑓 𝑏 = 3, 𝑓 𝑒 = 10, 𝛽 = 1 and 𝑘 = 24. Firstly, concerning the number of clusters, 𝐾, and the number of expansion embeddings 𝑓 𝑒 selected from those clusters (𝑓 𝑒 ≤ 𝐾), Figures <ref type="figure" target="#fig_9">5(a</ref>) and (b) report, for ColBERT-PRF Ranker and ColBERT-PRF ReRanker, respectively, the MAP (y-axis) performance for different 𝑓 𝑒 (x-axis) selected from 𝐾 clusters (different curves). We observe that, with the same number of clusters and expansion embeddings, ColBERT-PRF Ranker exhibits a higher MAP performance than ColBERT-PRF ReRanker -as we also observed in Section 5.3.1.</p><p>Then, for a given 𝑓 𝑒 value, Figures <ref type="figure" target="#fig_9">5(a</ref>) and (b) show that the best performance is achieved by ColBERT-PRF when using 𝐾 = 24. To explain this, we refer to Figure <ref type="figure" target="#fig_7">4</ref>   which both show the centroid embeddings obtained using different numbers of clusters 𝐾. Indeed, if the number of clusters 𝐾 is too small, the informativeness of the returned embeddings would be limited. For instance, in Figure <ref type="figure" target="#fig_7">4</ref>(a), the centroid embeddings represent stopwords such as 'in' and '##'' are included, which are unlikely to be helpful for retrieving more relevant passages. However, if 𝐾 is too large, the returned embeddings contain more noise, and hence are not suitable for expansion -for instance, using 𝐾 = 64, feedback embeddings representing 'innocent' and 'stunt' are identified in Figure <ref type="figure" target="#fig_7">4(b)</ref>, which could cause a topic drift.</p><p>Next, we analyse the impact of the number of feedback passages, 𝑓 𝑏 . Figure <ref type="figure" target="#fig_9">5</ref>(c) reports the MAP performance in response to different number of 𝑓 𝑏 for both ColBERT-PRF Ranker and ReRanker. We observe that, when 𝑓 𝑏 = 3, both Ranker and ReRanker obtain their peak MAP values. In addition, for a given 𝑓 𝑏 value, the Ranker exhibits a higher performance than the ReRanker. Similar to existing PRF models, we also find that considering too many feedback passages causes a query drift, in this case by identifying unrelated embeddings.</p><p>Finally, we analyse the impact of the 𝛽 parameter, which controls the emphasis of the expansion embeddings during the final passage scoring. Figure <ref type="figure" target="#fig_9">5</ref>(d) reports MAP as 𝛽 is varied for ColBERT-PRF Ranker and ReRanker. From the figure, we observe that in both scenarios, the highest MAP is obtained for 𝛽 ∈ [0.6, 0.8], but good effectiveness is maintained for higher values of 𝛽, which emphasises the high utility of the centroid embeddings for effective retrieval. X X X X X X X X Fig. <ref type="figure">6</ref>. ColBERT-PRF interaction matrix between query (qid: 106375) and passage (docid: 4337532) embeddings. The darker shading indicate a higher similarity. The highest similarity among all the passage embeddings for a given query embedding is highlight with a X symbol. The histogram depicts the magnitude of contribution for each query embedding to the final score of the passage.</p><p>Overall, in response to RQ3, we find that ColBERT-PRF, similar to existing PRF approaches, is sensitive to the number of feedback passages and the number of expansion embeddings that are added to the query (𝑓 𝑏 &amp; 𝑓 𝑒 ) as well as their relative importance during scoring (c.f. 𝛽). However, going further, the 𝐾 parameter of KMeans has a notable impact on performance: if too high, noisy clusters can be obtained; too low and the obtained centroids can represent stopwords. Yet, the stable and effective results across the hyperparameters demonstrate the overall promise of ColBERT-PRF.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.4">Results for RQ4 -Semantic</head><p>Matching by ColBERT-PRF. We now analyse the expansion embeddings and the retrieved passages in order to better understand the behaviour of ColBERT-PRF, and why it demonstrates advantages over traditional (sparse) QE techniques.</p><p>Firstly, it is useful to inspect tokens corresponding to the expansion embeddings. Table <ref type="table" target="#tab_8">4</ref> <ref type="foot" target="#foot_11">9</ref> lists three example queries from both the TREC 2019 and 2020 query sets and their tokenised forms as well as the expansion tokens generated by the ColBERT-PRF model. For a given query, we used our default setting for the ColBERT-PRF model, i.e., selecting ten expansion embeddings; Equation (3) is used to resolve embeddings to tokens. On examination of Table <ref type="table" target="#tab_8">4</ref>, it is clear to see the relation of the expansion embeddings to the original query -for instance, we observe that expansion embeddings for the tectonic concept of active margin relate to 'oceanic', 'volcanoes' and 'continental' 'plate'. Overall, we find that most of the expansion tokens identified are credible supplementary information for each user query and can indeed clarify the information needs. To answer RQ4, we further conduct analysis to measure the ability to perform semantic matching within the ColBERT Max-Sim operation. In particular, we examine which of the query embeddings match most strongly with a passage embedding that corresponds to exactly the same token -a so called exact match; in contrast a semantic match is a query embedding matching with a passage embedding which has a different token id. Indeed, in <ref type="bibr" target="#b14">[13]</ref>, the authors concluded that ColBERT is able to conduct exact matches for important terms based on their embedded representations. In contrast, little work has considered the extent that ColBERT-based models perform semantic (i.e. non-exact) matching. Thus, firstly, following <ref type="bibr" target="#b29">[28]</ref>, we look into the interaction matrix between the query and passage embeddings. Figure <ref type="figure">6</ref> describes the interaction matrix between the query "why did the us voluntarily enter ww1 " expanded with 10 expansion embeddings and its top returned passage embeddings <ref type="foot" target="#foot_12">10</ref> . From Figure <ref type="figure">6</ref>, we see that some query tokens, such as 'the', 'us', 'w' and '##w', experience exact matching as these tokens are in the same form with their corresponding returned highest Max-Sim scored passage tokens. In contract, the remaining query tokens are performing semantic matching to the passage as their corresponding passage tokens with the highest Max-Sim score are in different lexical forms, for instance, query token 'why' matches with passage token 'reason'. In particular, the expansion token 'revolution' and 'entered', which does not exist in the original token but expanded using ColBERT-PRF, also performs the exact matching. In addition, the expansion tokens such as 'attacked' and 'harbour' further perform semantic matching to the passages. This further indicates the usefulness of the expansion tokens to improve the matching performance between query and passage pairs. To quantify the extent that semantic matching takes place, we follow <ref type="bibr" target="#b44">[43]</ref> and employ a recent measure that inspects the Max-Sim, and determines whether each query embedding is matched with the same token (exact match) vs. an inexact (semantic) match with a different token. Formally, let 𝑡 𝑖 and 𝑡 𝑗 respectively denote the token id of the 𝑖-th query embedding and 𝑗-th passage embedding, respectively. Given a query 𝑞 and the set 𝑅 𝑘 of the top ranked 𝑘 passages, the Semantic Match Proportion (SMP) at rank cutoff 𝑘 w.r.t. 𝑞 and 𝑅 𝑘 is defined as:</p><formula xml:id="formula_7">𝑆𝑀𝑃 (𝑞, 𝑅 𝑘 ) = ∑︁ 𝑑 ∈𝑅 𝑘 𝑖 ∈toks(𝑞) 1[𝑡 𝑖 ≠ 𝑡 𝑗 ] • max 𝑗=1,...,|𝑑 | 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗 𝑖 ∈toks(𝑞) max 𝑗=1,...,|𝑑 | 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗 ,<label>(6)</label></formula><p>where toks(𝑞) returns the indices of the query embeddings that correspond to BERT tokens, i.e., not</p><p>[CLS], [Q], or [MASK] tokens <ref type="foot" target="#foot_13">11</ref> , 𝑅 𝑘 is the top ranked 𝑘 passages, and 1[] is the indicator function.</p><p>Figure <ref type="figure">7</ref> depicts the per-query semantic matching proportion calculated at the rank cutoff 10 for the ColBERT-PRF and ColBERT E2E models on the TREC 2019 query set. From the figure, we observe that, when the expansion embeddings are added to the original query by ColBERT-PRF, SMP is increased for most of the queries over the original ColBERT E2E model. Next, on both TREC 2019 and TREC 2020 query sets, we investigate the impact of the rank cutoff 𝑘 to the semantic match proportion on ColBERT-PRF model instantiated as Ranker and ReRanker models as well as the ColBERT E2E model, which is portrayed in Figure <ref type="figure">8</ref>. In general, from Figure <ref type="figure">8</ref>, we can see that Mean SMP grows as the rank cutoff 𝑘 increases -this is expected, as we know that ColBERT prefers exact matches, and the number of exact matches will decreased by rank (resulting in increasing SMP). However, that ColBERT-PRF (both Ranker and Reranker) have, in general, higher SMP than the original ColBERT ranking. This verifies the results from Figure <ref type="figure">7</ref>. The interesting exception is at the very highest ranks, where both ColBERT-PRF approaches exhibit lower SMP than the baseline. This suggests that at the very top ranks ColBERT-PRF exhibits higher preference for exact token matches than the E2E baseline. However, overall, the higher SMPs exhibited by ColBERT-PRF indicates that, at deeper ranks, the embedding-based query expansion has the ability to retrieve passages with less lexical exact match between the query and passage embeddings. In addition, we further investigate the potential for topic drift when applying ColBERT-PRF with different number of expansion embeddings on the TREC 2019 queries. In particular, in Figure <ref type="figure" target="#fig_11">9a</ref>  <ref type="foot" target="#foot_14">12</ref>we measure retrieval effectiveness (MAP) as the number of expansion embeddings is varied and, in Figure <ref type="figure" target="#fig_11">9b</ref>, we present Mean SMP (y-axis) calculated upon the retrieved results after PRF, at different rank cutoffs (curves), also as the number of expansion embeddings is varied (x-axis).</p><p>From Figure <ref type="figure" target="#fig_11">9a</ref>, we can see that 𝑓 𝑒 = 8 gives the highest (MAP) effectiveness (as also shown earlier in Figure <ref type="figure" target="#fig_9">5b</ref>). At the same time, from Figure <ref type="figure" target="#fig_11">9b</ref>, we observe that (1) for 2 ≤ 𝑓 𝑒 ≤ 8, Mean SMP falls;</p><p>(2) however, for 𝑓 𝑒 &gt; 8, Mean SMP rises again. This trend is apparent when Mean SMP is analysed for 5 or more retrieved passages. This suggests that with more than 8 expansion embeddings are selected, excessive semantic matching occurs (Figure <ref type="figure" target="#fig_11">9b</ref>) and effectiveness approaches MAP 0.50 (Figure <ref type="figure" target="#fig_11">9a</ref>). As expansion embeddings are selected by using the IDF of the corresponding token, this suggests that given the size of the feedback set (3 passages, with length upto 180 tokens and on average 77 tokens), for more than 8 embeddings we are starting to select non-informative expansion embeddings that can only be semantically matched in the retrieved passages, and hence there is no further positive benefit in terms of effectiveness. However, as effectiveness does not markedly decrease for 𝑓 𝑒 &gt; 8, this indicates that there is little risk of topic drift with ColBERT-PRF, due to the contextualised nature of the expansion embeddings. Overall, these analyses answer RQ4.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">DOCUMENT RANKING EFFECTIVENESS OF COLBERT-PRF</head><p>After assessing the effectiveness of ColBERT-PRF on passage ranking in the previous section, we further demonstrate the performance of ColBERT-PRF on document ranking. In this task, documents are longer than passages, hence they need to be divided into smaller chunck, with length comparable to those of passages. Moreover, in document ranking we do not fine tune the ColBERT model on the new collection due to the limited number of queries available; hence, we leverage the ColBERT model trained on the MSMARCO as detailed in Section 5.2, e.g., in a zero shot setting. Thus, in this section, we focus on testing the effectiveness of our proposed ColBERT-PRF for MSMARCO document retrieval task and the TREC Robust04 document retrieval task. Research questions and experimental setup for document ranking experiments are detailed in Section 6.1 and Section 6.2, respectively. Results and analysis are discussed in Section 6.3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Research Questions</head><p>Our document ranking experiments address the following research questions:</p><p>• RQ5: Can our pseudo-relevance feedback mechanism enhance over the retrieval effectiveness of dense retrieval models, i.e., ColBERT-PRF model outperform ColBERT, ANCE and ANCE-PRF dense retrieval models for document retrieval task? • RQ6: How does ColBERT-PRF compare to other existing baseline and state-of-the-art approaches for document retrieval task, namely: In addition, we also conduct the evaluation using 250 title-only and description-only query sets from TREC Robust04 document ranking task. We report the following metrics for MSMARCO document ranking tasks, namely the normalised discounted cumulative gain (NDCG) calculated at rank 10, Mean Average Precision (MAP) at rank 1000 as well as Recall calculated at ranks 100 and 1000. For the Robust04 experiments, we use the same metrics used for passage ranking tasks in Section 5.2. For significance testing, we use the paired t-test (𝑝 &lt; 0.05) and apply the Holm-Bonferroni multiple testing correction.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.2">Implementation and Settings.</head><p>As the length of documents in these corpora are too long to be fitted into the BERT <ref type="bibr" target="#b12">[11]</ref> model, and in particular our trained ColBERT model 13 (limited to 512 and 180 BERT WordPiece tokens, respectively), we split long documents into smaller passages and index the generated passages following <ref type="bibr" target="#b10">[9]</ref>. In particular, when building the index for each document corpora, a sliding window of 150 tokens with a stride of 75 tokens is applied to split the documents into passages. All the passages are encoded into a FAISS index. At retrieval time, FAISS retrieves 𝑘 ′ = 1000 document embeddings for every query embedding. The final score for each document is obtained by taking its highest ranking passage, a.k.a., its max passage.</p><p>To ensure a fair comparison, we apply passaging for all other indices used in this section, including the Terrier inverted index, i.e., the ANCE dense index 14 . Similarly, all PRF methods are applied on feedback passages, and max passage applied on the final ranking of passages.</p><p>Finally, we follow the same ColBERT-PRF implementation as introduced in Section 5.2. For query expansion settings, we follow the default settings for passage ranking task in Section 5.3, which is 10 expansion terms obtained from 3 feedback passages 15 and 𝐾 = 24 clusters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.3">Baselines.</head><p>To test the effectiveness of our ColBERT-PRF model on document ranking task, we compare with the all the baseline models we used for passage ranking task except the Neural Augmentation Approaches, due to the high GPU indexing time require for performing the doc2query and DeepCT processing for these large document corpora.  13 It is a common practice to use models trained on the MSMARCO passage corpus <ref type="bibr" target="#b31">[30]</ref> for document retrieval (e.g. <ref type="bibr" target="#b22">[21,</ref><ref type="bibr" target="#b32">31]</ref>). 14 While this is necessary for a fair comparison, it results in a small degradation in effectiveness for the sparse baselinesthis has also been observed by the authors of Anserini -see https://github.com/castorini/anserini/blob/master/src/main/ python/passage_retrieval/example/robust04.md. 15 We also tried filtering passages from the same document before applying PRF. We observed no significant improvements across multiple measures.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3">Document Ranking Results</head><p>ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022. In this section, we further investigate the effectiveness of our proposed ColBERT-PRF for document ranking task. Table <ref type="table" target="#tab_9">5</ref> and Table <ref type="table" target="#tab_10">6</ref> present the performance of ColBERT-PRF models as well as the baselines on the MSMARCO document dataset and the Robust04 dataset, respectively. 6.3.1 Results for RQ5. Similar to the passage retrieval task, in this section we validate the effectiveness of the pseudo-relevance feedback technique for the ColBERT dense retrieval model on the document retrieval task. On analysing Table <ref type="table" target="#tab_9">5</ref>, we found that both ColBERT-PRF Ranker and ReRanker models significantly outperform both the single representation dense retrieval, namely ANCE, and the multiple representation dense retrieval model, namely ColBERT E2E, in terms of MAP and Recall on both TREC 2019 and TREC 2020 query sets. In particular, the application of ColBERT-PRF leads to upto 21% and 14% improvements over ColBERT E2E in terms of MAP for TREC 2019 and TREC 2020 query sets, respectively. Indeed, ColBERT-PRF outperforms all document retrieval runs to the TREC 2019 Deep Learning track, exceeding the highest observed MAP by 23% in terms of MAP. Similarly, on the TREC 2020 query set, the MAP observed is markedly above that attained by the second-ranked group on the leaderboard <ref type="bibr" target="#b8">[7]</ref>. <ref type="foot" target="#foot_15">16</ref> In terms of NDCG@10, ColBERT-PRF outperforms over both the ANCE and ColBERT E2E models on both MSMARCO query sets. Moreover, both the ColBERT-PRF Ranker and ReRanker models significantly outperform the ColBERT and ANCE models w.r.t. Recall@100, indicating the effectiveness of the ColBERT-PRF refined query representations.</p><p>Similarly, when comparing the performances of ColBERT-PRF with the dense retrieval models without pseudo-relevance feedback on Robust04 in Table <ref type="table" target="#tab_10">6</ref>, we note that both ColBERT-PRF Ranker and ReRanker models are markedly improved over the ANCE and ColBERT E2E models on MAP, NDCG@10 and Recall on both title-only and description-only type of queries. Overall, between the Ranker and ReRanker ColBERT-PRF models, we find that ColBERT-PRF Ranker is more effective than ColBERT-PRF ReRanker, likely due to its increased Recall, consistent with those obtained from the passage ranking task (Section 5). Thus, in response to RQ5, we conclude that our ColBERT-PRF is effective at improving ColBERT E2E on document ranking tasks, similar to the improvements observed in Section 5.</p><p>6.3.2 Results for RQ6. In the following, we compare the effectiveness of the ColBERT-PRF model with various baselines. From Table <ref type="table" target="#tab_9">5</ref>, we find that ColBERT-PRF instantiated as the Ranker model significantly improves over the BM25-based lexical retrieval baselines and the ColBERT E2E with BERT-QE as the reranker, as well as all the CEQE variants models in terms of the NDCG@10 and Recall@100 metrics on the TREC 2019 query set. In addition, for the TREC 2020 query set, ColBERT-PRF significantly improves over all the baselines except those with BERT-based neural reranking models, namely BERT, ColBERT and BERT-QE, in terms of the MAP and Recall@100 metrics. Now let's analyse the performance of ColBERT-PRF models on Robust04 query sets. From Table <ref type="table" target="#tab_10">6</ref>, we observe that ColBERT-PRF models significantly outperforms the BM25 on both query sets and markedly outperforms over BM25 + RM3 on title-only queries. In addition, ColBERT-PRF show the similar performance with CEQE models in terms of MAP but exhibit markedly improvements in terms of NDCG@10 and MRR@10. Moreover, when comparing with the models with neural rerankers, both ColBERT-PRF Ranker and ReRanker models significantly outperform the ColBERT E2E + BERT-QE baseline and exhibits comparable performance than the other neural reranker models. However, we argue that the limited performance of ColBERT-PRF compared with the BERT-based reranking models for the Robust04 query sets comes from the two following aspects: firstly, we used a zero-shot setting of ColBERT model for the document ranking tasks, in that the ColBERT model was not trained on the larger document datasets; second, we didn't perform further parameter tuning for ColBERT-PRF on the document ranking task. Thus, in response to RQ6, we find that ColBERT-PRF is more effective than most of the baseline models and comparable to the BERT based neural reranking models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">MEASURING THE INFORMATIVENESS OF EXPANSION EMBEDDINGS OF</head><p>COLBERT-PRF In this section, we investigate the effectiveness of the three variants of the ColBERT-PRF model using different techniques to measure the informativeness of the expansion embeddings. The strategies are detailed in Section 7.1. Accordingly, a research question is posed in Section 7.2, with a corresponding experimental setup. Finally, Section 7.3 presents the performance and analysis of the three ColBERT-PRF variants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.1">Methodology</head><p>In Section 4.2 we proposed to map each expansion embedding back to its most likely token, and use the IDF of that token to measure the importance 𝜎 of each expansion embedding 𝜐 𝑖 generated by ColBERT-PRF. This results in a weight, 𝜎 (𝜐 𝑖 ), that is used in the expanded max-sim calculation (Equation ( <ref type="formula" target="#formula_5">5</ref>)). Indeed, notions of document frequency or collection frequency are commonly used in PRF models to measure expansion terms <ref type="bibr" target="#b2">[2]</ref>. The intuition behind this is that if a term appears more frequently in the feedback documents than in the whole corpus, the term is taken as an informative term. In contrast, terms that occur frequently in the corpus will not discriminate well relevant documents from other documents in the collection. In this section, we revisit the use of IDF in ColBERT-PRF, by additionally using collection frequency of the token, while also examining the corresponding embeddings of the tokens. Indeed, in addition to the document frequency focus of IDF, the collection frequency is also useful to reflect the informativeness of a term within the whole collection, measured as follows:</p><formula xml:id="formula_8">𝜎 𝐼𝐶𝑇 𝐹 (𝑡) = log |𝐷 | + 1 𝑡 𝑓 (𝑡, 𝐷) + 1 (7)</formula><p>where |𝐷 | is the number of terms in the collection 𝐷 and 𝑡 𝑓 (𝑡, 𝐷) is the number of occurrences of expansion term 𝑡 in the whole collection 𝐷.</p><p>However using either IDF or ICTF as expansion embedding weights does not consider the contextualised nature of the embeddings -that different tokens can have distinct meanings, and these may be more or less useful for retrieval. Use of IDF or ICTF can mask such distinctions.</p><p>Hence, we examine a further method based directly on the embedded representations. In particular, for each token, we examine all corresponding embeddings in the index, and determine how 'focused' these are -we postulate that a token with more focused embeddings will only have a single meaning (and therefore less polysemous), and hence more likely to be a good expansion embedding. Specifically, we measure the Mean Cosine similarity (MCos) for the embeddings of each token compared to the mean of all those embeddings:</p><formula xml:id="formula_9">𝜎 𝑀𝐶𝑜𝑠 (𝑡) = 1 𝑡 𝑓 (𝑡, 𝐷) 𝑡 𝑓 (𝑡,𝐷 ) ∑︁ 𝑗=1 cos(Υ, 𝜙 𝑐 𝑗 )<label>(8)</label></formula><p>where Υ is the element-wise average embedding of all embeddings in the index for token 𝑡. MCos is intended to approximate the semantic coherence of the embeddings for a given token. The expansion embeddings of more coherent tokens are given a higher weight in ColBERT-PRF.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.2">Research Question &amp; Experimental Setup</head><p>Our informativeness measurement experiments address the following research question:</p><p>• RQ7: What is the impact of the effectiveness ColBERT-PRF using different informativeness of expansion embedding measurements methods, namely the IDF weighting method, ICTF weighting method and the MCos weighting method? In our experiments addressing RQ7, while testing IDF, ICTF and MCos importance measures, we vary the parameter of ColBERT-PRF that controls the overall weight of the expansion embeddings, 𝛽. We do not normalise the various importance measures 𝜎 𝐼 𝐷𝐹 (𝑡), 𝜎 𝐼𝐶𝑇 𝐹 (𝑡) and 𝜎 𝑀𝐶𝑜𝑠 (𝑡) -their inherent differences in scales are addressed by varying 𝛽. Dataset: The query sets we used to demonstrate the effectiveness of the three variants of ColBERT-PRF proposed are the MSMARCO passage TREC 2019 and TREC 2020 passage query sets for passage retrieval task and the Robust title and description query sets for document retrieval task. Measures: Mean Average Precision (MAP) is used as the main metric.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.3">Results</head><p>Figure <ref type="figure" target="#fig_16">10</ref> shows the impacts of the retrieval effectiveness of the different weighting methods while 𝛽 is varied, in terms of MAP, for ColBERT-PRF for both the MSMARCO passage ranking task and the Robust04 document ranking task. Specifically, for the passage ranking task, we measure the retrieval effectiveness on both the TREC 2019 and TREC 2020 passage ranking queries, and using title-only and description-only types of queries of Robust04.</p><p>On analysing the figure, we see that, for both TREC 2019 and TREC 2020 query sets, the peak MAP scores for all the three weighting methods are the same, approximately with MAP=0.54 and MAP=0.51 respectively. In addition, according to the Figure <ref type="figure" target="#fig_16">10a</ref>    When we compare with IDF and ICTF, we see that MCos with 𝛽 ∈ [4.0, 6.0] exhibits the highest MAP performance. These trends allow us to draw the following observations: the lines for IDF and ICTF are very similar, varying only in terms of the 𝛽 value needed to obtain the highest MAP; In contrast, the MCos weighting method achieves a similar maximum MAP, but at a larger 𝛽 value -this is due to the lack of common normalisation. Indeed, as the maximum MAP values obtained are similar for IDF, ICTF and MCos, this suggests that the MCos is correlated with IDF, and that the statistical approaches are sufficient for measuring expansion embedding importance. A closer analysis of IDF and ICTF, as calculated on the BERT tokens, found that they exhibit a very high correlation (Spearman's 𝜌 of ∼1.00 on the MSMARCO passage corpus). This is indeed higher than the correlation observed on a traditional sparse Terrier inverted index (which uses a more conventional tokeniser) of 0.95 on the MSMARCO document index. The differences in correlations can be explained as follows: firstly, due to the use of WordPieces by the BERT tokeniser, which reduces the presence of long-tail tokens (which are tokenised to smaller WordPieces); secondly, passage corpora use smaller indexing units than document corpora, so it is less likely for terms to occur multiple times -this results in collection frequency being more correlated to document frequency.</p><p>For the Robust04 queryset (Figure <ref type="figure" target="#fig_16">10c</ref> and 10d), we see that while the peak MAP values for IDF and ICTF are again similar, the MCos weighting method gives lower MAP scores on the Robust04 title and description query sets. This suggests that using the coherence of a token's embeddings may not well indicate the utility of the expansion embedding. Indeed, some tokens with high embedding coherence could be stopword-like in nature. This motivates the continued use of IDF and ICTF for identifying important expansion embeddings.</p><p>Overall, to address RQ7, we find that the statistical information, based IDF and ICTF weighting methods, is more stable than the MCos weighting method for different retrieval tasks. Use of IDF and ICTF were shown to be equivalent, due to the higher correlation between document frequency and collection frequency on passage corpora.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">EFFICIENT VARIANTS OF COLBERT-PRF</head><p>In Section 5.3, we noted the high mean response time of the ColBERT PRF approach. Higher response times are a feature of many PRF approaches, due to the need to analyse the contents of the feedback documents, and decide upon the expansion terms/embeddings. In this section, we investigate several efficient variants of our ColBERT-PRF model, by experimenting with different clustering approaches, as well as different retrieval configurations of ColBERT.</p><p>In particular, we describe different variants in Section 8.1. Two research questions and the implementation setup are detailed in Section 8.2. Results and analysis are discussed in Section 8.3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.1">ColBERT-PRF variants</head><p>The overall workflow of a ColBERT-PRF Ranker model can be described into five stages, as shown in Figure <ref type="figure" target="#fig_0">1</ref>. These stages can be summarised as follows (for the ColBERT-PRF ReRanker model, the fourth stage ANN retrieval is omitted):</p><p>• KMeans clustering is a widely used clustering method, which groups the samples into 𝑘 clusters according to their Euclidean distance to each other. Hence, in ColBERT-PRF, given a set of document embeddings and the number of clusters expected to be returned, KMeans clustering is employed to return a list of representative centroid embeddings. Figure <ref type="figure" target="#fig_19">11a</ref> provides an illustration of the KMeans clustering method. Indeed, as shown in Figure <ref type="figure" target="#fig_19">11a</ref>, we notice that both cluster centroids (which can be applied as expansion embeddings for PRF) are distinct from the input embeddings. As a consequence, while measuring the importance and selecting the most informative ones among the representative centroid embeddings using IDF (or ICTF or MCos), we require to map each centroid embedding to a corresponding token id. As the representative centroid embedding, by definition, is not an actual document embedding, we turn to the FAISS ANN index and apply Equation ( <ref type="formula" target="#formula_2">3</ref>) to obtain a list of token ids (see Section 4.2).</p><p>However, the main drawback of the above KMeans clustering method in ColBERT-PRF is that the procedure of looking up the most likely token for each of the 𝐾 centroid embeddings requires another 𝐾 FAISS lookups. To address this issue, we propose variants that avoid these additional FAISS lookups, by using the most likely token within each cluster -to do so, we recognise that the expansion embedding (which is added to the query) needs not perfectly alignment with the embedding used to measure informativeness, which we call the indicative embedding.</p><p>Our first proposed alternative strategy is called KMeans-Closest, which is still based on KMeans clustering but does not rely on additional FAISS lookups to obtain the most likely tokens. Once the 𝐾 centroid embeddings are computed, for each centroid we identify the closest feedback document embedding in the corresponding cluster -the indicative embedding for each cluster -and we  use its token id to measure the importance score, such as IDF of the expansion embeddings. As shown in Figure <ref type="figure" target="#fig_19">11b</ref>, the indicative embeddings (the diamonds) are the closest actual document embeddings to the KMeans centroid embeddings (the blue stars).</p><p>Our second proposed clustering strategy is KMedoids <ref type="bibr" target="#b19">[18]</ref>. The KMedoids algorithm returns the medoid of each cluster -the medoid is the most centrally located embedding of the input document embeddings. Thus, after applying clustering upon the feedback document embeddings, for each cluster, we obtain the medoid (an indicative embedding for the cluster) that is also an actual document embedding, and hence can be mapped back to a token id, without requiring additional FAISS lookups for each centroid. Figure <ref type="figure" target="#fig_19">11c</ref> depicts both the expansion embeddings and the indicative embeddings are the returned medoid embeddings of the KMedoids clustering algorithm.</p><p>Overall, while the use of the KMeans-Closest and KMedoids methods can speed up the third stage of ColBERT-PRF, there might exist some potential risks (e.g., token id mismatch) thus hindering the effectiveness -hence, we report effectiveness as well as efficiency in our experiments.</p><p>8.1.2 ANN Retrieval. The overall ColBERT-PRF Ranker process encapsulates a total of 5 stages, as shown in Figure <ref type="figure" target="#fig_0">1</ref>. An ANN retrieval stage is used in both stages 1 &amp; 4, and hence forms a significant part of the workflow. Indeed, as highlighted in Section 3, for each given query embedding, the approximate nearest neighbour search produces 𝑘 ′ document embeddings for each query embedding, which are then mapped to the corresponding documents, thereby forming an unordered set of candidate documents. However, the contribution of the different query embeddings to the final score of the document varies (c.f. the contribution histogram in Figure <ref type="figure">6</ref>) <ref type="foot" target="#foot_16">17</ref> . Therefore, it is not efficient to take upto 𝑘 ′ = 1000 documents for each query embedding forward to the 2nd stage for accurate MaxSim scoring, as not all of these documents will likely receive high scores.</p><p>To this end, we experiment with using Approximate Scoring <ref type="bibr" target="#b27">[26]</ref> at the first stage, as well as in the later stage 4 retrieval. In particular, this approach makes use of the MaxSim operator applied on the approximate cosine scores of the ANN algorithm, to generate a ranking of candidates from the first stage. Indeed, as this is a ranking, rather than a set, then the number of the candidates 𝑘 can be directly controlled, rather than indirectly through 𝑘 ′ . While requires more computation in stage 1 (and has a small negative impact on the response time of that stage), its has has marked overall efficiency benefits <ref type="bibr" target="#b27">[26]</ref> for ColBERT dense retrieval, as smaller number of candidates can be passed to MaxSim without loss of recall.</p><p>More specifically, for the ColBERT-PRF instantiated as Ranker model, we apply the Approximate Scoring technique only in the first stage or in both the first and fourth stage of the ColBERT-PRF-Ranker model. Indeed, as we only require the most relevant three feedback passages for effective PRF, accurately scoring thousands of passages retrieved by the 1st ANN stage is superfluous. For the ColBERT-PRF instantiated as the ReRanker model, we apply Approximate Scoring in the first stage. In addition, we further investigate the efficiency and effectiveness trade-off when implementing the different clustering technique and the Approximate Scoring technique in the various ColBERT stages.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.2">Research Question &amp; Experimental Setup</head><p>• RQ8: What is the impact on efficiency and effectiveness of the ColBERT-PRF model using different clustering methods, namely the KMeans and KMeans-Closest clustering methods and the KMedoids clustering method? • RQ9: What is the impact on efficiency and effectiveness of the ColBERT-PRF model when instantiated using Approximate Scoring? Dataset: We compare the efficiency and the effectiveness of ColBERT-PRF model efficient variants on TREC 2019 and TREC 2020 query sets from MSMARCO passage. Measures: For measuring the performance in terms of efficiency, we report the Mean Response Time (MRT) for each stage of the ColBERT-PRF model (described in Figure <ref type="figure" target="#fig_0">1</ref>) and its overall MRT. Mean response times are measured with one Nvidia Titan RTX GPU (using a single thread for retrieval). In addition, we report the effectiveness performance with the metrics used in Section 5.2, namely MAP, NDCG@10, MRR and Recall. For significance testing, we use the paired t-test (𝑝 &lt; 0.05) and apply the Holm-Bonferroni multiple testing correction technique. Experimental setup: For both KMeans-Closest and KMedoids clustering, we reuse the default setting of the KMeans clustering algorithm, i.e., the number of clusters 𝐾 = 24, the number of feedback documents 𝑓 𝑏 = 3, and the number of expansion embeddings 𝑓 𝑒 = 10. As for 𝛽, based on the conclusions obtained from Section 5, we pick the appropriate 𝛽 for each query set, namely 𝛽 = 1 and 𝛽 = 0.5 for the TREC 2019 and TREC 2020 passage ranking query sets, respectively. For the Approximate Scoring experiments, let 𝑘 1 denote the number of passages retrieved in the Stage 1 ANN, and 𝑘 4 denote the number of passages retrieved in the Stage 4 ANN. Then, for (i) the ColBERT-PRF Ranker model, we apply with rank cutoff of 𝑘 1 = 300 and 𝑘 4 = 1000 <ref type="foot" target="#foot_17">18</ref> , and for (ii) the ReRanker model, we apply with rank cutoff 𝑘 1 = 1000 in the first stage only, to ensure sufficient recall of relevant passages to be upranked after applying PRF. We later vary 𝑘 1 and 𝑘 4 to demonstrate their impact upon efficiency and effectiveness.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.3">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.</head><p>3.1 RQ8 -Clustering Variants. Table <ref type="table" target="#tab_11">7</ref> lists the effectiveness and the efficiency performance for ColBERT E2E and the ColBERT-PRF instantiated as Ranker and ReRanker models on both the TREC 2019 and TREC 2020 passage ranking query sets. In terms of efficiency, we measure the MRT of the different ColBERT-PRF stages as well as the overall MRT for each model variant. From Table <ref type="table" target="#tab_11">7</ref>, we note that, for both the TREC 2019 and TREC 2020 query sets, both the ColBERT-PRF Ranker and ReRanker model variants implemented with KMeans-Closest and KMedoids clustering methods are much faster than the KMeans clustering method model, without markedly compromising their effectiveness. In particular, both KMeans-Closest and KMedoids still exhibit enhanced NDCG@10 and MAP (significantly so) over the ColBERT E2E baseline. Moreover, this speed benefit is obtained by omitting the FAISS lookup step in the default ColBERT-PRF with KMeans-Closest and KMedoids clustering algorithms, as large efficiency improvements can be observed in the Stage 3 column of Table <ref type="table" target="#tab_11">7</ref> (e.g. on TREC 2019, ∼900ms for KMeans-Closest vs. ∼3000ms for KMeans). Going further, KMedoids is faster still (218ms on TREC 2019), demonstrating the benefit of a fast clustering algorithm, with no further loss of effectiveness compared to KMeans-Closest.</p><p>Overall, in a reranking scenario, KMeans-Closest and KMedoids clustering methods experience upto 2.48× and 4.54× speedups, respectively. Indeed, the mean response times of KMedoids of 766ms (TREC 2020) is very respectable compared to the ColBERT E2E baseline, despite the normally expensive application of a PRF technique. Thus, in response to RQ8, we conclude that for both the ColBERT-PRF Ranker and ReRanker models with KMeans-Closest or KMedoids clustering are more efficient than the KMeans clustering method without compromising the effectiveness. 8.3.2 RQ9 -Variants using Approximate Scoring. Next, we consider the application of Approximate Scoring within ColBERT-PRF. Again, efficiency and effectiveness results are reported in Table <ref type="table" target="#tab_11">7</ref>. We report response times only for KMeans. Firstly, on examining the table, we find that Approximate Scoring applied in both the first stage and the fourth stage of the ColBERT-PRF Ranker model exhibits similar effectiveness performance but much more efficient than the original ColBERT-PRF Ranker model. In addition, deploying Approximate Scoring within the ColBERT-PRF ReRanker model also reduces the response time while still outperform the ColBERT E2E model (but not by a significant margin). From Table <ref type="table" target="#tab_11">7</ref>, we see that rows with Approximate Scoring techniques applied exhibit increased Stage 1 times (43ms → 95ms/90ms for Ranker, as MaxSim takes time to compute), but are much faster in Stage 2, as the exact scoring only occurs in the selected high quality candidates (344ms → 22ms/23ms for Ranker). The next effect of replacing both of the set retrieval ANN stages with Approximate Scoring in Ranker is an up to 18% speedup in response times (4103ms → 3466ms), while still maintaining high effectiveness, e.g., significant improvements in MAP over the baseline ColBERT E2E.</p><p>Next, we further study the trade-off between the efficiency and the effectiveness of ColBERT-PRF applied with Approximate Scoring, as well as the benefits brought by the different clustering techniques. Aligned with the table, Figure <ref type="figure" target="#fig_20">12</ref> presents both the effectiveness and efficiency of the following three strategies on the TREC 2019 query set: (i) ColBERT-PRF Ranker applied with Approximate Scoring in stage 1 using three different clustering techniques; (ii) ColBERT-PRF Ranker applied with Approximate Scoring in both stage 1 and stage 4 using three different clustering techniques and (iii) ColBERT-PRF ReRanker applied with Approximate Scoring in stage 1 using three different clustering techniques. In each figure, we vary the cutoff, 𝑘 1 or 𝑘 4 , of Approximate Scoring to produce curves for each setting (100 ≤ {𝑘 1 , 𝑘 3 } ≤ 7300 19 ). We provide separate figures for MAP and NDCG@10. Each figure has two asterisk points (⋆) denoting the performance of ColBERT E2E, and the ColBERT-PRF default setting (KMeans, ANN set retrieval). For the points in each curve, the marker • indicates the corresponding performance is significantly improved (and × indicates not significantly) over the ColBERT E2E baseline.</p><p>Firstly, we analyse ColBERT-PRF Ranker when only the Stage 1 Approximate Scoring is applied. From Figure <ref type="figure" target="#fig_20">12b</ref>, we observe that, for the smaller 𝑘 1 , there is some minor degradation of NDCG@10; but the impact on MAP (Figure <ref type="figure" target="#fig_20">12a</ref>) is indistinguishable. In terms of efficiency, it can easily be seen that KMedoids is the most efficient technique, followed by the KMeans-Closest technique and finally the KMeans clustering technique.</p><p>We next consider Figure <ref type="figure" target="#fig_20">12c</ref> and Figure <ref type="figure" target="#fig_20">12d</ref>, where we applied the Approximate Scoring technique for both the first and fourth stages for ColBERT-PRF Ranker model, with the different clustering  beyond that of ColBERT. Indeed, our passage ranking experimental results -on the TREC 2019 and 2020 Deep Learning track passage ranking query sets -show that our proposed approach can significantly improve the retrieval effectiveness of the state-of-the-art ColBERT dense retrieval approach. In particular, our ColBERT-PRF outperforms ColBERT E2E model by 26% and 10% on TREC 2019 and TREC 2020 passage ranking query sets. Our proposed ColBERT-PRF is a novel and extremely promising approach into applying PRF in dense retrieval. It may also be adaptable to further multiple representation dense retrieval approaches beyond ColBERT. We further validate the effectiveness of the proposed ColBERT-PRF approach on the MSMARCO document ranking task and TREC Robust04 document ranking task, where ColBERT-PRF is observed to exhibit upto 21% and 14% improvements over ColBERT E2E model on TREC 2019 and TREC 2020 document ranking query sets, respectively. Moreover, we investigate ColBERT-PRF variants with different weighting approaches for measuring the usefulness of the expansion embeddings. Finally, in order to trade-off the efficiency and the effectiveness, we explore the efficient variants of ColBERT-PRF using the approximate scoring technique and/or different clustering algorithms, bringing upto 4.54x speedup without compromising the retrieval effectiveness.</p><p>In conclusion, the main findings of this work can be summarised as follows:</p><p>• The pseudo-relevance feedback information from the top-returned documents in multiple representation dense retrieval is beneficial for improving the retrieval effectiveness on passage retrieval (Section 5) and document retrieval (Section 6). Indeed, our proposed pseudorelevance feedback mechanism can significantly improve the retrieval effectiveness over than ColBERT end-to-end model, the single representation dense retrieval models, as well as most of the baselines for both passage ranking and document ranking tasks; • Techniques based on statistical information, namely IDF and ICTF, and on embedding coherency, namely Mean Cosine Similarity, can be used to measure the informativeness of expansion embeddings of ColBERT-PRF (Section 7); • The trade-off of the retrieval effectiveness and efficiency of ColBERT-PRF can be attained using different clustering techniques and/or candidate selection techniques based on approximate scoring (Section 8).</p><p>Overall, our work makes it feasible to implement the pseudo-relevance feedback technique in a multiple-representation dense retrieval setting. In particular, the provided extensive experimental results demonstrate the effectiveness of our proposed ColBERT-PRF model. However, how this proposed dense PRF technique can be applied to the single-representation dense retrieval models remains an open problem. In addition, while the performance of most of the queries can benefit from the expansion embeddings, the performance of some of the queries is still degraded. Thus, a more cautious design that applies selective query embedding expansion will likely alleviate this issue. We leave this as one of our future works. instance, for the ColBERT-PRF (Bo1) implementation, the expansion embeddings are weighted according to the following equation:</p><formula xml:id="formula_10">𝑊 Bo1 (𝑡) = 𝑡 𝑓 𝑥 log 2 1 + 𝜆 𝜆 + log 2 (1 + 𝜆),<label>(9)</label></formula><p>where 𝜆 = 𝑡 𝑓 𝑟𝑒𝑙 /𝑁 𝑟𝑒𝑙 , 𝑡 𝑓 𝑟𝑒𝑙 denotes the frequency of (BERT WordPiece) token 𝑡 in the pseudorelevant feedback documents and 𝑁 𝑟𝑒𝑙 denotes the number of feedback documents. 𝑡 𝑓 𝑥 denotes the number of unique tokens in the pseudo-relevant document set.</p><p>Similarly, for the ColBERT-PRF (RM3) variant, the expansion embeddings are selected using: </p><p>where 𝑀𝑎𝑥𝑆𝑖𝑚(𝑞, 𝑑) =</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>|𝑞 |</head><p>𝑖=1 max 𝑗=1,...,|𝑑 | 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗 denotes the maximum similarity score. In Table <ref type="table" target="#tab_12">8</ref>, we report the ColBERT-PRF models with various expansion embedding selection techniques on both the TREC 2019 and 2020 query sets. From Table <ref type="table" target="#tab_12">8</ref>, we find that both ColBERT-PRF Ranker and ReRanker with the Bo1 selection technique can outperform the ColBERT E2E model in terms of NDCG@10, MRR@10 and Recall on TREC 2019 while the improvements are not observed on the TREC 2020 query set. In particular, on the TREC 2020 query set, the ColBERT-PRF models with the RM3 expansion embeddings selection approach exhibit lower performance than the ColBERT E2E model. More importantly, we observe that, by comparing the ColBERT-PRF model with the KMeans clustering technique with the Bo1 and RM3 selection variants, the KMeans clustering technique significantly outperforms both the Bo1 and RM3 variants. Figure <ref type="figure" target="#fig_5">13</ref> below shows the impact of 𝛽 for the Bo1 and KMeans variants, in both the ranking and reranking settings, for MAP and NDCG@10. From the figures, it is clear that KMeans always outperforms Bo1, regardless of the setting of 𝛽.</p><p>Thus, we conclude that the KMeans clustering selection technique is more effective than the traditional Bo1 and RM3 selection approaches for the ColBERT-PRF model. This is because the Bo1 and RM3 query expansion techniques rely solely on the word occurrence statistics for selecting expansion embeddings rather than the semantic coherence of the embeddings, and hence select embeddings for tokens that occur frequently, rather than for frequently occurring semantic concepts. Selecting semantically coherent concepts is a key advantage of ColBERT-PRF for a dense retrieval environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 ColBERT-PRF Pipeline</head><p>In this appendix, we demonstrate the stages of ColBERT-PRF, when defined as PyTerrier <ref type="bibr" target="#b26">[25,</ref><ref type="bibr" target="#b28">27]</ref> pipelines. In particular, in PyTerrier, the &gt;&gt; operator is used to delineate different stages of a retrieval   </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. Workflow of ColBERT-PRF ranker.</figDesc><graphic coords="10,72.92,84.68,340.15,91.23" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>the red[MASK]  tokens are also visible, clustered around the original query terms (##fish, gold, grow). Meanwhile, document embeddings extracted from 10 feedback documents are shown as light blue ellipses in Figure2(a). There appear to be visible clusters of document embeddings near the query embeddings, but also other document embeddings exhibit some clustering. The mass of embeddings near the origin is not distinguishable in PCA. Figure 2(b) demonstrates the application of KMeans clustering upon the document embeddings; we map back to the original tokens by virtue of Equation (3). In Figure 2(b), the point size is indicative of the IDF of the corresponding token.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>(</head><label></label><figDesc>a) Query &amp; doc. embeddings. (b) Cluster centroids, 𝐾 = 24.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Example showing how ColBERT-PRF operates for the query 'do goldfish grow' in a 2D PCA space. In Figure 2(b), the point size is representative of IDF; five high IDF and one low IDF centroids are shown. For contrast, × 'tank (war)' denotes the embedding of 'tank' occurring in a non-fish context.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>• RQ2: How does ColBERT-PRF compare to other existing baselines and state-of-the-art approaches, namely: (a) lexical (sparse) baselines, including using PRF, (b) neural augmentation approaches, namely DeepCT and docT5query, (c) BERT-QE Reranking models, (d) embedding based query expansion models, namely the three variants of CEQE models: CEQE-Max, CEQE-Centroid and CEQE-Mul? • RQ3: What is the impact of the parameters of ColBERT-PRF, namely the number of clusters and expansion embeddings, the number of feedback passages and the 𝛽 parameter controlling the influence of the expansion embeddings? • RQ4: To what extent does ColBERT-PRF perform semantic matching? 5.2 Experimental Setup 5.2.1 Dataset &amp; Measures. Experiments are conducted on the MSMARCO passage corpus, using the TREC 2019 Deep Learning track topics (43 topics with an average of 215.35 relevance judgements</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Per-query analysis on the TREC 2019 query set.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>(a) Cluster centroids, 𝐾 = 8. (b) Cluster centroids, 𝐾 = 64.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Embeddings selected using different number of clustering centroids 𝐾 for the query 'do goldfish grow'; point size is representative of the magnitude of IDF.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head></head><label></label><figDesc>together with Figure 2(b), (a) Impact of 𝐾 and 𝑓 𝑒 on ColBERT-PRF Ranker. (b) Impact of 𝐾 and 𝑓 𝑒 on ColBERT-PRF ReRanker. (c) Impact of pseudo-relevance feedback size 𝑓 𝑏 . (d) Impact of expansion embedding weight 𝛽.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. MAP on the TREC 2019 query set while varying the number of clusters (𝐾), number of expansion embeddings (𝑓 𝑒 ), as well as the feedback set size 𝑓 𝑏 and expansion embedding weight 𝛽. 𝛽 = 0 &amp; 𝑓 𝑒 = 0 correspond to the original ColBERT.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 7 .Fig. 8 .</head><label>78</label><figDesc>Fig. 7. Per-query semantic matching proportion measurements (measured to rank 10) for the ColBERT E2E (shown as red bars) and ColBERT-PRF (shown as cyan bars) models on the TREC 2019 passage ranking query set.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig. 9 .</head><label>9</label><figDesc>Fig. 9. Potential topic drift analysis for ColBERT-PRF ReRanker on the TREC 2019 query set.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head></head><label></label><figDesc>(a) lexical (sparse) baselines, including using PRF, (b) BERT-QE Reranking models, (c) embedding based query expansion models, namely the three variants of the CEQE model: CEQE-Max, CEQE-Centroid and CEQE-Mul? 6.2 Experimental Setup 6.2.1 Dataset &amp; Measures. In this section, we evaluate our ColBERT-PRF on document ranking task using MSMARCO document and Robust04 document datasets. The MSMARCO training dataset contains ∼3.2M documents along with 367K training queries, each with 1-2 labelled relevant documents. The Robust04 collection contains 528K newswire articles from TREC disks 4 &amp; 5. To test retrieval effectiveness of ColBERT-PRF model, we use the 43 test queries from the TREC Deep Learning Track 2019 and 45 test queries from the TREC Deep Learning Track 2020 with an average of 153.4 and 39.26 relevant documents per query, respectively.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head></head><label></label><figDesc>ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><head></head><label></label><figDesc>Figure10shows the impacts of the retrieval effectiveness of the different weighting methods while 𝛽 is varied, in terms of MAP, for ColBERT-PRF for both the MSMARCO passage ranking task and the Robust04 document ranking task. Specifically, for the passage ranking task, we measure the retrieval effectiveness on both the TREC 2019 and TREC 2020 passage ranking queries, and using title-only and description-only types of queries of Robust04.On analysing the figure, we see that, for both TREC 2019 and TREC 2020 query sets, the peak MAP scores for all the three weighting methods are the same, approximately with MAP=0.54 and MAP=0.51 respectively. In addition, according to the Figure10aand 10b, the overall trend for IDF and</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_15"><head></head><label></label><figDesc>Robust04 desciption query set.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><head>Fig. 10 .</head><label>10</label><figDesc>Fig. 10. Influence of different weighting methods. 𝛽 = 0 corresponds to the original ColBERT.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head></head><label></label><figDesc>Stage 1: First-pass FAISS ANN Retrieval • Stage 2: First-pass exact ColBERT MaxSim re-ranking • Stage 3: Clustering of Feedback Documents and Expansion Embedding Weighting • Stage 4: Second-pass FAISS ANN Retrieval • Stage 5: Second-pass exact ColBERT MaxSim re-ranking In the following, we discuss changes to the clustering (Stage 3 above, Section 8.1.1) and ANN retrieval (Stages 1 &amp; 4, Section 8.1.2). 8.1.1 Clustering. The default clustering technique in Stage 3 is the KMeans clustering algorithm.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_19"><head>Fig. 11 .</head><label>11</label><figDesc>Fig. 11. The illustration of different clustering methods. Dots in different colours indicate the document embeddings belonging to different clusters. Blue stars represents the expansion embedding, while the red diamond represents the indicative embedding used to measure the informativeness of the expansion embeddings.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_20"><head>Fig. 12 .</head><label>12</label><figDesc>Fig. 12. Trade-off between efficiency and effectiveness for ColBERT-PRF implemented with different clustering methods and the Approximate Scoring technique. The star coloured with purple and the red represents the ColBERT E2E and the default ColBERT PRF Ranker or ReRanker performance. A point marker of • indicates the corresponding performance is significantly improved (and × indicates not significantly) over the ColBERT-E2E baseline.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_21"><head>𝑊</head><label></label><figDesc>RM3 (𝑡) = 𝜆 score exp (𝑡) + (1 -𝜆) score orig (𝑡),<ref type="bibr" target="#b11">(10)</ref> where 0 ≤ 𝜆 ≤ 1. score orig (𝑡) = 1 denotes the weights for the original query embeddings and score exp (𝑡) denotes the weights for the expansion embeddings. score exp (𝑡) =𝑆 (𝑡 )𝑑 ∈𝑃𝑅𝐷 𝑡 ′ ∈𝑑 𝑆 (𝑡 ′ ) , where 𝑆 (𝑡) is calculated as follows:𝑆 (𝑡) = 𝑃 𝑡, 𝑞 1 , . . . , 𝑞 |𝑞 | = ∑︁ 𝑀 ∈ M 𝑃 (𝑀)𝑃 (𝑡 | 𝑀)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_22"><head>Fig. 13 .# Loading the ColBERT index 2 from pyterrier_colbert.ranking import ColBERTFactory 3 pytcolbert 4 # Build the experimental pipeline 5 def 6 #</head><label>1323456</label><figDesc>Fig.<ref type="bibr" target="#b14">13</ref>. Impact of 𝛽 on TREC 2019 query set for ColBERT-PRF Ranker and ReRanker models with Bo1 and RM3 expansion embedding selection techniques in terms of MAP and NDCG@10 performances.</figDesc><graphic coords="40,253.85,354.62,170.08,111.32" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>. . , 𝑡 𝑛 }, representing a query 𝑞, composed by |𝑞| tokens into a set of embeddings {𝜙 𝑞 1 , . . . , 𝜙 𝑞 |𝑞| } and a document composed by |𝑑 | tokens into a set of embeddings {𝜙 𝑑 1 , . . . , 𝜙 𝑑 |𝑑 | }.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1 .</head><label>1</label><figDesc>Summary of notation -top group for ColBERT dense retrieval; bottom group for ColBERT-PRF. 𝑞 𝑖 in 𝜙 𝑞 1 , . . . , 𝜙 𝑞 𝑛 do 𝑑 (𝜙 𝑞 𝑖 , 𝑘 ′ )</figDesc><table><row><cell></cell><cell></cell><cell>Symbol</cell><cell>Meaning</cell></row><row><cell></cell><cell></cell><cell>𝜙 𝑞 𝑖 , 𝜙 𝑑 𝑗</cell><cell>An embedding for a query token 𝑞 𝑖 or a docu-</cell></row><row><cell></cell><cell></cell><cell></cell><cell>ment token 𝑑 𝑗</cell></row><row><cell></cell><cell></cell><cell cols="2">F 𝑑 (𝜙 𝑞 𝑖 , 𝑘 ′ ) Function returning a list of the 𝑘 ′ documents</cell></row><row><cell></cell><cell></cell><cell></cell><cell>closest to embedding 𝜙 𝑞 𝑖</cell></row><row><cell></cell><cell></cell><cell>Φ</cell><cell>Set of feedback embeddings from 𝑓 𝑏 top-</cell></row><row><cell></cell><cell></cell><cell></cell><cell>ranked feedback documents</cell></row><row><cell></cell><cell></cell><cell>𝜐 𝑖</cell><cell>A representative (centroid) embedding se-</cell></row><row><cell></cell><cell></cell><cell></cell><cell>lected by applying KMeans among Φ</cell></row><row><cell></cell><cell></cell><cell>𝐾</cell><cell>Number of representative embeddings to se-</cell></row><row><cell></cell><cell></cell><cell></cell><cell>lect, i.e., number of clusters for KMeans</cell></row><row><cell></cell><cell></cell><cell>F 𝑡 (𝜐 𝑖 , 𝑟 )</cell><cell>Function returning the 𝑟 token ids correspond-</cell></row><row><cell></cell><cell></cell><cell></cell><cell>ing to the 𝑟 closest document embeddings to</cell></row><row><cell></cell><cell></cell><cell></cell><cell>embedding 𝜐 𝑖</cell></row><row><cell></cell><cell></cell><cell>𝜎 𝑖</cell><cell>Importance score of 𝑣 𝑖</cell></row><row><cell></cell><cell></cell><cell>𝐹 𝑒</cell><cell>Set of expansion embeddings</cell></row><row><cell></cell><cell></cell><cell>𝑓 𝑒</cell><cell>Number of expansion embeddings selected</cell></row><row><cell></cell><cell></cell><cell></cell><cell>from 𝐾 representative embeddings</cell></row><row><cell></cell><cell></cell><cell>𝑓 𝑏</cell><cell>Number of feedback documents</cell></row><row><cell></cell><cell></cell><cell>𝛽</cell><cell>Parameter weighting the contribution of the</cell></row><row><cell></cell><cell></cell><cell></cell><cell>expansion embeddings</cell></row><row><cell cols="4">particular, as we will show, this permits representative embeddings from a set of pseudo-relevance</cell></row><row><cell cols="4">documents to be used to refine the query representation 𝜙.</cell></row><row><cell cols="4">Algorithm 1: The ColBERT E2E algorithm</cell></row><row><cell></cell><cell cols="2">Input : A query 𝑄</cell></row><row><cell></cell><cell cols="3">Output : A set 𝐴 of (docid, score) pairs</cell></row><row><cell></cell><cell cols="2">ColBERT E2E(Q):</cell></row><row><cell>1</cell><cell cols="2">𝜙 𝑞 1 , . . . , 𝜙 𝑞 𝑛 ← Encode(𝑄)</cell></row><row><cell>2</cell><cell>𝐷 ← ∅</cell><cell></cell></row><row><cell>5</cell><cell>𝐴 ← ∅</cell><cell></cell></row><row><cell>6</cell><cell cols="2">for 𝑑 in 𝐷 do</cell></row><row><cell>7</cell><cell>𝑠 ←</cell><cell cols="2">|𝑞 | 𝑖=1 max 𝑗=1,...,|𝑑 | 𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗</cell></row><row><cell>8</cell><cell cols="2">𝐴 ← 𝐴 ∪ (𝑑, 𝑠)</cell></row><row><cell>9</cell><cell>return 𝐴</cell><cell></cell></row></table><note><p>3 for 𝜙 4 𝐷 ← 𝐷 ∪ F</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>Reranking with ColBERT-PRFGiven the original |𝑞| query embeddings and the 𝑓 𝑒 expansion embeddings, we incorporate the score contributions of the expansion embeddings in Eq. (1) as follows:</figDesc><table><row><cell></cell><cell>|𝑞 |</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>𝑠 (𝑞, 𝑑) =</cell><cell>∑︁ 𝑖=1</cell><cell>max 𝑗=1,...,|𝑑 |</cell><cell>𝜙 𝑇 𝑞 𝑖 𝜙 𝑑 𝑗 + 𝛽</cell><cell>∑︁ (𝜐 𝑖 ,𝜎 𝑖 ) ∈𝐹 𝑒</cell><cell>max 𝑗=1,...,|𝑑 |</cell><cell>𝜎 𝑖 𝜐 𝑇 𝑖 𝜙 𝑑 𝑗 ,</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Algorithm 2 :</head><label>2</label><figDesc>The ColBERT PRF (reranking) algorithm Input : A query 𝑄, number of feedback documents 𝑓 𝑏 , number of representative embeddings 𝐾, number of expansion embeddings 𝑓 𝑒 Output : A set 𝐵 of (docid, score) pairs ColBERT PRF(𝑄):</figDesc><table><row><cell>1</cell><cell>𝐴 ← ColBERT E2E(𝑄)</cell></row><row><cell>2</cell><cell>Φ(𝑄, 𝑓 𝑏 ) ← set of all document embeddings from</cell></row><row><cell></cell><cell>the 𝑓 𝑏 top-scored documents in 𝐴</cell></row><row><cell>3</cell><cell>𝑉 ← ∅</cell></row><row><cell>4</cell><cell>𝜐 1 , . . . , 𝜐 𝐾 = KMeans 𝐾, Φ(𝑄, 𝑓 𝑏 )</cell></row><row><cell>5</cell><cell>for 𝜐 𝑖 in 𝜐 1 , . . . , 𝜐 𝐾 do</cell></row><row><cell>6</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 2 .</head><label>2</label><figDesc>Comparison with baselines. Superscripts a...p denote significant improvements over the indicated baseline model(s). The highest value in each column is boldfaced. The higher MRT of BM25+docT5query+ColBERT is expected, as we do not have a ColBERT index for the docT5query representation.</figDesc><table><row><cell></cell><cell>MRT</cell><cell></cell><cell>129</cell><cell>3554</cell><cell>203</cell><cell>248</cell><cell>4003</cell><cell>228</cell><cell></cell><cell>64</cell><cell>3719</cell><cell>141</cell><cell>295</cell><cell>3888</cell><cell>2381</cell><cell></cell><cell>179</cell><cell>-</cell><cell>600</cell><cell></cell><cell>1595</cell><cell>1328</cell><cell></cell><cell>16103</cell><cell>15432</cell><cell>14887</cell><cell></cell><cell>4150</cell><cell>3600</cell><cell>4155</cell><cell></cell></row><row><cell></cell><cell>Recall</cell><cell></cell><cell>0.8103</cell><cell>0.8103</cell><cell>0.8103</cell><cell>0.8423</cell><cell>0.8423</cell><cell>0.8423</cell><cell></cell><cell>0.8008</cell><cell>0.8008</cell><cell>0.8008</cell><cell>0.8456</cell><cell>0.8456</cell><cell>0.8456</cell><cell></cell><cell>0.7737</cell><cell>0.8148</cell><cell>0.8245</cell><cell></cell><cell>0.8423</cell><cell>0.8245</cell><cell></cell><cell>0.8561</cell><cell>0.8540</cell><cell>0.8447</cell><cell></cell><cell>0.8892 𝑎𝑏𝑔ℎ𝑙𝑚𝑛𝑜</cell><cell>0.8431 𝑚</cell><cell>0.8837 𝑎𝑔ℎ𝑙𝑚𝑛𝑜</cell><cell>0.8443 𝑚</cell></row><row><cell>TREC 2020 (54 queries)</cell><cell>NDCG@10 MRR@10</cell><cell></cell><cell>0.4936 0.5912</cell><cell>0.6716 0.8069</cell><cell>0.6931 0.8546</cell><cell>0.5043 0.5912</cell><cell>0.6704 0.8079</cell><cell>0.6877 0.8560</cell><cell></cell><cell>0.5603 0.7090</cell><cell>0.6852 0.8068</cell><cell>0.7071 0.8549</cell><cell>0.6228 0.7434</cell><cell>0.6810 0.8160</cell><cell>0.6934 0.8021</cell><cell></cell><cell>0.6447 0.7898</cell><cell>0.6948 0.8371</cell><cell>0.6871 0.8525</cell><cell></cell><cell>0.6909 0.8315</cell><cell>0.6911 0.8315</cell><cell></cell><cell>0.5094 0.6132</cell><cell>0.5099 0.6270</cell><cell>0.4749 0.5825</cell><cell></cell><cell>0.6993 𝑎𝑑𝑔𝑟𝑠𝑡 0.8396 𝑎𝑑</cell><cell>0.7006 𝑎𝑑𝑔𝑟𝑠𝑡 0.8396 𝑎𝑑</cell><cell>0.7153 𝑎𝑑𝑔 𝑗𝑟𝑠𝑡 0.8439 𝑎𝑑</cell><cell>0.7161 𝑎𝑑𝑔 𝑗𝑟𝑠𝑡 0.8439 𝑎𝑑</cell></row><row><cell></cell><cell>MAP</cell><cell></cell><cell>0.2930</cell><cell>0.4699</cell><cell>0.4752</cell><cell>0.3203</cell><cell>0.4739</cell><cell>0.4800</cell><cell></cell><cell>0.3570</cell><cell>0.4671</cell><cell>0.4757</cell><cell>0.4082</cell><cell>0.4714</cell><cell>0.4733</cell><cell></cell><cell>0.4070</cell><cell>0.4452</cell><cell>0.4654</cell><cell></cell><cell>0.4842</cell><cell>0.4749</cell><cell></cell><cell>0.3380</cell><cell>0.3302</cell><cell>0.2999</cell><cell></cell><cell>0.4962 𝑎𝑑𝑔 𝑗𝑚𝑟𝑠𝑡</cell><cell>0.4919 𝑎𝑑𝑔 𝑗𝑟𝑠𝑡</cell><cell>0.5116 𝑎𝑑𝑔 𝑗𝑚𝑛𝑜𝑟𝑠𝑡</cell><cell>0.5063 𝑎𝑑𝑔 𝑗𝑚𝑟𝑠𝑡</cell></row><row><cell>TREC 2019 (43 queries)</cell><cell>NDCG@10 MRR@10 Recall MRT</cell><cell>Lexical Retrieval Approaches</cell><cell>0.4795 0.6416 0.7553 133</cell><cell>0.6855 0.8295 0.7553 3589</cell><cell>0.6950 0.8580 0.7553 202</cell><cell>0.5156 0.6093 0.7756 201</cell><cell>0.6862 0.8275 0.7756 4035</cell><cell>0.7055 0.8651 0.7756 320</cell><cell>Neural Augmentation Approaches</cell><cell>0.5599 0.7155 0.7321 54</cell><cell>0.7011 0.8483 0.7321 3737</cell><cell>0.7004 0.8541 0.7321 129</cell><cell>0.6308 0.7614 0.8263 282</cell><cell>0.7123 0.8483 0.8263 8025</cell><cell>0.7136 0.8367 0.8263 2362</cell><cell>Dense Retrieval Models</cell><cell>0.6537 0.8590 0.7571 199</cell><cell>0.6807 0.8492 0.7912 -</cell><cell>0.6934 0.8529 0.7892 581</cell><cell>BERT-QE Reranking Models</cell><cell>0.7179 0.8754 0.7756 1130</cell><cell>0.7013 0.8683 0.7892 1261</cell><cell>Embedding-based Query Expansion Models</cell><cell>0.5382 0.6605 0.8277 15656</cell><cell>0.5345 0.6595 0.8234 14230</cell><cell>0.4987 0.5941 0.8097 15612</cell><cell>ColBERT-PRF Models</cell><cell>0.7352 𝑎𝑑𝑔𝑟𝑠𝑡 0.8858 𝑎𝑑𝑡 0.8706 𝑎𝑏ℎ𝑚𝑜 4103</cell><cell>0.7369 𝑎𝑑𝑔𝑟𝑠𝑡 0.8858 𝑎𝑑𝑡 0.7961 3543</cell><cell>0.7395 𝑎𝑑𝑔 𝑗𝑚𝑟𝑠𝑡 0.8897 𝑎𝑑𝑡 0.8711 𝑎𝑏ℎ𝑚𝑜 4111</cell><cell>0.7409 𝑎𝑑𝑔𝑗𝑚𝑟𝑠𝑡 0.8897 𝑎𝑑𝑡 0.7977 3470</cell></row><row><cell></cell><cell>MAP</cell><cell></cell><cell>0.2864</cell><cell>0.4441</cell><cell>0.4582</cell><cell>0.3108</cell><cell>0.4531</cell><cell>0.4709</cell><cell></cell><cell>0.3169</cell><cell>0.4308</cell><cell>0.4416</cell><cell>0.4044</cell><cell>0.4802</cell><cell>0.5009</cell><cell></cell><cell>0.3715</cell><cell>0.4253</cell><cell>0.4318</cell><cell></cell><cell>0.4832</cell><cell>0.4423</cell><cell></cell><cell>0.3453</cell><cell>0.3425</cell><cell>0.3203</cell><cell></cell><cell>0.5431 𝑎𝑏𝑐𝑑𝑔ℎ𝑖 𝑗𝑚𝑛𝑜𝑞𝑟𝑠𝑡</cell><cell>0.5040 𝑎𝑑𝑔𝑚𝑛𝑜𝑞𝑟𝑠𝑡</cell><cell>0.5427 𝑎𝑏𝑐𝑑𝑔ℎ𝑖 𝑗𝑚𝑛𝑜𝑞𝑟𝑠𝑡</cell><cell>0.5026 𝑎𝑑𝑔𝑚𝑛𝑜𝑞𝑟𝑠𝑡</cell></row><row><cell></cell><cell></cell><cell></cell><cell>BM25 (a)</cell><cell>BM25+BERT (b)</cell><cell>BM25+ColBERT (c)</cell><cell>BM25+RM3 (d)</cell><cell>BM25+RM3+BERT (e)</cell><cell>BM25+RM3+ColBERT (f)</cell><cell></cell><cell>BM25+DeepCT (g)</cell><cell>BM25+DeepCT+BERT (h)</cell><cell>BM25+DeepCT+ColBERT (i)</cell><cell>BM25+docT5query (j)</cell><cell>BM25+docT5query+BERT (k)</cell><cell>BM25+docT5query+ColBERT (l)</cell><cell></cell><cell>ANCE (m)</cell><cell>ANCE-PRF (n)</cell><cell>ColBERT E2E (o)</cell><cell></cell><cell>BM25 + RM3 + ColBERT + BERT-QE (p)</cell><cell>ColBERT E2E + BERT-QE (q)</cell><cell></cell><cell>BM25 + CEQE-Max (r)</cell><cell>BM25 + CEQE-Centroid (s)</cell><cell>BM25 + CEQE-Mul (t)</cell><cell></cell><cell>ColBERT-PRF Ranker (𝛽=1)</cell><cell>ColBERT-PRF ReRanker (𝛽=1)</cell><cell>ColBERT-PRF Ranker (𝛽=0.5)</cell><cell>ColBERT-PRF ReRanker (𝛽=0.5)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 3 .</head><label>3</label><figDesc>Comparison of different PRF mechanisms: (i) numbers of queries improved, unchanged or degraded compared to their respective baselines; (ii) performance improvement correlation (Spearman's 𝜌 correlation coefficient) between pairs of PRF mechanisms.</figDesc><table><row><cell></cell><cell>BM25+RM3 vs. BM25</cell><cell>ANCE-PRF vs. ANCE</cell><cell>ColBERT-PRF vs. ColBERT E2E</cell></row><row><cell></cell><cell cols="3">Improved/Unchanged/Degraded Improved/Unchanged/Degraded Improved/Unchanged/Degraded</cell></row><row><cell></cell><cell>23/1/19</cell><cell>26/1/16</cell><cell>30/0/13</cell></row><row><cell>BM25+RM3 vs. BM25</cell><cell>1.00</cell><cell>0.37</cell><cell>0.34</cell></row><row><cell>ANCE-PRF vs. ANCE</cell><cell>0.37</cell><cell>1.00</cell><cell>0.41</cell></row><row><cell>ColBERT-PRF vs. ColBERT E2E</cell><cell>0.34</cell><cell>0.41</cell><cell>1.00</cell></row></table><note><p>5.3.2 Results for RQ2 -Comparison to Baselines. Next, to address RQ2(a)-(c), we analyse the performances of the ColBERT-PRF Ranker and ColBERT-PRF ReRanker approaches in comparison to different groups of baselines, namely sparse (lexical) retrieval approaches, neural augmented baselines, and BERT-QE.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 4 .</head><label>4</label><figDesc>Examples of the expanded queries by the ColBERT PRF model on the TREC 2019 &amp; 2020 query sets. The symbol | denotes that there are multiple tokens that are highly likely for a particular expansion embedding. Token with darker red colour indicate its higher effectiveness contribution.</figDesc><table><row><cell>Original query terms</cell><cell>Original query tokens</cell><cell cols="5">Most likely tokens for expansion embeddings</cell></row><row><cell></cell><cell cols="2">TREC 2019 queries</cell><cell></cell><cell></cell><cell></cell></row><row><cell>what is a active margin</cell><cell>what is a active margin</cell><cell cols="2">(by|opposition)</cell><cell>oceanic</cell><cell></cell><cell>volcanoes</cell><cell>##cton</cell></row><row><cell></cell><cell></cell><cell cols="2">(margin|margins)</cell><cell cols="2">(breeds|##kshi)</cell><cell>continental</cell><cell>plate</cell></row><row><cell></cell><cell></cell><cell>an each</cell><cell></cell><cell></cell><cell></cell></row><row><cell>what is wifi vs bluetooth</cell><cell>what is wi ##fi vs blue ##tooth</cell><cell cols="5">##tooth (breeds|##kshi) phones devices wi ##fi blue</cell></row><row><cell></cell><cell></cell><cell cols="3">systems access point</cell><cell></cell></row><row><cell>what is the most popular food</cell><cell>what is the most popular food</cell><cell>##hs</cell><cell cols="3">(swiss|switzerland)</cell><cell>(influences|includes)</cell></row><row><cell>in switzerland</cell><cell>in switzerland</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">(breeds|##kshi)</cell><cell>potato</cell><cell cols="2">(dishes|food)</cell><cell>(bologna|hog)</cell></row><row><cell></cell><cell></cell><cell cols="3">cheese gr (italians|french)</cell><cell></cell></row><row><cell></cell><cell cols="2">TREC 2020 queries</cell><cell></cell><cell></cell><cell></cell></row><row><cell>what is mamey</cell><cell>what is ma ##me ##y</cell><cell cols="5">(is|upset) (breeds|##kshi) flesh sap ##ote fruit ma</cell></row><row><cell></cell><cell></cell><cell cols="3">##me (larger|more) central</cell><cell></cell></row><row><cell>average annual income data an-</cell><cell>average annual income data an-</cell><cell cols="5">(analyst|analysts) (breeds|##kshi) (55|96) (grow|growth)</cell></row><row><cell>alyst</cell><cell>alyst</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="5">salary computer tax 2015 depending ##k</cell></row><row><cell>do google docs auto save</cell><cell>do google doc ##s auto save</cell><cell cols="5">(breeds|##kshi) doc (to|automatically) google document</cell></row><row><cell></cell><cell></cell><cell cols="5">save (saves|saved) drive (changes|revisions) (back|to)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head>Table 5 .</head><label>5</label><figDesc>Results for the MSMARCO Document corpus. Comparison with baselines. Superscripts a...p denote significant improvements over the indicated baseline model(s). The highest value in each column is boldfaced.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">TREC 2019 (43 queries)</cell><cell></cell><cell></cell><cell cols="2">TREC 2020 (45 queries)</cell><cell></cell></row><row><cell></cell><cell>MAP</cell><cell cols="3">NDCG@10 Recall@100 Recall@1000</cell><cell>MAP</cell><cell cols="3">NDCG@10 Recall@100 Recall@1000</cell></row><row><cell></cell><cell></cell><cell cols="3">Lexical Retrieval Approaches</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>BM25 (a)</cell><cell>0.3145</cell><cell>0.5048</cell><cell>0.3891</cell><cell>0.6975</cell><cell>0.3650</cell><cell>0.4709</cell><cell>0.6095</cell><cell>0.8143</cell></row><row><cell>BM25+BERT (b)</cell><cell>0.3797</cell><cell>0.6279</cell><cell>0.4363</cell><cell>0.6977</cell><cell>0.4387</cell><cell>0.5993</cell><cell>0.6646</cell><cell>0.8147</cell></row><row><cell>BM25+ColBERT (c)</cell><cell>0.3862</cell><cell>0.6503</cell><cell>0.4378</cell><cell>0.6970</cell><cell>0.4390</cell><cell>0.6144</cell><cell>0.6580</cell><cell>0.8155</cell></row><row><cell>BM25+RM3 (d)</cell><cell>0.3650</cell><cell>0.5411</cell><cell>0.4203</cell><cell>0.7304</cell><cell>0.3822</cell><cell>0.4770</cell><cell>0.6380</cell><cell>0.8311</cell></row><row><cell>BM25+RM3+BERT (e)</cell><cell>0.3973</cell><cell>0.6330</cell><cell>0.4466</cell><cell>0.7304</cell><cell>0.4470</cell><cell>0.5981</cell><cell>0.6646</cell><cell>0.8305</cell></row><row><cell>BM25+RM3+ColBERT (f)</cell><cell>0.4083</cell><cell>0.6633</cell><cell>0.4506</cell><cell>0.7300</cell><cell>0.4467</cell><cell>0.6074</cell><cell>0.6580</cell><cell>0.8305</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="2">Dense Retrieval Models</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>ANCE (g)</cell><cell>0.2708</cell><cell>0.6468</cell><cell>0.3443</cell><cell>0.5349</cell><cell>0.4050</cell><cell>0.6256</cell><cell>0.5682</cell><cell>0.7197</cell></row><row><cell>ColBERT E2E (h)</cell><cell>0.3195</cell><cell>0.6342</cell><cell>0.3880</cell><cell>0.5642</cell><cell>0.4290</cell><cell>0.6113</cell><cell>0.6351</cell><cell>0.7951</cell></row><row><cell></cell><cell></cell><cell cols="3">BERT-QE Reranking Models</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">BM25 + RM3 + ColBERT + BERT-QE (i) 0.4340</cell><cell>0.6850</cell><cell>0.4626</cell><cell>0.7298</cell><cell>0.4728</cell><cell>0.6268</cell><cell>0.6848</cell><cell>0.8310</cell></row><row><cell>ColBERT E2E + BERT-QE (j)</cell><cell>0.3358</cell><cell>0.6668</cell><cell>0.3953</cell><cell>0.5642</cell><cell>0.4478</cell><cell>0.6244</cell><cell>0.7141</cell><cell>0.7951</cell></row><row><cell></cell><cell></cell><cell cols="3">Embedding based Query Expansion</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>CEQE-Max (k)</cell><cell>0.3778</cell><cell>0.5176</cell><cell>0.4313</cell><cell>0.7462</cell><cell>0.3956</cell><cell>0.4729</cell><cell>0.6546</cell><cell>0.8410</cell></row><row><cell>CEQE-Centroid (l)</cell><cell>0.3765</cell><cell>0.5103</cell><cell>0.4312</cell><cell>0.7432</cell><cell>0.3968</cell><cell>0.4746</cell><cell>0.6540</cell><cell>0.8390</cell></row><row><cell>CEQE-Mul (m)</cell><cell>0.3680</cell><cell>0.4959</cell><cell>0.4207</cell><cell>0.7360</cell><cell>0.3937</cell><cell>0.4809</cell><cell>0.6467</cell><cell>0.8351</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="2">ColBERT-PRF Models</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>ColBERT-PRF Ranker (𝛽=1)</cell><cell cols="3">0.3851 𝑔ℎ 𝑗 0.6681 𝑎𝑑𝑘𝑙𝑚 0.4467 𝑎𝑔ℎ 𝑗</cell><cell>0.6252 𝑔</cell><cell cols="3">0.4885 𝑎𝑑𝑔ℎ𝑘𝑙𝑚 0.6146 𝑎𝑑𝑘𝑙𝑚 0.7120 𝑎𝑐𝑑 𝑓 𝑔ℎ𝑚</cell><cell>0.8128 𝑔</cell></row><row><cell>ColBERT-PRF ReRanker (𝛽=1)</cell><cell cols="2">0.3473 𝑔ℎ 0.6688 𝑎𝑑𝑘𝑙𝑚</cell><cell>0.4283 𝑔ℎ 𝑗</cell><cell>0.5459</cell><cell cols="2">0.4739 𝑎𝑑𝑔𝑘𝑙𝑚 0.6171 𝑎𝑑𝑘𝑙𝑚</cell><cell>0.6933 𝑎𝑔ℎ</cell><cell>0.7782 𝑔</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10"><head>Table 6 .</head><label>6</label><figDesc>Results for the Robust corpus. Comparison with baselines. Superscripts a...p denote significant improvements over the indicated baseline model(s). The highest value in each column is boldfaced.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">Robust title (250 queries)</cell><cell></cell><cell cols="4">Robust description (250 queries)</cell></row><row><cell></cell><cell>MAP</cell><cell cols="2">NDCG@10 MRR@10</cell><cell>Recall</cell><cell>MAP</cell><cell cols="2">NDCG@10 MRR@10</cell><cell>Recall</cell></row><row><cell></cell><cell></cell><cell cols="3">Lexical Retrieval Approaches</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>BM25 (a)</cell><cell>0.2319</cell><cell>0.4163</cell><cell>0.6330</cell><cell>0.6758</cell><cell>0.2193</cell><cell>0.3966</cell><cell>0.6570</cell><cell>0.6584</cell></row><row><cell>BM25+BERT (b)</cell><cell>0.2550</cell><cell>0.4820</cell><cell>0.7290</cell><cell>0.6819</cell><cell>0.2723</cell><cell>0.4709</cell><cell>0.7293</cell><cell>0.6721</cell></row><row><cell>BM25+ColBERT (c)</cell><cell>0.2770</cell><cell>0.4753</cell><cell>0.7307</cell><cell>0.6821</cell><cell>0.2658</cell><cell>0.4728</cell><cell>0.7349</cell><cell>0.6684</cell></row><row><cell>BM25+RM3 (d)</cell><cell>0.2542</cell><cell>0.4244</cell><cell>0.6139</cell><cell>0.7007</cell><cell>0.2619</cell><cell>0.4182</cell><cell>0.6277</cell><cell>0.7008</cell></row><row><cell>BM25+RM3+BERT (e)</cell><cell>0.2884</cell><cell>0.4839</cell><cell>0.7343</cell><cell>0.7037</cell><cell>0.2814</cell><cell>0.4708</cell><cell>0.7251</cell><cell>0.7081</cell></row><row><cell>BM25+RM3+ColBERT (f)</cell><cell>0.2840</cell><cell>0.4758</cell><cell>0.7277</cell><cell>0.7058</cell><cell>0.2766</cell><cell>0.4739</cell><cell>0.7419</cell><cell>0.7068</cell></row><row><cell></cell><cell></cell><cell cols="2">Dense Retrieval Models</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>ANCE (g)</cell><cell>0.1605</cell><cell>0.3713</cell><cell>0.6096</cell><cell>0.5410</cell><cell>0.1919</cell><cell>0.4242</cell><cell>0.7002</cell><cell>0.5794</cell></row><row><cell>ColBERT E2E (h)</cell><cell>0.2327</cell><cell>0.4446</cell><cell>0.7011</cell><cell>0.6076</cell><cell>0.2175</cell><cell>0.4352</cell><cell>0.6853</cell><cell>0.6054</cell></row><row><cell></cell><cell></cell><cell cols="3">BERT-QE Reranking Models</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>BM25 + RM3 + ColBERT + BERT-QE (i)</cell><cell>0.2762</cell><cell>0.4407</cell><cell>0.6302</cell><cell>0.7072</cell><cell>0.2926</cell><cell>0.4857</cell><cell>0.7369</cell><cell>0.7076</cell></row><row><cell>ColBERT E2E + BERT-QE (j)</cell><cell>0.2395</cell><cell>0.4523</cell><cell>0.6973</cell><cell>0.6078</cell><cell>0.2289</cell><cell>0.4468</cell><cell>0.6904</cell><cell>0.6055</cell></row><row><cell></cell><cell></cell><cell cols="3">Embedding based Query Expansion</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>CEQE-Max (l)</cell><cell>0.2829</cell><cell>0.4318</cell><cell>0.6334</cell><cell>0.7494</cell><cell>0.2745</cell><cell>0.4224</cell><cell>0.6461</cell><cell>0.7232</cell></row><row><cell>CEQE-Centroid (m)</cell><cell>0.2818</cell><cell>0.4299</cell><cell>0.6305</cell><cell>0.7457</cell><cell>0.2746</cell><cell>0.4217</cell><cell>0.6475</cell><cell>0.7278</cell></row><row><cell>CEQE-Mul (n)</cell><cell>0.2764</cell><cell>0.4267</cell><cell>0.6225</cell><cell>0.7375</cell><cell>0.2672</cell><cell>0.4076</cell><cell>0.6146</cell><cell>0.7256</cell></row><row><cell></cell><cell></cell><cell cols="2">ColBERT-PRF Models</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>ColBERT-PRF Ranker (𝛽=1)</cell><cell cols="5">0.2715 𝑎𝑑𝑔ℎ 𝑗 0.4670 𝑎𝑑𝑔ℎ 0.6836 𝑑𝑔𝑙𝑚𝑛 0.6476 𝑔ℎ 𝑗 0.2627 𝑎𝑔ℎ 𝑗</cell><cell>0.4605 𝑎ℎ</cell><cell>0.6678</cell><cell>0.6347 𝑔ℎ 𝑗</cell></row><row><cell>ColBERT-PRF ReRanker (𝛽=1)</cell><cell cols="2">0.2642 𝑎𝑑𝑔ℎ 𝑗 0.4682 𝑎𝑑𝑔ℎ</cell><cell>0.6837 𝑑𝑔</cell><cell cols="2">0.6158 𝑔 0.2592 𝑎𝑔ℎ 𝑗</cell><cell>0.4624 𝑎ℎ</cell><cell>0.6681</cell><cell>0.6289 𝑔ℎ 𝑗</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11"><head>Table 7 .</head><label>7</label><figDesc>Mean response time and the effectiveness on both TREC 2019 and TREC 2020 passage ranking query sets. † indicates significant improvement over the ColBERT-E2E model. The highest effectiveness and lowest response time value in each scenario is boldfaced.</figDesc><table><row><cell>0.54</cell><cell></cell><cell>0.73</cell><cell></cell></row><row><cell>0.52</cell><cell></cell><cell></cell><cell></cell></row><row><cell>0.44 0.48 0.50 MAP 0.46</cell><cell>1000 Mean Response Time (ms) 2000 3000 4000 ColBERT-PRF Ranker KMeans ColBERT-PRF Ranker KMeans-Closest ColBERT-PRF Ranker KMedoids</cell><cell>0.71 0.72 NDCG@10 0.70</cell><cell>1000 Mean Response Time (ms) 2000 3000 4000 ColBERT-PRF Ranker KMeans ColBERT-PRF Ranker KMeans-Closest ColBERT-PRF Ranker KMedoids</cell></row><row><cell cols="2">(a) ANN 1 stage ColBERT-PRF Ranker</cell><cell cols="2">(b) ANN 1 stage ColBERT-PRF Ranker</cell></row><row><cell>0.52 0.54</cell><cell>KMeans ANN 1stage=300 KMeans-Closest ANN 1stage=300 KMedoids ANN 1stage=300</cell><cell>0.73</cell><cell></cell></row><row><cell>0.46 0.48 0.50 MAP</cell><cell></cell><cell>0.71 0.72 NDCG@10</cell><cell></cell></row><row><cell>0.40 0.42 0.44</cell><cell>500 1000 1500 2000 2500 3000 3500 4000 Mean Response Time (ms)</cell><cell>0.70</cell><cell>Mean Response Time (ms) 500 1000 1500 2000 2500 3000 3500 4000 KMeans ANN 1stage=300 KMeans-Closest ANN 1stage=300 KMedoids ANN 1stage=300</cell></row><row><cell cols="2">(c) ANN 1&amp;4 stage ColBERT-PRF Ranker</cell><cell cols="2">(d) ANN 1&amp;4 stage ColBERT-PRF Ranker</cell></row><row><cell>0.48 0.50</cell><cell>ColBERT-PRF ReRanker KMeans ColBERT-PRF ReRanker KMeans-Closest ColBERT-PRF ReRanker KMedoids</cell><cell>0.73</cell><cell>ColBERT-PRF ReRanker KMeans ColBERT-PRF ReRanker KMeans-Closest ColBERT-PRF ReRanker KMedoids</cell></row><row><cell>0.40 0.42 0.44 0.46 MAP</cell><cell></cell><cell>0.71 0.72 NDCG@10</cell><cell></cell></row><row><cell>0.36 0.38</cell><cell></cell><cell>0.70</cell><cell></cell></row><row><cell>0.34</cell><cell>500 1000 1500 2000 2500 3000 3500 Mean Response Time (ms)</cell><cell></cell><cell>500 1000 1500 2000 2500 3000 3500 Mean Response Time (ms)</cell></row><row><cell cols="2">(e) ANN 1 stage ColBERT-PRF ReRanker</cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12"><head>Table 8 .</head><label>8</label><figDesc>Comparison of applying clustering-based expansion embedding selection vs. Bo1 and RM3 based expansion embedding selection for ColBERT-PRF. Superscripts a...e denote significant improvements over the indicated baseline model(s). The highest value in each column is boldfaced.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">TREC 2019 (43 queries)</cell><cell></cell><cell></cell><cell cols="2">TREC 2020 (45 queries)</cell><cell></cell></row><row><cell></cell><cell>MAP</cell><cell cols="2">NDCG@10 MRR@10</cell><cell>Recall</cell><cell>MAP</cell><cell cols="2">NDCG@10 MRR@10</cell><cell>Recall</cell></row><row><cell>ColBERT E2E (a)</cell><cell>0.4318</cell><cell>0.6934</cell><cell>0.8529</cell><cell>0.7892</cell><cell>0.4654</cell><cell>0.6871</cell><cell>0.8525</cell><cell>0.8245</cell></row><row><cell>ColBERT-PRF Ranker (Bo1) (b)</cell><cell>0.4720</cell><cell>0.7068</cell><cell>0.8420</cell><cell>0.8561</cell><cell>0.4609</cell><cell>0.6811</cell><cell>0.8374</cell><cell>0.8589 𝑐</cell></row><row><cell>ColBERT-PRF Ranker (RM3) (c)</cell><cell>0.4036</cell><cell>0.7352</cell><cell>0.8858</cell><cell>0.8706</cell><cell>0.4289</cell><cell>0.6483</cell><cell>0.8417</cell><cell>0.7852</cell></row><row><cell>ColBERT-PRF Ranker (KMeans)</cell><cell>0.5427 𝑎𝑏𝑐</cell><cell>0.7395</cell><cell>0.8897</cell><cell cols="2">0.8711 𝑎𝑐 0.5116 𝑐</cell><cell>0.7153</cell><cell>0.8439</cell><cell>0.8837 𝑎𝑏𝑐</cell></row><row><cell>ColBERT-PRF ReRanker (Bo1) (d)</cell><cell>0.4382</cell><cell>0.7096</cell><cell>0.8411</cell><cell>0.7891</cell><cell>0.4650</cell><cell>0.6819</cell><cell>0.8374</cell><cell>0.8278 𝑐</cell></row><row><cell>ColBERT-PRF ReRanker (RM3) (e)</cell><cell>0.3943</cell><cell>0.6686</cell><cell>0.8624</cell><cell>0.7281</cell><cell>0.4313</cell><cell>0.6502</cell><cell>0.8417</cell><cell>0.7882</cell></row><row><cell cols="2">ColBERT-PRF ReRanker (KMeans) 0.5026 𝑎𝑏𝑐</cell><cell>0.7409</cell><cell>0.8897</cell><cell cols="2">0.7977 𝑐 0.5063</cell><cell>0.7161</cell><cell>0.8439</cell><cell>0.8443 𝑐</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>In this way, any notion of similarity from the ANN stage is discarded -the entire set of retrieved documents is reranked; we return to this detail later in Section 8. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2022" xml:id="foot_2"><p></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_3"><p>In Appendix A.1, we provide experiments that use Bo1 and RM3 to select tokens and their corresponding embeddings that verify this conjecture. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_4"><p>This additional mapping can be recorded at indexing time, using the same FAISS index as for dense retrieval, increasing the index size by 3%.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_5"><p>We have observed no marked empirical benefits in using other IDF formulations. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_6"><p>https://github.com/terrierteam/pyterrier_colbert ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_7"><p>Indeed, 𝐾 = 24 gave reasonable looking clusters in our initial investigations, and, as we shall see in Section 6.3, is an effective setting for the TREC 2019 query set. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_8"><p>https://github.com/Xiao0728/ColBERT-PRF-VirtualAppendix</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_9"><p>Indeed, this is 8% higher than the highest MAP among all TREC 2019 participants<ref type="bibr" target="#b9">[8]</ref>. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_10"><p>X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="9" xml:id="foot_11"><p>In Table4, the expansion embedding '(breeds|##kshi)', which appears for each query, is projected to be close to the embedding of the [D] token, which ColBERT places in each passage. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="10" xml:id="foot_12"><p>We use a FAISS index to map embeddings back to most likely token. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="11" xml:id="foot_13"><p>Indeed, [CLS], [Q], and [MASK] do not correspond to actual WordPiece tokens originating from the user's query and hence can never have exact matches, so we exclude them from this calculation.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="12" xml:id="foot_14"><p>This is a subset of the curves presented earlier in Figure5b, repeated here for ease of reference. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="16" xml:id="foot_15"><p>The first ranked group used expensive document expansion techniques. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="17" xml:id="foot_16"><p>Indeed, in separate but orthogonal work<ref type="bibr" target="#b42">[41]</ref>, we show that query embeddings vary in their ability to recall relevant documents, and some can even be discarded (pruned) from the ANN search phase without significant loss of effectiveness. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="18" xml:id="foot_17"><p>Indeed,<ref type="bibr" target="#b27">[26]</ref> suggest 𝑘 = 300 is sufficient for high precision retrieval. ACM Trans. Web, Vol. 1, No. 1, Article . Publication date: September 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_18"><p>Xiao Wang, Craig Macdonald, Nicola Tonellotto, and Iadh Ounis</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p><rs type="person">Nicola Tonellotto</rs> was partially supported by the Italian government in the framework of the Progetto PNRR "<rs type="projectName">CN1 -Simulazioni, calcolo e analisi dei dati ad alte prestazioni -Spoke 1 -Future HPC &amp; Big Data</rs>". <rs type="person">Xiao Wang</rs> acknowledges support by the <rs type="funder">China Scholarship Council (CSC)</rs> from the <rs type="funder">Ministry of Education of P.R. China</rs>. <rs type="person">Craig Macdonald</rs> and <rs type="person">Iadh Ounis</rs> acknowledge <rs type="funder">EPSRC</rs> grant <rs type="grantNumber">EP/R018634/1</rs>: <rs type="institution">Closed-Loop Data Science for Complex, Computationally-&amp; Data-Intensive Analytics</rs>.</p><p>The authors are thankful to reviewers for their constructive suggestions and comments, as well as <rs type="person">Sean MacAvaney</rs> and <rs type="person">Sasha Petrov</rs> for insightful comments and assistance with implementations.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_tPTHTxB">
+					<orgName type="project" subtype="full">CN1 -Simulazioni, calcolo e analisi dei dati ad alte prestazioni -Spoke 1 -Future HPC &amp; Big Data</orgName>
+				</org>
+				<org type="funding" xml:id="_Bfa6scA">
+					<idno type="grant-number">EP/R018634/1</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Models</head> <ref type="figure">12c</ref><p>, we find that all of the three clustering techniques exhibit correlations between efficiency and effectiveness, in that increased MRT also exhibits increased effectiveness. Moreover, reducing 𝑘 4 results in more marked degradations for MAP than for NDCG@10, and, for each of the three clustering methods, stable effectiveness can be achieved with large enough 𝑘 4 . Finally, we analyse the efficiency/effectiveness trade-off for ColBERT-PRF ReRanker. From Figures <ref type="figure">12e</ref> &amp;<ref type="figure">12f</ref>, we observe that the trade-off curves for ColBERT-PRF ReRanker model with different clustering technique exhibits similar trend with Figure <ref type="figure">12c</ref> &amp; 12d, with the slightly lower MAP values typically exhibited by ReRanker in comparison to the Ranker setting of ColBERT-PRF. Overall, reducing 𝑘 1 here can markedly impact both MAP and NDCG@10. However, using sufficiently large 𝑘 1 can still result in significantly enhanced MAP (denoted using •), even with response times around 1000ms. This is markedly faster than the default ColBERT-PRF ReRanker setting, which attains 3500ms (shown as ⋆) and much closer to the default response time of ColBERT E2E (⋆).</p><p>Overall, in response to RQ9, we conclude that the Approximate Scoring technique is useful to attain a better balance of effectiveness and efficiency for ColBERT-PRF model, by reducing the number of documents being re-ranked, and can also be combined with the more efficient clustering techniques.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="9">CONCLUSIONS</head><p>This work is the first to propose a contextualised pseudo-relevance feedback mechanism for multiple representation dense retrieval. Based on the feedback documents obtained from the first-pass retrieval, our proposed ColBERT-PRF approach extracts representative feedback embeddings using a clustering technique. It then identifies discriminative embeddings among these representative embeddings and appends them to the query representation. ColBERT-PRF can be effectively applied in both ranking and reranking scenarios, and requires no further neural network training</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A APPENDIX</head><p>In the following, Appendix A.1 firstly details how variants of ColBERT-PRF can be implemented which weight token occurrences, specifically using the Bo1 and RM3 query expansion models. These are compared with ColBERT-PRF implemented with KMeans clustering technique. Next, in Appendix A.2, we demonstrate the experimental pipelines for ColBERT-PRF .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.1 ColBERT-PRF (Bo1 or RM3) variants</head><p>As discussed in Section 4.1, in ColBERT-PRF, embeddings are clustered, rather than the frequency of the corresponding tokens. In this section, we analyse this choice, by separating the clustering from the embedded representation. In particular, we use traditional token counting to measure the informativeness of tokens in the feedback documents, but then expand the query using the corresponding embedded representation of the selected token. Therefore, for these variants, the informativeness of each feedback embedding is measured using the Bo1 or RM3 technique, then the highest informativeness feedback embeddings are selected as the expansion embeddings. For</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">flooring 1037798: who is robert gray 183378: exons definition biology 1114646: what is famvir prescribed for 405717: is cdg airport in main paris 1121709: what are the three percenters 962179: when was the salvation army founded 855410: what is theraderm used for 1121402: what can contour plowing reduce 443396: lps laws definition 1103812: who formed the commonwealth of independent states 1129237: hydrogen is a liquid below what temperature 168216: does legionella pneumophila cause pneumonia 1114819: what is durable medical equipment consist of 833860: what is the most popular food in switzerland 156493: do goldfish grow 182539: example of monotonic function 451602: medicare s definition of mechanical ventilation 87452: causes of military suicide 527433: types of dysarthria from cerebral palsy 1115776: what is an aml surveillance analyst 1106007: define visceral 264014: how long is life cycle of flea 207786: how are some sharks warm blooded 130510: definition declaratory judgment 359349: how to find the midsegment of a trapezoid 1063750: why did the us volunterilay enter ww1 19335: anthropological definition of environment 1113437: what is physical description of spruce 489204: right pelvic pain causes 915593: what types of food can you cook sous vide 148538: difference between rn and bsn 87181: causes of left ventricular hypertrophy 1133167: how is the weather in jamaica</title>
+		<imprint>
+			<date>1124210</date>
+			<biblScope unit="volume">490595</biblScope>
+		</imprint>
+	</monogr>
+	<note>tracheids are part of 1117099: what is a active margin 131843: definition of a sigmet 104861: cost of interior concrete. rsa definition key 146187: difference between a mcdouble and a double cheeseburger 47923: axon terminals or synaptic knob definition 1112341: what is the daily life of thai people 1110199: what is wifi vs bluetooth</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">what is physical description of spruce 1112341: what is the daily life of thai people 451602: medicare s definition of mechanical ventilation 1115776: what is an aml surveillance analyst 264014: how long is life cycle of flea 1110199: what is wifi vs bluetooth 915593: what types of food can you cook sous vide 1121709: what are the three percenters 962179: when was the salvation army founded 1121402: what can contour plowing reduce 1133167: how is the weather in jamaica 1037798: who is robert gray 1114819: what is durable medical equipment consist of 855410: what is theraderm used for 833860: what is the most popular food in switzerland 104861: cost of interior concrete flooring 1117099: what is a active margin 131843: definition of a sigmet 47923: axon terminals or synaptic knob definition 207786: how are some sharks warm blooded 19335: anthropological definition of environment 405717: is cdg airport in main paris 1106007: define visceral 1103812: who formed the commonwealth of independent states 1129237: hydrogen is a liquid below what temperature 87452: causes of military suicide 182539: example of monotonic function 146187: difference between a mcdouble and a double cheeseburger 490595: rsa definition key 156493: do goldfish grow 527433: types of dysarthria from cerebral palsy 130510: definition declaratory judgment 1124210: tracheids are part of 359349: how to find the midsegment of a trapezoid 148538: difference between rn and bsn 168216: does legionella pneumophila cause pneumonia 87181: causes of left ventricular hypertrophy</title>
+		<author>
+			<persName><forename type="first">Nasreen</forename><surname>Abdul-Jaleel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Allan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fernando</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leah</forename><surname>Larkey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaoyan</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><forename type="middle">D</forename><surname>Smucker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Courtney</forename><surname>Wade</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of TREC</title>
+		<meeting>TREC</meeting>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">573724</biblScope>
+		</imprint>
+	</monogr>
+	<note>UMass at TREC 2004: Novelty and HARD</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Probability models for information retrieval based on divergence from randomness Ph</title>
+		<author>
+			<persName><forename type="first">Giambattista</forename><surname>Amati</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003">2003. 2003</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Glasgow</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Query difficulty, robustness, and selective application of query expansion</title>
+		<author>
+			<persName><forename type="first">Giambattista</forename><surname>Amati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Claudio</forename><surname>Carpineto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giovanni</forename><surname>Romano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="page" from="127" to="137" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Article . Publication date</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2022-09">September 2022</date>
+		</imprint>
+	</monogr>
+	<note>ACM Trans. Web</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Probabilistic models of information retrieval based on measuring the divergence from randomness</title>
+		<author>
+			<persName><forename type="first">Gianni</forename><surname>Amati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cornelis Joost</forename><surname>Van Rijsbergen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems (TOIS)</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="357" to="389" />
+			<date type="published" when="2002">2002. 2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">K-Means++: The Advantages of Careful Seeding</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Arthur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergei</forename><surname>Vassilvitskii</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SODA</title>
+		<meeting>SODA</meeting>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="1027" to="1035" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Selecting good expansion terms for pseudorelevance feedback</title>
+		<author>
+			<persName><forename type="first">Guihong</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian-Yun</forename><surname>Nie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Robertson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="243" to="250" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2020 deep learning track</title>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emine</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Campos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of TREC</title>
+		<meeting>TREC</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2019 deep learning track</title>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emine</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Campos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ellen</forename><forename type="middle">M</forename><surname>Voorhees</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of TREC</title>
+		<meeting>TREC</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Deeper text understanding for IR with contextual neural language modeling</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="985" to="988" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Context-aware document term weighting for ad-hoc search</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of WWW</title>
+		<meeting>WWW</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1897" to="1907" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</title>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Devlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ACL</title>
+		<meeting>ACL</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="4171" to="4186" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Query Expansion with Locally-Trained Word Embeddings</title>
+		<author>
+			<persName><forename type="first">Fernando</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ACL</title>
+		<meeting>ACL</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="367" to="377" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A White Box Analysis of ColBERT</title>
+		<author>
+			<persName><forename type="first">Thibault</forename><surname>Formal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Piwowarski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stéphane</forename><surname>Clinchant</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="257" to="263" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">A deep relevance matching model for ad-hoc retrieval</title>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingyao</forename><surname>Ai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthijs</forename><surname>Douze</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hervé</forename><surname>Jégou</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1702.08734</idno>
+		<title level="m">Billion-scale similarity search with GPUs</title>
+		<imprint>
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Dense Passage Retrieval for Open-Domain Question Answering</title>
+		<author>
+			<persName><forename type="first">Vladimir</forename><surname>Karpukhin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barlas</forename><surname>Oguz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sewon</forename><surname>Min</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patrick</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ledell</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergey</forename><surname>Edunov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Danqi</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wen-Tau</forename><surname>Yih</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of EMNLP</title>
+		<meeting>EMNLP</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="6769" to="6781" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">ColBERT: Efficient and effective passage search via contextualized late interaction over BERT</title>
+		<author>
+			<persName><forename type="first">Omar</forename><surname>Khattab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matei</forename><surname>Zaharia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="39" to="48" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Clustering algorithms for query expansion based information retrieval</title>
+		<author>
+			<persName><forename type="first">Ilyes</forename><surname>Khennak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Habiba</forename><surname>Drias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Amine</forename><surname>Kechid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hadjer</forename><surname>Moulai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICCI</title>
+		<meeting>ICCI</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="261" to="272" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Query expansion using word embeddings</title>
+		<author>
+			<persName><forename type="first">Saar</forename><surname>Kuzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="1929" to="1932" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">NPRF: A Neural Pseudo Relevance Feedback Framework for Ad-hoc Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jungang</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of EMNLP</title>
+		<meeting>EMNLP</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="4482" to="4491" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">PARADE: Passage Representation Aggregation for Document Reranking</title>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2008.09093[cs.IR]</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Improving Query Representations for Dense Retrieval with Pseudo Relevance Feedback: A Reproducibility Study</title>
+		<author>
+			<persName><forename type="first">Hang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shengyao</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ahmed</forename><surname>Mourad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueguang</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guido</forename><surname>Zuccon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Sparse, dense, and attentional representations for text retrieval</title>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Eisenstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Collins</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Transactions of the Association for Computational Linguistics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="329" to="345" />
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">OpenNIR: A Complete Neural Ad-Hoc Ranking Pipeline</title>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of WSDM</title>
+		<meeting>WSDM</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="845" to="848" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Declarative Experimentation in Information Retrieval Using PyTerrier</title>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICTIR</title>
+		<meeting>ICTIR</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="161" to="168" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">On approximate nearest neighbour selection for multi-stage dense retrieval</title>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3318" to="3322" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">PyTerrier: Declarative Experimentation in Python from BM25 to Dense Retrieval</title>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="4526" to="4533" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">On Single and Multiple Representations in Dense Passage Retrieval</title>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IIR</title>
+		<imprint>
+			<biblScope unit="volume">2021</biblScope>
+			<biblScope unit="page">Workshop</biblScope>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">CEQE: Contextualized Embeddings for Query Expansion</title>
+		<author>
+			<persName><forename type="first">Shahrzad</forename><surname>Naseri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Dalton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Allan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+			<biblScope unit="page" from="467" to="482" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">MS MARCO: A human generated machine reading comprehension dataset</title>
+		<author>
+			<persName><forename type="first">Tri</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mir</forename><surname>Rosenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saurabh</forename><surname>Tiwary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rangan</forename><surname>Majumder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Deng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CoCo@ NIPs</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">Document ranking with a pretrained sequence-to-sequence model</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiying</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2003.06713</idno>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">From doc2query to docTTTTTquery</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">I</forename><surname>Epistemic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Web</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2019-09">2019. 2019. September 2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Online preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">Document expansion by query prediction</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyunghyun</forename><surname>Cho</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1904.08375</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Terrier information retrieval platform</title>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gianni</forename><surname>Amati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vassilis</forename><surname>Plachouras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Douglas</forename><surname>Johnson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page" from="517" to="519" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Rethinking query expansion for BERT reranking</title>
+		<author>
+			<persName><forename type="first">Ramith</forename><surname>Padaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="297" to="304" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Deep Contextualized Word Representations</title>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">E</forename><surname>Peters</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Neumann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohit</forename><surname>Iyyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matt</forename><surname>Gardner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luke</forename><surname>Zettlemoyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NAACL-HLT</title>
+		<meeting>NAACL-HLT</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="2227" to="2237" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Relevance feedback in information retrieval</title>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Rocchio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Smart Retrieval System-experiments in Automatic Document Processing</title>
+		<imprint>
+			<date type="published" when="1971">1971. 1971</date>
+			<biblScope unit="page" from="313" to="323" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Selecting Discriminative Terms for Relevance Model</title>
+		<author>
+			<persName><forename type="first">Dwaipayan</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sumit</forename><surname>Bhatia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1253" to="1256" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Using word embeddings for information retrieval: How collection and term normalization choices affect performance</title>
+		<author>
+			<persName><forename type="first">Dwaipayan</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debasis</forename><surname>Ganguly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sumit</forename><surname>Bhatia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Srikanta</forename><surname>Bedathur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="1835" to="1838" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Using word embeddings for automatic query expansion</title>
+		<author>
+			<persName><forename type="first">Dwaipayan</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debjyoti</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Utpal</forename><surname>Garain</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1606.07608</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR Workshop on Neural Information Retrieval</title>
+		<meeting>SIGIR Workshop on Neural Information Retrieval</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Query Embedding Pruning for Dense Retrieval</title>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3453" to="3457" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A Pseudo-relevance feedback framework combining relevance matching and semantic matching for information retrieval</title>
+		<author>
+			<persName><forename type="first">Junmei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tingting</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueyan</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xinhui</forename><surname>Tu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Processing &amp; Management</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="page">102342</biblScope>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Improving zero-shot retrieval using dense external expansion</title>
+		<author>
+			<persName><forename type="first">Xiao</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Processing &amp; Management</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="page">103026</biblScope>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Nicola Tonellotto, and Iadh Ounis. 2021. Pseudo-Relevance Feedback for Multiple Representation Dense Retrieval</title>
+		<author>
+			<persName><forename type="first">Xiao</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICTIR</title>
+		<meeting>ICTIR</meeting>
+		<imprint>
+			<biblScope unit="page" from="297" to="306" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">End-to-end neural ad-hoc ranking with kernel pooling</title>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Russell</forename><surname>Power</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Approximate nearest neighbor negative contrastive learning for dense text retrieval</title>
+		<author>
+			<persName><forename type="first">Lee</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ye</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kwok-Fung</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jialin</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Bennett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Junaid</forename><surname>Ahmed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arnold</forename><surname>Overwijk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICLR</title>
+		<meeting>ICLR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">PGT: Pseudo Relevance Feedback Using a Graph-Based Transformer</title>
+		<author>
+			<persName><forename type="first">Hongchien</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ECIR</title>
+		<meeting>ECIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="440" to="447" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Improving Query Representations for Dense Retrieval with Pseudo Relevance Feedback</title>
+		<author>
+			<persName><forename type="first">Hongchien</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3592" to="3596" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Embedding-based query language models</title>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICTIR</title>
+		<meeting>ICTIR</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="147" to="156" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">From neural re-ranking to neural ranking: Learning a sparse representation for inverted indexing</title>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mostafa</forename><surname>Dehghani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Erik</forename><surname>Learned-Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaap</forename><surname>Kamps</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="497" to="506" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">BERT-QE: Contextualized Query Expansion for Document Re-ranking</title>
+		<author>
+			<persName><forename type="first">Zhi</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xianpei</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of EMNLP: Findings</title>
+		<meeting>EMNLP: Findings</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="4718" to="4728" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

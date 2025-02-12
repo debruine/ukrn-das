@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">CFD modelling of spatiotemporal evolution of detailed tar species in a downdraft gasifier</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2022-11-25">25 November 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Ahmed</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+							<email>ahmed_salem@f-eng.tanta.edu.eg</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Systems, Power &amp; Energy Research Division</orgName>
+								<orgName type="institution" key="instit2">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit3">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Mechanical Power Department</orgName>
+								<orgName type="department" key="dep2">Faculty of Engineering</orgName>
+								<orgName type="institution">Tanta University</orgName>
+								<address>
+									<settlement>Tanta</settlement>
+									<country key="EG">Egypt</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Manosh</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+							<email>manosh.paul@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Systems, Power &amp; Energy Research Division</orgName>
+								<orgName type="institution" key="instit2">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit3">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">Energy Research Division</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">CFD modelling of spatiotemporal evolution of detailed tar species in a downdraft gasifier</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-11-25">25 November 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B24FDBB7F575383C62D2578E80BCA843</idno>
+					<idno type="DOI">10.1016/j.biombioe.2022.106656</idno>
+					<note type="submission">Received 10 April 2022; Received in revised form 28 September 2022; Accepted 13 November 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:36+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Bioenergy Gasification Tar kinetics Downdraft gasifier CFD</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The rising demand for renewable energy around the world has sparked interest in biomass gasification. However, the technology greatly suffers because of tar species produced during the gasification process, which limits direct use of the produced gas. To address this issue, the paper presents a novel piece of work that focuses on the formation and evolution of tar species consisting of benzene, naphthalene, toluene, and phenol. A twodimensional numerical model for a downdraft biomass gasifier is developed with a total of 20 thermochemical kinetic reactions to investigate the formation of tar species in the gasifier with the effect of residence time. The model's predictions are validated with the experimental and kinetic data and found to be in good agreement. Besides, the model's ability to simulate the producer gas production from a downdraft gasifier is examined. Reaction rates for volatiles decomposition, combustion, and gasification reactions under different working conditions are investigated. Overall, benzene has the highest concentration of the selected tar species, followed by naphthalene, and with relatively modest amounts of phenol and toluene.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The increase trend of the world's population, along with rising energy demand and continuous depletion of fossil fuels, encourages the development of renewable energy technologies. Biomass, as a renewable energy source, is considered to be clean, sustainable, and does not contribute to the generation of greenhouse gases. Besides, biomass can be converted to energy through different techniques including pyrolysis, gasification, and combustion <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>, and <ref type="bibr" target="#b2">[3]</ref>.</p><p>Biomass gasification, as the topic of this paper, is a promising approach for producing syngas and power <ref type="bibr" target="#b3">[4]</ref>. However, a gasifier's design and operation involve a complex process that requires an intensive time-consuming experiment to study the technology and obtain the optimum working parameters. On the other hand, modelling is a complementary technique that can be used to design and control the process of gasification using a wide set of validation and test data <ref type="bibr" target="#b4">[5]</ref>, and <ref type="bibr" target="#b5">[6]</ref>.</p><p>To date, different equilibrium ( <ref type="bibr" target="#b6">[7]</ref>), and kinetic models ( <ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref>, and <ref type="bibr" target="#b10">[11]</ref>) have been used to model biomass gasification. However, these models have certain limitations when it comes to analysing the gasification process since the interaction between solid and gas phases reactions during the gasification process requires an in-depth understanding, which cannot be achieved with an equilibrium/kinetic modelling. Gasifier design also has a strong effect on the syngas composition and quality. These limitations were overcome using a Computational Fluid Dynamics (CFD) model, which involves a combined solution of the transports of mass, momentum, energy, turbulence, and hydrodynamics <ref type="bibr" target="#b11">[12]</ref>. Different CFD models <ref type="bibr">([6,13,14]</ref>) were presented to simulate the process of gasification in biomass gasifiers with various gasifier types and feedstocks. Babu and Sheth <ref type="bibr" target="#b10">[11]</ref> developed a 1D steady-state model using a finite difference method to predict the gas composition and temperature along the reduction zone of a downdraft gasifier. They used four main gasification reactions in their model besides a correlation to describe velocity, pressure, and temperature distribution along the reduction zone. Their results were compared to experimental data and found to be in good agreement.</p><p>Fletcher et al. <ref type="bibr" target="#b14">[15]</ref> employed a Lagrangian approach to the biomass gasification process in an entrained flow gasifier. Transport equations consisting of a set of heterogeneous reactions were solved to determine the concentration of different gas species. The model was able to predict the temperature and syngas composition at the gasifier outlet under various working conditions. While Yu et al. <ref type="bibr" target="#b15">[16]</ref> presented a numerical simulation model for a bubbling fluidized bed coal gasifier using the kinetic theory of granular flow. The model was used to study the relationship between the gasifier height and gas composition, temperature, and velocity along the gasifier bed.</p><p>With regard to the CFD modelling of a downdraft gasifier, Gupta et al. <ref type="bibr" target="#b16">[17]</ref> presented a 2D model of a 10 kW downdraft biomass gasifier using ANSYS software. Wu et al. <ref type="bibr" target="#b17">[18]</ref> also developed a 2D Euler-Euler CFD model for simulating the gas and solid phase interactions in a downdraft biomass gasifier with highly preheated air and steam. While Murugan and Sekhar <ref type="bibr" target="#b18">[19]</ref> conducted a 2D numerical simulation of an Imbert biomass gasifier to study selected biomass feedstocks (e.g., coconut shell, cow dung, rice husk, rubber seed kernel shell, and rubber wood) which were available at a remote area. The study showed the effect of changing the equivalence ratio (ER) on the producer gas quality, composition, and heating value. The results demonstrated that ER within the range of 0.24-0.26 resulted in the optimum performance of the gasifier and particularly, the rubber seed kernel shell was the most suitable feedstock for producing syngas with a higher heating value.</p><p>Most recently, Kumar and Paul <ref type="bibr" target="#b5">[6]</ref> presented a 2D model of a 20-kW downdraft gasifier in which a Eulerian-Lagrangian approach was used, and the model included the four main zones of gasifier such as drying, pyrolysis, oxidation, and reduction. They provided a set of chemical reaction data, and the model was validated against experimental and kinetic results from literature. A detailed result of the gas species formation along the gasifier as well as temperature profile was also presented under different ERs, however, they only showed the results for ER &gt; 0.35, which appears to be slightly high in the context of gasification. The model was later extended to 3D <ref type="bibr" target="#b12">[13]</ref> to investigate the rubber wood gasification inside the entire reactor. Again, the Eulerian-Lagrangian approach with the discrete phase model was used to account the solid/gas phase interactions.</p><p>Experimental studies have particularly focused on investigating the nature of the formation and destruction of tar compounds because tar limits the use of producer gas. However, experimental studies regarding tar formation and destruction are a costly and time-consuming process. On the other hand, tar involves complex compounds and could form in hundreds of different chemical compounds <ref type="bibr" target="#b19">[20]</ref>. Equilibrium and kinetic models were built to simulate gasifier operation including tar formation e.g. see Refs. <ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref>, and <ref type="bibr" target="#b22">[23]</ref>. Kinetic models depend on a detailed chemical reaction that does not depend on reactor geometry. These limitations in kinetic models are addressed through a Computational Fluid Dynamics (CFD) model, which involves a combined solution of the transports of mass, momentum, energy, turbulence and hydrodynamics of flow. It can give a better understanding of the interactions between different phases and reactions inside the gasifier. The results can then be used to optimise the work of downdraft gasifiers that lead to the production of higher value syngas.</p><p>According to the literature review provided above, none of the CFD modelling work to-date has reported the formation and distribution of tar species within a downdraft gasifier in both steady and unsteady states. The current research work presents a 2D CFD modelling of an airblown downdraft gasifier, and it addresses a major knowledge gap in the literature on the fundamental understanding of the evolution and formation of detailed tar species such as benzene, naphthalene, toluene and phenol. The selected tar species are always found in large amounts of approximately 70-95% ( <ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref>) besides they represent primary (phenol), secondary (toluene), and tertiary (benzene, and naphthalene) tars. The concentration of remaining tar species (such as xylene, indene, pyrene, cresol and xylenol) can be ignored because of their small amount or a lack of chemical data and kinetic rate reactions that can help  <ref type="bibr" target="#b20">21]</ref>, and <ref type="bibr" target="#b25">[26]</ref>).</p><p>To the best of our knowledge, the selected tar species to be modelled in gasifier has not been computationally investigated in earlier works. Both the steady and unsteady CFD approaches will help further to clarify the tar formation and destruction throughout the gasification process, resulting in a high purity syngas product.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Model description</head><p>A 20-kW downdraft biomass gasifier's model is developed based on the design presented earlier in the kinetic modelling work of the authors <ref type="bibr" target="#b4">[5]</ref>. The gasifier design is composed of the four main zones: drying, pyrolysis, oxidation, and gasification/reduction. The gasification process is governed by a set of integrated kinetics, which begin with drying, followed by volatile break-up in the pyrolysis zone, then oxidation and reduction. A total of 20 thermochemical kinetic rate reactions are implemented in the ANSYS version 19.0 software to accommodate the volatiles break-up and other reactions involved in the process.</p><p>A schematic diagram of the gasifier model is shown in Fig. <ref type="figure" target="#fig_1">1</ref>. The gasifier uses air as a gasifying agent to be fed through the air inlets placed around the combustion zone. Biomass is fed from the top of the gasifier, while any residual ash and char to be collected from the bottom where the model assumes that all the char to be fully consumed within the reduction zone. Producer gas is discharged through the outlet pipes fitted at the bottom of the gasifier. The gasifier is an Imbert type downdraft gasifier with a throat ratio (throat to gasifier diameter) of 0.284 (Fig. <ref type="figure" target="#fig_1">1</ref>). Throat diameter is 6.2 cm, where air is injected through the air-inlet nozzle having the diameter of D = 18 cm located at the combustion zone of the gasifier. The full design of the gasifier is verified numerically and experimentally through the kinetic model of the current authors <ref type="bibr" target="#b4">[5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Governing equations</head><p>The governing equations include the conservation of energy, mass, momentum, and species transport which are built-in in the ANSYS <ref type="bibr" target="#b26">[27]</ref> as presented below:</p><p>Energy conservation:</p><p>∂ ∂t</p><formula xml:id="formula_0">(ρE) + ∇. ( v → (ρE + p)) = -∇. [ ∑ j h j J j ] + S h (1)</formula><p>Mass conservation:</p><formula xml:id="formula_1">∂ρ ∂t + ∂(ρu i ) ∂x i = S i (2)</formula><p>Momentum conservation:</p><formula xml:id="formula_2">∂(ρu i ) ∂t + ∂ ( ρu i u j ) ∂x j = - ∂p ∂x i + ∂τ ij ∂x j + ρg i + F i (3)</formula><p>where the stress tensor τ ij is defined as</p><formula xml:id="formula_3">τ ij = μ [( ∂u i ∂x j + ∂u j ∂x i ) - 2 3 ∇.u ij I ]<label>(4)</label></formula><p>and S i is the mass added to the continuous phase from the dispersed second phase, ρg i is the gravitational body forces, F i is the external body forces, I is the unit tensor, E is energy, and h is enthalpy.</p><p>The Reynolds Averaged Navier-Stokes (RANS) <ref type="bibr" target="#b26">[27]</ref> equations are derived by time averaging of equations ( <ref type="formula">2</ref>)-( <ref type="formula" target="#formula_3">4</ref>). The Reynolds stresses employed in the equations are modelled through the Boussinesq hypothesis that depends on turbulence model. Turbulence kinetic energy, k, and its dissipation rate, ε, are calculated through the following equations, representing the standard k-ε viscosity model.</p><formula xml:id="formula_4">∂ ∂x i (ρku i ) = ∂ ∂x j [( μ + μ t σ k ) ∂k ∂x j ] + G k + G b -ρε -Y M + S k (5) ∂ ∂x i (ρεu i ) = ∂ ∂x j [( μ + μ t σ ε ) ∂ε ∂x j ] + C 1ε ε k (G k + C 3ε G b ) -C 2ε ρ ε 2 k + S ε (<label>6</label></formula><formula xml:id="formula_5">)</formula><p>where The species transport equation <ref type="bibr" target="#b26">[27]</ref> is described as ∂ ∂t</p><formula xml:id="formula_6">(ρY i ) + ∇.(ρ u → Y i ) = -∇. J → i + R i + S i (7)</formula><p>where Y i is the mass fraction of species, R i is the net rate of production of species i by chemical reaction, S i is the rate addition by the dispersed phase plus any UDF source, and J i is the diffusion flux of species i. While the diffusion flux for turbulent flow is represented by</p><formula xml:id="formula_7">J i → = - ( ρD i,m + μ t Sc t ) ∇Y i -D T,i ∇T T (<label>8</label></formula><formula xml:id="formula_8">)</formula><formula xml:id="formula_9">Sc t = μ t ρD t (<label>9</label></formula><formula xml:id="formula_10">)</formula><p>where D i,m is the mass diffusion coefficient for species i in the mixture, D T,i is the thermal diffusion coefficient for species i in the mixture, D t is the turbulent diffusivity, and Sc t is the Schmidt number for turbulent flow.</p><p>Biomass particles are modelled by discrete phase model (DPM) [27] -a Lagrangian approach. The model considers particles trajectory by a continuous phase of fluid. The interaction between particles is taken into account considering the heat and mass transfer as the main term in the governing equations. Particle trajectory is written and calculated by integrating the force balance on a particle where this balance equates the particle inertia force with the other forces acting on the particle as described in equations 10-14.   <ref type="bibr" target="#b9">(10)</ref> where</p><formula xml:id="formula_11">∂u p → ∂t = F D ( u → -u → p ) + g → ( ρ p -ρ ) ρ p</formula><formula xml:id="formula_12">F D ( u → -u p → )</formula><p>is the drag force per unit particle mass and</p><formula xml:id="formula_13">F D = 18μ C D Re 24ρ p d p 2<label>(11)</label></formula><p>where C D is the drag coefficient, Re is the Reynolds number, and μ is the viscosity. The temperature of particle T p , convective heat transfer, and the absorption/emission of radiation of the particle surface are related by the following equation.</p><formula xml:id="formula_14">m p c p dT p dt = hA p ( T -T p ) + ε p A p σ ( T R 4 -T p 4 ) (<label>12</label></formula><formula xml:id="formula_15">)</formula><p>where h is the heat transfer coefficient, A p is the particle surface area, and T R is the radiation temperature which is used for estimating the radiative heat flux (black body temperature).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Drying model</head><p>The current simulation is based on the ANSYS fluent <ref type="bibr" target="#b26">[27]</ref> theory in the drying process which takes place at the early stages of the gasifier when biomass is fed from the top. For the drying process, ANSYS employs two models, the Lee model <ref type="bibr" target="#b27">[28]</ref>, and Phase-Change model. However, in the current simulation, the Lee model is more relevant because it is used for mixtures, multi-phase VOF, and Euler-Lagrangian models. The liquid vapour mass transfer in such system is governed by the vapour transport equation ( <ref type="formula" target="#formula_16">13</ref>):</p><formula xml:id="formula_16">∂ ∂t (α v ρ v ) + ∇ ( α v ρ v V v ̅→ ) = ṁlv -ṁvl<label>(13)</label></formula><p>Where v denotes the vapour phase, α v is the volume fraction of vapour, ṁlv , and ṁvl are the mass transfer rates due to drying (evaporation) and condensation respectively (kg/s/m 3 ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Volatiles break-up approach and biomass decomposition</head><p>Due to the temperature rise in the oxidation zone, biomass goes through the drying process first, which allows all moisture to vaporize <ref type="bibr" target="#b28">[29]</ref>. Biomass after drying decomposes into volatiles and char, and then these components further react with each other to form char and volatiles again, as discussed earlier ( <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b29">30]</ref>, and <ref type="bibr" target="#b30">[31]</ref>). Volatiles break up approach in this work depends on an equilibrium model as shown in equation ( <ref type="formula" target="#formula_17">14</ref>), and <ref type="bibr" target="#b14">(15)</ref>.</p><formula xml:id="formula_17">Biomass → Volatiles + moisture + Tar + Char + ASH (<label>14</label></formula><formula xml:id="formula_18">)</formula><formula xml:id="formula_19">Volatiles → x 1 CO + x 2 CO 2 + x 3 CH 4 + x 4 H 2<label>(15)</label></formula><p>Volatiles contain gases (CO, CO 2 , CH 4 , H 2 , and H 2 O), besides other hydrocarbons and tar. The devolatilization process however depends on the biomass composition (as determined by the ultimate and proximate analysis data) which also shows the volatiles and ash content.</p><p>Based on the volatiles' ultimate analysis data which are calculated from Refs. <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b26">27]</ref>, an elemental mass balance is carried out to calculate the mole fraction of every species. The model, proposed by Ref. <ref type="bibr" target="#b31">[32]</ref>, calculates the mass fraction of every species produced during biomass pyrolysis based on temperature and the CO concentrations. Other gas species are calculated form the mass balance between the volatiles and pyrolysis products. The biomass break-up reaction <ref type="bibr" target="#b13">(14)</ref> along with the volatile decomposition <ref type="bibr" target="#b14">(15)</ref> are included in ANSYS code to start the simulation process.</p><p>As the tar evolution and formation kinetics during the pyrolysis zone is not previously studied, the current model will depend on a reported correlations from previous studies. Tar formation begins at the pyrolysis zone, and the tar species formation depends on the mass empirical relation developed by Ref. <ref type="bibr" target="#b24">[25]</ref> based on the experimental results of <ref type="bibr" target="#b20">[21]</ref>. They report the mass yield of tar species in g/kg of biomass. More details about the model can be found in Ref. <ref type="bibr" target="#b22">[23]</ref>.</p><p>Tar species different mass yields (g/kg of biomass) is reported by the following equation.</p><formula xml:id="formula_20">Y = aT 2 + b T + c (<label>16</label></formula><formula xml:id="formula_21">)</formula><p>While the a, b, and c values are presented in Table <ref type="table">1</ref>.</p><p>After pyrolysis, the gas composition of volatiles and tar species are fed automatically to the next stages (oxidation and reduction) depending on their reactions (Tables <ref type="table">1</ref> and<ref type="table" target="#tab_2">2</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Gas phase and char surface reactions</head><p>The set of reactions used to represent the oxidation and reduction processes are based on the recommendations of <ref type="bibr" target="#b5">[6]</ref>, (Table <ref type="table" target="#tab_2">2</ref>, and Table <ref type="table" target="#tab_3">3</ref>). The current model is further enhanced by implementing the detailed chemical reactions of tar species formation and evolution starting with devolatilization, oxidation and reduction, Table <ref type="table" target="#tab_4">4</ref>. All of the reactions, including the tar kinetic reactions, have been implemented in the ANSYS code in both the oxidation and reduction zones. Tar was initially assumed as one compound, but it was later classified into four main species (benzene, naphthalene, toluene, and phenol). Nine additional reactions have been added to the CFD code to incorporate the tar evolution, formation, and cracking along the gasifier.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5.">Boundary and operating conditions</head><p>Two different feedstocks are used for model validation (Table <ref type="table" target="#tab_5">5</ref>) aiming to investigate the effect of gasifier operating conditions on the producer gas quality. Rubber wood and neem with their ultimate and proximate analysis data used for the initial model validation are illustrated in Table <ref type="table" target="#tab_5">5</ref>, while the boundary conditions used in the model are illustrated in Table <ref type="table" target="#tab_6">6</ref>. Both feedstocks were used previously in the kinetic model and in experiments, so it is a logical choice to use the same feedstocks for validation of CFD results.</p><p>Biomass is fed from the top of the gasifier as a mass flow rate input boundary condition, while the total number of particles are tracked through the Lagrangian approach (Discrete phase). Discrete phase model (DPM) follows the Euler-Lagrange approach where one phase representing fluid is solved by the Navier-Stokes equations, while the second phase representing dispersed particles is solved by tracking the specific number of particles through the flow field. Both the phases exchange mass, momentum, and energy with each other. The number of particles dispersed due to turbulence, is predicted by using stochastic tracking model (i.e., random walk model). At every time step, 1450 particles with a diameter of 0.355 mm are tracked. The model considers the effect of turbulence on the particles' trajectories (i.e., tries) which are injected into each cell of the computational mesh of the gasifier inlet <ref type="bibr" target="#b26">[27]</ref>. The DPM proved to have good stability and better prediction for biomass gasification as demonstrated in the previous studies, e.g. see Refs. <ref type="bibr" target="#b41">[42]</ref><ref type="bibr" target="#b42">[43]</ref><ref type="bibr" target="#b43">[44]</ref><ref type="bibr" target="#b44">[45]</ref>, and <ref type="bibr" target="#b45">[46]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Table 1</head><p>Correlations for pyrolysis products <ref type="bibr" target="#b24">[25]</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.6.">Numerical simulation and convergence testing</head><p>The governing equations of two phases are numerically solved by using an implicit finite volume method. A pressure velocity coupled algorithm is used where it encompasses a coupled solution for the momentum and pressure-based equations. This solving criterion gives higher rate of solution convergence <ref type="bibr" target="#b26">[27]</ref>. The spatially discretised pressure equation is solved by PRESTO (PREssure STaggering Option) method, which is a default option for multiphase simulations or volume of fluid (VOF) models with mixtures or having more than one fluid in the system. The PRESTO scheme is more applicable for the models as it gives better solution convergence. Energy, momentum, gas species, and discrete ordinates under the spatial discretization uses a second order upwind scheme for more accurate and stable solution. Convergence criteria for residuals is set as default, where all the relaxation factors are set to 10 -3 while for the energy and discrete ordinate radiation are set to 10 -6 to again ensure the stable accurate solutions. The particles are tracked cell by cell through the control volume, where the devolatilization, combustion and gasification take place according to the specified rate reactions. The overall solution methods and residuals control are concluded in Table <ref type="table" target="#tab_7">7</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Results and discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Mesh dependency and model validation</head><p>Mesh independency test is performed first by using five different mesh sizes with the cell numbers of 22,320, 39,744, 90,770, 203,980, and 319,780 respectively. Producer gas composition along with the higher heating value of rubber wood gasification is shown in Fig. <ref type="figure">2</ref>. The results show a slight variation in the gas compositions for all the grids employed. For example, the CO concentration varies between 20.9 and 20.4 in vol% when the grid size is changed from 203,980 to 22,320 -a variation of only less than 2%. Also, the variation in both CO 2 (9.11-9.5) mol% and CH 4 (1.8-2.17) mol.% for the same grids is insignificant. Additionally, the higher heating value (HHV (MJ/Nm 3 )) does not differ much (5.8 and 5.74 MJ/Nm 3 ) for the grid numbers 90770 and 203,980. However, starting with the 90,770 cells, the overall gas composition appears to be stable with negligible variations, and the heating value also almost remains the same. As a result, the mesh size of 90,770 is selected for the further simulations presented in the current work, as higher mesh density is time consuming and will require higher computational costs.</p><p>Fig. <ref type="figure">3</ref> depicts the results of CFD modelling for the two feedstocks as well as a comparison with the experimental, and kinetic modelling results <ref type="bibr" target="#b4">[5]</ref>. Rubber wood was gasified at an ER of 0.326 and an MC of 18.5% <ref type="bibr" target="#b39">[40]</ref>, while neem gasification was at an ER of 0.3 with an MC of 10% <ref type="bibr" target="#b40">[41]</ref>. The results show the volume (%) of dry gas composition at the gasifier outlet for the three data sets. Based on the comparison, the CFD results of both feedstocks show good agreement for all the gas compositions with those of the kinetic code and the experiments. A negligible variation in all the gas species formation is found and the results for the CFD, experiment and kinetic code results vary between 8 and 13 vol%, and 6 and 14 vol% for rubber wood and neem respectively, demonstrating the model's suitability to simulate the process of downdraft biomass gasifiers.</p><p>Tar species produced during the gasification of a wood sample at an     ER of 0.35 and an MC of 10% are presented in Fig. <ref type="figure" target="#fig_4">4</ref>. Comparisons are shown between the results of the CFD model, kinetic model and the corresponding experiment <ref type="bibr" target="#b22">[23]</ref>. Note that all the tar results have been converted from μg/100 ml of the produced gas to the unit of g/Nm 3 for easy tracking and comparison with the experimental or numerical data, as this unit is widely used in the literature in quantifying and estimating tar produced in gasification. The results in Fig. <ref type="figure" target="#fig_4">4</ref> show that all the major tar species produced, and the total tar amount are in fairly good agreement. A negligible decrease in the CFD model prediction for the total tar amount is found because of a very slight amount of benzene prediction. The kinetic model slightly outperforms when comparing with the CFD predictions for tar production. However, the CFD results are still matching with the experimental data with a small deviation for the different species and total tar amount produced. Furthermore, one of the main research aims is to study the hydrodynamics of tar and gas species within the gasifier which is not applicable for the kinetic models.</p><p>The following discussions (Figs. <ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref><ref type="bibr" target="#b11">[12]</ref> will present the distribution of velocity, temperature, reaction rates, volatiles decomposition across the gasifier height. As a result, the CFD is a strong numerical procedure that overcomes the limitations of such kinetic models. Phenol concentrations are too low and can be considered as negligible compared to the other species because, and it is a primary tar compound that tends to be fully cracked and converted to the other tar species at higher temperatures.</p><p>Based on the kinetic and CFD models, the phenol concentration is zero, while from the experiments it is reported as &lt;0.02 g/Nm 3 (thus negligible). Furthermore, benzene and naphthalene show fairly well agreement with both the experimental and kinetic code results. Both compounds have the highest portion of tar produced during the biomass gasification, accounting more than 60% of the tar produced in most cases ( <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b46">47]</ref>, and <ref type="bibr" target="#b0">[1]</ref>). Toluene concentration from the CFD model shows slightly lower than that of the experiment or kinetic model. However, it meets a strong agreement with the other data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Rates of reactions with an effect of ER</head><p>Fig. <ref type="figure" target="#fig_5">5</ref> illustrates the reaction rate of volatiles and the mass fraction of volatiles along gasifier centreline for rubber wood gasification at ER = 0.326, and MC of 18%. After drying, the decomposition of biomass to volatiles takes place at the pyrolysis zone and the very early stages of the   combustion zone. Biomass devolatilization rate reaches its peak in the middle of the pyrolysis zone, and then gradually decreases as biomass is fed into the combustion zone, until it reaches zero just above the oxidation zone (i.e., at about 60 cm height of gasifier) where the other reactions occur. Biomass decomposition into char, tar, and gases takes place in the pyrolysis zone as also clearly shown in the figure. The mass fraction of biomass decomposition starts at 1 until it approaches 0 at the onset of combustion, as demonstrated by the drop in the decomposition rate towards the end of the pyrolysis zone. It is also found that changing ER has no effect on decomposition because no air is driven within the pyrolysis zone. As a result, ER has no effect on the behaviour of pyrolysis products. The findings meet strong agreement with previous experimental and numerical results e.g., <ref type="bibr">([6,44]</ref>).</p><p>The oxidation zone is where the combustion reactions take place, as seen in Fig. <ref type="figure" target="#fig_6">6</ref>. The reaction rates of CO, CH 4 , and H 2 combustion are examined for rubber wood gasification at ERs of 0.2, 0.3, and 0.4. The oxidation reactions are exothermic, generating the heat required for all the other reaction processes of gasification such as biomass decomposition in pyrolysis and reduction reactions in the gasification zone. All of the combustion reactions, as also shown in this figure, take place in the   oxidation zone between the gasifier heights of 35 and 50 cm. A higher combustion rate is found for CO followed by H 2 and CH 4 as clearly illustrated in the figure. This is due to the increased amounts of CO produced during pyrolysis followed by H 2 , and CH 4 respectively. Additionally, the smaller activation energy for H 2 combustion compared to CO combustion leads to decrease its combustion rate (Table <ref type="table">1</ref>).</p><p>In the same figure, the effect of changing ER on the reaction rates and the formation of different species is also presented. As the ER increases from 0.2 to 0.4, the reaction rates increase, and the corresponding peak is shifted towards the middle of the combustion zone. Higher ERs tend to increase the amount of air (O 2 ) inside the oxidation zone, and consequently, increase the rate of reactions based on the combustion reaction rates (Table <ref type="table">1</ref>). Furthermore, increased air inside the gasifier favours flow turbulence leading to increase in the temperature and corresponding rates of oxidation reactions. The highest reaction rate is usually formed at the middle of combustion zone (~0.42 m height). It was found that the highest reaction rate for CO combustion (R2-Table <ref type="table">1</ref>) is 3.7*10 -6 kgmol/m 3 s at ER 0.4, while the lowest value is 4.7*10 -8 kgmol/m 3 s at ER 0.2 for CH 4 combustion (R4-Table <ref type="table">1</ref>). Such findings strongly align with those reported in Ref. <ref type="bibr" target="#b5">[6]</ref>.</p><p>The set of results in Fig. <ref type="figure" target="#fig_7">7</ref> further illustrate the reaction rates taking place in the reduction zone are the boudouard, water-gas, and methane formation reactions, respectively (R5,6,7-Table <ref type="table" target="#tab_2">2</ref>). Rubber wood is used as a feedstock at a fixed MC of 18.5% with varying ER. As seen from the figure, all the specified reactions take place in the reduction zone where it starts at around 35 cm from the gasifier height and proceeds towards the end of the gasification zone. The methane formation reaction has the highest reaction rate, followed by the water-gas and boudouard reactionsthe findings also strongly agree with those reported in Ref. <ref type="bibr" target="#b5">[6]</ref>. It is also worth further noting that all the reactions initiate near the end of the combustion zone, with only a very small rate possibly occurring in the combustion zone. The boudouard reaction has the lowest reaction rate due to the consumption of CO 2 to CO. This is mainly because CO 2 is a very stable compound and requires heat to be converted to other species ( <ref type="bibr" target="#b20">[21]</ref>, and <ref type="bibr" target="#b0">[1]</ref>) because it is strongly endothermic and requires heat to be initiated. These results are, again, consistent with the previously published work, which states that the reduction reactions are mostly endothermic thus require heat to occur <ref type="bibr" target="#b47">[48]</ref>.</p><p>Furthermore, while the methane formation reaction shows high reaction rates, it is mainly dependent on the amount of CH 4 which is mostly found in small amounts during the gasification process. Reaction 7, on the other hand, which show lower amounts of CH 4 because of its low activation energy and also its dependency on C, and H 2 formation along the reduction zone. Yet, it is effective in predicting the accurate amount of CH 4 formation during the process of gasification. Lower ER (0.2) tends to produce higher reaction rates for the boudouard, and methane formation reactions as illustrated in the figure. This is because lower ER in the combustion zone tends to produce higher concentrations of CO, and CH 4 and as a result, the formation rate is increased. Unlike the water gas reaction, which depends on the amount of steam present inside the gasifier. For higher ER, H 2 combustion reaction takes place (Fig. <ref type="figure" target="#fig_6">6</ref>), leading to more steam formation, and consequently, increasing the rate of formation of water-gas reaction.</p><p>The combustion (gas-phase) reactions rates are defined based on a volumetric basis in which the creation/destruction rates of the different species are a source term in the species transport equation (eqn. ( <ref type="formula">7</ref>)). While this is the case in most combustion reactions, the gasification reactions mostly depend on the char amounts, and are defined as a particle surface reaction in which, the rate of formation of different species is governed by the diffusion and chemical kinetics within the surface <ref type="bibr" target="#b26">[27]</ref>. As a result, the surface reactions create sinks and sources of the different species within the gas phase, and on the reacting species surface <ref type="bibr" target="#b48">[49]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Temperature distribution inside the gasifier</head><p>The equivalence ratio and air amount injected into the gasifier play a critical role in the producer gas production, chemical reactions, temperature and in fact, the whole gasification process. Hence, studying the effects of changing ER on the gasification temperature and other parameters will lead to the further understanding of its effect on gasification, resulting in higher producer gas production and gasification process efficiency.</p><p>Fig. <ref type="figure" target="#fig_8">8</ref> depicts the temperature contours inside the gasifier for rubber wood gasification at the different equivalence ratios and a fixed MC of 18.5%. The results clearly illustrate that the higher temperature is predicted in the oxidation zone, followed by the reduction and pyrolysis zones. The peak temperature, or in other word the ignition temperature, (1900-2015) K is seen near the air injection points; however, it is not the combustion temperature, as the temperature drops to normal levels (~1400K) in the middle of the gasifier, Fig. <ref type="figure" target="#fig_8">8</ref>. As the ER increases, the temperature inside the gasifier also increases. This is due to increased air injection and turbulence inside the gasifier, which increases the reaction rates for the heterogeneous combustion reactions.</p><p>Further in Fig. <ref type="figure" target="#fig_9">9</ref>, the temperature profile along the gasifier centreline is compared for the different ERs. As clearly shown in the figure, more air addition from a higher ER tends to increase the temperature inside the gasifier. The maximum temperature for ER of 0.4 was found to be around 1340K. The change of ER shows a negligible difference in the pyrolysis temperature. This is because pyrolysis temperature depends on the feedstock type, and moisture levels. Since both are fixed, (rubber wood. 18.5% MC), it is expected to have fixed pyrolysis temperature ~700 K. On the other hand, ER affects the amount of air/oxidant injection inside the combustion zone. Higher ERs, with high oxygen, lead to an increase in turbulence mixing as well as in the heterogenous oxidation reaction rates (Table <ref type="table" target="#tab_2">2</ref>). Thus, resulting in the higher temperatures and heat release in the combustion zone. This has been also demonstrated in Fig. <ref type="figure" target="#fig_8">8</ref>, where higher temperatures are found for higher ERs. The resulting gasification/reduction temperatures also depend on ER as illustrated by (Figs. 8, and Fig. <ref type="figure" target="#fig_9">9</ref>).</p><p>However, when ER decreases, the temperature decreases as well. The temperature rise with ER is also in good agreement with the previous works ( <ref type="bibr" target="#b30">[31]</ref>, and <ref type="bibr" target="#b39">[40]</ref>) as well as with the results derived from the kinetic model <ref type="bibr" target="#b4">[5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.">Tar species formation</head><p>Tar evolution in the pyrolysis zone is described using a mass yield relation <ref type="bibr" target="#b31">[32]</ref>. In the combustion and gasification zones, the tar species formation depends on the detailed reaction rate kinetics <ref type="bibr" target="#b36">[37]</ref>, and <ref type="bibr" target="#b37">[38]</ref>. The CFD model is used to investigate the formation of the different species of tar along the gasifier in both steady and unsteady states, as well as the effect of residence time on the formation and destruction of </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.1.">Tar species distribution inside the gasifier</head><p>Phenol concentrations in the producer gas are usually close to zero and can be neglected, as evidenced in Fig. <ref type="figure" target="#fig_10">10</ref>. In the early stage of pyrolysis, a large amount of phenol is formed; but as the temperature increases, it reacts more with the other compounds and eventually converts to other forms. When the temperature is high enough during gasification, it also tends to decrease gradually, and in some cases, it tends to be fully consumed and converted to benzene, naphthalene, and other gas species (CO, H 2 , and CH 4 ).</p><p>Toluene formation inside the gasifier has the same trend as phenol, with a higher concentration in the pyrolysis zone followed by destruction in the oxidation and reduction zones, as also evidenced in Fig. <ref type="figure" target="#fig_10">10</ref>. However, depending on the reduction reactions and temperature of the gasification zone, toluene starts reforming again in small amounts at the reduction zone. Although it needs further understanding and clarifications, this could be because of the reaction rates, backward reactions, and the complicated chemistry involved in such reactions. However, after reaching the steady state in the simulation, it appears that all of the phenol has been consumed (Figs. <ref type="bibr">10 and 11)</ref>. Particularly, at temperatures above 773 K, the primary tars start to re-form ( <ref type="bibr" target="#b47">[48]</ref>, and <ref type="bibr" target="#b46">[47]</ref>) and convert to the secondary, and then the tertiary tars. The temperatures in the oxidation and reduction zones, that are higher than 1173 K, are enough to destroy the primary tar species and transform them into the other compounds. Nevertheless, unlike the other species, naphthalene formation shows a different trend. It is formed in considerable amounts in the producer gas as illustrated in Fig. <ref type="figure" target="#fig_10">10</ref>. Small amounts are produced during pyrolysis because it is a tertiary tar which requires higher temperatures to present and form. Higher temperatures in the oxidation zone &gt;1300K are favourable for the naphthalene formation and total conversion at 1600 K <ref type="bibr" target="#b21">[22]</ref>. Further, based on the tar kinetic reactions, naphthalene is also converted to char, H 2 , CO and benzene. Those reactions occur in both the combustion and reduction zones; however, it is more likely to happen in the reduction zone because of the presence of water vapour.</p><p>Benzene has the highest portion of tar species, which is usually greater than 37% from the weight of the total tars produced <ref type="bibr" target="#b0">[1]</ref>. Benzene starts forming in pyrolysis and followed by a slight decrease in oxidation but increases again in the reduction zone. Oxidation reactions destroy benzene and convert it to CO, CO 2 , CH 4 , H 2 and H 2 O. However, benzene is still found in larger amounts compared to the other tar species, and during oxidation it is slightly cracked. This is because of its higher stability than the other tar species, and hence it forms as the highest portion of tar compounds during the gasification process <ref type="bibr" target="#b0">[1]</ref>. Furthermore, benzene requires a very high temperature to crack (1400-1700) K <ref type="bibr" target="#b21">[22]</ref>. On the other hand, these reactions (benzene combustion R16, 17) depend on oxygen amount and have slow reaction rates. As a result, it is unlikely that they will take place in the oxidation zone or will never happen in the reduction zone where no oxygen is present. Whereas the other tar species (phenol, naphthalene, and toluene) are converted to benzene and other compounds at this temperature range. All the previous factors, therefore, tend to increase the amount of benzene along the gasifier height as the temperature increases, which further agrees with the results of <ref type="bibr" target="#b19">[20]</ref>.</p><p>Tar species formation along the centreline is illustrated in Fig. <ref type="figure" target="#fig_11">11</ref>. The results follow the same trend described earlier in Fig. <ref type="figure" target="#fig_10">10</ref>. That is, in the pyrolysis zone, phenol shows higher concentration; this is because it is a primary tar compound and usually formed in higher amounts during the devolatilization process and has been further transformed into the secondary and tertiary tars during combustion and gasification. At the gasifier exit, benzene shows the highest portion of tar species followed by toluene and naphthalene, while phenol shows negligible values at the exit of the gasifier, as expected. Poly aromatic hydrocarbons (PAH) are favourable to be formed during high temperature. However, it was stated that benzene, and naphthalene are found in large amounts during the process pyrolysis <ref type="bibr" target="#b49">[50]</ref>, and <ref type="bibr" target="#b50">[51]</ref>. Benzene and naphthalene are more affected by the temperature rise and therefore show higher conversion rates in higher temperature <ref type="bibr" target="#b51">[52]</ref>. However, the formation of naphthalene was found in considerable amount (although small) in the pyrolysis zone at around 0.7 m height of the gasifier. At this height, the temperature was around 800-900 K (Fig. <ref type="figure" target="#fig_7">7</ref>) and at this temperature level, naphthalene could be found at considerable amounts as stated in the experimental and numerical study of <ref type="bibr" target="#b51">[52]</ref>.</p><p>Additionally, for all the species, the ER has a strong effect on their formation and destruction. Higher ER always shows smaller amounts of tar species at the gasifier exit. This is because higher temperature and turbulence inside the gasifier favour tar destruction, and therefore, lower amounts of tar. It is also noticed that all species amounts tend to be similar at the pyrolysis zone, because there is no effect of ER on either tar or volatiles at this stage (discussed earlier in Fig. <ref type="figure" target="#fig_5">5</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.2.">Temporal evolution of tar species</head><p>Unsteady simulations are also performed to study the formation of different tar species over time, starting with the evolution at pyrolysis and transformation through oxidation and gasification, and producer gas exits (Fig. <ref type="figure" target="#fig_12">12</ref>). The transient state is examined for 24 s with a time step of 0.05 s, A well understanding of the tar formation and its nature is the primary requirement that would help to decrease the tar amounts  produced with producer gas. Therefore, all the simulation results of tar species presented below are processed at the mid-location of every zone, while they are face averaged at the gasifier exit.</p><p>The evolution of tar species at the pyrolysis zone over time is shown in Fig. <ref type="figure" target="#fig_12">12</ref>. All the species, except for phenol, start to increase and reach their peaks at different and then decrease and eventually stabilise after 6 s. Phenol concentrations were found to be very high at the beginning, so the phenol was multiplied by 0.04 for an easy illustration in the chart area. Phenol concentrations are found to be very high because of its nature being a primary tar, which forms at pyrolysis, then over the time and when the temperature inside the gasifier increases, it starts to crack and convert to other higher tar compounds and consequently, tends to decrease by the end.</p><p>On the other hand, toluene was found to have the highest portion of tar species at the pyrolysis end, which is consistent with the previous and present research findings. Toluene being the most stable primary tar is formed at usual pyrolysis temperatures but cracks and converts to benzene and naphthalene at higher temperatures of the oxidation zone. Benzene is present in considerable amounts, while naphthalene in lower amounts as a PAH that needs higher temperatures to form. At the combustion zone, the results start to stabilise after 11 s, which should be longer than the pyrolysis duration (6 s). That is due to the fact that species begin to form during pyrolysis and then go through the combustion zone which takes time to stabilise. All the species exhibit the similar trend as those identified in the pyrolysis zone. However, benzene and naphthalene are formed in greater amounts, because of the higher combustion temperatures (Fig. <ref type="figure" target="#fig_7">7</ref>) that crack the primary tar molecules and convert them to the secondary and tertiary tars. Toluene is found in small amounts while phenol is fully consumed because of the higher temperature at the oxidation zone.</p><p>The results have a logical trend, where the sum of the tar contents (in kmol/m 3 ) at the end of pyrolysis (16*10 -5 ) and combustion (13*10 -5 ) decreases. Additionally, the results show that the primary tars are formed during pyrolysis (e.g. toluene ~8.8*10 -5 ), while at the end of oxidation benzene (tertiary tars) has the highest portion (8.5*10 -5 ) followed by naphthalene and toluene, which agrees strongly with the previous studies published in the literature ( <ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b52">53]</ref>, and <ref type="bibr" target="#b24">[25]</ref>).</p><p>Tar species formation at the reduction zone start to stabilise after a longer time than combustion and pyrolysis, around 14 s. Tar species formation follows the same trend as in the combustion zone because of again the higher temperature. Finally, the average values of tar species evolution at the producer gas exits are presented in the same figure. The species formation takes longer than the other zones start to stabilise, around 18 s. Initially, phenol is found in large amounts, but it decreases or fully consumed over time and temperature rise. Benzene and naphthalene are formed in large amounts, then they cracked slightly as the temperature increases. While toluene, being a stable compound, stabilises early and is found in considerable amounts. Eventually, benzene is the highest portion of tar species formed, followed by toluene, naphthalene, and phenol in a very small amount. The results are matching with the findings illustrated earlier in Fig. <ref type="figure" target="#fig_9">9</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Conclusions</head><p>A CFD model was developed for the investigation of the evolution and formation of major tar species in a downdraft gasifier. Tar representatives included benzene, naphthalene, toluene, and phenol which were classified as primary, secondary, and tertiary tars. The results of the producer gas composition as well as tar species formations were validated with the kinetic modelling and experimental data.</p><p>Detailed reaction kinetics were investigated at varying ER from 0.2 to 0.4, revealing the rates of reactions for various producer gas and tar species. The highest reaction rate was found for CO combustion at ER 0.4, while the lowest rate was for CH 4 combustion at ER 0.2. On the other hand, the boudouard reaction has the lowest reaction rate, while the methane formation reaction has the highest reaction rate.</p><p>Furthermore, the unsteady tar distribution at the pyrolysis, combustion, and reduction zones revealed that the primary tars formed in their higher concentration during pyrolysis. These were then consumed at the oxidation zone, and subsequently reduced at the reduction zone. On the other hand, the tertiary tars were formed initially with smaller amounts at pyrolysis, consumed at oxidation, but reformed again at reduction because of the conversion of the primary tars into the secondary and tertiary tars. The results further demonstrated that the tar species were stabilised after 6, 11, 14, and 18 s in pyrolysis, combustion, reduction, and gasifier exit respectively.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>σ k and σ ε are the turbulent Prandtl numbers for k, and ε respectively, G b is the turbulence kinetic energy due to buoyancy, G k is the turbulence kinetic energy due to mean velocity gradients, Y M is the contribution of the fluctuating dilatation in compressible turbulence to the overall dissipation rate, S k , and S ε are the source terms for the kinetic energy, and the rate of dissipation respectively. The values of constants used are C 1ε = 1.44; C 2ε = 1.92; σ k = 1.0; σ ε = 1.3 [22].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. Gasifier schematic showing the design and various zones.</figDesc><graphic coords="3,56.30,489.16,213.70,237.02" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 2 .Fig. 3 .</head><label>23</label><figDesc>Fig. 2. Producer gas composition vol. %, and HHV (MJ/Nm 3 ) at different mesh sizes.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Detailed tar species validation.</figDesc><graphic coords="6,308.58,308.97,247.97,221.90" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Volatiles' reaction rate (right), and decomposition (left) along the gasifier height.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Combustion reactions rates along the gasifier centreline at different ERs.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Gasification reaction rates along the gasifier for different ERs.</figDesc><graphic coords="7,308.58,485.81,247.82,218.88" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. Temperature contours along the gasifier with different ERs.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 9 .</head><label>9</label><figDesc>Fig. 9. Temperature distribution at different ERs along the gasifier centreline.</figDesc><graphic coords="8,39.63,55.43,247.97,166.46" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 10 .</head><label>10</label><figDesc>Fig. 10. Various tar species mole fraction contours inside the gasifier.</figDesc><graphic coords="9,124.10,55.44,347.04,514.94" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig. 11 .</head><label>11</label><figDesc>Fig. 11. Tar species distribution along the gasifier centreline with different ERs.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Fig. 12 .</head><label>12</label><figDesc>Fig. 12. Temporal distribution of tar species at the middle point of different zones, and gasifier exit.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 2</head><label>2</label><figDesc>Oxidation reactions.</figDesc><table><row><cell></cell><cell>Reactions</cell><cell>A</cell><cell>E (kJ/mol)</cell><cell>T. exponent</cell><cell>Ref.</cell></row><row><cell>1</cell><cell>2C + O 2 →2CO</cell><cell>147,000</cell><cell>112.99</cell><cell>1</cell><cell>[33]</cell></row><row><cell>2</cell><cell>CO+0.5O 2 →CO 2</cell><cell>1.0e+10</cell><cell>126</cell><cell>0</cell><cell>[34]</cell></row><row><cell>3</cell><cell>2H 2 +O 2 →2H 2 O</cell><cell>2.2e+09</cell><cell>109</cell><cell>0</cell><cell>[34]</cell></row><row><cell>4</cell><cell>CH 4 +2O 2 →CO 2 +2H 2 O</cell><cell>4.4e+11</cell><cell>126</cell><cell>0</cell><cell>[35]</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 3</head><label>3</label><figDesc>Reduction reactions.</figDesc><table><row><cell></cell><cell>Reactions</cell><cell>A</cell><cell>E (kJ/mol)</cell><cell>T. exponent</cell><cell>Ref.</cell></row><row><cell>5</cell><cell>C + CO 2 →2CO</cell><cell>8.268</cell><cell>188.2</cell><cell>1</cell><cell>[33]</cell></row><row><cell>6</cell><cell>C + H 2 O→CO + H 2</cell><cell>42.5</cell><cell>142</cell><cell>1</cell><cell>[33]</cell></row><row><cell>7</cell><cell>0.5C + H 2 →0.5CH 4</cell><cell>8.8894e-06</cell><cell>67.16</cell><cell>1</cell><cell>[33]</cell></row><row><cell>8</cell><cell>CH 4 +H 2 O→CO+3H 2</cell><cell>3e+08</cell><cell>125</cell><cell>0</cell><cell>[34]</cell></row><row><cell>9</cell><cell>CO + H 2 O→CO 2 +H 2</cell><cell>2.35e+10</cell><cell>288</cell><cell>0</cell><cell>[36]</cell></row><row><cell>10</cell><cell>CO 2 +H 2 →CO + H 2 O</cell><cell>1.785e+12</cell><cell>326</cell><cell>0</cell><cell>[36]</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 4</head><label>4</label><figDesc>Reactions of tar species implemented in the model.</figDesc><table><row><cell></cell><cell>Reactions and rate expression</cell><cell>A (s -1 )</cell><cell>E (kJ/</cell><cell>Ref.</cell></row><row><cell></cell><cell></cell><cell></cell><cell>mol)</cell><cell></cell></row><row><cell>11</cell><cell>C7H8→0.17C10H8 + 0.89C6H6 + 0.67H2 r1 =</cell><cell>2.23E13</cell><cell>315</cell><cell>[37]</cell></row><row><cell></cell><cell>k1 [C7H8]</cell><cell></cell><cell></cell><cell></cell></row><row><cell>12</cell><cell>C10H8→10 C + 4H2 r2 = k2 [C10H8] 2 [H2] -0.7</cell><cell>5.56E15</cell><cell>360</cell><cell>[38]</cell></row><row><cell>13</cell><cell>C10H8 + 4H2O→C6H6 + 4CO + 5H2 r3 =</cell><cell>1.58E12</cell><cell>324</cell><cell>[38]</cell></row><row><cell></cell><cell>k3 [C10H8] [H2] 0.4</cell><cell></cell><cell></cell><cell></cell></row><row><cell>14</cell><cell>C7H8 + H2→C6H6 + CH4 r4 =</cell><cell>1.04E12</cell><cell>247</cell><cell>[38]</cell></row><row><cell></cell><cell>k4 [C7H8] [H2] 0.5</cell><cell></cell><cell></cell><cell></cell></row><row><cell>15</cell><cell>C6H6 + 5H2O→5CO + CH4 + 6H2 r5 =</cell><cell>4.4E8</cell><cell>220</cell><cell>[38]</cell></row><row><cell></cell><cell>k5 [C6H6]</cell><cell></cell><cell></cell><cell></cell></row><row><cell>16</cell><cell>C6H6 + 7.5 O2→6CO2 + 4H2O r6 =</cell><cell>17.83</cell><cell>125.5</cell><cell>[38]</cell></row><row><cell></cell><cell>k6 [C6H6] -0.1 [O2] 1.25</cell><cell></cell><cell></cell><cell></cell></row><row><cell>17</cell><cell>C6H6 + 3O2→6CO + 3H2 r7 = k7 [C6H6] [O2]</cell><cell>1.58E15</cell><cell>202.6</cell><cell>[38]</cell></row><row><cell>18</cell><cell>C7H8 + 9 O2→7CO2 + 4H2O r8 =</cell><cell>14.26</cell><cell>125.5</cell><cell>[38]</cell></row><row><cell></cell><cell>k8 [C7H8] -0.1 [O2] 1.25</cell><cell></cell><cell></cell><cell></cell></row><row><cell>19</cell><cell>C6H6O→CO + 0.4C10H8 + 0.15 C6H6</cell><cell>1.0E7</cell><cell>100</cell><cell>[25,</cell></row><row><cell></cell><cell>+0.1CH4 + 0.75H2 r9 = k9 [C6H6O]</cell><cell></cell><cell></cell><cell>39]</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 5</head><label>5</label><figDesc>Feedstocks' data used in validation.</figDesc><table><row><cell></cell><cell cols="4">Ultimate analysis db. (%)</cell><cell cols="3">Proximate analysis db. (%)</cell><cell></cell></row><row><cell></cell><cell>C</cell><cell>H</cell><cell>O</cell><cell>N</cell><cell>Vol.</cell><cell>FC</cell><cell>Ash</cell><cell>MC</cell></row><row><cell>Rubber wood</cell><cell>50.6</cell><cell>6.5</cell><cell>42</cell><cell>0.2</cell><cell>80.1</cell><cell>19.2</cell><cell>0.7</cell><cell>18.5</cell></row><row><cell>[40]</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Neem [41]</cell><cell>45.1</cell><cell>6.0</cell><cell>41.5</cell><cell>1.7</cell><cell>81.75</cell><cell>12.65</cell><cell>5.6</cell><cell>10</cell></row><row><cell>Db -on dry basis.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 6</head><label>6</label><figDesc>Boundary conditions used in validation.</figDesc><table><row><cell></cell><cell>Rubber wood</cell><cell>Neem</cell></row><row><cell>Equivalence ratio</cell><cell>0.326</cell><cell>0.3</cell></row><row><cell>ṁfuel , kg/hr</cell><cell>0.316</cell><cell>0.694</cell></row><row><cell>ṁair , kg/hr</cell><cell>0.631</cell><cell>1.142</cell></row><row><cell>Air T (K)</cell><cell>600</cell><cell>600</cell></row><row><cell>Biomass T (K)</cell><cell>300</cell><cell>300</cell></row><row><cell>Gauge P, producer gas outlet</cell><cell>0</cell><cell>0</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 7</head><label>7</label><figDesc>Solution methods followed in the CFD modelling.</figDesc><table><row><cell>Phases</cell><cell>Euler-Lagrangian</cell></row><row><cell>Models included</cell><cell>Turbulence model: k-epsilon 2 equations</cell></row><row><cell></cell><cell>Radiation: Discrete ordinates</cell></row><row><cell></cell><cell>Species Transport for Finite rate/Eddy transport kinetic model</cell></row><row><cell></cell><cell>Intensity and Hydraulic Diameter specification</cell></row><row><cell>Solution</cell><cell>Pressure-velocity coupling, Coupled</cell></row><row><cell>methods</cell><cell>Momentum and Energy: 2nd order upwind discretization</cell></row><row><cell></cell><cell>scheme</cell></row><row><cell></cell><cell>Pressure discretization scheme, PRESTO</cell></row><row><cell>Residuals' level</cell><cell>10</cell></row></table><note><p><p>-3 </p>for all variables, for Energy and radiation 10 -6</p></note></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>Data will be made available on request.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Basu</surname></persName>
+		</author>
+		<title level="m">Biomass Gasification, Pyrolysis, and Torrefaction. Practical Design and Theory</title>
+		<meeting><address><addrLine>Amsterdam</addrLine></address></meeting>
+		<imprint>
+			<publisher>Academic Press</publisher>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note>second ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Assessing biomass steam gasification technologies using a multi-purpose model</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Sepe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">126</biblScope>
+			<biblScope unit="page" from="216" to="226" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Studies of ignition behaviour of biomass particles in a down-fire reactor for improving co-firing performance</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">M</forename><surname>Czajka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="5870" to="5877" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Advanced numerical methods for the assessment of integrated gasification and CHP generation technologies</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Izaharuddin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Dhami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sutardi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Coal and Biomass Gasification, Energy, Environment, and Sustainability</title>
+		<imprint>
+			<biblScope unit="page" from="307" to="330" />
+			<date type="published" when="2018">2018</date>
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">An integrated kinetic model for downdraft gasifier based on a novel approach that optimises the reduction zone of gasifier</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="172" to="181" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">CFD modelling of biomass gasification with a volatile breakup approach</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem. Eng. Sci</title>
+		<imprint>
+			<biblScope unit="volume">195</biblScope>
+			<biblScope unit="page" from="413" to="422" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Prediction of performance of a downdraft gasifier using equilibrium modeling for different biomass materials</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">A</forename><surname>Zainal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Lean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">N</forename><surname>Seetharamu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1499" to="1515" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Modeling and Simulation of a Downdraft Biomass Gasifier 1. Model Development and Validation</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Sharma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Conversion and Management</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="1386" to="1396" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Automated advanced calibration and optimization of thermochemical models applied to biomass gasification and pyrolysis</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bianco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B E</forename><surname>Brownbridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Nurkowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Bhave</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kraft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="10144" to="10153" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Syngas production and combined heat and power from scottish agricultural waste gasification-a computational study</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Dhami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/su14073745</idno>
+		<ptr target="https://doi.org/10.3390/su14073745" />
+	</analytic>
+	<monogr>
+		<title level="j">Sustainability</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">3745</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Modeling and simulation of reduction zone of downdraft biomass gasifier: effect of char reactivity factor</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">N</forename><surname>Sheth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">V</forename><surname>Babu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="2602" to="2611" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Biomass gasification models for downdraft gasifier: a stateof-the-art review</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">K</forename><surname>Patra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">N</forename><surname>Sheth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="page" from="583" to="593" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Sensitivity analysis of homogeneous reactions for thermochemical conversion of biomass in a downdraft gasifier</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">151</biblScope>
+			<biblScope unit="page" from="332" to="341" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Characterization of tar content in the syngas produced in a downdraft type fixed bed gasification system from dried sewage sludge</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Phuphuakrat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Nipattummakul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Namioka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kerdsuwan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yoshikawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fuel</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="page" from="2278" to="2284" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A CFD based combustion model of an entrained flow biomass gasifier</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Fletcher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">S</forename><surname>Haynes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Christo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Joseph</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Math. Model</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="165" to="182" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Numerical simulation of the bubbling fluidized bed coal gasification by the kinetic theory of granular flow (KTGF)</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fuel</title>
+		<imprint>
+			<biblScope unit="volume">86</biblScope>
+			<biblScope unit="page" from="722" to="734" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">CFD modeling and simulation of 10KWE biomass downdraft gasifier</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vyas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Curr. Eng. Technol</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1446" to="1452" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Two-dimensional computational fluid Dynamics simulation of biomass gasification in a downdraft fixed-bed gasifier with highly preheated air and steam</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Blasiak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="3274" to="3282" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Numerical simulation of Imbert biomass gasifier toSelect the feedstock available in remote areas</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">C</forename><surname>Murugan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Joseph</forename><surname>Sekhar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Environ. Prog. Sustain. Energy</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="708" to="716" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Tar formation under different biomass gasification conditions</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Kinoshita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Anal. Appl. Pyrol</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="169" to="181" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Evolution of aromatic tar composition in relation to methane and ethylene from biomass pyrolysisgasification</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dufour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Masson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Girods</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Rogaume</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zoulalian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="4182" to="4189" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Mechanisms and kinetics of thermal reactions of aromatic hydrocarbons from pyrolysis of solid fuels</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jess</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fuel</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1441" to="1448" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">The evolution and formation of tar species in a downdraft gasifier: numerical modelling and experimental validation</title>
+		<author>
+			<persName><forename type="first">Ahmed</forename><forename type="middle">M</forename><surname>Salem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilman</forename><surname>Nuran Zaini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Manosh</forename><forename type="middle">C</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weihong</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="page">130</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Reduction of tar generated during biomass gasification: a review</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L V</forename><surname>Rios</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>González</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E S</forename><surname>Lora</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Del Olmo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="page" from="345" to="370" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Detailed modeling of biomass gasification in dual fluidized bed reactors under aspen plus</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dufour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Abdelouahed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Authier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mauviel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Corriou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Verdier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="3840" to="3855" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Tar formation during eucalyptus gasification in a bubbling fluidized bed reactor: effect of feedstock and reactor bed composition</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T L C M</forename><surname>Ruivo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A C</forename><surname>Tarelho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Frade</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kantarelis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Engvall</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">229</biblScope>
+			<biblScope unit="page">113749</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m">ANSYS 15 Fluent Theory Guide</title>
+		<meeting><address><addrLine>Canonsburg, PA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2013">15317. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">A Pressure Iteration Scheme for Two-phase Modeling</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<idno>LA-UR 79-975</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Los Alamos Scientific Laboratory</title>
+		<imprint>
+			<date type="published" when="1979">1979</date>
+			<pubPlace>Los Alamos, New Mexico</pubPlace>
+		</imprint>
+	</monogr>
+	<note type="report_type">Technical Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Four zones modeling of the downdraft biomass gasification process: effects of moisture content and air to fuel ratio</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dejtrakulwong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Patumsawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Proc</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="142" to="149" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Kinetic modelling of the pyrolysis of biomass and biomass components</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Koufopanosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Maschio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lucchesit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Can. J. Chem. Eng</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="page" from="75" to="84" />
+			<date type="published" when="1989-02">1989. Feb</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Computer simulation of a downdraft wood gasifier for tea drying</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Jayah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Aye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Fuller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Stewart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="459" to="469" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Synthesis gas production by biomass pyrolysis: effect of reactor temperature on product distribution</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dufour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Masson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Girods</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Rogaume</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zoulalian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Hydrogen Energy</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="1726" to="1734" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Simulation on gasification of forestry residues in fluidized beds by Eulerian Lagrangian approach</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioresour. Technol</title>
+		<imprint>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="page" from="36" to="46" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Modeling of biomass gasification in fluidized bed</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Gomez-Barea</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Prog. Energy Combust. Sci</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="444" to="509" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Lateral diffusion of solids in a fluidized bed with submerged vertical tubes</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tomeczek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jastrzçab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Gradoń</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Powder Technol</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="17" to="22" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Modeling and validation of oxy-fired and air-fired entrained flow gasifiers</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Nakod</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Chem. Phys. Sci</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2074" to="2091" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Kinetic modeling of tar and light hydrocarbons during the thermal conversion of biomass</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Fuentes-Cano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gómez-Barea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nilsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ollero</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Fuel</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="377" to="385" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Modelling of thermal removal of tarsinahightemperature stage fedbyaplasmatorch</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Marias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fourcault</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Michon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="1363" to="1374" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Mechanisms and kinetics of homogeneous secondary reactions of tar from continuous pyrolysis of wood chips</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Morf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hasler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nussbaumer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fuel</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="843" to="853" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Computer simulation of a downdraft wood gasifier for tea drying</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Jayah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Aye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Fuller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Stewart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="459" to="469" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Down draft gasification modelling and experimentation of some indigenous biomass for thermal applications</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">P</forename><surname>Dutta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Pandey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Das</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Baruah</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Proc</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="21" to="34" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">CFD analysis of the fluidised bed hydrodynamic behaviour inside an isothermal gasifier with different perforated plate distributors</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Al-Akaishi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Valera-Medina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Chong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Marsh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Proc</title>
+		<imprint>
+			<biblScope unit="volume">142</biblScope>
+			<biblScope unit="page" from="835" to="840" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Modelling coal gasification with CFD and discrete phase method</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Zitney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shahnam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Syamlal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">A</forename><surname>Rogers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Inst</title>
+		<imprint>
+			<biblScope unit="volume">79</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="217" to="221" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<author>
+			<persName><forename type="first">I</forename><surname>Janajreh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Al</forename><surname>Shrah</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Numerical and Experimental Investigation of Downdraft Gasification of Wood Chips</title>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="page" from="783" to="792" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Optimisation of a throat downdraft gasifier for hydrogen production</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Prasertcharoensuk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Hernandez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Bulla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ana</forename><forename type="middle">A N</forename><surname>Phan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biomass Bioenergy</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page" from="216" to="226" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">CFD simulation of entrained-flow coal gasification: coal particle density/sizefraction effects</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Slezak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Kuhlman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Shadle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Spenik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Powder Technol</title>
+		<imprint>
+			<biblScope unit="volume">203</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="98" to="108" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Kinetic model of biomass gasification</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Kinoshita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sol. Energy</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="19" to="25" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+		<title level="m" type="main">Biomass Gasification and Pyrolysis: Practical Design and Theory</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Basu</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<publisher>Academic press</publisher>
+			<pubPlace>Burlington</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">OPTICAL MATERIALS | heterogeneous materials</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Kreibig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Quinten</surname></persName>
+		</author>
+		<idno>978-0-12-369395-2</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Encyclopedia of Modern Optics</title>
+		<editor>
+			<persName><forename type="first">R</forename><forename type="middle">D</forename><surname>Guenther</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Oxford, UK</addrLine></address></meeting>
+		<imprint>
+			<publisher>Elsevier</publisher>
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">formation of naphthalene, indene, and benzene from cyclopentadiene pyrolysis: a dft</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Violi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Chem</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page" from="4719" to="4725" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">The pyrolysis of anisole (C6H5OCH3) using a hyperthermal nozzle</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Friderichsen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fuel</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1747" to="1755" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Development of a CFD model for the simulation of tar and methane steam reforming through a ceramic catalytic filter</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Savuto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Di Carlo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bocci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>D'orazio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Hydrogen Energy</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">25</biblScope>
+			<biblScope unit="page" from="7991" to="8004" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Tars</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Milne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Evans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Abatzoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Biomass</forename><surname>Gasifier</surname></persName>
+		</author>
+		<idno>NREL TP-570-25357</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Their Nature, Formation, and Conversion</title>
+		<meeting><address><addrLine>Golden, Colorado, Colorado, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

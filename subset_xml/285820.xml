@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">The Use of Instantaneous Overcurrent Relay in Determining the Threshold Current and Voltage for Optimal Fault Protection and Control in Transmission Line</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-02-07">7 February 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Vincent</forename><forename type="middle">Nsed</forename><surname>Ogar</surname></persName>
+							<email>v.ogar.1@research.gla.ac.uk</email>
+							<idno type="ORCID">0000-0001-6311-0926</idno>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Sajjad</forename><surname>Hussain</surname></persName>
+							<idno type="ORCID">0000-0001-6311-0926</idno>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Kelum</forename><forename type="middle">A A</forename><surname>Gamage</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">The Use of Instantaneous Overcurrent Relay in Determining the Threshold Current and Voltage for Optimal Fault Protection and Control in Transmission Line</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-02-07">7 February 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">947AD34F0C08F83EFE8962B4AA315D5A</idno>
+					<idno type="DOI">10.3390/signals4010007</idno>
+					<note type="submission">Received: 15 November 2022 Revised: 17 January 2023 Accepted: 3 February 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:02+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>circuit breaker</term>
+					<term>overcurrent relay</term>
+					<term>faults</term>
+					<term>threshold current</term>
+					<term>threshold voltage</term>
+					<term>transmission line</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>When a fault occurs on the transmission line, the relay should send the faulty signal to the circuit breaker to trip or isolate the line. Timely detection is integral to fault protection and the management of transmission lines in power systems. This paper focuses on using the threshold current and voltage to reduce the time of delay and trip time of the instantaneous overcurrent relay protection for a 330 kV transmission line. The wavelet transforms toolbox from MATLAB and a Simulink model were used to design the model to detect the threshold value and the coordination time for the backup relay to trip if the primary relay did not operate or clear the fault on time. The difference between the proposed model and the model without the threshold value was analysed. The simulated result shows that the trip time of the two relays demonstrates a fast and precise trip time of 60% to 99.87% compared to other techniques used without the threshold values. The proposed model can eliminate the trial-and-error in programming the instantaneous overcurrent relay setting for optimal performance.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The power system's major and minor components are critical in transmitting electric supply from the generation site to the customer. However, the fault protective relay is the most crucial and sensitive of all these components. These comprise the overcurrent and overvoltage relay protection. Transmission line faults disrupt the consumer's power supply, which is inconvenient and could result in financial losses. Damage to the power system or a power outage at the consumer's end could result in financial losses. When a failure occurs on the transmission lines, it is critical to protect them <ref type="bibr" target="#b0">[1]</ref>. Overcurrent protection is capable of operating under any fault condition. The relay's current pickup value must be higher than the maximum value of projected output or regular load flow situations. The overcurrent relay is commonly utilised in radial transmission and distribution systems <ref type="bibr" target="#b1">[2]</ref>. In the event of an abnormal condition or fault, such as a short circuit, the protective relay de-energises the defective component of the distribution power system, preventing the rest of the system from being impacted <ref type="bibr">[3]</ref>. The relays are established in cooperation to prevent the incidents mentioned earlier and their impact on customers. Because improper coordination can have significant implications for the electrical network, such as power outages, equipment damage, and utility station faults, properly coordinated relays are critical for the power system network. The current magnitude increases when the power system malfunctions, causing network damage <ref type="bibr" target="#b3">[4]</ref>. The fault current is measured by the overcurrent relays and compared to predetermined threshold values. When the current level exceeds the threshold, a trip order is delivered, and the appropriate circuit breaker opens its contacts and isolates the faulted area after a predetermined time delay. Some literature has recently proposed tools to aid transmission and distribution system protection based on overcurrent relay settings. In <ref type="bibr" target="#b4">[5]</ref>, an approach for fault calculation in imbalanced distribution systems was disclosed where the primary protective devices and functions employed in distribution systems have mathematical models. This method makes complete three-phase representations possible, and the solution is achieved directly in phase coordinates. In <ref type="bibr" target="#b5">[6]</ref>, an integrated optimising model for current relay coordination with tough, practical limitations based on a gradient-based optimiser was analysed, and the model was used to enhance the protection coordination of the transmission and distribution network with some constraints such as false tripping actions. In <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b7">8]</ref>, this study describes a computational tool that was created to automatically calculate the adjustments of all distribution network protection devices to acquire the best technological application, optimise its performance, and make protection studies easier. Ref. <ref type="bibr" target="#b8">[9]</ref> presents a straightforward method in which two-phase faults were diagnosed based on the negative sequence current value, and the operating conditions of the suggested criteria arising from negative and zero sequence currents were automatically selected based on the three-phase short-circuit criterion. However, the paper fails to introduce the controller operation of the circuit breaker for adequate tripping of the transmission line. In another paper <ref type="bibr" target="#b9">[10]</ref>, based on a real-time estimation of the Thevenin equivalent circuit (TEC), the methodology determines the protection setting settings. The estimation process used the voltage and current values in the positive sequence and a system of nonlinear equations that were solved repeatedly using the Gauss-Newton method. Additionally, in <ref type="bibr" target="#b10">[11]</ref>, the implementation of a new adaptive protection method to set online overcurrent relays in distribution networks was implemented for miscoordination of the overcurrent relay.</p><p>The connecting and disconnecting of transmission lines and their components are critical to changing fault currents' magnitude and flow direction. Change in the network configuration also leads to a disturbance in the overcurrent relay functionality. The fault current signal affects the power transformer and other components when a fault occurs in the transmission line. Therefore, the circuit breaker needs to open immediately to prevent damage to the installation. The fault current magnitude is greater than the standard load current, so the relay should be signed to operate and trip the circuit breaker for all currents above the relay settings. The overcurrent relay needs a backup relay for proper coordination such that, if one fails to trip, the backup relay will trip automatically.</p><p>To protect the transmission lines against multi-phase faults, the overcurrent protection criterion with a fixed current threshold and time-independent operation on fault current value is frequently utilised. Usually, two of these protection relays are currently deployed. The situation right now acting as the time-delay short-circuit, and the initial line of defence overload prevention identified by the I &gt; symbol, must adhere to the subsequent conditions,</p><formula xml:id="formula_0">I min &gt; I pr &gt; I st ,<label>(1)</label></formula><p>where I min is the minimum short-circuit phase current of the transmission line with I &gt; protection, I pr is the threshold value of the current protection, and I st is the steady state component of the highest load current of the line <ref type="bibr" target="#b8">[9]</ref>. Such protection relays respond only to phase current values and are typically definite minimum time (DMT) overcurrent relays configured to meet selectivity requirements. According to the literature reviewed above, this paper proposed the following approaches:</p><p>1.</p><p>The use of wavelet transforms to determine the threshold voltage and current of faulty transmission lines; 2.</p><p>A designed model to determine the tripping time and the operating time of instantaneous over current relay at different fault-resistant values; 3.</p><p>A protection scheme was designed to evaluate and determine the response time of relays in different zones.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Contribution of the Proposed Algorithm</head><p>The proposed algorithm performs better than those mentioned in the literature due to its speed in obtaining the threshold values for setting the overcurrent and overvoltage relay. Additionally, fault signals are accompanied by noise. Therefore, using the wavelet transform to determine the threshold current and voltage helps denoise the signal to attain stability in the system. It also serves as a fast gateway for instantaneous relay settings for optimal protection of transmission and distribution line fault detection and isolation with the use of a circuit breaker.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Proposed Algorithm</head><p>The proposed model uses the discrete wavelet transform to generate the threshold current and voltage for the overcurrent relay setting. This method is a fast and reliable process to determine the pickup current, minimum and maximum threshold current and voltage for the fast and accurate detection of transient or overcurrent faults in the transmission line. The proposed model improves the relay protection level, reduces the operating time of the relay and better coordinates between the primary and backup relay.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Wavelet Transform</head><p>The wavelet transform (WT) is a mathematical tool with which to analyse the power system transient signals. It extends a single prototype function to break up a signal into different scales with different levels of resolution. It shows how the signal looks locally in both the time and frequency domains. This wavelet transform capability is used to locate, classify, and detect fault conditions. The basic idea behind wavelet analysis is to choose an appropriate wavelet function known as the "mother wavelet" and then analyse it using shifted and dilated versions of this wavelet <ref type="bibr" target="#b11">[12]</ref>. The fault signals are transformed into different frequency bands using the discrete wavelet transform and the Daubechies wavelet transform in this method, which can then be used to identify the faults. These signals can be represented in terms of both the scaling and wavelet function, as shown in the equation below;</p><formula xml:id="formula_1">f (t) = Σ n CJ n Φ t-n + Σ n Σ J j=0 d j (n)2 j 2 Ψ(2 j t -n),<label>(2)</label></formula><p>where c j represents the J level scaling coefficient and d j represents the j level wavelet function. Φ(t) is the scaling function, Ψ(t) is the wavelet function, J is the highest wavelet level, and t is the time. Each wavelet is created by the scaling and translation operations of the mother wavelet <ref type="bibr" target="#b11">[12]</ref>. The continuous WT for a given signal x(t) to the parent wavelet</p><formula xml:id="formula_2">Ψ(t) is shown in Equation (2): CWT Ψ x(a, b) = W x (a, b) = ∞ -∞ x(t)Ψa, b (t) dt,<label>(3)</label></formula><p>where</p><formula xml:id="formula_3">Ψa, b(t) =| a | 1 2 Ψ( t-b a )</formula><p>, a (scale) and b (translation) are real numbers. For discretetime systems, the discretion process leads to the time-discrete wavelet series given as</p><formula xml:id="formula_4">DWT Ψ x(m, n) = ∞ -∞ x(t)Ψm, n (t) dt,<label>(4)</label></formula><p>where Ψm,</p><formula xml:id="formula_5">n(t) = a 0 -m 2 Ψ t-nb o a m 0 a , a = a 0 m and b = nb 0 a 0 m .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Data Acquisition</head><p>A 330 kV, 50 Hz, 500 km transmission line was modelled using MATLAB/SIMULINK, and 11 different types of faults were induced in the model, and the fault current data were collected and recorded, as shown in the table below. A wavelet transform syntax was applied to obtain the maximum coefficient current for phases A,B and C. [C, 1] = wavedec(x,n, wname), where wavedec is the function which decomposes the signal. X is the signal generated, n is the wavelet layer, wname is the name of wavelet type and C is the output wavelet decomposition vector, while l is the number of coefficients by layer.</p><p>The voltage and current of the grid experience transients when faults occur. Using a discrete wavelet transform to analyse these transients, the defect can be categorised <ref type="bibr" target="#b12">[13]</ref>. The zero sequence and phase transient currents are analysed to determine the fault that occurred. Wavelet transform identifies the phase-related fault by calculating the energy of transients linked to each phase and ground.</p><p>MATLAB/Simulink was used to simulate the model using the RLC load at the receiving end, while the three-phase source block was used at the sending end; 330 kV, 500 km, 50 Hz and a three-phase transmission line were used for the model. The coefficient of each fault type was calculated and compared with the threshold value by checking the maximum and minimum threshold values.</p><p>Table <ref type="table" target="#tab_0">1</ref> shows the maximum coefficient value of the different fault types. In contrast, Table <ref type="table" target="#tab_1">2</ref> represents the maximum and minimum threshold values for each current fault phase.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Modelling of the High Sensitive Overcurrent Relay</head><p>This protection switchgear block contains a current transformer, a circuit breaker (52) and an IDMT overcurrent relay (51P) that operate when the current exceeds the relay's predetermined value. This relay operates based on the IEC 60255 standard for normal inverse IDMT trip characteristics, as seen in Figure <ref type="figure" target="#fig_0">1</ref>. It also contains a phasor measurement unit (PMU) and two supply and switching units (SSU) connected to a separate bus with 10 kA, 6 kA and 4 kA faults. These fault values are obtained from Tables <ref type="table" target="#tab_0">1</ref> and<ref type="table" target="#tab_1">2</ref>. The input voltage was a 330 kV high voltage transmission line, and an output display of the relay status showed the tripping time and fault current. The overcurrent relay activates when the fault current exceeds the relay pickup current. The pickup current is calculated in operating time, and the inverse definite minimum time (IDMT) is defined as the amount of time taken before the circuit breaker trips when an overcurrent is initiated in a circuit or transmission line are also calculated. The operating time is defined as a fixed parameter such that an instantaneous overcurrent relay is produced when the operating time is set to zero <ref type="bibr" target="#b13">[14]</ref>. This can be illustrated in Figure <ref type="figure" target="#fig_1">2</ref> below and, to calculate the trip time, the IEEE C37.112-1996 equation for the trip time used is given as:</p><formula xml:id="formula_6">t(I) = TD A ( 1 I s ) p -1 + B , (<label>5</label></formula><formula xml:id="formula_7">)</formula><p>where A is the time factor for the overcurrent trip, I is the actual current, Is is the relay pickup setting, p is the exponent for inverse time, and B is the time coefficient for the overcurrent trip. While the IEC 60255 IDMT trip curve equation is given by</p><formula xml:id="formula_8">t(I) = TMS k ( 1 I s ) α -1 ,<label>(6)</label></formula><p>where α and k are the curve constants and seen in Table <ref type="table" target="#tab_3">3</ref> below.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Results and Discussion</head><p>The threshold current or peak make current and the short circuit breaking current can be calculated by finding the RMS symmetrical current i"k; the peak make current for a single radial current is calculated using the peak factor k.</p><formula xml:id="formula_9">i p = k √ 2i"k,<label>(7)</label></formula><p>where k = 1.02 + 0.98x10 -3 X R .</p><p>Peak f actor =</p><formula xml:id="formula_10">√ 2 1 + sin tan -1 ( X R ) exp -[ π 2 + tan -1 ( X R )] X R ,<label>(8)</label></formula><p>where the X R is the system ratio at the fault point. The RMS current is given by I r ms total at 1 2 cycle (KA), × f f c for single phase to Earth faults. f is the normal frequency and f c is the equivalent frequency.</p><formula xml:id="formula_11">I r ms = I + 2exp - π 2 X R XI r ms,<label>(9)</label></formula><p>The model generated the threshold current when the fault resistance was set at 0.01 Ω, 50 Ω and 100 Ω. The response times of the three different relays were also analysed, as seen in Tables 4-6. The tripping time varied as the fault resistance changed from 0.01 Ω to 100 Ω at different fault conditions. In Table <ref type="table" target="#tab_4">4</ref>, when the fault resistance was at 0.01 Ω, the trip time was 0.01 s at the three relays and all the fault conditions. At the same time, it was quite different when the fault resistance changed to 50 Ω. The trip time was reduced to zero seconds at a double line to ground and a single line to ground fault at relays 1 and 3 with a variation in relay 2 of about 0.91 s as seen in Table <ref type="table" target="#tab_5">5</ref>. The time multiplier setting (TMS) for each of the relays was set at 1 s, 2 s and 5 s, and the error after tripping was about 0.9 s, which is minimal, as seen in Table <ref type="table" target="#tab_6">6</ref> (0.98 s, 0.89 s and 0.96 s) for the three phases to ground fault. This can be seen in Figure3 A-C, where the TMS was set to 5 s, 2 s and 1 s, respectively.</p><p>A backup relay was added to the network for optimal system performance to prevent feedback faults. In instances where relay 1 failed to operate, it sent the signal to relays 2 and 3 for better coordination and protection.  The threshold current also varied as the fault resistance increased and was slightly different in the different fault types, as seen in Table <ref type="table" target="#tab_6">6</ref>, where the threshold current was an average of 358 kV in relay 1 and was slightly different in relay 3 of the single phase-to-ground fault.</p><p>Transmission line faults can be found and identified with less accuracy when there are noise signals. When choosing and extracting fault characteristics, noise signals such as voltage sag, transients, harmonics, and voltage interruption must be considered. In <ref type="bibr" target="#b14">[15]</ref>, the DWT was utilised for feature extraction, and the SVM was used for fault classification, with 100% accuracy when there was no disturbance and 98% and 95.6% accuracy when there was 30 dB and 20 dB noise, respectively. It is recommended that noise be removed using the DWT approach during fault extraction to obtain a denoised signal.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Validation of the Result Using the Threshold Current and Voltage with Other Models for the Sensitivity of TMS</head><p>Two scenarios were created in Figures <ref type="figure" target="#fig_4">4</ref> and<ref type="figure" target="#fig_5">5</ref> to show when three phase-to-ground faults were initiated to bus A and B, and the relay was applied in bus B while bus A was without a relay. In the implementation of the proposed model in Figure <ref type="figure" target="#fig_4">4</ref>, at the maximum threshold current, the circuit breaker tripped at 0.05 s and was restored. When the relay was initiated, the line tripped at 0.04 s, and the operating time delay was 0.035 s, as seen in Figure <ref type="figure" target="#fig_5">5</ref>. The application of the instantaneous overcurrent relay has reduced the operating time drastically, thereby protecting the entire system from collapsing. The threshold value is an easy way to detect faults and prevent transmission line fault protection tripping delays. The overshoot at Bus B/l 1 in Figure <ref type="figure" target="#fig_5">5</ref> shows that the maximum threshold coefficient was at the highest with 620.4303 kA as seen in Table <ref type="table" target="#tab_1">2</ref> (AC-G). Additionally, the minimum threshold was at the lowest at the no-fault condition with 10.6870 kA.</p><p>The instantaneous overcurrent and voltage relay function model is shown in Figure <ref type="figure" target="#fig_6">6</ref> of relay 1. The trip time for the current is smaller (Figure <ref type="figure" target="#fig_6">6a</ref>) compared to the voltage, while the time delay was at zero seconds in each case. This shows a better tripping time than the model without the relay setting, as seen in Figure <ref type="figure" target="#fig_4">4</ref>. In addition, the fault current trip time was 0.05 s, while the voltage trip time was 0.35 s, as opposed to 0.04 s in Figures <ref type="figure" target="#fig_4">4</ref> and<ref type="figure" target="#fig_5">5</ref>. The reduction of the tripping time was due to the introduction of instantaneous overcurrent and voltage relay settings with the help of the threshold voltage and current of the model.   In Figure <ref type="figure" target="#fig_9">8</ref>, the reference tripping time of the three-phase-to-ground fault at relay 2 shows that the line tripped at 0.2 s without applying the proposed model. The performance of the proposed model is shown in Table <ref type="table" target="#tab_7">7</ref> with a percentage increase in the tripping time without the application of the model compared to the proposed model, and it shows that at bus A, the double line to ground fault shows 99.87% with a difference of 0.33 s. The same also applies to three phase-to-ground faults and to single phase-toground faults. The differences in the various fault condition tripping times were computed to find the percentage increment of the tripping time of the normal system without the threshold value. The proposed model is shown in Equation ( <ref type="formula" target="#formula_12">10</ref>) below.</p><formula xml:id="formula_12">P i = T A -T B T A × 100, (<label>10</label></formula><formula xml:id="formula_13">)</formula><p>where P i is the percentage increment of the tripping time of the relay, T A is the tripping time without the threshold value, and T B is the tripping time using the proposed model. At bus B relay 1, there were significant changes in the tripping time with the doubleline-to-ground fault of 84.38% and a difference of 0.27 s, as seen in Table <ref type="table" target="#tab_8">8</ref>. The proposed model improved the tripping time and reduced the time delay of the relay to sense a fault signal and trip, as compared to <ref type="bibr" target="#b15">[16]</ref>, which focused on the selection and reliance of backup relays to trip in a fault condition. The deep learning-based method was compared with the proposed algorithm for accuracy and tripping time. In <ref type="bibr" target="#b16">[17]</ref>, an artificial intelligence search algorithm and a genetic algorithm were employed to find the optimal relay setting coordination time. The result shows that the tripping time varied from 0.10 s to 0.69 s at different fault levels. The operating time varied from 0.28 s to 6.3 s at different fault locations. In <ref type="bibr" target="#b17">[18]</ref>, the Radial Bias Function Neural Network (RBFNN) to learn and detect short-circuit fault current was implemented in the microprocessor of a digital relay on a distribution feeder to detect short-circuit faults using inverter-based distributed energy resources. The offline training time was 0.414 s, the detection time was 0.0136 s, and the trip time was 0.5 s. In <ref type="bibr" target="#b18">[19]</ref>, a directional overcurrent relay was used at different setting groups to detect faults at various locations. The optimal coordination of directional overcurrent relay in clusters was obtained using a machine learning algorithm and a genetic algorithm, with heuristic adjustment, and the operating time was 497.4069 s. The tripping times were set at 0.282 s and 0.593 s for different clusters. In <ref type="bibr" target="#b19">[20]</ref>, a dual-path mixed-domain residual threshold network was used for fault diagnosis in bearings, the soft threshold function was employed as the nonlinear transformation layer, and dilated convolution was used to create a dualpath neural network to identify the critical features in the signal without using any signal denoising algorithms. The algorithm's accuracy was about 99.97% on Gaussian noise and 99.98% on real noise. This paper, on the other hand, focused on feature extraction at various noise levels and thresholds for machine learning training, but the difference lies in the direct application of the proposed model without the combination with other algorithms, as seen in <ref type="bibr" target="#b19">[20]</ref>, where the channel attention mechanism, spatial attention mechanism, and residual structure were all combined in the dual-path mixed-domain residual threshold network. The soft threshold function was used as the nonlinear transformation layer, and dilated convolution was used to make a dual-path neural network. This was done so that the signal's most important parts could be found without using algorithms to remove noise.</p><p>When compared to the literature, the data extraction stage is simpler with the help of the threshold current and voltage and does not require another medium for the extraction of the threshold value; thus, it produces fast and accurate results for the relay setting without needing relay coordination. Additionally, the wavelet transform can de-noise fault signals so that it can be applied to every kind of noise signal.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusions</head><p>This paper has proposed using the threshold voltage and current value as a standard for coordinating and setting the instantaneous overcurrent relay protection. The simulated result was analysed to confirm the model's viability in calculating the tripping time, delay time and operating time of the high-voltage transmission line relay. It also analyses or detects the maximum and minimum threshold voltage and current suitable for optimising the relay and circuit breaker for optimal performance. This technique helps reduce the time delay and improve the relay's tripping time. One of the constraints of this technique is the inability to optimise the threshold current for different current and voltage types. However, this technique has poor discrimination in distinguishing between fault currents at different points when the fault impedance between two points is small. Additionally, coordinating is challenging and necessitates changes as the load increases and the optimisation of the model to accommodate different voltage inputs synchronously. This process can be used for all fault types. Therefore, it has a superior and effective tripping time compared to other techniques in the literature.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Instantaneous overcurrent relay block model.</figDesc><graphic coords="5,107.31,379.00,380.38,135.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Instantaneous overcurrent relay block model.</figDesc><graphic coords="6,166.39,94.86,302.40,175.25" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Time multiplier settings at 1 second.</figDesc><graphic coords="8,62.29,349.13,470.40,153.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. Fault at bus A without the relay.</figDesc><graphic coords="9,166.39,94.86,384.00,216.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Application of relay at bus B.</figDesc><graphic coords="9,166.39,360.56,384.00,216.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. The overcurrent and voltage relay function at relay 1 before setting.</figDesc><graphic coords="10,166.39,94.86,366.53,154.37" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 7</head><label>7</label><figDesc>Figure 7 represented the initial condition when the trip time was 0.35 s without setting the instantaneous overvoltage relay at bus B. However, it reduced to 0.05 s when the model was implemented, as shown in Figure 5 above.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. Overvoltage. Trip at Bus B.</figDesc><graphic coords="10,166.39,327.42,377.86,108.29" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 8 .</head><label>8</label><figDesc>Figure 8. Three phases to ground fault at relay 2.</figDesc><graphic coords="10,166.39,501.34,389.28,186.78" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Faulty current and voltage data in kA and kV.</figDesc><table><row><cell>Fault Types</cell><cell>Coeff of I a</cell><cell>Coeff of I b</cell><cell>Coeff of I c</cell><cell>Coeff of V a</cell><cell>Coeff of V b</cell><cell>Coeff of V c</cell></row><row><cell>ABC-G</cell><cell>533.0974</cell><cell>495.1115</cell><cell>575.3335</cell><cell>0.0000</cell><cell>0.0000</cell><cell>0.0000</cell></row><row><cell>ABC</cell><cell>395.1943</cell><cell>587.4911</cell><cell>474.7873</cell><cell>-0.0001</cell><cell>0.0000</cell><cell>0.0001</cell></row><row><cell>(AB-G)</cell><cell>338.5069</cell><cell>531.6202</cell><cell>32.9732</cell><cell>0.6655</cell><cell>-1.6882</cell><cell>1.0227</cell></row><row><cell>(AC-G)</cell><cell>306.5768</cell><cell>22.3418</cell><cell>620.4303</cell><cell>1.5501</cell><cell>-0.1691</cell><cell>-1.3810</cell></row><row><cell>(BC-G)</cell><cell>26.1066</cell><cell>608.8079</cell><cell>294.0561</cell><cell>-1.2685</cell><cell>1.6153</cell><cell>-0.3468</cell></row><row><cell>(A-B)</cell><cell>855.3816</cell><cell>385.9281</cell><cell>17.8156</cell><cell>-1.2792</cell><cell>1.6102</cell><cell>-0.3311</cell></row><row><cell>(A-C)</cell><cell>299.0803</cell><cell>19.8595</cell><cell>574.5684</cell><cell>-1.2897</cell><cell>1.6050</cell><cell>-0.3154</cell></row><row><cell>(B-C)</cell><cell>15.3783</cell><cell>420.5652</cell><cell>355.8047</cell><cell>-1.3001</cell><cell>1.5996</cell><cell>-0.2996</cell></row><row><cell>(A-G)</cell><cell>307.6007</cell><cell>39.5083</cell><cell>20.8305</cell><cell>-1.3103</cell><cell>1.5941</cell><cell>-0.2838</cell></row><row><cell>(B-G)</cell><cell>32.6032</cell><cell>199.6292</cell><cell>28.3545</cell><cell>-1.3205</cell><cell>1.5885</cell><cell>-0.2680</cell></row><row><cell>(C-G)</cell><cell>15.1679</cell><cell>28.6647</cell><cell>364.3873</cell><cell>0.4383</cell><cell>-1.6423</cell><cell>1.2040</cell></row><row><cell>No Fault</cell><cell>10.6870</cell><cell>15.1958</cell><cell>23.0105</cell><cell>1.4530</cell><cell>0.0390</cell><cell>-1.4920</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 .</head><label>2</label><figDesc>Threshold value of current at different fault locations.</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Threshold</cell></row><row><cell>Fault Types</cell><cell cols="2">Threshold of I a (kA)</cell><cell cols="2">Threshold of I b (kA)</cell><cell cols="2">Threshold of I c (kA)</cell><cell>of Ground</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Current (kA)</cell></row><row><cell></cell><cell>Max</cell><cell>Min</cell><cell>Max</cell><cell>Min</cell><cell>Max</cell><cell>Min</cell></row><row><cell>ABC-G</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>18.6876</cell></row><row><cell>ABC</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>56.9488</cell></row><row><cell>AB-G</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>531.6202</cell><cell>32.9732</cell><cell>25.7012</cell></row><row><cell>AC-G</cell><cell></cell><cell></cell><cell>620.4303</cell><cell>22.3418</cell><cell></cell><cell>15.5710</cell></row><row><cell>BC-G</cell><cell>608.8079</cell><cell>26.1066</cell><cell></cell><cell></cell><cell></cell><cell>20.9355</cell></row><row><cell>A-B</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>855.3816</cell><cell>17.8156</cell><cell>28.2445</cell></row><row><cell>A-C</cell><cell></cell><cell></cell><cell>574.5684</cell><cell>19.8595</cell><cell></cell><cell>34.5217</cell></row><row><cell>B-C</cell><cell>420.5652</cell><cell>15.3783</cell><cell></cell><cell></cell><cell></cell><cell>16.8326</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 2 .</head><label>2</label><figDesc>Cont.    </figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Threshold</cell></row><row><cell>Fault Types</cell><cell cols="2">Threshold of I a (kA)</cell><cell cols="2">Threshold of I b (kA)</cell><cell cols="2">Threshold of I c (kA)</cell><cell>of Ground</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Current (kA)</cell></row><row><cell></cell><cell>Max</cell><cell>Min</cell><cell>Max</cell><cell>Min</cell><cell>Max</cell><cell>Min</cell><cell></cell></row><row><cell>A-G</cell><cell></cell><cell></cell><cell>307.6007</cell><cell>39.5083</cell><cell>307.6007</cell><cell>20.8305</cell><cell>18.3399</cell></row><row><cell>B-G</cell><cell>199.6292</cell><cell>32.6032</cell><cell></cell><cell></cell><cell>199.6292</cell><cell>28.3545</cell><cell>24.7174</cell></row><row><cell>C-G</cell><cell>364.3873</cell><cell>15.1679</cell><cell>364.3873</cell><cell>28.6647</cell><cell></cell><cell></cell><cell>15.5710</cell></row><row><cell>No-Fault</cell><cell>23.0105</cell><cell>10.6870</cell><cell>23.0105</cell><cell>15.1958</cell><cell>23.0105</cell><cell>23.0105</cell><cell>13.0455</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 3 .</head><label>3</label><figDesc>IDMT curve constant.</figDesc><table><row><cell>Curve Types</cell><cell>K</cell><cell>α</cell></row><row><cell>Normal Inverse Curve</cell><cell>0.140</cell><cell>0.020</cell></row><row><cell>Very Inverse Curve</cell><cell>13.5</cell><cell>1</cell></row><row><cell>Extremely Inverse Curve</cell><cell>80</cell><cell>2</cell></row><row><cell>Long-time Standard Curve</cell><cell>120</cell><cell>1</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 4 .</head><label>4</label><figDesc>Threshold current at fault resistance of 0.01 Ω.</figDesc><table><row><cell>Fault Types</cell><cell cols="2">Fault Resistance = 0.01 Ω</cell><cell></cell></row><row><cell>Three-phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>259</cell><cell>8.524</cell><cell>2.826</cell></row><row><cell>TMS (Seconds)</cell><cell>2.991</cell><cell>0.1421</cell><cell>0.04709</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0.01</cell><cell>0.01</cell><cell>0.01</cell></row><row><cell>Double phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.9</cell><cell>13.25</cell><cell>4.424</cell></row><row><cell>TMS (Seconds)</cell><cell>2.991</cell><cell>0.2208</cell><cell>0.07373</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0.01</cell><cell>0.01</cell><cell>0.01</cell></row><row><cell>Single line to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.8</cell><cell>16.43</cell><cell>5.478</cell></row><row><cell>TMS (Seconds)</cell><cell>2.99</cell><cell>0.2739</cell><cell>0.0913</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0.01</cell><cell>0.01</cell><cell>0.01</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 5 .</head><label>5</label><figDesc>Threshold current at fault resistance of 50 Ω.</figDesc><table><row><cell>Fault Types</cell><cell cols="2">Fault Resistance = 50 Ω</cell><cell></cell></row><row><cell>Three-phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.7</cell><cell>355.8</cell><cell>117.9</cell></row><row><cell>TMS (Seconds)</cell><cell>2.989</cell><cell>5.93</cell><cell>1.966</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0.01</cell><cell>0.9198</cell><cell>0.01</cell></row><row><cell>Double phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.7</cell><cell>355.7</cell><cell>118.3</cell></row><row><cell>TMS (Seconds)</cell><cell>2.989</cell><cell>5.929</cell><cell>1.971</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0</cell><cell>0.9193</cell><cell>0</cell></row><row><cell>Single line to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.5</cell><cell>355.5</cell><cell>118.5</cell></row><row><cell>TMS (Seconds)</cell><cell>2.987</cell><cell>5.925</cell><cell>1.975</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0</cell><cell>0.9185</cell><cell>0</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 6 .</head><label>6</label><figDesc>Threshold current at fault resistance of 100 Ω.</figDesc><table><row><cell>Fault Types</cell><cell cols="2">Fault Resistance = 100 Ω</cell><cell></cell></row><row><cell>Three-phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.2</cell><cell>353.9</cell><cell>117.9</cell></row><row><cell>TMS (Seconds)</cell><cell>2.985</cell><cell>5.899</cell><cell>1.966</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0</cell><cell>0.9149</cell><cell>0.9039</cell></row><row><cell>Double phase to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358.1</cell><cell>353.8</cell><cell>118.3</cell></row><row><cell>TMS (Seconds)</cell><cell>2.984</cell><cell>5.897</cell><cell>1.971</cell></row><row><cell>Trip time (Seconds)</cell><cell>0</cell><cell>0.9145</cell><cell>0.9035</cell></row><row><cell>Single line to ground fault</cell><cell>Relay 1</cell><cell>Relay 2</cell><cell>Relay 3</cell></row><row><cell>Threshold Current (kA)</cell><cell>358</cell><cell>353.7</cell><cell>349.5</cell></row><row><cell>TMS (Seconds)</cell><cell>2.984</cell><cell>5.895</cell><cell>5.824</cell></row><row><cell>Trip Time (Seconds)</cell><cell>0</cell><cell>0.9136</cell><cell>0.9026</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 7 .</head><label>7</label><figDesc>Percentage accuracy of the proposed model at bus A.</figDesc><table><row><cell>Fault Types</cell><cell>Trip Time without Proposed Model (Seconds)</cell><cell>Trip Time with Proposed Model (Seconds)</cell><cell>% Increase in Accuracy</cell></row><row><cell>L-G</cell><cell>0.25</cell><cell>0.03</cell><cell>85.00</cell></row><row><cell>L-L-G</cell><cell>0.38</cell><cell>0.05</cell><cell>99.87</cell></row><row><cell>L-L-L-G</cell><cell>0.10</cell><cell>0.04</cell><cell>60.00</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 8 .</head><label>8</label><figDesc>Percentage accuracy of the proposed model at bus B.</figDesc><table><row><cell>Fault Types</cell><cell>Trip Time without Proposed Model (Seconds)</cell><cell>Trip Time with Proposed Model (Seconds)</cell><cell>% Increase in Accuracy</cell></row><row><cell>L-G</cell><cell>0.10</cell><cell>0.03</cell><cell>70.00</cell></row><row><cell>L-L-G</cell><cell>0.32</cell><cell>0.05</cell><cell>84.38</cell></row><row><cell>L-L-L-G</cell><cell>0.20</cell><cell>0.04</cell><cell>80.00</cell></row><row><cell cols="4">4.2. Comparison of the Proposed Algorithm with the Deep Learning-Based Results</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data Availability Statement: Not applicable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicts of Interest:</head><p>The authors declare no conflict of interest.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>List of Acronyms</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Blackouts: A sociology of electrical power failure</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Matthewman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Byrd</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Soc. Space (Przestrz. Społeczna)</title>
+		<imprint>
+			<biblScope unit="page" from="31" to="55" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Design and implementation of overcurrent protection relay</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Y</forename><surname>Suliman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghazal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Electr. Eng. Technol</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="1595" to="1605" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A Comprehensive Assessment of Fundamental Overcurrent Relay Operation Optimization Function and Its Constraints</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rojnić</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Prenc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Bulat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Franković</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en15041271</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<date type="published" when="1271">2022. 1271</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Evaluating the impact of increasing system fault currents on protection</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Voloh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Khanbeigi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2017 70th Annual Conference for Protective Relay Engineers (CPRE)</title>
+		<meeting>the 2017 70th Annual Conference for Protective Relay Engineers (CPRE)<address><addrLine>College Station, TX, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2017-04">April 2017</date>
+			<biblScope unit="page" from="1" to="20" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A method for evaluation of overcurrent protection in unbalanced distribution systems</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J G</forename><surname>Ledesma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>De Araujo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R R</forename><surname>Penido</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/etep.2091</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Int. Trans. Electr. Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="412" to="428" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Over-Current Relays Coordination Including Practical Constraints and DGs: Damage Curves, Inrush, and Starting Currents</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Draz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Elkholy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>El-Fergany</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/su14052761</idno>
+		<imprint/>
+	</monogr>
+	<note>Sustainability 2022, 14, 2761. [CrossRef</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Software for automatic coordination of protection devices in distribution system</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Comassetto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bernardon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Canha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Abaide</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TPWRD.2008.919264</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Deliv</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="2241" to="2246" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Optimal overcurrent relay coordination in power distribution system using a new approach</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Chang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijepes.2012.08.057</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="217" to="222" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Overcurrent protection against multi-phase faults in MV networks based on negative and zero sequence criteria</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Andruszkiewicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lorenc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Staszak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Weychan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zięba</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijepes.2021.107449</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">134</biblScope>
+			<date type="published" when="2022">2022. 107449</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Methodology of Adaptive Instantaneous Overcurrent Protection Setting</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jimenez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Vázquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Gonzalez-Longatt</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/electronics10222754</idno>
+		<imprint>
+			<date type="published" when="2021">2021. 2754</date>
+			<biblScope unit="volume">10</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">On-line overcurrent relays setting approach in distribution networks by implementing new adaptive protection algorithm</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Esmaili</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A B M</forename><surname>Zin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Shariati</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2015 IEEE Tenth International Conference on Intelligent Sensors, Sensor Networks and Information Processing (ISSNIP)</title>
+		<meeting>the 2015 IEEE Tenth International Conference on Intelligent Sensors, Sensor Networks and Information Processing (ISSNIP)<address><addrLine>Singapore</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2015-04">April 2015</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Fault detection and classification in transmission lines based on a PSD index</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Guillen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R A</forename><surname>Paternina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ortiz-Bejar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Tripathy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zamora-Mendez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tapia-Olvera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Tellez</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/iet-gtd.2018.5062</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IET Gener. Transm. Distrib</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="4070" to="4078" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Fault Analysis in Three Phase Transmission Lines using Wavelet Method</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Navyasri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Deepa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Sailaja</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">V</forename><surname>Manitha</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2022 6th International Conference on Trends in Electronics and Informatics (ICOEI)</title>
+		<meeting>the 2022 6th International Conference on Trends in Electronics and Informatics (ICOEI)<address><addrLine>Tirunelveli, India</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2022-04">April 2022</date>
+			<biblScope unit="page" from="248" to="254" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Non-standard characteristic of overcurrent relay for minimum operating time and maximum protection level</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hemmati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Mehrjerdi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.simpat.2019.101953</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Simul. Model. Pract. Theory</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<date type="published" when="2019">2019. 101953</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Wavelet-based feature extraction and selection for classification of power system disturbances using support vector machines</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Erişti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Uçar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Demir</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.epsr.2009.09.021</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Electr. Power Syst. Res</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="743" to="752" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Optimal overcurrent relays coordination in microgrid using cuckoo algorithm</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ahmarinejad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Hasanpour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Babaei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tabrizian</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egypro.2016.10.178</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Energy Procedia</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="280" to="286" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Application of genetic algorithm to overcurrent relay grading coordination</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>So</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Fung</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the IEE Conference Publication</title>
+		<meeting>the IEE Conference Publication<address><addrLine>Edinburgh, UK</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1998-05-15">15 May 1998</date>
+			<biblScope unit="page" from="283" to="287" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">An Intelligent Overcurrent Protection Algorithm of Distribution Systems with Inverter based Distributed Energy Resources</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2020 IEEE Energy Conversion Congress and Exposition (ECCE), Virtual</title>
+		<meeting>the 2020 IEEE Energy Conversion Congress and Exposition (ECCE), Virtual</meeting>
+		<imprint>
+			<date type="published" when="2020-10">October 2020</date>
+			<biblScope unit="page" from="2746" to="2751" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Optimal coordination of over-current relays in microgrids using unsupervised learning techniques</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Saldarriaga-Zuluaga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>López-Lezama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Muñoz-Galeano</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app11031241</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">2021</biblScope>
+			<date type="published" when="1241">1241</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Dual-Path Mixed-Domain Residual Threshold Networks for Bearing Fault Diagnosis</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">G</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIE.2022.3144572</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Electron</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="page" from="13462" to="13472" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods</title>
+		<imprint>
+			<publisher>Disclaimer/Publisher&apos;s Note</publisher>
+		</imprint>
+	</monogr>
+	<note>instructions or products referred to in the content</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Offshore wind power forecasting based on WPD and optimised deep learning methods</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-08-31">31 August 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Shahram</forename><surname>Hanifi</surname></persName>
+							<email>shahram.hanifi@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Hossein</forename><surname>Zare-Behtash</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Andrea</forename><surname>Cammarano</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Saeid</forename><surname>Lotfian</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Naval Architecture, Ocean and Marine Engineering</orgName>
+								<orgName type="institution">University of Strathclyde</orgName>
+								<address>
+									<postCode>G4 0LZ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">James Watt South Building</orgName>
+								<address>
+									<addrLine>R703C Level 7</addrLine>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Offshore wind power forecasting based on WPD and optimised deep learning methods</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-08-31">31 August 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">222877455250137CF5C5B699956A1FC0</idno>
+					<idno type="DOI">10.1016/j.renene.2023.119241</idno>
+					<note type="submission">Received 17 November 2022; Received in revised form 21 August 2023; Accepted 28 August 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:07+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Wind power forecasting Wavelet packet decomposition (WPD) Convolutional neural network (CNN) Long short-term memory (LSTM) Optuna</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Accurate wind power forecasting is vital for (i) wind power management, (ii) penetration increment of the power generated into the power grid, and (iii) making maintenance more efficient. Motivated by the recent application of wavelet transforms and advancements in deep learning methods, a hybrid forecasting method is developed based on the wavelet packet decomposition [WPD], Long Short-Term Memory Network [LSTM], and Convolutional Neural Network [CNN]  to improve the accuracy of wind power forecasting. WPD is employed to decompose pre-processed wind power data into sublayers with different frequencies. Sequential Model-Based optimisation (SMBO) with the Tree Parzen Estimator (TPE) is then used to tune the hyper-parameters of LSTM and CNN, efficiently. The optimised LSTM is employed to predict the low-frequency sub-layer that has both long-term and short-term dependencies, and CNN is used to forecast the high-frequency sub-layers with shortterm dependencies. To evaluate the prediction performance of the developed method, seven forecasting models, including random forest (RF), feed-forward neural network (FFNN), CNN, LSTM, WPD-FFNN, WPD-CNN, and WPD-LSTM models, are considered as comparison models. Comparing the prediction results of all involved models proves that the developed model improves the prediction accuracy by at least 77.4% compared to methods that do not use WPD. In addition, the proposed combination of optimised CNN and LSTM improves the forecasting accuracy by 26.25% compared to methods that use only one deep learning model to forecast all sub-series.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Before the current gauge-political in Europe, the world was rapidly developing renewable energy production to reduce the harmful effects of burning fossil fuels, including pollution, climate change, and depletion of the ozone layer <ref type="bibr" target="#b0">[1]</ref>. Numerous international agreements have been made between countries around the world in recent years to move away from burning fossil fuels for energy production. Paris Agreement 2015 to reduce global greenhouse gas emissions by limiting the global temperature to 2 • C above the pre-industrial level in century 21st, as well as the recent Glasgow Climate Pact (COP26) to keep 1.5 • C, can be mentioned as examples. These agreements are based on an increased focus towards renewable energy sources <ref type="bibr" target="#b1">[2]</ref>. The war in Ukraine has disrupted the global energy supply, and the rapid 'hike' in the price of oil and gas due to the following economic sanctions (in response to the invasion) has further highlighted the need to develop renewable energy sources <ref type="bibr" target="#b0">[1]</ref>.</p><p>During the last decade, by amplifying the impact of climate and environmental changes, governments and scientists increasingly considered a variety of renewable energy resources such as wind, solar, wave, tidal, etc. They started to address the existing and rising challenges in harvesting renewable energy generation. Among all those resources, wind power is a success story and plays a critical role in replacing fossil fuels <ref type="bibr" target="#b2">[3]</ref>. However, the high level of uncertainty due to wind speed fluctuations still acts as the main obstacle in front of wind power penetration into the power grids <ref type="bibr" target="#b0">[1]</ref>. Accurate wind power forecasting is necessary for proportional electricity distribution planning to meet consumers (industrials and households) demands. It is also important for determination of the optimum operating conditions and maintenance planning to reduce the levelised cost of energy for the fair pricing objective.</p><p>In general, two steps need to be taken to develop an accurate wind power forecasting model: (i) prediction and (ii) optimisation. While the prediction aspect is carried out by the application of prediction methods, the optimisation step improves the prediction performance through signal processing or parameter optimisation of the prediction models <ref type="bibr" target="#b3">[4]</ref>.</p><p>Power forecasting methods are categorised into three main methods, including physical, statistical and hybrid approaches. Physical processes utilise Numerical Weather Prediction (NWP) data, geographic descriptions of wind turbines/farms and weather information to model onsite conditions. The provided model is then used for wind speed and wind power predictions. These models are computationally complex and therefore require considerable computing resources. In addition, due to the high sensitivity to initial conditions, there is a need for synchronisation with other methods to improve prediction performance <ref type="bibr" target="#b2">[3]</ref>.</p><p>A precise mapping between input variables (e.g. NWP data, historical data, etc.) and target variables (like wind speed or wind power) is the foundation of statistical approaches <ref type="bibr" target="#b2">[3]</ref>. Time series-based and machine learning (ML) are the two main methodologies used in these techniques <ref type="bibr" target="#b0">[1]</ref>. The wind speed or wind power predictions in time series-based approaches are achieved by application of the historical forecasted variable itself. Time series-base methods have employed for very short-term (a few minutes to a few hours) prediction as they are able to recognise the hidden random features of wind speed. One of the most popular statistical techniques is the autoregressive integrated moving average (ARIMA) model established by Box-Jenkins <ref type="bibr" target="#b4">[5]</ref>, though it cannot handle non-linear dependencies. By understanding the correlations between input and output variables, ML techniques like neural networks (NNs) can build deductive models. These techniques are simple to develop, do not need more geographic details or specifics about wind farms or turbines, and have a more significant time horizon for prediction. However, their performance is highly dependent on the selected parameters. As a result, these methods are combined with various methods of feature selection or parameter optimisation to improve prediction performance.</p><p>Hybrid methods combine different methods to utilise their unique merits and improve the overall prediction accuracy. Table <ref type="table" target="#tab_0">1</ref> presents some proposed hybrid methods in the recent years, along with their main features and performance improvements. What is clear is that although combining different methods improves overall performance, on the other hand it complicates the model and increases the required computation time. Hence, it is vital to obtain a balance between accuracy and efficiency.</p><p>Choosing the appropriate input features is also critical for the accuracy and reliability of wind power forecasting models. As shown in Table <ref type="table" target="#tab_0">1</ref>, wind power is used more often than other variables in wind power prediction models developed over the past few years. Nevertheless, some research indicates that additional inputs may improve wind power forecasts. For example <ref type="bibr" target="#b5">[6]</ref>, et al. in the development of a wind power forecasting model based on fandom forest (RF) showed that more accurate predictions can be made when the average wind speed and wind direction are added to the wind power as the input features. However, adding these features sometimes degrades the results significantly. In another research, Velazquez et al. <ref type="bibr" target="#b6">[7]</ref> investigated the impact of wind speed, wind power density, and power output on the performance of ANN models. According to the findings, considering wind direction as an input can decrease the forecasting errors.</p><p>The accuracy of deep learning methods used in hybrid wind power prediction methods strongly depends on the proper selection of hyperparameters <ref type="bibr" target="#b14">[15]</ref>. Instead of manual tuning which can be extremely time consuming, grid and random search are used widely to set up a network of hyper-parameters and then run the train, predict and evaluation cycle automatically <ref type="bibr" target="#b15">[16]</ref>. Nevertheless, without considering the past evaluated hyper-parameters, these tuning methods are relatively inefficient as they spend a significant amount of time evaluating improper hyper-parameters, i.e., wrong selection of activation functions of deep learning models. Bayesian model-based methods in contrast, through evaluation of hyper-parameters that appear more promising in the past results, can find better hyper-parameters in less time <ref type="bibr" target="#b16">[17]</ref>.</p><p>Signal processing methods such as data decomposition, data denoising or data feature selection can effectively improve the accuracy of power forecasting methods. All decomposition-based forecasting models published in the literature use the same framework. In this framework, the original non-stationary time series is decomposed into stationary sub-series. Then, independent forecasting models are used to predict each sub-series. Finally, all predictions are added together to form the final forecast. Independent forecasting of each sub-series can efficiently enhance the prediction accuracy <ref type="bibr" target="#b17">[18]</ref>.</p><p>Su et al. <ref type="bibr" target="#b18">[19]</ref> decomposed the wind speed data into four low-frequency and four high-frequency components by WPD. Then the four high-frequency components were decomposed into 60 intrinsic mode functions (IMFs) through ensemble empirical mode decomposition (EEMD). These components were then fed to individual LSTM models with yaw error and rotor speed data. The power prediction results of the proposed approach showed an improvement in accuracy. However, the effect of the direct application of the wind power dataset for prediction was not investigated. Zu et al. <ref type="bibr" target="#b19">[20]</ref> used WPD to decompose wind power time series into three levels. The gained sub-series were fed to a gated recurrent unit (GRU), and the predictions were reconstructed to obtain the results. Experimental results showed that the proposed WPD-GRU-SELU model has a higher prediction accuracy than other Recurrent Neural Network (RNN) models. In another research, Mujeeb et al. <ref type="bibr" target="#b20">[21]</ref> combined Wavelet Packet Transform (WPT) and Deep convolutional neural network (DCNN) to predict the day-ahead hourly wind power of ISO New England's wind farm, however, the authors did not attempt to forecast the sub-series with different independent methods. In addition to WPD, other wavelet transform methods have recently been used in the wind power prediction field. For example, Azimi et al. <ref type="bibr" target="#b21">[22]</ref>, with a combination of the K-means clustering method with discrete wavelet transform (DWT) and multilayer perceptron neural network (MLPNN), improved the wind power forecasting accuracy of the National Renewable Energy Laboratory (NREL). Shi et al. <ref type="bibr" target="#b22">[23]</ref> employed variational mode decomposition (VMD) and LSTM to provide hourly predictions of day-ahead wind power of a Chinese wind farm. In another study, Liu et al. <ref type="bibr" target="#b23">[24]</ref> combined empirical mode decomposition (EMD), LSTM and Elman neural network (ENN) to develop a hybrid model and obtained satisfactory results for multi-step wind speed predictions. To obtain better forecasting results, some researchers use error correction mechanisms through application of the double decomposition methods. For example, Ma et al. <ref type="bibr" target="#b24">[25]</ref> used this decomposition approach with LSTM model and proved the better prediction performance of the proposed model than models without double decomposition. This research proposes a novel hybrid forecasting model for 10-minahead wind power forecasting of an offshore wind turbine in Scotland. The proposed model is based on applying WPD, optimised CNN and LSTM models without imputing future weather forecasting data. The proposed model is applicable when a complex non-linear relationship between the variables exists in the wind power time series data. The novelty of this research lies in creating an ensemble forecasting method by intelligent combination of WPD and sequential model-based optimised (SMBO) CNN and LSTM models for short-term offshore wind power forecasting. WPD can decompose the original time series data into different sub-series with different frequencies. With access to both high-frequency and low-frequency components, patterns and trends displayed in wind power time series can be extracted and analyzed more effectively. In this way, it is possible to focus on the most important features of the data while reducing noise and irrelevant details. In this study, various mother wavelets and decomposition levels have been analyzed for the first time, to determine which would yield the best performance for WPD. Deep learning models with different performance in learning short-term and long-term dependencies can extract linear and non-linear relations from historical wind power data to make an accurate prediction. The present study is the first to employ CNN models for forecasting high-frequency components of wind power time series, and LSTM models for forecasting low-frequency components. In addition, the hyperparameters of both the LSTM and CNN models were tuned by SMBO with the Tree Parzen Estimator (TPE) that has never been used in the wind power prediction field. This method can significantly increase hyperparameter selection speed, resulting in improved prediction accuracy and efficiency.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methodology</head><p>The framework of the proposed WPD-LSTM-CNN model is demonstrated in Fig. <ref type="figure" target="#fig_0">1</ref>, and the entire process is depicted in detail in the following steps:</p><p>Step 1) The raw SCADA data of an offshore wind turbine are preprocessed by removing the negative power values as obvious outliers, imputing the missed data, and resampling. The detail of the preprocessing part is described in section 3.</p><p>Step 2) WPD decomposes the pre-processed wind power time series into several approximations and detail coefficients (sub-series). The detail of the decomposition method is described in section 2.1.</p><p>Step 3) The optimised CNN with surrogate optimisation method is used to predict the high-frequency sub-layers obtained from the WPD. Details and structure of this method are provided in section 2.2.</p><p>Step 4) The LSTM is tuned and employed for predicting the lowfrequency sub-layer with details described in section 2.3.</p><p>Step 5) After the prediction of each sub-layer, the final forecasting result is generated by summing all the predictions of the sub-layers. The result is compared with models including RF, feed-forward neural network (FFNN), CNN, LSTM, WPD-LSTM and WPD-CNN to evaluate the forecasting performance of the developed method.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Wavelet packet decomposition (WPD)</head><p>As a signal processing method, WPD is an efficient mathematical solution for decomposing signals into approximation and detail components with different time frequencies <ref type="bibr" target="#b25">[26]</ref>. WPD uses low-pass and high-pass filters to decompose the signals to the components mentioned above. The approximate coefficient, obtained by applying a low-pass filter, has the low-frequency part of the signal and represents the long-term dependencies. On the other hand, the detailed coefficients gained by applying a high-pass filter include high-frequency components and depict the short-term dependencies <ref type="bibr" target="#b26">[27]</ref>. In contrast to the wavelet decomposition (WD) process in which only the approximation coefficients are decomposed, in WPD, the detail coefficients can also be decomposed <ref type="bibr" target="#b27">[28]</ref>. As a result, it can contribute to higher accuracies in signal analysis than normal wavelet transforms methods. In addition, through decomposition by WPD, the high-frequency component of the signal can have a better resolution <ref type="bibr" target="#b28">[29]</ref>.</p><p>There are two types of WPDs; discrete wavelet transform and continuous wavelet transform. Continuous wavelet transform for a signal f(t) can be described as:</p><formula xml:id="formula_0">CWT f (a, b) = 〈f (t), Ψ a,b (t)〉 = ∫ +∞ -∞ f (t)Ψ * ((t -b) / a) / ̅̅ ̅ a √ dt (1)</formula><p>where Ψ (t) denotes the selected mother wavelet function, a and b are the scale and translation coefficients, respectively, and * indicates the complex conjugate. The scale and translation coefficient in discrete wavelet transform can be explained by:</p><formula xml:id="formula_1">{ a = 2 j b = k2 j (2)</formula><p>where j and k are scale and translation factors, respectively, the following equations can illustrate the decomposition process of WPD:</p><formula xml:id="formula_2">⎧ ⎨ ⎩ P 2i-1 j (t) = HP i j-1 (t) P 2i j (t) = GP i j-1 (t)<label>(3)</label></formula><p>and the reconstruction process can be described as follows:</p><formula xml:id="formula_3">P i j (t) = H * P 2i-1 j+1 (t) + G * P 2i j+1 (t) (<label>4</label></formula><formula xml:id="formula_4">)</formula><p>where t is the time index, P i j represents the i-wavelet packet for level j and H and G are the low-and high-pass filters.</p><p>The performance of WPD is highly dependent on the selected mother wavelet and the chosen level of decomposition. According to the literature, the normal decomposition level is in the range of 2-4 for time series prediction models <ref type="bibr" target="#b29">[30]</ref>. In this study, the 2-level framework of WPD is employed with the schematic diagram shown in Fig. <ref type="figure">2</ref>.</p><p>In addition, various mother wavelets are examined due to the impact of the mother wavelet on the decomposition performance and prediction accuracy. In this study, sixteen wavelets from four widely used wavelet families in the literature (Daubechies, Haar, Sym, and Coif) were selected, and their performance in prediction improvement of forecasting models, including linear regression (LR), RF, FFNN and LSTM are assessed.</p><p>As seen in Table <ref type="table" target="#tab_1">2</ref> and Fig. <ref type="figure" target="#fig_1">3</ref>, the Daubechies wavelets of order 5 have the best performance and are therefore selected as the mother wavelet in this study.</p><p>The corresponding decomposition result of the application of WPD for the wind power time series used in this research is shown in Fig. <ref type="figure" target="#fig_2">4</ref>. The upper graph in this Figure represents the wind power time-series before decomposition and the next four graphs show four sub-series obtained after decomposition.</p><p>In this research, to improves the decomposition which leads to more accurate predictions, the single branch reconstruction method is used. In fact, during the reconstruction of each component of the final decomposition to the original level, the values of other components of the same level were considered zero <ref type="bibr" target="#b27">[28]</ref>.</p><p>High-frequency components of wind power time series have shortterm dependencies, while low-frequency components have long-term dependencies. Detection of short-term dependencies in high-frequency components is possible with fully connected layers, and calculations are performed faster than LSTM recurrent layer <ref type="bibr" target="#b30">[31]</ref>. Therefore, this paper selects the CNN model to predict the high-frequency sublayers. On the other hand, the LSTM recurrent layer, which can better sequentially process the temporal data with long-term dependencies, is used for predicting the low-frequency sub-series.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Convolutional neural network (CNN)</head><p>CNN is an effective method of extracting hidden features by automatically creating filters <ref type="bibr" target="#b30">[31]</ref>. Although it is more common in the field of image processing, it has shown great potential for dealing with time series, including wind speed forecasting <ref type="bibr" target="#b31">[32]</ref>, wind power prediction <ref type="bibr" target="#b10">[11]</ref>, and solar irradiance forecasting <ref type="bibr" target="#b27">[28]</ref>. CNNs are a multilayer perceptron (MLP) version that can resist overfitting data <ref type="bibr" target="#b32">[33]</ref>. While the full connection of neurons in each layer to neurons in other layers in MLP exposes them to overfitting, CNNs benefit from the hierarchical pattern in data and gather increasingly complex patterns using easier patterns embossed in their filters. Each convolutional layer in CNN can be represented as follows:</p><formula xml:id="formula_5">h k ij = f ( ( W k * x ) ij + b k )<label>(5)</label></formula><p>where f represents the activation function and W k represents the connected kernel weights to the kth feature map. In this study, the CNN models consist of two convolutional layers and a fully connected dense layer. The optimiser algorithm independently selects the channel number of each convolutional layer and the activation function for different datasets and sub-series.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Long short-term memory (LSTM)</head><p>The LSTM model with details and features explained in the <ref type="bibr" target="#b14">[15]</ref> is employed in this study based on its great capability of processing the temporal data with long-term and short-term dependence <ref type="bibr" target="#b33">[34]</ref>. The number of LSTM units in the hidden layer, the batch size (the number of processed samples before updating the weights), the iterations through the dataset training, the sample number in each epoch during weight updating, and the difference order that makes data stationary are some Fig. <ref type="figure">2</ref>. Schematic diagram of WPD with two layers. of the hyper-parameters for LSTMs.</p><p>To Specify the best LSTM model for wind power forecasting, it is vital to determine the best combination of their hyper-parameters. In this way, overfitting is prevented, and the generalisation of the algorithm is improved.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Hyper-parameter optimisation</head><p>To improve both the CNN and LSTM models' prediction accuracy, hyper-parameters can be estimated through iterative trial and error. This process can be very challenging, leading to prediction errors. As a result, researchers try to find hyper-parameters through methods such as grid search or random search. The grid search process is very time consuming and needs considerable computing resources as it tries all possible combinations of hyper-parameters without considering the past evaluated hyper-parameters <ref type="bibr" target="#b34">[35]</ref>. On the other hand, a random search algorithm looks randomly for a set of combinations rather than searching for better results.</p><p>The forecasting models in this study are tuned using the Optuna optimisation method. The open-source optimisation software Optuna <ref type="bibr" target="#b33">[34]</ref> has a number of benefits over other optimisation frameworks. Depending on the algorithm used to choose the parameters, other optimisation techniques typically vary. Gaussian Processes are used, for instance, by GPyOpt and Spearmint <ref type="bibr" target="#b34">[35]</ref>, Random Forests are used by SMAC <ref type="bibr" target="#b35">[36]</ref>, and a Tree-structured Parzen Estimator is used by Hyperopt <ref type="bibr" target="#b36">[37]</ref>. (TPE). Three issues with these approaches stand out. First, for large-scale experiments with numerous possible parameters, definying the parameter search space is a very challenging procedure. Furthermore, they lack a powerful pruning approach for high-performance optimisation while using constrained resources. Thirdly, they are unable to conduct extensive handling trials with a basic setup. With Optuna's define-by-run architecture, the user can dynamically create the search space. Optuna includes two strategies for finding the best hyper-parameters, a Sampling strategy for concentration on areas of   hyper-parameters with better results and a Pruning strategy with constantly checking the training process to terminate combination with worse results <ref type="bibr" target="#b14">[15]</ref>. In this study, the Tree-structured Parzen estimator algorithm is used for sampling and the median stopping rule is employed to prune trials. More details of the optimisation process of this package can be found in Ref. <ref type="bibr" target="#b35">[36]</ref>. The first step of the optimisation algorithm is providing the search space for the dynamic generation of the hyper-parameters for each trial. The search space for the hyper-parameters of the CNN and LSTM models in this research is defined in Table <ref type="table" target="#tab_2">3</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5.">Prediction performance criteria</head><p>To evaluate the performance of the developed hybrid forecasting model, four prediction performance evaluation metrics were used: the mean absolute error (MAE), the mean square error (MSE), the root mean square error (RMSE), and R-square (R 2 ). These metrics can be computed as:</p><formula xml:id="formula_6">MAE = 1 N ∑ N i=1 |Y i -Ŷ i | (12) MSE = 1 N ∑ N i=1 ( Ŷ i -Y i ) 2 (13) RMSE = ̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅ 1 N ∑ N i=1 ( Ŷ i -Y i ) 2 √ √ √ √<label>(14)</label></formula><formula xml:id="formula_7">R 2 = 1 - ∑ N i=1 (Y i -Ŷ i ) 2 (Y i -Y) 2<label>(15)</label></formula><p>where Y i represents the recorded offshore wind power at the time step t, Ŷi is the prediction of wind power values for the identified time step, Y is the mean power value, and N represents the number of data points. For further comparison of the forecasting performance of the proposed model with existing prediction models, the P MSE as the promoting percentages of mean square error, P RMSE as the promoting percentages of root mea , and P MAE as the promoting percentages of mean absolute error can be calculated from Eq. ( <ref type="formula" target="#formula_8">16</ref>) to Eq. <ref type="bibr" target="#b17">(18)</ref>. In these equations, index 1 is related to the existing prediction models and index 2 is related to the proposed WPD-CNN-LSTM model.</p><formula xml:id="formula_8">P MSE = |(MSE 1 -MSE 2 ) / MSE 1 |<label>(16)</label></formula><formula xml:id="formula_9">P RMSE = ⃒ ⃒ ⃒ ⃒ RMSE 1 -RMSE 2 RMSE 1 ⃒ ⃒ ⃒ ⃒<label>(17)</label></formula><formula xml:id="formula_10">P MAE = |(MAE 1 -MAE 2 ) / MAE 1 |<label>(18)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Case study</head><p>The Leven mouth Demonstration Turbine (LDT), an offshore wind turbine in Scotland with configuration and key parameters detailed in Refs. <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b36">37]</ref>, provided the source SCADA data used in this investigation. The datasets were recorded for four months, from January 1, 2019 to April 30, 2019. The 574 different observations of each timestamp in this time series data include generated power, wind speed at various levels, blade pitch angle, nacelle orientation, etc. With the exception of the time stamp, wind speed, and active power, all extraneous variables were deleted to reduce the dataset's size and speed up calculations. Selection of these input features has been based on previous researches using the same wind power dataset <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b12">13]</ref>.</p><p>An assessment of active power values revealed some obvious errors in the SCADA data, with plenty of negative values. In wind energy power prediction, negative values have no real-world applications. Shen et al. hypothesised that these numbers represent time stamps taken when the turbine's control system was in use and the blades were not rotating, which resulted in no power being produced <ref type="bibr" target="#b37">[38]</ref>. These values were replaced with zero to keep the time continuity of the time series. In addition, to decrease the negative effect of wind turbulence on the correlation between the measured wind speed and the output power <ref type="bibr" target="#b14">[15]</ref>, the resolution of data averaged 10 min. This resolution value corresponds to the recommended average time by the international standard for power performance measurements of electricity-producing wind turbines (IEC 61400-12-1) <ref type="bibr" target="#b38">[39]</ref>. It is also equivalent to the maximum sampling rate used to predict wind speed and wind power in the survey conducted by Hanifi et al. <ref type="bibr" target="#b0">[1]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Experimental results and discussions</head><p>In order to investigate the prediction performance of the proposed method, the data processed in section 3 is divided into four equal experimental parts, each including 4200 samples, the 1st-3800th samples are used for training, and the 3801th-4200th samples are considered for testing. Fig. <ref type="figure" target="#fig_3">5</ref> shows these four power time series, and Table <ref type="table" target="#tab_3">4</ref> provides their statistical descriptions.</p><p>For comparison, seven wind power forecasting models, including the RF, FFNN, CNN model, LSTM model, WPD-FFNN model, WPD-CNN model, WPD-LSTM model, and the proposed WPD-CNN-LSTM model were selected.</p><p>Python programming language and packages are employed to carry out all the steps of the proposed method. A PC with Intel Core™ i7-11850H 2.5 GHz CPU and 16 GB RAM (without GPU processing) is used to run the numerical experiments. To better investigate the forecasting performance of the various models, all selected models have similar parameters; for example, the selected time lag (input layer length) was set at 10 for all of them. The values of MAE, MSE, RMSE and R-square of all prediction models for the four datasets are shown in Tables <ref type="table" target="#tab_4">5</ref> and<ref type="table" target="#tab_5">6</ref>.</p><p>Fig. <ref type="figure" target="#fig_4">6</ref> shows the prediction results of all forecasting models for the last day of the dataset 1, and Fig. <ref type="figure" target="#fig_5">7</ref> shows the same forecast for only 2 h of the last day.</p><p>As can be seen from Tables <ref type="table" target="#tab_4">5</ref> and<ref type="table" target="#tab_5">6</ref> and Figs. <ref type="figure" target="#fig_4">6</ref> and<ref type="figure" target="#fig_5">7</ref>, when the wind power generation encounters abrupt changes, the methods that use WPD to decompose the data have a better prediction performance than the other methods. Figs. <ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref> show the forecasting results of the proposed WPD-LSTM-CNN model for datasets 1 to 4, respectively.</p><p>Based on Figs. 6-11 and Tables <ref type="table" target="#tab_4">5</ref> and<ref type="table" target="#tab_5">6</ref>, the following conclusions can be drawn: 1) Comparing the prediction performance of the FFNN, CNN and LSTM models with WPD-FFNN, WPD-CNN and WPD-LSTM models, respectively, the significant impact of WPD on improving the prediction capability is evident; 2) The developed WPD-CNN-LSTM model has the highest prediction precision among all the models which are considered here; 3) A combination of two optimised deep learning methods, CNN, and LSTM, for the prediction of different sub-series increases the forecasting accuracy compared to forecasting all sub-series with only one of them;</p><p>For further assessment of the forecasting performance of the proposed hybrid model, the P MSE, P RMSE, P MAE of the trial tests are used to provide a clear comparative analysis between the WPD-LSTM-CNN model and other forecasting models. Table <ref type="table">7</ref> provides a comparative analysis between the proposed model and other involved forecasting models for the four experimental tests, respectively.</p><p>Based on the reported promoting percentages in Table <ref type="table">7</ref> and it can be recognised that:</p><p>1) The developed WPD-LSTM-CNN is the most accurate short-term forecasting model for wind power time series among all evaluated models; 2) The WPD-LSTM-CNN model outperforms all forecasting models based on the use of non-decomposed data. For example, in experimental dataset 1, the RMSE value of the WPD-LSTM-CNN model, compared to models RF, FFNN, CNN and LSTM, was reduced by 79.08%, 78.43%, 77.72% and 77.4%, respectively, and the MAE value of the proposed model for the same experimental dataset, compared to models RF, FFNN, CNN and LSTM was reduced by 77.62%, 77.41%, 76.84% and 76.49%, respectively;      </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusions</head><p>This paper proposes a novel wind power forecasting method based on the combination of WPD, optimised LSTM and CNN models. In the developed WPD-LSTM-CNN model, first, the obvious outliers that diminish the prediction accuracy, are removed and the resolution of data averaged over 10 min in order to mitigate the influence of turbulence. After an assessment of various mother wavelets and selection of the db5 mother wavelet, resulting in the best performance, WPD is employed to decompose the pre-processed wind power time series into several sub-series with different frequencies. The appropriate decomposition of signals into several sub-series increases the stationary of data and thus makes the prediction models more efficient. Three tuned independent CNNs are employed for the prediction of the high-frequency sub-series, and one optimised LSTM model is adopted to complete the forecasting of the low-frequency sub-layer. For the optimisation of these deep learning models, the SMBO method as a formalisation of Bayesian optimisation, provided in the Optuna optimisation package, is used to reduce the dependence on computational resources.</p><p>For the prediction performance assessment of the proposed model, various forecasting models were employed, including the RF model,   prediction performance of the forecasting models. This improvement is more pronounced during time steps when the wind power encounters abrupt changes. Considering the four different datasets, using WPD improved the average accuracy of the FFNN, CNN and LSTM models, by 74.10%, 78.13% and 78.38%, respectively.</p><p>It is also observed that the optimised CNN and LSTM models have good performance in learning the short-term and long-term dependencies of the wind power time series. Using SMBO methods for hyper-parameter selection of these deep learning models, instead of commonly used methods such as grid and random search, increases the prediction accuracy and efficiency. Using only the CNN model increases the forecasting accuracy by 6.56% and 1.57% on average compared to the RF and FFNN models, respectively. Likewise, the application of only the LSTM model improves the prediction accuracy by an average of 8% and 3.05% compared to the RF and FFNN models, respectively.</p><p>Furthermore, the simultaneous application of the CNN and LSTM models to predict the approximation and detail components of the decomposed time series, instead of using only one of them to predict both components, was shown to improve the prediction performance. The results of the simulations have shown that this approach leads to an improvement in accuracy of up to 11.93% and 14.11%, compared to the application of only the CNN and LSTM models, respectively. This research validated the ability of an ensemble method employing the WPD, CNN, LSTM and SMBO for short-term offshore wind power forecasting. The proposed model can potentially be adapted for onshore wind power prediction. However, some factors including geographical differences, data adaptation, and temporal and seasonal variabilities need to be considered before transition. Geographical differences between offshore and onshore wind turbines can lead to variations in wind patterns, turbulence, and other atmospheric conditions that affect generated power. In the case of data adaptation, a significant amount of onshore wind power data needs to be gathered for retraining the model. This is to ensure the required level of accuracy. The proposedforecasting method has the potential to advance wind power prediction applications. During the simulations carried out in this study, the effect of random initialisation while training the deep learning methods was observed. As a result, in future work, this issue will be assessed to provide the most robust prediction model with less sensitivity to the random initialisation. In addition, due to the lack of access to different wind power data sets, the model proposed here is limited to predicting the generated power of only one wind turbine. Future research should investigate the performance of the model for predictions based on other wind power data sets. Meanwhile, we aim to increase the forecasting horizon up to several hours, or even longer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability statement</head><p>The data presented in this study are available on request from the corresponding author. The data are not publicly available because it also forms part of an ongoing study.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CRediT authorship contribution statement</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Table 7</head><p>Promoting percentages of the involved forecasting models by the WPD-CNN-LSTM model. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Declaration of competing interest</head><p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgement</head><p>This research was supported by the EPSRC Doctoral Training Partnership (EP/R513222/1). The authors thank the Offshore Renewable Energy (ORE) Catapult for provisions of the SCADA database. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nomenclature</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. Diagram of the applied methodology.</figDesc><graphic coords="3,126.99,500.44,341.28,225.79" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Prediction performance of forecasting models based on decomposition with different mother wavelets.</figDesc><graphic coords="5,77.33,150.09,440.64,106.56" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Wavelet packet decomposition result of wind power time series.</figDesc><graphic coords="5,126.99,294.57,341.28,232.85" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Four sets of 10-min averaged wind power time series.</figDesc><graphic coords="7,126.99,55.43,341.28,184.61" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Forecasting results of the involved models for dataset 1.</figDesc><graphic coords="8,126.99,55.42,341.28,194.26" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Forecasting results of the involved models for 2 h of dataset 1.</figDesc><graphic coords="8,126.94,287.60,341.42,190.94" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. Wind power forecasting with the proposed WPD-LSTM-CNN model for data set #1.</figDesc><graphic coords="8,126.94,516.75,341.42,200.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>FFNN model, CNN model, LSTM model, WPD-FFNN model, WPD-CNN model, and WPD-LSTM model. Based on the prediction results for four different datasets it is observed that WPD, through extracting the hidden features of the signals and reducing noise and irrelevant details can effectively improve the</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 9 .</head><label>9</label><figDesc>Fig. 9. Wind power forecasting with the proposed WPD-LSTM-CNN model for data set #2.</figDesc><graphic coords="9,126.99,55.45,341.28,194.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 10 .</head><label>10</label><figDesc>Fig. 10. Wind power forecasting with the proposed WPD-LSTM-CNN model for data set #3.</figDesc><graphic coords="9,126.99,288.57,341.28,201.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Shahram Hanifi :</head><label>Hanifi</label><figDesc>Conceptualization, Methodology, Software, Investigation, Validation, Formal analysis, Writingoriginal draft, Visualization. Hossein Zare-Behtash: Writingreview &amp; editing,</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig. 11 .</head><label>11</label><figDesc>Fig. 11. Wind power forecasting with the proposed WPD-LSTM-CNN model for data set #4.</figDesc><graphic coords="10,126.99,55.41,341.28,205.49" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Hybrid wind power prediction models.</figDesc><table><row><cell>Combined</cell><cell>Year</cell><cell>Inputs</cell><cell>Accuracy</cell><cell>Features</cell></row><row><cell>model</cell><cell></cell><cell></cell><cell>improvement</cell><cell></cell></row><row><cell>BPNN,</cell><cell>2017</cell><cell>wind speed</cell><cell>Significant</cell><cell>Pearson</cell></row><row><cell>RBFNN,</cell><cell></cell><cell>&amp; direction,</cell><cell>improvement in</cell><cell>correlation</cell></row><row><cell>LSSVM [8]</cell><cell></cell><cell>temp.</cell><cell>accuracy.</cell><cell>coefficient (PCC)</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>is used to</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>improve the</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>mapping</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>accuracy</cell></row><row><cell>MODA, ELNN</cell><cell>2018</cell><cell>Wind speed</cell><cell>43.96% MAPE</cell><cell>MODA</cell></row><row><cell>[9]</cell><cell></cell><cell></cell><cell>reductions</cell><cell>application for</cell></row><row><cell></cell><cell></cell><cell></cell><cell>compared to</cell><cell>ELNN</cell></row><row><cell></cell><cell></cell><cell></cell><cell>comparison</cell><cell>optimisation</cell></row><row><cell></cell><cell></cell><cell></cell><cell>models</cell><cell></cell></row><row><cell>LSTM, GMM</cell><cell>2019</cell><cell>wind speed</cell><cell>Up to 4.96%</cell><cell>LSTM used for</cell></row><row><cell>[10]</cell><cell></cell><cell></cell><cell>RMSE</cell><cell>prediction and</cell></row><row><cell></cell><cell></cell><cell></cell><cell>improvement over</cell><cell>GMM for</cell></row><row><cell></cell><cell></cell><cell></cell><cell>traditional</cell><cell>uncertainty</cell></row><row><cell></cell><cell></cell><cell></cell><cell>methods</cell><cell>description</cell></row><row><cell>CNN, RBFNN,</cell><cell>2019</cell><cell>wind power</cell><cell>accurate than</cell><cell>the novel double</cell></row><row><cell>DGF [11]</cell><cell></cell><cell></cell><cell>traditional models</cell><cell>Gaussian function</cell></row><row><cell></cell><cell></cell><cell></cell><cell>for 24 h-ahead</cell><cell>(DGF) employed</cell></row><row><cell></cell><cell></cell><cell></cell><cell>wind power</cell><cell>for RBFNN</cell></row><row><cell></cell><cell></cell><cell></cell><cell>prediction</cell><cell></cell></row><row><cell>ICEEMDAN,</cell><cell>2020</cell><cell>wind power</cell><cell>62.38%</cell><cell>A robust hybrid</cell></row><row><cell>MOMFO,</cell><cell></cell><cell></cell><cell>improvement in</cell><cell>method with</cell></row><row><cell>Wavelet NN</cell><cell></cell><cell></cell><cell>MAPE compared</cell><cell>appropriate</cell></row><row><cell>[12]</cell><cell></cell><cell></cell><cell>to wavelet NN</cell><cell>accuracy and</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>stability</cell></row><row><cell>GA, LSTM [13]</cell><cell>2021</cell><cell>wind power</cell><cell>Up to 30%</cell><cell>GA application</cell></row><row><cell></cell><cell></cell><cell></cell><cell>accuracy</cell><cell>for LSTM window</cell></row><row><cell></cell><cell></cell><cell></cell><cell>improvement</cell><cell>size and neurons</cell></row><row><cell></cell><cell></cell><cell></cell><cell>compared to</cell><cell>number</cell></row><row><cell></cell><cell></cell><cell></cell><cell>existing methods</cell><cell>optimisation</cell></row><row><cell>IF, GRU, LSTM</cell><cell>2021</cell><cell>wind power</cell><cell>IF filtering</cell><cell>A robust model</cell></row><row><cell>[14]</cell><cell></cell><cell></cell><cell>improved</cell><cell>with less</cell></row><row><cell></cell><cell></cell><cell></cell><cell>forecasting</cell><cell>sensitivity to</cell></row><row><cell></cell><cell></cell><cell></cell><cell>performance by</cell><cell>noise in SCADA</cell></row><row><cell></cell><cell></cell><cell></cell><cell>over 92%.</cell><cell>data</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2</head><label>2</label><figDesc>RMSE values of wind power forecast (kW) based on the application of different mother wavelets.</figDesc><table><row><cell>Model</cell><cell>db1</cell><cell>db2</cell><cell>db3</cell><cell>db4</cell><cell>db5</cell><cell>db6</cell><cell>db7</cell><cell>db8</cell><cell>db9</cell><cell>db10</cell><cell>haar</cell><cell>sym2</cell><cell>sym5</cell><cell>sym8</cell><cell>coif 1</cell><cell>coif 5</cell></row><row><cell>LR</cell><cell>795</cell><cell>788</cell><cell>783</cell><cell>784</cell><cell>712</cell><cell>799</cell><cell>804</cell><cell>804</cell><cell>799</cell><cell>795</cell><cell>774</cell><cell>788</cell><cell>801</cell><cell>803</cell><cell>786</cell><cell>803</cell></row><row><cell>RF</cell><cell>799</cell><cell>755</cell><cell>735</cell><cell>722</cell><cell>687</cell><cell>710</cell><cell>714</cell><cell>713</cell><cell>711</cell><cell>704</cell><cell>722</cell><cell>757</cell><cell>730</cell><cell>734</cell><cell>729</cell><cell>719</cell></row><row><cell>FFNN</cell><cell>822</cell><cell>773</cell><cell>757</cell><cell>732</cell><cell>686</cell><cell>737</cell><cell>730</cell><cell>753</cell><cell>750</cell><cell>764</cell><cell>754</cell><cell>774</cell><cell>765</cell><cell>768</cell><cell>757</cell><cell>761</cell></row><row><cell>LSTM</cell><cell>812</cell><cell>764</cell><cell>746</cell><cell>722</cell><cell>690</cell><cell>723</cell><cell>717</cell><cell>733</cell><cell>730</cell><cell>728</cell><cell>746</cell><cell>765</cell><cell>747</cell><cell>751</cell><cell>743</cell><cell>740</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3</head><label>3</label><figDesc>Search space for hyper-parameters of CNN and LSTM models.</figDesc><table><row><cell>LSTM Model</cell><cell></cell><cell>CNN Model</cell><cell></cell></row><row><cell>Hyper-</cell><cell>Search Space</cell><cell>Hyper-parameter</cell><cell>Search Space</cell></row><row><cell>parameter</cell><cell></cell><cell></cell><cell></cell></row><row><cell>Batch size</cell><cell>50, 100, 150, 200</cell><cell>1st convolution</cell><cell>12, 16, 20, 24, 28,</cell></row><row><cell></cell><cell></cell><cell>layer channels</cell><cell>32, 36, 40</cell></row><row><cell>Epoch numbers</cell><cell>100, 150, 200,</cell><cell>2nd convolution</cell><cell>12, 16, 20, 24, 28,</cell></row><row><cell></cell><cell>250</cell><cell>layer channels</cell><cell>32, 36, 40</cell></row><row><cell>LSTM units</cell><cell>20, 40, 60, 80,</cell><cell>Epoch numbers</cell><cell>100, 150, 200,</cell></row><row><cell></cell><cell>100</cell><cell></cell><cell>250</cell></row><row><cell>Neurons in</cell><cell>20, 40, 60, 80,</cell><cell>Activation function</cell><cell>Sigmoid, tanh,</cell></row><row><cell>dense layer</cell><cell>100</cell><cell></cell><cell>Relu</cell></row><row><cell>Activation</cell><cell>Sigmoid, tanh,</cell><cell></cell><cell></cell></row><row><cell>function</cell><cell>Relu, Softmax</cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4</head><label>4</label><figDesc>Statistical descriptions of the wind power data.</figDesc><table><row><cell>Data</cell><cell>Mean</cell><cell>Min</cell><cell>Max</cell><cell>Standard Derivation</cell></row><row><cell>Dataset 1</cell><cell>1794.2</cell><cell>0</cell><cell>6566.9</cell><cell>2167.8</cell></row><row><cell>Dataset 2</cell><cell>2029.7</cell><cell>0</cell><cell>6567.5</cell><cell>2316.3</cell></row><row><cell>Dataset 3</cell><cell>1372.4</cell><cell>0</cell><cell>6569.6</cell><cell>2040.3</cell></row><row><cell>Dataset 4</cell><cell>2121.3</cell><cell>0</cell><cell>6551.2</cell><cell>2349.9</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 5</head><label>5</label><figDesc>Performance comparison between WPD-CNN-LSTM and other models for datasets 1 and 2.</figDesc><table><row><cell>Comparison models</cell><cell>Dataset 1</cell><cell></cell><cell></cell><cell></cell><cell>Dataset 2</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>MSE</cell><cell>RMSE</cell><cell>MAE</cell><cell>R-square</cell><cell>MSE</cell><cell>RMSE</cell><cell>MAE</cell><cell>R-square</cell></row><row><cell>RF</cell><cell>350741.8</cell><cell>592.2</cell><cell>405.8</cell><cell>0.836</cell><cell>177039.3</cell><cell>420.8</cell><cell>190.5</cell><cell>0.73</cell></row><row><cell>FFNN</cell><cell>329902.1</cell><cell>574.3</cell><cell>402</cell><cell>0.846</cell><cell>140227.3</cell><cell>374.4</cell><cell>158.9</cell><cell>0.786</cell></row><row><cell>CNN</cell><cell>309210.7</cell><cell>556.1</cell><cell>392.1</cell><cell>0.856</cell><cell>144140.7</cell><cell>379.6</cell><cell>167.1</cell><cell>0.78</cell></row><row><cell>LSTM</cell><cell>300599.8</cell><cell>548.3</cell><cell>386.2</cell><cell>0.858</cell><cell>142455.1</cell><cell>377.4</cell><cell>208.1</cell><cell>0.783</cell></row><row><cell>WPD-FFNN</cell><cell>28240.2</cell><cell>168</cell><cell>118.5</cell><cell>0.987</cell><cell>9741.4</cell><cell>98.6</cell><cell>48.3</cell><cell>0.985</cell></row><row><cell>WPD-CNN</cell><cell>16890.39</cell><cell>129.9</cell><cell>99.88</cell><cell>0.8937</cell><cell>6970.04</cell><cell>83.5</cell><cell>44.66</cell><cell>0.891</cell></row><row><cell>WPD-LSTM</cell><cell>16844.8</cell><cell>129.7</cell><cell>95.3</cell><cell>0.992</cell><cell>6348.4</cell><cell>79.6</cell><cell>46.1</cell><cell>0.99</cell></row><row><cell>WPD-CNN-LSTM</cell><cell>15354.9</cell><cell>123.9</cell><cell>90.8</cell><cell>0.993</cell><cell>6336.4</cell><cell>79.6</cell><cell>40.6</cell><cell>0.99</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 6</head><label>6</label><figDesc>Performance comparison between WPD-CNN-LSTM and other models for the datasets 3 and 4.</figDesc><table><row><cell>Comparison models</cell><cell>Dataset 3</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head></head><label></label><figDesc>Andrea Cammarano: Writingreview &amp; editing, Methodology, Supervision. Saeid Lotfian: Methodology, Writingreview &amp; editing.</figDesc><table><row><cell cols="2">Methodology, Supervision.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Promoting</cell><cell>Dataset</cell><cell>Dataset</cell><cell>Dataset</cell><cell>Dataset</cell><cell>Average</cell></row><row><cell>percentages</cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell></cell></row><row><cell>P RMSE (%)</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>RF</cell><cell>79.08%</cell><cell>81.08%</cell><cell>81.94%</cell><cell>80.24%</cell><cell>80.59%</cell></row><row><cell>FFNN</cell><cell>78.43%</cell><cell>78.74%</cell><cell>81.91%</cell><cell>79.01%</cell><cell>79.52%</cell></row><row><cell>CNN</cell><cell>77.72%</cell><cell>79.03%</cell><cell>81.56%</cell><cell>78.45%</cell><cell>79.19%</cell></row><row><cell>LSTM</cell><cell>77.40%</cell><cell>78.91%</cell><cell>81.04%</cell><cell>78.16%</cell><cell>78.88%</cell></row><row><cell>WPD-FFNN</cell><cell>26.25%</cell><cell>19.27%</cell><cell>19.90%</cell><cell>17.46%</cell><cell>20.72%</cell></row><row><cell>WPD-CNN</cell><cell>4.62%</cell><cell>4.67%</cell><cell>2.23%</cell><cell>7.35%</cell><cell>4.72%</cell></row><row><cell>WPD-LSTM</cell><cell>4.47%</cell><cell>0.09%</cell><cell>4.63%</cell><cell>2.75%</cell><cell>2.99%</cell></row><row><cell>P MSE (%)</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>RF</cell><cell>95.62%</cell><cell>96.42%</cell><cell>96.74%</cell><cell>96.09%</cell><cell>96.22%</cell></row><row><cell>FFNN</cell><cell>95.35%</cell><cell>95.48%</cell><cell>96.73%</cell><cell>95.59%</cell><cell>95.79%</cell></row><row><cell>CNN</cell><cell>95.03%</cell><cell>95.60%</cell><cell>96.60%</cell><cell>95.35%</cell><cell>95.65%</cell></row><row><cell>LSTM</cell><cell>94.89%</cell><cell>95.55%</cell><cell>96.41%</cell><cell>95.23%</cell><cell>95.52%</cell></row><row><cell>WPD-FFNN</cell><cell>45.63%</cell><cell>34.95%</cell><cell>35.90%</cell><cell>31.85%</cell><cell>37.08%</cell></row><row><cell>WPD-CNN</cell><cell>9.09%</cell><cell>9.09%</cell><cell>4.47%</cell><cell>14.11%</cell><cell>9.19%</cell></row><row><cell>WPD-LSTM</cell><cell>8.84%</cell><cell>0.19%</cell><cell>9.09%</cell><cell>5.52%</cell><cell>5.91%</cell></row><row><cell>P MAE (%)</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>RF</cell><cell>77.62%</cell><cell>78.69%</cell><cell>76.95%</cell><cell>78.49%</cell><cell>77.94%</cell></row><row><cell>FFNN</cell><cell>77.41%</cell><cell>74.45%</cell><cell>78.02%</cell><cell>76.02%</cell><cell>76.47%</cell></row><row><cell>CNN</cell><cell>76.84%</cell><cell>75.70%</cell><cell>77.72%</cell><cell>75.96%</cell><cell>76.55%</cell></row><row><cell>LSTM</cell><cell>76.49%</cell><cell>80.49%</cell><cell>76.75%</cell><cell>76.27%</cell><cell>77.50%</cell></row><row><cell>WPD-FFNN</cell><cell>23.38%</cell><cell>15.94%</cell><cell>14.81%</cell><cell>10.26%</cell><cell>16.10%</cell></row><row><cell>WPD-CNN</cell><cell>9.09%</cell><cell>9.09%</cell><cell>1.01%</cell><cell>9.38%</cell><cell>7.14%</cell></row><row><cell>WPD-LSTM</cell><cell>4.72%</cell><cell>11.93%</cell><cell>9.09%</cell><cell>0.31%</cell><cell>6.51%</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head></head><label></label><figDesc>, U o , U f LSTM assigned weights W i , W o , W f LSTM assigned weights</figDesc><table><row><cell>PMAE</cell><cell>promoting percentages of mean absolute error</cell></row><row><cell>PMSE</cell><cell>promoting percentages of mean square error</cell></row><row><cell>RBF</cell><cell>Radial Basis Function</cell></row><row><cell>RMSE</cell><cell>Root Mean Square Error</cell></row><row><cell>RF</cell><cell>Random Forest</cell></row><row><cell>RNN</cell><cell>Recurrent Neural Network</cell></row><row><cell>R2</cell><cell>R-square</cell></row><row><cell cols="2">SCADA Supervisory Control and Data Acquisition</cell></row><row><cell>SMBO</cell><cell>Sequential Model-Based Optimisation</cell></row><row><cell>TPE</cell><cell>Tree Parzen Estimator</cell></row><row><cell>VMD</cell><cell>variational model decomposition</cell></row><row><cell>WPD</cell><cell>Wavelet Packet Decomposition</cell></row><row><cell cols="2">Latin symbols WPT Wavelet Packet Transform</cell></row><row><cell>a</cell><cell>Scale coefficient</cell></row><row><cell>b</cell><cell>Translation coefficient</cell></row><row><cell>db</cell><cell>Daubechies</cell></row><row><cell>f</cell><cell>Activation function</cell></row><row><cell>G</cell><cell>High pass filter</cell></row><row><cell>H</cell><cell>Low pass filter</cell></row><row><cell>h t</cell><cell>LSTM overall output</cell></row><row><cell>h t-1</cell><cell>cell state vector at time step t -1</cell></row><row><cell>i t</cell><cell>LSTM input gate</cell></row><row><cell>o t</cell><cell>LSTM's output gate</cell></row><row><cell>P t</cell><cell>measured wind power at the time t</cell></row><row><cell>Pt+k/t</cell><cell>predicted wind power for the future time k</cell></row><row><cell>Pt+k/t</cell><cell>predicted wind power for the future time k</cell></row><row><cell>t</cell><cell>Time index</cell></row><row><cell>U i W k</cell><cell>kernel weights</cell></row><row><cell>x t</cell><cell>neuron input at time step t</cell></row><row><cell>Y i</cell><cell>Measured Wind Power</cell></row><row><cell>Ŷi</cell><cell>Forecasted wind power</cell></row><row><cell>Y</cell><cell>Mean wind power</cell></row><row><cell cols="2">Greek symbols</cell></row><row><cell>σ l</cell><cell>Activation function</cell></row><row><cell>σ s</cell><cell>activation function</cell></row><row><cell>φ t</cell><cell>ARIMA model coefficient</cell></row><row><cell>θ t</cell><cell>ARIMA model coefficient</cell></row><row><cell>Ψ(t)</cell><cell>mother wavelet function</cell></row><row><cell cols="2">Abbreviation</cell></row><row><cell>ANN</cell><cell>Artificial Neural Network</cell></row><row><cell cols="2">ARIMA Auto-Regressive Integrated Moving Average</cell></row><row><cell>CEC</cell><cell>Constant Error Carousel</cell></row><row><cell>CNN</cell><cell>Convolutional Neural Network</cell></row><row><cell>CWT</cell><cell>Continuous Wavelet Transform</cell></row><row><cell>DBN</cell><cell>Deep Belief Network</cell></row><row><cell>DCNN</cell><cell>Deep convolutional neural network</cell></row><row><cell>DGF</cell><cell>Double Gaussian Function</cell></row><row><cell>EEMD</cell><cell>ensemble empirical mode decomposition</cell></row><row><cell>FFNN</cell><cell>Feed Forward Neural Network</cell></row><row><cell>GRU</cell><cell>Gated Recurrent Unit</cell></row><row><cell>IMFs</cell><cell>intrinsic mode functions</cell></row><row><cell>LDT</cell><cell>Levenmouth Demonstration Turbine</cell></row><row><cell>LSTM</cell><cell>Long Short-Term Memory</cell></row><row><cell>MAE</cell><cell>Mean Absolute Error</cell></row><row><cell>ML</cell><cell>Machine Learning</cell></row><row><cell>MSE</cell><cell>Mean Square Error</cell></row><row><cell>NN</cell><cell>Neural Network</cell></row><row><cell>NWP</cell><cell>Numerical Weather Prediction</cell></row><row><cell>ORE</cell><cell>Offshore Renewable Energy</cell></row><row><cell cols="2">PRMSE promoting percentages of root mean square error</cell></row></table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A critical review of wind power forecasting methods-past</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hanifi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lotfian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Present Future Energ</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="1" to="24" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Challenge of Net-Zero Carbon Construction and Measurement of Energy Consumption and Carbon Emission Reduction to Climate Change , Economy and Job Growths in</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">T</forename><surname>Kit</surname></persName>
+		</author>
+		<editor>Hong Kong and Australia</editor>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">State-of-the-art onestop handbook on wind forecasting technologies: an overview of classifications, methodologies, and analysis</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Clean. Prod</title>
+		<imprint>
+			<biblScope unit="volume">283</biblScope>
+			<biblScope unit="page">124628</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A novel bidirectional mechanism based on time series model for wind power forecasting</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Su</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">177</biblScope>
+			<biblScope unit="page" from="793" to="803" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Data mining-assisted short-term wind speed forecasting by wavelet packet decomposition and Elman neural network</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Wind Eng. Ind. Aerod</title>
+		<imprint>
+			<biblScope unit="volume">175</biblScope>
+			<biblScope unit="page" from="136" to="143" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Hour-ahead wind power forecast based on random forests</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lahouar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ben</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hadj</forename><surname>Slama</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="529" to="541" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Influence of the input layer signals of ANNs on wind power estimation for a target site: a case study</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Velázquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Carta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Matías</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="1556" to="1566" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">A novel hybrid methodology for short-term wind power forecasting based on adaptive neuro-fuzzy inference system</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="page" from="620" to="629" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Research and application of a hybrid forecasting framework based on multi-objective optimization for electrical power system</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">148</biblScope>
+			<biblScope unit="page" from="59" to="78" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Short-term forecasting and uncertainty analysis of wind turbine power based on long short-term memory network and Gaussian mixture model</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Infield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lien</forename><forename type="middle">F</forename><surname>Sang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="page" from="229" to="244" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A hybrid deep learning-based neural network for 24-h ahead wind power forecasting</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Y</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L P P</forename><surname>Rioflorido</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">250</biblScope>
+			<biblScope unit="page" from="530" to="539" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A novel hybrid model for short-term wind power forecasting</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Niu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Soft Comput. J</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="93" to="106" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A novel genetic LSTM model for wind power forecast</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Shahid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zameer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Muneeb</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">223</biblScope>
+			<biblScope unit="page">120069</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Wind power forecastinga data-driven method along with gated recurrent neural network</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kisvari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">163</biblScope>
+			<biblScope unit="page" from="1895" to="1909" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Offshore wind power forecasting-a New hyperparameter optimisation algorithm for deep learning models</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hanifi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lotfian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zare-Behtash</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cammarano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">6919</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Tuning machine learning models for prediction of building energy loads</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Seyedzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pour Rahimian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rastogi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Glesk</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>Sustain. Cities Soc</publisher>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page">101484</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Algorithms for hyper-parameter optimization Adv</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bergstra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bardenet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bengio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kégl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="s">Neural Inf. Process. Syst. 24 25th Annu. Conf. Neural Inf. Process. Syst</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2011">2011. 2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Data processing strategies in wind energy forecasting models and applications: a comprehensive review</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">249</biblScope>
+			<biblScope unit="page" from="392" to="408" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A LSTM based wind power forecasting method considering wind frequency components and the wind turbine states, in: 2019 22nd Int</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Conf. Electr. Mach. Syst. ICEMS</title>
+		<imprint>
+			<biblScope unit="page" from="19" to="24" />
+			<date type="published" when="2019">2019, 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Short-term wind power prediction method based on wavelet packet decomposition and improved GRU</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">R</forename><surname>Zu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">X</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Conf. Ser</title>
+		<imprint>
+			<biblScope unit="page">1087</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Exploiting deep learning for wind power forecasting based on big data analytics</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mujeeb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Alghamdi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ullah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fatima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Javaid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Saba</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A hybrid wind power forecasting model based on data mining and wavelets analysis Energy Convers</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Azimi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghofrani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghayekhloo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">OR Manag</title>
+		<imprint>
+			<biblScope unit="volume">127</biblScope>
+			<biblScope unit="page" from="208" to="225" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Hourly day-ahead wind power prediction using the hybrid model of variational model decomposition and long short-term memory</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="1" to="20" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Wind speed forecasting method based on deep learning strategy using empirical wavelet transform, long short term memory neural network and Elman neural network</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mi</forename><forename type="middle">X</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><forename type="middle">Y</forename><surname>Fei</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">156</biblScope>
+			<biblScope unit="page" from="498" to="514" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Application of hybrid model based on double decomposition, error correction and deep learning in shortterm wind speed prediction</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">205</biblScope>
+			<biblScope unit="page">112345</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A hybrid deep learning model for short-term PV power forecasting</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">259</biblScope>
+			<biblScope unit="page">114216</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Intraday wind power forecasting employing feedback mechanism</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Boopathi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Elec. Power Syst. Res</title>
+		<imprint>
+			<biblScope unit="volume">201</biblScope>
+			<biblScope unit="page">107518</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<author>
+			<persName><forename type="first">X</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Hybrid deep neural model for hourly solar irradiance forecasting</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">171</biblScope>
+			<biblScope unit="page" from="1041" to="1060" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">A New hybrid forecasting model based on SW-LSTM and wavelet packet decomposition, A Case Study of Oil Futures Prices</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page">2021</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Short-term load forecasting of power systems by combination of wavelet transform and neuro-evolutionary algorithm</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Amjady</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Keynia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="46" to="57" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Input quality aware convolutional LSTM networks for virtual marine sensors</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Oehmcke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Zielinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Kramer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neurocomputing</title>
+		<imprint>
+			<biblScope unit="volume">275</biblScope>
+			<biblScope unit="page" from="2603" to="2615" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Smart multi-step deep learning model for wind speed forecasting based on variational mode decomposition, singular spectrum analysis, LSTM network and ELM</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Mi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="page" from="54" to="64" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Seyedzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">P</forename><surname>Rahimian</surname></persName>
+		</author>
+		<title level="m">Data-Driven Modelling of Non-domestic Buildings Energy Performance: Supporting Building Retrofit Planning</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Multi-step wind speed forecasting using EWT decomposition, LSTM principal computing, RELM subordinate computing and IEWT reconstruction</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">167</biblScope>
+			<biblScope unit="page" from="203" to="219" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Machine learning modelling for predicting non-domestic buildings energy performance: a model to support deep energy retrofit decision-making</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Seyedzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pour Rahimian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Oliver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Glesk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">279</biblScope>
+			<biblScope unit="page">115908</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Optuna: a next-generation hyperparameter optimization framework</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Akiba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Yanase</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ohta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Koyama</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ACM SIGKDD Int. Conf. Knowl. Discov. Data Min</title>
+		<meeting>ACM SIGKDD Int. Conf. Knowl. Discov. Data Min</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="2623" to="2631" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Deep Learning with Knowledge Transfer for Explainable Anomaly Prediction in Wind Turbines</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Dethlefs</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1693" to="1710" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">A combined algorithm for cleaning abnormal data of wind turbine power curve based on change point grouping algorithm and quartile algorithm</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Sustain. Energy</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="46" to="54" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Fuzzy modeling techniques and artificial neural networks to estimate annual energy output of a wind turbine</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jafarian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Ranjbar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="2008" to="2014" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

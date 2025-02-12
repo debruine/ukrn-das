@@ -1,0 +1,1750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Vibrational Modelling with an anHarmonic Oscillator Model in DSMC</title>
+				<funder>
+					<orgName type="full">James Watt School of Engineering</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Clément</forename><surname>Civrais</surname></persName>
+							<email>clement.civrais@glasgow.ac.uk</email>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">PhD Student</orgName>
+								<orgName type="department" key="dep2">Aerospace Sciences Division</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Craig</forename><surname>White</surname></persName>
+							<email>craig.white.2@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">René</forename><surname>Steijl</surname></persName>
+							<email>rene.steijl@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution" key="instit1">University of Glasgow</orgName>
+								<orgName type="institution" key="instit2">James Watt South Building</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Vibrational Modelling with an anHarmonic Oscillator Model in DSMC</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">A208E7216EECF4BD45972CE4EDB05E3E</idno>
+					<idno type="DOI">10.2514/1.T6547)</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T16:06+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Vehicles undergoing hypersonic speed experience extreme aerothermodynamic conditions. Real gas effects cannot be neglected and thus internal degrees of freedom of molecules being partially/fully excited must be carefully predicted in order to accurately capture the physics of the flow-field. Within direct simulation Monte Carlo solvers, a harmonic oscillator (HO) model, where the quantum levels are evenly spaced, is typically used for vibrational energy. A more realistic model is an anharmonic oscillator (aHO), in which the energy between quantum levels is not evenly spaced. In this work, the Morse-aHO model is compared against HO. The Morse-aHO model is implemented in the dsmcFoam+ solver and the numerical results are in excellent agreement with analytical and Potential Energy Surface solutions for the partition function, mean vibrational energy, and degrees of freedom. A method for measuring the vibrational temperature of the gas when using the anharmonic model in a DSMC solver is presented, which is essential for returning macroscopic fields. For important thermophysical properties of molecular oxygen, such as the specific heat capacity, it is shown that the aHO and HO models begin to diverge at temperatures above 1000 K, making the use of HO questionable for all but low enthalpy flows. For the same gas, including the electronic energy mode significantly improves the accuracy of the specific heat prediction, compared to experimental data, for temperatures above 2000 K. For relaxation from a state of thermal non-equilibrium, it is shown that the aHO model results in a slightly lower equilibrium temperature. When applied to hypersonic flow over a cylinder, the aHO model results in a smaller shock stand off distance and lower peak temperatures.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>I. Introduction</head><p>Space exploration is one of the most demanding technological challenges. One of the major difficulty remains the entry into a planetary atmosphere where the space vehicle experiences large aerothermodynamic loading. Vehicles travelling at hypersonic velocities induce the formation of strong shock waves, behind which very high temperatures are created, with the result that real gas effects on the thermophysical properties of the flow cannot be neglected <ref type="bibr" target="#b0">[1]</ref>.</p><p>The number of degrees of freedom of the problem increases: in addition to the translational and rotational modes, one must take into account the vibrational and electronic modes <ref type="bibr" target="#b1">[2]</ref>. Being closely related to the thermophysical properties through the partition functions, the degrees of freedom of a molecule must be carefully modelled to correctly capture the physics of the flow <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3]</ref>.</p><p>One of the most popular manners to characterise the vibrational excitation of a diatomic molecular system is the simple harmonic oscillator (HO) model <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3]</ref>, Eq. <ref type="bibr" target="#b0">(1)</ref>. Vibrational energies, 𝜖 𝑣 , are equally-spaced over vibrational quantum levels, 𝑖, by a increment ℎ𝜈,</p><formula xml:id="formula_0">𝜖 𝐻𝑂 𝑣 (𝑖) = ℎ𝜈(𝑖 + 1 2 ),<label>(1)</label></formula><p>where 𝜈 is the fundamental frequency and ℎ is Planck's constant.</p><p>Typically, the vibrational energy is re-scaled such that the ground state level has zero energy, which is permissible since it simply a constant and does not influence the changes of state of a system <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2,</ref><ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b4">5]</ref>. In the HO model, the energy associated with a given quantum level can then be defined in terms of a characteristic vibrational temperature, Eq. ( <ref type="formula" target="#formula_1">2</ref>),</p><formula xml:id="formula_1">𝜖 𝐻𝑂 𝑣 (𝑖) = 𝑖𝑘𝜃 𝑣 ,<label>(2)</label></formula><p>where 𝑘 is the Boltzmann constant and 𝜃 𝑣 is the characteristic vibrational temperature.</p><p>This model is often used in the direct simulation Monte Carlo (DSMC) community to address the vibrational excitation of molecular systems <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref>. For reasonably low temperatures, where the flow is mainly governed by translational and rotational modes, the assumption of a molecular system acting as a HO is valid, whereas at high temperature, where the vibrational modes become significantly excited, the HO model meets its limitations <ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref>. As a result of the linear distribution of the vibrational energy over quantum levels, the modelling of the vibrational partition function, 𝑄 𝑣 , is inaccurate at high temperature. Poorly modelling the partition function is undesirable because it is closely related to the thermophysical properties, e.g. the specific heat capacity of the gas 𝐶 𝑣 (𝑇),</p><formula xml:id="formula_2">𝐶 𝑣 (𝑇) = 𝜕 2 𝜕𝑇 2 [𝑄 𝑡𝑟 𝑎𝑛𝑠 (𝑇) + 𝑄 𝑟 𝑜𝑡 (𝑇) + 𝑄 𝑣𝑖𝑏 (𝑇) + 𝑄 𝑒𝑙𝑒𝑐 (𝑇)],<label>(3)</label></formula><p>where 𝑄 is the partition function and the superscripts () 𝑡𝑟 𝑎𝑛𝑠 , () 𝑟 𝑜𝑡 , () 𝑣𝑖𝑏 , and () 𝑒𝑙𝑒𝑐 refer to the translational, rotational, vibrational, and electronic modes, respectively, and 𝑇 is the temperature. A failure to recover the correct thermophysical properties will lead to the physics of the flow not being captured accurately.</p><p>An alternative to avoid using a HO model for the description of vibrational excitation is to assume the molecular system to be an anharmonic oscillator (aHO) <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b11">12,</ref><ref type="bibr" target="#b12">13]</ref>. Instead of linearly relating vibrational energy and quantum levels, this model offers a non-equally spaced quantum level distribution, i.e. it assumes that the spacing between quantum levels decreases with increasing energy. Describing the physical interaction that a molecule experiences with a non-linear approach significantly impacts the macroscopic properties of the physics of the flow <ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref>.</p><p>Similar to an HO model, an aHO model is derived from a system composed of the time-independent Schrödinger equation and a potential energy function that describes the inter-atomic forces acting within the molecule <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref>. In the HO framework, the potential function is derived from a simple quadratic formulation, while a large number of potential functions -and their corrected versions -can result in an aHO-like model, see Roy <ref type="bibr" target="#b16">[17]</ref> for an extensive discussion around potential energy functions. Two of the most common functions that lead to an aHO-like model with application in DSMC are summarised in Table <ref type="table">1</ref>.</p><p>Table <ref type="table">1</ref> Potential energy functions. 𝑆 𝑘 is the bond stiffness, 𝑐 is the speed of light in vacuum, 𝜉 = 𝑟-𝑟 𝑒𝑞 𝑟 𝑒𝑞 is the normalised distance between the nuclei, 𝑟 𝑒𝑞 is the distance between the nuclei at the equilibrium state, 𝑎 0 and 𝑎 𝑖 are spectroscopic constants, 𝛼 is a constant controlling the width of the potential, and 𝐷 is the dissociation energy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Name Formulation</head><p>Harmonic Oscillator <ref type="bibr" target="#b1">[2]</ref> 𝑉 (𝜉) = 𝑆 𝑘 𝑟 2 𝑒𝑞 2 𝜉 2 Dunham Expansion <ref type="bibr" target="#b12">[13]</ref> 𝑉 (𝜉) = ℎ𝑐𝑎 0 𝜉 2 (1 + 𝑖 𝑎 𝑖 𝜉 𝑖 ) Morse Potential <ref type="bibr" target="#b11">[12]</ref> 𝑉 (𝜉) = 𝐷 (1 -𝑒 -𝛼𝑟 𝑒𝑞 𝜉 ) 2</p><p>The Dunham expansion function makes use of a series expansion at an equilibrium molecular state. This model is widely used in spectroscopic and plasma research due to its ability to propose a simple coupling between the rotational, vibrational, and electronic modes of the molecular system <ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref>.</p><p>Anharmonic oscillator models have been employed in the past to address the vibrational excitation in DSMC simulations <ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref> and in CFD simulations <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref>. The Morse-aHO model has previously been used in DSMC simulations. It was applied as the foundation for Koura's studies <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b28">29,</ref><ref type="bibr" target="#b29">30]</ref> on the rotational relaxation of diatomic species. Similarly, Haas <ref type="bibr" target="#b20">[21]</ref> employed the Morse-aHO model to propose a new model for reactive collisions in order to capture coupled vibration-dissociation (CVD) mechanisms prevalent in high-temperature rarefied gases <ref type="bibr" target="#b30">[31]</ref><ref type="bibr" target="#b31">[32]</ref><ref type="bibr" target="#b33">[33]</ref>.</p><p>The authors show that the Morse-aHO model indicates the best agreement to empirical data when compared to the other vibrational models considered. The coupling between vibrational excitation and the dissociation phenomena is a field of active research <ref type="bibr" target="#b34">[34]</ref><ref type="bibr" target="#b35">[35]</ref><ref type="bibr" target="#b36">[36]</ref>, showing the benefits of modelling the vibrational excitation with an aHO model. Bird also implemented the Morse-aHO model in his code to include anharmonic vibrational energy levels in a test case in his 1994 monograph <ref type="bibr" target="#b3">[4]</ref>, where the impact of this on dissociation rates was studied. It was found that the measured dissociation rates were greater than that from the harmonic oscillator model, although some uncertainty remained over the selection procedure for post-collision vibrational energies being taken from a uniform distribution when the energies are not uniformly distributed.</p><p>However, to the best of the authors' knowledge, the details of how to implement an aHO model in a DSMC solver have not been explicitly described before. This article therefore aims to describe the implementation of such a model in a DSMC solver and to study the influence of having an aHO rather than a HO model. The focus will be on the Morse potential <ref type="bibr" target="#b11">[12]</ref> and Dunham expansion <ref type="bibr" target="#b12">[13]</ref> for the computation of macroscopic and thermophysical properties of a diatomic gas.</p><p>As is evident from Eq. ( <ref type="formula" target="#formula_2">3</ref>), the electronic mode must also be taken into account to return the correct macroscopic properties of a high temperature gas <ref type="bibr" target="#b3">[4]</ref>. At low temperatures, the flow is mainly governed by the translational and rotational modes, whereas at high temperatures, the contributions of vibrational and electronic modes are no longer negligible and play a major role in the correct representation of the physics of the flow. The electronic mode has sometimes been omitted in DSMC studies <ref type="bibr" target="#b37">[37]</ref> due to its strong connection to ionisation and plasma simulations; this decision is surprising while dealing with Mach numbers in excess of 30 and temperatures of almost 20,000 K <ref type="bibr" target="#b37">[37]</ref>. The consequences of such an omission on the thermophysical properties will also be investigated in the current work.</p><p>The aims of this work are threefold. The key contribution of the current article is on the quantification of the influence of modelling the vibration excitation with either a traditional HO model or a Morse-aHO model on the thermophysical properties. Although aHO-type models have been employed in DSMC before <ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref>, none of the articles detail how it has been implemented and the necessary modifications required in the DSMC solver. Therefore, the development of a aHO model compatible with the DSMC principle, as well as a novel technique for measuring the vibrational temperature of the gas when an aHO model is used, will be addressed. Moreover, electronic mode omission is a questionable assumption for the recovery of the thermophysical properties of a gas for all but low enthalpy flows and the impact of this will be investigated. To summarise, the novelty of the article lies in the development of a Morse-aHO model, validated against well-established test cases and high-accuracy data, and its application to different problems.</p><p>The rest of the article is organized as follows: in Sec. II, the derivation of two aHO models, namely Dunham expansion and Morse potential, are presented. The important characteristics of these models are regarded in terms of the physical description of the dissociation phenomena. The implementation of the Morse-aHO model in the dsmcFoam+ <ref type="bibr" target="#b38">[38]</ref> solver is detailed in a step-by-step fashion. In Sec. III, the Morse potential function is validated against theory and compared to the traditional HO model. In Sec. IV, the impact of the vibrational model and the omission of electronic mode on thermophysical properties of fundamental problems is studied. In Sec. V, the Morse aHO model is tested for a flow past a cylindrical body. The final section, Sec. VI, provides conclusions and perspectives for future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>II. Vibrational Modelling Theory</head><p>The derivation of the vibrational energy, 𝜖 𝑣 , is a matter of solving the time-independent Schrödinger equation <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref> for a chosen potential function <ref type="bibr" target="#b16">[17]</ref>, i.e. Morse potential <ref type="bibr" target="#b11">[12]</ref>, Dunham expansion <ref type="bibr" target="#b12">[13]</ref>, or any other potential function <ref type="bibr" target="#b16">[17]</ref>. Obtaining the vibrational energy consists of applying a convenient coordinate transformation and evaluating the eigen-value of the system. The complete derivation from quantum mechanics of the HO model can be found in Refs. <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b14">15]</ref>, for the Morse-aHO model in Refs <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b39">39]</ref>, and for Dunham-aHO model in Ref <ref type="bibr" target="#b12">[13]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A. Dunham Expansion</head><p>With Dunham theory, a diatomic molecule is modelled as a rotating vibrator <ref type="bibr" target="#b12">[13]</ref> that has two contributions. The total potential is obtained by summing the rotational and vibrational contributions. Applying the relevant mathematical transformation <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref>, the internal ro-vibrational energy has the form of a double infinite summation that accounts for each contribution,</p><formula xml:id="formula_3">𝜖 𝐷𝑢𝑛ℎ𝑎𝑚 𝑣,𝑟 (𝑖, 𝐾) = ℎ𝑐 ∑︁ 𝑚 ∑︁ 𝑛 𝑌 𝑚,𝑛 (𝑖 + 1 2 ) 𝑚 [ 𝑓 (𝐾)] 𝑛 ,<label>(4)</label></formula><p>where 𝑌 𝑚,𝑛 is related to a spectroscopy constant <ref type="bibr" target="#b12">[13]</ref>, 𝑖 is the vibrational quantum level, 𝑓 (𝐾) a function that accounts for the calculation of the rotational energies.</p><p>In the context of uncoupling internal modes and targeting the vibrational excitation of a diatomic molecule, the 𝑛 𝑡 ℎ summation, referring to rotational motion, can be dropped to zero. Due to the infinite nature of the summation over 𝑚, this function must be arbitrarily truncated to a certain level. This decision is mainly governed by the availability of spectroscopy constants <ref type="bibr" target="#b40">[40]</ref><ref type="bibr" target="#b41">[41]</ref><ref type="bibr" target="#b42">[42]</ref> for the computation of the weighted parameter 𝑌 𝑚,𝑛 . These coefficients are tabulated in</p><p>Refs. <ref type="bibr" target="#b40">[40,</ref><ref type="bibr" target="#b42">42]</ref> for a selection of chemical species. Developing Eq. ( <ref type="formula" target="#formula_3">4</ref>) up to the third order results in a commonly used expression <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b18">19]</ref>;</p><formula xml:id="formula_4">𝜖 𝐷𝑢𝑛ℎ𝑎𝑚 𝑣 (𝑖) = ℎ𝑐𝜔 𝑒 (𝑖 + 1 2 ) (1 -𝜒 𝑒 (𝑖 + 1 2 ) + 𝛾 𝑒 (𝑖 + 1 2 ) 2 ),<label>(5)</label></formula><p>where 𝜔 𝑒 , 𝜔 𝑒 𝜒 𝑒 and 𝜔 𝑒 𝛾 𝑒 are spectroscopy constants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Morse Potential</head><p>Similarly, the Morse potential <ref type="bibr" target="#b11">[12]</ref> defines the vibrational energies as the eigen-value of the system composed of the time-independent Schrödinger equation and the Morse potential <ref type="bibr" target="#b11">[12]</ref>.</p><p>The vibrational energy is readily obtained by applying the appropriate transformation and extracting the eigen-value of the system,</p><formula xml:id="formula_5">𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣 (𝑖) = ℎ𝜈(𝑖 + 1 2 ) - [ℎ𝜈(𝑖 + 1 2 )] 2 4𝐷 , (<label>6</label></formula><formula xml:id="formula_6">)</formula><p>where 𝐷 is the dissociation energy and 𝜈 is the fundamental frequency, defined as</p><formula xml:id="formula_7">𝜈 = 𝛼 2𝜋 √︂ 𝐷 𝑚 ,<label>(7)</label></formula><p>where the parameter 𝛼 controls the width of the potential function and 𝑚 is the mass.</p><p>The first term on the right hand side of Eq. ( <ref type="formula" target="#formula_5">6</ref>) is equivalent to the HO model and the second, negative, term is responsible for the change from the parabolic shape to an asymptotic behavior towards the dissociation limit.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. Comparison</head><p>To compare the previously described models at an equivalent level, it is necessary to follow the same convention.</p><p>For this purpose, the vibrational energy derived through a Morse Potential can be re-written in the form of a function that accounts for spectroscopy constants only. The most popular sources for obtaining these constants are the National Institute of Standards and Technology (NIST) database <ref type="bibr" target="#b44">[43]</ref> or the Huber and Herzberg tables <ref type="bibr" target="#b40">[40,</ref><ref type="bibr" target="#b41">41]</ref>. However, as has previously been noted by other authors <ref type="bibr" target="#b27">[28]</ref>, the use of these constants often over-estimates the number of vibrational quantum levels and the dissociation energy of a molecule <ref type="bibr" target="#b45">[44]</ref>. Therefore, the spectroscopic constants used in this work have been fitted to high-accuracy Potential Energy Surface (PES) data <ref type="bibr" target="#b46">[45]</ref>. Table <ref type="table" target="#tab_0">2</ref> presents the fitted spectroscopy constants along with the values extracted from the Huber and Herzberg tables <ref type="bibr" target="#b40">[40,</ref><ref type="bibr" target="#b41">41]</ref> for three molecular systems lying at the ground state level. For Eq. ( <ref type="formula" target="#formula_5">6</ref>) to be expressed in terms of the spectroscopic constants from Tab. 2, the first step is to express both the fundamental frequency, Eq. ( <ref type="formula" target="#formula_7">7</ref>), and dissociation energy in terms of spectroscopy constants <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b27">28]</ref>, i.e.,</p><formula xml:id="formula_8">𝜈 = 𝑐𝜔 𝑒 ,<label>(8)</label></formula><p>and,</p><formula xml:id="formula_9">𝐷 = ℎ𝑐 𝜔 2 𝑒 4𝜔 𝑒 𝜒 𝑒 .<label>(9)</label></formula><p>Substituting Eqs. ( <ref type="formula" target="#formula_8">8</ref>)- <ref type="bibr" target="#b8">(9)</ref> in Eq. ( <ref type="formula" target="#formula_5">6</ref>), the Morse-vibrational energy can now be written as:</p><formula xml:id="formula_10">𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣 (𝑖) = ℎ𝑐𝜔 𝑒 (𝑖 + 1 2 ) -ℎ𝑐𝜔 𝑒 𝜒 𝑒 (𝑖 + 1 2 ) 2 . (<label>10</label></formula><formula xml:id="formula_11">)</formula><p>As previously mentioned, for the calculation of thermophysical flow properties, the zero-point energy is subtracted in the calculation of the vibrational energy <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b47">46,</ref><ref type="bibr" target="#b48">47]</ref>. Note that this treatment is also applied to the translational and electronic modes as mentioned in Refs. <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b47">46,</ref><ref type="bibr" target="#b48">47]</ref>. Therefore, Eq. ( <ref type="formula" target="#formula_10">10</ref>) can be reduced to the following expression,</p><formula xml:id="formula_12">𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣 (𝑖) = 𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣 (𝑖) -𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣 (0) = ℎ𝑐𝜔 𝑒 𝑖 -ℎ𝑐𝜔 𝑒 𝜒 𝑒 (𝑖 2 + 𝑖).<label>(11)</label></formula><p>The result of this is illustrated in Fig. PES Data <ref type="bibr" target="#b46">[45]</ref> PES Data <ref type="bibr" target="#b46">[45]</ref> Fig. <ref type="figure">1</ref> Vibrational energy for molecular nitrogen at the ground state level.</p><p>In the preamble of this manuscript, the foundation of the HO model has been detailed. This vibrational model is based on an equally spaced representation of the vibration quantum levels which, in turn, leads to a linear behavior of the vibrational energy, as clearly illustrated in Fig. <ref type="figure">1</ref>. In aHO models, the spacing between levels is no longer uniformly distributed. In fact, the latter possesses a second order negative term that decreases the gap between levels as the level increases. This pattern is particularly noticeable in Fig. <ref type="figure">1</ref>, with a high concentration of energy in the high-lying vibrational quantum levels.</p><p>Note that the vibrational energies computed with the Huber and Herzberg tables <ref type="bibr" target="#b40">[40]</ref> match the PES data <ref type="bibr" target="#b46">[45]</ref> for the first 14 vibrational quantum levels of molecular nitrogen. Beyond this, the vibrational energies diverge as the energy levels increase. It is clear that these spectroscopic constants over-estimate the vibrational energy and allow it to obtain values significantly above the accepted dissociation energy, as previously noted by Da Silva <ref type="bibr" target="#b27">[28]</ref>.  The change from linear to non-linear behavior directly influences the quantum level reached at the dissociation Another outcome highlighted in Fig. <ref type="figure">1</ref> is the validity of the HO assumption. It is perceptible that, due to the linear behavior, the HO model is an acceptable hypothesis in a configuration where only a small portion of vibrational levels are excited. In another words, HO fits for low enthalpy flows, but as the temperature increases, it should be replaced by an aHO model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>III. Implementation and Validation of Morse-aHO model</head><p>A. dsmcFoam+ solver Similar to MONACO <ref type="bibr" target="#b49">[48]</ref>, DAC <ref type="bibr" target="#b50">[49]</ref>, SPARTA <ref type="bibr" target="#b51">[50]</ref>, and others, dsmcFoam+ is a DSMC solver developed around the foundation of the method established by Bird <ref type="bibr" target="#b3">[4]</ref>. It is built within the OpenFOAM framework <ref type="bibr" target="#b52">[51]</ref>. In the current work, a version of dsmcFoam+ that is implemented within OpenFOAM-v2112 is used. A custom version of this solver, developed at the University of Glasgow, possesses vibrational and electronic energies <ref type="bibr" target="#b38">[38]</ref>. In order to provide a more realistic description of the vibrational excitation of a diatomic molecule, the aHO model derived from the Morse potential, Sec. II, has been implemented in the dsmcFoam+ solver. As described in detail previously, rather than computing the vibrational energy through the use of the characteristic vibrational temperature, aHO vibrational levels have been pre-calculated and inserted within the dsmcFoam+ species definitions as an additional "look-up table" entry, in a similar fashion to the treatment of electronic energy <ref type="bibr" target="#b38">[38]</ref>.</p><p>The redistribution of internal energies is ensured by a serial application of the quantum Larsen-Borgnakke (LB) method <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b53">52]</ref> using the HO model or the Morse-aHO model to compute the vibrational energy of the molecule.</p><p>Various alternatives can be used to redistribute the internal energy with sophisticated approaches, i.e. forced harmonic oscillator <ref type="bibr" target="#b45">[44,</ref><ref type="bibr" target="#b54">53]</ref>, Quasi-Classical Trajectory Calculation-DSMC <ref type="bibr" target="#b55">[54,</ref><ref type="bibr" target="#b56">55]</ref>, Classical Trajectory Calculation-DSMC <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b28">29]</ref> or a 'state-to-state' approach <ref type="bibr" target="#b21">[22]</ref>. These techniques can provide a highly-accurate description of the quantum transitions for the distribution of the energy toward various internal energetic channels, i.e. vibrationaltranslational (VT) <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b54">53,</ref><ref type="bibr" target="#b57">56]</ref>, vibrational-vibrational (VV) <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b54">53,</ref><ref type="bibr" target="#b57">56]</ref>, or vibrational-vibrational-translational (VVT) <ref type="bibr" target="#b54">[53]</ref> transitions. Although the state-to-state technique has a clear advantage in that it offers an almost complete description of energy transitions, which is the key difference between traditional LB and the cited models, this technique increases the level of complexity to keep track of the full transitions and the corresponding rates that a molecule can experience (single/multi-quantum jumps). In the current work, the choice has been made to keep the application of the quantum LB method to maintain a certain level of sophistication. The combination of the Morse-aHO model and LB can provide a significant improvement in the calculation of the macroscopic and thermophysical properties without adding significant complexity to the algorithms, or expense to the numerical simulations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Implementation of Morse-aHO model in dsmcFoam+</head><p>The DSMC method <ref type="bibr" target="#b3">[4]</ref> is a stochastic particle-based technique for obtaining a solution to the Boltzmann equation. In the framework of the method, internal energies are commonly redistributed through a serial application of the quantum Larsen-Borgnakke (LB) method <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b53">52]</ref>. A general illustration of the serial application of the method to redistribute the energy through the internal modes is shown in Fig. <ref type="figure" target="#fig_0">2</ref>.</p><p>The quantum Larsen-Borgnakke technique to redistribute the internal energy is a four-step procedure. The purpose of Step 1 (top left) and 3 (top right) is to allocate a portion of the collision energy to the vibrational modes of particles 𝐴 and 𝐵, respectively. Similarly, Step 2 (bottom left) and 4 (bottom right) aim to redistribute the collision energy to the rotational mode of the collision partners.</p><p>Assuming all stages of the collision process are inelastic, the pre-collision energy of the collision partners 𝐴 and 𝐵, 𝐸 𝐶 , is calculated as the sum of the relative translational energy of the pair 𝐴 and 𝐵, 𝜖 𝑡 , and the pre-collision vibrational energy of particle 𝐴, 𝜖 𝑣, 𝐴 ,</p><formula xml:id="formula_13">𝐸 𝐶,1 = 𝜖 𝑡 + 𝜖 𝑣, 𝐴 .<label>(12)</label></formula><p>After this process, the collision energy is redistributed between a new translational energy, 𝜖 * 𝑡 ,1 and the newly selected vibrational energy 𝜖 * 𝑣, 𝐴 (where the superscript () * refers to post-collision properties), such that</p><formula xml:id="formula_14">𝜖 𝑡 ,1 = 𝐸 𝐶,1 -𝜖 * 𝑣, 𝐴 . (<label>13</label></formula><formula xml:id="formula_15">)</formula><p>This procedure is then applied successively to the rotational mode of particle 𝐴 and repeated for particle 𝐵.</p><p>Fig. <ref type="figure">3</ref> shows the general three-step procedure to assign the post-collision vibrational energy levels, whether an HO or aHO model is used. The first step is to test the particle for vibrational energy exchange and compute the maximum available post-collision vibrational quantum level, 𝑖 * 𝑚𝑎𝑥 . If an inelastic collision is accepted, a post-collision quantum level is uniformly chosen between 0 and 𝑖 * 𝑚𝑎𝑥 ; if the particle is not accepted for energy exchange, the function returns the initial vibrational quantum level, 𝑖 𝑝 . Finally, an acceptance-rejection method is used to select a value of 𝑖 * from the distribution 𝑃 (𝐸 𝐶 ,𝑖 * )</p><formula xml:id="formula_16">𝑃 (𝐸 𝐶 ,𝑖 * 𝑚𝑎𝑥 ) .</formula><p>In the context of an anharmonic oscillator model, the implementation only slightly differs from the traditional harmonic oscillator model. When using the HO model, the vibrational energies for a diatomic molecule are supplied as a list that is a species property, similar to the electronic energy list <ref type="bibr" target="#b38">[38]</ref>. Vibrational energies for 𝑁 2 , 𝑂 2 , and 𝑁𝑂 have been calculated and are provided in Tabs. 3, 4, and 5, respectively. For other diatomic species, vibrational energies can be calculated using Eq. ( <ref type="formula" target="#formula_5">6</ref>) and Refs. <ref type="bibr" target="#b40">[40]</ref><ref type="bibr" target="#b41">[41]</ref><ref type="bibr" target="#b42">[42]</ref>. In DSMC, it is good practice to avoid the utilisation of macroscopic temperature <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b38">38,</ref><ref type="bibr" target="#b59">58]</ref>; therefore the next step is to define a collision temperature, 𝑇 𝑐𝑜𝑙𝑙 , when a pair are selected for collision,</p><formula xml:id="formula_17">A B ϵ v,A ϵ v,B ϵ r,A ϵ r,B ϵ t E C,1 = ϵ t + ϵ v,A ϵ* t,1 = E C,1 -ϵ* v,A A B ϵ* v,A ϵ v,B ϵ r,A ϵ r,B ϵ* t,1 E C,2 = ϵ* t,1 + ϵ r,A ϵ* t,2 = E C,2 -ϵ* r,A A B ϵ* v,A ϵ v,B ϵ* r,A ϵ r,B ϵ* t,2 E C,3 = ϵ* t,2 + ϵ v,B ϵ* t,2 = E C,3 -ϵ* v,B A B ϵ* v,A ϵ* v,B ϵ* r,A ϵ r,B ϵ* t,3 E C,4 = ϵ* t,3 + ϵ r,B ϵ* t = E C,4 -ϵ* r,B</formula><formula xml:id="formula_18">𝑇 𝑐𝑜𝑙𝑙 = 𝜖 𝑣 (𝑖 * 𝑚𝑎𝑥 ) 𝑘 (7/2 -𝜔) =            𝑖 * 𝑚𝑎𝑥 𝜃 𝑣 (7/2-𝜔) if HO model, ℎ𝑐 𝜔 𝑒 𝑖 * 𝑚𝑎𝑥 (1-𝜒 𝑒 (𝑖 * 𝑚𝑎𝑥 +1)) 𝑘 (7/2-𝜔)</formula><p>if aHO model, <ref type="bibr" target="#b13">(14)</ref> where 𝜖 𝑣 (𝑖 * 𝑚𝑎𝑥 ) refers to the vibrational energy at quantum level 𝑖 * 𝑚𝑎𝑥 .</p><p>For the HO model, the maximum vibrational quantum level, 𝑖 * 𝑚𝑎𝑥 , is,</p><formula xml:id="formula_19">𝑖 * 𝑚𝑎𝑥 = 𝐸 𝐶 𝑘𝜃 𝑣 , (<label>15</label></formula><formula xml:id="formula_20">)</formula><p>where 𝜔 is the viscosity index, 𝐸 𝐶 is the collision energy, which is the sum of the pre-collision vibrational energy for the particle under consideration and the relative translational energy, and 𝑖 * 𝑚𝑎𝑥 denotes the maximum vibrational quantum level available.</p><p>For the Morse-aHO model, the maximum vibrational quantum level is obtained by looping through the list of vibrational energies and finding the vibrational quantum level that satisfies the conditions of Eq. ( <ref type="formula" target="#formula_21">16</ref>), i.e.</p><formula xml:id="formula_21">𝑖 * 𝑚𝑎𝑥 =            increment 𝑖, if 𝐸 𝐶 &gt; 𝜖 𝑣 (𝑖), accept (𝑖 -1), if 𝐸 𝐶 &lt; 𝜖 𝑣 (𝑖).<label>(16)</label></formula><p>Compute 𝑖 * 𝑚𝑎𝑥 , Eq. ( <ref type="formula" target="#formula_19">15</ref>), 𝑇 𝑐𝑜𝑙𝑙 , Eq. ( <ref type="formula">14</ref>) and 𝑍 𝑣 , Eq. ( <ref type="formula" target="#formula_22">17</ref>). The vibrational collision number, 𝑍 𝑣 , is calculated from Eq. ( <ref type="formula" target="#formula_22">17</ref>) <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b59">58]</ref>,</p><formula xml:id="formula_22">𝑍 𝑣 = 𝐷 𝑇 𝑐𝑜𝑙𝑙 𝜔 𝑍 𝑟 𝑒 𝑓 𝐷 𝑇 𝑐𝑜𝑙𝑙 -𝜔 𝐷 𝑇 𝑐𝑜𝑙𝑙 1/3 -1 𝐷 𝑇 𝑍 𝑟𝑒 𝑓 1/3 -1 ,<label>(17)</label></formula><p>where 𝑍 𝑟 𝑒 𝑓 is the vibrational collision number at a reference temperature 𝑇 𝑟 𝑒 𝑓 ,</p><formula xml:id="formula_23">𝑍 𝑟 𝑒 𝑓 = 𝐶 1 𝑇 𝜔 𝑟 𝑒 𝑓 𝑒 -𝐶 2 𝑇 1 3 𝑟𝑒 𝑓 ,<label>(18)</label></formula><p>where the parameters 𝐶 1 , 𝐶 2 , and 𝜔 are given in Appendix A of Ref. <ref type="bibr" target="#b3">[4]</ref>.</p><p>If accepted for vibrational relaxation, the potential post-collision vibrational quantum level of the particle is uniformly chosen between 𝑖 = 0 and the maximum possible level 𝑖 * 𝑚𝑎𝑥 . The acceptance-rejection method is applied to select a value of 𝑖 * from the probability ratio, Eq. <ref type="bibr" target="#b18">(19)</ref>,</p><formula xml:id="formula_24">𝑃(𝐸 𝐶 , 𝑖 * ) 𝑃(𝐸 𝐶 , 𝑖 * 𝑚𝑎𝑥 ) =            1 -𝑖 * 𝑘 𝜃 𝑣 𝐸 𝑐 3/2-𝜔 𝐴,𝐵 if HO model. 1 -ℎ𝑐 𝜔 𝑒 𝑖 * (1-𝜒 𝑒 (𝑖 * +1)) 𝐸 𝑐 3/2-𝜔 𝐴,𝐵 if aHO model. (<label>19</label></formula><formula xml:id="formula_25">)</formula><p>where 𝜔 𝐴,𝐵 is the average viscosity exponent of the collision pair 𝐴 and 𝐵, see Fig. <ref type="figure" target="#fig_0">2</ref>.</p><p>As shown above, the redistribution of internal energy is slightly modified by the inclusion of an aHO model. However, it is a relatively simple adaptation since the procedure is similar to the one typically used for electronic energy <ref type="bibr" target="#b60">[59]</ref>.</p><p>The main differences lie in the calculation of the maximum allowed vibrational quantum level, 𝑖 * 𝑚𝑎𝑥 , Eq. ( <ref type="formula" target="#formula_21">16</ref>) and the probability calculation where the vibrational energies are calculated with Eq. ( <ref type="formula" target="#formula_5">6</ref>) for the Morse-aHO model instead of Eq. ( <ref type="formula" target="#formula_1">2</ref>) for the HO model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. Validation test case</head><p>Changing from a linear behaviour with an HO model to a non-linear behaviour implies a different response to an external excitation. It has been observed in Sec. II that due to the negative non-linear term, a larger proportion of the vibrational energy is concentrated in the high-lying vibrational quantum levels compared to the HO model. This has significant consequences on the high-lying vibrational quantum level population. Usually, these levels are populated through a Boltzmann distribution</p><formula xml:id="formula_26">𝑓 𝑖 ≡ 𝑒 -𝜖𝑣 (𝑖) 𝑘𝑇 𝑗 𝑒 -𝜖𝑣 ( 𝑗) 𝑘𝑇 ,<label>(20)</label></formula><p>where 𝜖 𝑣 is the energy in the 𝑖 𝑡 ℎ vibrational quantum level.</p><p>With the population density being a function of the internal vibrational energy, a change from a linear to a non-linear profile is expected. As it is the fundamental characteristic point of the aHO model, this quantity is selected as a validation test case for the implementation of Morse-aHO model within dsmcFoam+ <ref type="bibr" target="#b38">[38]</ref>.</p><p>A 0-D simulation of molecular oxygen in an adiabatic cell filled with 1 million DSMC simulator particles and periodic boundaries is performed. Collisions are processed with the variable hard sphere (VHS) model <ref type="bibr" target="#b3">[4]</ref> with the properties at a reference temperature 𝑇 𝑟 𝑒 𝑓 of 273 K, i.e. 𝑚 = 53.12 × 10 -27 kg, 𝑑 = 4.07 × 10 -10 m and 𝜔 = 0.77. The population of each quantum level is sampled for 1000 time-steps and recorded for three different temperatures: 5,000 K, 10,000 K, and 15,000 K.</p><p>The HO and aHO results for the analytical and dsmcFoam+ calculations are shown in Fig. <ref type="figure" target="#fig_2">4</ref>, with the numerical results in excellent agreement with the analytical solutions. Some scatter is evident at the tails of the distributions, particularly for 5,000 K. This is expected in a DSMC simulation, because the probability of finding a molecule in these higher vibrational levels is relatively small, leading to a low signal-to-noise ratio. It is a positive outcome to notice the change from linear to non-linear shape when the aHO model is considered. This crucial characteristic of an aHO model of having higher-lying vibrational quantum levels with a greater population can have an impact on the dissociation of reactive chemical species, however, such phenomena will not be covered in the current work. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>IV. Adiabatic Box</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A. Partition function</head><p>In statistical thermodynamics <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b61">60]</ref>, the parameter that relates internal structures of the molecules to macroscopic properties such as pressure, the temperature, or specific heat capacity, is the partition function, 𝑄, that is defined in terms of the sensible energy, i.e. relative to the zero-point energy,</p><formula xml:id="formula_27">𝑄(𝑇) ≡ ∑︁ 𝑖 𝑔(𝑖)𝑒 -𝜖 (𝑖) 𝑘𝑇 ,<label>(21)</label></formula><p>where 𝑔 𝑖 is the degeneracy of the mode and 𝜖 is the energy of the mode.</p><p>In the current work, each mode has been treated individually, i.e. no coupling is considered, therefore it is a matter of evaluating each contribution as a separate element. Translational, rotational, and electronic modes are fully derived in Refs. <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b61">60]</ref>. In this work the focus is on the vibrational contribution while describing the vibrational excitation of a molecule with a HO or aHO model.</p><p>In the HO formalism, the complete derivations of the total mean vibrational energy, 𝐸 𝑣 (𝑇 𝑣 ), the degrees of freedom, 𝜉 𝑣 (𝑇 𝑣 ), and the specific heat capacity, 𝐶 𝑣𝑖𝑏 𝑣 (𝑇 𝑣 ), are readily obtained with the first and second derivative, with respect to 𝑇, of the partition function. The full derivation of these quantities can be found in Refs. <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b61">60]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Vibrational temperature</head><p>The challenge with an aHO model is related to the characteristics of the model presented in Sec. II. By definition, the vibrational partition function follows the formulation in Eq. ( <ref type="formula" target="#formula_27">21</ref>),</p><formula xml:id="formula_28">𝑄 𝑎𝐻𝑂 𝑣 (𝑇 𝑣 ) = ∑︁ 𝑖 𝑒 -𝜖𝑣 (𝑖) 𝑘𝑇𝑣 . (<label>22</label></formula><formula xml:id="formula_29">)</formula><p>Because of the nature of vibrational energy in aHO models, the upfront summation can not be dropped and Eq. ( <ref type="formula" target="#formula_28">22</ref>)</p><p>is lying in its simplest form. Following the whole process with the assessment of the total mean vibrational energy, this quantity is, again, not obtainable with an analytical expression in the same fashion as the HO model, and takes the form,</p><formula xml:id="formula_30">𝐸 𝑎𝐻𝑂 𝑣 (𝑇 𝑣 ) = 𝑖 𝜖 𝑣 (𝑖)𝑒 -𝜖𝑣 (𝑖) 𝑘𝑇𝑣 𝑖 𝑒 -𝜖𝑣 (𝑖) 𝑘𝑇𝑣 . (<label>23</label></formula><formula xml:id="formula_31">)</formula><p>Finally, with the degrees of freedom of the molecule being linearly linked to Eq. ( <ref type="formula" target="#formula_30">23</ref>), the expression is,</p><formula xml:id="formula_32">𝜉 𝑎𝐻𝑂 𝑣 (𝑇 𝑣 ) = 1 2𝑇 𝑣 𝑖 𝜖 (𝑖)𝑒 -𝜖 (𝑖) 𝑘𝑇𝑣 𝑖 𝑒 -𝜖 (𝑖) 𝑘𝑇𝑣 .<label>(24)</label></formula><p>A point should be made about the calculation of the vibrational temperature, 𝑇 𝑣 . Through a series of calculations, illustrated in Refs. <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>, this quantity is related to the mean vibrational quantum level &lt; 𝑖 &gt; and the characteristic vibrational temperature of the molecule, 𝜃 𝑣 . As a consequence of the simplest form of the vibrational energies, the HO model benefits from a simple derivation and the vibrational temperature can be calculated as</p><formula xml:id="formula_33">𝑇 𝐻𝑂 𝑣 = 𝜃 𝑣 𝑙𝑛(1 + 1 &lt;𝑖&gt; ) . (<label>25</label></formula><formula xml:id="formula_34">)</formula><p>An aHO model does not benefit from an analytical expression of 𝑇 𝑣 and the only way to obtain this parameter is to make use of an iterative methodology to approach one of the quantities derived above. In the current work, a new way of solving this issue is proposed; using a first-order Newton iterative methodology <ref type="bibr" target="#b62">[61,</ref><ref type="bibr" target="#b63">62]</ref> coupled with an optimized pre-loop to hasten the convergence of the approach. A general illustration of the method is represented in Fig. <ref type="figure">5</ref>. This method is versatile, has fast convergence, and consumes little computational resources <ref type="bibr" target="#b62">[61,</ref><ref type="bibr" target="#b63">62]</ref>. It consists of applying a</p><p>Taylor expansion around a certain value and truncating the term beyond the fist order. As the series is shortened to conserve only first order terms, the function must be smooth to be approached by a reasonable tangent approximation.</p><p>In the case of the resolution of 𝑇 𝑣 for an aHO model, the function 𝑓 (𝑇 𝑣 ), in Fig. <ref type="figure">5</ref>, chosen is composed of the total mean vibrational energy, Eq. ( <ref type="formula" target="#formula_30">23</ref>), and the value returned by dsmcFoam+,</p><formula xml:id="formula_35">𝐸 𝐷𝑆 𝑀𝐶 𝑣 , 𝑓 (𝑇 𝑣 ) = 𝐸 𝐷𝑆 𝑀𝐶 𝑣 -𝐸 𝑎𝐻𝑂 𝑣 (𝑇 𝑣 ).<label>(26)</label></formula><p>The function in Eq. ( <ref type="formula" target="#formula_35">26</ref>) is monotone, which by definition does not contain local minima. Therefore, solving the problem of the vibrational temperature by a Newton iterative method is particularly well adapted since it will not encounter any singularities. Nevertheless, this method is sensitive to the initial value set at the beginning of the process and a coarse initial value can delay convergence.</p><p>To avoid this, an optimized pre-Newton loop has been designed to closely approach the value given by dsmcFoam+ with a scanning process. Once this initial guess is known, the value is passed to the main Newton loop to refine the vibrational temperature value by comparing the gradient of the function, the function itself, and the initial guess to a tolerance factor. In this work, the Newton iterative approach has been applied to a certain function that is related to 𝐸 𝑣 (𝑇 𝑣 ). In a different configuration, this versatile method can be employed to solve any irreversible problem as long as the function is smooth. To sum up the implementation requirements of this functionality within a DSMC framework, the user must specify:</p><p>• a temperature step, 𝑑𝑇 -for the pre-loop optimisation, the smaller the better;</p><p>• a tolerance factor, 𝛼 -for the comparison between a gradient, the function, and the initial guess.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. Vibrational degrees of freedom</head><p>In Sec. IV.B, the HO and aHO models have been compared, with a focus on the numerical methodologies employed for the computation of the thermophysical properties. Here, these quantities are studied for a pure oxygen gas experiencing a large range of temperature to investigate the influence of the vibrational models.</p><p>Looking first at the vibrational partition function, 𝑄 𝑣 (𝑇 𝑣 ), Eq. ( <ref type="formula" target="#formula_27">21</ref>) is shown in Fig. <ref type="figure">6</ref>, along with the results extracted from PES calculations <ref type="bibr" target="#b46">[45]</ref>.</p><p>From the beginning of the article, the validity of the HO model at low temperature has been stressed. It is relatively evident in Figs. <ref type="figure">6,</ref><ref type="figure">7</ref>, and 8 that at low-to-moderate temperatures the HO model returns a valid approximation of the vibrational partition function. However, as the temperature increases, the discrepancy between the HO and aHO models becomes appreciable. This departure is, of course, propagated over the quantities derived from the partition function, such as the total mean vibrational energy, in Fig. <ref type="figure">7</ref>, and the vibrational degrees of freedom, Fig. <ref type="figure">8</ref>. Although expected, it is good to notice that the value of these quantities returned by dsmcFoam+ matches the theory, validating the implementation of the aHO model. A second element that should be highlighted is the change of behaviour when switching from HO to aHO in Figs. <ref type="figure">7</ref> and<ref type="figure">8</ref>. In the HO hypothesis, the vibrational degrees of freedom of the diatomic molecule is asymptotically limited to a value of 2, while in the aHO formalism, an oxygen molecule can reach another Pre-Newton Loop Iteration, 𝑖 &gt; 0</p><formula xml:id="formula_36">𝑇 𝑖𝑛𝑖 = 𝑇 𝑣 (𝑖 -1)</formula><p>Compute 𝐸 𝑣 (𝑇), Eq. ( <ref type="formula" target="#formula_30">23</ref>) yes no</p><formula xml:id="formula_37">𝐸 𝑣 (𝑇) &gt; 𝐸 𝐷𝑆 𝑀𝐶 𝑣 𝑇 𝑖𝑛𝑖 = 𝑇 yes no 𝑇 = 𝑇 + 𝑑𝑇 Main Newton-Loop</formula><p>Compute 𝑓 (𝑇 𝑖𝑛𝑖 ), Eq. ( <ref type="formula" target="#formula_35">26</ref>), and 𝑓 ′ (𝑇 𝑖𝑛𝑖 ) vibrationally excited state that has more than 2 degrees of freedom over a specific interval of temperature. This behaviour, although still observable within a molecular nitrogen system, is primarily enabled by the weak bond that links the two atoms of oxygen. This modification in the description of the vibrational excitation of the molecule consequently impacts the internal properties of a molecular system.</p><formula xml:id="formula_38">𝑇 𝐺𝑢𝑒𝑠𝑠 = 𝑇 𝑖𝑛𝑖 -𝑓 (𝑇 𝑖𝑛𝑖 ) 𝑓 ′ (𝑇 𝑖𝑛𝑖 ) (𝑇 𝐺𝑢𝑒𝑠𝑠 -𝑇 𝑖𝑛𝑖 ) &gt; 𝛼 𝑇 𝑣 = 𝑇 𝐺𝑢𝑒𝑠𝑠</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D. Thermal equilibrium</head><p>In this section, a more complex test case is investigated. The HO and aHO models are employed to model the vibrational modes of a diatomic molecule experiencing relaxation from an initial condition of significant thermal non-equilibrium. This situation is simulated with the dsmcFoam+ solver <ref type="bibr" target="#b38">[38]</ref>, see Sec. III. The test case is a single adiabatic cell filled with one million DSMC simulator particles with periodic boundaries. The working gas is molecular oxygen. The translational and rotational modes are initialised at 20,000 K, while the vibrational and electronic modes are set at 0 K. The internal energy is redistributed through a serial application of the quantum LB method <ref type="bibr" target="#b53">[52]</ref>. The vibrational relaxation rate 𝑍 𝑟 𝑒 𝑓 is calculated from Eq. ( <ref type="formula" target="#formula_23">18</ref>) with the reference temperature set to 𝑇 𝑟 𝑒 𝑓 = 20, 000 K. A fraction of 1/5 and 1/50 collisions are allowed to result in rotational and electronic relaxation, respectively. In the cell, the collision rate and the corresponding temperature of each internal mode are recorded and presented in Fig. <ref type="figure" target="#fig_5">9</ref>. The 'collision number' for the abscissa is calculated as the product of the instantaneous collision rate from the simulation and the physical time that has elapsed <ref type="bibr" target="#b64">[63,</ref><ref type="bibr" target="#b65">64]</ref>. In addition, the CPU time and the memory consumption for both cases are monitored and tabulated in Table <ref type="table" target="#tab_5">6</ref>. The major change between the HO model and the aHO model lies in the calculation of the vibrational temperature with a non-linear system to solve in the Morse-aHO framework. Changing from the HO to the aHO model requires some effort in terms of modifying the algorithms, however the methodology used here to implement an aHO model within a DSMC solver is fast and efficient and does not affect the computational expense, as shown in Table <ref type="table" target="#tab_5">6</ref>.  In Fig. <ref type="figure" target="#fig_5">9</ref>, the abscissa has been consciously cropped to a collision number of 180 in order to visualise the influence of the Morse-aHO model on the relaxation process at low values of the collision number; the temperatures eventually come in to thermal equilibrium after enough collisions have occurred. A slight increment of 500 K differentiates these two models at equilibrium. The change of the equilibrium temperature is readily derived from the degrees of freedom of the molecule, Fig. <ref type="figure">8</ref>, and the corresponding mean energy, Fig. <ref type="figure">7</ref>. In the case of the aHO model, the molecule is slightly more excited than when an HO model is used (𝜉 𝑎𝐻𝑂 𝑣 (𝑇 𝑒𝑞 ) &gt; 𝜉 𝐻𝑂 𝑣 (𝑇 𝑒𝑞 )). With the cell being adiabatic, energy is conserved along the relaxation process. The thermal equilibrium must, consequently, reach a lower value for the aHO model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>E. Specific heat capacity</head><p>Another thermophysical property that should be regarded while changing from the HO to the aHO model is the specific heat capacity, 𝐶 𝑣 . The evaluation of the influence of the vibrational model is studied for a pure molecular oxygen gas for a low-to-moderate range of temperature. Often omitted <ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b37">37,</ref><ref type="bibr" target="#b66">[65]</ref><ref type="bibr" target="#b67">[66]</ref><ref type="bibr" target="#b68">[67]</ref><ref type="bibr" target="#b69">[68]</ref> in the description of the molecular modes in DSMC simulations, the electronic mode effects on 𝐶 𝑣 are also highlighted.</p><p>By definition, the partition function, 𝑄(𝑇), is related to the specific heat capacity through the second derivative with respect to 𝑇,</p><formula xml:id="formula_39">𝐶 𝑣 (𝑇) ≡ 𝜕 2 𝑄(𝑇) 𝜕𝑇 2 .<label>(27)</label></formula><p>The total specific heat capacity of a gas is described as the summation of each of the internal contributions,</p><formula xml:id="formula_40">𝐶 𝑣 (𝑇) = 𝐶 𝑡𝑟 𝑎𝑛𝑠 𝑣 + 𝐶 𝑟 𝑜𝑡 𝑣 + 𝐶 𝑣𝑖𝑏 𝑣 + 𝐶 𝑒𝑙𝑒𝑐 𝑣 .<label>(28)</label></formula><p>In the case of translational and rotational contributions, the corresponding heat capacities, 𝐶 𝑡𝑟 𝑎𝑛𝑠 𝑣 and 𝐶 𝑟 𝑜𝑡 𝑣 are known <ref type="bibr" target="#b1">[2]</ref> to be 3 2 𝑅 and 𝑅, respectively, where 𝑅 is the specific gas constant. For the vibrational and electronic modes, this simple form is not readily obtained and requires a full derivation of the partition function, Eq. ( <ref type="formula" target="#formula_28">22</ref>) and Eq. ( <ref type="formula" target="#formula_27">21</ref>), for the vibrational and electronic modes, respectively. By substituting these quantities in Eq. ( <ref type="formula" target="#formula_40">28</ref>), the complete description of the specific heat capacity takes the form,</p><formula xml:id="formula_41">𝐶 𝑣 (𝑇) = 3 2 𝑅 + 𝑅 + 𝜕 2 𝑄 𝑣𝑖𝑏 (𝑇) 𝜕𝑇 2 + 𝜕 2 𝑄 𝑒𝑙𝑒𝑐 (𝑇) 𝜕𝑇 2 .<label>(29)</label></formula><p>Fig. <ref type="figure">10</ref> compares the specific heat capacity of molecular oxygen where vibrational excitation is described with the HO and the Morse-aHO models, with the electronic mode being either enabled, including the first six excited states of the oxygen molecule <ref type="bibr" target="#b44">[43,</ref><ref type="bibr" target="#b60">59]</ref>, or disabled. Experimental data from the NIST database <ref type="bibr" target="#b44">[43]</ref> is included for comparison, along with the Jaffe calculations <ref type="bibr" target="#b70">[69]</ref>.</p><p>Fig. <ref type="figure">10</ref> shows the importance of including the electronic mode within the 𝐶 𝑣 (𝑇) calculation. Even in the situation of an aHO model applied to describe vibrational excitation, the specific heat capacity of the gas does not match experimental data from the NIST-JANAF database <ref type="bibr" target="#b44">[43]</ref> or Jaffe calculations <ref type="bibr" target="#b70">[69]</ref> for temperatures above 2000 K. Note that adding the electronic contribution to 𝐶 𝑣 (𝑇) is a significant improvement even under the HO assumption. The best option to recover the experimental data for 𝐶 𝑣 at low-to-moderate temperatures is the aHO model with the inclusion of the electronic mode. At high temperature, especially for species with low dissociation energy, the assumption of having four individual modes meets its validity domain. A slight difference between the aHO model and experimental data is noticeable at higher temperatures and is possibly related to the coupling between the rotational and the vibrational modes of the molecules <ref type="bibr" target="#b71">[70]</ref>. The vibrational energy list for the excited states also differs from that in the ground state, see Ref. <ref type="bibr" target="#b41">[41]</ref>, but we have assumed they remain constant in the current work, which will also influence the degree of disagreement here. In the current work, each of the modes have been considered separately and attributed a dedicated partition function. Consequently, this demonstration highlights the necessity of neglecting any modes in the calculation of thermophysical properties, even for relatively low enthalpies, and the requirement of coupling some of the internal modes for a better description of the high enthalpy physics of the flow. It should be reiterated that chemical reactions are not considered in the current work and that the agreement between aHO with electronic excitation and the experimental data is reasonable until well above the expected dissociation temperature of molecular oxygen. NIST <ref type="bibr" target="#b44">[43]</ref> Jaffe <ref type="bibr" target="#b70">[69]</ref> NIST <ref type="bibr" target="#b44">[43]</ref> Jaffe <ref type="bibr" target="#b70">[69]</ref> Fig. <ref type="figure">10</ref> Specific heat capacity variation with temperature for pure oxygen gas.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>V. Hypersonic Cylinder Flow</head><p>In order to show the difference between the HO and the aHO models in a 2D hypersonic flow, a study of flow past a cylinder is considered. The free stream conditions are 𝑀𝑎 ∞ = 16, 𝑃 ∞ = 48.5 Pa, 𝑇 ∞ = 300 K. The cylindrical body has a diameter of 𝐷 = 0.01 m, giving 𝐾𝑛 𝐷 = 0.005. The working gas is non-reacting molecular oxygen. The electronic energy follows the techniques developed by Liechty <ref type="bibr" target="#b60">[59]</ref>. The redistribution of internal energies is modelled by a serial application of the quantum Larsen-Borgnakke method <ref type="bibr" target="#b53">[52]</ref> using the HO model or the Morse-aHO model. The inter-molecular collisions are computed by the variable hard sphere (VHS) model <ref type="bibr" target="#b3">[4]</ref> with a reference temperature of 𝑇 𝑟 𝑒 𝑓 = 273 K. A constant fraction of 1/5 and 1/50 collisions are considered for rotational and vibrational relaxation, respectively. Additionally, two fractions of collisions, 1/100 and 1/500, are considered for the relaxation of the electronic mode.</p><p>The geometry represents a 2D slice of a cylinder with a domain length equal to one diameter upstream of the stagnation point. The mesh is refined near the stagnation point to ensure a cell size, Δ𝑥, of around one quarter of the local mean free path, 𝜆, is maintained, resulting in a total of 152, 123 cells. The gas-surface interactions are fully diffusive with a wall temperature, 𝑇 𝑤 = 300 K. The time-step, Δ𝑡, is carefully chosen following Eq. ( <ref type="formula" target="#formula_42">30</ref>),</p><formula xml:id="formula_42">Δ𝑡 =            1 10 × Δ𝑥 𝑢 ∞ if Δ𝑥 𝑢 ∞ ≤ 𝜆 2 𝑐 𝑤 1 10 × 𝜆 2 𝑐 𝑤 if Δ𝑥 𝑢 ∞ ≥ 𝜆 2 𝑐 𝑤<label>(30)</label></formula><p>where 𝑢 ∞ is the free stream velocity, 𝜆 2 is the VHS mean free path <ref type="bibr" target="#b72">[71]</ref> downstream of the normal shock wave that develops along the stagnation streamline, 𝑐 𝑤 is the most probable thermal velocity <ref type="bibr" target="#b1">[2]</ref> such that,</p><formula xml:id="formula_43">𝑐 𝑤 = √︁ 2𝑅𝑇 2 ,<label>(31)</label></formula><p>where 𝑇 2 is the peak value of the translational temperature along the stagnation streamline. Based on this, a time step of 10 -9 s was used, which is smaller than the smallest values of both the mean collision time and the cell residence time.</p><p>The simulation was run in parallel on 6 AMD® Ryzen 9 5950x CPU cores (base: 3.4GHz, max: 4.9 GHz) and over 300, 000 samples are taken after steady-state to reduce the numerical scatter. The temperatures along the stagnation streamline are presented in Fig. <ref type="figure">11</ref>. The translational, rotational, and vibrational temperature contours are shown in Figs. 14, 12, and 13, respectively. The inclusion of the electronic mode is denoted by 𝐻𝑂𝑒 and 𝑎𝐻𝑂𝑒.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A. Stagnation Line Properties</head><p>The influence of the vibrational models on the internal temperatures along the stagnation streamline is plotted in Fig. <ref type="figure">11</ref>. The internal temperatures are normalised by the free stream temperature and the longitudinal coordinate is normalised by the diameter of the cylinder. The peak values and their locations are summarised in Table <ref type="table" target="#tab_6">7</ref>.</p><p>Physically, the flow experiences a compression through the shock wave that forms in front of the body. The internal modes are consequently largely activated throughout the shock, culminating in a peak value downstream of the shock wave. The dominating mode is naturally the translational energy, Fig. <ref type="figure">11a</ref>, which experiences a steep increase across the shock wave and reaches a peak value upstream the body surface. It undergoes a short relaxation process before enduring a rapid drop towards the constant value of the cylinder surface temperature. The small difference of the thermal peak value between the two vibrational energy models originates from the nonlinear distribution of vibrational energy over the vibrational quantum levels as seen in Sec. III. The inclusion of electronic mode results in a small drop of the translational temperature in similar proportion to the modelling of the vibrational excitation with an aHO model.</p><p>The rotational mode is the most dominant internal mode of the molecule and the profiles through the stagnation streamline are shown in Fig. <ref type="figure">11b</ref>. The rotational temperature exhibits a smaller peak of temperature in comparison with the translational temperature. It initiates a relaxation process before undergoing a sudden decrease towards the body surface. The inclusion of the electronic energy results in a peak value of rotational temperature that is 100 K lower for 𝑍 𝑒 = 500 and 400 K lower for 𝑍 𝑒 = 100 than the predicted state with the electronic mode disabled. This finding is directly linked to the addition of a fourth channel for the energy, resulting in a lower thermal state, as was noted in Sec. IV.D.</p><p>The vibrational temperature peaks closer to the surface compared to the translational and rotational modes, as is shown in Fig. <ref type="figure">11c</ref>. The vibrational temperature exhibits a parabolic shape and does not have the time to relax towards a quasi-transient thermal equilibrium state with the translational temperature until near the surface of the cylinder. The aHO model results in a smaller vibrational temperature peak compared to the HO model. This behaviour is partly due to the non-linear distribution of the vibrational energy over the vibrational quantum levels. At high temperatures, the Morse-aHO model suggests that the high lying vibrational quantum levels become significantly more populated than in the HO model. This overpopulation at the end of the vibrational quantum ladder decreases the vibrational temperature.</p><p>Similarly, the inclusion of electronic energy considerably impacts the vibrational temperature across the shock wave, with the result of a lower peak value compared to the HO profile. Note that the larger electronic relaxation probability results in a smaller vibrational temperature peak value. Fig. <ref type="figure">11c</ref> also shows that the new measurement technique for the vibrational temperature when using the aHO model works well in flows with large spatial gradients of temperature.</p><p>In this study the electronic temperature is calculated with the approach developed by Liechty <ref type="bibr" target="#b60">[59]</ref> and derived from the ratio of the Boltzmann distribution of the ground state and the first unbounded electronic states. The assumption of the higher lying electronic states having a negligible contribution is applied here. Although this model is a zeroth-order approximation of the electronic temperature and the electronic degrees of freedom, it has significantly improved the calculation of the thermophysical flow properties, i.e. specific heat capacity, see Fig. <ref type="figure">10</ref>. When the electronic mode relaxes with 𝑍 𝑒 = 100, the electronic temperature has a larger peak value and the inclusion of the electronic mode significantly impacts the vibrational temperature profile. For the other relaxation constant value, i.e. 𝑍 𝑒 = 500, the electronic temperature reaches smaller a peak value, inducing a lower impact on the other internal modes of the molecule.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Thermal Non-Equilibrium</head><p>In the previous section, the comparison of the two vibrational models was limited to the stagnation line properties and the results show that the Morse-aHO model results in lower thermal peak values. In Figs. 12, 13, and 14, the translational, rotational, and vibrational temperature contours, respectively, are plotted for the two vibrational models and the electronic mode enabled with the two relaxation constants denoted () 𝑍 𝑒 =100 and () 𝑍 𝑒 =500 .</p><p>From Fig. <ref type="figure" target="#fig_0">12</ref> it is evident that the vibrational models agree well in the far-field region and the near the surface of the body. However, in the vicinity of the shock wave, the Morse-aHO model predicts a slightly smaller shock stand off distance. When the electronic mode is enabled, the peak temperature decreases and the shock stand off distance agrees between HO and aHO.</p><p>Fig. <ref type="figure" target="#fig_1">13</ref> shows that the rotational temperature exhibits notable changes in its topology when the Morse-aHO model is applied and the electronic mode is activated. Similar to the translational temperature, the two models result in differences in the region where the shock wave develops. In this region, the HO model results in larger and more diffuse high-temperature contours compared to the Morse-aHO model. The addition of the electronic mode tends to reduce the discrepancy between the two models; although, the Morse-aHO model predicts a significantly smaller very-high temperature contour with the highest electronic relaxation constant.</p><p>When the electronic mode is disabled, Figs. 14a and Fig. <ref type="figure" target="#fig_2">14d</ref> show a reasonable agreement for the first six contours where the vibrational temperature does not exceed 6, 000 K. For any temperature above this value, the aHO model shows smaller areas bounded by the contours. This behaviour is gradually accentuated as the temperature increases. In addition to a difference in the high temperature areas, the two models also differ in the peak temperature that is achieved.</p><p>The HO model results in a higher temperature ratio of 38.43 whereas the aHO model peaks at 37.05, as seen in Table . 7.</p><p>Note that this result agrees with the observations from Figs. The inclusion of the electronic mode changes the topology of the vibrational temperature. For 𝑍 𝑒 = 500, the high-temperature contour layers reduce in size compared to when the electronic mode is omitted. For 𝑍 𝑒 = 100, the  high-temperature regions are strongly impacted resulting in considerably smaller contours. This implies a significant decrease in the vibrational temperature around the cylindrical body when the electronic mode is enabled. The inclusion of the electronic mode constitutes another sink in which to redistribute the internal energy, which, in turn, decreases the internal energy allocated to the vibrational mode. As has been highlighted in Fig. <ref type="figure">10</ref>, the inclusion of unbounded electronic states has a significant impact on the thermophysical flow properties and results in a better description of the physics of the flow. When the unbounded electronic mode is activated, Figs. 14b, 14c, 14e and Fig. <ref type="figure" target="#fig_2">14f</ref>, the peak value of the vibrational temperature changes and the contours significantly reduce in area. The two vibrational models agree very well in the vicinity of the stagnation point and the far-field regions providing similar areas for all the contours.</p><p>which is expected as the temperature in these regions is much lower.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>VI. Conclusions</head><p>The merits of different vibrational models for use in DSMC simulations have been discussed and analysed. The gas. Additionally, a method for returning a macroscopic measurement of the vibrational temperature of a gas when using the aHO model is described.</p><p>Relaxation to thermal equilibrium has been demonstrated using a serial Larsen-Borgnakke model to redistribute energy between the various modes and it is shown that the aHO model results in a slightly lower equilibrium temperature.</p><p>The importance of including the electronic mode for reproducing the correct thermophysical properties has been illustrated and it is shown that the aHO model improves this prediction further over an HO model. The study of a hypersonic flow past a cylindrical body has shown that the vibrational temperature is over-estimated when considering the HO model. Similarly to the specific heat capacity study, the vibrational temperature is substantially impacted by the omission of the electronic mode. The Morse-aHO model needs further improvement to bring the model into closer alignment with experimental data. However, it seems that modelling the vibrational excitation with an aHO model and including the unbounded electronic states offers a more accurate description than only representing the molecular vibrations using the HO model.</p><p>In future work, further studies on the coupling between the rotational and the vibrational modes will be presented.</p><p>The influence of having different lists of vibrational energy for each excited state of a molecule will also be explored.</p><p>Additionally, investigations on the influence of modelling the vibrational excitation with an aHO model on chemical reaction rates will be addressed.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 2</head><label>2</label><figDesc>Fig. 2 Flowchart of the serial application of the quantum Larsen-Borgnakke techniques [52] (adapted from [57]).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>1 𝑍Fig. 3</head><label>13</label><figDesc>Fig. 3 Flowchart of the post-collision treatment of the vibrational energy levels.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 4</head><label>4</label><figDesc>Fig. 4 Probability distribution of vibrational quantum levels for molecular oxygen at the ground state.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 5 Fig. 6</head><label>56</label><figDesc>Fig.5Flowchart of the first-order Newton approach with an optimized pre-loop.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 7 Fig. 8</head><label>78</label><figDesc>Fig. 7 Total mean vibrational energy, 𝐸 𝑣 (𝑇 𝑣 ), for the HO and aHO models of molecular oxygen.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 9</head><label>9</label><figDesc>Fig. 9 Simulation of thermal relaxation in pure oxygen gas.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 9</head><label>9</label><figDesc>Fig.9highlights the difference in terms of the equilibrium state reached at the end of a relaxation process between HO and aHO. The internal mode temperatures are normalised by the initial temperature given to the translational mode.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 11 Fig. 12</head><label>1112</label><figDesc>Fig. 11 Temperatures along the stagnation streamline for pure oxygen gas flow over a cylinder with free stream conditions 𝑀𝑎 ∞ = 16 and 𝐾𝑛 𝐷 = 0.005. The inclusion of electronic energy is denoted by HOe and aHOe in the legend.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 13</head><label>13</label><figDesc>Fig. 13 Non-dimensionalised rotational temperature contours for hypersonic flow over a cylinder; a) harmonic oscillator and no electronic energy, b) harmonic oscillator with electronic energy and 𝑍 𝑒 = 500, c) harmonic oscillator with electronic energy and 𝑍 𝑒 = 100, d) anharmonic oscillator and no electronic energy, e) anharmonic oscillator with electronic energy and 𝑍 𝑒 = 500, f) anharmonic oscillator with electronic energy and 𝑍 𝑒 = 100.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>5 Fig. 14</head><label>514</label><figDesc>Fig. 14 Non-dimensionalised vibrational temperature contours for hypersonic flow over a cylinder; a) harmonic oscillator and no electronic energy, b) harmonic oscillator with electronic energy and 𝑍 𝑒 = 500, c) harmonic oscillator with electronic energy and 𝑍 𝑒 = 100, d) anharmonic oscillator and no electronic energy, e) anharmonic oscillator with electronic energy and 𝑍 𝑒 = 500, f) anharmonic oscillator with electronic energy and 𝑍 𝑒 = 100.</figDesc><graphic coords="32,70.22,203.83,140.70,125.07" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 2 Spectroscopy constants for three ground state diatomic molecules.</head><label>2</label><figDesc>Species𝜔 𝑒 (𝑐𝑚 -1 )<ref type="bibr" target="#b41">[41]</ref> Fitted 𝜔 𝑒 (𝑐𝑚 -1 ) 𝜔 𝑒 𝜒 𝑒 (𝑐𝑚 -1 )<ref type="bibr" target="#b41">[41]</ref> Fitted 𝜔 𝑒 𝜒 𝑒 (𝑐𝑚 -1 ) 𝐷 (𝑒𝑉)<ref type="bibr" target="#b41">[41]</ref> </figDesc><table><row><cell>𝑁 2 (𝑋 1 + 𝑔 )</cell><cell>2358.57</cell><cell>2345.99</cell><cell>14.324</cell><cell>17.454</cell><cell>9.759</cell></row><row><cell>𝑂 2 (𝑋 3 -𝑔 )</cell><cell>1580.19</cell><cell>1671.74</cell><cell>11.981</cell><cell>16.425</cell><cell>5.116</cell></row><row><cell>𝑁𝑂 (𝑋 2 Π 𝑟 )</cell><cell>1904.20</cell><cell>1949.98</cell><cell>14.075</cell><cell>17.305</cell><cell>6.497</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>1, where aHO models, i.e. the Dunham and Morse, are compared to the HO model for the calculation of the vibrational energy for the nitrogen molecule lying at ground state level. The vibrational energies are calculated with both sets of spectroscopic constants shown in Tab. 2. The calculation of the vibrational energy with the Huber and Herzberg table values<ref type="bibr" target="#b40">[40]</ref> are denoted by 𝐻. 𝑎𝑛𝑑 𝐻.. The calculation of the vibrational energy with the values fitted to PES calculations are denoted by 𝐹𝑖𝑡𝑡𝑒𝑑 and the dissociation limit is denoted by 𝐷. The vibrational energies of the three diatomic molecules summarised in Table2are tabulated in Tables 3, 4 and 5 for 𝑁 2 , 𝑂 2 ,</figDesc><table><row><cell cols="3">and 𝑁𝑂, respectively.</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>14</cell><cell></cell><cell cols="2">Dunham Fitted Morse Fitted</cell><cell cols="2">Dunham H. and H. [40-42] Morse H. and H. [40-42]</cell><cell>HO D</cell></row><row><cell></cell><cell>12</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Vibrational Energy, (eV)</cell><cell>4 6 8 10</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>2</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>0</cell><cell>0</cell><cell>10</cell><cell cols="2">20 Vibrational Quantum Levels 30 40</cell><cell>50</cell><cell>60</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3 Vibrational energy for Nitrogen molecular at ground state.</head><label>3</label><figDesc></figDesc><table><row><cell>𝑖</cell><cell>𝜖 𝐻𝑂 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝐷𝑢𝑛ℎ𝑎𝑚 𝑣</cell><cell>(𝑖) , 𝑒𝑉</cell><cell>𝜖 𝑃𝐸𝑆 𝑣</cell><cell>(𝑖), 𝑒𝑉 [45]</cell></row><row><cell>0</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell></cell><cell>0.0000</cell></row><row><cell>1</cell><cell cols="2">0.2903</cell><cell cols="2">0.2860</cell><cell cols="2">0.2859</cell><cell></cell><cell>0.2881</cell></row><row><cell>2</cell><cell cols="2">0.5805</cell><cell cols="2">0.5676</cell><cell cols="2">0.5676</cell><cell></cell><cell>0.5719</cell></row><row><cell>3</cell><cell cols="2">0.8708</cell><cell cols="2">0.8449</cell><cell cols="2">0.8449</cell><cell></cell><cell>0.8513</cell></row><row><cell>4</cell><cell cols="2">1.1611</cell><cell cols="2">1.1179</cell><cell cols="2">1.1179</cell><cell></cell><cell>1.1265</cell></row><row><cell>5</cell><cell cols="2">1.4513</cell><cell cols="2">1.3866</cell><cell cols="2">1.3865</cell><cell></cell><cell>1.3973</cell></row><row><cell>6</cell><cell cols="2">1.7416</cell><cell cols="2">1.6509</cell><cell cols="2">1.6508</cell><cell></cell><cell>1.6638</cell></row><row><cell>7</cell><cell cols="2">2.0319</cell><cell cols="2">1.9110</cell><cell cols="2">1.9108</cell><cell></cell><cell>1.9260</cell></row><row><cell>8</cell><cell cols="2">2.3222</cell><cell cols="2">2.1667</cell><cell cols="2">2.1665</cell><cell></cell><cell>2.1839</cell></row><row><cell>9</cell><cell cols="2">2.6124</cell><cell cols="2">2.4181</cell><cell cols="2">2.4178</cell><cell></cell><cell>2.4375</cell></row><row><cell></cell><cell cols="2">2.9027</cell><cell cols="2">2.6652</cell><cell cols="2">2.6648</cell><cell></cell><cell>2.6867</cell></row><row><cell></cell><cell cols="2">3.1930</cell><cell cols="2">2.9079</cell><cell cols="2">2.9075</cell><cell></cell><cell>2.9316</cell></row><row><cell></cell><cell cols="2">3.4832</cell><cell cols="2">3.1464</cell><cell cols="2">3.1458</cell><cell></cell><cell>3.1722</cell></row><row><cell></cell><cell cols="2">3.7735</cell><cell cols="2">3.3805</cell><cell cols="2">3.3798</cell><cell></cell><cell>3.4085</cell></row><row><cell></cell><cell cols="2">4.0638</cell><cell cols="2">3.6103</cell><cell cols="2">3.6094</cell><cell></cell><cell>3.6405</cell></row><row><cell></cell><cell cols="2">4.3540</cell><cell cols="2">3.8358</cell><cell cols="2">3.8347</cell><cell></cell><cell>3.8681</cell></row><row><cell></cell><cell cols="2">4.6443</cell><cell cols="2">4.0569</cell><cell cols="2">4.0557</cell><cell></cell><cell>4.0914</cell></row><row><cell></cell><cell cols="2">4.9346</cell><cell cols="2">4.2738</cell><cell cols="2">4.2723</cell><cell></cell><cell>4.3104</cell></row><row><cell></cell><cell cols="2">5.2249</cell><cell cols="2">4.4863</cell><cell cols="2">4.4845</cell><cell></cell><cell>4.5251</cell></row><row><cell></cell><cell cols="2">5.5151</cell><cell cols="2">4.6945</cell><cell cols="2">4.6924</cell><cell></cell><cell>4.7355</cell></row><row><cell></cell><cell cols="2">5.8054</cell><cell cols="2">4.8984</cell><cell cols="2">4.8960</cell><cell></cell><cell>4.9416</cell></row><row><cell></cell><cell cols="2">6.0957</cell><cell cols="2">5.0980</cell><cell cols="2">5.0952</cell><cell></cell><cell>5.1433</cell></row><row><cell></cell><cell cols="2">6.3859</cell><cell cols="2">5.2932</cell><cell cols="2">5.2900</cell><cell></cell><cell>5.3407</cell></row><row><cell></cell><cell cols="2">6.6762</cell><cell cols="2">5.4842</cell><cell cols="2">5.4805</cell><cell></cell><cell>5.5338</cell></row><row><cell></cell><cell cols="2">6.9665</cell><cell cols="2">5.6708</cell><cell cols="2">5.6667</cell><cell></cell><cell>5.7226</cell></row><row><cell></cell><cell cols="2">7.2567</cell><cell cols="2">5.8531</cell><cell cols="2">5.8484</cell><cell></cell><cell>5.9070</cell></row><row><cell></cell><cell cols="2">7.5470</cell><cell cols="2">6.0310</cell><cell cols="2">6.0258</cell><cell></cell><cell>6.0872</cell></row><row><cell></cell><cell cols="2">7.8373</cell><cell cols="2">6.2047</cell><cell cols="2">6.1989</cell><cell></cell><cell>6.2630</cell></row><row><cell></cell><cell cols="2">8.1276</cell><cell cols="2">6.3740</cell><cell cols="2">6.3676</cell><cell></cell><cell>6.4345</cell></row><row><cell></cell><cell cols="2">8.4178</cell><cell cols="2">6.5390</cell><cell cols="2">6.5319</cell><cell></cell><cell>6.6017</cell></row><row><cell></cell><cell cols="2">8.7081</cell><cell cols="2">6.6997</cell><cell cols="2">6.6918</cell><cell></cell><cell>6.7645</cell></row><row><cell></cell><cell cols="2">8.9984</cell><cell cols="2">6.8561</cell><cell cols="2">6.8474</cell><cell></cell><cell>6.9231</cell></row><row><cell></cell><cell cols="2">9.2886</cell><cell cols="2">7.0082</cell><cell cols="2">6.9986</cell><cell></cell><cell>7.0773</cell></row><row><cell></cell><cell cols="2">9.5789</cell><cell cols="2">7.1559</cell><cell cols="2">7.1454</cell><cell></cell><cell>7.2272</cell></row><row><cell></cell><cell cols="2">9.8692</cell><cell cols="2">7.2993</cell><cell cols="2">7.2879</cell><cell></cell><cell>7.3728</cell></row><row><cell></cell><cell cols="2">10.1594</cell><cell cols="2">7.4384</cell><cell cols="2">7.4259</cell><cell></cell><cell>7.5140</cell></row><row><cell></cell><cell cols="2">10.4497</cell><cell cols="2">7.5732</cell><cell cols="2">7.5596</cell><cell></cell><cell>7.6510</cell></row><row><cell></cell><cell cols="2">10.7400</cell><cell cols="2">7.7037</cell><cell cols="2">7.6889</cell><cell></cell><cell>7.7836</cell></row><row><cell></cell><cell cols="2">11.0303</cell><cell cols="2">7.8298</cell><cell cols="2">7.8139</cell><cell></cell><cell>7.9119</cell></row><row><cell></cell><cell cols="2">11.3205</cell><cell cols="2">7.9517</cell><cell cols="2">7.9344</cell><cell></cell><cell>8.0359</cell></row><row><cell></cell><cell cols="2">11.6108</cell><cell cols="2">8.0692</cell><cell cols="2">8.0506</cell><cell></cell><cell>8.1556</cell></row><row><cell></cell><cell cols="2">11.9011</cell><cell cols="2">8.1824</cell><cell cols="2">8.1624</cell><cell></cell><cell>8.2709</cell></row><row><cell></cell><cell cols="2">12.1913</cell><cell cols="2">8.2912</cell><cell cols="2">8.2698</cell><cell></cell><cell>8.3820</cell></row><row><cell></cell><cell cols="2">12.4816</cell><cell cols="2">8.3958</cell><cell cols="2">8.3728</cell><cell></cell><cell>8.4887</cell></row><row><cell></cell><cell cols="2">12.7719</cell><cell cols="2">8.4960</cell><cell cols="2">8.4714</cell><cell></cell><cell>8.5911</cell></row><row><cell></cell><cell cols="2">13.0621</cell><cell cols="2">8.5919</cell><cell cols="2">8.5656</cell><cell></cell><cell>8.6891</cell></row><row><cell></cell><cell cols="2">13.3524</cell><cell cols="2">8.6835</cell><cell cols="2">8.6554</cell><cell></cell><cell>8.7829</cell></row><row><cell></cell><cell cols="2">13.6427</cell><cell cols="2">8.7708</cell><cell cols="2">8.7408</cell><cell></cell><cell>8.8723</cell></row><row><cell></cell><cell cols="2">13.9330</cell><cell cols="2">8.8538</cell><cell cols="2">8.8219</cell><cell></cell><cell>8.9575</cell></row><row><cell></cell><cell cols="2">14.2232</cell><cell cols="2">8.9324</cell><cell cols="2">8.8985</cell><cell></cell><cell>9.0383</cell></row><row><cell></cell><cell cols="2">14.5135</cell><cell cols="2">9.0067</cell><cell cols="2">8.9707</cell><cell></cell><cell>9.1147</cell></row><row><cell></cell><cell cols="2">14.8038</cell><cell cols="2">9.0767</cell><cell cols="2">9.0385</cell><cell></cell><cell>9.1869</cell></row><row><cell></cell><cell cols="2">15.0940</cell><cell cols="2">9.1424</cell><cell cols="2">9.1019</cell><cell></cell><cell>9.2547</cell></row><row><cell></cell><cell cols="2">15.3843</cell><cell cols="2">9.2037</cell><cell cols="2">9.1609</cell><cell></cell><cell>9.3182</cell></row><row><cell></cell><cell cols="2">15.6746</cell><cell cols="2">9.2608</cell><cell cols="2">9.2155</cell><cell></cell><cell>9.3774</cell></row><row><cell></cell><cell cols="2">15.9648</cell><cell cols="2">9.3135</cell><cell cols="2">9.2657</cell><cell></cell><cell>9.4323</cell></row><row><cell></cell><cell cols="2">16.2551</cell><cell cols="2">9.3619</cell><cell cols="2">9.3115</cell><cell></cell><cell>9.4829</cell></row><row><cell></cell><cell cols="2">16.5454</cell><cell cols="2">9.4060</cell><cell cols="2">9.3528</cell><cell></cell><cell>9.5291</cell></row><row><cell></cell><cell cols="2">16.8357</cell><cell cols="2">9.4458</cell><cell cols="2">9.3898</cell><cell></cell><cell>9.5710</cell></row><row><cell></cell><cell cols="2">17.1259</cell><cell cols="2">9.4812</cell><cell cols="2">9.4223</cell><cell></cell><cell>9.6086</cell></row><row><cell></cell><cell cols="2">17.4162</cell><cell cols="2">9.5123</cell><cell cols="2">9.4504</cell><cell></cell><cell>9.6419</cell></row><row><cell></cell><cell cols="2">17.7065</cell><cell cols="2">9.5391</cell><cell cols="2">9.4741</cell><cell></cell><cell>9.6709</cell></row><row><cell></cell><cell cols="2">17.9967</cell><cell cols="2">9.5616</cell><cell cols="2">9.4934</cell><cell></cell><cell>9.6955</cell></row><row><cell></cell><cell cols="2">18.2870</cell><cell cols="2">9.5798</cell><cell cols="2">9.5082</cell><cell></cell><cell>9.7158</cell></row><row><cell></cell><cell cols="2">18.4060</cell><cell cols="2">9.5937</cell><cell cols="2">9.5186</cell><cell></cell><cell>9.7318</cell></row><row><cell></cell><cell cols="2">18.6936</cell><cell cols="2">9.6032</cell><cell cols="2">9.5246</cell><cell></cell><cell>9.7435</cell></row><row><cell></cell><cell cols="2">18.9812</cell><cell cols="2">9.6084</cell><cell cols="2">10.1920</cell><cell></cell><cell>9.7508</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4 Vibrational energy for Oxygen molecular at ground state.</head><label>4</label><figDesc></figDesc><table><row><cell>𝑖</cell><cell>𝜖 𝐻𝑂 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝐷𝑢𝑛ℎ𝑎𝑚 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝑃𝐸𝑆 𝑣</cell><cell>(𝑖), 𝑒𝑉 [45]</cell></row><row><cell>0</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell></cell><cell>0.0000</cell></row><row><cell>1</cell><cell cols="2">0.2068</cell><cell cols="2">0.2028</cell><cell cols="2">0.2028</cell><cell></cell><cell>0.1932</cell></row><row><cell>2</cell><cell cols="2">0.4137</cell><cell cols="2">0.4015</cell><cell cols="2">0.4015</cell><cell></cell><cell>0.3838</cell></row><row><cell>3</cell><cell cols="2">0.6205</cell><cell cols="2">0.5961</cell><cell cols="2">0.5961</cell><cell></cell><cell>0.5720</cell></row><row><cell>4</cell><cell cols="2">0.8274</cell><cell cols="2">0.7867</cell><cell cols="2">0.7867</cell><cell></cell><cell>0.7575</cell></row><row><cell>5</cell><cell cols="2">1.0342</cell><cell cols="2">0.9733</cell><cell cols="2">0.9732</cell><cell></cell><cell>0.9404</cell></row><row><cell>6</cell><cell cols="2">1.2411</cell><cell cols="2">1.1557</cell><cell cols="2">1.1555</cell><cell></cell><cell>1.1205</cell></row><row><cell>7</cell><cell cols="2">1.4479</cell><cell cols="2">1.3341</cell><cell cols="2">1.3339</cell><cell></cell><cell>1.2978</cell></row><row><cell>8</cell><cell cols="2">1.6548</cell><cell cols="2">1.5084</cell><cell cols="2">1.5081</cell><cell></cell><cell>1.4722</cell></row><row><cell>9</cell><cell cols="2">1.8616</cell><cell cols="2">1.6787</cell><cell cols="2">1.6782</cell><cell></cell><cell>1.6436</cell></row><row><cell>10</cell><cell cols="2">2.0684</cell><cell cols="2">1.8449</cell><cell cols="2">1.8442</cell><cell></cell><cell>1.8119</cell></row><row><cell>11</cell><cell cols="2">2.2753</cell><cell cols="2">2.0070</cell><cell cols="2">2.0061</cell><cell></cell><cell>1.9772</cell></row><row><cell>12</cell><cell cols="2">2.4821</cell><cell cols="2">2.1651</cell><cell cols="2">2.1639</cell><cell></cell><cell>2.1393</cell></row><row><cell>13</cell><cell cols="2">2.6890</cell><cell cols="2">2.3191</cell><cell cols="2">2.3177</cell><cell></cell><cell>2.2981</cell></row><row><cell>14</cell><cell cols="2">2.8958</cell><cell cols="2">2.4690</cell><cell cols="2">2.4673</cell><cell></cell><cell>2.4536</cell></row><row><cell>15</cell><cell cols="2">3.1027</cell><cell cols="2">2.6149</cell><cell cols="2">2.6127</cell><cell></cell><cell>2.6057</cell></row><row><cell>16</cell><cell cols="2">3.3095</cell><cell cols="2">2.7567</cell><cell cols="2">2.7541</cell><cell></cell><cell>2.7543</cell></row><row><cell>17</cell><cell cols="2">3.5163</cell><cell cols="2">2.8945</cell><cell cols="2">2.8913</cell><cell></cell><cell>2.8993</cell></row><row><cell>18</cell><cell cols="2">3.7232</cell><cell cols="2">3.0282</cell><cell cols="2">3.0244</cell><cell></cell><cell>3.0407</cell></row><row><cell>19</cell><cell cols="2">3.9300</cell><cell cols="2">3.1578</cell><cell cols="2">3.1534</cell><cell></cell><cell>3.1784</cell></row><row><cell>20</cell><cell cols="2">4.1369</cell><cell cols="2">3.2833</cell><cell cols="2">3.2783</cell><cell></cell><cell>3.3123</cell></row><row><cell>21</cell><cell cols="2">4.3437</cell><cell cols="2">3.4048</cell><cell cols="2">3.3990</cell><cell></cell><cell>3.4424</cell></row><row><cell>22</cell><cell cols="2">4.5506</cell><cell cols="2">3.5222</cell><cell cols="2">3.5156</cell><cell></cell><cell>3.5684</cell></row><row><cell>23</cell><cell cols="2">4.7574</cell><cell cols="2">3.6356</cell><cell cols="2">3.6280</cell><cell></cell><cell>3.6904</cell></row><row><cell>24</cell><cell cols="2">4.9643</cell><cell cols="2">3.7449</cell><cell cols="2">3.7363</cell><cell></cell><cell>3.8082</cell></row><row><cell>25</cell><cell cols="2">5.1711</cell><cell cols="2">3.8501</cell><cell cols="2">3.8404</cell><cell></cell><cell>3.9218</cell></row><row><cell>26</cell><cell cols="2">5.3779</cell><cell cols="2">3.9513</cell><cell cols="2">3.9404</cell><cell></cell><cell>4.0311</cell></row><row><cell>27</cell><cell cols="2">5.5848</cell><cell cols="2">4.0484</cell><cell cols="2">4.0362</cell><cell></cell><cell>4.1359</cell></row><row><cell>28</cell><cell cols="2">5.7916</cell><cell cols="2">4.1414</cell><cell cols="2">4.1278</cell><cell></cell><cell>4.2362</cell></row><row><cell>29</cell><cell cols="2">5.9985</cell><cell cols="2">4.2304</cell><cell cols="2">4.2153</cell><cell></cell><cell>4.3318</cell></row><row><cell>30</cell><cell cols="2">6.2053</cell><cell cols="2">4.3153</cell><cell cols="2">4.2987</cell><cell></cell><cell>4.4226</cell></row><row><cell>31</cell><cell cols="2">6.4122</cell><cell cols="2">4.3962</cell><cell cols="2">4.3778</cell><cell></cell><cell>4.5085</cell></row><row><cell>32</cell><cell cols="2">6.6190</cell><cell cols="2">4.4729</cell><cell cols="2">4.4528</cell><cell></cell><cell>4.5893</cell></row><row><cell>33</cell><cell cols="2">6.8259</cell><cell cols="2">4.5457</cell><cell cols="2">4.5236</cell><cell></cell><cell>4.6649</cell></row><row><cell>34</cell><cell cols="2">7.0327</cell><cell cols="2">4.6143</cell><cell cols="2">4.5902</cell><cell></cell><cell>4.7353</cell></row><row><cell>35</cell><cell cols="2">7.2395</cell><cell cols="2">4.6789</cell><cell cols="2">4.6526</cell><cell></cell><cell>4.8001</cell></row><row><cell>36</cell><cell cols="2">7.4464</cell><cell cols="2">4.7394</cell><cell cols="2">4.7109</cell><cell></cell><cell>4.8592</cell></row><row><cell>37</cell><cell cols="2">7.6532</cell><cell cols="2">4.7959</cell><cell cols="2">4.7649</cell><cell></cell><cell>4.9125</cell></row><row><cell>38</cell><cell cols="2">7.8601</cell><cell cols="2">4.8483</cell><cell cols="2">4.8147</cell><cell></cell><cell>4.9598</cell></row><row><cell>39</cell><cell cols="2">8.0669</cell><cell cols="2">4.8966</cell><cell cols="2">4.8604</cell><cell></cell><cell>5.0009</cell></row><row><cell>40</cell><cell cols="2">8.2738</cell><cell cols="2">4.9409</cell><cell cols="2">4.9018</cell><cell></cell><cell>5.0355</cell></row><row><cell>41</cell><cell cols="2">8.4806</cell><cell cols="2">4.9811</cell><cell cols="2">4.9391</cell><cell></cell><cell>5.0635</cell></row><row><cell>42</cell><cell cols="2">8.6875</cell><cell cols="2">5.0172</cell><cell cols="2">4.9721</cell><cell></cell><cell>5.0850</cell></row><row><cell>43</cell><cell cols="2">8.8943</cell><cell cols="2">5.0493</cell><cell cols="2">5.0009</cell><cell></cell><cell>5.0999</cell></row><row><cell>44</cell><cell cols="2">9.1011</cell><cell cols="2">5.0773</cell><cell cols="2">5.0255</cell><cell></cell><cell>5.1089</cell></row><row><cell>45</cell><cell cols="2">9.3080</cell><cell cols="2">5.1012</cell><cell cols="2">5.0459</cell><cell></cell><cell>5.1134</cell></row><row><cell>46</cell><cell cols="2">9.5148</cell><cell cols="2">5.1211</cell><cell cols="2">5.0620</cell><cell></cell><cell>5.1150</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table Vibrational energy for Nitric Oxide molecular at ground state.</head><label>Vibrational</label><figDesc></figDesc><table><row><cell>𝑖</cell><cell>𝜖 𝐻𝑂 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝑀𝑜𝑟 𝑠𝑒 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝐷𝑢𝑛ℎ𝑎𝑚 𝑣</cell><cell>(𝑖), 𝑒𝑉</cell><cell>𝜖 𝑃𝐸𝑆 𝑣</cell><cell>(𝑖), 𝑒𝑉 [45]</cell></row><row><cell>0</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell cols="2">0.0000</cell><cell></cell><cell>0.0000</cell></row><row><cell>1</cell><cell cols="2">0.2413</cell><cell cols="2">0.2370</cell><cell cols="2">0.2370</cell><cell></cell><cell>0.2289</cell></row><row><cell>2</cell><cell cols="2">0.4825</cell><cell cols="2">0.4697</cell><cell cols="2">0.4697</cell><cell></cell><cell>0.4548</cell></row><row><cell>3</cell><cell cols="2">0.7238</cell><cell cols="2">0.6981</cell><cell cols="2">0.6981</cell><cell></cell><cell>0.6778</cell></row><row><cell>4</cell><cell cols="2">0.9651</cell><cell cols="2">0.9223</cell><cell cols="2">0.9221</cell><cell></cell><cell>0.8977</cell></row><row><cell>5</cell><cell cols="2">1.2064</cell><cell cols="2">1.1421</cell><cell cols="2">1.1419</cell><cell></cell><cell>1.1145</cell></row><row><cell>6</cell><cell cols="2">1.4476</cell><cell cols="2">1.3577</cell><cell cols="2">1.3573</cell><cell></cell><cell>1.3281</cell></row><row><cell>7</cell><cell cols="2">1.6889</cell><cell cols="2">1.5690</cell><cell cols="2">1.5684</cell><cell></cell><cell>1.5385</cell></row><row><cell>8</cell><cell cols="2">1.9302</cell><cell cols="2">1.7760</cell><cell cols="2">1.7752</cell><cell></cell><cell>1.7457</cell></row><row><cell>9</cell><cell cols="2">2.1714</cell><cell cols="2">1.9787</cell><cell cols="2">1.9776</cell><cell></cell><cell>1.9495</cell></row><row><cell></cell><cell cols="2">2.4127</cell><cell cols="2">2.1772</cell><cell cols="2">2.1756</cell><cell></cell><cell>2.1499</cell></row><row><cell></cell><cell cols="2">2.6540</cell><cell cols="2">2.3714</cell><cell cols="2">2.3693</cell><cell></cell><cell>2.3469</cell></row><row><cell></cell><cell cols="2">2.8952</cell><cell cols="2">2.5612</cell><cell cols="2">2.5586</cell><cell></cell><cell>2.5404</cell></row><row><cell></cell><cell cols="2">3.1365</cell><cell cols="2">2.7468</cell><cell cols="2">2.7435</cell><cell></cell><cell>2.7303</cell></row><row><cell></cell><cell cols="2">3.3778</cell><cell cols="2">2.9282</cell><cell cols="2">2.9240</cell><cell></cell><cell>2.9166</cell></row><row><cell></cell><cell cols="2">3.6191</cell><cell cols="2">3.1052</cell><cell cols="2">3.1001</cell><cell></cell><cell>3.0993</cell></row><row><cell></cell><cell cols="2">3.8603</cell><cell cols="2">3.2779</cell><cell cols="2">3.2718</cell><cell></cell><cell>3.2781</cell></row><row><cell></cell><cell cols="2">4.1016</cell><cell cols="2">3.4464</cell><cell cols="2">3.4391</cell><cell></cell><cell>3.4532</cell></row><row><cell></cell><cell cols="2">4.3429</cell><cell cols="2">3.6106</cell><cell cols="2">3.6020</cell><cell></cell><cell>3.6244</cell></row><row><cell></cell><cell cols="2">4.5841</cell><cell cols="2">3.7705</cell><cell cols="2">3.7604</cell><cell></cell><cell>3.7917</cell></row><row><cell></cell><cell cols="2">4.8254</cell><cell cols="2">3.9261</cell><cell cols="2">3.9144</cell><cell></cell><cell>3.9550</cell></row><row><cell></cell><cell cols="2">5.0667</cell><cell cols="2">4.0775</cell><cell cols="2">4.0640</cell><cell></cell><cell>4.1142</cell></row><row><cell></cell><cell cols="2">5.3080</cell><cell cols="2">4.2246</cell><cell cols="2">4.2091</cell><cell></cell><cell>4.2692</cell></row><row><cell></cell><cell cols="2">5.5492</cell><cell cols="2">4.3673</cell><cell cols="2">4.3497</cell><cell></cell><cell>4.4200</cell></row><row><cell></cell><cell cols="2">5.7905</cell><cell cols="2">4.5058</cell><cell cols="2">4.4858</cell><cell></cell><cell>4.5665</cell></row><row><cell></cell><cell cols="2">6.0318</cell><cell cols="2">4.6401</cell><cell cols="2">4.6175</cell><cell></cell><cell>4.7087</cell></row><row><cell></cell><cell cols="2">6.2730</cell><cell cols="2">4.7700</cell><cell cols="2">4.7447</cell><cell></cell><cell>4.8464</cell></row><row><cell></cell><cell cols="2">6.5143</cell><cell cols="2">4.8956</cell><cell cols="2">4.8673</cell><cell></cell><cell>4.9795</cell></row><row><cell></cell><cell cols="2">6.7556</cell><cell cols="2">5.0170</cell><cell cols="2">4.9855</cell><cell></cell><cell>5.1080</cell></row><row><cell></cell><cell cols="2">6.9968</cell><cell cols="2">5.1341</cell><cell cols="2">5.0992</cell><cell></cell><cell>5.2318</cell></row><row><cell></cell><cell cols="2">7.2381</cell><cell cols="2">5.2469</cell><cell cols="2">5.2083</cell><cell></cell><cell>5.3508</cell></row><row><cell></cell><cell cols="2">7.4794</cell><cell cols="2">5.3554</cell><cell cols="2">5.3129</cell><cell></cell><cell>5.4648</cell></row><row><cell></cell><cell cols="2">7.7207</cell><cell cols="2">5.4597</cell><cell cols="2">5.4129</cell><cell></cell><cell>5.5738</cell></row><row><cell></cell><cell cols="2">7.9619</cell><cell cols="2">5.5596</cell><cell cols="2">5.5084</cell><cell></cell><cell>5.6777</cell></row><row><cell></cell><cell cols="2">8.2032</cell><cell cols="2">5.6553</cell><cell cols="2">5.5994</cell><cell></cell><cell>5.7763</cell></row><row><cell></cell><cell cols="2">8.4445</cell><cell cols="2">5.7467</cell><cell cols="2">5.6858</cell><cell></cell><cell>5.8695</cell></row><row><cell></cell><cell cols="2">8.6857</cell><cell cols="2">5.8338</cell><cell cols="2">5.7676</cell><cell></cell><cell>5.9572</cell></row><row><cell></cell><cell cols="2">8.9270</cell><cell cols="2">5.9166</cell><cell cols="2">5.8449</cell><cell></cell><cell>6.0392</cell></row><row><cell></cell><cell cols="2">9.1683</cell><cell cols="2">5.9952</cell><cell cols="2">5.9175</cell><cell></cell><cell>6.1153</cell></row><row><cell></cell><cell cols="2">9.4095</cell><cell cols="2">6.0694</cell><cell cols="2">5.9856</cell><cell></cell><cell>6.1855</cell></row><row><cell></cell><cell cols="2">9.6508</cell><cell cols="2">6.1394</cell><cell cols="2">6.0490</cell><cell></cell><cell>6.2495</cell></row><row><cell></cell><cell cols="2">9.8921</cell><cell cols="2">6.2051</cell><cell cols="2">6.1078</cell><cell></cell><cell>6.3072</cell></row><row><cell></cell><cell cols="2">10.1334</cell><cell cols="2">6.2665</cell><cell cols="2">6.1621</cell><cell></cell><cell>6.3582</cell></row><row><cell></cell><cell cols="2">10.3746</cell><cell cols="2">6.3237</cell><cell cols="2">6.2116</cell><cell></cell><cell>6.4024</cell></row><row><cell></cell><cell cols="2">10.6159</cell><cell cols="2">6.3765</cell><cell cols="2">6.2566</cell><cell></cell><cell>6.4394</cell></row><row><cell></cell><cell cols="2">10.8572</cell><cell cols="2">6.4251</cell><cell cols="2">6.2969</cell><cell></cell><cell>6.4690</cell></row><row><cell></cell><cell cols="2">11.0984</cell><cell cols="2">6.4694</cell><cell cols="2">6.3326</cell><cell></cell><cell>6.4909</cell></row><row><cell></cell><cell cols="2">11.3397</cell><cell cols="2">6.5094</cell><cell cols="2">6.3635</cell><cell></cell><cell>6.5045</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 6 Numerical expense of aHO and HO models.</head><label>6</label><figDesc></figDesc><table><row><cell cols="3">Model CPU time (𝑠)/100Δ𝑡 RAM (GB)</cell></row><row><cell>HO</cell><cell>1382.55</cell><cell>0.816</cell></row><row><cell>aHO</cell><cell>1385.25</cell><cell>0.816</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 7 Comparison of the HO model and aHO model on the peak value of the internal temperatures and their locations. The inclusion of electronic energy is denoted by HOe and aHOe.</head><label>7</label><figDesc></figDesc><table><row><cell>Model</cell><cell>𝑥 𝐷 | 𝑚𝑎𝑥 (𝑇 𝑡 )</cell><cell>𝑇 𝑡 𝑇 ∞</cell><cell>𝑥 𝐷 | 𝑚𝑎𝑥 (𝑇 𝑟 )</cell><cell>𝑇 𝑟 𝑇 ∞</cell><cell>𝑥 𝐷 | 𝑚𝑎𝑥 (𝑇 𝑣 )</cell><cell>𝑇 𝑣 𝑇 ∞</cell><cell>𝑥 𝐷 | 𝑚𝑎𝑥 (𝑇 𝑒 )</cell><cell>𝑇 𝑒 𝑇 ∞</cell></row><row><cell>𝐻𝑂</cell><cell>-0.31</cell><cell>56.48</cell><cell>-0.23</cell><cell>44.64</cell><cell>-0.10</cell><cell>38.43</cell><cell>-</cell><cell>-</cell></row><row><cell>𝑎𝐻𝑂</cell><cell>-0.30</cell><cell>56.31</cell><cell>-0.23</cell><cell>44.08</cell><cell>-0.10</cell><cell>37.05</cell><cell>-</cell><cell>-</cell></row><row><cell>𝐻𝑂𝑒 𝑍 𝑒 =500</cell><cell>-0.30</cell><cell>56.35</cell><cell>-0.23</cell><cell>44.32</cell><cell>-0.10</cell><cell>37.29</cell><cell>-0.06</cell><cell>19.51</cell></row><row><cell>𝑎𝐻𝑂𝑒 𝑍 𝑒 =500</cell><cell>-0.29</cell><cell>56.33</cell><cell>-0.23</cell><cell>43.81</cell><cell>-0.10</cell><cell>36.24</cell><cell>-0.06</cell><cell>19.51</cell></row><row><cell>𝐻𝑂𝑒 𝑍 𝑒 =100</cell><cell>-0.29</cell><cell>55.98</cell><cell>-0.23</cell><cell>43.28</cell><cell>-0.10</cell><cell>35.85</cell><cell>-0.08</cell><cell>31.78</cell></row><row><cell>𝑎𝐻𝑂𝑒 𝑍 𝑒 =100</cell><cell>-0.28</cell><cell>55.87</cell><cell>-0.22</cell><cell>42.35</cell><cell>-0.10</cell><cell>35.01</cell><cell>-0.08</cell><cell>31.21</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>dissociation of the molecule as indicated by Fig.1causes a noticeable change in the chemistry of the molecule. Although</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>investigated in the current work.177</p></note>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><head>Funding Sources</head><p>The author gratefully acknowledges scholarship funding from the <rs type="funder">James Watt School of Engineering</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>energy. For a nitrogen molecule under the HO assumption, the dissociation limit is reached for a quantum level of 33, 172 while under the Morse-aHO assumption, the dissociation occurs at quantum level 47 for the the vibrational energies 173 computed with the Huber and Herzberg tables <ref type="bibr" target="#b40">[40]</ref>, or 66 for the PES fitted vibrational energies. A delay in the this fundamental aspect is of interest in the context of high speed flow simulations, chemical reaction rates are not</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Hypersonic and high-temperature gas dynamics</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<publisher>American Institute of Aeronautics and Astronautics</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Kruger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G</forename><surname>Vincenti</surname></persName>
+		</author>
+		<title level="m">Introduction to Physical Gas Dynamics</title>
+		<imprint>
+			<publisher>John Willey &amp; Sons</publisher>
+			<date type="published" when="1965">1965</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">W</forename><surname>Liepmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Roshko</surname></persName>
+		</author>
+		<title level="m">Elements of Gas Dynamics</title>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="1957">1957</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Bird</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Molecular gas dynamics and the direct simulation of gas flows</title>
+		<title level="s">Oxford Engineering Science Series</title>
+		<imprint>
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Schwartzentruber</surname></persName>
+		</author>
+		<title level="m">Nonequilibrium gas dynamics and molecular simulation</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">42</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Combining particle-in-cell and direct simulation Monte Carlo for the simulation of reactive plasma flows</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Fasoulas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-D</forename><surname>Munz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pfeiffer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Beyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Binder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Copplestone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mirza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Nizenkov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ortwein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Reschke</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.5097638</idno>
+		<ptr target="https://doi.org/10.1063/1.5097638" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page">72006</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Investigation of shock wave structure in CO 2 based on the continuum and DSMC approaches</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kustova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Alekseev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Tan</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/1742-6596/1959/1/012032</idno>
+		<ptr target="https://doi.org/10.1088/1742-6596/1959/1/012032" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Physics: Conference Series</title>
+		<imprint>
+			<biblScope unit="volume">1959</biblScope>
+			<biblScope unit="page">12032</biblScope>
+			<date type="published" when="2021">2021</date>
+			<publisher>IOP Publishing</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">A study of internal energy relaxation in shocks using molecular dynamics based models</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Parsons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Levin</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4931107</idno>
+		<ptr target="https://doi.org/10.1063/1.4931107" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page">144501</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Tables of internal partition functions and thermodynamic properties of high-temperature Mars-atmosphere species from 50K to 50000K</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Capitelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Colonna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Marraffa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Giordano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Giordano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Warmbein</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<publisher>European Space Agency</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">High-temperature and nonequilibrium partition function and thermodynamic data of diatomic molecules</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Babou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rivière</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-Y</forename><surname>Perrin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Soufiani</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10765-007-0288-6</idno>
+		<ptr target="https://doi.org/10.1007/s10765-007-0288-6" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Thermophysics</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="416" to="438" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">High-temperature partition functions, specific heats and spectral radiative properties of diatomic molecules with an improved calculation of energy levels</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Qin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jqsrt.2018.02.004</idno>
+		<ptr target="https://doi.org/10.1016/j.jqsrt.2018.02.004" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Quantitative Spectroscopy and Radiative Transfer</title>
+		<imprint>
+			<biblScope unit="volume">210</biblScope>
+			<biblScope unit="page" from="1" to="18" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Diatomic molecules according to the wave mechanics. II. Vibrational levels</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Morse</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRev.34.57</idno>
+		<ptr target="https://doi.org/10.1103/PhysRev.34.57" />
+	</analytic>
+	<monogr>
+		<title level="j">Physical review</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">57</biblScope>
+			<date type="published" when="1929">1929</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">The energy levels of a rotating vibrator</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Dunham</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRev.41.721</idno>
+		<ptr target="https://doi.org/10.1103/PhysRev.41.721" />
+	</analytic>
+	<monogr>
+		<title level="j">Physical Review</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1932" to="1721" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Molecular quantum mechanics</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">W</forename><surname>Atkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Friedman</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/ed076p170.2</idno>
+		<ptr target="https://doi.org/10.1021/ed" />
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<publisher>Oxford university press</publisher>
+			<biblScope unit="page" from="76" to="170" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">Introduction to quantum mechanics</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Blinder</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Academic Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Quantum chemistry: an introduction</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Kauzmann</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<publisher>Elsevier</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">LEVEL: A computer program for solving the radial Schrödinger equation for bound and quasibound levels</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J L</forename><surname>Roy</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jqsrt.2016.05.028</idno>
+		<ptr target="https://doi.org/10.1016/j.jqsrt.2016.05.028" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Quantitative Spectroscopy and Radiative Transfer</title>
+		<imprint>
+			<biblScope unit="volume">186</biblScope>
+			<biblScope unit="page" from="167" to="178" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">High-temperature thermodynamic properties of Mars-atmosphere components</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Capitelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Colonna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Giordano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Marraffa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Casavola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Minelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pagano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Pietanza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Taccogna</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.12503</idno>
+		<ptr target="https://doi.org/10.2514/1.12503" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Spacecraft and Rockets</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="980" to="989" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Thermodynamic Properties of High-Temperature Air Components</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Capitelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Colonna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gorse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Giordano</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-94-009-0267-1_17</idno>
+		<ptr target="https://doi.org/10.1007/978-94-009-0267-1_17" />
+	</analytic>
+	<monogr>
+		<title level="m">Molecular Physics and Hypersonic Flows</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1996">1996</date>
+			<biblScope unit="page" from="293" to="301" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Recombination-assisted nitrogen dissociation rates under nonequilibrium conditions</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Colonna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">D</forename><surname>Pietanza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Capitelli</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.33505</idno>
+		<ptr target="https://doi.org/10.2514/1.33505.32" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Thermophysics and Heat Transfer</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="399" to="406" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Models for direct Monte Carlo simulation of coupled vibration-dissociation</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Haas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Boyd</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.858870</idno>
+		<ptr target="https://doi.org/10.1063/1.858870" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids A: Fluid Dynamics</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="478" to="489" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">DSMC modelling of vibrational and chemical kinetics for a reacting gas mixture</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bruno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Capitelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Longo</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0009-2614(98)00399-6</idno>
+		<ptr target="https://doi.org/10.1016/S0009-2614(98)00399-6" />
+	</analytic>
+	<monogr>
+		<title level="j">Chemical Physics letters</title>
+		<imprint>
+			<biblScope unit="volume">289</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="141" to="149" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Monte Carlo direct simulation of rotational relaxation of nitrogen through high total temperature shock waves using classical trajectory calculations</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Koura</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.869782</idno>
+		<ptr target="https://doi.org/10.1063/1.869782" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="2689" to="2691" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Direct simulation Monte Carlo study of rotational nonequilibrium in shock wave and spherical expansion of nitrogen using classical trajectory calculations</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Koura</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1467059</idno>
+		<ptr target="https://doi.org/10.1063/1.1467059" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1689" to="1695" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Implementation of a vibrationally linked chemical reaction model for DSMC</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Carlson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Bird</surname></persName>
+		</author>
+		<idno type="DOI">10.5555/885978</idno>
+		<ptr target="https://doi.org/10.5555/885978" />
+		<imprint>
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. rep.</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Prediction of Vibrational Relaxation in Hypersonic Expanding Flows Part I: Model Development</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Ruffin</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/3.685</idno>
+		<ptr target="https://doi.org/10.2514/3.685" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Thermophysics and Heat Transfer</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="432" to="437" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Prediction of vibrational relaxation in hypersonic expanding flows part 2: Results</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Ruffin</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/3.56309</idno>
+		<ptr target="https://doi.org/10.2514/3.56309" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Thermophysics and Heat Transfer</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="438" to="445" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Vibrational distributions in N 2 with an improved calculation of energy levels using the RKR method</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Da Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Guerra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Loureiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Sá</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.chemphys.2008.02.048</idno>
+		<ptr target="https://doi.org/10.1016/j.chemphys.2008.02.048" />
+	</analytic>
+	<monogr>
+		<title level="j">Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">348</biblScope>
+			<biblScope unit="issue">1-3</biblScope>
+			<biblScope unit="page" from="187" to="194" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">4 Monte Carlo direct simulation of rotational relaxation of diatomic molecules using classical trajectory calculations: Nitrogen shock wave</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Koura</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.869462</idno>
+		<ptr target="https://doi.org/10.1063/1.869462" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="3543" to="3549" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A set of model cross sections for the Monte Carlo simulation of rarefied real gases: Atom-diatom collisions</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Koura</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.868404</idno>
+		<ptr target="https://doi.org/10.1063/1.868404" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="3473" to="3486" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Theory of radiation from luminous shock waves in nitrogen</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Hammerling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Teare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kivel</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1724413</idno>
+		<ptr target="https://doi.org/10.1063/1.1724413" />
+	</analytic>
+	<monogr>
+		<title level="j">The Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="422" to="426" />
+			<date type="published" when="1959">1959</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Effect of dissociation on the rate of vibrational relaxation</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Treanor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">V</forename><surname>Marrone</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title/>
+		<idno type="DOI">10.1063/1.1724467</idno>
+		<ptr target="https://doi.org/10.1063/1.1724467" />
+		<imprint>
+			<date type="published" when="1962">1962</date>
+			<biblScope unit="page" from="1022" to="1026" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Chemical relaxation with preferential dissociation from excited vibrational levels</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">V</forename><surname>Marrone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Treanor</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1706888</idno>
+		<ptr target="https://doi.org/10.1063/1.1706888" />
+	</analytic>
+	<monogr>
+		<title level="j">The Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1215" to="1221" />
+			<date type="published" when="1963">1963</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">An improved potential energy surface and multi-temperature quasiclassical trajectory calculations of 𝑁 + 2 N 2 dissociation reactions</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Bender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Valentini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Nompelis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Paukku</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Varga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">G</forename><surname>Truhlar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Schwartzentruber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">V</forename><surname>Candler</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4927571</idno>
+		<ptr target="https://doi.org/10.1063/1.4927571" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">54304</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">General multi-group macroscopic modeling for thermo-chemical nonequilibrium gas mixtures</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Panesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sahai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Vinokur</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4915926</idno>
+		<ptr target="https://doi.org/10.1063/1.4915926" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">142</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page">134109</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Non-Boltzmann vibrational energy distributions and coupling to dissociation rate</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Singh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Schwartzentruber</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.5142732</idno>
+		<ptr target="https://doi.org/10.1063/1.5142732" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">152</biblScope>
+			<biblScope unit="issue">22</biblScope>
+			<biblScope unit="page">224301</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">IXV post-flight reconstruction and analysis of the aerothermodynamic measurements along the rarefied portion of the reentry trajectory</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Schouler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Prévereaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mieussens</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijheatmasstransfer.2021.121582</idno>
+		<ptr target="https://doi.org/10.1016/j.ijheatmasstransfer.2021.121582" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Heat and Mass Transfer</title>
+		<imprint>
+			<biblScope unit="volume">178</biblScope>
+			<biblScope unit="page">121582</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">dsmcFoam+: An OpenFOAM based direct simulation Monte Carlo solver</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Borg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Scanlon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Longshaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>John</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Emerson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Reese</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cpc.2017.09.030</idno>
+		<ptr target="https://doi.org/10.1016/j.cpc.2017.09.030" />
+	</analytic>
+	<monogr>
+		<title level="j">Computer Physics Communications</title>
+		<imprint>
+			<biblScope unit="volume">224</biblScope>
+			<biblScope unit="page" from="22" to="43" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Introduction to quantum mechanics</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">F</forename><surname>Schroeter</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<publisher>Cambridge university press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">Molecular spectra and molecular structure: IV. Constants of diatomic molecules</title>
+		<author>
+			<persName><forename type="first">K.-P</forename><surname>Huber</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-1-4757-0961-2_2</idno>
+		<ptr target="https://doi.org/10.1007/978-1-4757-0961-2_2" />
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<publisher>Springer Science &amp; Business Media</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<title level="m" type="main">Molecular spectra and molecular structure</title>
+		<author>
+			<persName><forename type="first">K.-P</forename><surname>Huber</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-1-4757-0961-2</idno>
+		<ptr target="https://doi.org/10.1007/978-1-4757-0961-2" />
+		<imprint>
+			<date type="published" when="1979">1979</date>
+		</imprint>
+	</monogr>
+	<note>Constants of diatomic molecules</note>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Potential energy functions for diatomic molecules</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">M</forename><surname>Hulburt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">O</forename><surname>Hirschfelder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<monogr>
+		<title/>
+		<idno type="DOI">10.1063/1.1750827</idno>
+		<ptr target="https://doi.org/10.1063/1.1750827" />
+		<imprint>
+			<date type="published" when="1941">1941</date>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="61" to="69" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">National Institute for Standards and Technology (NIST) Chemistry WebBook</title>
+		<author>
+			<persName><surname>Nist</surname></persName>
+		</author>
+		<ptr target="https://kinetics.nist.gov/kinetics/index.jsp" />
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Semiclassical modeling of state-specific dissociation rates in diatomic gases</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Macheret</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">V</forename><surname>Adamovich</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1313386</idno>
+		<ptr target="https://doi.org/10.1063/1.1313386" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="7351" to="7361" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">NO state-to-state vibrational kinetics in hypersonic boundary layers: The problem of rescaling rate coefficients to uniform vibrational ladders</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Armenise</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Esposito</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.chemphys.2014.11.004</idno>
+		<ptr target="https://doi.org/10.1016/j.chemphys.2014.11.004" />
+	</analytic>
+	<monogr>
+		<title level="j">Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="30" to="46" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">High temperature gas dynamics</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">K</forename><surname>Bose</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">High Temperature Gas Dynamics</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="page" from="259" to="281" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Progress and future prospects for particle-based simulation of hypersonic flow</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Schwartzentruber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Boyd</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.paerosci.2014.09.003</idno>
+		<ptr target="https://doi.org/10.1016/j.paerosci.2014.09.003" />
+	</analytic>
+	<monogr>
+		<title level="j">Progress in Aerospace Sciences</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="page" from="66" to="79" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Scalar and parallel optimized implementation of the direct simulation Monte Carlo method</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Dietrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Boyd</surname></persName>
+		</author>
+		<idno type="DOI">10.1006/jcph.1996.0141</idno>
+		<ptr target="https://doi.org/10.1006/jcph.1996.0141" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational Physics</title>
+		<imprint>
+			<biblScope unit="volume">126</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="328" to="342" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">A parallel implementation of the direct simulation Monte Carlo method</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Lebeau</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0045-7825(98)00302-8</idno>
+		<ptr target="https://doi.org/10.1016/S0045-7825(98)00302-8" />
+	</analytic>
+	<monogr>
+		<title level="j">Computer methods in applied mechanics and engineering</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="issue">3-4</biblScope>
+			<biblScope unit="page" from="319" to="337" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<monogr>
+		<title level="m" type="main">SPARTA direct simulation Monte Carlo (DSMC) simulator</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Plimpton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Gallis</surname></persName>
+		</author>
+		<ptr target="http://sparta.sandia.gov" />
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+		<respStmt>
+			<orgName>Sandia National Laboratories, USA</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">A tensorial approach to computational continuum mechanics using object-oriented techniques</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Weller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tabor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jasak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fureby</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.168744</idno>
+		<ptr target="https://doi.org/10.1063/1.168744" />
+	</analytic>
+	<monogr>
+		<title level="j">Computers in Physics</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="620" to="631" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Statistical collision model for Monte Carlo simulation of polyatomic gas mixture</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Borgnakke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Larsen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0021-9991(75)90094-7</idno>
+		<ptr target="https://doi.org/10.1016/0021-9991(75)90094-7" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of computational Physics</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="405" to="420" />
+			<date type="published" when="1975">1975</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Vibrational relaxation and dissociation behind shock waves. Part 1-Kinetic rate models</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">V</forename><surname>Adamovich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Macheret</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Rich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Treanor</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/3.48339</idno>
+		<ptr target="https://doi.org/10.2514/3.48339" />
+	</analytic>
+	<monogr>
+		<title level="j">AIAA Journal</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1064" to="1069" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Effect of O 2+ O ab initio and Morse additive pairwise potentials on dissociation and relaxation rates for nonequilibrium flow calculations</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kulakhmetov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gallis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Alexeenko</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4928198</idno>
+		<ptr target="https://doi.org/10.1063/1.4928198" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page">87104</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Ab initio-informed maximum entropy modeling of rovibrational relaxation and state-specific dissociation with application to the O 2 +O system</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kulakhmetov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gallis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Alexeenko</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4947590</idno>
+		<ptr target="https://doi.org/10.1063/1.4947590" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page">174302</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Direct Monte Carlo simulation of chemical reaction systems: Internal energy transfer and an energy-dependent unimolecular reaction</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Dunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Anderson</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.466185</idno>
+		<ptr target="https://doi.org/10.1063/1.466185" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Chemical Physics</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="6607" to="6612" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<monogr>
+		<title level="m" type="main">Modélisation des réactions chimiques dans un code de simulation par la méthode Monte Carlo</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Mertz</surname></persName>
+		</author>
+		<ptr target="https://tel.archives-ouvertes.fr/tel-02110304/file/77248_MERTZ_2019_archivage.pdf" />
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+		<respStmt>
+			<orgName>Université Paris-Saclay</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Open-source Direct simulation Monte Carlo chemistry modeling for hypersonic flows</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Scanlon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Borg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Palharini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Farbar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">D</forename><surname>Boyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Reese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Brown</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.J053370</idno>
+		<ptr target="https://doi.org/10.2514/1.J053370" />
+	</analytic>
+	<monogr>
+		<title level="j">AIAA Journal</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1670" to="1680" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<monogr>
+		<title level="m" type="main">Extension of a kinetic approach to chemical reactions to electronic energy levels and reactions involving charged species with application to DSMC simulations</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Liechty</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Maryland</orgName>
+		</respStmt>
+	</monogr>
+	<note>Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Mcquarrie</surname></persName>
+		</author>
+		<title level="m">Statistical thermodynamics</title>
+		<imprint>
+			<publisher>HarperCollins Publishers</publisher>
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">The 35-moment system with the maximum-entropy closure for rarefied gas flows</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">P</forename><surname>Schaerer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Torrilhon</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.euromechflu.2017.01.003</idno>
+		<ptr target="https://doi.org/10.1016/j.euromechflu.2017.01.003" />
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Mechanics-B/Fluids</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="30" to="40" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">An undecomposed hybrid algorithm for nonlinear coupled constitutive relations of rarefied gas dynamics</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Agarwal</surname></persName>
+		</author>
+		<idno type="DOI">10.4208/cicp.OA-2018-0056</idno>
+		<ptr target="https://doi.org/10.4208/cicp.OA-2018-0056" />
+	</analytic>
+	<monogr>
+		<title level="j">Commun. Comput. Phys</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">880</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<monogr>
+		<title level="m" type="main">Benchmarking, development and applications of an open source DSMC solver</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>White</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Strathclyde</orgName>
+		</respStmt>
+	</monogr>
+	<note>Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<monogr>
+		<title level="m" type="main">Notes prepared for a short course at the DSMC07 meeting</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Bird</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<pubPlace>Santa Fe, USA</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Sophisticated DSMC</note>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">One-dimensional flows of an imperfect diatomic gas</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Eggers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">National Advisory Committee for Aeronautics</title>
+		<imprint>
+			<date type="published" when="1949">1949</date>
+			<biblScope unit="volume">959</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Charts for Compressible Flow</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R S</forename><surname>Naca</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">NACA Report</title>
+		<imprint>
+			<biblScope unit="volume">1135</biblScope>
+			<date type="published" when="1953">1953</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<monogr>
+		<title level="m" type="main">Assessment of a high-order shock-capturing central-difference scheme for hypersonic turbulent flow simulations</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sciacovelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Passiatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Cinnella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pascazio</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://arxiv.org/abs/2103.16426" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Finite-rate chemistry effects in turbulent hypersonic boundary layers: A direct numerical simulation study</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Passiatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sciacovelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Cinnella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pascazio</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevFluids.6.054604</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevFluids.6.054604" />
+	</analytic>
+	<monogr>
+		<title level="j">Physical Review Fluids</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">54604</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">The calculation of high-temperature equilibrium and nonequilibrium specific heat data for N 2 , O 2 and NO</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Jaffe</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.1987-1633</idno>
+		<ptr target="https://doi.org/10.2514/6.1987-1633" />
+	</analytic>
+	<monogr>
+		<title level="m">22nd Thermophysics Conference</title>
+		<imprint>
+			<date type="published" when="1987">1987</date>
+			<biblScope unit="page">1633</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Rovibrational coupling in molecular nitrogen at high temperature: An atomic-level study</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Valentini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Norman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">E</forename><surname>Schwartzentruber</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.4875279</idno>
+		<ptr target="https://doi.org/10.1063/1.4875279" />
+	</analytic>
+	<monogr>
+		<title level="j">Physics of Fluids</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">56103</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">Definition of mean free path for real gases</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Bird</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.864095</idno>
+		<ptr target="https://doi.org/10.1063/1.864095" />
+	</analytic>
+	<monogr>
+		<title level="j">The Physics of fluids</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="3222" to="3223" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

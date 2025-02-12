@@ -1,0 +1,902 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Automated Qualitative and Quantitative Analysis of Complex Forensic Drug Samples using 1 H NMR</title>
+				<funder ref="#_hhCPQ75">
+					<orgName type="full">unknown</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">S</forename><surname>Hessam</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">M</forename><surname>Mehr</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Drug Analysis Service, Regulatory Operations and Enforcement Branch</orgName>
+								<address>
+									<postCode>3155</postCode>
+									<settlement>Willingdon Green, Burnaby</settlement>
+									<region>Health Canada, BC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Aaron</forename><forename type="middle">W</forename><surname>Tang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Drug Analysis Service, Regulatory Operations and Enforcement Branch</orgName>
+								<address>
+									<addrLine>2301 Midland Ave</addrLine>
+									<settlement>Scarborough</settlement>
+									<region>Health Canada, ON</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Richard</forename><forename type="middle">R</forename><surname>Laing</surname></persName>
+							<email>richard.laing@hc-sc.gc.ca</email>
+							<affiliation key="aff0">
+								<orgName type="department">Drug Analysis Service, Regulatory Operations and Enforcement Branch</orgName>
+								<address>
+									<postCode>3155</postCode>
+									<settlement>Willingdon Green, Burnaby</settlement>
+									<region>Health Canada, BC</region>
+									<country key="CA">Canada</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">School of Chemistry</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Automated Qualitative and Quantitative Analysis of Complex Forensic Drug Samples using 1 H NMR</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">C77FE37459FD5D3456A04EC83709AAF3</idno>
+					<idno type="DOI">10.1002/mrc.5265</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:50+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Progress in high resolution NMR instrumentation has enabled fast and accurate acquisition of quantitative 1 H NMR (qNMR) data but analyzing complex forensic drug samples in the presence of significant peak overlap remains challenging. This limitation has hampered the adoption of 1 H NMR in areas such as traditional medicine and law enforcement. We present the NMRquant algorithm, which can detect and quantitate compounds of interest within forensic mixed drug samples even when there is overlap between chemical shift regions. Our algorithm is robust against variations in chemical shift resulting from temperature, concentration, and inter-analyte interactions. We have integrated these desirable features into an automated workflow, enabling routine unattended proton qNMR analysis of forensic drug samples.</p><p>As a technique for analyzing mixtures, 1 H NMR enjoys characteristics such as excellent reproducibility, low risk of contamination, and a straightforward quantitative relationship between abundance and peak area [1-3]. These inherent strengths have become more accessible with advances in affordable instrumentation.</p><p>High field instruments and sensitive cryoprobes have become widely available, reducing experiment time dramatically even with limited sample amounts. Inexpensive disposable NMR tubes eliminate contamination and simplify analysis. Proton NMR is optimally suited to automation, as a common set of acquisition and processing parameters can be used across a wide range of solvents and analytes, unlike techniques requiring bespoke method development <ref type="bibr" target="#b3">[4]</ref>. Despite these advantageous characteristics, quantitative analysis has not embraced proton NMR as much as it has chromatography-spectrometry techniques, such as liquid chromatography-mass spectrometry (LC-MS) <ref type="bibr" target="#b4">[5]</ref>. Although more susceptible to contamination and dependent on calibration curves, techniques like LC-MS are favored because they combine mixture separation with detection. This simplifies analysis as it</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>allows each analyte to be measured individually. Such chromatographic separation, although possible <ref type="bibr" target="#b5">[6]</ref>, is rarely practical with NMR, due to its lower sensitivity <ref type="bibr" target="#b6">[7]</ref> and the high cost of specialized flow probes.</p><p>The principal challenge when analyzing mixtures using NMR is resolving regions of the spectrum with significant peak overlap <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b8">9]</ref>. In the case of complex multiplets, manual analysis of these regions by visual inspection becomes complicated or entirely infeasible <ref type="bibr" target="#b9">[10]</ref>. In other cases, careful method development has been required for each analyte of interest and set of contaminants to identify overlap-free regions that can be used for quantitation <ref type="bibr" target="#b10">[11]</ref>.</p><p>In many applications, such as the analysis of forensic drug samples, mixture components are known to belong to a pool of molecules of interest, in this case drug molecules and cutting agents, for which high quality reference NMR spectra exist <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b12">13]</ref>. Using this assumption, the problem of analyzing a mixture can be reduced to that of reconstructing the mixture spectrum from a given library of reference spectra, the simplest possible scheme for which is shown in Figure <ref type="figure">1</ref>.</p><p>Along with this valuable simplification, there are constraints associated with reliable deployment in forensic, law enforcement, and harm reduction applications. Typically, a simple, fast (runtime of a few minutes) NMR experiment is desired, without per-sample method development/optimization or the collection of large multidimensional datasets <ref type="bibr" target="#b13">[14]</ref>. It should be possible to process each sample independently, i.e. regardless of the composition statistics across all samples encountered. Figure <ref type="figure">1</ref>. Naïve scheme for quantitative analysis of mixed samples through reconstruction. The objective is to find the unknown weights w1, …, wn of a series of known reference spectra so the mixture spectrum can be reconstructed as accurately as possible.</p><p>Historically, there have been several approaches to the problem of signal factorization, that is, approximating a spectrum by combining of a set of reference spectra. Source separation and dimensionality reduction approaches using techniques such as principal component analysis <ref type="bibr" target="#b14">[15]</ref>, independent component analysis, non-negative matrix factorization <ref type="bibr" target="#b15">[16]</ref>, and latent Dirichlet allocation <ref type="bibr" target="#b16">[17]</ref> are well-known and widely used in diverse fields <ref type="bibr" target="#b17">[18]</ref>, including in analytical chemistry <ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref> for factorization of mixed spectra, also known as spectral deconvolution <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b22">23]</ref>. What these methods have in common is their reliance on the statistical properties of a dataset, for instance a set of NMR spectra, where the size of the dataset is greater than the number of factors expected for each spectrum.</p><p>As a simple and robust starting point for an algorithm satisfying the constraints of forensic sample analysis, factorization of forensic drug samples can be reduced to the solution of an overdetermined system of linear equations, Figure <ref type="figure" target="#fig_0">2</ref>. The matrix L represents the library of known spectra, ‡ and we seek the weight vector w minimizing the difference between the sample spectrum and the combination of library spectra. Highperformance solutions to this least squares problem are available in many software libraries for numerical linear algebra. Although least squares factorization is simple and robust, accurate analysis depends on spectral contributions from mixture components being identical to their respective pure spectra. In practice, the chemical shift and shape of each peak in the sample has a subtle dependence on sample composition. For example, the 1 H NMR spectrum of a D2O solution of heroin hydrochloride, caffeine, fentanyl hydrochloride, and mannitol shows many small chemical shift changes compared to D2O solutions of the individual constituents in pure form, Figure <ref type="figure" target="#fig_1">3</ref>. Due to the misalignment of sample and reference peaks, naïve application of least squares decomposition is prone to large errors in calculated analyte amounts. In this work, we present an augmented least-squares decomposition scheme that accounts for potential movement of individual peaks within a mixture and demonstrate an automated workflow using this refinement for accurate quantitation of forensic samples. Accounting for the composition dependence of chemical shift is complicated by the fact that, even within a single compound, the amount and direction of chemical shift change is unique to each peak. Therefore, each reference spectrum must be divided into smaller regions and the alignment between the region and sample spectrum optimized within a small chemical shift window, e.g., 0.1 ppm. Typically, reference spectra have been processed and approved by an expert operator and precise chemical shift regions already been defined for each peak during the process of peak integration, Figure <ref type="figure" target="#fig_2">4</ref>. The local maxima of overlap (calculated as the cross-correlation in the frequency-domain) between sample and reference spectra define a set of candidate alignments specific to a given region of the spectrum. When the enumeration of possible alignments is applied to every peak region of every reference spectrum, a very large number of potential reconstructions is generated, each of which needs to be evaluated in order to find the optimal combination of region alignments.</p><p>The enhanced least-squares scheme described above can account for peak movement in a wide range of samples and provides much more accurate quantitation than the naïve implementation, but has three main drawbacks. First, the least squares problem needs to be solved for each combination of potential referencesample peak alignments in order to find the best factorization, which can quickly become computationally prohibitive due to the combinatorial nature of the problem. In addition, the alignment procedure for minor mixture components, such as potent synthetic opioids in the case of street drug samples, is error-prone when the spectrum is dominated by other chemical species, such as caffeine cutting agent often encountered in drug samples, where overlap with the large peaks of the dominant species interferes with the alignment search procedure. Finally, in the same scenario, even when it is possible to find the correct alignment of trace components, the presence of peak overlap causes the reported amounts of these compounds to be greatly overestimated. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Description of the NMRquant algorithm</head><p>The NMRquant algorithm preserves the desirable properties of least-squares factorization while overcoming the computational intractability and composition sensitivity of the previous implementation.</p><p>In an iterative process, each reference spectrum is aligned and matched against the sample (as described before) individually. If successful, the reference is removed from the sample spectrum in order to avoid interference with the detection of smaller mixture components. § Only part of the library is shown; see Supplementary information for complete library.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Overall algorithm</head><p>The overall algorithm is illustrated in Figure <ref type="figure" target="#fig_3">5</ref>. The iterative procedure attempts to match each reference spectrum to the unknown sample as described below, rejecting those references for which a high-quality match cannot be found within the defined reference peak regionsnote that references rejected at this stage will be retried in subsequent iterations of the algorithm. A composite quality score, also described below, is calculated for each possible alignment of each peak region of each matched reference, and the match/alignment combination with the highest score is selected. For this top match, its contribution to the overall spectrum is calculated by likelihood-weighted projection of each constituent peak region. The resulting scaled reference spectrum (corrected with the optimal chemical shift and line shape adjustments to each individual peak) is subtracted from the original sample spectrum. Finally, the matched reference is removed from the reference library (to prevent repeat matches) and the process is repeated. The algorithm stops if no reference spectrum matches the sample in a given iteration. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Matching of reference spectra</head><p>Each reference spectrum is split into user-defined peak regions. For this purpose, the program consults the list of operator-defined integration regions that are stored alongside each reference spectrum in the library. To match a reference spectrum, each of its constituent peak regions is first matched against the sample spectrum as described below.</p><p>To match each region, it is moved along the frequency axis within a user-defined tolerance windowthe default window is 0.08 ppm wideabout its native position within the reference spectrum. For each of these potential alignments, the inner product, i.e., cross-correlation, between the reference region and  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Quantitation</head><p>Whenever all peak regions in a reference spectrum are found within the sample, the algorithm iterates through all possible alignment combinations of the reference spectrum's peak regions to find the optimal match. Each combination of potential region alignment sites is assigned an overall score. To calculate this score, the algorithm first starts a preliminary quantitation procedure by calculating the mean µ and standard deviation σ of the sample's projection onto each aligned peak region weighted by that region's fit score.</p><p>The estimated µ and σ are used to construct a normal probability distribution function, based on which each region's projection is assigned a likelihood value called its projection score. The overall score for each peak region is defined as the product of fit and projection scores; similarly, the product of overall scores for all peak regions gives the overall score for the reference spectrum. The corrected mean projection value M is also calculated, weighted this time by regions' overall scores.</p><p>Once the overall score has been calculated for every possible alignment of every matched reference, the reference spectrum with the highest score is selected and its contribution to the sample spectrum, found via scaling the optimally aligned reference by M, is subtracted from the sample spectrum, concluding an iteration of the overall algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Reference Deconvolution</head><p>As the algorithm identifies compounds based on cross-correlation of the sample and library reference peaks and quantitates using a projection of the reference peak onto the sample peak, it can be sensitive to differences in spectral line shapes between the two spectra. Line shapes in NMR can be influenced by variability in instrument performance, sample preparation, and other environmental factors <ref type="bibr" target="#b23">[24]</ref>.</p><p>An acquired NMR spectrum can be viewed as a convolution of two functions: the signal arising from NMRactive nuclei, and an instrument line-broadening function arising from magnetic field inhomogeneity. The latter function can result in significant variability in the spectrum and thus introduce error in the algorithm.</p><p>This can be resolved by applying a correction function to the sample spectrum such that the instrument function is standardized with that of the reference spectrum <ref type="bibr" target="#b24">[25]</ref>. This reference deconvolution process results in an NMR spectrum with an identical line shape between the sample and reference peaks. The correction function is calculated using the tetramethylsilane (TMS) or trimethylsilylpropanoic acid (TSP) resonance as the reference peak, as TMS or TSP are chemical shift references that are present in all prepared samples. Furthermore, since the chemical shift reference is usually far from any other resonances and has minimal matrix interactions with other species in the sample, it is the ideal resonance for deconvolution.</p><p>Figure <ref type="figure" target="#fig_6">7</ref> summarizes the reference deconvolution procedure used in the algorithm. After normal processing, a defined region of TMS or TSP peak is excised as a stand-alone spectrum, and it is inverse Fourier transformed into a time domain FID. The same procedure is done on the library reference spectrum, and the resultant FID is divided by the sample FID. This correction function is then applied to the wholespectrum sample FID, then Fourier transformed to yield the reference deconvolved NMR spectrum, which can then be analyzed by the NMRquant algorithm as normal. The deconvolution algorithm is able to increase precision and minimize the impact of poor shimming. This was demonstrated in a series of spectra of MDMA acquired with deliberate suboptimal shims introduced;</p><p>the aromatic regions of the spectra, displaying the aromatic protons and methylene protons of MDMA, as well as the maleic acid protons, are shown in Figure <ref type="figure" target="#fig_7">8</ref>. Under optimal shimming conditions (a), the algorithm without deconvolution reported a quantitation result of 90.4% MDMA. With some z magnetic inhomogeneity introduced (b), the meta-coupling is obfuscated in the aromatic signals. Poor peak overlap led to a reported result of 67.9%, Further introduction of z and z 2 inhomogeneities obscure even the orthocoupling in the aromatic protons, as well as introducing asymmetric artifacts and splitting in the singlets, yielding a result of 48.3%. Finally, high magnetic homogeneity (d) completely removes any spectral details and leads to a quantitation result of 30.1%. When reference deconvolution is applied, the algorithm is able to extract the desired spectral information and reconstruct the spectrum with ideal shimming in all but the most extreme examples. In those cases, the algorithm recovered all the spectral detail seen in spectrum a), and the calculated quantitation results in spectra (a) to (c) demonstrate much higher precision, around 92%. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Implementation</head><p>To create a high performance implementation of the algorithm capable of integrating with the existing NMR acquisition workflow (using Bruker TopSpin software), the core data structures representing NMR spectra and the spectral decomposition algorithm described above were first implemented in the Julia programming language <ref type="bibr" target="#b26">[27]</ref> as an open-source library <ref type="bibr" target="#b27">[28]</ref>. The NMRquant program, also released as open-source software (see Supplementary information section for links) integrates with the acquisition software, in this case Bruker TopSpin, through a small automation script that triggers processing at the end of sample acquisition.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Validation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Experimental setup</head><p>The NMRquant method was validated on a Bruker Ascend 400 spectrometer equipped with a Prodigy cryoprobe. Acquisition consisted of 8 scans, each involving a 30° proton pulse centered at 6.00 ppm, followed by 4.1 s of acquisition (64k samples) and a 30-second recycle delay (full acquisition/processing parameters and pulse program included in Supporting Information). The delay values were optimized based on the measured T1 values for each reference compound in order to ensure that all peak integrations can be interpreted quantitatively. NMR samples were prepared by weighing powdered sample (ca. 5 mg) on a microbalance and dissolving in the appropriate deuterated solvent containing internal standard.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Reference library</head><p>Validation was carried using two reference libraries. The first, containing reference spectra for 30 hard drugs and cutting agents, was aimed at analytes with appreciable water solubility using D2O as solvent and maleic acid as internal standard. A second library (not presented in this work) using ethylene carbonate internal standard in CDCl3 solvent was subsequently developed for analytes with poor water solubility, such as phytocannabinoids, benzodiazepines, and benzimidazoles (nitazenes).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results</head><p>The accuracy and robustness of the NMRquant method were evaluated within the context of an International</p><p>Collaborative Exercise (ICE) program organized by the United Nations Office on Drugs and Crime. The ICE program was chosen as a medium for testing our method as it is a large-scale effort -179 laboratories from 57 countries participated in the ICE program ** in the 2020/2 round. Furthermore, worldwide submissions are based on a variety of analytical techniques. ICE samples for the 2020/1, 2020/2, 2021/1, and 2021/2 rounds were processed using the NMRquant method and the results compared to submission from other laboratories. To assess the portability and reproducibility of our method, ICE exercises were performed using NMRquant by Health Canada chemists within laboratories in Vancouver, Toronto, and Montréal. The results show the absence of any false positives/negatives, consistent results across different laboratories and chemists, and accurate quantitation of all compounds of interest as reflected by the low zscore values for our method, Table <ref type="table" target="#tab_0">1</ref>.</p><p>Within Health Canada, NMRquant was validated for the identification and quantitation of methamphetamine, MDMA, and fentanyl (see SI for validation procedure and outcomes). Following validation, the method was found to be fit for purpose and conforming to ISO/IEC 17025 standard "General Requirements for the Competence of Testing and Calibration Laboratories" and has been in use in Health Canada's Drug Analysis Lab since 2018. The validated limit of quantification for these compounds is 3% w/w within a 5 mg sample, although the method was found to be capable of detecting and quantitating a mixture of MDMA (27%) and methamphetamine (2%) despite extensive peak overlap arising from structural similarity between the two compounds (see sample FSC-0615709 in SI). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion</head><p>In summary, we have presented an algorithm and associated workflow capable of correct identification and quantitation of compounds in the presence of chemical shift variation by finding the optimal location for each peak region via a computationally efficient alignment search. We were able to overcome the issue of poor peak alignment in the presence of peak overlap, as well as the combinatorial intractability of global optimum search, through iterative matching and subtraction of quantitated references. Our use of likelihood-weighted quantitation further reduces the impact of both contaminants and poorly matched regions; similarly, reference deconvolution results in accurate quantitative analysis in inhomogeneous and poorly shimmed samples. Alongside, we are releasing a fast open-source implementation of this algorithm, validated both in a national health organization and as part of a large-scale international exercise, that can be deployed without extra fine tuning and manual intervention by the operator.</p><p>A qNMR method for simultaneous multi-component, multi-resonance quantitation was developed, validated, and implemented. Key strengths of the method include simple sample preparation, quick analysis time, high specificity, and flexible library that allows for adaptation to new compounds. The biggest challenge to the NMRquant algorithm remains matrix interference and shimming; a new deconvolution algorithm was developed to address the latter issue <ref type="bibr" target="#b28">[29]</ref>. Using the same algorithm and a different solvent and internal standard preparation the qNMR method for simultaneous THC/THCA quantification was developed, validated, and implemented, with &gt;2000 samples analyzed to date. An independent GC-FID study of typical samples analyzed with qNMR has confirmed these results <ref type="bibr" target="#b29">[30]</ref>.</p><p>Historically, procuring controlled substances for chromatographic analyses has been complicated by international regulations, often making it difficult to obtain novel controlled substances in analytically useful quantities or in a timely manner. Coordinating import and export permits with specific vendors can be time-consuming and limits forensic quantification to only the most common controlled substances if there is not a domestic distributor <ref type="bibr" target="#b30">[31]</ref>. In contrast, the quantitation of any compound amenable to the NMR experiment is only limited by the acquisition of an appropriate spectrum of relative high purity. This allows the forensic science practitioner to add to a library any novel compound, once properly elucidated and verified as fit for purpose, for subsequent automated quantification without the need for the purchase of a certified reference standard. We believe that wider awareness of the unique advantages of NMR coupled with advanced processing techniques, as implemented in NMRquant, will reinforce the use of qNMR as the method of choice in routine analysis of forensic drug samples.</p><p>Supplementary information: Proton NMR data for validation samples in Table <ref type="table" target="#tab_0">1</ref>; library of reference spectra used in the D2O + maleic acid method; algorithm report for a sample containing Heroin, Fentanyl, Caffeine and Mannitol. Julia source code for NMRquant and the NMR processing library NMR.jl is available online at https://github.com/JuliaSpect/NMRquant.jl and https://github.com/JuliaSpect/NMR.jl, respectively. Samples and processed reports used for Health Canada's validation of the method as well as analysis results of UNODC ICE samples have been deposited at https://doi.org/10.5281/zenodo.5933788.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Initial formulation of signal factorization as the solution of an overdetermined system of linear equations.</figDesc><graphic coords="4,189.25,262.76,233.45,131.10" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Composition dependence of chemical shift. 1 H NMR spectra of pure reference samples of heroin hydrochloride, caffeine, fentanyl hydrochloride, and mannitol in D2O are compared to a sample containing the same four compounds. All solutions contain maleic acid as internal standard, and 3-(trimethylsilyl)propionic-2,2,3,3-d4 acid (TSP) as chemical shift reference. Solvent and internal standard peaks have been masked for clarity.</figDesc><graphic coords="5,77.50,72.00,456.75,222.25" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. Example library of forensic reference spectra § . Spectra are divided into peak regions based on the integrals defined by the operator. The alignment of each region with the sample spectrum can be optimized independently.</figDesc><graphic coords="6,72.00,195.84,467.91,262.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Overall NMRquant algorithm.</figDesc><graphic coords="7,103.38,315.68,407.95,182.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>sample spectrum is calculated. Both signals are normalized prior to this calculation so the cross-correlation, dubbed the fit score, can attain a maximum value of 1.0, corresponding to the sample and reference peaks being identical and perfectly aligned. Fit score is tabulated as a function of the displacement along the chemical shift axis and the positions of maximum fit scores are stored as potential alignments, Figure6. To avoid spurious matches in the case of noise or interference, these local maxima are only considered if above a certain absolute threshold determined as a fraction of the total signal energy (10% by default). A reference spectrum is rejected if no local maxima meeting this criterion are found. Additionally, for performance reasons, local maxima below a factor ∆ of the absolute maximum are rejected. The value of ∆ is tuned for each reference spectrum to target the total number of possible alignments to be between 150-250.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. Search for potential alignments of a single peak region for mannitol (orange). The sample signal (blue) corresponds to a mixture of 10% methamphetamine hydrochloride, 52% mannitol, and 38% caffeine.</figDesc><graphic coords="8,140.73,233.79,330.48,137.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. Illustration of the reference deconvolution algorithm, adapted from [26].</figDesc><graphic coords="10,81.50,72.00,448.97,290.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 8 .</head><label>8</label><figDesc>Figure 8. Reference deconvolution of a series of spectra of MDMA and maleic acid with various degrees of poor shimming artificially introduced. Displayed is the aromatic region of the spectra a) with optimal shimming, b) with some poor z shimming, c) with further z and z 2 inhomogeneity, and d) with extreme inhomogeneity. The algorithm is able to deconvolve the acquired spectrum and recover the desired NMR signals in all but the worst scenario. The quantitation results from the program are also displayed for each spectrum, showing consistency in results after deconvolution.</figDesc><graphic coords="11,72.15,72.00,467.70,164.65" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="3,72.00,434.55,468.00,119.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Results of external proficiency testing runs. Comparison of UNODC ICE submissions with reported results by DAS laboratories (Vancouver, Toronto, Montréal), by analyst and by component quantified. The average and standard deviation of each compound quantified for all labs and analysts by each compound in each sample series demonstrating robustness of the method.</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="3">Composition % (w/w)</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Lab Chemist</cell><cell>Cocaine</cell><cell>Meth</cell><cell>MDMA</cell><cell>Heroin</cell><cell>Fentanyl</cell><cell>Amphetamine</cell><cell>Paracetamol</cell><cell>N-Ethyl-pentalone</cell><cell>Etizolam</cell><cell>Ketamine</cell><cell>Caffeine</cell><cell>Z-Score</cell></row><row><cell cols="2">2020/1/SM-1</cell><cell></cell><cell></cell><cell></cell><cell>47.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell>51.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>0.39</cell></row><row><cell>II</cell><cell>b</cell><cell></cell><cell></cell><cell></cell><cell>47.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>0.46</cell></row><row><cell cols="2">2020/1/SM-2</cell><cell>54.0</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell>53.0</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-0.81</cell></row><row><cell>II</cell><cell>b</cell><cell>50.9</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-1.06</cell></row><row><cell cols="2">2020/1/SM-4</cell><cell></cell><cell>24.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell>24.9</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-0.04</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell>24.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-0.19</cell></row><row><cell cols="2">2020/2/SM-1</cell><cell>26.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell>25.2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-0.96</cell></row><row><cell>II</cell><cell>b</cell><cell>27.0</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>0.23</cell></row><row><cell>II</cell><cell>c</cell><cell>28.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.27</cell></row><row><cell cols="2">2020/2/SM-2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>6.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>- †</cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>6.9</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>28.1</cell><cell>0.15</cell></row><row><cell>II</cell><cell>b</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>6.9</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>28.3</cell><cell>0.15</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>7.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>29.0</cell><cell>0.39</cell></row><row><cell cols="2">2020/2/SM-3</cell><cell></cell><cell></cell><cell></cell><cell>22.9</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell>24.2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.11</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell>24.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.28</cell></row><row><cell cols="2">2020/2/SM-4</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>- †</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>28.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>II</cell><cell>b</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>28.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>29.2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/1/SM-1</cell><cell></cell><cell></cell><cell>19.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell>17.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>III</cell><cell>e</cell><cell></cell><cell></cell><cell>18.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/1/SM-2</cell><cell></cell><cell></cell><cell></cell><cell>9.4</cell><cell></cell><cell></cell><cell>- †</cell><cell></cell><cell></cell><cell></cell><cell>- †</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell>10.9</cell><cell></cell><cell></cell><cell>6.4</cell><cell></cell><cell></cell><cell></cell><cell>6.5</cell><cell>-*</cell></row><row><cell>III</cell><cell>e</cell><cell></cell><cell></cell><cell></cell><cell>11.7</cell><cell></cell><cell></cell><cell>6.3</cell><cell></cell><cell></cell><cell></cell><cell>6.5</cell><cell>-*</cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell>11.3</cell><cell></cell><cell></cell><cell>6.8</cell><cell></cell><cell></cell><cell></cell><cell>6.7</cell><cell>-*</cell></row><row><cell cols="2">2021/1/SM-3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>- †</cell><cell></cell><cell></cell><cell></cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>30.0</cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>III</cell><cell>e</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>31.5</cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>28.6</cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/1/SM-4</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>- †</cell><cell></cell><cell></cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>22.6</cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>III</cell><cell>e</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>23.2</cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>20.1</cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/2/SM-1</cell><cell></cell><cell>- †</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>II</cell><cell>d</cell><cell></cell><cell>33.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>III</cell><cell>f</cell><cell></cell><cell>32.0</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>II</cell><cell>c</cell><cell></cell><cell>33.2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>I</cell><cell>a</cell><cell></cell><cell>32.4</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/2/SM-2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>II</cell><cell>d</cell><cell>17.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>III</cell><cell>f</cell><cell>17.3</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>II</cell><cell>c</cell><cell>18.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell>I</cell><cell>a</cell><cell>17.4</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>-*</cell></row><row><cell cols="2">2021/2/SM-3</cell><cell></cell><cell></cell><cell></cell><cell>11.7</cell><cell>5.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>27.8</cell></row><row><cell>II</cell><cell>d</cell><cell></cell><cell></cell><cell></cell><cell>13.3</cell><cell>5.1</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>32.8</cell><cell>-*</cell></row><row><cell>III</cell><cell>f</cell><cell></cell><cell></cell><cell></cell><cell>11.8</cell><cell>4.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>33.8</cell><cell>-*</cell></row></table><note><p>** https://www.unodc.org/LSS/Home/ICE</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>‡  In practice, chemical shift regions common to all spectra, such as those containing solvent and internal standard peaks, are removed, i.e. set to zero in the spectral library.</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements:</head><p>The authors would like to thank <rs type="person">Graeme Langille</rs> for his work on validation of the NMRquant method, <rs type="person">Francine Chartier</rs> for her contributions as part of the development team, <rs type="person">Stephanie Dubland</rs> for supporting the project as <rs type="projectName">DAS Lab Manager</rs>; <rs type="person">Lily Luu</rs> for assistance with compiling validation data for publication, and <rs type="person">Stéphanie Lessard</rs> for Montréal ICE data.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_hhCPQ75">
+					<orgName type="project" subtype="full">DAS Lab Manager</orgName>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<author>
+			<persName><forename type="first">L</forename><surname>Scotti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Lorenzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mendonça</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Junior</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sastry Yarla</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Scotti</surname></persName>
+		</author>
+		<title level="m">NMR Descriptors in Computer-Aided Drug Design</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="3" to="29" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Validation of quantitative nuclear magnetic resonance (QNMR) spectroscopy as a primary ratio analytical method for assessing the purity of organic compounds: a metrological approach</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">N S</forename><surname>Al-Deen</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2002">2002</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of New South Wales</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Quantitative 1H NMR. Development and Potential of an Analytical Method: An Update</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">F</forename><surname>Pauli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gödecke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">U</forename><surname>Jaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lankin</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/np200993k</idno>
+		<ptr target="https://doi.org/10.1021/np200993k" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Nat. Prod</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="834" to="851" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Uncertainty measurement for automated macro program-processed quantitative proton NMR spectra</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Hays</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Schoenberger</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s00216-014-8205-x</idno>
+		<ptr target="https://doi.org/10.1007/s00216-014-8205-x" />
+	</analytic>
+	<monogr>
+		<title level="j">Anal Bioanal Chem</title>
+		<imprint>
+			<biblScope unit="volume">406</biblScope>
+			<biblScope unit="page" from="7397" to="7400" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Yap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Lim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">Y</forename><surname>Ying</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lijie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">L Y</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lieka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Analysis of Methamphetamine Seized in</title>
+		<meeting><address><addrLine>Singapore</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="53" to="59" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Dorn</surname></persName>
+		</author>
+		<author>
+			<persName><surname>1h-Nmr</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/ac00270a798</idno>
+		<ptr target="https://doi.org/10.1021/ac00270a798" />
+	</analytic>
+	<monogr>
+		<title level="m">A New Detector for liquid Chromatography</title>
+		<imprint>
+			<date type="published" when="1984">1984</date>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page">758</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D W</forename><surname>Claridge</surname></persName>
+		</author>
+		<title level="m">High-resolution NMR techniques in organic chemistry</title>
+		<imprint>
+			<publisher>Elsevier</publisher>
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Introduction to spectral deconvolution</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Pariente</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0165-9936(86)80015-2</idno>
+		<ptr target="https://doi.org/10.1016/0165-9936(86)80015-2" />
+	</analytic>
+	<monogr>
+		<title level="j">TrAC Trends in Analytical Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="209" to="215" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Challenges and perspectives in quantitative NMR, Magnetic Resonance in Chemistry</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Giraudeau</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/mrc.4475</idno>
+		<ptr target="https://doi.org/10.1002/mrc.4475" />
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="page" from="61" to="69" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Quantification of Complex Mixtures by NMR</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Van Duynhoven</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Van Velzen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Jacobs</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/B978-0-12-408097-3.00003-2</idno>
+		<ptr target="https://doi.org/10.1016/B978-0-12-408097-3.00003-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual Reports on NMR Spectroscopy</title>
+		<imprint>
+			<biblScope unit="page" from="181" to="236" />
+			<date type="published" when="2013">2013</date>
+			<publisher>Elsevier</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Robust analytical methods for the detection of illicit drugs and their cutting agents</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">A</forename><surname>Naqi</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Bath</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">PhD Thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A Validated NMR Approach for MDMA Quantification in Ecstasy Tablets</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Almeida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Benedito</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Maldaner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Oliveira</surname></persName>
+		</author>
+		<idno type="DOI">10.21577/0103-5053.20180071</idno>
+		<ptr target="https://doi.org/10.21577/0103-5053.20180071" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Braz. Chem. Soc</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Forensic NMR spectroscopy: Just a beginning of a promising partnership</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D C</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">M</forename><surname>Dutra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R A</forename><surname>Menezes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F C</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Barison</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.trac.2018.07.015</idno>
+		<ptr target="https://doi.org/10.1016/j.trac.2018.07.015" />
+	</analytic>
+	<monogr>
+		<title level="j">TrAC Trends in Analytical Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="31" to="42" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Brüschweiler</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/cphc.200301073</idno>
+		<ptr target="https://doi.org/10.1002/cphc.200301073" />
+	</analytic>
+	<monogr>
+		<title level="m">Spectral Deconvolution of Chemical Mixtures by Covariance NMR</title>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="794" to="796" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Principal component analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Abdi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Williams</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/wics.101</idno>
+		<ptr target="https://doi.org/10.1002/wics.101" />
+	</analytic>
+	<monogr>
+		<title level="j">WIREs Computational Statistics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="433" to="459" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Learning the parts of objects by non-negative matrix factorization</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Seung</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/44565</idno>
+		<ptr target="https://doi.org/10.1038/44565" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">401</biblScope>
+			<biblScope unit="page" from="788" to="791" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Latent dirichlet allocation</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Blei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Y</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Jordan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Mach. Learn. Res</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="993" to="1022" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Analysis of a complex of statistical variables into principal components</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hotelling</surname></persName>
+		</author>
+		<idno type="DOI">10.1037/h0071325</idno>
+		<ptr target="https://doi.org/10.1037/h0071325" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Educational Psychology</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="417" to="441" />
+			<date type="published" when="1933">1933</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Principal component analysis</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Smilde</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/C3AY41907J</idno>
+		<ptr target="https://doi.org/10.1039/C3AY41907J" />
+	</analytic>
+	<monogr>
+		<title level="j">Analytical Methods</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="2812" to="2831" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Supervised topic modeling for predicting molecular substructure from mass spectrometry</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">K</forename><surname>Reder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Young</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Altosaar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rajniak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Elhadad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fischbach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Holmes</surname></persName>
+		</author>
+		<idno type="DOI">10.12688/f1000research.52549.1</idno>
+		<ptr target="https://doi.org/10.12688/f1000research.52549.1" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Concise Representation of Mass Spectrometry Images by Probabilistic Latent Semantic Analysis</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hanselmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kirchner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">Y</forename><surname>Renard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Amstalden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Glunde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M A</forename><surname>Heeren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A</forename><surname>Hamprecht</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/ac801303x</idno>
+		<ptr target="https://doi.org/10.1021/ac801303x" />
+	</analytic>
+	<monogr>
+		<title level="j">Anal. Chem</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="9649" to="9658" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Kang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/pr7060379</idno>
+		<ptr target="https://doi.org/10.3390/pr7060379" />
+		<title level="m">Analysis of the Trends in Biochemical Research Using Latent Dirichlet Allocation (LDA), Processes</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page">379</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Overlapping spectra resolution using non-negative matrix factorization</title>
+		<author>
+			<persName><forename type="first">H.-T</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T.-H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W.-G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Bi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.talanta.2004.09.017</idno>
+		<ptr target="https://doi.org/10.1016/j.talanta.2004.09.017" />
+	</analytic>
+	<monogr>
+		<title level="j">Talanta</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="page" from="65" to="73" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">The Ancient and Honourable Art of Shimming</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">N</forename><surname>Chmurny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">I</forename><surname>Hoult</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/cmr.1820020303</idno>
+		<ptr target="https://doi.org/10.1002/cmr.1820020303" />
+	</analytic>
+	<monogr>
+		<title level="j">Concepts Magn. Reson</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="131" to="149" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Reference deconvolution: A simple and effective method for resolution enhancement in nuclear magnetic resonance spectroscopy, Concepts in Magnetic Resonance</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Metz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">G</forename><surname>Webb</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/(SICI)1099-0534(2000)12:1&lt;21</idno>
+		<idno>AID- CMR4&gt;3.0.CO;2-R</idno>
+		<ptr target="https://doi.org/10.1002/(SICI)1099-0534(2000)12:1&lt;21" />
+		<imprint>
+			<date type="published" when="2000">2000</date>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="21" to="42" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Cleaning up NMR spectra with reference deconvolution for improving multivariate analysis of complex mixture spectra: Improving multivariate analysis of NMR data by reference deconvolution</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ebrahimi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nilsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Morris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">M</forename><surname>Jensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Engelsen</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/cem.2607</idno>
+		<ptr target="https://doi.org/10.1002/cem.2607" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Chemometrics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="656" to="662" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">A Fresh Approach to Numerical Computing</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bezanson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Edelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Karpinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">B</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julia</forename></persName>
+		</author>
+		<idno type="DOI">10.1137/141000671</idno>
+		<ptr target="https://doi.org/10.1137/141000671" />
+	</analytic>
+	<monogr>
+		<title level="j">SIAM Rev</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="page" from="65" to="98" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hessam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mehr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Tang</surname></persName>
+		</author>
+		<ptr target="https://github.com/JuliaSpect/NMR.jl" />
+	</analytic>
+	<monogr>
+		<title level="j">NMR.jl</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Automated Analysis and Quantitation of Complex Forensic Drug Mixtures by qNMR and a Multi-Component, Multi-Resonance Algorithm</title>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hessam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mehr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Graeme</forename><surname>Langille</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lessard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Laing</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PANIC Virtual Conference</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Rapid Quantitation of Cannabinoids using Nuclear Magnetic Resonance Spectroscopy</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Langille</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hessam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mehr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Laing</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Analytical Cannabis Expo</title>
+		<meeting><address><addrLine>San Francisco</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">New psychoactive substances: catalysing a shift in forensic science practice?</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tettey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Crean</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rstb.2014.0265</idno>
+		<ptr target="https://doi.org/10.1098/rstb.2014.0265" />
+	</analytic>
+	<monogr>
+		<title level="j">Phil. Trans. R. Soc. B</title>
+		<imprint>
+			<biblScope unit="volume">370</biblScope>
+			<date type="published" when="2015">2015. 20140265</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

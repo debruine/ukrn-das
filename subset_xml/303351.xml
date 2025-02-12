@@ -1,0 +1,1771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">OnGuard3e: A predictive, ecophysiology-ready tool for gas exchange and photosynthesis research</title>
+				<funder ref="#_A478zak #_5eN844Y #_bRDWynZ">
+					<orgName type="full">BBSRC</orgName>
+				</funder>
+				<funder ref="#_wmKzkcd #_87NqZE7">
+					<orgName type="full">unknown</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Thanh-Hao</forename><surname>Nguyen</surname></persName>
+							<idno type="ORCID">0000-0003-0347-2946</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Fernanda</forename><forename type="middle">A L</forename><surname>Silva-Alvim</surname></persName>
+							<idno type="ORCID">0000-0002-4896-4234</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Adrian</forename><surname>Hills</surname></persName>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Michael</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+							<email>michael.blatt@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="laboratory">Laboratory of Plant Physiology and Biophysics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="laboratory">Laboratory of Plant Physiology and Biophysics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<addrLine>Bower Bldg</addrLine>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">OnGuard3e: A predictive, ecophysiology-ready tool for gas exchange and photosynthesis research</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">DD2B643DD1EECFE99BE654F9FA00418A</idno>
+					<idno type="DOI">10.1111/pce.14674</idno>
+					<note type="submission">Received: 14 March 2023 | Revised: 20 June 2023 | Accepted: 17 July 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:05+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>CO 2</term>
+					<term>guard cell</term>
+					<term>humidity</term>
+					<term>quantitative systems model</term>
+					<term>stomata</term>
+					<term>transpiration</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Gas exchange across the stomatal pores of leaves is a focal point in studies of plantenvironmental relations. Stomata regulate atmospheric exchange with the inner air spaces of the leaf. They open to allow CO 2 entry for photosynthesis and close to minimize water loss. Models that focus on the phenomenology of stomatal conductance generally omit the mechanics of the guard cells that regulate the pore aperture. The OnGuard platform fills this gap and offers a truly mechanistic approach with which to analyse stomatal gas exchange, whole-plant carbon assimilation and water-use efficiency. Previously, OnGuard required specialist knowledge of membrane transport, signalling and metabolism. Here we introduce OnGuard3e, a software package accessible to ecophysiologists and membrane biologists alike. We provide a brief guide to its use and illustrate how the package can be applied to explore and analyse stomatal conductance, assimilation and water use efficiencies, addressing a range of experimental questions with truly predictive outputs.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>Stomata are pores that commonly form between pairs of guard cells on the leaf epidermis of terrestrial plants and enable CO 2 entry to the leaf for photosynthesis. When open, stomata also provide a pathway for water loss to the atmosphere by evaporation and diffusion of water vapour from the saturated environment of the inner air spaces within the leaf. Guard cells must therefore balance the need for CO 2 in photosynthesis against the need to prevent drying of the leaf, especially when access to water is limiting. Stomata can reduce photosynthetic rates by 50% or more when limiting water supply to the leaf promotes closure of the aperture and restricts CO 2 diffusion from the atmosphere <ref type="bibr" target="#b23">(Hetherington &amp; Woodward, 2003;</ref><ref type="bibr" target="#b33">Lawson &amp; Blatt, 2014;</ref><ref type="bibr" target="#b55">Wong et al., 1979)</ref>. Stomatal behaviour thus encapsulates the tight interdependence between these often conflicting demands.</p><p>Research over the past four decades has generated a wealth of knowledge about the molecular, biophysical, and kinetic properties of guard cell membrane transport and metabolism and how they work.</p><p>Even when removed from the leaf in epidermal peels, guard cells respond in a well-defined manner to an array of extracellular signals, notably light, CO 2 , extracellular solutes and hormones, including the water-stress signal abscisic acid (ABA) and fungal toxins such as fusicoccin <ref type="bibr">(Blatt &amp; Clint, 1989;</ref><ref type="bibr">Clint &amp; Blatt, 1989)</ref>. Their ability to regulate stomatal aperture in isolation has greatly facilitated a detailed analysis of the underlying molecular mechanics. From these studies <ref type="bibr" target="#b28">(Jezek &amp; Blatt, 2017;</ref><ref type="bibr" target="#b54">Willmer &amp; Fricker, 1996)</ref>, we know that guard cells incorporate a number of specialised ion transporters and that they coordinate transport at the plasma membrane and tonoplast through a complex network that spans metabolism, mass action effects and signalling intermediates, to regulate osmotic solute flux, principally of K + , Cl -and malate (Mal). These processes, and the accompanying water flux, drive the turgor of the guard cell and stomatal aperture. Such deep knowledge has made the guard cell the single, best-known cell model for ion transport, homeostasis and signalling.</p><p>At the macroscopic scale, stomata connect the global water and carbon cycles, exerting a major influence on both. As one example, foliar transpiration has played an important role in atmospheric modelling and weather prediction for more than a quarter of a century <ref type="bibr" target="#b3">(Beljaars et al., 1996;</ref><ref type="bibr" target="#b4">Berry et al., 2010;</ref><ref type="bibr" target="#b5">Betts et al., 1996;</ref><ref type="bibr" target="#b27">Jasechko et al., 2013)</ref>. Indeed, stomata have long attracted the interest of modellers seeking to describe their behaviour and the consequences for the plant within mathematical frameworks. These frameworks generally subsume the characteristics of stomata within a small number of empirical parameters that describe stomatal aperture from a phenomenological perspective.</p><p>They omit the wealth of knowledge, noted above, available for guard cells and the mechanics of how they work. As <ref type="bibr" target="#b4">Berry et al. (2010)</ref> pointed out over a decade ago, 'the decisions "made by" stomata emerge as an important and inadequately understood component of these models'.</p><p>With the advent of the OnGuard3 platform, the barriers to such understanding have largely disappeared. The platform seamlessly bridges the gap between the mechanics of the guard cell and the macroscopic frameworks on which much of ecophysiological modelling and analysis have been based <ref type="bibr" target="#b8">(Blatt et al., 2022)</ref>.</p><p>As part of its initial unveiling, OnGuard3 exposed a previously unknown and emergent 'carbon memory' of stomata: it predicted the slowed the kinetics of stomatal conductance, g s , that erodes the water-use efficiency (WUE) under fluctuating light <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>. OnGuard3 has since proven an important guide in reverse engineering of guard cells to accelerate responsiveness in whole-plant g s for enhanced WUE and biomass gains <ref type="bibr" target="#b26">(Horaruang et al., 2022)</ref>. However, effective use of OnGuard3 requires some understanding of ion transport and the principles of membrane biophysics. These are topics that are generally less familiar to most plant biologists, and they present a practical barrier to potential users of the platform.</p><p>Here we introduce OnGuard3e for predictive and quantitative analysis of gas exchange physiology. Like the OnGuard3 platform <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>, OnGuard3e offers a mathematical framework for modelling and analysis of plant-atmospheric interactions, and it incorporates the depth of mechanistic knowledge available for guard cell transport, metabolism and signalling. However, OnGuard3e places the molecular mechanics of stomata within an ecophysiology-ready format that should ease its use in many settings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| INSIDE THE OnGuard3e PLATFORM</head><p>The engine behind OnGuard3e is identical to that of the full OnGuard platform <ref type="bibr" target="#b13">(Chen et al., 2012;</ref><ref type="bibr" target="#b25">Hills et al., 2012;</ref><ref type="bibr" target="#b29">Jezek et al., 2019</ref><ref type="bibr" target="#b30">Jezek et al., , 2021;;</ref><ref type="bibr" target="#b52">Wang et al., 2017)</ref> and incorporates the mechanics of solute transport, buffering and metabolism in the guard cells. Within the core of the platform, all metabolic and transport processes and their regulatory properties are fully defined by standard, nonlinear differential equations with parameters determined experimentally.</p><p>OnGuard3e uses the same iterative computational cycle to introduce deviations away from the previous steady state with small steps in time. The platform calculates and logs the dynamic adjustments of solute flux, compartmental composition, and voltage across the guard cell plasma membrane and tonoplast (Figure <ref type="figure">1</ref>). All of these calculations are constrained by fundamental physical laws of mass and charge conservation, and they generate new solute contents for the guard cell compartments of the cytosol and vacuole at the end of each time interval. In turn, these values are used to calculate the new total and compartmental cell volumes, solute concentrations, guard cell turgor, and stomatal aperture, as well as solute exchanges with the neighbouring epidermal cells. Thus, rather than transiting between predefined limits, OnGuard3e outputs evolve over time, just as stomatal apertures do in vivo, determined by the mechanisms encoded in the metabolic and transport flux equations, the variables they generate, and the network of interactions between these processes engendered by the variables and their entanglements.</p><p>In its original formulation <ref type="bibr" target="#b13">(Chen et al., 2012;</ref><ref type="bibr" target="#b25">Hills et al., 2012)</ref>, the OnGuard platform described stomata as if isolated in epidermal peels. Models built on this platform nonetheless provided reasonable simulations of stomatal dynamics and uncovered an emergent network connecting the KAT1 K + channel with the SLAC1 anion channel <ref type="bibr" target="#b53">(Wang et al., 2012)</ref> as well as explaining the origins and impacts of oscillations in cytosolic-free Ca 2+ concentrations ([Ca 2+ ] i ) <ref type="bibr" target="#b40">(Minguet-Parramona et al., 2016)</ref>. OnGuard2 introduced the hydraulic feed of the whole plant, foliar transpiration and water transport in the guard cells <ref type="bibr" target="#b52">(Wang et al., 2017)</ref>. It used vapour equilibration with the water potential in the guard cell wall to harmonise the platform with concepts of liquid water delivery to the mesophyll and guard cells <ref type="bibr" target="#b10">(Buckley et al., 2017</ref><ref type="bibr" target="#b11">(Buckley et al., , 2003;;</ref><ref type="bibr" target="#b43">Peak &amp; Mott, 2011;</ref><ref type="bibr" target="#b46">Rockwell et al., 2014)</ref>.</p><p>Apoplastic solute and turgor 'exchange' with the surrounding epidermal cells was introduced to accommodate these opposing mechanical pressures of the epidermis and the viscoelastic properties of the guard cell wall on stomatal aperture <ref type="bibr" target="#b29">(Jezek et al., 2019)</ref>. Finally, OnGuard3 added CO 2 diffusion from the atmosphere and its fixation through mesophyll photosynthesis <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>. Adding CO 2 diffusion to the platform allowed for model constructs that tested the minimum set of targets necessary for CO 2 to act on stomatal aperture.</p><p>It uncovered an emergent 'carbon memory' in stomatal responsiveness that was predicted, and subsequently shown, to erode g s kinetics and the WUE of plants under fluctuating light and pCO 2 <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>.</p><p>Most recently, OnGuard3 was used to guide the engineering of a guard cell ion channel for improved WUE and biomass gains <ref type="bibr" target="#b26">(Horaruang et al., 2022)</ref>.</p><p>F I G U R E 1 OnGuard3e gives access to a wide range of outputs from the temporal kinetics of the cell to whole-plant gas exchange and photosynthesis. The computational cycle (center) of the OnGuard3e platform is shown surrounded by the range of output groupings that the platform makes available to the user. These groupings cross scales from the activities of single ion channels to assimilation (A), transpiration (E) and stomatal conductance (g s ) of the whole plant. OnGuard3e computes the changes in solute gas and metabolic flux, clockwise over the cycle, with small increments in time (Δt) as indicated by the black arrows within the cycle. Environmental inputs comprise light (hν), the relative water feed (RWF) that subsumes water flux and its availability to the leaf, and the atmospheric partial pressures of water vapour (w air ) and CO 2 (pCO 2 ), each indicated by the coloured boxes and grey arrows. Model outputs evolve with each increment in time and distribute between the molecular, cellular, leaf and canopy. Molecular and cellular outputs, indicated within Molecule and Cell quadrants, include the activities of transport and metabolic reactions, here illustrated with current-voltage curves; the cytosolic and vacuolar solute contents ([X]); the compartmental metabolic and solute fluxes (Φ X ); and the voltages (ΔΨ) across the plasma membrane and tonoplast. The guard cell osmotic potential, volume and turgor, and hence stomatal aperture and conductance of Cell and Leaf quadrants, are derived from these outputs. Foliar outputs and the steady-state surface plots of Leaf and Canopy quadrants are determined by the cellular outputs together with the environmental inputs of RWF, light, w air and pCO 2 , and the intermediates internal to the leaf, namely the partial pressures of water vapour (w p ) and CO 2 (pC i ). Phenomenological models address only the Leaf and Canopy characteristics and lack mechanistic connection to the Molecule and Cell processes of the left side of the figure.</p><p>Outputs generated by OnGuard3e, as with OnGuard3, capture all of the temporal kinetics of the guard cells, second by second, as the plant trades soil water for atmospheric CO 2 . These outputs include the osmotic solute content, turgor and volume of the guard cell, stomatal aperture and conductance (g s ), and the rates of transpiration (E) and carbon assimilation (A), all as functions of light, atmospheric CO 2 (pCO 2 ), and relative humidity (RH) as well as water and solute availability. OnGuard outputs also encompass the subcellular kinetics of solute flux and the molecular activities of individual guard cell transporters, and all of these model components and their associated variables are available for analysis (Figure <ref type="figure">1</ref>). Indeed, previous publications offer many examples of ecophysiologically focused outputs from OnGuard. Among these, examples will be found in figures 2, 3, 5-7 and Supporting Information figure <ref type="figure">1</ref> of <ref type="bibr" target="#b52">Wang et al. (2017)</ref> of how the platform predicts g s and associated variables in response to the atmospheric partial pressure of water vapour (w air ) and the vapour pressure difference, to the water feed to the leaf (RWF), and to leaf temperature. Examples of OnGuard predictions for g s , E and A in response to opposing changes in light and atmospheric partial pressure of CO 2 (pCO 2 ) are presented in figure <ref type="figure">2</ref> of <ref type="bibr" target="#b8">Blatt et al. (2022)</ref>. OnGuard model predictions for g s , E, A, the associated cellular variables of ion flux in response to light, atmospheric CO 2 , and their oscillations will be found in figures 2 and 5 and Supporting Information figures S2, S3 and S7 of <ref type="bibr" target="#b30">Jezek et al. (2021)</ref>. Finally, examples of g s and its kinetics predicted for modified GORK K + channels will be found in figure <ref type="figure">5</ref> of <ref type="bibr" target="#b26">Horaruang et al. (2022)</ref>. Each of these publications also includes experimental validations of the key OnGuard predictions, demonstrating how the platform seamlessly connects the macroscopic outputs of gas exchange with the microscopic characteristics of guard cell ion and water flux.</p><p>Users of OnGuard3e are likely to be interested also in a number of intermediate variables. For example, the platform gives access to the relative humidity (RH i ), or partial pressure of water vapour (w p ), and CO 2 (pC i ) within the leaf air space of the substomatal cavity, as well as the concentrations of all of the major solutes and signalling intermediates in the major compartments of the guard cell <ref type="bibr" target="#b8">(Blatt et al., 2022;</ref><ref type="bibr" target="#b30">Jezek et al., 2021;</ref><ref type="bibr" target="#b52">Wang et al., 2017)</ref>. Each of these variables is connected to w air and pCO 2 , the fluence rate of light, and the rate of mesophyll carbon assimilation. Finally, all OnGuard3e outputs take the form of real-time temporal kinetics much as would be recorded in experiments, whether of whole-plant gas exchange or of single-cell physiology with guard cells in isolation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| PHILOSOPHY AND LIMITATIONS</head><p>It is the gold standard in modelling to ask 'What is the most parsimonious assembly of model elements needed to simulate the biological system?' Beyond parsimony, useful models not only recapitulate known behaviours, they also predict new ones. Thus, the modeller will also ask 'What behaviours does this assembly predict that are experimentally testable?' Equally informative, the Because the kinetics of most biological processes are highly nonlinear, often with respect to multiple parameters, the interactions of these processes underpin much of physiology that is seemingly counterintuitive, what are often termed 'emergent' behaviours. More often than not, these emergent behaviours become a focus for model testing and validation.</p><p>OnGuard facilitates modelling of this kind, building on the depth of quantitative knowledge outlined above and detailed previously <ref type="bibr" target="#b13">(Chen et al., 2012;</ref><ref type="bibr" target="#b25">Hills et al., 2012;</ref><ref type="bibr" target="#b30">Jezek et al., 2021;</ref><ref type="bibr" target="#b52">Wang et al., 2017)</ref>. The parameter space for guard cell transport and metabolism is exceptionally well defined experimentally, generally to within a factor of three and frequently with an accuracy of a few percent <ref type="bibr" target="#b25">(Hills et al., 2012)</ref>, and similar degree of accuracy is evident in the macroscopic characteristics pertaining to gas exchange for a wide range of species <ref type="bibr" target="#b34">(Leakey et al., 2019;</ref><ref type="bibr" target="#b37">Long et al., 2022;</ref><ref type="bibr" target="#b39">Matthews &amp; Lawson, 2019)</ref>. This knowledge, and the fundamental requirements for charge and ionic balance, constrain the few model components for which parameterization is less well-defined.</p><p>Of course, as with any mechanistic modeling, success with the platform rests with the ability of the modeller to adequately populate the parameter set-the *.ogb file-that defines a model. For now, the OnGuard platform works well for a range of kidney-shaped stomata.</p><p>Models for Arabidopsis, Vicia and tobacco are available for download; extensive descriptions of the parameter sets and their justifications will be found in <ref type="bibr" target="#b25">Hills et al. (2012)</ref>, <ref type="bibr" target="#b13">Chen et al. (2012)</ref>, <ref type="bibr" target="#b28">Jezek and Blatt (2017)</ref> and <ref type="bibr" target="#b30">Jezek et al. (2021)</ref>. Of course, these models come with the standard proviso of all working systems: they are good approximations to experimental data within the bounds of the conditions and data used for their validation. With new experimental data, further refinement of one or more model parameters may be needed in the future. We welcome communication with users and are always open to suggestions for refinements and new implementations to the OnGuard platform.</p><p>With minor parameter adjustments, the Arabidopsis model will accommodate the behaviours of other Brassica species, and close relatives Tarenaya hassleriana, and the C 4 model Gynandropsis gynandra <ref type="bibr" target="#b1">(Alvim, 2022)</ref>. Likewise, the Vicia and tobacco model requires little adjustment to accommodate the behaviours of potato, tomato and pea. We are presently developing the parameter set for Zea mays for which some essential detail of the stomatal complex is available <ref type="bibr" target="#b9">(Büchsenschütz et al., 2005;</ref><ref type="bibr" target="#b16">Fairley &amp; Assmann, 1991;</ref><ref type="bibr" target="#b17">Fairley-Grenot &amp; Assmann, 1992;</ref><ref type="bibr" target="#b38">Majore et al., 2002)</ref>. Otherwise, there is far less quantitative data suitable for modelling dumbell -shaped stomata, which is likely to limit applications of the OnGuard platform with many grasses for now.</p><p>There remain other important gaps in our knowledge of stomata that users need to be aware of, although many are accommodated within parameter assignments. Users will find extensive discussions of these gaps in relation to the OnGuard platform in several of our previous publications <ref type="bibr" target="#b8">(Blatt et al., 2022;</ref><ref type="bibr" target="#b13">Chen et al., 2012;</ref><ref type="bibr" target="#b25">Hills et al., 2012;</ref><ref type="bibr" target="#b29">Jezek et al., 2019</ref><ref type="bibr" target="#b30">Jezek et al., , 2021;;</ref><ref type="bibr" target="#b50">Vialet-Chabrand et al., 2017;</ref><ref type="bibr" target="#b52">Wang et al., 2017)</ref>. Among these, are the kinetic relationships of (de) phosphorylation and impacts on organic solute metabolism ion channel activities <ref type="bibr" target="#b35">(Lefoulon, 2021)</ref>. For example, we know that [Ca 2+ ] i inactivates inward-rectifying K + channels, possibly through the actions of one or more Ca 2+ -dependent protein kinases <ref type="bibr" target="#b0">(Acharya et al., 2013;</ref><ref type="bibr" target="#b36">Li et al., 1998;</ref><ref type="bibr" target="#b47">Ronzier et al., 2014;</ref><ref type="bibr" target="#b58">Zou et al., 2015)</ref>. We lack the detail needed to model Ca 2+ binding and channel phosphorylation. Nevertheless, we know the overarching kinetics of [Ca 2+ ] i action on K + channel activity and can place the intermediate steps within a mathematical description that subsumes these details.</p><p>This approach introduces modules-effectively 'black boxes' with adjustable levels of resolution-that may be expanded if, and when, the detail of a specific module becomes a focus; it also greatly reduces the computational overhead of the model without loss of predictive power <ref type="bibr" target="#b15">(Endy &amp; Brent, 2001)</ref>. There are many successful examples of black-boxing in biology, including the Hodgkin-Huxley equations used to represent the Na + and K + channels now known to drive the action potentials of nerve and muscle. Indeed, the Hodgkin-Huxley equations explained the fundamental physiological processes of channel gating decades before the underlying molecular mechanisms were elucidated <ref type="bibr" target="#b24">(Hille, 2001)</ref>.</p><p>Finally, it is important to note that each OnGuard model builds on a single set of parameters and therefore represents the 'ideal' or averaged behaviour of stomata behind foliar gas exchange. Experimental strategies that depend on selecting individual stomata, subsets of stomata over the leaf surface, individual leaves or plants invariably yield results that are biological snapshots. These snapshots are governed by heterogeneities in the underlying processes that may vary, each within a normal distribution of values. From a modelling standpoint, it is common practice to explore the range of population behaviours by introducing meaningful variations in combinations of parameters to acertain the range of outputs that arise from interactions intrinsic to the model. These outputs can then be compared with the experimental results and with the data typical from the species; they also provide important insights into the sensitivities of a model to specific parameter choices <ref type="bibr" target="#b25">(Hills et al., 2012;</ref><ref type="bibr" target="#b50">Vialet-Chabrand et al., 2017)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| RUNNING OnGuard3e</head><p>OnGuard3e is available as a standalone package and is compatible with all currently supported Microsoft Windows operating systems.</p><p>Versions are available for 32-and 64-bit platforms and will also run The user has the option to switch between modes at any time, including during a modelling session. The Ecology mode operates with access to environmental inputs and water feed only and is suitable for simulations and analyses that explore these inputs with species compatible with any of the established models supplied with the platform. Additionally, the Ecology mode includes intuitive, animated displays of real-time water and CO 2 fluxes, the RH and partial pressures of CO 2 in the atmosphere and intercellular leaf air space, the rate of carbon assimilation, and macroscopic properties of the guard cells and stoma (Figure <ref type="figure">2b</ref>). The Physiology mode gives access to a more extensive subset of model parameters, including all solute concentrations, some properties of the membrane transporters, guard cell metabolism, the relationship between guard cell solute content, volume, turgor and aperture, and parameters defining ion and turgor 'exchange' with the surrounding epidermal cells. The Physiology mode is likely to attract researchers working in ecophysiology, not least because it is possible to extend existing models to accommodate new species of interest. The Biophysics mode gives full access to all OnGuard controls and displays, including transport current-voltage relations. Both the Physiology and Biophysics modes include real-time, animations describing the ion fluxes through each membrane and transporter. The Biophysics mode can also be used to define entirely new parameters for species that have yet to be modelled as well as introducing new ion transport pathways, for example to explore the effects of salinity stress on stomatal function <ref type="bibr" target="#b41">(Nguyen et al., 2022)</ref>. It is most suited to researchers working in fields close to membrane biology.</p><p>Regardless of the mode selected at startup, we recommend opening one of the model files (*.ogb, located in the default folder, created on installation) supplied with the platform. Once open, the file will populate the full set of parameters along with settings for the diurnal pattern of light, pCO 2 , w air , and hydraulic conductance encapsulated in the relative water feed (RWF). Simulations may be run using the Begin simulation command, which opens the flux window, or through the Run Fast mode command, both found in the Modelling dropdown tab (Figure <ref type="figure">3a</ref>). Simulations that run in the Begin simulation mode will update the animations and displays, including a flux window (Figure <ref type="figure">3b</ref>), throughout and give the user access to a number of controls while in simulation. The Run Fast mode limits user access and the real-time display during simulations, and it does not support animations, but it is substantially faster in operation. Both simulation modes will generate a complete set of outputs in spreadsheet-readable (*.csv) format (Figure <ref type="figure">3c</ref>) that are then available for import into a number of analysis and graphical display programs <ref type="bibr" target="#b13">(Chen et al., 2012;</ref><ref type="bibr" target="#b25">Hills et al., 2012;</ref><ref type="bibr" target="#b30">Jezek et al., 2021;</ref><ref type="bibr" target="#b52">Wang et al., 2017)</ref>. Model parameters cannot be changed while a simulation is running. However, the user can pause a simulation at any time and then resume the simulation when ready. This facility is particularly useful as it allows the user to modify one or more model parameters while the simulation is paused to test the consequences of the modifications over time when the simulation resumes. The user can also program the simulation to pause at a preset time. Thus, it is possible to simulate changes in any number of environmental and endogenous stimuli at a specified time in the diurnal cycle and to follow the progression of changes in stomatal response and its impact on g s , A and E, among other outputs.</p><p>In all operational modes, OnGuard3e provides a real-time, chart recorder onscreen for many outputs (Figure <ref type="figure">4</ref>) in addition to the full set of outputs logged to a spreadsheet-readable (*.csv) format. Chart recorder data are also saved automatically as OnGuard *.ogc files that are available for later review. A typical 24-h simulation started with Begin simulation will complete within 10-20 min on a quad-core i7 computer, depending on the environmental steps included, for example in pCO 2 and w air . The same 24-h simulation run in the Run Fast mode will usually complete within 3-5 min. It is possible also to shift between these two simulation approaches when a simulation is paused.</p><p>F I G U R E 2 OnGuard3e working modes and model parameter access. (a) OnGuard3e provides three working modes, Ecology, Phyiology and Biophysics, with increasing access rights to the parameters defining a model. Each mode is designed to fit the respective user expertise. To choose the appropriate working mode, go to Options, Preferences from the dropdown menu or press Ctrl + Alt + P (1). From the Settings window, click on the Operation Mode button (2) on the left side, and select the appropriate mode in the Interface Level field (3). The information about the features provided by each mode is presented in the Specific Features field (4). Users cannot add or remove these features unless the Custom mode (black arrow) is chosen in the Interface Level field. (b) OnGuard3e includes optional cartoon displays that are updated during simulations when run in the Begin Simulation mode. Shown here are the transport (left) and gas exchange (right) displays. The transport display shows the ion fluxes across each of the two membranes, both as total flux for each ionic species and as the flux through the individual transporters. The gas exchange display shows the net water vapour (blue) and CO 2 (green) fluxes through the stomatal pore (center) and within the leaf (corners, left and right). Also shown is the current relative humidity and CO 2 partial pressure within the leaf air space. Arrows in every case are scaled logarithmically so that a twofold change in length indicates a 10-fold change in flux. (c) Model parameters are divided between eight property pages in the Edit Model window, accessed by going to Modelling, Edit Model Parameters from the dropdown menue or pressing Ctrl + E. In the Edit Model window, the icons representing the eight property pages are shown on the left (upper panel). The information and adjustable parameters relating to each property are shown in each of the main windows (upper panel right and below). The Water-Use Efficiency page with changes to the CO 2 cycle are shown (below, left) as an example of modifying cycle-based model parameters. The Ext. CO 2 Protocol pop-up window, which is accessed by following steps (1) and ( <ref type="formula">2</ref>), provides the adjustable CO 2 cycle (3), the option to set a constant external CO 2 value with the Set Flat button (4) of a given value (5). Protocols with CO 2 changes during the day can be achieved by repositioning nodes (blue arrows) and steps (black arrows) or by double-clicking and entering the precise time point and CO 2 value (6). Nodes can be added at the cursor location or selected and removed from the protocol by clicking New Corner or Delete Hook, respectively. OnGuard3e allows users to control the daily cycle of four environmental inputs, atmospheric CO 2 and relative humidity (RH), blue and red light. Light is accessed through the Light Cycles page and can be modified similarly. The Solute Concentrations (1) page (bottom, right) gives the user access to parameters relevant to guard cell solute flux. In the Physiology and Biophysics modes, the concentration of each solute in each compartment is accessible by clicking directly on the value and typing a desired number <ref type="bibr" target="#b4">(2)</ref>. In the Biophysics mode, new solutes can be added to the model by clicking the Add Solute button (3) and subsequently entering all required information into the pop-up window (4). Users can also change the information of a solute via Edit Solute and remove a solute by clicking Del Solute. It is advisable, when adding and deleting solutes-as when altering solute concentrations-to ensure any changes are balanced in charge. Note that adding a new solute will not impact on model outputs unless an appropriate set of transporters at each membrane are also added to the model. Likewise, entirely removing a solute from a model without also removing the associated transporters is guaranteed to cause computational failure. In the Ecology mode, access is restricted to the concentrations of extant solutes in the apoplast.  <ref type="figure">2c</ref>), for example, are defined as rates per guard cell in units of fmol s -1 , whereas macroscopic outputs are defined per unit leaf surface area. Thus, carbon assimilation is defined in units of μmol m -2 s -1 and transpiration is defined in units of mmol m -2 s -1 . Of course, knowing the stomatal density over the leaf surface, it is a straightforward matter to convert between these two sets of parameters. General Parameters (Figure <ref type="figure">2c</ref>) relate to the guard cell volume, turgor and aperture relations, temperatures and elapsed time. The Solute Concentrations page (Figure <ref type="figure">2c</ref>) reports on the solutes in each of the three compartments associated with the guard cell, namely the apoplast, cytosol and vacuole; it gives the user access to modify the apoplast composition; in the Physiology mode the user can modify all solute compositions; and in the Biophysics mode it is possible to introduce new solutes as well.</p><p>The OnGuard platform treats the bulk apoplast surrounding the guard cells as a reservoir that is unaffected by solute taken up or released by the guard cell; its composition is defined therefore by the user. However, solute gain and loss from the guard cell is connected with solute loss and gain by the epidermal cell immediately adjacent the guard cell, in effect creating a subdomain of the apoplast between these two cells. This solute exchange allows for turgor interactions and epidermal 'back pressure'-accessed through Constraint Relaxation (CRR) parameters (Figure <ref type="figure">2c</ref>)-and it accommodates the viscoelastic properties of the guard cell wall <ref type="bibr" target="#b29">(Jezek et al., 2019)</ref>. The OnGuard platform also assumes a single endomembrane compartment, referred to as the vacuole. This simplification avoids the need to define additional sets of transporters and their parameters for other endomembrane compartments, and it accords with the role of the vacuole as the primary endomembrane compartment responsible for holding the bulk of the osmotically active solute in the guard cell. In general, our knowledge of transport between the cytosol and compartments such as the endoplasmic reticulum, mitochondria and chloroplasts remains insufficient to quantify their functions without introducing indetermination to OnGuard outputs. Nonetheless, the platform retains the capacity for users to add these compartments in the future, once sufficient experimental detail becomes available.</p><p>The Physiology and Biophysics modes give the user access to the populations of the plasma membrane and tonoplast ion channels, carriers and pumps through the Transporters page (Figure <ref type="figure">2c</ref>). This facility enables manipulations that simulate null The Metabolism page (Figure <ref type="figure">2c</ref>) gives access to the concentrations of Mal and sugar, the latter labelled as sucrose (Suc) for expedience, as well as the characteristics of photosynthesis in the guard cells. A preview of the diurnal cycle of Mal and Suc synthesis and their breakdown in the cytosol is available with the Preview button, but note that the preview does not take account of solute transport between compartments and is intended as a guide only. In the Biophysics mode, this page includes the option change the concentrations of each solute in each of the three compartments, and to adjust the characteristics for guard cell photosynthesis and for the interconversion between Suc and Mal in the cytosol.</p><p>The Water-Use Efficiency page (Figure <ref type="figure">2c</ref>) allows the user to set parameters for stomatal pore and leaf geometries, and mesophyll carbon assimilation. Assimilation parameters are also accessible through a preview function that shows the A-C i relations and the predicted assimilation characteristics over the 24 h cycle. The user has access also to the RWF to the leaf, as well as the environmental characteristics for pCO 2 and RH (w air ). Note that RWF is calculated as the effective evaporative surface of the xylem and surrounding mesophyll below the stoma divided by the cross-sectional area of the stomatal pore. RWF values of 40 and F I G U R E 4 Real-time tracking of a simulation using the Chart Recorder. The Chart Recorder tool of Onguard3e provides real-time visualization of a selection of commonly sought outputs during the simulation. The simulation mode (Begin Simulation or Run Fast mode) determines how the user interacts with Chart Recorder. In Begin Simulation mode, the user can switch freely between Chart Recorder tabs (red box and ticks) during simulation to observe the changes of different parameters, adjust the time base for all tabs, and adjust the scaling within each tab. In Run Fast mode, the time base and scaling are not accessible during simulation and switching between tabs must be done using the dropdown list within the Run Fast mode box. The appearance of the chart recorder can be customized by modifying the parameters in the chart properties table when a simulation is not running, or is paused. Adding a new solute generates a new chart recorder tab once the model is saved and reopened.</p><p>above correspond to a well-watered plant with unrestricted water flow to the leaf and its transfer over cell surfaces within the leaf surrounding the xylem for evaporation. Water restriction can be imposed by reducing RWF to values of 10 and below <ref type="bibr" target="#b52">(Wang et al., 2017)</ref>.</p><p>Finally, the Biophysics mode gives the user access to the Constraint Relaxation (CRR) page (Figure <ref type="figure">2c</ref>), defining the parameters for ion and turgor 'exchange' with the surrounding epidermal cells, the subsumed viscoelastic properties of the guard cell wall, and their opposing action on stomatal aperture. The Biophysics mode also gives access to parameters defining the relationship between guard cell solute content, volume, turgor and aperture through the General parameter page (Figure <ref type="figure">2c</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">| THE OUTPUTS OF OnGuard3e</head><p>OnGuard outputs take the form of real-time kinetics much as would be recorded in gas exchange experiments of transpiration and carbon assimilation rates, and it connects these outputs with those of ion and water flux, cellular [Ca 2+ ] i , pH and Mal contents, among others. The platform, therefore, yields an abundance of information connecting the whole-plant behaviour with the characteristics of the guard cell, its physiology and the underpinning molecular events of transport and metabolism. Of course, interpreting the output of any simulation relies on interrogating the variables it generates and their interconnections. To understand how a system responds to physiological or experimental perturbation, the user must determine the origins of each output variable and how one variable is connected to another, for example following an external trigger. Such information is vital, as each simulation, and the parameter set used to construct it, may be seen as a hypothesis under test, to be validated, refined or discarded by comparison with experiment.</p><p>We include here a selection of model outputs for the addition of ABA within the leaf (Figure <ref type="figure">5</ref>). The core parameter sets provided (cf. ARAB-wt.ogb) do not predefine higher-order inputs -notably for the action of ABA-even though the dominant targets of the hormone are well known <ref type="bibr" target="#b28">(Jezek &amp; Blatt, 2017;</ref><ref type="bibr" target="#b31">Kollist et al., 2014;</ref><ref type="bibr" target="#b33">Lawson &amp; Blatt, 2014;</ref><ref type="bibr" target="#b54">Willmer &amp; Fricker, 1996)</ref>. By leaving the targets of higher-order inputs undefined, the user is free to address each pathway independently and may also assess the effects of assembling different combinations of targets. Nonetheless, we are frequently asked for a higher-order model that includes ABA. With the OnGuard3e package, therefore, we now supply a file for a model defining the parameters for Arabidopsis that incorporates ABA action. Within the ARAB-wt-ABA.ogb model, ABA is 'hard-wired' to a set of targets known to be affected by ABA and that also overlap with those resolved for pC i action <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>. The model includes ABA as a user-defined apoplastic solute with transporters at the plasma membrane and tonoplast. The primary targets for cytosolic ABA are the endomembrane and plasma membrane Ca 2+ -ATPases along with the plasma membrane Ca 2+ channel.</p><p>These transporters impact on [Ca 2+ ] i and on pH i for which ABA action is long-established <ref type="bibr" target="#b6">(Blatt &amp; Armstrong, 1993;</ref><ref type="bibr" target="#b22">Hamilton et al., 2000;</ref><ref type="bibr" target="#b28">Jezek &amp; Blatt, 2017;</ref><ref type="bibr" target="#b51">Wang et al., 2013)</ref>. A full list of the relevant targets and parameter values for this model are included in Supporting Information: Appendix SA1.</p><p>Consistent with the literature <ref type="bibr" target="#b2">(Assmann &amp; Jegla, 2016;</ref><ref type="bibr" target="#b28">Jezek &amp; Blatt, 2017)</ref>, raising ABA in the apoplast to micromolar concentrations promotes a rapid decay in stomatal aperture, E and g s , even in the light, and a corresponding decline in A (Figure <ref type="figure">5</ref>). Interrogating the simulation, as presented in the figure, shows that these declines are accompanied by a large decrease in guard cell turgor and volume, an increase and oscillations in [Ca 2+ ] i , and by a substantial flux of K + , and Cl -from the vacuole to the cytosol and apoplast across the plasma membrane. How are the connections made between ABA and guard cell transport? And how do these connections feedback to g s and to A in the whole leaf?</p><p>We know that ABA promotes the gating of the plasma membrane Ca 2+ channels and endomembrane Ca 2+ release through the actions of ROS and nitric oxide <ref type="bibr" target="#b20">(Garcia-Mata et al., 2003;</ref><ref type="bibr" target="#b21">Grabov &amp; Blatt, 1998;</ref><ref type="bibr" target="#b22">Hamilton et al., 2000;</ref><ref type="bibr" target="#b32">Kwak et al., 2003;</ref><ref type="bibr" target="#b44">Pei et al., 2000;</ref><ref type="bibr" target="#b49">Sokolovski et al., 2005)</ref>, with their cumulative actions in promoting anion efflux while suppressing the activity of the KAT1type K + channels <ref type="bibr" target="#b28">(Jezek &amp; Blatt, 2017)</ref>. The repeated elevations in [Ca 2+ ] i suppress the plasma membrane H + -ATPases and tonoplast H + -PPase with corresponding impacts on the driving forces for transport at both membranes <ref type="bibr" target="#b28">(Jezek &amp; Blatt, 2017)</ref>. The characteristics for enhanced Ca 2+ release and its reduced elimination from the cytosol are encoded in the platform with ABA to overlap with those for the effects of CO 2 <ref type="bibr" target="#b30">(Jezek et al., 2021)</ref>. In addition, the elevation of [Ca 2+ ] i in ABA suppresses the plasma membrane H + -ATPase to accelerate closure. With these characteristics, the ARAB-wt-ABA.ogb parameter set reproduces stomatal behaviour that has been reported with ABA and, furthermore, it shows a reduction in pC i and in A while reducing E and the raising the partial pressure of water vapour, w p , behind the stomatal pore.</p><p>A number of the predictions set out in Figure <ref type="figure">5</ref> are amenable to experimental testing. For example, the model predicts stomatal closure with ABA, even in the presence of reduced pC i <ref type="bibr" target="#b18">(Fischer et al., 1986)</ref>, indicating a much more subtle balance of actions between water stress and CO 2 availability <ref type="bibr" target="#b45">(Raschke, 1976)</ref> than has been implied in recent studies of the underlying signal cascades <ref type="bibr" target="#b12">(Chater et al., 2015;</ref><ref type="bibr" target="#b48">Schulze et al., 2021)</ref>; it also shows an unexpected retention of Mal over Cl -in the vacuole in the presence of ABA. Overall, these simulations establish a predominance in the connection of ABA signalling through guard cell Ca 2+ transport. They suggest that endomembrane Ca 2+ transport, especially, is vital to explaining this physiology and is sufficient to predict a dominance of the ABA stimulus over that of pC i within the range typical for the gas in the inner leaf air spaces. Most important, the simulations highlight the feedback between the macroscopic processes of gas exchange and the microscopic regulatory network that operates in the guard cells.</p><p>F I G U R E 5 ABA-evoked stomatal characteristics using the 'hard-wired' OnGuard3e model. Selected outputs plotted from the data logged on running the ARAB-wt-ABA.ogb model with 1 μM ABA added over the period of 4-6 h in the light with 70% RH and 400 μbar CO 2 in the atmosphere. Shown are (a) the stomatal aperture and guard cell turgor, (b) stomatal conductance, g s , and transpiration, E, (c) water-use efficiency, and carbon assimilation, A, (d) the partial pressure of CO 2 , pC i , and %RH, in the leaf air space, (e) the plasma membrane and tonoplast voltages, (f) the cytosolic-free Ca 2+ concentration, [Ca 2+ ] i , and total vacuolar Ca 2+ concentration, and the cytosolic and vacuolar concentrations of K + (g), Cl - (h), and total Mal (i). ABA, abscisic acid; Mal, malate; RH, relative humidity.</p><p>Research on photosynthetic gas exchange and efforts to analyse stomatal behaviour through simulations have divided between two radically different approaches and scales. The physiology of the guard cell is exceptionally well-defined and has been modelled successfully with quantitative mechanistic and kinetic detail at the molecular and cellular levels. By contrast, canopy-level simulation of gas exchange has focused on stomatal aperture as a central parameter that is defined phenomenologically. Foliar gas exchange at this level is described with respect to water availability, atmospheric humidity, CO 2 , light and photosynthesis, but is devoid of the mechanics pertinent to the guard cell. Simply put, until now the absence of a detailed mechanistic platform for stomata has prevented efforts to introduce the developments from stomatal research at the cellular and subcellular levels in forward-looking studies of the carbon and water cycles of the plant and the planet <ref type="bibr" target="#b4">(Berry et al., 2010;</ref><ref type="bibr" target="#b19">Franks et al., 2017)</ref>.</p><p>The OnGuard platform bridges this gap with an overarching approach that crosses scales while drawing explicitly on the molecular mechanics of transport, buffering and metabolism in the guard cell. The platform offers a new and unprecedented set of tools with which to explore the mechanics of foliar gas exchange within an overarching framework that operates seamlessly from the molecule to the plant canopy. These same tools offer opportunities in designing strategies for 'reverse engineering' of stomatal traits, assimilation and WUE. They are ideal as a basis for in silico 'template trials' to inform efforts in crop enhancement before their application in the field. Indeed, OnGuard modelling has proven important in guiding the recent success in engineering an ion channel native to the guard cell for enhanced WUE and biomass gains <ref type="bibr" target="#b26">(Horaruang et al., 2022)</ref>. The advances in synthetic biology toward modularising many biochemical and physiological processes <ref type="bibr" target="#b42">(Papanatsiou et al., 2019;</ref><ref type="bibr" target="#b56">Yang et al., 2015;</ref><ref type="bibr" target="#b57">Zhu et al., 2010)</ref> means that such combinations of modelling and 'template trials' with laboratory and field experiments increasingly will become a central focus of research in the future.</p><p>Mechanistic platforms, such as OnGuard, are needed also to refocus large-scale modelling efforts and better understand plant interactions with the environment. <ref type="bibr" target="#b4">Berry et al. (2010)</ref> noted that the conclusions drawn from global-scale modelling projects 'depend on getting our plant physiology right'. If we are to improve on globalscale models, it will be essential to avail ourselves of the mechanistic detail to hand for stomata. What makes the OnGuard platform so sucessful is its unique ability to model and predict temporal kinetics across a wide range of variable inputs with outputs that are immediately available for comparison with experiments in the field.</p><p>Whether the focus is on whole-plant ecophysiology or guard cell molecular biology, the OnGuard platform allows the user to explore and analyse transient behaviours as they arise, second by second, through the interacting elements of each model assembly. Rather than focusing on the steady-state conductance of stomata, OnGuard describes stomatal physiology across timescales from fractions of a second to many hours and days as the plant trades soil water for CO 2 .</p><p>Even with the introduction of OnGuard3e, there remains much still to do. We encourage users to communicate with us and discuss ways of enhancing the platform to better serve the research community. A wealth of knowledge exists for guard cells of many species that has yet to be parameterised. Incorporating this knowledge within the OnGuard platform is sure to help expand the utility of the platform in guiding our understanding of stomata in the real world.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>modeller will want to know 'In what ways does the model assembly fail, either in recapitulating known behaviours or in predicting new ones?' In short, each OnGuard model-each *.ogb file-becomes a hypothesis under test, to be discarded, validated, or refined by comparisons between model predictions and experimental results.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>on a Mac using a Windows 'emulator' such as Parallels or the native Windows mode of Boot Camp. The 32-bit version of OnGuard3e also works on Mac computers with the M1, M1X, M2 and M2X chips. The software can be downloaded and installed using the relevant (32-or 64-bit) msi installer file and includes an extensive set of guides and context-sensitive help pointers, the latter accessed by hovering over the various parameter controls and buttons. OnGuard3e uses the standard file dropdown structure familiar to Windows users. It runs in three, main, user-selectable modes that are accessed in Preferences from the Options dropdown menu (Figure 2a).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>From the Edit Model Parameters command in the Modelling dropdown of OnGuard3e, the user has access to a range of environmental and associated parameters (Figure2c). For example, if you have opened the ARAB-wt.ogb file, then in the Model View panel Water-Use Efficiency a double-click on CO 2 cyc will open a popup window to show a 24 h diurnal cycle preset with 1-h steps from 400 to 1000 ppm separated by periods at 400 ppm CO 2 (Figure2c).To remove the steps, click the Set Flat button, enter the desired pCO 2 , click 'OK' and then 'OK' again to exit the CO 2 cycle editor.Steps in pCO 2 may also be introduced by clicking on an interval between nodes in the window and then dragging the interval to the desired pCO 2 value or by double-clicking and entering a numerical value. Nodes and steps can also be repositioned by clicking and dragging or by numerical A similar set of user-accessible controls are available for the diurnal cycles in RH (w air ) and in light. OnGuard3e users have access also to define apoplastic ion and other solute concentrations, ABA (see below), fluence rates of blue and red light, pCO 2 , water availability (as RWF), settings for mesophyll photosynthesis, leaf geometry, air and leaf temperatures. It is possible to reset operational variables, such as the elapsed time, and to save and/or rename a model file. Be aware that saving an open model will overwrite the existing *.ogb file, unless the Save As… option is selected from the File menu. Saving a model also saves the current simulation timepoint, which can cause confusion when running the model afresh after saving and exiting OnGuard3e unless the elapsed time is first reset to zero. A brief summary of the model elements are outlined in the next section.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>F</head><label></label><figDesc>I G U R E 3 Running and logging an OnGuard simulation. OnGuard simulations are run from the Modelling dropdown menu (a) using either the Begin Simulation (1) or the Run in Fast Mode (2) command. The Begin Simulation command opens a flux window (b) that also gives the user options for time autoincrements and CSV file logging, as well as readouts for the fluxes across the plasma membrane and tonoplast and contents of the major compartments of the guard cell. CSV files (c) can be selected to log both net fluxes as well as the individual ion and solute fluxes along with a full range of intermediate and macroscopic variables with each time increment. Much of the OnGuard platform includes parameters that are scaled to the guard cell, reflecting the fact that the vast majority of stomatal research at the cellular level is carried out on guard cells isolated in epidermal peels, or as protoplasts and isolated vacuoles, maintained in controlled external media. Parameters and variables relevant to macroscopic outputs are scaled to the leaf surface area. Sugar and Mal synthesis in the guard cell (see metabolism, Figure</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>mutants and transporter overexpression by setting the corresponding population number to zero and to higher values, respectively. In each case, the user selects the transporter from the dropdown list and enters values in the Number entry box to the right of the transporter identifier. Note that the number of transporters specified is that of the single guard cell, not the density of transporters per unit area of membrane. Parameters defining the biophysical and intrinsic regulatory properties of the various transporters-Ion Channel, Pump and Carrier-are also accessible through the Biophysics mode.</figDesc></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Plant Cell Environ. 2023;46:3644-3658.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>13653040, 2023, 11, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pce.14674 by Test, Wiley Online Library on [12/10/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p>Development of the OnGuard platform was supported by <rs type="funder">BBSRC</rs> grants <rs type="grantNumber">BB/L001276/1</rs>, <rs type="grantNumber">BB/L019205/1</rs>, <rs type="grantNumber">BB/M001601/1</rs>, and <rs type="grantNumber">BB/ N01832X/1</rs>, and <rs type="grantNumber">BB/T006153/1</rs> to <rs type="person">Michael R. Blatt</rs> and by a <rs type="grantName">Lord Kelvin Adam Smith PhD studentship</rs> to FALS-A.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_A478zak">
+					<idno type="grant-number">BB/L001276/1</idno>
+				</org>
+				<org type="funding" xml:id="_5eN844Y">
+					<idno type="grant-number">BB/L019205/1</idno>
+				</org>
+				<org type="funding" xml:id="_bRDWynZ">
+					<idno type="grant-number">BB/M001601/1</idno>
+				</org>
+				<org type="funding" xml:id="_wmKzkcd">
+					<idno type="grant-number">BB/ N01832X/1</idno>
+				</org>
+				<org type="funding" xml:id="_87NqZE7">
+					<idno type="grant-number">BB/T006153/1</idno>
+					<orgName type="grant-name">Lord Kelvin Adam Smith PhD studentship</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The OnGuard3e platform and the model parameter sets as binary code described herein are freely available to academic users and may be downloaded from www.psrg.org.uk. The full list of entries to the core parameter set are also provided in the Supporting Information Appendix SA1.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SUPPORTING INFORMATION</head><p>Additional supporting information can be found online in the Supporting Information section at the end of this article. </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Open stomata 1 (OST1) is limiting in abscisic acid responses of Arabidopsis guard cells</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">R</forename><surname>Acharya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Jeon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Assmann</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/nph.12469</idno>
+		<ptr target="https://doi.org/10.1111/nph.12469" />
+	</analytic>
+	<monogr>
+		<title level="j">New Phytologist</title>
+		<imprint>
+			<biblScope unit="volume">200</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1049" to="1063" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Potassium channels of C 3 and C 4 plants</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">S L</forename><surname>Alvim</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Glasgow</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">PhD Thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Guard cell sensory systems: recent insights on stomatal responses to light, abscisic acid, and CO 2</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Assmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jegla</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.pbi.2016.07.003</idno>
+		<ptr target="https://doi.org/10.1016/j.pbi.2016.07.003" />
+	</analytic>
+	<monogr>
+		<title level="j">Current Opinion in Plant Biology</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="157" to="167" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The anomalous rainfall over the United States during July 1993: sensitivity to land surface parameterization and soil moisture</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C M</forename><surname>Beljaars</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Viterbo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Betts</surname></persName>
+		</author>
+		<idno type="DOI">10.1175/1520-0493(1996)124%3C0362:tarotu%3E2.0.co;2</idno>
+		<ptr target="https://doi.org/10.1175/1520-0493(1996)124&lt;0362:tarotu&gt;2.0.co" />
+	</analytic>
+	<monogr>
+		<title level="j">Monthly Weather Review</title>
+		<imprint>
+			<biblScope unit="volume">124</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="362" to="383" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Stomata: key players in the earth system, past and present</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Berry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Beerling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Franks</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Current Opinion in Plant Biology</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="232" to="239" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The land surface-atmosphere interaction: a review based on observational and global modeling perspectives</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Betts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Ball</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C M</forename><surname>Beljaars</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Viterbo</surname></persName>
+		</author>
+		<idno type="DOI">10.1029/95jd02135</idno>
+		<ptr target="https://doi.org/10.1029/95jd02135" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Geophysical Research: Atmospheres</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">D3</biblScope>
+			<biblScope unit="page" from="7209" to="7225" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">K + channels of stomatal guard cells: abscisic acid-evoked control of the outward rectifier mediated by cytoplasmic pH</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Armstrong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">191</biblScope>
+			<biblScope unit="page" from="330" to="341" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Mechanisms of fusicoccin action: kinetic modification and inactivation of K + channels in guard cells</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Clint</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">178</biblScope>
+			<biblScope unit="page" from="509" to="523" />
+			<date type="published" when="1989">1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">What can mechanistic models tell us about guard cells, photosynthesis, and water-use efficiency?</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jezek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Lew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.tplants.2021.08.010</idno>
+		<ptr target="https://doi.org/10.1016/j.tplants.2021.08.010" />
+	</analytic>
+	<monogr>
+		<title level="j">Trends in Plant Science</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="166" to="179" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Differential expression of K + channels between guard cells and subsidiary cells within the maize stomatal complex</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Büchsenschütz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Marten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Becker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Philippar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hedrich</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s00425-005-0038-6</idno>
+		<idno>1007/ s00425-005-0038-6</idno>
+		<ptr target="https://doi.org/10" />
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">222</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="968" to="976" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The sites of evaporation within leaves</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">N</forename><surname>Buckley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>John</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Scoffoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sack</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.16.01605</idno>
+		<ptr target="https://doi.org/10.1104/pp.16.01605" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">173</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1763" to="1782" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A hydromechanical and biochemical model of stomatal conductance</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">N</forename><surname>Buckley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Mott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Farquhar</surname></persName>
+		</author>
+		<idno type="DOI">10.1046/j.1365-3040.2003.01094.x</idno>
+		<ptr target="https://doi.org/10.1046/j.1365-3040.2003.01094.x" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant, Cell &amp; Environment</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="1767" to="1785" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Elevated CO 2 -induced responses in stomata require ABA and ABA signaling</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chater</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Movahedi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Dunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">K</forename><surname>Liang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cub.2015.09.013</idno>
+		<ptr target="https://doi.org/10.1016/j.cub.2015.09.013" />
+	</analytic>
+	<monogr>
+		<title level="j">Current Biology</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="2709" to="2716" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Systems dynamic modeling of the stomatal guard cell predicts emergent behaviors in transport, signaling, and volume control</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Bätz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Amtmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Lew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1235" to="1251" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Mechanisms of fusicoccin action: evidence for concerted modulations of secondary K + transport in a higherplant cell</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Clint</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">178</biblScope>
+			<biblScope unit="page" from="495" to="508" />
+			<date type="published" when="1989">1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Modelling cellular behaviour</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Endy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Brent</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">409</biblScope>
+			<biblScope unit="issue">6818</biblScope>
+			<biblScope unit="page" from="391" to="395" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A patch clamp comparison of potassium ion channel current in guard cell protoplasts from Zea mays and Vicia faba</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">K</forename><surname>Fairley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Assmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="page">138</biblScope>
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Whole-cell K + current across the plasma membrane of guard cells from a grass: Zea mays</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Fairley-Grenot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Assmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">186</biblScope>
+			<biblScope unit="page" from="282" to="293" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Effects of abscisic-acid on photosynthesis in whole leaves-changes in CO 2 assimilation, levels of carbon-reduction-cycle intermediates, and activity of ribulose-1,5-bisphosphate carboxylase</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Fischer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raschke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Stitt</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/bf00392104</idno>
+		<ptr target="https://doi.org/10.1007/bf00392104" />
+	</analytic>
+	<monogr>
+		<title level="j">Planta</title>
+		<imprint>
+			<biblScope unit="volume">169</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="536" to="545" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Stomatal function across temporal and spatial scales: deep-time trends, landatmosphere coupling and global models</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Franks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Berry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Lombardozzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Bonan</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.17.00287</idno>
+		<ptr target="https://doi.org/10.1104/pp.17.00287" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="583" to="602" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Nitric oxide regulates K+ and Clchannels in guard cells through a subset of abscisic acid-evoked signaling pathways</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Garcia-Mata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sokolovski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lamattina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="11116" to="11121" />
+		</imprint>
+		<respStmt>
+			<orgName>Proceedings of the National Academy of Sciences of the United States of America</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<title level="m" type="main">Membrane voltage initiates Ca 2+ waves and potentiates Ca 2+ increases with abscisic acid in stomatal guard cells</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grabov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="page" from="4778" to="4783" />
+		</imprint>
+		<respStmt>
+			<orgName>Proceedings of the National Academy of Sciences of the United States Of America</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Ca 2+ channels at the plasma membrane of stomatal guard cells are activated by hyperpolarization and abscisic acid</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W A</forename><surname>Hamilton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kohler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="page" from="4967" to="4972" />
+		</imprint>
+		<respStmt>
+			<orgName>Proceedings of the National Academy of Sciences of the United States of America</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">The role of stomata in sensing and driving environmental change</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Hetherington</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">I</forename><surname>Woodward</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">424</biblScope>
+			<biblScope unit="issue">6951</biblScope>
+			<biblScope unit="page" from="901" to="908" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Ionic channels of excitable membranes</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hille</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<publisher>Sinauer Press</publisher>
+			<biblScope unit="volume">3</biblScope>
+			<pubPlace>Sunderland, MA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">OnGuard, a computational platform for quantitative kinetic modeling of guard cell physiology</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Amtmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Lew</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1026" to="1042" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Engineering a K + channel &apos;sensory antenna&apos; enhances stomatal kinetics, water-use efficiency and photosynthesis</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Horaruang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Klejchová</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Carroll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A L</forename><surname>Silva-Alvim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Waghmare</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Papanatsiou</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41477-022-01255-2</idno>
+		<ptr target="https://doi.org/10.1038/s41477-022-01255-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Plants</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="1262" to="1274" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Terrestrial water fluxes dominated by transpiration</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jasechko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">D</forename><surname>Sharp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Gibson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Birks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Fawcett</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nature11983</idno>
+		<ptr target="https://doi.org/10.1038/nature11983" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">496</biblScope>
+			<biblScope unit="issue">7445</biblScope>
+			<biblScope unit="page" from="347" to="350" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">The membrane transport system of the guard cell and its integration for stomatal dynamics</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jezek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.16.01949</idno>
+		<ptr target="https://doi.org/10.1104/pp.16.01949" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="487" to="519" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A constraint-relaxationrecovery mechanism for stomatal dynamics</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jezek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Lew</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/pce.13568</idno>
+		<ptr target="https://doi.org/10.1111/pce.13568" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant, Cell &amp; Environment</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="2399" to="2410" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Guard cell endomembrane Ca 2+ -ATPases underpin a &apos;carbon memory&apos; of photosynthetic assimilation that impacts on water-use efficiency</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jezek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">A L</forename><surname>Silva-Alvim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Donald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Ishka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Shadbolt</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41477-021-00966-2</idno>
+		<ptr target="https://doi.org/10.1038/s41477-021-00966-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature Plants</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="1301" to="1313" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Closing gaps: linking elements that control stomatal movement</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kollist</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nuhkat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R G</forename><surname>Roelfsema</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/nph.12832</idno>
+		<ptr target="https://doi.org/10.1111/nph.12832" />
+	</analytic>
+	<monogr>
+		<title level="j">New Phytologist</title>
+		<imprint>
+			<biblScope unit="volume">203</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="44" to="62" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">NADPH oxidase AtrbohD and AtrbohF genes function in ROS-dependent ABA signaling in Arabidopsis</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Kwak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">C</forename><surname>Mori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z.-M</forename><surname>Pei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Leonhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Dangl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The EMBO Journal</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="2623" to="2633" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Stomatal size, speed, and responsiveness impact on photosynthesis and water-use efficiency</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">164</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1556" to="1570" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Water-use efficiency as a constraint and target for improving the resilience and productivity of C 3 and C 4 crops</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D B</forename><surname>Leakey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Ferguson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">P</forename><surname>Pignon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Hammer</surname></persName>
+		</author>
+		<idno type="DOI">10.1146/annurev-arplant-042817-040305</idno>
+		<ptr target="https://doi.org/10.1146/annurev-arplant-042817-040305" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual Review of Plant Biology</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="page" from="781" to="808" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">The bare necessities of plant K + channel regulation</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lefoulon</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/plphys/kiab266</idno>
+		<ptr target="https://doi.org/10.1093/plphys/kiab266" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">187</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="2092" to="2109" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Guard cells possess a calciumdependent protein kinase that phosphorylates the KAT1 potassium channel</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">R</forename><surname>Julie Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Assmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page" from="785" to="795" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Into the shadows and back into sunlight: photosynthesis in fluctuating light</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Long</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Burgess</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Carmo-Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>De Souza</surname></persName>
+		</author>
+		<idno type="DOI">10.1146/annurev-arplant-070221-024745</idno>
+		<ptr target="https://doi.org/10.1146/annurev-arplant-070221-024745" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual Review of Plant Biology</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="page" from="617" to="648" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Identification of K + channels in the plasma membrane of maize subsidiary cells</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Majore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wilhelm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Marten</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/pcp/pcf104</idno>
+		<ptr target="https://doi.org/10.1093/pcp/pcf104" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant and Cell Physiology</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="844" to="852" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Climate change and stomatal physiology</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S A</forename><surname>Matthews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lawson</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/9781119312994.apr0667</idno>
+		<ptr target="https://doi.org/10.1002/9781119312994.apr0667" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual Plant Reviews Online</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="713" to="751" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">An optimal frequency in Ca 2+ oscillations for stomatal closure is an emergent property of ion transport in guard cells</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Minguet-Parramona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vialet-Chabrand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rogers</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.15.01607</idno>
+		<ptr target="https://doi.org/10.1104/pp.15.01607" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">170</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="33" to="42" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Stomata under salt stress-what can mechanistic modeling tell us?</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B A</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Amtmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T.-H</forename><surname>Nguyen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/bs.abr.2022.02.012</idno>
+		<ptr target="https://doi.org/10.1016/bs.abr.2022.02.012" />
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Botanical Research</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="page" from="139" to="162" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Optogenetic manipulation of stomatal kinetics improves carbon assimilation, water use, and growth</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Papanatsiou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Petersen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Henderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Christie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">363</biblScope>
+			<biblScope unit="page" from="1456" to="1459" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A new, vapour-phase mechanism for stomatal responses to humidity and temperature</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Peak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Mott</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant, Cell &amp; Environment</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="162" to="178" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Calcium channels activated by hydrogen peroxide mediate abscisic acid signalling in guard cells</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">M</forename><surname>Pei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Murata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Benning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Thomine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Klüsener</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Allen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">406</biblScope>
+			<biblScope unit="page" from="731" to="734" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">How stomata resolve the dilemma of opposing priorities</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raschke</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rstb.1976.0031</idno>
+		<ptr target="https://doi.org/10.1098/rstb.1976.0031" />
+	</analytic>
+	<monogr>
+		<title level="m">Philosophical Transactions of the Royal Society of London. B, Biological Sciences</title>
+		<imprint>
+			<date type="published" when="1976">1976</date>
+			<biblScope unit="volume">273</biblScope>
+			<biblScope unit="page" from="551" to="560" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">The competition between liquid and vapor transport in transpiring leaves</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">E</forename><surname>Rockwell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">M</forename><surname>Holbrook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Stroock</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">164</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1741" to="1758" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">CPK13, a noncanonical Ca 2+ -dependent protein kinase, specifically inhibits KAT2 and KAT1 shaker K + channels and reduces stomatal opening</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ronzier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Corratgé-Faillie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sanchez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Prado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Brière</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Leonhardt</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.114.240226</idno>
+		<ptr target="https://doi.org/10.1104/pp.114.240226" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="314" to="326" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">A role for calcium-dependent protein kinases in differential CO 2and ABA-controlled stomatal closing and low CO 2 -induced stomatal opening in Arabidopsis</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schulze</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dubeaux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">H O</forename><surname>Ceciliato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Munemasa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nuhkat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yarmolinsky</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/nph.17079</idno>
+		<ptr target="https://doi.org/10.1111/nph.17079" />
+	</analytic>
+	<monogr>
+		<title level="j">New Phytologist</title>
+		<imprint>
+			<biblScope unit="volume">229</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="2765" to="2779" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Protein phosphorylation is a prerequisite for intracellular Ca 2+ release and ion channel control by nitric oxide and abscisic acid in guard cells: nitric oxide-mediated Ca 2+ signalling and protein phosphorylation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sokolovski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Garcia-Mata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lamattina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Plant Journal</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="520" to="529" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Global sensitivity analysis of OnGuard models identifies key hubs for transport interaction in stomatal dynamics</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vialet-Chabrand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">L</forename><surname>Lew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lawson</surname></persName>
+		</author>
+		<idno type="DOI">10.1104/pp.17.00170</idno>
+		<ptr target="https://doi.org/10.1104/pp.17.00170" />
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="680" to="688" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">PYR/PYL/ RCAR abscisic acid receptors regulate K + and Clchannels through reactive oxygen species-mediated activation of Ca 2+ channels at the plasma membrane of intact Arabidopsis guard cells</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Blatt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">163</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="566" to="577" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Unexpected connections between humidity and ion transport discovered using a model to bridge guard cell-to-leaf scales</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vialet-Chabrand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Papanatsiou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rogers</surname></persName>
+		</author>
+		<idno type="DOI">10.1105/tpc.17.00694</idno>
+		<ptr target="https://doi.org/10.1105/tpc.17.00694" />
+	</analytic>
+	<monogr>
+		<title level="j">The Plant Cell</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="2921" to="2939" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Systems dynamic modeling of a guard cell Clchannel mutant uncovers an emergent homeostatic network regulating stomatal transpiration</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Papanatsiou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Eisenach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Karnik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Williams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hills</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Plant Physiology</title>
+		<imprint>
+			<biblScope unit="volume">160</biblScope>
+			<biblScope unit="page" from="1956" to="1967" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Willmer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Fricker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Stomata</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1" to="375" />
+			<date type="published" when="1996">1996</date>
+			<publisher>Chapman and Hall</publisher>
+			<pubPlace>London</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Stomatal conductance correlates with photosynthetic capacity</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">R</forename><surname>Cowan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Farquhar</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/282424a0</idno>
+		<ptr target="https://doi.org/10.1038/282424a0" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">282</biblScope>
+			<biblScope unit="issue">5737</biblScope>
+			<biblScope unit="page" from="424" to="426" />
+			<date type="published" when="1979">1979</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">A roadmap for research on crassulacean acid metabolism (CAM) to enhance sustainable food and bioenergy production in a hotter, drier world</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Cushman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Borland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">J</forename><surname>Edwards</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Wullschleger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Tuskan</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/nph.13393</idno>
+		<ptr target="https://doi.org/10.1111/nph.13393" />
+	</analytic>
+	<monogr>
+		<title level="j">New Phytologist</title>
+		<imprint>
+			<biblScope unit="volume">207</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="491" to="504" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Improving photosynthetic efficiency for greater yield</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">G</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Long</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Ort</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annual Review of Plant Biology</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="235" to="261" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Arabidopsis calcium-dependent protein kinase 8 and catalase 3 function in abscisic acid-mediated signaling and H 2 O 2 homeostasis in stomatal guard cells under drought stress</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">D</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ratnasekera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">X</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Song</surname></persName>
+		</author>
+		<idno type="DOI">10.1105/tpc.15.00144</idno>
+		<ptr target="https://doi.org/10.1105/tpc.15.00144" />
+	</analytic>
+	<monogr>
+		<title level="j">The Plant Cell</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1445" to="1460" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

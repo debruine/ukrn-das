@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Discussion of &quot;Multivariate dynamic modeling for Bayesian forecasting of business revenue&quot;</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Dimitris</forename><surname>Korobilis</surname></persName>
+							<email>dimitris.korobilis@glasgow.ac.uk</email>
+							<idno type="ORCID">0000-0001-9146-3008</idno>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Santiago</forename><surname>Montoya-Blandón</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Discussion of &quot;Multivariate dynamic modeling for Bayesian forecasting of business revenue&quot;</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B2BBB2F9AF92ABD1FBFBDB82EDFD1FF8</idno>
+					<idno type="DOI">10.1002/asmb.2753</idno>
+					<note type="submission">Received: 28 January 2023 Accepted: 31 January 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:55+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>The paper by Yanchenko et al. <ref type="bibr" target="#b0">1</ref> presents a long-term business revenue forecast effort for a large retail company. We congratulate the authors for elaborating on a framework that is of theoretical interest while responding to specific needs of business revenue forecasting and the retail sector. Forecasting approaches in academic spheres usually focus on developing flexible and general models with desirable statistical properties. However, models for forecasting in practical settings further require considerations of computational feasibility, scalability, replicability and interpretability. Most of these concerns are addressed with simple and transparent Bayesian techniques that afford the firms a lot of control over the data and inputs used, as well as interpretation of the results. Using information on pricing strategies, promotions and discounts, and taking into the account the multi-scale nature of stores and categories of items that affect these pricing decisions, the authors present 12-week ahead forecasts on revenue at the local store group and item levels. Their analysis first shows how using multi-scale information on pricing and discount decisions can improve forecasts for some categories and stores, but that sharing information across scales does not uniformly lead to forecast improvements. In particular, smaller store groups tend to benefit more than larger groups. The analysis then focuses on how additional modeling of price and seasonal effects can improve performance and explore these gains in the context of their available data. Finally, the authors explore the correlation structure across categories of goods to try and understand how these can inform better pricing strategies and the forecasting specification itself.</p><p>The methods in the paper build upon the classic dynamic linear model (DLM) framework of West and Harrison 2 and their extensions in Berry and West. <ref type="bibr" target="#b2">3</ref> As perfectly exhibited in the paper, the DLM framework is tremendously diverse and flexible, with many modeling and fine-tuning options that can be suited to a wide range of applications. On the other hand, the sheer amount of flexibility in these models means there can still be strategies that lead to potential forecasting gains. Consequently, in this comment we explore possible extensions to the specification presented in the paper that might add value to this and future business revenue forecasting applications. The remainder of the comment is structured as follows. Section 2 discusses extensions to the covariates included in the model, both in terms of additional pricing variables and use of mixed-frequency information in DLMs; Section 3 discusses other technical extensions, for example one that could allow for recursively incorporating expert information in the prior structure, or one to the coupling/decoupling idea viewed as a problem of variable selection and dimensionality reduction; Section 4 discusses the use of other application-relevant objective functions and their possible gains for forecasting; finally, Section 5 presents our concluding remarks and further advice for future research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">ADDITIONAL PREDICTORS AND MIXED-FREQUENCY DATA</head><p>Despite the fact that the authors claim that their dataset has several "breadth of discount" measures, they only consider three as potential predictors of sales. It would be interesting to explore more predictors, and also allow different predictors to have different importance for forecasting each sales. Within the context of DLM that the authors present (see Yanchenko et al., <ref type="bibr" target="#b0">1</ref> equation ( <ref type="formula">1</ref>)) our suggestion implies that some of the coefficients 𝜽 t may be zero in some time periods but not in others. This is the so-called dynamic variable selection problem in statistics, and recently Koop and Korobilis 4 have developed a fast variational Bayes algorithm that allows to select among hundreds of predictors each time period. Related to the previous point, many times there are relevant predictors that are not measured at the same frequency as the target variable. A prime example is regional macroeconomic data, such as disposable income of families in the geographical area of the Local Store Groups considered in the study, which most probably will not be available at the weekly frequency used in the analysis. Conversely, financial data and other indicators might be available at the daily level. The DLM is an appropriate framework for forecasting with mixed-frequency data, as it allows to treat low-frequency observations (e.g., monthly) as high-frequency observations (e.g., weekly) that have missing values, without having to dramatically alter the forecasting specification or estimation algorithms; see Harvey <ref type="bibr" target="#b4">5</ref> for an early exposition of this idea.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">EXPERT OPINIONS AND DECOUPLING/RECOUPLING</head><p>Even if one argues that additional predictor variables may not necessarily provide valuable information for long-term forecasting, it is hard to understate that expert opinion from decision-makers or professional forecasters is invaluable and cannot be fully replaced by any model-based forecast. This additional information from the decision-maker may come in the form of experience, private information, or knowledge that simply cannot be measured and incorporated into a statistical model. Here we would like to stress again the flexibility of the DLM, which, when estimated with variance discounting methods, allows to incorporate expert opinion in a numerically explicit way. In particular, Kulhav ỳ and Zarrop 6 provide details of a generalized variance discounting framework (also known as "forgetting" in the signal processing jargon) for updating the regression coefficients 𝜽 t in equation ( <ref type="formula">1</ref>) of Yanchenko et al. <ref type="bibr" target="#b0">1</ref> This scheme allows to define both the mean and variance of the regression coefficients at time t as a mixture of past information (i.e., estimates obtained using data up to time t -1), as well as dynamically updated prior information that is available each period t. In contrast, standard DLM estimation only allows to choose an initial condition at time t = 0, and then parameters are updated solely by information in the data. While in general estimation problems data information provides an objective way of tracking parameters, when forecasting it might be beneficial to allow "experts" to inject private information and beliefs into parameter updates. The generalized variance discounting approach of Kulhav ỳ and Zarrop 6 allows for the incorporation of expert opinion each week in the form of recursive priors on the regression coefficients; we refer the authors to this paper for technical details. We find particularly interesting how the decoupling/recoupling strategy operates in the context of DLMs. The decoupling aspect is simple as it begins by modeling the univariate time series conditional on the appropriate states. Both the recoupling and multi-scale analyses operate through these states, whether they be latent or observed. As outlined in Zhou et al. <ref type="bibr" target="#b6">7</ref> and West, 8 one needs to decide on a way to incorporate contemporaneous relationships between the forecasted time series in order to account for all relevant information and increase forecasting performance. Then, the recoupling aspect relates to accounting for these relationships in the posterior distributions of DLM coefficients and variances. A similar structure arises for sharing multi-scale information across different levels. In this case, however, the contemporaneous information that is included in the modeling for each time series is through a common aggregate factor that impacts those lower levels of aggregation. As noted in the paper, accounting for both of these sources of information using the recoupling approach has an advantage over standard hierarchical models, given the extra computational burden of smoothing after each posterior sampling iteration.</p><p>These models attempt to account for cross-correlation structures in two different ways. One is through the allowed components in the variance matrices for the DLM updates. The second is through the recoupling approach. As outlined in <ref type="bibr">West,</ref><ref type="bibr" target="#b7">8</ref> this turns out to be similar as trying to learn a relevant network or graph relating the variables at each point in time but without directly incorporating information on their correlation structure. The work in Gruber and West <ref type="bibr" target="#b8">9,</ref><ref type="bibr" target="#b9">10</ref> shows how to use tools from graphical analysis in order to better inform this decision or construct models with more general coupling strategies. Exploring the use of further graphical tools that are used in network analysis (and that can potentially be included within a Bayesian structure; see, e.g., Fan et al. <ref type="bibr" target="#b10">11</ref> ) would be an interesting additional extension for the paper and the decoupling/recoupling framework in general.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">ALTERNATIVE LOSS FUNCTIONS</head><p>One key of the paper is that 12-week forecasting of the particular sales data is hard. Even though this conclusion sounds pessimistic, this is the truth in many hard forecasting problems: even the most elaborate statistical models and algorithms may not be able to beat a naive forecast. We quote as examples the problems of forecasting exchange rates, oil prices, and the yield curve (interest rates) for which the random walk forecast is notoriously hard to beat. In such cases, it might be worth reconsidering what the modeler and decision-maker consider is a reasonable loss. The mean absolute percentage error (MAPE) metric used in the paper is a benchmark criterion for many forecasting problems, but it is not always representative of the ability of a statistical model to provide useful output for decision-making.</p><p>The forecasting literature has numerous examples of other loss functions and targets useful for sales forecasting. For example, one could attempt to forecast only the sign (whether sales will go up or down), or follow a mixed approach of point-forecasting sales within a specified range of interest and forecasting the sign beyond that range. Depending on the exact target of the client, such loss functions might provide more realistic input to decision-making.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">CONCLUSION</head><p>In summary, we believe that the DLM is an excellent choice of statistical framework for forecasting count data, such as sales. The paper by Yanchenko et al. <ref type="bibr" target="#b0">1</ref> strikes a great balance between the desire to have a model that is flexible enough and being able to communicate results easily to interested stakeholders. Due to the fact that forecasting economic and financial data comes with many challenges, this comment provides some thoughts/suggestions that cover various aspects of the statistical modeling process. These suggestions have more general applicability to other forecasting problems and can be summarized as follows. First, the statistician might want to consider expanding the primary inputs (data) to their statistical model by considering a larger number of exogenous predictors. Second, they might want to expand their statistical model (and/or estimation algorithms) drawing from the numerous advances in statistical machine learning. Third, they can use their prior distribution as a means of incorporating expert opinion, such that they rigorously account for information that is missing in the data or likelihood function. Finally, if all else fails and forecasts cannot be improved substantially, the statistician can adjust their expectations about the part of time series data that is truly forecastable (e.g., by using different loss functions when evaluating forecasts).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>ORCID</head><p>Dimitris Korobilis https://orcid.org/0000-0001-9146-3008</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>R E F E R E N C E S</head></div>			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>15264025, 2023, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asmb.2753 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [24/07/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Multivariate dynamic modeling for bayesian forecasting of business revenue</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">K</forename><surname>Yanchenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tierney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lawson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hellmayr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl Stoch Model Bus Ind</title>
+		<imprint>
+			<biblScope unit="page">2023</biblScope>
+		</imprint>
+	</monogr>
+	<note>forthcoming</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Bayesian Forecasting and Dynamic Models</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Harrison</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<publisher>Springer Science &amp; Business Media</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Bayesian forecasting of many count-valued time series</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">R</forename><surname>Berry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Bus Econ Stat</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="872" to="887" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Bayesian dynamic variable selection in high dimensions</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Koop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Korobilis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int Econom Rev</title>
+		<imprint>
+			<biblScope unit="page">2023</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Harvey</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Forecasting</surname></persName>
+		</author>
+		<title level="m">Structural Time Series Models and the Kalman Filter</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">On a general concept of forgetting</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kulhavý</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Zarrop</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Control</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="905" to="924" />
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Bayesian forecasting and portfolio decisions using dynamic dependent sparse factor models</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nakajima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Forecast</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="963" to="980" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Bayesian forecasting of multivariate time series: scalability, structure uncertainty and decisions</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann Inst Stat Math</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="31" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">GPU-accelerated Bayesian learning and forecasting in simultaneous graphical dynamic linear models</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Gruber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bayesian Anal</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="125" to="149" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Bayesian online variable selection and scalable multivariate volatility forecasting in simultaneous graphical dynamic linear models</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Gruber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>West</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econom Stat</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="3" to="22" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Network exploration via the adaptive LASSO and SCAD penalties</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ann Appl Stat</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="521" to="541" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

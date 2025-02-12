@@ -1,0 +1,3199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">PARADE: Passage Representation Aggregation for Document Reranking</title>
+				<funder ref="#_uPmfp3M">
+					<orgName type="full">National Natural Science Foundation of China</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Google TPU Research Cloud</orgName>
+					<orgName type="abbreviated">TRC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+							<email>licanjia17@mails.ucas.ac.cn</email>
+						</author>
+						<author>
+							<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+							<email>a.c.yates@uva.nl</email>
+						</author>
+						<author>
+							<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+							<email>sean.macavaney@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Max Planck Institute for Informatics</orgName>
+								<orgName type="institution">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Max Planck Institute for Informatics SEAN MACAVANEY</orgName>
+								<orgName type="institution" key="instit1">ANDREW YATES †</orgName>
+								<orgName type="institution" key="instit2">University of Amsterdam</orgName>
+								<address>
+									<country key="NL">Netherlands</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">BEN HE †</orgName>
+								<orgName type="institution" key="instit2">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="department">YINGFEI SUN †</orgName>
+								<orgName type="institution">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<orgName type="department">Max Planck Institute for Informatics</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff6">
+								<orgName type="department">Max Planck Institute for Informatics</orgName>
+								<orgName type="institution">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<settlement>Beijing, Andrew Yates</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff7">
+								<orgName type="department">Max Planck Institute for Informatics</orgName>
+								<orgName type="institution">University of Amsterdam</orgName>
+								<address>
+									<settlement>Amsterdam, Netherlands</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff8">
+								<orgName type="institution">Sean MacAvaney</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff9">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff10">
+								<orgName type="institution">Ben He</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff11">
+								<orgName type="institution">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<settlement>Beijing, Yingfei Sun</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff12">
+								<orgName type="institution">University of Chinese Academy of Sciences</orgName>
+								<address>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">PARADE: Passage Representation Aggregation for Document Reranking</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">C60BE7685EE3D401A08DFA6CEC8F5104</idno>
+					<idno type="DOI">10.1145/nnnnnnn.nnnnnnn</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:01+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>CCS Concepts:</term>
+					<term>Information systems → Document representation</term>
+					<term>Retrieval models and ranking</term>
+					<term>Language models document reranking, passage representation aggregation, pre-trained language models</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Pre-trained transformer models, such as BERT and T5, have shown to be highly effective at ad-hoc passage and document ranking. Due to the inherent sequence length limits of these models, they need to process document passages one at a time rather than processing the entire document sequence at once. Although several approaches for aggregating passage-level signals into a document-level relevance score have been proposed, there has yet to be an extensive comparison of these techniques. In this work, we explore strategies for aggregating relevance signals from a document's passages into a final ranking score. We find that passage representation aggregation techniques can significantly improve over score aggregation techniques proposed in prior work, such as taking the maximum passage score. We call this new approach PARADE. In particular, PARADE can significantly improve results on collections with broad information needs where relevance signals can be spread throughout the document (such as TREC Robust04 and GOV2). Meanwhile, less complex aggregation techniques may work better on collections with an information need that can often be pinpointed to a single passage (such as TREC DL and TREC Genomics). We also conduct efficiency analyses and highlight several strategies for improving transformer-based aggregation.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Pre-trained language models (PLMs), such as BERT <ref type="bibr" target="#b21">[22]</ref>, ELECTRA <ref type="bibr" target="#b14">[15]</ref> and T5 <ref type="bibr" target="#b79">[80]</ref>, have achieved state-of-the-art results on standard ad-hoc retrieval benchmarks. In this context, the success of PLMs mainly relies on learning contextualized representations of input sequences using the transformer encoder architecture <ref type="bibr" target="#b93">[94]</ref>. The transformer uses a self-attention mechanism whose computational complexity is quadratic with respect to the input sequence's length. Therefore, PLMs generally limit the sequence's length (e.g., to 512 tokens) to reduce computational costs. Consequently, when applied to the ad-hoc ranking task, PLMs are commonly used to predict the relevance of passages or individual sentences <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b105">106]</ref>. The max or 𝑘-max passage scores (e.g., top 3) are then aggregated to produce a document relevance score. Such score aggregation approaches have achieved state-of-the-art results on a variety of ad-hoc retrieval benchmarks.</p><p>Documents are often much longer than a single passage, however, and intuitively there are many types of relevance signals that can only be observed in a full document. For example, the Verbosity Hypothesis <ref type="bibr" target="#b81">[82]</ref> states that relevant excerpts can appear at different positions in a document. It is not necessarily possible to account for all such excerpts by considering only the top passages. Similarly, the ordering of passages itself may affect a document's relevance; a document with relevant information at the beginning is intuitively more useful than a document with the information at the end <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b40">41]</ref>. Empirical studies support the importance of full-document signals. <ref type="bibr">Wu et al.</ref> study how passage-level relevance labels correspond to document-level labels, finding that more relevant documents also contain a higher number of relevant passages <ref type="bibr" target="#b97">[98]</ref>. Additionally, experiments suggest that aggregating passage-level relevance scores to predict the document's relevance score outperforms the common practice of using the maximum passage score (e.g., <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b22">23]</ref>).</p><p>On the other hand, the amount of non-relevant information in a document can also be a signal, because relevant excerpts would make up a large fraction of an ideal document. IR axioms encode this idea in the first length normalization constraint (LNC1), which states that adding non-relevant information to a document should decrease its score <ref type="bibr" target="#b23">[24]</ref>. Considering a full document as input has the potential to incorporate signals like these. Furthermore, from the perspective of training a supervised ranking model, the common practice of applying document-level relevance labels to individual passages is undesirable, because it introduces unnecessary noise into the training process.</p><p>In this work, we provide an extensive study on neural techniques for aggregating passage-level signals into document scores. We study how PLMs like BERT and ELECTRA can be applied to the ad-hoc document ranking task while preserving many document-level signals. We move beyond simple passage score aggregation strategies (such as Birch <ref type="bibr" target="#b105">[106]</ref>) and study passage representation aggregation (PARADE). We find that aggregation over passage representations often outperforms passage score aggregation. We also confirm that hierarchical aggregation architectures like CNN and Transformer are more capable of capturing the diverse relevance signals from the passages within a document, which results in a more effective ranking model.</p><p>Since the utilization of the full-text increases memory requirements, we investigate using knowledge distillation to create smaller, more efficient passage representation aggregation models that remain effective. In summary, our contributions are:</p><p>• The formalization of passage score and representation aggregation strategies, showing how both can be trained end-to-end, • A thorough comparison of passage aggregation strategies on a variety of benchmark datasets, demonstrating the value of passage representation aggregation, • An ablation study of the contributions of different components that improves the representation aggregation effectiveness,</p><p>• An analysis of how to reduce the computational cost of PARADE by decreasing the model size, • An analysis of how the effectiveness of PARADE is influenced by different hyper-parameters, • An analysis into dataset characteristics that can influence which aggregation strategies are most effective on certain benchmarks • An analysis of how reranking effectiveness is influenced by the first-stage retriever.</p><p>The rest of the paper is organized as follows: We summarize the related work in Section 2. We formalize our method in Section 3. The details of evaluation results are described in Section 4. A few in-depth analysis to the research questions are conducted in Section 5. Finally, we conclude the paper in Section 6.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>We review four lines of related research related to our study. Contextualized Language Models for IR. Many pre-BERT neural ranking models have been proposed, such as DSSM <ref type="bibr" target="#b38">[39]</ref>, DRMM <ref type="bibr" target="#b27">[28]</ref>, Duet <ref type="bibr" target="#b70">[71]</ref>, (Co-)PACRR <ref type="bibr" target="#b39">[40,</ref><ref type="bibr" target="#b40">41]</ref>, and (Conv-)KNRM <ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b98">99]</ref>. However, compared to Transformer-based models, pre-BERT models often obtain relatively small improvements on TREC benchmarks <ref type="bibr" target="#b102">[103]</ref>, due to their relatively small model size (except the word embeddings). Benefiting from embedding contextualization, BERT-based IR models have been shown to be superior to these prior neural IR models. We briefly summarize related approaches here and refer the reader to a survey on transformers for text ranking by Lin et al. <ref type="bibr" target="#b56">[57]</ref> for further details. These approaches use BERT as a relevance classifier in a cross-encoder configuration (i.e., BERT takes both a query and a document as input). Nogueira et al. first adopted BERT to passage reranking tasks <ref type="bibr" target="#b74">[75]</ref> using BERT's [CLS] vector. Birch <ref type="bibr" target="#b105">[106]</ref> and BERT-MaxP <ref type="bibr" target="#b19">[20]</ref> explore using sentence-level and passage-level relevance scores from BERT for document reranking, respectively. CEDR proposed a joint approach that combines BERT's outputs with existing neural IR models and handled passage aggregation via a representation aggregation technique (averaging) <ref type="bibr" target="#b66">[67]</ref>. In this work, we further explore techniques for passage aggregation and consider an improved CEDR variant as a baseline. We focus on the under-explored direction of representation aggregation by employing more sophisticated strategies, including using CNNs and Transformers.</p><p>On the pre-training side, researchers have designed pre-training objectives tailored for IR. PROP proposed a novel representative words prediction training task <ref type="bibr" target="#b62">[63]</ref>, while B-PROP further improves upon PROP by replacing PROP's classical unigram language model with a more powerful BERTbased contextual language model <ref type="bibr" target="#b63">[64]</ref>. Other researchers trade off PLM effectiveness for efficiency by utilizing the PLM to improve document indexing <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b76">77]</ref>, pre-computing intermediate Transformer representations <ref type="bibr" target="#b26">[27,</ref><ref type="bibr" target="#b41">42,</ref><ref type="bibr" target="#b46">47,</ref><ref type="bibr" target="#b64">65]</ref>, selecting query-aware key blocks within a document for input squeezing <ref type="bibr" target="#b47">[48,</ref><ref type="bibr" target="#b54">55]</ref>, using the PLM to build sparse representations <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b55">56,</ref><ref type="bibr" target="#b65">66,</ref><ref type="bibr" target="#b67">68,</ref><ref type="bibr" target="#b72">73,</ref><ref type="bibr" target="#b111">112,</ref><ref type="bibr" target="#b113">114]</ref>, weighting offline pseudo-query and document relevance <ref type="bibr" target="#b10">[11]</ref>, or reducing the number of Transformer layers <ref type="bibr" target="#b33">[34,</ref><ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b71">72]</ref>.</p><p>Several works have investigated approaches for improving the Transformer's efficiency by reducing the computational complexity of its attention module, e.g., Sparse Transformer <ref type="bibr" target="#b13">[14]</ref>, Big Bird <ref type="bibr" target="#b106">[107]</ref> and Longformer <ref type="bibr" target="#b3">[4]</ref>. QDS-Transformer tailors Longformer to the ranking task with query-directed sparse attention <ref type="bibr" target="#b42">[43]</ref>. We note that representation-based passage aggregation is more effective than increasing the input text size using the aforementioned models, but representation aggregation could be used in conjunction with such models.</p><p>Passage-based Document Retrieval. Callan first experimented with paragraph-based and windowbased methods of defining passages <ref type="bibr" target="#b7">[8]</ref>. Several works drive passage-based document retrieval in the language modeling context <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b58">59]</ref>, indexing context <ref type="bibr" target="#b57">[58]</ref>, and learning to rank context <ref type="bibr" target="#b87">[88]</ref>. In the realm of neural networks, HiNT demonstrated that aggregating representations of passage-level relevance can perform well in the context of pre-BERT models <ref type="bibr" target="#b22">[23]</ref>. Wu et al. explicitly modeled the importance of passages based on position decay, passage length, length with position decay, exact match, etc <ref type="bibr" target="#b97">[98]</ref>. They proposed a model that considers passage-level representations of relevance in order to predict the passage-level cumulative gain of each passage <ref type="bibr" target="#b96">[97]</ref>. In this approach the final passage's cumulative gain can be used as the document-level cumulative gain. Our approaches share some similarities, but differ in that Wu et al. use passage-level labels to train their model and perform passage representation aggregation using a LSTM.</p><p>Besides passage-based methods, field-based methods use aggregation techniques across heterogenous document fields to improve ranking effectiveness. NRM-F <ref type="bibr" target="#b107">[108]</ref> and DuetMF <ref type="bibr" target="#b69">[70]</ref> aggregate representations from different document fields (e.g., title, body, anchor text). Passage aggregation methods can be considered as a special case of field aggregation approaches, where the fields are homogeneous rather than containing different types of information (e.g., title vs. body). Others have investigated sophisticated evidence aggregation approaches <ref type="bibr" target="#b110">[111,</ref><ref type="bibr" target="#b112">113]</ref>. Aggregating across different document fields <ref type="bibr" target="#b69">[70,</ref><ref type="bibr" target="#b107">108]</ref> or aggregating evidence from outer sources <ref type="bibr" target="#b110">[111,</ref><ref type="bibr" target="#b112">113]</ref> is interesting and has the potential to improve the reranking effectiveness. However, such explorations are orthogonal to the current work on aggregating passage representations. Representation Aggregation Approaches for NLP. Representation learning has been shown to be powerful in many NLP tasks <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b60">61]</ref>. For pre-trained language models, a text representation is learned by feeding the PLM with a formatted text like</p><formula xml:id="formula_0">[CLS] TextA [SEP] or [CLS] TextA [SEP] TextB [SEP].</formula><p>The vector representation of the prepended [CLS] token in the last layer is then regarded as either a text overall representation or a text relationship representation. Such representations can also be aggregated for tasks that requires reasoning from multiple scopes of evidence. Gear aggregates the claim-evidence representations by max aggregator, mean aggregator, or attention aggregator for fact checking <ref type="bibr" target="#b112">[113]</ref>. Transformer-XH uses extra hop attention that bears not only in-sequence but also inter-sequence information sharing <ref type="bibr" target="#b110">[111]</ref>. The learned representation is then adopted for either question answering or fact verification tasks. Several lines of work have explored hierarchical representations for document classification and summarization, including transformer-based approaches <ref type="bibr" target="#b59">[60,</ref><ref type="bibr" target="#b95">96,</ref><ref type="bibr" target="#b103">104,</ref><ref type="bibr" target="#b108">109]</ref>. In the context of ranking, SMITH <ref type="bibr" target="#b100">[101]</ref>, a long-to-long text matching model, learns a document representation with hierarchical sentence representation aggregation, which shares some similarities with our work. Rather than learning independent document (and query) representations, SMITH is a bi-encoder approach that learns separate representations for each. While such approaches have efficiency advantages, current bi-encoders do not match the effectiveness of cross-encoders, which are the focus of our work <ref type="bibr" target="#b56">[57]</ref>. Furthermore, Luan et al. <ref type="bibr" target="#b61">[62]</ref> demonstrate from both a theoretical and empirical perspective that the size of a document's representation must increase with its length in order to maintain an accurate ranking.</p><p>Knowledge Distillation. Knowledge distillation is the process of transferring knowledge from a large model to a smaller student model <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b30">31]</ref>. Ideally, the student model performs well while consisting of fewer parameters. One line of research investigates the use of specific distilling objectives for intermediate layers in the BERT model <ref type="bibr" target="#b43">[44,</ref><ref type="bibr" target="#b89">90]</ref>, which is shown to be effective in the IR context <ref type="bibr" target="#b9">[10]</ref>. Turc et al. pre-train a family of compact BERT models and explore transferring task knowledge from large fine-tuned models <ref type="bibr" target="#b92">[93]</ref>. Tang et al. distill knowledge from the BERT model into Bi-LSTM <ref type="bibr" target="#b91">[92]</ref>. Tahami et al. propose a new cross-encoder architecture and transfer knowledge from this model to a bi-encoder model for fast retrieval <ref type="bibr" target="#b90">[91]</ref>. Hofstätter et al. also proposes a cross-architecture knowledge distillation framework using a Margin Mean Squared Error loss in a pairwise training manner <ref type="bibr" target="#b31">[32]</ref>. We demonstrate the approach in <ref type="bibr" target="#b90">[91,</ref><ref type="bibr" target="#b91">92]</ref> can be applied to representation aggregation approaches to improve efficiency without substantial reductions in effectiveness.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">METHOD</head><p>In this section, we formalize approaches for aggregating passage representations into document ranking scores. We make the distinction between the passage score aggregation techniques explored in prior work with passage representation aggregation (PARADE) techniques, which have received less attention in the context of document ranking. Given a query 𝑞 and a document 𝐷, a ranking method aims to generate a relevance score 𝑟𝑒𝑙 (𝑞, 𝐷) that estimates to what degree document 𝐷 satisfies the query 𝑞. As described in the following sections, we perform this relevance estimation by aggregating passage-level relevance representations into a document-level representation, which is then used to produce a relevance score.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Creating Passage Relevance Representations</head><p>As introduced in Section 1, a long document cannot be considered directly by the BERT model<ref type="foot" target="#foot_1">1</ref> due to its fixed sequence length limitation. As in prior work <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b19">20]</ref>, we split a document into passages that can be handled by BERT individually. To do so, a sliding window of 225 tokens is applied to the document with a stride of 200 tokens, formally expressed as 𝐷 = {𝑃 1 , . . . , 𝑃 𝑛 } where 𝑛 is the number of passages. Afterward, these passages are taken as input to the BERT model for relevance estimation. Following prior work <ref type="bibr" target="#b74">[75]</ref>, we concatenate a query 𝑞 and passage 𝑃 𝑖 pair with a [SEP] token in between and another [SEP] token at the end. The special [CLS] token is also prepended, in which the corresponding output in the last layer is parameterized as a relevance representation 𝑝 𝑐𝑙𝑠 𝑖 ∈ R 𝑑 , denoted as follows:</p><formula xml:id="formula_1">𝑝 𝑐𝑙𝑠 𝑖 = BERT(𝑞, 𝑃 𝑖 )<label>(1)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Score vs. Representation Aggregation</head><p>Previous approaches like BERT-MaxP <ref type="bibr" target="#b19">[20]</ref> and Birch <ref type="bibr" target="#b105">[106]</ref> use a feedforward network to predict a relevance score from each passage representation 𝑝 𝑐𝑙𝑠 𝑖 , which are then aggregated into a document relevance score with a score aggregation approach. Figure <ref type="figure" target="#fig_11">1a</ref> illustrates common score aggregation approaches like max pooling ("MaxP"), sum pooling, average pooling, and k-max pooling. Different from score aggregation approaches, passage representation aggregation (PARADE) approaches generate an overall document relevance representation by aggregating passage representations directly (see Figure <ref type="figure" target="#fig_11">1b</ref>). By leveraging the passages representations, PARADE has the advantage of modeling document-level relevance directly rather than splitting a document into passages independently. We describe the representation aggregators in the following sections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Aggregating Passage Representations</head><p>Given the passage relevance representations 𝐷 𝑐𝑙𝑠 = {𝑝 𝑐𝑙𝑠 1 , . . . , 𝑝 𝑐𝑙𝑠 𝑛 }, PARADE summarizes 𝐷 𝑐𝑙𝑠 into a single dense representation 𝑑 𝑐𝑙𝑠 ∈ R 𝑑 in one of several different ways, as illustrated in Figure <ref type="figure">2</ref>.</p><p>PARADE-Max utilizes a robust max pooling operation on the passage relevance features<ref type="foot" target="#foot_3">2</ref> in 𝐷 𝑐𝑙𝑠 . As widely applied in Convolution Neural Networks (CNNs), max pooling has been shown to be effective in obtaining position-invariant features <ref type="bibr" target="#b86">[87]</ref>. Herein, each element at index 𝑗 in 𝑑 𝑐𝑙𝑠 is obtained by a element-wise max pooling operation on the passage relevance representations over the same index.</p><formula xml:id="formula_2">𝑑 𝑐𝑙𝑠 [ 𝑗] = max(𝑝 𝑐𝑙𝑠 1 [ 𝑗], . . . , 𝑝 𝑐𝑙𝑠 𝑛 [ 𝑗])<label>(2)</label></formula><p>PARADE-Attn assumes that each passage contributes differently to the relevance of a document to the query. A simple yet effective way to learn the importance of a passage is to apply a feedforward network to predict passage weights:</p><formula xml:id="formula_3">𝑤 1 , . . . , 𝑤 𝑛 = softmax(𝑊 𝑝 𝑐𝑙𝑠 1 , . . . ,𝑊 𝑝 𝑐𝑙𝑠 𝑛 )<label>(3)</label></formula><formula xml:id="formula_4">𝑑 𝑐𝑙𝑠 = 𝑛 ∑︁ 𝑖=1 𝑤 𝑖 𝑝 𝑐𝑙𝑠 𝑖 (<label>4</label></formula><formula xml:id="formula_5">)</formula><p>where softmax is the normalization function and 𝑊 ∈ R 𝑑 is a learnable weight.</p><p>For completeness of study, we also introduce a PARADE-Sum that simply sums the passage relevance representations. This can be regarded as manually assigning equal weights to all passages (i.e., 𝑤 𝑖 = 1). In addition, we introduce another variant PARADE-Avg that is combined with document length normalization(i.e., 𝑤 𝑖 = 1/𝑛).</p><p>PARADE-CNN, which operates in a hierarchical manner, stacks several Convolutional Neural Network (CNN) layers with a window size of 𝑑 × 2 and a stride of 2. In other words, the CNN filters </p><formula xml:id="formula_6">ℎ = LayerNorm(𝑥 𝑙 + MultiHead(𝑥 𝑙 ))<label>(5)</label></formula><formula xml:id="formula_7">𝑥 𝑙+1 = LayerNorm(ℎ + FFN(ℎ))<label>(6)</label></formula><p>where LayerNorm is the layer-wise normalization as introduced in <ref type="bibr" target="#b2">[3]</ref>, MultiHead is the multi-head self-attention <ref type="bibr" target="#b93">[94]</ref>, and FFN is a two-layer feed-forward network with a ReLu activation in between. As shown in Figure <ref type="figure">2c</ref>, the [CLS] vector of the last Transformer output layer, regarded as a pooled representation of the relevance between query and the whole document, is taken as 𝑑 𝑐𝑙𝑠 . Note that both PARADE-CNN and PARADE-Transformer are hierarchical models in the sense that a document level relevance representation is obtained by complex aggregation of passage level relevance representations, which is similar in spirit to pre-BERT models like HiNT <ref type="bibr" target="#b22">[23]</ref>, ARC <ref type="bibr" target="#b37">[38]</ref>, MatchPyramid <ref type="bibr" target="#b77">[78]</ref>, and Duet <ref type="bibr" target="#b70">[71]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Generating Document Relevance Score</head><p>For all PARADE variants except PARADE-CNN, after obtaining the final 𝑑 𝑐𝑙𝑠 embedding, a singlelayer feed-forward network (FFN) is adopted to generate a relevance score, as follows:</p><formula xml:id="formula_8">𝑟𝑒𝑙 (𝑞, 𝐷) = 𝑊 𝑑 𝑑 𝑐𝑙𝑠<label>(7)</label></formula><p>where 𝑊 𝑑 ∈ R 𝑑 is a learnable weight. For PARADE-CNN, a FFN with one hidden layer is applied to every CNN representation, and the final score is determined by the sum of those FFN output scores 3 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Aggregation Complexity</head><p>We note that the computational complexity of representation aggregation techniques are dominated by the passage processing itself. In the case of PARADE-Max, Attn, and Sum, the methods are inexpensive. For PARADE-CNN and PARADE-Transformer, there are inherently fewer passages in a document than total tokens, and (in practice) the aggregation network is shallower than the transformer used for passage modeling.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">EXPERIMENTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Datasets</head><p>We experiment with several ad-hoc ranking collections. Robust04<ref type="foot" target="#foot_5">4</ref> is a newswire collection used by the TREC 2004 Robust track. GOV2<ref type="foot" target="#foot_6">5</ref> is a web collection crawled from US government websites used in the TREC Terabyte 2004-06 tracks. For Robust04 and GOV2, we consider both keyword (title) queries and description queries in our experiments. The Genomics dataset <ref type="bibr" target="#b28">[29,</ref><ref type="bibr" target="#b29">30]</ref> consists of scientific articles from the Highwire Press<ref type="foot" target="#foot_7">6</ref> with natural-language queries about specific genes, and was used in the TREC Genomics 2006-07 track. The MSMARCO document ranking dataset <ref type="foot" target="#foot_8">7</ref>is a large-scale collection and is used in TREC 2019-20 Deep Learning Tracks <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b17">18]</ref>. To create document labels for the development and training sets, passage-level labels from the MSMARCO passage dataset are transferred to the corresponding source document that contained the passage.</p><p>In other words, a document is considered relevant as long as it contains a relevant passage, and each query can be satisfied by a single passage. The ClueWeb12-B13 dataset<ref type="foot" target="#foot_9">8</ref> is a large-scale collection crawled from the web between February 10, 2012 and May 10, 2012. It is used for the NTCIR We Want Web 3 (WWW-3) Track <ref type="bibr" target="#b85">[86]</ref>. The statistics of these datasets are shown in Table <ref type="table" target="#tab_0">1</ref>. The average number of tokens per document is calculated from the subset of documents retrieved by BM25 (i.e., the documents being reranked). Documents in GOV2 and Genomics are much longer than Robust04, making it more challenging to train an end-to-end ranker.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Baselines</head><p>We compare PARADE against the following traditional and neural baselines, including those that employ other passage aggregation techniques.</p><p>BM25 is an unsupervised ranking model based on IDF-weighted counting <ref type="bibr" target="#b82">[83]</ref>. The documents retrieved by BM25 also serve as the candidate documents used with reranking methods.</p><p>BM25+RM3 is a query expansion model based on RM3 <ref type="bibr" target="#b49">[50]</ref>. We used Anserini's <ref type="bibr" target="#b101">[102]</ref> implementations of BM25 and BM25+RM3. Documents are indexed and retrieved with the default settings for keywords queries. For description queries, we set 𝑏 = 0.6 and changed the number of expansion terms to 20.</p><p>Birch aggregates sentence-level evidence provided by BERT to rank documents <ref type="bibr" target="#b105">[106]</ref>. Rather than using the original Birch model provided by the authors, we train an improved "Birch-Passage" variant. Unlike the original model, Birch-Passage uses passages rather than sentences as input, it is trained end-to-end, it is fine-tuned on the target corpus rather than being applied zero-shot, and it does not interpolate retrieval scores with the first-stage retrieval method. These changes bring our Birch variant into line with the other models and baselines (e.g., using passages inputs and no interpolating), and they additionally improved effectiveness over the original Birch model in our pilot experiments.</p><p>ELECTRA-MaxP adopts the maximum score of passages within a document as an overall relevance score <ref type="bibr" target="#b19">[20]</ref>. However, rather than fine-tuning BERT-base on a Bing search log, we improve performance by fine-tuning on the MSMARCO passage ranking dataset. We also use the more recent and effective pre-trained ELECTRA model rather than BERT <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b109">110]</ref>.</p><p>ELECTRA-KNRM is a kernel-pooling neural ranking model based on query-document similarity matrix <ref type="bibr" target="#b98">[99]</ref>. We set the kernel size as 11. Different from the original work, we use the embeddings from the pre-trained ELECTRA model for model initialization.</p><p>CEDR-KNRM (Max) combines the advantages from both KNRM and pre-trained model <ref type="bibr" target="#b66">[67]</ref>. It digests the kernel features learned from KNRM and the [CLS] representation as ranking features. We again replace the BERT model with the more effective ELECTRA. We also use a more effective variant that performs max-pooling on the passages' [CLS] representations, rather than averaging the representations.</p><p>T5-3B performs ranking in a sequence-to-sequence generation context using the pre-trained T5 model <ref type="bibr" target="#b75">[76]</ref>. For the document reranking task, it utilizes the same score max-pooling technique as in BERT-MaxP <ref type="bibr" target="#b19">[20]</ref>. Due to its large size and expensive training, we present the values reported by <ref type="bibr" target="#b75">[76]</ref> in their zero-shot setting, rather than training it ourselves.</p><p>BioBERT-base <ref type="bibr" target="#b50">[51]</ref> is a BERT variant pre-trained on a biomedical corpus. We use BioBERT in place of ELECTRA-base on the TREC Genomics task, because it is better suited for specialized medical domain data.</p><p>We do not consider pre-BERT methods that utilize aggregation approaches (e.g., <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b107">108]</ref>), since we focus on studying passage representation aggregation vs. score aggregation in the context of pre-trained language models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Training</head><p>To prepare the ELECTRA model for the ranking task, we first fine-tune ELECTRA on the MSMARCO passage ranking dataset <ref type="bibr" target="#b73">[74]</ref>. The fine-tuned ELECTRA model is then used to initialize PARADE's PLM component. For PARADE-Transformer we use two randomly initialized transformer encoder layers with the same hyperparameters (e.g., number of attention heads, hidden size, etc.) used by ELECTRA-base. Training of PARADE and the baselines was performed on a single Google TPU v3-8 using a pairwise hinge loss. We use the Tensorflow implementation of PARADE available in the Capreolus toolkit <ref type="bibr" target="#b104">[105]</ref>; a standalone implementation is also available <ref type="foot" target="#foot_10">9</ref> . We train on the top 1,000 documents returned by a first-stage retrieval method; documents that are labeled relevant in the ground-truth are taken as positive samples and all other documents serve as negative samples. We use BM25+RM3 for first-stage retrieval on Robust04 and BM25 on the other datasets with parameters tuned on the dev sets via grid search. We train for 36 "epochs" consisting of 4,096 pairs of training examples with a learning rate of 3e-6, warm-up over the first ten epochs, and a linear decay rate of 0.1 after the warm-up. Due to its larger memory requirements, we use a batch size of 16 with CEDR and a batch size of 24 with all other methods. Other than this difference, the PARADE variants and other methods are trained in the same way. Each instance comprises a query and all split passages in a document.</p><p>Documents are split into a maximum of 16 passages. As we split the documents using a sliding window of 225 tokens with a stride of 200 tokens, a maximum number of 3,250 tokens in each document are retained. The maximum passage sequence length is set as 256. Documents with fewer than the maximum number of passages are zero padded. The padded passage representations are masked when doing passage representation aggregation. For documents longer than required, the first and last passages are always kept while the remaining are uniformly sampled as in <ref type="bibr" target="#b19">[20]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Evaluation</head><p>Following prior work <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b66">67]</ref>, we use 5-fold cross-validation. We set the reranking threshold to 1000 on the test fold as trade-off between latency and effectiveness. The reported results aggregate queries across all test folds. Performance is measured in terms of the MAP, Precision, ERR and nDCG ranking metrics using trec_eval<ref type="foot" target="#foot_11">10</ref> with different cutoffs. On Robust04 and Gov2, the cutoff is 20 following prior work on these collections <ref type="bibr" target="#b56">[57]</ref>. On TREC-DL and NTCIR, the cutoff is 10 following the official guidelines. <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b85">86]</ref>. For NTCIR WWW-3, the results are reported using NTCIREVAL <ref type="foot" target="#foot_12">11</ref> . The details of the evaluation metrics are described as follows.</p><p>The Precision metric is defined as the ratio of relevant documents in the retrieved documents at a cutoff 𝑘. MAP evaluates a retrieval system from the trade-off between precision and recall and is usually measured at a deeper cutoff than precision. It's defined as:</p><formula xml:id="formula_9">𝑀𝐴𝑃 = 1 |𝑄 | |𝑄 | ∑︁ 𝑗=1 1 𝑚 𝑗 𝑚 𝑗 ∑︁ 𝑘=1 𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛(𝑅 𝑗𝑘 )<label>(8)</label></formula><p>where |𝑄 | is the number of queries and |𝑚 𝑗 | is the number of relevant documents to the query 𝑄 𝑗 . 𝑅 𝑗𝑘 is the ranking position of a relevant document 𝑑 𝑘 . In other words, MAP takes into account the precision of all recalled documents. Both Precision and MAP consider documents as either relevant (label 1) or irrelevant (label 0) while the nDCG evaluates a ranking system in a finer grain:</p><formula xml:id="formula_10">𝐷𝐶𝐺@𝑘 = 𝑘 ∑︁ 𝑖=1 2 𝑟𝑒𝑙 𝑖 -1 log(1 + 𝑖)<label>(9)</label></formula><p>where 𝑟𝑒𝑙 𝑖 is the label of a document at position 𝑖, measured by its relevance to the query (3 as highly relevant, 2 as relevant, 1 as partially relevant, and 0 as irrelevant). The DCG is then normalized by IDCG as 𝑛𝐷𝐶𝐺@𝑘 = 𝐷𝐶𝐺@𝑘 𝐼 𝐷𝐶𝐺@𝑘 <ref type="bibr" target="#b9">(10)</ref> where the IDCG is the DCG value of the ideal ranked list to the query so as to ensure that nDCG is in the range from 0 to 1.</p><p>The ERR metric is inspired by the cascade user model that assumes a user only will continue examining the next document when the last perceived document does not satisfy the user's information need, formally:</p><formula xml:id="formula_11">𝐸𝑅𝑅@𝑘 = 𝑘 ∑︁ 𝑟 =1 1 𝑟 𝑟 -1 𝑖=1 (1 -𝑅 𝑖 )𝑅 𝑟<label>(11)</label></formula><p>where 𝑅 𝑖 represents the relevance degrade of a document 𝑅 𝑖 = 2 𝑟𝑒𝑙 𝑖 -1 2 𝑟𝑒𝑙𝑚𝑎𝑥 . As ERR is not normalized, there is a normalized version of ERR, called nERR, that is normalized by the aforementioned ideal ranked list <ref type="bibr" target="#b84">[85]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Main Results</head><p>The reranking effectiveness of PARADE on the two commonly-used Robust04 and GOV2 collections are shown in Table <ref type="table">2</ref> and<ref type="table" target="#tab_1">Table 3</ref>, respectively. Considering the three approaches that do not introduce any new weights, PARADE-Max is usually more effective than PARADE-Avg and PARADE-Sum, though the results are mixed on GOV2. PARADE-Max is consistently better than PARADE-Attn on Robust04, but PARADE-Attn sometimes outperforms PARADE-Max on GOV2. The two variants that consume passage representations in a hierarchical manner, PARADE-CNN and PARADE-Transformer, consistently outperforms the four other variants. This confirms the effectiveness of the passage representation aggregation approaches.</p><p>Table <ref type="table">2</ref>. Ranking effectiveness of PARADE on the Robust04 collection. Best performance is in bold. Significant difference between PARADE-Transformer and the corresponding method is marked with † (𝑝 &lt; 0.05, twotailed paired 𝑡-test). We also report the current best-performing model (T5-3B from <ref type="bibr" target="#b75">[76]</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Robust04 Title</head><p>Robust04 Description MAP P@20 nDCG@20 MAP P@20 nDCG@20 BM25 0.  setting. CEDR-KNRM and ELECTRA-KNRM, which both use some form of representation aggregation, are significantly worse than PARADE-Transformer on title queries and have comparable effectiveness on description queries. Overall, PARADE-CNN and PARADE-Transformer are consistently among the most effective approaches, which suggests the importance of performing complex representation aggregation on these datasets.</p><p>Results on the Genomics dataset are shown in Table <ref type="table" target="#tab_2">4</ref>. We first observe that this is a surprisingly challenging task for neural models. Unlike Robust04 and GOV2, where transformer-based models are clearly state-of-the-art, we observe that all of the methods we consider almost always underperform a simple BM25 baseline, and they perform well below the best-performing TREC submission. It is unclear whether this is due to the specialized domain, the smaller amount of training data, or some other factor. Nevertheless, we observe some interesting trends. First, we see that PARADE approaches can outperform score aggregation baselines. However, we note that statistical significance can be difficult to achieve on this dataset, given the small number of queries. Next, we notice that PARADE-Max performs the best among neural methods. This is in contrast with what we observed on Robust04 and GOV2, and suggests that hierarchically aggregating evidence from different passages is not required on the Genomics dataset.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6">Results on the TREC DL Track and NTCIR WWW-3 Track</head><p>We study the effectiveness of PARADE on the TREC DL Track and NTCIR WWW-3 Track. We report results in this section and refer the readers to the TREC and NTCIR task papers for details on the specific hyperparameters used <ref type="bibr" target="#b52">[53,</ref><ref type="bibr" target="#b53">54]</ref>.</p><p>Results from the TREC Deep Learning Track are shown in Table <ref type="table" target="#tab_3">5</ref>. For simplicity of study, we only report the results of the two most representative PARADE variants: PARADE-Max (representation aggregation without a hierarchical architecture) and PARADE-Transformer (representation aggregation with a hierarchical architecture). In TREC DL'19, we include comparisons with topperformaning runs from TREC: ucas_runid1 <ref type="bibr" target="#b12">[13]</ref> used BERT-MaxP <ref type="bibr" target="#b19">[20]</ref> as the reranking method, TUW19-d3-re <ref type="bibr" target="#b34">[35]</ref>   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Year Group Runid</head><p>MAP nDCG@10 2019 TREC BM25 0.237 0.517 ucas_runid1 <ref type="bibr" target="#b12">[13]</ref> 0.264 0.644 TUW19-d3-re <ref type="bibr" target="#b34">[35]</ref> 0.271 0.644 idst_bert_r1 <ref type="bibr" target="#b99">[100]</ref> 0 Model nDCG@10 Q@10 nERR@10 BM25 0.5748. 0.5850 0.6757 Technion-E-CO-NEW-1 <ref type="bibr" target="#b80">[81]</ref> 0.6581 0.6815 0.7791 KASYS-E-CO-NEW-1 <ref type="bibr" target="#b88">[89]</ref> 0.6935 0.7123 0.7959 PARADE-Max 0.6337 0.6556 0.7395 PARADE-Transformer 0.6897 0.7016 0.8090 structBERT <ref type="bibr" target="#b94">[95]</ref>, which strengthens on the task of sentence order prediction. All PARADE variants outperform ucas_runid1 and TUW19-d3-re in terms of nDCG@10, but cannot outperform idst_bert_r1. Since this run's pre-trained structBERT model is not publicly available, we are not able to embed it into PARADE and make a fair comparison. In TREC DL'20, the best TREC run d_d2q_duo is a T5-3B model. Moreover, PARADE-Max again outperforms PARADE-Transformer, which is in line to the Genomics results in Table <ref type="table" target="#tab_2">4</ref> and in contrast to results on Robust04 and GOV2 in Table <ref type="table">2</ref> and Table <ref type="table" target="#tab_1">3</ref>. We explore this further in Section 5.5.</p><p>Results from the NTCIR WWW-3 Track are shown in Table <ref type="table" target="#tab_4">6</ref>. KASYS-E-CO-NEW-1 is a Birchbased method <ref type="bibr" target="#b105">[106]</ref> that uses BERT-Large and Technion-E-CO-NEW-1 is a cluster-based method. As shown in Table <ref type="table" target="#tab_4">6</ref>, PARADE-Transformer's effectiveness is comparable with KASYS-E-CO-NEW-1 across metrics. On this benchmark, PARADE-Transformer outperforms PARADE-Max by a large margin.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">ANALYSIS</head><p>In this section, we consider the following research questions:</p><p>• RQ1: What factors contribute most to PARADE's effectiveness?</p><p>• RQ2: How does PARADE perform when compared with transformers that support long text?</p><p>• RQ3: How can BERT's efficiency be improved while maintaining its effectiveness?</p><p>, Vol.  • RQ4: How sensitive is PARADE to the hyper-parameters for selecting passages in a document? • RQ5: When is the complex representation aggregation approach e.g., CNN and Transformer preferable to the simple aggregation approach in the light of dataset characteristics? • RQ6: Is it beneficial to rerank documents from a more effective first-stage retriever? In particular, is reranking BM25+RM3 better than reranking BM25?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Source of Effectiveness (RQ1)</head><p>The major components of PARADE are 1) passage representation aggregation, 2) hierarchical model, and 3) end-to-end document-level training. To study these factors, we first trained an ELECTRA-MaxP model end-to-end, i.e., the max-pooling is conducted during training rather than training on individual passages separately. MaxP score aggregation <ref type="bibr" target="#b19">[20]</ref> exhibits two limitations. First, a passage model is trained by taking all passages in a relevant document as relevant and all passages in an irrelevant document as irrelevant. This introduces label noise into the training as not all passages in a relevant document are necessarily relevant. Second, a document score is obtained by max pooling the passage scores during inference while no document level signal is supervised during training. This introduces a mismatch between training and testing.</p><p>As illustrated in Table <ref type="table" target="#tab_6">7</ref>, by overcoming such limitations, the end-to-end trained ELECTRA-MaxP (e2e) outperforms ELECTRA-MaxP by a large margin. This finding confirms the advantage of using document labels to train a document retrieval model rather than splitting a document into independent passages, which relies on the unrealistic assumption that all passages have the same relevance label. The second difference between PARADE and ELECTRA-MaxP <ref type="bibr" target="#b19">[20]</ref> is that passage representations are aggregated rather than passage relevance scores. From Table <ref type="table" target="#tab_6">7</ref>, the effectiveness difference between ELECTRA-MaxP (e2e) and PARADE-Max is minor in terms of MAP on the Robust04 collection, but improves by a larger margin on GOV2 and with other metrics on Robust04. Aggregating passage representations is arguably better than aggregating passage scores, which is also confirmed by Zamani et al. <ref type="bibr" target="#b107">[108]</ref> where they study aggregating field representations vs. scores. The third key factor in PARADE is the hierarchical passage model, which is adopted in PARADE-Transformer and PARADE-CNN. Notably, PARADE-Transformer improves the performance over the simple max-pooling aggregation approach on both collections. In summary, a hierarchical passage representation aggregation model trained at the document-level makes a more effective document retrieval model. In the next section, we study the difference between PARADE and the more recent long-text Transformers.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Comparison with</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model nDCG@20 ERR@20</head><p>Sparse-Transformer <ref type="bibr" target="#b42">[43]</ref> 0.449 0.119 Longformer-QA <ref type="bibr" target="#b42">[43]</ref> 0.448 0.113 Transformer-XH <ref type="bibr" target="#b42">[43]</ref> 0.450 0.123 QDS-Transformer <ref type="bibr" target="#b42">[43]</ref> 0.457 0.126 Longformer <ref type="bibr" target="#b6">[7]</ref> 0.500 -Big-Bird <ref type="bibr" target="#b6">[7]</ref> 0.452 -PARADE-Transformer 0.565 0.149 mechanism for efficiency, which makes it possible to input longer documents as a whole for ad-hoc ranking. These methods restrict the attention for a word using a sliding attention mask, whereas PARADE restricts the attention from the input by considering one predefined passage unit at a time. Hence, PARADE learns the relevance of stationary passages as opposed to the sliding attention window for a word in the long-text Transformers. We consider the results reported by Jiang et al. <ref type="bibr" target="#b42">[43]</ref> and Boytsov et al. <ref type="bibr" target="#b6">[7]</ref> to compare some of these approaches with passage representation aggregation. The results are shown in Table <ref type="table" target="#tab_7">8</ref>. In this comparison, long-text transformer approaches achieve similar effectiveness and underperform PARADE-Transformer by a large margin. However, it is worth noting that approaches in Jiang et al. <ref type="bibr" target="#b42">[43]</ref> use the [CLS] representation as features for a downstream model rather than using it to predict a relevance score directly as by Boytsov et al. <ref type="bibr" target="#b6">[7]</ref> and PARADE, which contribute to the difference in effectiveness. Using the [CLS] representation to predict a relevance score is more effective as confirmed by the comparison between Longformer-QA <ref type="bibr" target="#b42">[43]</ref> and Longformer <ref type="bibr" target="#b6">[7]</ref>, which are the same model trained differently. Apart from the higher ranking effectiveness, Boytsov et al. <ref type="bibr" target="#b6">[7]</ref> argue that PARADE is also 1.5x faster to train and evaluate than Longformer. We consider the question of how to further improve PARADE's efficiency in Section 5.3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Reranking Effectiveness vs. Efficiency (RQ3)</head><p>While BERT-based models are effective at producing high-quality ranked lists, they are computationally expensive. However, the reranking task is sensitive to efficiency concerns, because documents must be reranked in real time after the user issues a query. In this section we consider two strategies for improving PARADE's efficiency. Using a Smaller BERT Variant. As smaller models require fewer computations, we study the reranking effectiveness of PARADE when using pre-trained BERT models of various sizes, providing guidance for deploying a retrieval system. To do so, we use the pre-trained BERT provided by Turc et al. <ref type="bibr" target="#b92">[93]</ref>. In this analysis we change several hyperparameters to reduce computational requirements: we rerank the top 100 documents from BM25, train with a cross-entropy loss using a single positive or negative document, reduce the passage length 150 tokens, and reduce the stride to 100 tokens. We additionally use BERT models in place of ELECTRA so that we can consider models warmed up from LM distillation (i.e., distillation using self-supervised PLM objectives in the pretraining stage) rather than using ranker distillation alone (i.e., using student models that are randomly initialized). Gao et al. <ref type="bibr" target="#b25">[26]</ref> found that LM distillation is more effective than ranker distillation alone.</p><p>From Table <ref type="table" target="#tab_8">9</ref>, it can be seen that as the size of models is reduced, their effectiveness usually declines. The hidden layer size (#6 vs #7, #8 vs #9) plays a more critical role for performance than the number of layers (#3 vs #4, #5 vs #6). An example is the comparison between models #7 and #8. Model   <ref type="table" target="#tab_8">9</ref> to facilitate the study of trade-offs between model complexity and effectiveness.</p><p>Distilling Knowledge from a Large Model. To further explore the limits of smaller PARADE models, we apply knowledge distillation to leverage knowledge from a large teacher model. We use PARADE-Transformer trained with BERT-Base on the target collection as the teacher model. Smaller student models then learn from the teacher at the output level. We use mean squared error as the distilling objective, which has been shown to work effectively <ref type="bibr" target="#b90">[91,</ref><ref type="bibr" target="#b91">92]</ref>. The learning objective penalizes the student model based on both the ground-truth and the teacher model:</p><formula xml:id="formula_12">𝐿 = 𝛼 • 𝐿 𝐶𝐸 + (1 -𝛼) • ||𝑧 𝑡 -𝑧 𝑠 || 2<label>(12)</label></formula><p>where 𝐿 𝐶𝐸 is the cross-entropy loss with regard to the logit of the student model and the ground truth, 𝛼 weights the importance of the learning objectives, and 𝑧 𝑡 and 𝑧 𝑠 are logits from the teacher model and student model, respectively. As shown in Table <ref type="table" target="#tab_8">9</ref>, the nDCG@20 of distilled models always increases. The PARADE model using 8 layers (#4) can achieve comparable results with the teacher model. Moreover, the PARADE model using 10 layers (#3) can outperform the teacher model with 11% fewer parameters. The PARADE model trained with BERT-Small achieves a nDCG@20 above 0.5, which outperforms BERT-MaxP using BERT-Base, while requiring only 1.14 ms to perform inference on one document. Thus, when reranking 100 documents, the inference time for each query is approximately 0.114 seconds.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">Hyper-parameter Sensitivity (RQ4)</head><p>In this section, we study the hyper-parameter sensitivity of PARADE with respect to the number of passages, window size, and window stride. We conduct such ablation study on the GOV2 collection given that these documents are longer on average than in Robust04. When studying one specific hyper-parameter, we fix other hyper-parameters to the values used in Section 4.3. Number of Passages. One hyper-parameter in PARADE is the maximum number of passages being used, i.e., preserved data size, which is studied to answer RQ3 in this section. Figure <ref type="figure" target="#fig_7">3</ref> depicts nDCG@20 of PARADE-Transformer with the number of passages varying from 8 to 64. Generally, larger preserved data size results in better performance for PARADE-Transformer, which suggests that a document can be better understood from document-level context with more    preservation of its content. For PARADE-Max and PARADE-Attn, however, the performance degrades a little when using 64 passages. Both max pooling (Max) and simple attention mechanism (Attn) have limited capacity and are challenged when dealing with such longer documents. The PARADE-Transformer model is able to improve nDCG@20 as the number of passages increases, demonstrating its superiority in detecting relevance when documents become much longer. However, considering more passages also increases the number of computations performed. One advantage of the PARADE models is that the number of parameters remains constant as the number of passages in a document varies. Thus, we consider the impact of varying the number of passages considered between training and inference. As shown in Table <ref type="table" target="#tab_9">10</ref>, rows indicate the number of passages considered at training time while columns indicate the number used to perform inference. The diagonal indicates that preserving more of the passages in a document consistently improves nDCG. Similarly, increasing the number of passages considered at inference time (columns) or at training time (rows) usually improves nDCG. In conclusion, the number of passages considered plays a crucial role in PARADE's effectiveness. When trading off efficiency for effectiveness, PARADE models' effectiveness can be improved by training on more passages than will be used at inference time. This generally yields a small nDCG increase.</p><p>Window Size and Stride. The other two parameters are the window size and the window stride used for selecting passages. The window size controls the length of a passage while the stride controls how much consecutive passages overlap. As it can be seen from Figure <ref type="figure" target="#fig_7">3</ref> and Figure <ref type="figure" target="#fig_8">4</ref>, PARADE is very stable in a wide range of hyper-parameters. Such phenomenon is consistent with early work on passage-based document retrieval <ref type="bibr" target="#b7">[8]</ref>. Focused Nature of Queries. While PARADE variants are effective across a range of datasets and the PARADE-Transformer variant is generally the most effective, this is not always the case. In particular, PARADE-Max outperforms PARADE-Transformer on both years of TREC DL and on TREC Genomics. We hypothesize that this difference in effectiveness is a result of the focused nature of queries in both collections. Such queries may result in a lower number of highly relevant passages per document, which would reduce the advantage of using more complex aggregation methods like PARADE-Transformer and PARADE-CNN. In other words, when a focused query can be answered well by a short highly-relevant passage, we expect considering the entire document to yield less benefit. While documents in MS MARCO may contain other passages related to the query, these passages are not necessary to satisfy the query's information need, which can be answered by a single passage by nature of the collection's construction. The fact that TREC DL queries come from MS MARCO suggests that the queries in both TREC DL collections can also be sufficiently answered by a single highly relevant passage.</p><p>Passage-document Mapping. We consider this hypothesis by using passage-level relevance judgments to compare the number of highly relevant passages per document in various collections. To do so, we use mappings between relevant passages and documents for those collections with passage-level judgments available: TREC DL, TREC Genomics, and GOV2.</p><p>• TREC DL (Ours). We create a mapping between the MS MARCO document and passage collections by using the MS MARCO Question Answering (QnA) collection to map passages to document URLs. This mapping can then be used to map between passage and document judgments in DL'19 and DL'20. However, the DL'21 overview paper notes that the resulting counts of relevant passages may be unreliable due to construction artifacts <ref type="bibr" target="#b16">[17]</ref>. • TREC DL (FiRA). With DL'19, we additionally use the FIRA passage relevance judgments <ref type="bibr" target="#b36">[37]</ref> to map between documents and passages. The FIRA judgments were created by asking annotators to identify relevant passages in every DL'19 document with a relevance label of 2 or 3 (i.e., the two highest labels). Thus, FIRA provides reliable counts of relevant passages, but this mapping contains fewer queries and documents than the mapping we constructed covering DL'19 and DL'20. • TREC Genomics. In the case of TREC Genomics, we use the mapping provided by TREC. • GOV2. We use the sentence-level relevance judgments available in WebAP <ref type="bibr" target="#b44">[45,</ref><ref type="bibr" target="#b45">46]</ref>, which cover a subset of 82 queries.</p><p>Due to the difficulty of mapping between passages and documents, these MS MARCO mappings come with several caveats. Our mapping covers nearly the entire MS MARCO collection, but it is limited by the fact that DL's passage-level relevance judgments may not be complete, and by the fact that all relevant passages in a MS MARCO document do not necessarily appear in the MS MARCO passage collection. The FIRA mapping covers only highly-relevant DL'19 documents, but the passage annotations are complete and it was created by human annotators with quality control. Thus, it includes all relevant passages in the annotated documents, but not all documents were annotated.</p><p>Relevance Label Alignment. We compare passage judgments across collections by using each collection's annotation guidelines to align their relevance labels with MS MARCO's definition of a relevant passage as one that is sufficient to answer the question query. With GOV2 we consider passages with a relevance label of 3 or 4 to be relevant. With DL documents we consider a label of 2 or 3 to be relevant and passages with a label of 3 to be relevant. With FIRA we consider label 3 to be relevant. With Genomics we consider labels 1 or 2 to be relevant.</p><p>We align the maximum passage lengths in GOV2 to FIRA's maximum length so that they can be directly compared. To do so, we convert GOV2's sentence judgments to passage judgments by collapsing sentences following a relevant sentence into a single passage with a maximum passage length of 130 tokens, as used by FIRA <ref type="foot" target="#foot_13">12</ref> . We note that this process can only decrease the number of relevant passages per document observed in GOV2, which we expect to have the highest number. With the DL collections using the MS MARCO mapping, the passages are much smaller than these lengths, so collapsing passages could only decrease the number of relevant passages per document. We note that Genomics contains "natural" passages that can be longer; this should be considered when drawing conclusions. In all cases, the relevant passages comprise a small fraction of the document.</p><p>Results. In each collection, we calculate the number of relevant passages per document using the collection's associated document and passage judgments. The results are shown in Table <ref type="table" target="#tab_10">11</ref>. First, considering the GOV2 and MS MARCO collections that we expect to lie at opposite ends of the spectrum, we see that 38% of GOV2 documents contain a single relevant passage, whereas 98-99% of MS MARCO documents contain a single relevant passage. This confirms that MS MARCO documents contain only 1-2 highly relevant passages per document by nature of the collection's construction, though this collection may still contain unjudged passages that are relevant but not necessary to answer the query. The percentages are the lowest on GOV2 as expected. While we would prefer to put these percentages in the context of another collection like Robust04, the lack of passage-level judgments on such collections prevents us from doing so. Second, considering the Deep Learning collections, we see that DL'19 and DL'20 exhibit similar trends regardless of whether our potentially-noisy mapping or the smaller, more reliable FIRA mapping is used. In these collections, the majority of documents contain a single relevant passage and the vast majority of documents contain one or two relevant passages. We call this a maximum passage bias <ref type="foot" target="#foot_14">13</ref> . The fact that the queries are shared with MS MARCO likely contributes to this observation, since we know the vast majority of MS MARCO question queries can be answered by a single passage. Third, considering Genomics 2006, we see that this collection is similar to the DL collections. The majority of documents contain only one relevant passage, and the vast majority contain one or two relevant passages. Thus, this analysis supports our hypothesis that the difference in PARADE-Transformer's effectiveness across collections is related to the number of relevant passages per document in these collections. PARADE-Max performs better when the number is low, which may reflect the reduced importance of aggregating relevance signals across passages on these collections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.6">Is Reranking Effectiveness Influenced by the First-stage Retriever? (RQ6)</head><p>Can PARADE be further boosted by reranking a stronger first-stage retriever? Exhaustively testing all first-stage retrievers is prohibitively expensive since PARADE must be trained separately with each for a fair comparison (due to the fact that its input distributions may change). In this section, we narrow the first-stage retriever to lexical matching methods, and study whether reranking from a stronger first-stage retriever brings better reranking effectiveness (RQ 6). We compare the reranking effectiveness of PARADE that reranks BM25 <ref type="bibr" target="#b83">[84]</ref> and BM25+RM3 <ref type="bibr" target="#b49">[50]</ref>, respectively. BM25+RM3 is a query expansion methods based on pseudo-relevance feedback that select representative terms in the first round retrieval for expansion. Generally, BM25+RM3 yields better retrieval performance than BM25 <ref type="bibr" target="#b51">[52,</ref><ref type="bibr" target="#b68">69]</ref>.  To simplify the analysis, we focus on the ranking distribution of relevant documents. On the Robust04 collection with title queries, we examine the top 1,000 documents retrieved by BM25 and BM25+RM3. We then divide all relevant documents retrieved into three partitions, 𝐷 𝑏𝑜𝑡ℎ , 𝐷 𝐵𝑀25 and 𝐷 𝑄𝐸 , defined as follows:</p><p>• 𝐷 𝑏𝑜𝑡ℎ : the relevant documents retrieved by both BM25 and BM25+RM3</p><p>• 𝐷 𝐵𝑀25 : the relevant documents retrieved by BM25 but not retrieved by BM25+RM3</p><p>• 𝐷 𝑄𝐸 : the relevant documents retrieved by BM25+RM3 but not retrieved by BM25 For all methods, 𝐷 𝑏𝑜𝑡ℎ is the same; differences come from 𝐷 𝐵𝑀25 , 𝐷 𝑄𝐸 , and non-relevant documents. In total, Count(𝐷 𝑏𝑜𝑡ℎ ) = 9863, Count(𝐷 𝑄𝐸 ) = 1538, and Count(𝐷 𝐵𝑀25 ) = 409, which means that BM25 and BM25+RM3 share a large number of relevant documents.</p><p>The most effective PARADE-Transformer is adopted as a reranker. The (re-)ranking effectiveness of these models is shown in Table <ref type="table" target="#tab_12">12</ref>. Replacing BM25 with BM25+RM3 increases Recall@1k by about 8% and MAP@1k by about 4%, which may be a result of the nearly 1,000 relevant documents introduced by RM3. The differences for the other metrics are minor, with RM3 slightly reducing P@20. These findings are in line with recent work demonstrating that there is little difference in effectiveness between reranking BM25 and reranking BM25+RM3 <ref type="bibr" target="#b75">[76]</ref>.</p><p>To investigate why there is little difference between reranking BM25 and BM25+RM3 for metrics considering top positions, we provide four sub-figures in Figure <ref type="figure" target="#fig_9">5</ref> that depict the number of relevant documents placed in different position bins (averaged by the number of queries). Figures <ref type="figure" target="#fig_9">5a,</ref><ref type="figure" target="#fig_9">5b</ref>, 5c, 5d depict the ranking distribution of BM25+RM3, PARADE (reranking BM25+RM3), BM25, PARADE (reranking BM25), respectively. Due to the change in bin size from 10 to 100, there is a steep increase in the bin 101-200 across all figures. The distribution is mono-decreasing if the bin size is unchanged. It can be seen that:</p><p>• From figures 5a and 5c, the documents from 𝐷 𝑄𝐸 and 𝐷 𝐵𝑀25 are more likely to be ranked at the low positions (behind 100) by the initial ranking models, which suggests that both models are less confident in these documents. For BM25+RM3, it might be that the documents from 𝐷 𝑄𝐸 are mostly retrieved by the expanded terms; for BM25, it may be these documents are retrieved by terms with lower weights. • Comparing Figure <ref type="figure" target="#fig_9">5a</ref> with 5b, as well as Figure <ref type="figure" target="#fig_9">5c</ref> with 5d, the documents from 𝐷 𝑄𝐸 and 𝐷 𝐵𝑀25 can be boosted to higher positions by PARADE. Mostly, documents in 𝐷 𝑄𝐸 are retrieved using the expanded terms. PARADE can boost these documents without even knowing these terms, which confirms contextualization benefits by BERT. • Comparing Figure <ref type="figure" target="#fig_9">5c</ref> with 5d, it can be seen that a large amount of documents from 𝐷 𝐵𝑀25 , especially the documents behind position 100, are boosted to higher positions, which closes the large gap in MAP between BM25 and BM25+RM3 as shown in Table <ref type="table" target="#tab_12">12</ref>. The advantage of using BM25+RM3 may be that its relevance scores are good source for model ensemble. As shown in Table <ref type="table" target="#tab_12">12</ref>, an ensemble method that linearly interpolates the scores achieves the best results. In conclusion, while BM25+RM3 does retrieve more relevant documents than BM25, these documents are not effectively utilized by the reranking methods. Simply adopting BM25 as a first-stage retriever can result in a simple retrieval pipeline that performs well.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">CONCLUSION</head><p>We formalized the passage score and representation aggregation strategies for document reranking (PARADE), and demonstrated PARADE's effectiveness on ad-hoc benchmark collections. The effectiveness comes from a combination of 1) document-level training, 2) hierarchical architecture, and 3) passage representation aggregation. The passage representation method also outperforms long-text Transformers taking the whole document as a single input. Particularly, PARADE can cooperate with diverse relevance signals from the full text, rather than focusing on a single passage. It is robust to several hyper-parameters for selecting passages, i.e., number of passages, window size, and stride. A dataset characteristic, i.e., maximum passage bias, is later explored. It reveals that representation aggregation strategies can be less effective when such bias exists on the dataset. For efficiency, we investigated how model size affects performance, finding that knowledge distillation on PARADE boosts the performance of smaller PARADE models while substantially reducing their parameters. Finally, the reranking behaviour of PARADE w.r.t different first-stage retrievers is studied, finding that simply adopting BM25 as a first-stage retriever can result in a simple retrieval pipeline that performs well.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>, Vol. 1 ,</head><label>1</label><figDesc>No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 .Fig. 2 .</head><label>12</label><figDesc>Fig. 1. Comparison between score aggregation approaches and PARADE's representation aggregation mechanism.</figDesc><graphic coords="6,55.69,84.68,177.45,72.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>is a Transformer-based non-BERT method, and idst_bert_r1 [100] utilizes , Vol. 1, No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Long-Text Transformers (RQ2) Recently, a line of research focuses on reducing the redundant computation cost in the transformer block, allowing models to support longer sequences. Most approaches design novel sparse attention , Vol. 1, No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>, Vol. 1 ,</head><label>1</label><figDesc>No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>, Vol. 1 ,</head><label>1</label><figDesc>No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>(a) Number of Passages. (b) Window Size. (c) Window Stride.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 3 .</head><label>3</label><figDesc>Fig.3. Hyper-parameter sensitivity of PARADE on Gov2 collection using title queries. nDCG@20 is reported.</figDesc><graphic coords="18,183.85,235.13,118.30,88.73" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Hyper-parameter sensitivity of PARADE on Gov2 collection using description queries. nDCG@20 is reported.</figDesc><graphic coords="18,45.83,235.13,118.30,88.73" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. (Re)ranking distributions by different models. The X-axis represents the ranking position bins while Y-axis represents the average number of relevant documents dropped in each bin.</figDesc><graphic coords="21,58.01,232.22,172.80,129.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>, Vol. 1 ,</head><label>1</label><figDesc>No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>, Vol. 1 ,</head><label>1</label><figDesc>No. 1, Article . Publication date: May 2023.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Collection statistics. (There are 43 test queries in DL'19 and 45 test queries in DL'20.) on every pair of passage representations without overlap. Specifically, we stack 4 layers of CNN, which halve the number of representations in each layer, as shown in Figure 2b. The output of the final CNN layer is then regarded as the document relevance representation. PARADE-Transformer enables passage relevance representations to interact thoroughly by adopting the Transformer encoder [94] in a hierarchical way. Specifically, BERT's [CLS] token embedding and all 𝑝 𝑐𝑙𝑠 𝑖 are concatenated, resulting in an input 𝑥 𝑙 = (𝑒𝑚𝑏 𝑐𝑙𝑠 , 𝑝 𝑐𝑙𝑠 1 , . . . , 𝑝 𝑐𝑙𝑠 𝑛 ) that is consumed by several Transformer layers to exploit the ordering of and dependencies among passages. That is,</figDesc><table><row><cell>Collection</cell><cell cols="3"># Queries # Documents # tokens / doc</cell></row><row><cell>Robust04</cell><cell>249</cell><cell>0.5M</cell><cell>0.7K</cell></row><row><cell>GOV2</cell><cell>149</cell><cell>25M</cell><cell>3.8K</cell></row><row><cell>Genomics</cell><cell>64</cell><cell>162K</cell><cell>6.5K</cell></row><row><cell>MSMARCO</cell><cell>43/45</cell><cell>3.2M</cell><cell>1.3K</cell></row><row><cell>ClueWeb12-B13</cell><cell>80</cell><cell>52M</cell><cell>1.9K</cell></row></table><note><p>operate</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 3 .</head><label>3</label><figDesc>2531 † 0.3631 † 0.4240 † 0.2249 † 0.3345 † 0.4058 † BM25+RM3 0.3033 † 0.3974 † 0.4514 † 0.2875 † 0.3659 † 0.4307 † Ranking effectiveness of PARADE on the GOV2 collection. Best performance is in bold. Significant difference between PARADE-Transformer and the corresponding method is marked with † (𝑝 &lt; 0.05, twotailed paired 𝑡-test).Considering the baseline methods, PARADE-Transformer significantly outperforms the Birch and ELECTRA-MaxP score aggregation approaches for most metrics on both collections. PARADE-Transformer's ranking effectiveness is comparable with T5-3B on the Robust04 collection while using only 4% of the parameters, though it is worth noting that T5-3B is being used in a zero-shot</figDesc><table><row><cell>Birch</cell><cell>0.3763</cell><cell cols="2">0.4749  † 0.5454  †</cell><cell cols="3">0.4009  † 0.5120  † 0.5931  †</cell></row><row><cell>ELECTRA-MaxP</cell><cell cols="3">0.3183  † 0.4337  † 0.4959  †</cell><cell cols="3">0.3464  † 0.4731  † 0.5540  †</cell></row><row><cell>T5-3B (from [76])</cell><cell>-</cell><cell>-</cell><cell>-</cell><cell cols="2">0.4062 -</cell><cell>0.6122</cell></row><row><cell>ELECTRA-KNRM</cell><cell cols="3">0.3673  † 0.4755  † 0.5470  †</cell><cell cols="3">0.4066 0.5255 0.6113</cell></row><row><cell>CEDR-KNRM (Max)</cell><cell cols="3">0.3701  † 0.4769  † 0.5475  †</cell><cell cols="3">0.3975  † 0.5219 0.6044  †</cell></row><row><cell>PARADE-Avg</cell><cell cols="3">0.3352  † 0.4464  † 0.5124  †</cell><cell cols="3">0.3640  † 0.4896  † 0.5642  †</cell></row><row><cell>PARADE-Sum</cell><cell cols="3">0.3526  † 0.4711  † 0.5385  †</cell><cell cols="3">0.3789  † 0.5100  † 0.5878  †</cell></row><row><cell>PARADE-Max</cell><cell cols="3">0.3711  † 0.4723  † 0.5442  †</cell><cell cols="3">0.3992  † 0.5217 0.6022</cell></row><row><cell>PARADE-Attn</cell><cell cols="3">0.3462  † 0.4576  † 0.5266  †</cell><cell cols="3">0.3797  † 0.5068  † 0.5871  †</cell></row><row><cell>PARADE-CNN</cell><cell cols="3">0.3807 0.4821  † 0.5625</cell><cell cols="3">0.4005  † 0.5249 0.6102</cell></row><row><cell cols="2">PARADE-Transformer 0.3803</cell><cell cols="2">0.4920 0.5659</cell><cell cols="3">0.4084 0.5255 0.6127</cell></row><row><cell></cell><cell></cell><cell cols="2">GOV2 Title</cell><cell cols="3">GOV2 Description</cell></row><row><cell></cell><cell>MAP</cell><cell>P@20</cell><cell cols="2">nDCG@20 MAP</cell><cell>P@20</cell><cell>nDCG@20</cell></row><row><cell>BM25</cell><cell cols="3">0.3056  † 0.5362  † 0.4774  †</cell><cell cols="3">0.2407  † 0.4705  † 0.4264  †</cell></row><row><cell>BM25+RM3</cell><cell cols="3">0.3350  † 0.5634  † 0.4851  †</cell><cell cols="3">0.2702  † 0.4993  † 0.4219  †</cell></row><row><cell>Birch</cell><cell cols="3">0.3406  † 0.6154  † 0.5520  †</cell><cell>0.3270</cell><cell cols="2">0.6312  † 0.5763  †</cell></row><row><cell>ELECTRA-MaxP</cell><cell cols="3">0.3193  † 0.5802  † 0.5265  †</cell><cell cols="3">0.2857  † 0.5872  † 0.5319  †</cell></row><row><cell>ELECTRA-KNRM</cell><cell cols="3">0.3469  † 0.6342  † 0.5750  †</cell><cell>0.3269</cell><cell cols="2">0.6466 0.5864  †</cell></row><row><cell>CEDR-KNRM (Max)</cell><cell cols="3">0.3481  † 0.6332  † 0.5773  †</cell><cell cols="3">0.3354  † 0.6648 0.6086</cell></row><row><cell>PARADE-Avg</cell><cell cols="3">0.3174  † 0.6225  † 0.5741  †</cell><cell cols="3">0.2924  † 0.6228  † 0.5710  †</cell></row><row><cell>PARADE-Sum</cell><cell cols="3">0.3268  † 0.6218  † 0.5747  †</cell><cell cols="3">0.3075  † 0.6436  † 0.5879  †</cell></row><row><cell>PARADE-Max</cell><cell cols="3">0.3352  † 0.6228  † 0.5636  †</cell><cell cols="3">0.3160  † 0.6275  † 0.5732  †</cell></row><row><cell>PARADE-Attn</cell><cell cols="3">0.3306  † 0.6359  † 0.5864  †</cell><cell cols="3">0.3116  † 0.6584 0.5990</cell></row><row><cell>PARADE-CNN</cell><cell cols="3">0.3555  † 0.6530 0.6045</cell><cell>0.3308</cell><cell cols="2">0.6688 0.6169</cell></row><row><cell cols="4">PARADE-Transformer 0.3628 0.6651 0.6093</cell><cell>0.3269</cell><cell cols="2">0.6621 0.6069</cell></row></table><note><p>, Vol. 1, No. 1, Article . Publication date: May 2023.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 4 .</head><label>4</label><figDesc>Ranking effectiveness of PARADE on the Genomics collection. Significant difference between PARADE-Transformer and the corresponding method is marked with † (𝑝 &lt; 0.05, two-tailed paired 𝑡-test). The top neural results are underlined, and the top overall scores are in bold.</figDesc><table><row><cell></cell><cell>MAP</cell><cell>P@20 nDCG@20</cell></row><row><cell>BM25</cell><cell cols="2">0.3108 0.3867 0.4740</cell></row><row><cell>TREC Best</cell><cell cols="2">0.3770 0.4461 0.5810</cell></row><row><cell>Birch</cell><cell cols="2">0.2832 0.3711 0.4601</cell></row><row><cell>BioBERT-MaxP</cell><cell cols="2">0.2577 0.3469 0.4195  †</cell></row><row><cell>BioBERT-KNRM</cell><cell cols="2">0.2724 0.3859 0.4605</cell></row><row><cell>CEDR-KNRM (Max)</cell><cell cols="2">0.2486 0.3516  † 0.4290</cell></row><row><cell>PARADE-Avg</cell><cell cols="2">0.2514  † 0.3602 0.4381</cell></row><row><cell>PARADE-Sum</cell><cell cols="2">0.2579  † 0.3680 0.4483</cell></row><row><cell>PARADE-Max</cell><cell cols="2">0.2972 0.4062  † 0.4902</cell></row><row><cell>PARADE-Attn</cell><cell cols="2">0.2536  † 0.3703 0.4468</cell></row><row><cell>PARADE-CNN</cell><cell cols="2">0.2803 0.3820 0.4625</cell></row><row><cell cols="3">PARADE-Transformer 0.2855 0.3734 0.4652</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 5 .</head><label>5</label><figDesc>Ranking effectiveness of PARADE on TREC DL Track document ranking task. PARADE's best results are underlined. The top overall results of of each track are in bold.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 6</head><label>6</label><figDesc></figDesc><table><row><cell></cell><cell></cell><cell>.291</cell><cell>0.719</cell></row><row><cell>Ours</cell><cell cols="2">PARADE-Max PARADE-Transformer 0.274 0.287</cell><cell>0.679 0.650</cell></row><row><cell></cell><cell>BM25</cell><cell>0.379</cell><cell>0.527</cell></row><row><cell></cell><cell>fr_doc_roberta [49]</cell><cell>0.442</cell><cell>0.640</cell></row><row><cell>TREC</cell><cell>ICIP_run1 [12]</cell><cell>0.433</cell><cell>0.662</cell></row><row><cell>2020</cell><cell>d_d2q_duo [79]</cell><cell>0.542</cell><cell>0.693</cell></row><row><cell>Ours</cell><cell cols="2">PARADE-Max PARADE-Transformer 0.403 0.420</cell><cell>0.613 0.601</cell></row></table><note><p>. Ranking effectiveness of PARADE on NTCIR WWW-3 task. PARADE's best results are underlined. The best results of the Track are in bold.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 7 .</head><label>7</label><figDesc>Source of effectiveness in PARADE. PRA: Passage Representation Aggregation, HM:Hierarchical model, DT:Document-level Training</figDesc><table><row><cell></cell><cell>Source</cell><cell>Robust04</cell><cell></cell><cell>GOV2</cell></row><row><cell>Model</cell><cell>HM PRA DT MAP</cell><cell cols="2">P@20 nDCG@20 MAP</cell><cell>P@20 nDCG@20</cell></row><row><cell>ELECTRA-MaxP</cell><cell cols="2">0.3183 0.4337 0.4959</cell><cell cols="2">0.3193 0.5802 0.5265</cell></row><row><cell>ELECTRA-MaxP (e2e)</cell><cell cols="2">0.3766 0.4757 0.5444</cell><cell cols="2">0.3389 0.6134 0.5467</cell></row><row><cell>PARADE-Max</cell><cell cols="2">0.3711 0.4723 0.5442</cell><cell cols="2">0.3352 0.6228 0.5636</cell></row><row><cell>PARADE-Transformer</cell><cell cols="2">0.3803 0.4920 0.5659</cell><cell cols="2">0.3628 0.6651 0.6093</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 8 .</head><label>8</label><figDesc>Comparison with transformers that support longer text sequences on the Robust04 collection.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 9 .</head><label>9</label><figDesc>PARADE-Transformer's effectiveness using BERT models of varying sizes on Robust04 title queries. L and H stand for number of hidden layers and hidden size, respectively. The distilled models are all distilled from BERT-Base. Significant improvements of distilled over non-distilled models are marked with †. (𝑝 &lt; 0.01, two-tailed paired t-test.)</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell>Robust04</cell><cell cols="4">Robust04 (Distilled) Parameter Inference Time</cell></row><row><cell cols="2">ID Model</cell><cell>L / H</cell><cell cols="2">P@20 nDCG@20 P@20</cell><cell>nDCG@20</cell><cell>Count</cell><cell>(ms / doc)</cell></row><row><cell>1</cell><cell>BERT-Large</cell><cell cols="2">24 / 1024 0.4508 0.5243</cell><cell>-</cell><cell>-</cell><cell>360M</cell><cell>15.93</cell></row><row><cell>2</cell><cell>BERT-Base</cell><cell cols="2">12 / 768 0.4486 0.5252</cell><cell>-</cell><cell>-</cell><cell>123M</cell><cell>4.93</cell></row><row><cell>3</cell><cell>\</cell><cell cols="2">10 / 768 0.4420 0.5168</cell><cell cols="2">0.4494  † 0.5296  †</cell><cell>109M</cell><cell>4.19</cell></row><row><cell>4</cell><cell>\</cell><cell>8 / 768</cell><cell>0.4428 0.5168</cell><cell cols="2">0.4490  † 0.5231</cell><cell>95M</cell><cell>3.45</cell></row><row><cell>5</cell><cell cols="2">BERT-Medium 8 / 512</cell><cell>0.4303 0.5049</cell><cell cols="2">0.4388  † 0.5110</cell><cell>48M</cell><cell>1.94</cell></row><row><cell>6</cell><cell>BERT-Small</cell><cell>4 / 512</cell><cell>0.4257 0.4983</cell><cell cols="2">0.4365  † 0.5098  †</cell><cell>35M</cell><cell>1.14</cell></row><row><cell>7</cell><cell>BERT-Mini</cell><cell>4 / 256</cell><cell>0.3922 0.4500</cell><cell cols="2">0.4046  † 0.4666  †</cell><cell>13M</cell><cell>0.53</cell></row><row><cell>8</cell><cell>\</cell><cell>2 / 512</cell><cell>0.4000 0.4673</cell><cell cols="2">0.4038 0.4729</cell><cell>28M</cell><cell>0.74</cell></row><row><cell>9</cell><cell>BERT-Tiny</cell><cell>2 / 128</cell><cell>0.3614 0.4216</cell><cell cols="2">0.3831  † 0.4410  †</cell><cell>5M</cell><cell>0.18</cell></row></table><note><p>#8 performs better; it has fewer layers but contains more parameters. The number of parameters and inference time are also given in Table</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head>Table 10 .</head><label>10</label><figDesc>Reranking effectiveness of PARADE-Transformer using various preserved data size on GOV2 title dataset. nDCG@20 is reported. The indexes of columns and rows are number of passages being used.</figDesc><table><row><cell>Train \ Eval</cell><cell>8</cell><cell>16</cell><cell>32</cell><cell>64</cell></row><row><cell>8</cell><cell cols="4">0.5554 0.5648 0.5648 0.5680</cell></row><row><cell>16</cell><cell cols="4">0.5621 0.5685 0.5736 0.5733</cell></row><row><cell>32</cell><cell cols="4">0.5610 0.5735 0.5750 0.5802</cell></row><row><cell>64</cell><cell cols="4">0.5577 0.5665 0.5760 0.5815</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10"><head>Table 11 .</head><label>11</label><figDesc>Percentage of documents with a given number of relevant passages.</figDesc><table><row><cell cols="7"># Relevant passages GOV2 DL19 DL19 DL20 MS MARCO Genomics</cell></row><row><cell></cell><cell></cell><cell cols="3">(FiRA) (Ours) (Ours)</cell><cell>train / dev</cell><cell>2006</cell></row><row><cell>1</cell><cell>38%</cell><cell>66%</cell><cell>66%</cell><cell>67%</cell><cell>99% / 98%</cell><cell>62%</cell></row><row><cell>1-2</cell><cell>60%</cell><cell>87%</cell><cell>86%</cell><cell>81%</cell><cell>100% / 100%</cell><cell>80%</cell></row><row><cell>3+</cell><cell>40%</cell><cell>13%</cell><cell>14%</cell><cell>19%</cell><cell>0% / 0%</cell><cell>20%</cell></row><row><cell cols="7">5.5 Dataset Characteristics: Complex Aggregation vs. Simple Aggregation (RQ5)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12"><head>Table 12 .</head><label>12</label><figDesc>(Re)ranking effectiveness of different first-stage retrieval and reranking models.</figDesc><table><row><cell>Model</cell><cell cols="6">Recall@100 Recall@1k MAP@100 MAP@1k P@20 nDCG@20</cell></row><row><cell>BM25</cell><cell>0.4137</cell><cell>0.6989</cell><cell>0.2154</cell><cell>0.2531</cell><cell>0.3631</cell><cell>0.4240</cell></row><row><cell>BM25+RM3</cell><cell>0.4517</cell><cell>0.7549</cell><cell>0.2451</cell><cell>0.2903</cell><cell>0.3821</cell><cell>0.4407</cell></row><row><cell>PARADE-Transformer (BM25)</cell><cell>0.4996</cell><cell>0.6989</cell><cell>0.2889</cell><cell>0.3280</cell><cell>0.4562</cell><cell>0.5291</cell></row><row><cell>PARADE-Transformer (BM25+RM3)</cell><cell>0.5058</cell><cell>0.7549</cell><cell>0.2943</cell><cell>0.3407</cell><cell>0.4548</cell><cell>0.5303</cell></row><row><cell>PARADE-Transformer (BM25+RM3, Ensemble)</cell><cell>0.5347</cell><cell>0.7549</cell><cell>0.3167</cell><cell>0.3635</cell><cell>0.4733</cell><cell>0.5411</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>, Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>We refer to BERT since it is the most common PLM. In some of our later experiments, we consider the more recent and effective ELECTRA model<ref type="bibr" target="#b14">[15]</ref>; the same limitations apply to it and to most PLMs. , Vol. 1, No. 1, Article . Publication date: May</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2023" xml:id="foot_2"><p></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_3"><p>Note that max pooling is performed on passage representations, not over passage relevance scores as in prior work. , Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_4"><p>In pilot experiments, we found this approach to be more robust than considering only the final CNN representation.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_5"><p>https://trec.nist.gov/data/qa/T8_QAdata/disks4_5.html</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_6"><p>http://ir.dcs.gla.ac.uk/test_collections/gov2-summary.htm</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_7"><p>https://www.highwirepress.com/</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_8"><p>https://microsoft.github.io/TREC-2019-Deep-Learning</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_9"><p>http://lemurproject.org/clueweb12/ , Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="9" xml:id="foot_10"><p>https://github.com/canjiali/PARADE/ , Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="10" xml:id="foot_11"><p>https://trec.nist.gov/trec_eval</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="11" xml:id="foot_12"><p>http://research.nii.ac.jp/ntcir/tools/ntcireval-en.html , Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="12" xml:id="foot_13"><p>Applying the same procedure to both FIRA and WebAP with longer maximum lengths did not substantially change the trend.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="13" xml:id="foot_14"><p>Others have observed another dataset bias in the QA datasets used for passage retrieval<ref type="bibr" target="#b32">[33]</ref>: the answers favors earlier positions in the paragraphs, especially in the MS MARCO collection. , Vol. 1, No. 1, Article . Publication date: May 2023.</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>This work was supported in part by the <rs type="funder">National Natural Science Foundation of China</rs> (Grant No. <rs type="grantNumber">62272439</rs>), <rs type="person">Google Cloud</rs>, and the <rs type="funder">Google TPU Research Cloud (TRC)</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_uPmfp3M">
+					<idno type="grant-number">62272439</idno>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A Neural Passage Model for Ad-hoc Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Qingyao</forename><surname>Ai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Brendan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Connor</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECIR</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">10772</biblScope>
+			<biblScope unit="page" from="537" to="543" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Do Deep Nets Really Need to be Deep?</title>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Ba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rich</forename><surname>Caruana</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">NIPS</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="2654" to="2662" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Layer Normalization</title>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Ba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><forename type="middle">E</forename><surname>Ryan Kiros</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hinton</surname></persName>
+		</author>
+		<idno>CoRR abs/1607.06450</idno>
+		<imprint>
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Longformer: The Long-Document Transformer</title>
+		<author>
+			<persName><forename type="first">Iz</forename><surname>Beltagy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><forename type="middle">E</forename><surname>Peters</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arman</forename><surname>Cohan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2020. 2004. 2020</date>
+			<biblScope unit="page">5150</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Utilizing Passage-Based Language Models for Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Bendersky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECIR</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="volume">4956</biblScope>
+			<biblScope unit="page" from="162" to="174" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Representation Learning: A Review and New Perspectives</title>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><forename type="middle">C</forename><surname>Courville</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pascal</forename><surname>Vincent</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Pattern Anal. Mach. Intell</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="1798" to="1828" />
+			<date type="published" when="2013">2013. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Understanding Performance of Long-Document Ranking Models through Comprehensive Evaluation and Leaderboarding</title>
+		<author>
+			<persName><forename type="first">Leonid</forename><surname>Boytsov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tianyi</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fangwei</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yutian</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Nyberg</surname></persName>
+		</author>
+		<idno>CoRR abs/2207.01262</idno>
+		<imprint>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Passage-Level Evidence in Document Retrieval</title>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">P</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM/Springer</publisher>
+			<date type="published" when="1994">1994</date>
+			<biblScope unit="page" from="302" to="310" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Catena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Frieder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cristina</forename><surname>Ioana Muntean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Nardini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Perego</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<title level="m">Enhanced News Retrieval: Passages Lead the Way! Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Simplified TinyBERT: Knowledge Distillation for Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Xuanang</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2020. 2009. 2020</date>
+			<biblScope unit="page">7531</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Contextualized Offline Relevance Weighting for Efficient and Effective Neural Retrieval</title>
+		<author>
+			<persName><forename type="first">Xuanang</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yiran</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1617" to="1621" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">ICIP at TREC-2020 Deep Learning Track</title>
+		<author>
+			<persName><forename type="first">Xuanang</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">1266</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">UCAS at TREC-2019 Deep Learning Track</title>
+		<author>
+			<persName><forename type="first">Xuanang</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>In TREC</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Generating Long Sequences with Sparse Transformers</title>
+		<author>
+			<persName><forename type="first">Rewon</forename><surname>Child</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Scott</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alec</forename><surname>Radford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<idno>CoRR abs/1904.10509</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators</title>
+		<author>
+			<persName><forename type="first">Kevin</forename><surname>Clark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Minh-Thang</forename><surname>Luong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Quoc</forename><forename type="middle">V</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><forename type="middle">D</forename><surname>Manning</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In ICLR. OpenReview.net</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2020-05">2020. May 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Overview of the TREC 2020 deep learning track</title>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emine</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Campos</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>In TREC</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2021 deep learning track</title>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emine</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Campos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<ptr target="https://www.microsoft.com/en-us/research/publication/overview-of-the-trec-2021-deep-learning-track/" />
+	</analytic>
+	<monogr>
+		<title level="m">Text REtrieval Conference (TREC)</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>TREC</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2019 deep learning track</title>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Emine</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Campos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ellen</forename><forename type="middle">M</forename><surname>Voorhees</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Context-Aware Sentence/Passage Term Importance Estimation For First Stage Retrieval</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<idno>CoRR abs/1910.10687</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Deeper Text Understanding for IR with Contextual Neural Language Modeling</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="985" to="988" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Convolutional Neural Networks for Soft-Matching N-Grams in Ad-hoc Search</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WSDM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="126" to="134" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</title>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Devlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">NAACL-HLT</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Modeling Diverse Relevance Patterns in Ad-hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanyan</forename><surname>Lan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jun</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chengxiang</forename><surname>Zhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueqi</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="375" to="384" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Diagnostic Evaluation of Information Retrieval Models</title>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tao</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chengxiang</forename><surname>Zhai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page">42</biblScope>
+			<date type="published" when="2011">2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">SPLADE v2: Sparse lexical and expansion model for information retrieval</title>
+		<author>
+			<persName><forename type="first">Thibault</forename><surname>Formal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carlos</forename><surname>Lassance</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Benjamin</forename><surname>Piwowarski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stéphane</forename><surname>Clinchant</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2109.10086</idno>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Understanding BERT Rankers Under Distillation</title>
+		<author>
+			<persName><forename type="first">Luyu</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM International Conference on the Theory of Information Retrieval</title>
+		<meeting>the ACM International Conference on the Theory of Information Retrieval</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>ICTIR 2020</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">EARL: Speedup Transformer-based Rankers with Pre-computed Representation</title>
+		<author>
+			<persName><forename type="first">Luyu</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">P</forename><surname>Callan</surname></persName>
+		</author>
+		<idno>ArXiv abs/2004.13313</idno>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">A Deep Relevance Matching Model for Ad-hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingyao</forename><surname>Ai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">William</forename><surname>Hersh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lynn</forename><surname>Ruslen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phoebe</forename><surname>Roberts</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genomics Track Overview. In TREC</title>
+		<imprint>
+			<date type="published" when="2007">2007. 2007</date>
+		</imprint>
+	</monogr>
+	<note>TREC</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">William</forename><surname>Hersh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aaron</forename><forename type="middle">M</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Phoebe</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hari</forename><forename type="middle">Krishna</forename><surname>Rekapalli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genomics Track Overview. In TREC</title>
+		<imprint>
+			<date type="published" when="2006">2006. 2006</date>
+		</imprint>
+	</monogr>
+	<note>TREC</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Distilling the Knowledge in a Neural Network</title>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><forename type="middle">E</forename><surname>Hinton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oriol</forename><surname>Vinyals</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Dean</surname></persName>
+		</author>
+		<idno>CoRR abs/1503.02531</idno>
+		<imprint>
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Improving Efficient Neural Ranking Models with Cross-Architecture Knowledge Distillation</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sophia</forename><surname>Althammer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Schröder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mete</forename><surname>Sertkan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+		<idno>CoRR abs/2010.02666</idno>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Mitigating the Position Bias of Transformer Models in Passage Re-ranking</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aldo</forename><surname>Lipani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sophia</forename><surname>Althammer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Zlabinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECIR</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">12656</biblScope>
+			<biblScope unit="page" from="238" to="253" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Local Self-Attention over Long Text for Efficient Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bhaskar</forename><surname>Mitra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="2021" to="2024" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">TU Wien @ TREC Deep Learning &apos;19 -Simple Contextualization for Re-ranking</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Zlabinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Zlabinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+		<idno>CoRR abs/2002.01854</idno>
+		<title level="m">Interpretable &amp; Time-Budget-Constrained Contextualization for Re-Ranking</title>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Fine-Grained Relevance Annotations for Multi-Task Document Ranking and Question Answering</title>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Zlabinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mete</forename><surname>Sertkan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Schröder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Allan</forename><surname>Hanbury</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="3031" to="3038" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+		<title level="m" type="main">Convolutional Neural Network Architectures for Matching Natural Language Sentences</title>
+		<author>
+			<persName><forename type="first">Baotian</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhengdong</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingcai</forename><surname>Chen</surname></persName>
+		</author>
+		<idno>NIPS. 2042-2050</idno>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Learning deep structured semantic models for web search using clickthrough data</title>
+		<author>
+			<persName><forename type="first">Po-Sen</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaodong</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Acero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Larry</forename><forename type="middle">P</forename><surname>Heck</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="2333" to="2338" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">PACRR: A Position-Aware Neural IR Model for Relevance Matching</title>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Klaus</forename><surname>Berberich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gerard</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melo</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EMNLP</title>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1049" to="1058" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Co-PACRR: A Context-Aware Neural IR Model for Ad-hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Klaus</forename><surname>Berberich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gerard</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melo</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WSDM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="279" to="287" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Poly-encoders: Architectures and Pre-training Strategies for Fast and Accurate Multi-sentence Scoring</title>
+		<author>
+			<persName><forename type="first">Samuel</forename><surname>Humeau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kurt</forename><surname>Shuster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marie-Anne</forename><surname>Lachaux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jason</forename><surname>Weston</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In ICLR. OpenReview.net</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2020-05">2020. May 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Long Document Ranking with Query-Directed Sparse Transformer</title>
+		<author>
+			<persName><forename type="first">Jyun-Yu</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chia-Jung</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EMNLP (Findings)</title>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="4594" to="4605" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<monogr>
+		<title level="m" type="main">TinyBERT: Distilling BERT for Natural Language Understanding</title>
+		<author>
+			<persName><forename type="first">Xiaoqi</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yichun</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lifeng</forename><surname>Shang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiao</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Linlin</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qun</forename><surname>Liu</surname></persName>
+		</author>
+		<idno>CoRR abs/1909.10351</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Evaluating answer passages using summarization measures</title>
+		<author>
+			<persName><forename type="first">Mostafa</forename><surname>Keikha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jae</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hyun</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 37th international ACM SIGIR conference on Research &amp; development in information retrieval</title>
+		<meeting>the 37th international ACM SIGIR conference on Research &amp; development in information retrieval</meeting>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="963" to="966" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Retrieving passages and finding answers</title>
+		<author>
+			<persName><forename type="first">Mostafa</forename><surname>Keikha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jae</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hyun</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Sanderson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2014 Australasian Document Computing Symposium</title>
+		<meeting>the 2014 Australasian Document Computing Symposium</meeting>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="81" to="84" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT</title>
+		<author>
+			<persName><forename type="first">Omar</forename><surname>Khattab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matei</forename><surname>Zaharia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Query-driven Segment Selection for Ranking Long Documents</title>
+		<author>
+			<persName><forename type="first">Youngwoo</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Razieh</forename><surname>Rahimi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hamed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Bonab</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Allan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3147" to="3151" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">SIB Text Mining at TREC 2020 Deep Learning Track</title>
+		<author>
+			<persName><forename type="first">Julien</forename><surname>Knafou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthew</forename><surname>Jeffryes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sohrab</forename><surname>Ferdowsi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patrick</forename><surname>Ruch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">1266</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Relevance-Based Language Models</title>
+		<author>
+			<persName><forename type="first">Victor</forename><surname>Lavrenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR. ACM</title>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="page" from="120" to="127" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">BioBERT: a pre-trained biomedical language representation model for biomedical text mining</title>
+		<author>
+			<persName><forename type="first">Jinhyuk</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wonjin</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungdong</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donghyeon</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sunkyu</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chan</forename><surname>Ho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">So</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaewoo</forename><surname>Kang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="1234" to="1240" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">NPRF: A Neural Pseudo Relevance Feedback Framework for Ad-hoc Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingfei</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jungang</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EMNLP</title>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="4482" to="4491" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<monogr>
+		<title level="m" type="main">MPII at the TREC 2020 Deep Learning Track</title>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">MPII at the NTCIR-15 WWW-3 Task</title>
+		<author>
+			<persName><forename type="first">Canjia</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NTCIR-15</title>
+		<meeting>NTCIR-15</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">KeyBLD: Selecting Key Blocks with Local Pre-ranking for Long Document Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Minghan</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Éric</forename><surname>Gaussier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="2207" to="2211" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<monogr>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueguang</forename><surname>Ma</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2106.14807</idno>
+		<title level="m">A few brief notes on deepimpact, coil, and a conceptual framework for information retrieval techniques</title>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<monogr>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2010.06467</idno>
+		<title level="m">Pretrained transformers for text ranking: Bert and beyond</title>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<title level="m" type="main">Is searching full text more effective than searching abstracts?</title>
+		<author>
+			<persName><forename type="first">Jimmy</forename><forename type="middle">J</forename><surname>Lin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2009. 2009</date>
+			<publisher>BMC Bioinform</publisher>
+			<biblScope unit="volume">10</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Passage retrieval based on language models</title>
+		<author>
+			<persName><forename type="first">Xiaoyong</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2002">2002</date>
+			<biblScope unit="page" from="375" to="382" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Hierarchical Transformers for Multi-Document Summarization</title>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mirella</forename><surname>Lapata</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics</title>
+		<meeting>the 57th Annual Meeting of the Association for Computational Linguistics</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="5070" to="5081" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<monogr>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yankai</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maosong</forename><surname>Sun</surname></persName>
+		</author>
+		<title level="m">Representation Learning for Natural Language Processing</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Sparse, Dense, and Attentional Representations for Text Retrieval</title>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Eisenstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Collins</surname></persName>
+		</author>
+		<idno type="DOI">10.1162/tacl_a_00369</idno>
+		<ptr target="https://doi.org/10.1162/tacl_a_00369" />
+	</analytic>
+	<monogr>
+		<title level="j">Transactions of the Association for Computational Linguistics</title>
+		<imprint>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="329" to="345" />
+			<date type="published" when="2021-04">2021. 04 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">PROP: Pre-training with Representative Words Prediction for Ad-hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruqing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Ji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueqi</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WSDM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="283" to="291" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">B-PROP: Bootstrapped Pre-training with Representative Words Prediction for Ad-hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruqing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingyan</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueqi</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1318" to="1327" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Efficient Document Re-Ranking for Transformers by Precomputing Term Representations</title>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maria</forename><surname>Franco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raffaele</forename><surname>Nardini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Perego</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nazli</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ophir</forename><surname>Goharian</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Frieder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Expansion via Prediction of Importance with Contextualization</title>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maria</forename><surname>Franco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Raffaele</forename><surname>Nardini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Perego</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nazli</forename><surname>Tonellotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ophir</forename><surname>Goharian</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Frieder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">CEDR: Contextualized Embeddings for Document Ranking</title>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arman</forename><surname>Cohan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nazli</forename><surname>Goharian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1101" to="1104" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Learning passage impacts for inverted indexes</title>
+		<author>
+			<persName><forename type="first">Antonio</forename><surname>Mallia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Omar</forename><surname>Khattab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Torsten</forename><surname>Suel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Tonellotto</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1723" to="1727" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<monogr>
+		<title level="m" type="main">Introduction to information retrieval</title>
+		<author>
+			<persName><forename type="first">Prabhakar</forename><surname>Christopher D Manning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hinrich</forename><surname>Raghavan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Schütze</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Cambridge university press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">DUET AT TREC 2019 DEEP LEARNING TRACK</title>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">1250</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Learning to Match using Local and Distributed Representations of Text for Web Search</title>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fernando</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WWW</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1291" to="1299" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<monogr>
+		<title level="m" type="main">Conformer-Kernel with Query Term Independence for Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Hofstätter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Craswell</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007">2020. 2007. 2020</date>
+			<biblScope unit="volume">10434</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">A Unified Framework for Learned Sparse Retrieval</title>
+		<author>
+			<persName><forename type="first">Thong</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sean</forename><surname>Macavaney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Information Retrieval: 45th European Conference on Information Retrieval, ECIR 2023</title>
+		<meeting><address><addrLine>Dublin, Ireland</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2023-04-02">2023. April 2-6, 2023</date>
+			<biblScope unit="page" from="101" to="116" />
+		</imprint>
+	</monogr>
+	<note>Proceedings, Part III</note>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">MS MARCO: A Human Generated MAchine Reading COmprehension Dataset</title>
+		<author>
+			<persName><forename type="first">Tri</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mir</forename><surname>Rosenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saurabh</forename><surname>Tiwary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rangan</forename><surname>Majumder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Deng</surname></persName>
+		</author>
+		<ptr target="CEUR-WS.org" />
+	</analytic>
+	<monogr>
+		<title level="m">CoCo@NIPS (CEUR Workshop Proceedings</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">1773</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<monogr>
+		<title level="m" type="main">Passage Re-ranking with BERT</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyunghyun</forename><surname>Cho</surname></persName>
+		</author>
+		<idno>CoRR abs/1901.04085</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">Document Ranking with a Pretrained Sequence-to-Sequence Model</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiying</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ronak</forename><surname>Pradeep</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Findings of EMNLP</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<monogr>
+		<title level="m" type="main">Document Expansion by Query Prediction</title>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyunghyun</forename><surname>Cho</surname></persName>
+		</author>
+		<idno>CoRR abs/1904.08375</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">Text Matching as Image Recognition</title>
+		<author>
+			<persName><forename type="first">Liang</forename><surname>Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanyan</forename><surname>Lan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jun</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shengxian</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueqi</forename><surname>Cheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI</title>
+		<imprint>
+			<publisher>AAAI Press</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="2793" to="2799" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">Deep Learning, Health Misinformation, and Precision Medicine</title>
+		<author>
+			<persName><forename type="first">Ronak</forename><surname>Pradeep</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueguang</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hang</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruizhou</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rodrigo</forename><forename type="middle">Frassetto</forename><surname>Nogueira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">1266</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+	<note>H2oloo at TREC 2020: When all you got is a hammer</note>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<monogr>
+		<title level="m" type="main">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</title>
+		<author>
+			<persName><forename type="first">Colin</forename><surname>Raffel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Shazeer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Katherine</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sharan</forename><surname>Narang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Matena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanqi</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><forename type="middle">J</forename><surname>Liu</surname></persName>
+		</author>
+		<idno>CoRR abs/1910.10683</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">The Technion at the WWW-3 Task: Cluster-Based Document Retrieval</title>
+		<author>
+			<persName><forename type="first">Fiana</forename><surname>Raiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NTCIR-15</title>
+		<meeting>NTCIR-15</meeting>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+			<biblScope unit="page" from="247" to="248" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Some Simple Effective Approximations to the 2-Poisson Model for Probabilistic Weighted Retrieval</title>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">E</forename><surname>Robertson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Walker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM/Springer</publisher>
+			<date type="published" when="1994">1994</date>
+			<biblScope unit="page" from="232" to="241" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<analytic>
+		<title level="a" type="main">Okapi at TREC-4</title>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">E</forename><surname>Robertson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Micheline</forename><surname>Hancock-Beaulieu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mike</forename><surname>Gatford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Payne</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<monogr>
+		<title level="m" type="main">Relevance feedback in information retrieval. The Smart retrieval system-experiments in automatic document processing</title>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Rocchio</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1971">1971. 1971</date>
+			<biblScope unit="page" from="313" to="323" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Topic Set Size Design with the Evaluation Measures for Short Text Conversation</title>
+		<author>
+			<persName><forename type="first">Tetsuya</forename><surname>Sakai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lifeng</forename><surname>Shang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhengdong</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hang</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AIRS</title>
+		<title level="s">Lecture Notes in Computer Science</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="volume">9460</biblScope>
+			<biblScope unit="page" from="319" to="331" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<analytic>
+		<title level="a" type="main">Overview of the NTCIR-15 We Want Web with CENTRE (WWW-3) Task</title>
+		<author>
+			<persName><forename type="first">Tetsuya</forename><surname>Sakai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sijie</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhaohao</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yukun</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiaxin</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhumin</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yiqun</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maria</forename><surname>Maistro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhicheng</forename><surname>Dou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Ferro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ian</forename><surname>Soboroff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NTCIR-15</title>
+		<meeting>NTCIR-15</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<analytic>
+		<title level="a" type="main">Evaluation of Pooling Operations in Convolutional Architectures for Object Recognition</title>
+		<author>
+			<persName><forename type="first">Dominik</forename><surname>Scherer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><forename type="middle">C</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sven</forename><surname>Behnke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In ICANN</title>
+		<imprint>
+			<biblScope unit="volume">6354</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="92" to="101" />
+			<date type="published" when="2010">2010</date>
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">A passage-based approach to learning to rank documents</title>
+		<author>
+			<persName><forename type="first">Eilon</forename><surname>Sheetrit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Retr. J</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="159" to="186" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<analytic>
+		<title level="a" type="main">KASYS at the NTCIR-15 WWW-3 Task</title>
+		<author>
+			<persName><forename type="first">Kohei</forename><surname>Shinden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Atsuki</forename><surname>Maruta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Makoto P</forename><surname>Kato</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NTCIR-15</title>
+		<meeting>NTCIR-15</meeting>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+			<biblScope unit="page" from="235" to="238" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<analytic>
+		<title level="a" type="main">Patient Knowledge Distillation for BERT Model Compression</title>
+		<author>
+			<persName><forename type="first">Siqi</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yu</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhe</forename><surname>Gan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jingjing</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EMNLP</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<monogr>
+		<title level="m" type="main">Distilling Knowledge for Fast Retrieval-based Chat-bots</title>
+		<author>
+			<persName><forename type="first">Amir</forename><surname>Vakili Tahami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kamyar</forename><surname>Ghajar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Azadeh</forename><surname>Shakery</surname></persName>
+		</author>
+		<idno>CoRR abs/2004.11045</idno>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<monogr>
+		<title level="m" type="main">Distilling Task-Specific Knowledge from BERT into Simple Neural Networks</title>
+		<author>
+			<persName><forename type="first">Raphael</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yao</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Linqing</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lili</forename><surname>Mou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Olga</forename><surname>Vechtomova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<idno>CoRR abs/1903.12136</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<monogr>
+		<title level="m" type="main">Well-Read Students Learn Better: The Impact of Student Initialization on Knowledge Distillation</title>
+		<author>
+			<persName><forename type="first">Iulia</forename><surname>Turc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+		<idno>CoRR abs/1908.08962</idno>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<analytic>
+		<title level="a" type="main">Attention is All you Need</title>
+		<author>
+			<persName><forename type="first">Ashish</forename><surname>Vaswani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Shazeer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Niki</forename><surname>Parmar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jakob</forename><surname>Uszkoreit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Llion</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aidan</forename><forename type="middle">N</forename><surname>Gomez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lukasz</forename><surname>Kaiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Illia</forename><surname>Polosukhin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">NIPS</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="5998" to="6008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<monogr>
+		<title level="m" type="main">StructBERT: Incorporating Language Structures into Pre-training for Deep Language Understanding</title>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiangnan</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zuyi</forename><surname>Bao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liwei</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luo</forename><surname>Si</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>In ICLR. OpenReview.net</note>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<analytic>
+		<title level="a" type="main">Hi-Transformer: Hierarchical Interactive Transformer for Efficient and Effective Long Document Modeling</title>
+		<author>
+			<persName><forename type="first">Chuhan</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fangzhao</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tao</forename><surname>Qi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yongfeng</forename><surname>Huang</surname></persName>
+		</author>
+		<idno type="DOI">10.18653/v1/2021.acl-short.107</idno>
+		<ptr target="https://doi.org/10.18653/v1/2021.acl-short.107" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing</title>
+		<meeting>the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing</meeting>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2021-05">2021. May 2023</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="848" to="853" />
+		</imprint>
+	</monogr>
+	<note>Short Papers)</note>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<monogr>
+		<title level="m" type="main">Leveraging Passage-level Cumulative Gain for Document Ranking</title>
+		<author>
+			<persName><forename type="first">Zhijing</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiaxin</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yiqun</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jingtao</forename><surname>Zhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yukun</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shaoping</forename><surname>Ma</surname></persName>
+		</author>
+		<idno>WWW. ACM / IW3C2</idno>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="2421" to="2431" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<analytic>
+		<title level="a" type="main">Investigating Passage-level Relevance and Its Role in Document-level Relevance Judgment</title>
+		<author>
+			<persName><forename type="first">Zhijing</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiaxin</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yiqun</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shaoping</forename><surname>Ma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="605" to="614" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<analytic>
+		<title level="a" type="main">End-to-End Neural Ad-hoc Ranking with Kernel Pooling</title>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Russell</forename><surname>Power</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<analytic>
+		<title level="a" type="main">IDST at TREC 2019 Deep Learning Track: Deep Cascade Ranking with Generation-based Document Expansion and Pre-trained Language Modeling</title>
+		<author>
+			<persName><forename type="first">Ming</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenliang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiangnan</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luo</forename><surname>Si</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b100">
+	<analytic>
+		<title level="a" type="main">Beyond 512 Tokens: Siamese Multi-depth Transformer-based Hierarchical Encoder for Long-Form Document Matching</title>
+		<author>
+			<persName><forename type="first">Liu</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mingyang</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Bendersky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marc</forename><surname>Najork</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CIKM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1725" to="1734" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b101">
+	<analytic>
+		<title level="a" type="main">Anserini: Reproducible Ranking Baselines Using Lucene</title>
+		<author>
+			<persName><forename type="first">Peilin</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Data and Information Quality</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">20</biblScope>
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b102">
+	<analytic>
+		<title level="a" type="main">Critically Examining the &quot;Neural Hype&quot;: Weak Baselines and the Additivity of Effectiveness Gains from Neural Ranking Models</title>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kuang</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peilin</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1129" to="1132" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b103">
+	<analytic>
+		<title level="a" type="main">Hierarchical Attention Networks for Document Classification</title>
+		<author>
+			<persName><forename type="first">Zichao</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Diyi</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><surname>Dyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaodong</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Smola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eduard</forename><surname>Hovy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2016 Conference of the North American Chapter</title>
+		<meeting>the 2016 Conference of the North American Chapter</meeting>
+		<imprint>
+			<publisher>Human Language Technologies</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="1480" to="1489" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b104">
+	<analytic>
+		<title level="a" type="main">Flexible IR pipelines with Capreolus</title>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kevin</forename><forename type="middle">Martin</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 29th ACM International Conference on Information &amp; Knowledge Management</title>
+		<meeting>the 29th ACM International Conference on Information &amp; Knowledge Management</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="3181" to="3188" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b105">
+	<analytic>
+		<title level="a" type="main">Applying BERT to Document Retrieval with Birch</title>
+		<author>
+			<persName><forename type="first">Akkalyoncu</forename><surname>Zeynep</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shengjin</forename><surname>Yilmaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haotian</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EMNLP</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b106">
+	<analytic>
+		<title level="a" type="main">Big Bird: Transformers for Longer Sequences</title>
+		<author>
+			<persName><forename type="first">Manzil</forename><surname>Zaheer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guru</forename><surname>Guruganesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Avinava</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><surname>Dubey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><surname>Ainslie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Santiago</forename><surname>Alberti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><surname>Ontañón</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anirudh</forename><surname>Pham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qifan</forename><surname>Ravula</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Amr</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ahmed</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">NeurIPS</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b107">
+	<analytic>
+		<title level="a" type="main">Neural Ranking Models with Multiple Document Fields</title>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mitra</forename><surname>Bhaskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WSDM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="700" to="708" />
+		</imprint>
+	</monogr>
+	<note>Nick Craswell, and Saurabh Tiwary</note>
+</biblStruct>
+
+<biblStruct xml:id="b108">
+	<analytic>
+		<title level="a" type="main">HIBERT: Document Level Pre-training of Hierarchical Bidirectional Transformers for Document Summarization</title>
+		<author>
+			<persName><forename type="first">Xingxing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Furu</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics</title>
+		<meeting>the 57th Annual Meeting of the Association for Computational Linguistics</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="5059" to="5069" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b109">
+	<analytic>
+		<title level="a" type="main">Comparing Score Aggregation Approaches for Document Retrieval with Pretrained Transformers</title>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Yates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Lin</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-030-72240-1_11</idno>
+		<ptr target="https://doi.org/10.1007/978-3-030-72240-1_11" />
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Information Retrieval: 43rd European Conference on IR Research, ECIR 2021, Virtual Event</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="2021-03-28">2021. March 28 -April 1, 2021</date>
+			<biblScope unit="page" from="150" to="163" />
+		</imprint>
+	</monogr>
+	<note>Proceedings, Part II</note>
+</biblStruct>
+
+<biblStruct xml:id="b110">
+	<monogr>
+		<title level="m" type="main">Transformer-XH: Multi-Evidence Reasoning with eXtra Hop Attention</title>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Corby</forename><surname>Rosset</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">N</forename><surname>Bennett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saurabh</forename><surname>Tiwary</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>In ICLR. OpenReview.net</note>
+</biblStruct>
+
+<biblStruct xml:id="b111">
+	<monogr>
+		<title level="m" type="main">Sparta: Efficient open-domain question answering via sparse transformer matching retrieval</title>
+		<author>
+			<persName><forename type="first">Tiancheng</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaopeng</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyusong</forename><surname>Lee</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2009.13013</idno>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b112">
+	<analytic>
+		<title level="a" type="main">GEAR: Graphbased Evidence Aggregating and Reasoning for Fact Verification</title>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xu</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lifeng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Changcheng</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maosong</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ACL (1)</title>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="892" to="901" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b113">
+	<analytic>
+		<title level="a" type="main">TILDE: Term independent likelihood moDEl for passage re-ranking</title>
+		<author>
+			<persName><forename type="first">Shengyao</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guido</forename><surname>Zuccon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval. 1483-1492</title>
+		<meeting>the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval. 1483-1492</meeting>
+		<imprint>
+			<date type="published" when="2021-05">2021. May 2023</date>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

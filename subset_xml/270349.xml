@@ -1,0 +1,1520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Modelling failure rates with machine-learning models: Evidence from a panel of UK firms</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Georgios</forename><surname>Sermpinis</surname></persName>
+							<email>georgios.sermpinis@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Serafeim</forename><surname>Tsoukas</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yiqun</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">School of Insurance</orgName>
+								<orgName type="institution">Central University of Finance and Economics</orgName>
+								<address>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Adam</forename><surname>Smith</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Modelling failure rates with machine-learning models: Evidence from a panel of UK firms</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">A554C1956B259AFA7AB114590DE853A9</idno>
+					<idno type="DOI">10.1111/eufm.12369</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:49+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>G17</term>
+					<term>G33</term>
+					<term>C25</term>
+					<term>E37</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>In this study, we investigate the ability of machinelearning techniques to predict firm failures and we compare them against alternatives. Using data on business and financial risks of UK firms over 1994-2019, we document that machine-learning models are systematically more accurate than a discrete hazard benchmark. We conclude that the random forest model outperforms other models in failure prediction. In addition, we show that the improved predictive power of the random forest model relative to its counterparts persists when we consider extreme economic events as well as firm and industry heterogeneity. Finally, we find that financial factors affect failure probabilities.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>It is well accepted that timely detection and accurate prediction of firm failures are essential to firm managers, market participants and policymakers. Managers, as insiders, can incorporate reliable and efficient failure predictions into their internal performance evaluations to check management performance and construct early warning mechanisms so they can implement remedial actions <ref type="bibr" target="#b33">(Geng et al., 2015)</ref>. Moreover, accurate failure prediction can lower the probability that a firm's outsiders (e.g., investors and creditors) become exposed to default risks and losses. Failure prediction can also encourage policymakers to create regulations or policies that can stabilize the financial markets.</p><p>Improvement of prediction techniques has become a pressing issue for academics and practitioners in light of extreme economic events such as the most recent global financial crisis (GFC) or the United Kingdom's decision to leave the European Union in the 23 June 2016 referendum <ref type="bibr">(Brexit)</ref>. Both events are characterized by heightened economic and policy uncertainty with implications for firms' real activities, as well as for trade, immigration and regulation <ref type="bibr" target="#b15">(Bloom et al., 2019;</ref><ref type="bibr" target="#b52">van Reenen, 2016)</ref>. The empirical literature confirms that uncertainty affects firms due to declines in demand and supply or in the extreme, corporate bankruptcy. Surprisingly, however, there is limited empirical evidence regarding the most appropriate modelling strategy and the characteristics that affect firm closures during the recent global financial crisis and Brexit.</p><p>The purpose of this paper is to take a deeper look at firms' failures both in tranquil and crisis times, paying attention to firm and industry heterogeneity and improved methods of firms' exit assessments. Analysis of bankruptcy prediction techniques has a long pedigree (see <ref type="bibr" target="#b2">Altman, 1968;</ref><ref type="bibr" target="#b23">Chava &amp; Jarrow, 2004;</ref><ref type="bibr" target="#b27">Dimitras et al., 1996;</ref><ref type="bibr" target="#b29">Doumpos et al., 2017;</ref><ref type="bibr" target="#b43">Kumar &amp; Ravi, 2007;</ref><ref type="bibr" target="#b49">Ohlson, 1980;</ref><ref type="bibr" target="#b57">Shumway, 2001)</ref> and seeks to model default likelihood using a set of business and financial risks <ref type="bibr" target="#b43">(Kumar &amp; Ravi, 2007)</ref>. Such studies typically apply firm-specific financial ratios and other publicly available information in reduced-form models and find that firms' chances of survival correspond strongly to a number of balance sheet indicators and macroeconomic conditions.</p><p>However, the conventional approach in the literature has important drawbacks because it relies on strict assumptions such as linearity, normality and pre-existing functional forms and the selection of covariates depends on researchers' knowledge. If these assumptions are violated, the statistical models produce biased estimates which may further reduce the models' predictive power. In addition, the conventional approach might work well in tranquil periods, but they are less sensitive to financial datasets characterized by heightened uncertainty and financial distress. In other words, the performance of the conventional approach not only relies on the mathematical algorithm but the quality of data set. As computing techniques advance, reducing the interference from superabundant outliers in the data set, simplifying the constructed model and evaluating the predictive ability of predictors with high explanatory ability have gained momentum in modelling corporate bankruptcy.</p><p>Our study makes three important contributions to the literature. First, we rely on machine learning (ML) tools, which are gaining ground in economic and finance applications (see, e.g., <ref type="bibr" target="#b1">Akyildirim et al., 2021;</ref><ref type="bibr" target="#b4">Athey et al., 2019;</ref><ref type="bibr" target="#b7">Aziz et al., 2021;</ref><ref type="bibr" target="#b9">Barboza et al., 2017;</ref><ref type="bibr" target="#b42">Knaus et al., 2021;</ref><ref type="bibr" target="#b47">de Moor et al., 2018)</ref>. We compare the performance of these models with the golden standard of default prediction studies-the discrete hazard (DH) model. These modelling techniques have different properties and limitations but are the most promising ML classifiers. More specifically, we cover the ML models most widely applied in bankruptcy prediction <ref type="bibr" target="#b44">(Lin et al. 2011</ref>) and the top-performing ML in data mining <ref type="bibr" target="#b12">(Bergstein et al., 2008)</ref>. This allows us to investigate the value of the ML models' properties in a rich data set characterized by structural breaks and extreme economic events. We identify the conditions under which these models gain or lose accuracy in corporate failures. For this purpose, we explore the relative importance of several time-varying covariates from an extensive set of balance sheet indicators and macroeconomic explicators in the related empirical literature. We further improve the literature by going beyond measuring models' predictive performance. To do so we report the mean decrease in accuracy to gauge variables' importance in predicting firm failures. Therefore, we provide a sparse representation of failure predictors that market participants, financial institutions and governments can readily use.</p><p>Our second contribution is that contrary to the literature, which looks at how well ML techniques predict corporate bankruptcies using listed firms, we focus on a large panel of mainly unquoted firms. There are strong reasons to suppose that a segment of firms is more likely to face problems of asymmetric information and is, therefore, more likely to be affected by higher liquidity risk and financing constraints, especially during periods of financial distress. These firms are typically small, less well-known and lack a track record. Focusing on unlisted firms allows us, therefore, to provide a crisp comparison of how ML models predict failures of different types of firms. The richness of our panel enables us to take into account two dimensions of firm heterogeneity (age and size), aimed at measuring the degree of financing constraints faced by firms. In addition, we recognize that the likelihood of firm survival is shaped by technology. Therefore, we allow for the fact that firms operating in different industrial groups might respond to changes in economic conditions disproportionately. This is also relevant because bankruptcy contagion takes place among industry peers <ref type="bibr" target="#b22">(Chang et al., 2020)</ref>. Exploiting heterogeneity at the firm and industry level is an important contribution in light of the fact that the firms in our sample are heterogeneous and are unlikely to be affected by changes in the economic uncertainty in the same way.</p><p>Third, our study spans two important episodes in the United Kingdom's recent economic history. Specifically, although the 2007-2009 crisis was a global phenomenon, Brexit is a major event with large-scale implications across the political, social and economic spectrum <ref type="bibr" target="#b25">(Davies &amp; Studnicka, 2018)</ref>. The GFC generated heightened uncertainty about the markets, which subsided reasonably quickly, but Brexit's uncertainty was persistent and remained elevated even 3 years after the initial shock <ref type="bibr" target="#b15">(Bloom et al., 2019)</ref>. Because these two major negative episodes have different causes, scopes and implications, we separate our rich historical data set into subsamples to assess the choice of predictors for bankruptcy and the predictive ability of our models during the crisis and tranquil times. To the best of our knowledge, this channel is yet to be documented.</p><p>Previewing our main results, we find evidence that ML models with a large number of covariates are systematically more accurate than the benchmark model in the literature. Having the ML models as the starting point, interest lies in identifying the model that outperforms all other alternatives in terms of point statistics. We provide compelling evidence that the random forest model consistently beats the benchmarks and other ML tools in failure prediction. The model's superior performance stems from its variable selection mechanism and its ability to capture wider underlying patterns and relationships in the data set <ref type="bibr" target="#b45">(Medeiros et al., 2021)</ref>. In addition, we find that the model's predictive ability differs when we account for crisis/ noncrisis periods and for firm-and industry-level heterogeneity. Finally, several balance sheet indicators contain information regarding firms' chances of failure. Firm-specific uncertainty is one of the key variables that plays a more potent role in young firms and during extreme economic periods. Our results are robust to various sensitivity checks.</p><p>The rest of the work is organized as follows. We document the relevant literature on failure prediction for firms and implications for managers in Section 2. Following that, we discuss data and summary statistics in Section 3. Section 4 introduces in detail the methodologies we use. In Section 5 we report the empirical results and robustness tests, with Section 6 concluding this study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| RELATED LITERATURE</head><p>Predicting bankruptcies among general businesses and financial institutions has been on the top of the research agenda since the Great Depression (see <ref type="bibr" target="#b11">Bellovary et al., 2007</ref> for a detailed review). The seminal contribution of <ref type="bibr" target="#b2">Altman (1968)</ref> prompted researchers to use multivariate analysis to predict firm bankruptcies. Following that, <ref type="bibr" target="#b49">Ohlson (1980)</ref> proposes the O-score model in bankruptcy research. Both are classical models based on several accounting-based financial ratios to group failed and non-failed companies.</p><p>To produce more consistent estimates and more efficient out-of-sample predictions, Shumway ( <ref type="formula">2001</ref>) employs a DH model with market-driven and accounting variables from previous studies; that study confirms that the predictive ability of DH outperforms discriminant analysis and logit models. The Shumway model has been modified in various ways to establish the most important predictive variables. Specifically, <ref type="bibr" target="#b23">Chava and Jarrow (2004)</ref> investigate how industry effects influence bankruptcy prediction by extending Shumway's model. They achieve relatively higher forecasting accuracy than previous studies. Similarly, <ref type="bibr" target="#b21">Campbell et al. (2008)</ref> introduce additional market variables to achieve a noticeable improvement in the corporate bankruptcy forecast model. 1 Other papers, including <ref type="bibr" target="#b13">Bharath and Shumway (2008)</ref> examine the accuracy and the contribution of the Merton distance to the default model, which is based on <ref type="bibr" target="#b46">Merton's (1974)</ref> bond pricing model. They find that the predictive power of distance to default is significant in determining corporate failures. <ref type="bibr" target="#b16">Bonfim (2009)</ref> advocates accounting for macroeconomic conditions in assessing bankruptcy probabilities. In addition, survival analysis related to a hazard model has gradually become an important methodology for predicting failed events in finance because they capture the timing of alternative outcomes in the work <ref type="bibr" target="#b10">(Beaver et al., 2005;</ref><ref type="bibr" target="#b28">Ding et al., 2012;</ref><ref type="bibr" target="#b30">Duffie et al., 2007)</ref>. Finally, <ref type="bibr" target="#b3">Altman et al. (2017)</ref> provide a review on the prediction of corporate failures using cross-country studies. Their study highlights that accounting-based models have good predictive ability for most countries with improvements in accuracy when country-specific estimation is carried out that incorporates additional variables.</p><p>On the methodological side, conventional models, such as the ones described earlier, are unable to identify complex patterns in millions of data points to make accurate inferences and predictions. Therefore, the literature adopts nonlinear numerical methodologies to deal with this challenge. Specifically, the support vector machine (SVM), recently introduced in default risk analysis, performs better than competing models <ref type="bibr" target="#b24">(Chen et al., 2011;</ref><ref type="bibr" target="#b37">Härdle &amp; Simar, 2012;</ref><ref type="bibr" target="#b38">Härdle et al., 2009)</ref>. Improvements in computer technology have led to a significant reduction in computation costs and the literature investigates credit default and firm bankruptcies using variable-selection techniques or ensemble techniques. 2 For example, <ref type="bibr" target="#b58">Tian et al. (2015)</ref> use the least absolute shrinkage and selection operator (LASSO) to evaluate the probability of bankruptcy using a comprehensive sample of US firms. The authors conclude that accuracy in 1 Agarwal and Taffler (2008) show that there is little difference in the predictive accuracy of accounting-based and market-based models, especially for UK firms. 2 For a recent bibliographic review on ML techniques and prediction of corporate failures, see <ref type="bibr" target="#b41">Kim et al. (2020)</ref>.</p><p>the out-of-sample prediction is superior to previous studies in estimating default by combining reduced-form models with the LASSO procedure.</p><p>Other studies use newer statistical models for forecasting corporate bankruptcy. In particular, <ref type="bibr" target="#b50">Olson et al. (2012)</ref> provide a comparative analysis of data mining methods for bankruptcy prediction. The authors find that decision tree algorithms are more straightforward to implement and are relatively more accurate compared to neural networks and support vector machines. More recently, <ref type="bibr" target="#b60">Traczynski (2017)</ref> breaks ground from previous studies by developing a Bayesian model-averaging approach to analysing firm bankruptcies and default predictability.</p><p>The study shows that this method is out-of-sample performance superior to other common models. Finally, <ref type="bibr" target="#b9">Barboza et al. (2017)</ref> show that ML models have, on average, approximately 10% higher accuracy in relation to traditional models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| DATA AND SUMMARY STATISTICS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">| Data sources</head><p>We construct our data set from the profit and loss and balance sheet data gathered by Bureau Van Dijk Electronic Publishing in the FAME database. We use the FAME August 2019, October 2010, October 2008 and February 2005 editions, as well as archived FAME 1998. In line with <ref type="bibr" target="#b35">Guariglia et al. (2016)</ref> and <ref type="bibr" target="#b34">Görg and Spaliara (2018)</ref>, we take this approach to track the status of firms continuously and address potential attrition bias because FAME records firms within the last 5 years. <ref type="foot" target="#foot_0">3</ref> Our data set covers 1994-2019.</p><p>Our database includes a majority of firms (99%) not in the public market or alternative exchanges such as the alternative investment market and the off-exchange market. This is an attractive characteristic of the data set because unlisted firms are likely to suffer more from a high degree of information asymmetry compared to public firms; hence they are the most affected during extreme economic events. Following common selection criteria in the literature, we exclude companies that do not have complete records on our explanatory variables, as well as firm-years with negative sales and assets. To control for the potential influence of outliers, we winsorize the regression variables at the 5th and 95th percentiles. Finally, to prevent double-counting firms and subsidiaries or operations abroad, we keep consolidated firms. Our combined panel has an unbalanced structure containing 66,165 annual observations (firm-years) on 14,825 UK firms.<ref type="foot" target="#foot_1">4</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">| Choice of explanatory variables</head><p>Previous research on failure prediction accounts for both financial and business risk. Accordingly, the existing failure-prediction literature guides the selection of independent variables in our study. We present the expected relationship between applied predictors and firm failure in Supporting Information: Appendix Table <ref type="table">A1</ref>, which provides a detailed description of the variables in this study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">| Firm-specific variables</head><p>We rely on four variables that are components of the Z-score created in <ref type="bibr" target="#b2">Altman (1968)</ref>. These are working capital to total assets (WC/TA), earnings before interest and taxes to total assets (EBIT/TA), retained earnings to total assets (RE/TA) and sales to total assets (S/TA). In addition, we incorporate three accounting variables from <ref type="bibr" target="#b49">Ohlson (1980)</ref> and <ref type="bibr" target="#b60">Traczynski (2017)</ref>, namely, the ratio of net income to total assets (NI/TA), total liabilities to total assets (TL/TA) and current assets to current liabilities (CA/CL). Next, we use an efficiency indicator, measured as gross profits to total assets (GP/TA) in <ref type="bibr" target="#b51">Psillaki et al. (2010)</ref> and <ref type="bibr" target="#b34">Görg and Spaliara (2018)</ref>. We capture firms' ability to pledge collateral via the ratio of tangible assets to total assets (TAN/TA), in line with <ref type="bibr" target="#b16">Bonfim (2009)</ref>, <ref type="bibr" target="#b51">Psillaki et al. (2010)</ref> and <ref type="bibr" target="#b32">Farinha et al. (2019)</ref>. In addition, we measure firm age (AGE), defined as the logarithm of the difference between the current year and the date of incorporation; we measure growth prospects using growth in sales (GRS). Finally, in line with <ref type="bibr" target="#b20">Byrne et al. (2016)</ref>, we employ a measure of firm-specific uncertainty (F_UNC), by estimating an AR(1) model of sales augmented with time and industry-specific dummies and then taking the standard deviation of the firm's total real sales in the 3 years preceding and including year t.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">| Macroeconomic indicators</head><p>We consider a list of macroeconomic factors that measure different aspects of the aggregate economy's performance; they may influence the probability of failure. Specifically, the growth rate of real gross domestic product (GDP) (RGDPGR_UK and RGDPGR_US) captures the aggregate business cycle in the United Kingdom and the United States, respectively. The interest rate (RINTR) is the yield on 10-year Treasury bonds in the United Kingdom minus the annual rate of inflation (CPI). The real effective exchange rate in the United Kingdom (REER) and the volatility of the real effective exchange rate (REER_VOL) are included. The stock market performance is the FTSE 100 return, which calculates logarithm returns on the FTSE 100 index (LNRET). VOL represents the volatility of the stock price index for the United Kingdom. Aggregate economic activity is a coincident indicator in the United Kingdom (CIEA). Finally, we measure policy uncertainty (POL_UNC), which likely plays a major role in the Brexit period. This variable is from <ref type="bibr" target="#b8">Baker et al. (2016)</ref> and uses a 50% weight on a news-based component from the Financial Times and The Times newspapers (i.e., the mention of policyrelevant terms), as well as a 50% weight on Consensus Economics CPI and budget deficit forecaster disagreement.<ref type="foot" target="#foot_2">5</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3">| Summary statistics</head><p>Table 1 reports summary statistics related to the explanatory variables in the empirical models. In columns (1)-(4), we present statistics splitting the sample between non-failed and failed unit root hypothesis and we conclude that the variables are stationary (see Supporting Information: Appendix Table <ref type="table">D11</ref>). Hence, any shock affecting the variables is likely to be temporary and we should not be concerned over spurious regression.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>T A B L E 1 Descriptive statistics</head><p>This table reports sample means. Standard deviations are in parentheses. Fail is a dummy that equals 1 in a given year if the firm is recorded as failed in that year and 0 otherwise. GFC is the p value of the test statistic for the equality of means. Abbreviations: AGE, firm age; CA/CL, ratio of current assets to current liabilities; EBIT/TA, ratio of earnings before interest and taxes to total assets; F_UNC, firm-specific uncertainty; GP/TA, ratio of gross profits to total assets; GRS, growth in sales; NI/TA, ratio of net income to total assets; RE/TA, ratio of retained earnings to total assets; S/TA, ratio of sales to total assets; TAN/TA, ratio of tangible assets to total assets; TL/TA, ratio of total liabilities to total assets; WC/TA, ratio of working capital to total assets.  firms to measure any differences across operating statuses. We test the equality of means across the above-mentioned groups and report the corresponding p values in the final columns of the table. 6 When comparing failing and surviving firms, we observe, as expected, that the latter group of firms have better financial characteristics, as measured by the balance sheet indicators. Also, they are older, as indicated by their date of incorporation. Moreover, nonfailed firms have higher growth rates and less sales uncertainty. The results from equality tests suggest significant differences between the two groups, which indicates a correlation between better financial health and a lower risk of failure. In other words, there is considerable crosssectional variation in the probability of a firm failing. This motivates our study to consider how firm heterogeneity affects failure predictions for candidate models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Variables</head><formula xml:id="formula_0">Full sample Fail = 1 Fail = 0 Diff. GFC = 1 GFC = 0 Diff. Brexit = 1 Brexit = 0 Diff. (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) S/</formula><formula xml:id="formula_1">T A B L E 1 (Continued) Variables Full sample Fail = 1 Fail = 0 Diff. GFC = 1 GFC = 0 Diff. Brexit = 1 Brexit = 0 Diff. (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) AGE 2.</formula><p>In columns ( <ref type="formula">5</ref>)-( <ref type="formula" target="#formula_17">10</ref>) of Table <ref type="table">1</ref>, we compare the GFC and Brexit periods to calmer times. During the GFC, firms display worse balance sheet indicators, such as higher leverage and lower profitability. This pattern does not hold for the Brexit period, which is characterized by better firm fundamentals. This observation supports the idea that the episodes are very different and have different implications for firm performance. The statistics suggest that firm characteristics are very different in crisis versus noncrisis periods and hence we should separate our sample into subsample periods to check the predictive ability of the models and the chosen explicators.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| METHODOLOGY</head><p>In this section, we present models that predict the failure of UK firms. 7 In line with <ref type="bibr" target="#b19">Bunn and Redwood (2003)</ref> and <ref type="bibr" target="#b35">Guariglia et al. (2016)</ref>, we define a firm as failed in a given year when its status is that of receivership, liquidation or dissolution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">| DH model</head><p>The DH model is widely used as a benchmark in bankruptcy-prediction studies (see among others, <ref type="bibr" target="#b10">Beaver et al., 2005;</ref><ref type="bibr" target="#b21">Campbell et al., 2008;</ref><ref type="bibr" target="#b23">Chava &amp; Jarrow, 2004;</ref><ref type="bibr" target="#b28">Ding et al., 2012;</ref><ref type="bibr" target="#b30">Duffie et al., 2007;</ref><ref type="bibr" target="#b57">Shumway, 2001;</ref><ref type="bibr" target="#b58">Tian et al., 2015;</ref><ref type="bibr" target="#b60">Traczynski, 2017)</ref>. Compared to static models, the DH model using time-varying panel data produces consistent and unbiased estimates that consider potential duration dependence <ref type="bibr" target="#b57">(Shumway, 2001)</ref>.</p><p>Let us define Y s t , as the dependent binary variable that equals 1 if at year t a firm fails and 0 otherwise. The DH 1-year-ahead prediction of firm s failing is given by the following equation: 6 The average failure rate in our sample is 10.6%, which is comparable with previous UK studies (e.g., <ref type="bibr" target="#b35">Guariglia et al., 2016)</ref>. 7 For details about the selection of hyperparameters and alternative shrinkage regression methods see online Supporting Information: Appendix C. In online Supporting Information: Appendix D, we show the performance of a set of additional ML models (the Multilayer Perceptron, the Recurrent Neural Network, Genetic Algorithms, bagging and boosting) that display promising results in other fields of science. As can be seen, the performance of these models is inferior to those presented in our main manuscript. Further, we show the computational cost of our main models in online Supporting Information: Appendix F.</p><formula xml:id="formula_2">Pr Y Y X e e ( = 1| = 0, ) = 1 + , s t s t s t β βx β βx , ,-1 ,-1 + ′ + ′ s t s t 0 , 0 ,<label>(1)</label></formula><p>where s = 1, 2…, S refers to firms and t = 1, 2…, T stands for the time period. X s t , is a vector of the time-varying explanatory variables including firm-specific and macroeconomic variables for each firm s at time t, β is a vector of covariate effect parameters and β 0 is a scalar parameter. The parameter estimates can be achieved by maximizing the log-likelihood function 8 :</p><formula xml:id="formula_3">                                             l β Y β βX Y β βX β βX ( ˆ) = × ln 1 1 + exp(-( + ′ )) + (1 - ) ×ln exp(-( + ′ )) 1 + exp(-( + ′ )) . s t s t s t s t s t , 0 , , 0 , 0 ,<label>(2)</label></formula><p>4.2 | The Bayesian model averaging-DH (BMA-DH) </p><formula xml:id="formula_4"> y y y p M p M p M p M p M ( | ) = ( | ) ( ) ( | ) ( ) i i i i m i i =1 (4) and y p M ( | ) i is calculated by the integral:  y y p M f β M f β M dβ ( | ) = ( | , ) × ( | ) , i M i M i M i i i (5)</formula><p>where</p><formula xml:id="formula_5">y f β M ( | , ) M i i</formula><p>is the likelihood of the data conditional on the model M i and</p><formula xml:id="formula_6">f β M ( | ) M i i</formula><p>is the prior distribution of β .  </p><formula xml:id="formula_7">                                                                          ( ) ( ) ( ) ( ) ( ) ( ) ( ) (</formula><p>)</p><formula xml:id="formula_8">f y β β M Y β β X Y β β X β β X ln | , , = ×l n 1 1 + exp - + ′ + (1 - ) × ln exp - + ′ 1 + exp - + ′ , M M i s t M M s t M s t M M s t M M M s t M 0, ,<label>0, , , , 0, , , 0, , , i i</label></formula><formula xml:id="formula_9">i i i i i i i i i (6)</formula><p>where X s t M , , i contains the predictors in model M i , which is part of X s t , in Equation ( <ref type="formula" target="#formula_2">1</ref>). β M 0, i and β M i are the corresponding estimated parameter vectors in model M i .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">| LASSO with DH (LASSO-DH) model</head><p>The LASSO technique, initially proposed by <ref type="bibr" target="#b59">Tibshirani (1996)</ref>, simultaneously performs predictors' selection and regression. It chooses variables by forcing some coefficients to zero and shrinking others by adding the penalty function</p><formula xml:id="formula_10">≤  β σ | | q p q =1</formula><p>into the model estimation. The constraint σ is a user-specified tuning parameter and q p = 1, 2. .. indicates the number of surviving predictors with nonzero estimated coefficients. LASSO-DH can be expressed as:</p><formula xml:id="formula_11">                 l β argmax β Y X λ β , ˆ= ( | , )- | | β s t s t q p q , , =1<label>(7)</label></formula><p>where</p><formula xml:id="formula_12">l β Y X ( | , ) s t s t , ,</formula><p>is the same as Equation ( <ref type="formula" target="#formula_3">2</ref>) and λ is a tuning parameter that controls the shrinkage.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">| Naive Bayes (NB) classifier</head><p>NB is a probabilistic ML classifier based on the Bayes theorem with the assumption of conditional independence between every pair of predictors given the value of the class variable. It is a computationally simple method that can handle missing values in the data set and irrelevant predictors. Although the assumption of independent predictors rarely holds in finance and economics datasets, NB can still provide accurate forecasts <ref type="bibr" target="#b56">(Sarkar &amp; Sriram, 2001)</ref>. The NB classifier can be defined as 9 :</p><formula xml:id="formula_13">              Y argmax p Y X argmax p X Y p Y p X , = ( ( | ))= ( | )× ( ) ( ) s t s t s t s t s t s t s t , ,<label>, , , , , (8)</label></formula><p>9 For details on the exposition of the NB classifier, see <ref type="bibr" target="#b53">Rish (2001)</ref>.</p><p>where p Y X ( | )</p><formula xml:id="formula_14">s t s t , ,</formula><p>is the conditional probability given the predictor's vector . Hence, Equation ( <ref type="formula" target="#formula_13">8</ref>) can be written as:</p><formula xml:id="formula_15">∝ Y argmax p X Y p Y argmax p X X Y p Y = ( ( | ) * ( )) ( ( ,… , | ) * ( )) . i t s t s t s t t n t s t s t , , ,<label>, 1 , , , , (9)</label></formula><p>4.  <ref type="formula">2012</ref>), the probability of a specific classification for an object in the k-NN classifier can be written as:</p><formula xml:id="formula_16"> p Y X D k k Y 1 ( | , , ) = 1 ( ), s t s t s N X D s t , , ϵ<label>( , )</label></formula><p>,</p><formula xml:id="formula_17">k st ,<label>(10)</label></formula><p>where</p><formula xml:id="formula_18">N X D ( , ) k st ,</formula><p>is a specific set of k observations in the training data that are the closest to X s t , based on their Euclidean distance D, X s t , is the predictors' set, k is a predefined parameter and e 1( ) is the indicator function defined as follows:</p><formula xml:id="formula_19">      e e e 1( ) = 1, if is true, 0, if is false.<label>(11)</label></formula><p>Following <ref type="bibr" target="#b55">Rodriguez et al. (2010)</ref>, we select k based on a 10-fold cross-validation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6">| Support vector machines</head><p>SVM is a class of ML models introduced by <ref type="bibr" target="#b17">Boser et al. (1992)</ref> that is widely used in modern classification and regression. Its aim is to project nonlinear separable samples onto another higher dimensional space, with the assistance of a kernel function, where the data points can be distinctly classified. The SVM algorithm tries to maximize the margin between the data points and the hyperplane by minimizing the loss function. The classification prediction takes the form:</p><formula xml:id="formula_20">        sign α Y K X X b ( , ) + ), s F s s t s t =1 , ,<label>(12)</label></formula><p>where F is the number of firms in the training sample, α are Lagrange multipliers, b is the bias and K is the kernel function. In our study, like kernel, we apply the radial basis function. The parameters of the radial basis function are selected based on a 10-fold cross-validation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.7">| Random forest (RF) model</head><p>RF is an ensemble learning method for classification tasks, which contains the collection of decision trees. RF is a way of bagging multiple, deep, decision trees trained on different parts of the same training set, with the goal of reducing the variance <ref type="bibr" target="#b18">(Breiman, 2001)</ref>. The RF model does not require statistical assumptions and handles multicollinearity. <ref type="bibr" target="#b18">Breiman (2001)</ref> indicates that random inputs and random features tend to produce better results in RF models. Suppose that there are d D = 1, 2, …, bootstrap samples. In each d sample, ω predictors are randomly selected from the vector X s t , to produce the ensemble of trees T { } d D</p><p>1 . The classification prediction in RF model 10 can be written as:</p><formula xml:id="formula_21">Y majority vote C X , ˆ= { ˆ( )} s t rf D b s t D , , 1<label>(13)</label></formula><p>where</p><formula xml:id="formula_22">C X ˆ( ) b s t ,</formula><p>is the classification prediction of the dth RF tree.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">| EMPIRICAL RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">| Full sample</head><p>To measure the predictive performance of all competing models, we calculate the area under the receiver operating characteristic curve (AUC), the Brier score and type I and II errors (see <ref type="bibr" target="#b13">Bharath &amp; Shumway, 2008;</ref><ref type="bibr" target="#b23">Chava &amp; Jarrow, 2004;</ref><ref type="bibr" target="#b57">Shumway, 2001;</ref><ref type="bibr" target="#b58">Tian et al., 2015;</ref><ref type="bibr" target="#b60">Traczynski, 2017)</ref>. 11 For the out-of-sample predictions, we employ an expanding-window method based on the past and current information available up to time T. It allows us to include successive observations in the initial sample before forecast of the next one-step-ahead prediction of firm failure while keeping the start date of the sample fixed. By this method, we forecast future failure f ˆt+1 , f ˆ, t+2 and so forth. The initial estimation window is 1994 to 2015 and the first prediction date is 2016. We then increase T by 1 each year until T reaches 2019. For AUC the highest value the better is considered the model. The opposite is true for the Brier score and type I and II errors where the lowest scores suggest better models. These measures do not indicate statistical significance. For this reason, we compare the difference between two AUCs using the DeLong test <ref type="bibr" target="#b26">(DeLong et al., 1988)</ref>. The null hypothesis of the DeLong test for two models, A and B, is that the AUCs of the two models are not statistically different. We apply this procedure to examine the gain of the ML models over DH. In other words, we apply the DeLong test in pairs of models between an ML method 10 See <ref type="bibr" target="#b39">Hastie et al. (2008)</ref> for an excellent overview of the RF model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>11</head><p>For a detailed description of the metrics, please see online Supporting Information: Appendix B. and the DH. In Table <ref type="table">2</ref>, we report the above-mentioned statistics for the out-of-sample predictions of all candidate models.</p><p>Starting with the analysis of the AUC measure, we note that the RF outperforms all models. Using the RF model, the AUC value is around 75%, which is the highest one among all AUC values for candidate models. There exists a 12% increase in AUC values relative to the DH model, which suggests that RF clearly outperforms its DH benchmark. This gain in AUC values is related to less misclassification, which is a meaningful improvement in predictive ability. <ref type="bibr" target="#b21">Campbell et al. (2008)</ref> and <ref type="bibr" target="#b60">Traczynski (2017)</ref> argue that a 1% difference in predicted default probabilities is considerable for a firm, affecting its performance in the stock market. Concerning the other ML models, we note that k-NN, NB and SVM present performance that is worse than the linear DH benchmark. On the other hand, applying BMA in conjunction with DH marginally improves the DH. LASSO-DH has a statistically better AUC compared to simple DH. Our Brier scores realizations are consistent with the AUC analysis. The type I errors of our best model, the RF, are lower than their counterparts. The type II errors are close to the ones of BMA-DH and LASSO-DH.</p><p>In Table <ref type="table">3</ref>, we present the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model <ref type="bibr" target="#b13">(Bharath &amp; Shumway, 2008;</ref><ref type="bibr" target="#b23">Chava &amp; Jarrow, 2004;</ref><ref type="bibr" target="#b57">Shumway, 2001;</ref><ref type="bibr" target="#b58">Tian et al., 2015;</ref><ref type="bibr" target="#b60">Traczynski, 2017)</ref>. We opt for the decile method because depending on the rank order of firmyears may not be significantly affected by small changes in the predicted probabilities of failure, given they are unlikely to change the decile in which a firm-year lies in the distribution. The lowest probabilities of failure are in the 10th decile and the highest probabilities are in the first decile. Thus, a high proportion in high-probability deciles suggests improved accuracy of outof-sample prediction. We show that all models display the highest percentage in the first decile compared with the rest of the deciles, with RF presenting the best predictive accuracy in the first decile. We can predict almost all failed events in the first five deciles for all competing models. 12 This suggests that all candidate models have predictive accuracy for firm failure.</p><p>Our results highlight the value of ML methods in predicting firms' probability of failure. RF clearly outperforms all other models in terms of statistical accuracy, which is consistent with previous evidence that points to the superiority of RF among a number of learning algorithms in different settings <ref type="bibr" target="#b61">(Varian, 2014)</ref>. It can also handle large datasets with higher dimensionality and identify the most important variables. These properties are highly beneficial in our data set, where the true functional form between our inputs and output is unknown and our out-of-sample includes the Brexit referendum as well as the associated noise, outliers and turbulence. We also note that DH proves a tough benchmark for NB, k-NN and SVM. In addition, SVM is unable to handle large datasets such as ours and NB is based on the assumption that the predictors are independent (a property violated in our data set) <ref type="bibr" target="#b36">(Han et al., 2011)</ref>. These elements can explain the underperformance of NB, k-NN and SVM compared to DH, which confirms its popularity in the related literature as a robust failure-prediction approach. LASSO and BMA combined with DH act as forecast combination techniques. LASSO-DH manages to provide statistically better forecasts, which we attribute to the models' shrinkage properties.</p><p>T A B L E 3 Defaults by out-of-sample prediction decile during  This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. Abbreviations: AUC, area under receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The bold value denotes the higher AUC value. According to Table <ref type="table">3</ref>, we observe that the 66.94% of the DH model predictions are correct in the top five deciles, which is the sum of the percentage of actual bankruptcies observed in the first five deciles (22.05% + 10.24% + 14.96% + 13.39% + 6.30% = 66.94%). Hence, we calculate that the BMA-DH, ADALLASO-DH, NB, k-NN, SVM and RF predictions are correct at 69.29%, 69.30%, 60.64%, 62.21%, 61.41% and 82.69% of the time in the top five deciles, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Decile</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">| Splitting the sample into subperiods</head><p>The preceding analysis employs the full time period , which spans the global financial crisis and the Brexit referendum. These extreme events caused uncertainty and stressed market conditions with implications for firm failures. To examine how these adverse economic events, affect the performance of our models, we drop the years 2017-2019 and construct a pre-Brexit period. We also explore the GFC <ref type="bibr">(1994)</ref><ref type="bibr">(1995)</ref><ref type="bibr">(1996)</ref><ref type="bibr">(1997)</ref><ref type="bibr">(1998)</ref><ref type="bibr">(1999)</ref><ref type="bibr">(2000)</ref><ref type="bibr">(2001)</ref><ref type="bibr">(2002)</ref><ref type="bibr">(2003)</ref><ref type="bibr">(2004)</ref><ref type="bibr">(2005)</ref><ref type="bibr">(2006)</ref><ref type="bibr">(2007)</ref><ref type="bibr">(2008)</ref><ref type="bibr">(2009)</ref> and the pre-GFC <ref type="bibr">(1994)</ref><ref type="bibr">(1995)</ref><ref type="bibr">(1996)</ref><ref type="bibr">(1997)</ref><ref type="bibr">(1998)</ref><ref type="bibr">(1999)</ref><ref type="bibr">(2000)</ref><ref type="bibr">(2001)</ref><ref type="bibr">(2002)</ref><ref type="bibr">(2003)</ref><ref type="bibr">(2004)</ref><ref type="bibr">(2005)</ref><ref type="bibr">(2006)</ref><ref type="bibr">(2007)</ref>. The GFC and the related financial turbulence have different characteristics and natures compared to the effects of Brexit on UK firms. Examining these subperiods can act as a robustness check to our main results and reveal whether the different natures of the two crises have any impact on our models' performance. <ref type="bibr">Pre-Brexit period (1994</ref><ref type="bibr" target="#b52">-2016)</ref> In this exercise, the in-sample period spans from 1994 to 2014, with 2015 and 2016 acting as the out-of-sample period. Table <ref type="table">4</ref> presents the AUC values, DeLong test statistics, Brier scores, type I and II errors for each model. We report the percentage of firm failures in each decile for each candidate model in Table <ref type="table">5</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1">|</head><p>We note that the performance of all models is robust in this subsample, as RF still outperforms all other algorithms under study. The decile analysis continues to report that the highest percentages of failed events are in the first deciles for all models. It is interesting to note that NB, k-NN and SVM are substantially more accurate compared to our main sample period. Models such as the NB and SVM have less noise to handle and the corresponding AUC value in each model is 5% and 4% higher, respectively. Their accuracy is now on par with the DH model. RF presents the lowest type I error and BMA-DH has the lowest type II error. and 7 present the related failure-accuracy metrics and Tables <ref type="table">8</ref> and<ref type="table">9</ref> present the percentage of firm failures in each decile for each candidate model in each subsample. We observe a similar picture regarding the performance of our models. RF displays the best performance. It is interesting to note the imbalance of k-NN, SVM and NB models in the GFC period on the percentages of type I and type II errors. They present low type I errors but high type II errors, which is a further indication of their inability to map the data set. BMA and LASSO with DH offer an advantage during the crisis but not before. All models (except RF) perform considerably better before the crisis than in the sample that covers it. RF seems unaffected by the extreme economic event in our data set. Our findings are consistent with those from the pre-Brexit and Brexit samples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.3">| Discussion</head><p>For the full sample and our three subsamples, the ranking of our models in terms of statistical accuracy is robust. RF presents the best performance for the statistical measures retained. It is impressive that, unlike other models, its improved accuracy relative to its counterparts, persists in the crisis periods. Concerning DH, it can beat more complicated methods such as SVM. Nevertheless, BMA and LASSO can improve their performance when there is turbulence in the data set. SVM, k-NN and NB present a volatile accuracy that depends on the characteristics of the data set.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">| The role of firm-level heterogeneity</head><p>We differentiate old from young firms, whereby the latter lack track records or reputations.</p><p>Young firms are less likely to weather economic and financial downturns and therefore face higher liquidation risk <ref type="bibr" target="#b35">(Guariglia et al., 2016)</ref>. In doing so, we take into account firms' relative age to separate firms that are likely more financially constrained from those that are not. We use median firm age as a cut-off in keeping with normal practice in the literature.  To ensure that our results are not driven by the way that we split our sample, we experiment with alternative cut-off points in the age distribution. Specifically, young firms are those in the bottom percentile of the age distribution and old firms are in the top percentile of the age distribution. The results, not reported for brevity, are similar to those obtained using the median sample splitting criterion and are available upon request.</p><p>As such, we estimate our models for two subgroups: young (old) firms whose ages are below (above) the median of the age distribution. Our goal is to assess whether the bankruptcy models account for financial constraints in their methodologies. The in-sample and out-of-sample periods are the same as in the full sample. Tables <ref type="table">10</ref> and<ref type="table">11</ref> report the accuracy tests and the percentage of failed events for young companies.</p><p>Based on Table <ref type="table">10</ref>, RF continues to significantly outperform other candidates according to both AUC and Brier scores. Compared to DH, the AUC value of RF is 11.5% higher. BMA and LASSO marginally improve the performance of DH, but the remaining three have lower classification accuracy. All results are also supported by decile methods. Tables <ref type="table">12</ref> and<ref type="table">13</ref> present the related results for old firms.</p><p>Comparing across columns in Tables <ref type="table">12</ref> and<ref type="table">13</ref> allows us to investigate the specific influence of older firms on each forecasting model. Our results are consistent with previous findings in the sense that our best model and the ranking of its benchmarks remain the same. The predictive power of the DH model improves only marginally by adding BMA and LASSO. Behind RF, the second-highest correct prediction rate in the first decile is in the NB classifier; in the top five deciles, it is the DH models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.1">| Discussion</head><p>When we allow for firm heterogeneity, we show that the predictions are more accurate for older firms because the AUC scores of all models are lower for their younger counterparts. This is an important finding, as the operation of young firms, for whom access to external finance is expensive, depends critically on balance sheet health and external financial conditions. Modelling their failure is a more tenacious task compared to older, well-established firms that are less risky, have management experience, track-record reputation and have sound financial statements to counter the financial turmoil that our data set covers <ref type="bibr" target="#b54">(Robb, 2002)</ref>. Our results can help policymakers and managers better assess credit risk and financing needs for younger firms. This is particularly helpful for financially constrained firms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">| Industry-level analysis</head><p>Next, we take into account the role of technology in determining the chances of firm failures. Previous studies show that firms that engage in more innovative activities experience a higher likelihood of survival (e.g., <ref type="bibr" target="#b6">Audretsch, 1995;</ref><ref type="bibr" target="#b31">Esteve-Pérez &amp; Mañez-Castillejo, 2008)</ref>. The rationale is that firms that invest in innovation can adapt to changes in the business environment and to better respond to their customers' changing requirements. 14 Motivated by this consideration, we split the sample into high-and low-technology firms based on a two-digit Standard industrial classification of economic activities. The in-sample and out-of-sample periods are the same as in the full sample. Tables <ref type="table">14</ref> and<ref type="table">15</ref> report the accuracy tests and the percentage of failed events for high-tech companies.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>14</head><p>A counterargument is that firms operating in high-tech industries are likely to face lower chances of survival. As technological uncertainty rises, the probability that a firm will be able to produce a viable product will deteriorate, along with their chances of survival.</p><p>In Table <ref type="table">14</ref>, our main finding, which is that RF significantly outperforms other modes, is upheld. This is true when considering both AUC and Brier scores. Moreover, our results are supported by decile methods. Tables <ref type="table">16</ref> and<ref type="table">17</ref> present the outputs for low-tech firms. We find, once again, that RF displays superior predictive ability compared to the other models.</p><p>T A B L E 10 Accuracy tests during 1994-2019 for young firms This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUC (%)</head><p>Brier </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4.1">| Discussion</head><p>Technological intensity can shape the likelihood of firm survival <ref type="bibr" target="#b5">(Audretsch, 1991)</ref>. In this subsection, we allow for industry-level heterogeneity by separating firms according to their degree of technological innovation. The resulting models show that we achieve improved predictive ability for firms operating in high-tech industries. Importantly, the predictions for the low-tech group of firms do not deteriorate significantly compared to their counterparts. Our findings highlight the importance for financial managers to invest in innovative products to improve their chances of survival.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.5">| Variable importance for the RF model</head><p>Although accurate failure predictions are valuable, financial managers are also interested in the importance of the predictors that drive these potential outcomes. RF is the most accurate classifier in all previous settings. However, it does not allow interpretation of coefficient estimates, because it is not possible to measure how much each variable contributes to the final split-up into all final nodes (de <ref type="bibr" target="#b47">Moor et al., 2018)</ref>. To this end, we report results on the mean decrease in accuracy to gauge the mean loss of accuracy when we exclude each specific predictor from the algorithm. 15 In Table <ref type="table">18</ref>, we present the top 10 variables in terms of importance for all our subsamples. We find that the covariates that are meant to measure firms' financial health are by far the most important. Specifically, profitability indicators and the degree to which a firm is well collateralized behave as conjectured and strongly affect firms' chances of failure in line with prior literature (e.g., <ref type="bibr" target="#b60">Traczynski, 2017)</ref>. Notably, firm-specific uncertainty is a key factor affecting firm survival probabilities when the sample covers the Brexit event (column 1). We also observe that the importance of firm uncertainty persists in the sample that refers to young firms. The firm-specific uncertainty indicator (measured by the volatility of sales) addresses the concept that uncertainty varies over time and this process affects managers' response in an environment where access to financing is hard or prohibitively expensive. Hence, our finding is important as it confirms the impact of demand uncertainty on financially constrained firms' performance. To the best of our knowledge, this is the first paper to make this point and we document the role of sales volatility when it comes to firm failure using ML models. In other words, we show that uncertainty about future sales and demand conditions can generate fluctuations in firms' chances of failure. This can be explained as higher levels of uncertainty generate a temporary slowdown and bounce back as firms postpone their activities and projects and wait for uncertainty to subside <ref type="bibr" target="#b14">(Bloom et al., 2007;</ref><ref type="bibr" target="#b20">Byrne et al., 2016)</ref>. In summary, investors and managers assign slightly different weights to the variables under consideration, but there is consensus about the most important determinants of the firm probability of failure in tranquil and in crisis periods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.6">| Robustness tests</head><p>We conduct six additional tests of the results we report in the main section. We summarize these additional robustness tests below, but we do not report them due to space constraints. They are available upon request.</p><p>First, to consider the potential impact of autocorrelation (and hence history) of the explanatory variables in the models, we augment the current set of predictors by using the variables in levels and their first lags. 16 We present the results with the extended sample in online Supporting Information: Appendix Tables <ref type="table">E1</ref> and<ref type="table">E2</ref>. If anything, we continue to observe that the RF model continues to beat all other methods. Hence, our main findings are robust to an extended set of predictors that account for past history.</p><p>Second, we check whether our results on firm heterogeneity are robust to using a different firm splitting criterion. As such, we rely on firms' size which is a classification related to the well-established empirical financing constraints literature (see e.g., <ref type="bibr" target="#b32">Farinha et al., 2019)</ref>. We use median firm size as a cut-off point and report accuracy tests and the percentile of failed firms in online Supporting Information: Appendix Tables <ref type="table">E3-E6</ref>. We confirm our main findings. Our models perform better for larger firms and the RF model has the highest proportion of correct predictions. We conclude, therefore, that our models uphold their predictive ability when we conduct out-of-sample exercises using an alternative criterion for firm heterogeneity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>We construct an alternative measure based on the Gini impurity. It measures the average decrease in Gini-impurity across the forest. Our results are robust to using both measures.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>16</head><p>We consider using deeper lags and our results remain intact.</p><p>Third, we opt for estimating models that incorporate time and industry fixed effects, which are meant to control for business cycle effects and industry differences, respectively. We tabulate all related results in online Supporting Information: Appendix Tables <ref type="table">E7</ref> and<ref type="table">E8</ref>. We confirm that controlling for time and industry effects can improve the predictive accuracy of models related to the DH model but adding time effects cannot significantly influence the predictive ability of simple classifiers in the whole sample. To sum up, the RF model generates more accurate predictions than other models, which confirms our main findings.</p><p>Fourth, we create an early warning distress indicator to account for the fact that firms in financial distress do not necessarily go out of business due to legislation on exit and restructuring barriers <ref type="bibr" target="#b32">(Farinha et al., 2019)</ref>. To this end, we employ FAME's rich information about firm credit ratings, which measure the likelihood of company failure in the 12 months following the date of calculation. A rating score ranges from 0 to 100, with higher values indicating improved financial health and lower risk. We create a dummy variable that equals 1 T A B L E 18 Mean decrease accuracy predictors' importance This table reports the top 10 predictors in terms of mean decrease in accuracy. The values in the parentheses are the relevant metrics. Abbreviations: AGE, firm age; CA/CL, ratio of current assets to current liabilities; EBIT/ TA, ratio of earnings before interest and taxes to total assets; F_UNC, firm-specific uncertainty; GP/TA, ratio of gross profits to total assets; GRS, growth in sales; NI/TA, ratio of net income to total assets; RE/TA, ratio of retained earnings to total assets; S/TA, ratio of sales to total assets; TAN/TA, ratio of tangible assets to total assets; TL/TA, ratio of total liabilities to total assets; WC/TA, ratio of working capital to total assets. <ref type="bibr">set 1994-2019 1994-2016 1994-2009 1994-2007</ref>  if the firms attain a score of 40 or below and 0 otherwise. The results in online Supporting Information: Appendix Tables E9 and E10 corroborate our main findings. In the out-of-sample exercises, the RF model provides more accurate forecasts than its DH benchmark. To sum up, even when employing an early warning indicator, the out-of-sample predictions show that the RF models outperform the benchmark model. Fifth, we check the sensitivity of our results given that failed firms are under-sampled relative to surviving firms. We create a balanced sample by year in the following way. For each year, we get a random sample of X non-failed firms, where X is the number of failed firms in that year to construct a balanced data set. The results, reported in Tables <ref type="table">E12</ref> and<ref type="table">E13</ref>, corroborate our main findings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data</head><p>Finally, our results may be sensitive to the inclusion of listed firms in the sample. 17 We address this issue by removing the listed firms and re-assessing our models. In Tables <ref type="table">E14</ref> and<ref type="table">E15</ref>, we continue to observe that RF displays the highest predictive ability compared to the other competing models. Therefore, our results are not affected by the inclusion of listed firms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">| CONCLUSION</head><p>A corporate failure should be carefully assessed because it can bring significant wealth losses for market participants and potentially lead to economic depression. Thus, a reasonable margin of accuracy in failure predictions can bring many benefits for market participants, firm managers and policymakers. In this study, we model the prediction of failure using the DH, the BMA-DH models, the LASSO-DH, the NB, the k-NN and the RF ML classifiers. We rely on annual data of firm-specific factors and macroeconomic variables for a period of about 20 years  as the input in the benchmark model (the DH model) and all competing models. This model selection not only follows the literature of binary-dependent variable models but also compares the predictive performance of the reduced-form models and some of the more promising ML models.</p><p>Our results show that ML classifiers offer significant gains in predictive ability. When comparing all candidate models, the RF model performs better in out-of-sample prediction than DH models, mostly adopted in previous studies. In addition, we find that the two major economic episodes and firm and industry heterogeneity can influence the predictive power of each candidate model. These results suggest that RF is widely applicable for predicting failure because it does not require a priori knowledge of this method and does not need to satisfy assumptions carefully. Over time, the reasons for failure will change, which implies that the best model would also change. To solve the parameter and model uncertainty, the BMA version of the DH model is a reasonable model selection to improve predictive accuracy in further research.</p><p>This study has implications for managers, particularly during periods of extreme economic events. We conclude that managers should rely on rich accounting and macroeconomic data to improve their assessment of business failures. In addition, our results can help policymakers and managers better assess credit risk and financing needs for younger firms. However, our 17 As noted in the data description, our sample contains only a small number of listed firms (approx. 1% of the total sample). We check whether the distance to default (or Merton DD) is a valuable predictor for the sample of listed firms. Our findings, despite the limited number of observations, confirm the superiority of RF to predict firm failures. The results of this exercise are available upon request.</p><p>findings confirm to some extent the scepticism of several academics and practitioners in machine learning. Our study does not argue that all ML models have value in failure prediction. We argue that specific models (such as the RF or LASSO and BMA combined with DH in some settings) can offer a comparative advantage to financial managers. ML should not be treated as a panacea but as a set of promising specifications that require good technical knowledge for successful application. In particular, ML models can support the development of risk-management strategies using both operational and financial hedging when dealing with companies in financial distress. For the correct choice of ML predictor, managers should be aware of the different properties that these models possess.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>is a dummy representing the recent financial crisis. It equals 1 in the years 2007-2009 and 0 otherwise. Brexit is a dummy representing the Brexit vote. It equals 1 in the years 2016-2019 and 0 otherwise. Diff.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>M i The log-likelihood function of a model M i in the BMA version of DH models can be written as:8 For a detailed description of the DH model, refer to<ref type="bibr" target="#b57">Shumway (2001)</ref>,<ref type="bibr" target="#b58">Tian et al. (2015)</ref> and<ref type="bibr" target="#b60">Traczynski (2017)</ref>.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>is a collection of candidate DH models, each based on a subset of the full set of predictors, X s t , . Following Equation (2), we estimate the parameters β M i for each model M i for i m = 1… . The β ˆM for all the candidate models, we can estimate M as:</figDesc><table><row><cell></cell><cell>β ˆ= M</cell><cell>i  =1 m</cell><cell>y ˆ× ( | ), β p M M i i</cell><cell>(3)</cell></row><row><cell>where</cell><cell>y ( | ) p M</cell><cell></cell><cell>y ( | ) p M</cell></row></table><note><p><p><p>In our study, BMA is combined into the DH model to capture the parameter uncertainty in a model through the prior distribution and solve model uncertainty using the posterior parameters in Bayes' theorem. Suppose that M M M = ( , …, )</p>m 1 i</p>is the posterior probability that model M i given data y. i can be computed by Bayes' rule as:</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head></head><label></label><figDesc>5 | k-Nearest neighbour (k-NN) classifierk-NN is a nonparametric and nonlinear classifier based on the premise that pieces of past time series have patterns that might resemble pieces of future time series. It uses the Euclidean distance to locate similar patterns of past behaviour, and, based on them, it forecasts the immediate future. The k-NN uses only local information and does not require any assumptions on the data set. As k-NN is based on predictors' similarity, it is ideal for applications such as ours, where default firms might share the same past characteristics. In this study, following the description inMurphy (</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head></head><label></label><figDesc>Accuracy tests during 1994Accuracy tests during  -2019       This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The bold values are the highest AUC and lowest Brier scores. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively.</figDesc><table><row><cell></cell><cell>AUC (%)</cell><cell>Brier score</cell><cell>Type I error (%)</cell><cell>Type II error (%)</cell></row><row><cell>DH</cell><cell>63.29</cell><cell>0.0124</cell><cell>36.96</cell><cell>41.73</cell></row><row><cell>BMA-DH</cell><cell>63.70</cell><cell>0.0128</cell><cell>38.31</cell><cell>37.01</cell></row><row><cell>LASSO-DH</cell><cell>64.39**</cell><cell>0.0130</cell><cell>39.92</cell><cell>36.22</cell></row><row><cell>NB</cell><cell>59.97</cell><cell>0.0261</cell><cell>28.46</cell><cell>55.91</cell></row><row><cell>k-NN</cell><cell>56.23***</cell><cell>0.0334</cell><cell>45.25</cell><cell>41.73</cell></row><row><cell>SVM</cell><cell>54.19**</cell><cell>0.0256</cell><cell>37.85</cell><cell>51.18</cell></row><row><cell>RF</cell><cell>74.74***</cell><cell>0.0022</cell><cell>24.71</cell><cell>38.58</cell></row></table><note><p>T A B L E 2</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head></head><label></label><figDesc>Accuracy tests during 1994Accuracy tests during  -2016       This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2014 act as in-sample and the years 2015-2016 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively. Defaults by out-of-sample prediction decile during This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2014 act as in-sample and the years 2015-2016 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH,</figDesc><table><row><cell cols="9">Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN,</cell></row><row><cell cols="5">k-nearest neighbour; SVM, support vector machine; RF, random forest.</cell><cell></cell><cell></cell><cell></cell></row><row><cell>Decile</cell><cell>Discrete hazard (DH)</cell><cell>BMA-DH</cell><cell cols="2">LASSO-DH</cell><cell>NB</cell><cell>k-NN</cell><cell>SVM</cell><cell>RF</cell></row><row><cell>1</cell><cell>26.42</cell><cell>27.36</cell><cell>26.42</cell><cell></cell><cell>25.00</cell><cell>16.98</cell><cell>16.04</cell><cell>27.83</cell></row><row><cell>2</cell><cell>11.79</cell><cell>10.85</cell><cell>13.21</cell><cell></cell><cell>17.45</cell><cell>14.15</cell><cell>11.32</cell><cell>21.70</cell></row><row><cell>3</cell><cell>8.49</cell><cell>8.96</cell><cell>7.08</cell><cell></cell><cell>12.26</cell><cell>11.32</cell><cell>13.21</cell><cell>10.85</cell></row><row><cell>4</cell><cell>11.32</cell><cell>10.85</cell><cell>9.91</cell><cell></cell><cell>8.49</cell><cell>8.49</cell><cell>12.26</cell><cell>8.49</cell></row><row><cell>5</cell><cell>8.49</cell><cell>8.96</cell><cell>11.32</cell><cell></cell><cell>5.66</cell><cell>8.49</cell><cell>8.96</cell><cell>8.96</cell></row><row><cell>6-10</cell><cell>33.49</cell><cell>33.01</cell><cell>32.07</cell><cell></cell><cell>31.13</cell><cell>40.56</cell><cell>38.22</cell><cell>22.17</cell></row><row><cell>AUC (%)</cell><cell>64.48</cell><cell>64.48</cell><cell>64.57</cell><cell></cell><cell>65.26</cell><cell>60.06</cell><cell>58.35</cell><cell>71.41</cell></row><row><cell></cell><cell>AUC (%)</cell><cell>Brier score</cell><cell></cell><cell cols="2">Type I error (%)</cell><cell></cell><cell cols="2">Type II error (%)</cell></row><row><cell>DH</cell><cell>61.51</cell><cell>0.1842</cell><cell></cell><cell>42.32</cell><cell></cell><cell></cell><cell>40.80</cell></row><row><cell>BMA-DH</cell><cell>61.58</cell><cell>0.1833</cell><cell></cell><cell>42.01</cell><cell></cell><cell></cell><cell>40.93</cell></row><row><cell>LASSO-DH</cell><cell>61.46</cell><cell>0.1815</cell><cell></cell><cell>43.67</cell><cell></cell><cell></cell><cell>38.80</cell></row><row><cell>NB</cell><cell>60.01***</cell><cell>0.3561</cell><cell></cell><cell>46.73</cell><cell></cell><cell></cell><cell>38.93</cell></row><row><cell>k-NN</cell><cell>59.89</cell><cell>0.1772</cell><cell></cell><cell>43.38</cell><cell></cell><cell></cell><cell>42.60</cell></row><row><cell>SVM</cell><cell>AUC (%) 58.87***</cell><cell>Brier score 0.1861</cell><cell></cell><cell cols="2">Type I error (%) 40.18</cell><cell></cell><cell cols="2">Type II error (%) 47.13</cell></row><row><cell>DH RF</cell><cell>64.48 66.44***</cell><cell>0.0442 0.1652</cell><cell></cell><cell>41.32 39.21</cell><cell></cell><cell></cell><cell>39.62 37.40</cell></row><row><cell>BMA-DH</cell><cell>64.48</cell><cell>0.0443</cell><cell></cell><cell>41.62</cell><cell></cell><cell></cell><cell>39.15</cell></row><row><cell cols="4">LASSO-DH 5.2.2 | The global financial crisis period 64.57 0.0430</cell><cell>41.37</cell><cell></cell><cell></cell><cell>42.45</cell></row><row><cell>NB</cell><cell>65.26</cell><cell>0.0461</cell><cell></cell><cell>30.67</cell><cell></cell><cell></cell><cell>43.87</cell></row><row><cell>k-NN</cell><cell>60.06*</cell><cell>0.0429</cell><cell></cell><cell>42.96</cell><cell></cell><cell></cell><cell>45.28</cell></row><row><cell>SVM</cell><cell>58.35**</cell><cell>0.0407</cell><cell></cell><cell>38.60</cell><cell></cell><cell></cell><cell>48.11</cell></row><row><cell>RF</cell><cell>71.41***</cell><cell>0.0047</cell><cell></cell><cell>22.81</cell><cell></cell><cell></cell><cell>42.92</cell></row></table><note><p><p><p><p>T A B L E 4</p>In this section, we explore two subsamples related to the global financial crisis. The first subsample covers the years before the crisis</p>(1994)(1995)(1996)(1997)(1998)(1999)(2000)(2001)(2002)(2003)(2004)(2005)(2006)(2007) </p>with the years 2005-2007 as out-ofsample. The second one includes 1994-2006; the out-of-sample years are 2007-2009. Tables 6 T A B L E 5 T A B L E 6 Accuracy tests during 1994-2007 This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2004 act as in-sample and the years 2005-2007 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head></head><label></label><figDesc>T A B L E 7 Accuracy tests during[1994][1995][1996][1997][1998][1999][2000][2001][2002][2003][2004][2005][2006][2007][2008][2009] This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2006 act as in-sample and the years 2007-2009 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively.</figDesc><table><row><cell></cell><cell cols="2">AUC (%)</cell><cell>Brier score</cell><cell cols="2">Type I error (%)</cell><cell cols="2">Type II error (%)</cell></row><row><cell>DH</cell><cell>54.19</cell><cell></cell><cell>0.2230</cell><cell>42.96</cell><cell></cell><cell>54.42</cell><cell></cell></row><row><cell>BMA-DH</cell><cell cols="2">59.58***</cell><cell>0.1712</cell><cell>42.75</cell><cell></cell><cell>43.48</cell><cell></cell></row><row><cell>LASSO-DH</cell><cell cols="2">58.60***</cell><cell>0.1830</cell><cell>42.62</cell><cell></cell><cell>45.31</cell><cell></cell></row><row><cell>NB</cell><cell cols="2">59.12***</cell><cell>0.2290</cell><cell>30.08</cell><cell></cell><cell>61.44</cell><cell></cell></row><row><cell>k-NN</cell><cell>55.93</cell><cell></cell><cell>0.1527</cell><cell>35.00</cell><cell></cell><cell>60.62</cell><cell></cell></row><row><cell>SVM</cell><cell>54.07</cell><cell></cell><cell>0.1426</cell><cell>23.68</cell><cell></cell><cell>69.64</cell><cell></cell></row><row><cell>RF</cell><cell cols="2">66.37***</cell><cell>0.1412</cell><cell>41.34</cell><cell></cell><cell>36.55</cell><cell></cell></row><row><cell>Decile</cell><cell>DH</cell><cell>BMA-DH</cell><cell>LASSO-DH</cell><cell>NB</cell><cell>k-NN</cell><cell>SVM</cell><cell>RF</cell></row><row><cell>1</cell><cell>15.87</cell><cell>16.27</cell><cell>15.93</cell><cell>15.27</cell><cell>14.13</cell><cell>12.13</cell><cell>18.27</cell></row><row><cell>2</cell><cell>13.60</cell><cell>13.13</cell><cell>14.00</cell><cell>13.80</cell><cell>14.20</cell><cell>12.33</cell><cell>14.80</cell></row><row><cell>3</cell><cell>12.60</cell><cell>12.40</cell><cell>12.07</cell><cell>10.73</cell><cell>12.53</cell><cell>13.07</cell><cell>12.80</cell></row><row><cell>4</cell><cell>10.53</cell><cell>11.60</cell><cell>10.60</cell><cell>11.87</cell><cell>9.60</cell><cell>12.20</cell><cell>11.93</cell></row><row><cell>5</cell><cell>10.73</cell><cell>9.93</cell><cell>10.67</cell><cell>9.40</cell><cell>10.07</cell><cell>9.73</cell><cell>10.27</cell></row><row><cell>6-10</cell><cell>36.67</cell><cell>36.66</cell><cell>36.74</cell><cell>38.93</cell><cell>39.47</cell><cell>40.53</cell><cell>31.93</cell></row><row><cell>AUC (%)</cell><cell>61.51</cell><cell>61.58</cell><cell>61.46</cell><cell>60.01</cell><cell>59.89</cell><cell>58.87</cell><cell>66.44</cell></row></table><note><p><p><p>T A B L E 8 Defaults by out-of-sample prediction decile during</p>[1994][1995][1996][1997][1998][1999][2000][2001][2002][2003][2004][2005][2006][2007] </p>This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2004 act as in-sample and the years 2005-2007 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head></head><label></label><figDesc>13   </figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10"><head></head><label></label><figDesc>Defaults by out-of-sample prediction decile during[1994][1995][1996][1997][1998][1999][2000][2001][2002][2003][2004][2005][2006][2007][2008][2009] This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2006 act as in-sample and the years 2007-2009 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest.</figDesc><table><row><cell>Decile</cell><cell>DH</cell><cell>BMA-DH</cell><cell>LASSO-DH</cell><cell>NB</cell><cell>k-NN</cell><cell>SVM</cell><cell>RF</cell></row><row><cell>1</cell><cell>11.85</cell><cell>14.86</cell><cell>14.59</cell><cell>18.23</cell><cell>13.49</cell><cell>10.30</cell><cell>19.60</cell></row><row><cell>2</cell><cell>10.85</cell><cell>13.95</cell><cell>12.12</cell><cell>10.94</cell><cell>9.75</cell><cell>12.76</cell><cell>14.31</cell></row><row><cell>3</cell><cell>10.67</cell><cell>11.49</cell><cell>12.67</cell><cell>8.11</cell><cell>8.66</cell><cell>12.22</cell><cell>13.49</cell></row><row><cell>4</cell><cell>10.12</cell><cell>10.21</cell><cell>9.66</cell><cell>12.58</cell><cell>13.49</cell><cell>9.48</cell><cell>11.12</cell></row><row><cell>5</cell><cell>9.66</cell><cell>11.12</cell><cell>11.21</cell><cell>10.39</cell><cell>11.39</cell><cell>12.49</cell><cell>10.39</cell></row><row><cell>6-10</cell><cell>46.87</cell><cell>38.37</cell><cell>39.75</cell><cell>39.74</cell><cell>43.21</cell><cell>42.75</cell><cell>31.09</cell></row><row><cell>AUC (%)</cell><cell>54.19</cell><cell>59.58</cell><cell>58.60</cell><cell>59.12</cell><cell>55.93</cell><cell>54.07</cell><cell>66.37</cell></row><row><cell>13</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table><note><p>T A B L E 9</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11"><head></head><label></label><figDesc>Defaults by out-of-sample prediction decile during 1994-2019 for young firms This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value.</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell>score</cell><cell cols="2">Type I error (%)</cell><cell cols="2">Type II error (%)</cell></row><row><cell>DH</cell><cell>57.70</cell><cell></cell><cell>0.0155</cell><cell>36.61</cell><cell></cell><cell>53.73</cell><cell></cell></row><row><cell>BMA-DH</cell><cell>59.15*</cell><cell></cell><cell>0.0158</cell><cell>36.02</cell><cell></cell><cell>44.78</cell><cell></cell></row><row><cell>LASSO-DH</cell><cell>59.09</cell><cell></cell><cell>0.0164</cell><cell>40.45</cell><cell></cell><cell>41.79</cell><cell></cell></row><row><cell>NB</cell><cell>55.90</cell><cell></cell><cell>0.0324</cell><cell>32.94</cell><cell></cell><cell>53.73</cell><cell></cell></row><row><cell>k-NN</cell><cell>48.16**</cell><cell></cell><cell>0.0427</cell><cell>47.38</cell><cell></cell><cell>55.22</cell><cell></cell></row><row><cell>SVM</cell><cell>53.60</cell><cell></cell><cell>0.0258</cell><cell>38.49</cell><cell></cell><cell>47.76</cell><cell></cell></row><row><cell>RF</cell><cell cols="2">69.20***</cell><cell>0.0141</cell><cell>26.52</cell><cell></cell><cell>43.28</cell><cell></cell></row><row><cell>T A B L E 11 Decile</cell><cell>DH</cell><cell>BMA-DH</cell><cell>LASSO-DH</cell><cell>NB</cell><cell>k-NN</cell><cell>SVM</cell><cell>RF</cell></row><row><cell>1</cell><cell>14.93</cell><cell>16.42</cell><cell>17.91</cell><cell>16.42</cell><cell>7.46</cell><cell>23.88</cell><cell>34.33</cell></row><row><cell>2</cell><cell>14.93</cell><cell>13.43</cell><cell>16.42</cell><cell>13.43</cell><cell>13.43</cell><cell>11.94</cell><cell>11.94</cell></row><row><cell>3</cell><cell>13.43</cell><cell>14.93</cell><cell>10.45</cell><cell>13.43</cell><cell>4.48</cell><cell>5.97</cell><cell>10.45</cell></row><row><cell>4</cell><cell>7.46</cell><cell>11.94</cell><cell>10.45</cell><cell>7.46</cell><cell>8.96</cell><cell>10.45</cell><cell>5.97</cell></row><row><cell>5</cell><cell>10.45</cell><cell>4.48</cell><cell>7.46</cell><cell>2.99</cell><cell>10.45</cell><cell>1.49</cell><cell>14.93</cell></row><row><cell>6-10</cell><cell>38.81</cell><cell>38.82</cell><cell>37.31</cell><cell>46.28</cell><cell>55.23</cell><cell>46.28</cell><cell>22.40</cell></row><row><cell>AUC (%)</cell><cell>57.70</cell><cell>59.15</cell><cell>59.09</cell><cell>55.90</cell><cell>48.16</cell><cell>53.60</cell><cell>69.20</cell></row></table><note><p>Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12"><head></head><label></label><figDesc>T A B L E 12 Accuracy tests during 1994-2019 for old firms This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively. Defaults by out-of-sample prediction decile during 1994-2019 for old firms This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value. Accuracy tests during 1994-2019 for high-tech firms This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively. Defaults by out-of-sample prediction decile during 1994-2019 for high-tech firms This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value.</figDesc><table><row><cell cols="3">AUC (%) T A B L E 14 AUC (%)</cell><cell>Brier score Brier score</cell><cell cols="2">Type I error (%) Type I error (%)</cell><cell cols="2">Type II error (%) Type II error (%)</cell></row><row><cell>DH DH</cell><cell>68.87 63.86</cell><cell></cell><cell>0.0102 0.0123</cell><cell>35.03 37.06</cell><cell></cell><cell>33.33 39.22</cell><cell></cell></row><row><cell>BMA-DH BMA-DH</cell><cell cols="2">69.12 71.86***</cell><cell>0.0105 0.0012</cell><cell>32.96 36.60</cell><cell></cell><cell>36.67 38.24</cell><cell></cell></row><row><cell>LASSO-DH LASSO-DH</cell><cell>69.23 65.40**</cell><cell></cell><cell>0.0110 0.0112</cell><cell>28.90 37.63</cell><cell></cell><cell>36.67 38.24</cell><cell></cell></row><row><cell>NB NB</cell><cell>63.28* 62.22</cell><cell></cell><cell>0.0239 0.0282</cell><cell>25.40 40.56</cell><cell></cell><cell>55.00 44.12</cell><cell></cell></row><row><cell>k-NN k-NN</cell><cell cols="2">60.13*** 57.69**</cell><cell>0.0258 0.0335</cell><cell>51.89 41.32</cell><cell></cell><cell>30.00 48.04</cell><cell></cell></row><row><cell>SVM SVM</cell><cell>59.02* 60.96</cell><cell></cell><cell>0.0180 0.0238</cell><cell>30.65 36.43</cell><cell></cell><cell>60.00 43.14</cell><cell></cell></row><row><cell>RF RF</cell><cell cols="2">73.12* 73.56***</cell><cell>0.0022 0.0011</cell><cell>26.22 27.80</cell><cell></cell><cell>38.33 36.27</cell><cell></cell></row><row><cell cols="8">T A B L E 13 Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, T A B L E 15 Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH,</cell></row><row><cell cols="8">Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN,</cell></row><row><cell cols="5">k-nearest neighbour; SVM, support vector machine; RF, random forest. k-nearest neighbour; SVM, support vector machine; RF, random forest.</cell><cell></cell><cell></cell><cell></cell></row><row><cell>Decile Decile</cell><cell>DH DH</cell><cell>BMA-DH BMA-DH</cell><cell>LASSO-DH LASSO-DH</cell><cell>NB NB</cell><cell>k-NN k-NN</cell><cell>SVM SVM</cell><cell>RF RF</cell></row><row><cell>1 1</cell><cell>20.00 22.55</cell><cell>21.67 32.35</cell><cell>20.00 26.47</cell><cell>25.00 21.57</cell><cell>11.67 15.69</cell><cell>10.00 17.65</cell><cell>31.67 35.29</cell></row><row><cell>2 2</cell><cell>25.00 12.75</cell><cell>25.00 15.69</cell><cell>28.33 11.76</cell><cell>13.33 17.65</cell><cell>8.33 7.84</cell><cell>15.00 21.57</cell><cell>20.00 20.59</cell></row><row><cell>3 3</cell><cell>15.00 12.75</cell><cell>15.00 15.69</cell><cell>15.00 17.65</cell><cell>15.00 6.86</cell><cell>21.67 15.69</cell><cell>13.33 11.76</cell><cell>15.00 7.84</cell></row><row><cell>4 4</cell><cell>8.33 12.75</cell><cell>6.67 7.84</cell><cell>5.00 7.84</cell><cell>5.00 6.86</cell><cell>11.67 11.76</cell><cell>16.67 10.78</cell><cell>5.00 8.82</cell></row><row><cell>5 5</cell><cell>10.00 6.86</cell><cell>5.00 7.84</cell><cell>6.67 4.90</cell><cell>6.67 9.80</cell><cell>8.33 12.75</cell><cell>11.67 4.90</cell><cell>6.67 8.82</cell></row><row><cell>6-10 6-10</cell><cell>21.67 32.34</cell><cell>26.66 20.58</cell><cell>25.00 31.36</cell><cell>34.99 37.24</cell><cell>38.33 36.26</cell><cell>33.33 33.32</cell><cell>21.66 18.62</cell></row><row><cell>AUC (%) AUC (%)</cell><cell>68.87 63.86</cell><cell>69.12 71.86</cell><cell>69.23 65.40</cell><cell>63.28 62.22</cell><cell>60.13 57.69</cell><cell>59.02 60.96</cell><cell>73.12 73.56</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_13"><head></head><label></label><figDesc>T A B L E 16 Accuracy tests during 1994-2019 for low-tech firms This table reports the out-of-sample AUC, Brier score and type I and II errors of all models. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold values are the highest AUC and lowest Brier scores. Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest. The ***, ** and * marks denote that the DeLong test's null hypothesis of no difference in AUCs of a machine-learning model and DH is rejected at the 1%, 5% and 10% significance level, respectively. Defaults by out-of-sample prediction decile during 1994-2019 for low-tech firms This table reports the percentage of failed events in each decile of the predicted distribution for the probability of failure and the corresponding AUC for each candidate model. The years 1994-2015 act as in-sample and the years 2016-2019 are out-of-sample in a rolling forward exercise. The bold value denotes the higher AUC value.</figDesc><table><row><cell></cell><cell cols="2">AUC (%)</cell><cell>Brier score</cell><cell cols="2">Type I error (%)</cell><cell cols="2">Type II error (%)</cell></row><row><cell>DH</cell><cell>61.59</cell><cell></cell><cell>0.0133</cell><cell>35.06</cell><cell></cell><cell>40.00</cell><cell></cell></row><row><cell>BMA-DH</cell><cell>69.19**</cell><cell></cell><cell>0.0132</cell><cell>36.03</cell><cell></cell><cell>36.00</cell><cell></cell></row><row><cell>LASSO-DH</cell><cell>62.14</cell><cell></cell><cell>0.0141</cell><cell>34.68</cell><cell></cell><cell>44.00</cell><cell></cell></row><row><cell>NB</cell><cell>52.50</cell><cell></cell><cell>0.0163</cell><cell>47.00</cell><cell></cell><cell>52.00</cell><cell></cell></row><row><cell>k-NN</cell><cell>51.33</cell><cell></cell><cell>0.0348</cell><cell>39.82</cell><cell></cell><cell>60.00</cell><cell></cell></row><row><cell>SVM</cell><cell>66.59</cell><cell></cell><cell>0.0219</cell><cell>35.17</cell><cell></cell><cell>36.00</cell><cell></cell></row><row><cell>RF</cell><cell>72.68*</cell><cell></cell><cell>0.0028</cell><cell>32.20</cell><cell></cell><cell>36.00</cell><cell></cell></row><row><cell>T A B L E 17 Decile</cell><cell>DH</cell><cell>BMA-DH</cell><cell>LASSO-DH</cell><cell>NB</cell><cell>k-NN</cell><cell>SVM</cell><cell>RF</cell></row><row><cell>1</cell><cell>8.00</cell><cell>24.00</cell><cell>12.00</cell><cell>16.00</cell><cell>0.00</cell><cell>20.00</cell><cell>24.00</cell></row><row><cell>2</cell><cell>20.00</cell><cell>20.00</cell><cell>24.00</cell><cell>12.00</cell><cell>16.00</cell><cell>20.00</cell><cell>16.00</cell></row><row><cell>3</cell><cell>12.00</cell><cell>4.00</cell><cell>4.00</cell><cell>8.00</cell><cell>8.00</cell><cell>12.00</cell><cell>16.00</cell></row><row><cell>4</cell><cell>20.00</cell><cell>24.00</cell><cell>16.00</cell><cell>4.00</cell><cell>16.00</cell><cell>12.00</cell><cell>16.00</cell></row><row><cell>5</cell><cell>8.00</cell><cell>16.00</cell><cell>8.00</cell><cell>12.00</cell><cell>0.00</cell><cell>4.00</cell><cell>16.00</cell></row><row><cell>6-10</cell><cell>32.00</cell><cell>12.00</cell><cell>36.00</cell><cell>48.00</cell><cell>60.00</cell><cell>32.00</cell><cell>12.00</cell></row><row><cell>AUC (%)</cell><cell>61.59</cell><cell>69.19</cell><cell>62.14</cell><cell>52.50</cell><cell>51.33</cell><cell>66.59</cell><cell>72.68</cell></row></table><note><p>Abbreviations: AUC, area under the receiver operating characteristic curve; DH, discrete hazard; BMA-DH, Bayesian model averaging; LASSO-DH, least absolute shrinkage and selection operator; NB, Naive Bayes; k-NN, k-nearest neighbour; SVM, support vector machine; RF, random forest.</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_0"><p>For example, a firm that existed before 2006 may be omitted if only the 2010 version of FAME is used. Thus, our data set tracks firm that exits up to the earlier part of the sample period.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_1"><p>See online Supporting Information: Appendix A for details about our sample selection criteria.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_2"><p>We carry out<ref type="bibr" target="#b40">Im-Pesaran-Shin (2003)</ref> unit root tests for all the series included. The statistics for all variables reject the</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_3"><p>1468036x, 2023, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/eufm.12369 by Test, Wiley Online Library on [13/07/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are available from the Bureau Van Dijk Electronic Publishing in the FAME database. Restrictions apply to the availability of these data, which were used under license for this study.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SUPPORTING INFORMATION</head><p>Additional supporting information can be found online in the Supporting Information section at the end of this article.</p><p>How to cite this article: Sermpinis, G., Tsoukas, S., &amp; Zhang, Y. ( <ref type="formula">2023</ref>). Modeling failure rates with machine-learning models: Evidence from a panel of UK firms. European Financial Management, 29, 734-763. https://doi.org/10.1111/eufm.12369</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Comparing the performance of market-based and accounting-based bankruptcy prediction models</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Agarwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Taffler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Banking and Finance</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="1541" to="1551" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Forecasting high-frequency excess stock returns via data analytics and machine learning</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Akyildirim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">K</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sensoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Šikić</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/eufm.12345</idno>
+	</analytic>
+	<monogr>
+		<title level="j">European Financial Management</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="54" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Financial ratios, discriminant analysis and the prediction of corporate bankruptcy</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">I</forename><surname>Altman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Finance</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="589" to="609" />
+			<date type="published" when="1968">1968</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Financial distress prediction in an international context: A review and empirical analysis of Altman&apos;s Z-score model</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">I</forename><surname>Altman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Iwanicz-Drozdowska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">K</forename><surname>Laitinen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Suvas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of International Financial Management and Accounting</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="131" to="171" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<author>
+			<persName><forename type="first">S</forename><surname>Athey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tibshirani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wager</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Generalised random forests</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="1148" to="1178" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">New firm survival and the technological regime</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Audretsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Review of Economics and Statistics</title>
+		<imprint>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="page" from="441" to="450" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Innovation and industry evolution</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Audretsch</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1995">1995</date>
+			<publisher>The MIT Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Machine learning in finance: A topic modeling approach</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Aziz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dowling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hammami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Piepenbrink</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/eufm.12326</idno>
+	</analytic>
+	<monogr>
+		<title level="j">European Financial Management</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="27" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Measuring economic policy uncertainty</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Baker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bloom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Davies</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quarterly Journal of Economics</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page" from="1593" to="1636" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Machine learning models and bankruptcy prediction</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Barboza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kimura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Altman</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">83</biblScope>
+			<biblScope unit="page" from="405" to="417" />
+		</imprint>
+	</monogr>
+	<note>Expert Systems With Applications</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Have financial statements become less informative? Evidence from the ability of financial ratios to predict bankruptcy</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Beaver</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Mcnichols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J.-W</forename><surname>Rhie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Review of Accounting Studies</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="93" to="122" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A review of bankruptcy prediction studies: 1930 to present</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bellovary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Giacomino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Akers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Financial Education</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="1" to="42" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Top 10 algorithms in data mining</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Bergstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ozkumur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Yalçin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Colson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Needham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Irani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Gershoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">B</forename><surname>Goldberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Delisi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Ruane</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Unlü</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Knowledge and Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="1" to="37" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Forecasting default with the Merton distance to default model</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">T</forename><surname>Bharath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shumway</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Review of Financial Studies</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="1339" to="1369" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Uncertainty and investment dynamics</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bloom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bond</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Van Reenen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Review of Economic Studies</title>
+		<imprint>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="391" to="415" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bloom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mizen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Smietanka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Thwaites</surname></persName>
+		</author>
+		<title level="m">The impact of Brexit on UK firms</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+	<note>Working paper no. 26218). NBER</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Credit risk drivers: Evaluating the contribution of firm level information and of macroeconomic dynamics</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bonfim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Banking and Finance</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="281" to="299" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A training algorithm for optimal margin classifiers</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Boser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>Guyon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">N</forename><surname>Vapnik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the fifth annual workshop on Computational learning theory</title>
+		<editor>
+			<persName><forename type="first">D</forename><surname>Haussler</surname></persName>
+		</editor>
+		<meeting>the fifth annual workshop on Computational learning theory</meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="1992">1992</date>
+			<biblScope unit="page" from="144" to="152" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Random forests</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Breiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Machine Learning</title>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="5" to="32" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Company accounts-based modelling of business failures and the implications for financial stability</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Redwood</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<publisher>Bank of England</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Byrne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Spaliara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tsoukas</surname></persName>
+		</author>
+		<title level="m">Firm survival, uncertainty and financial frictions: Is there a financial uncertainty accelerator? Economic Inquiry</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="375" to="390" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">In search of distress risk</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Campbell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hilscher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Szilagyi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Finance</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="2899" to="2939" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Intra-industry bankruptcy contagion: Evidence from the pricing of industry recovery rates</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">T</forename><surname>Hsieh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Miu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Financial Management</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="503" to="534" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Bankruptcy prediction with industry effects</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chava</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Jarrow</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Finance Review</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="537" to="569" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Modeling default risk with support vector machines</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Härdle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Moro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quantitative Finance</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="135" to="154" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">The heterogeneous impact of Brexit: Early indications from the FTSE</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Studnicka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Economic Review</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="page" from="1" to="17" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Comparing the areas under two or more correlated receiver operating characteristic curves: A nonparametric approach</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Delong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Delong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Clarke-Pearson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biometrics</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="837" to="845" />
+			<date type="published" when="1988">1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">A survey of business failures with an emphasis on prediction methods and industrial applications</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dimitras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zanakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zopounidis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">90</biblScope>
+			<biblScope unit="page" from="487" to="513" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A class of discrete transformation survival models with application to default probability prediction</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Statistical Association</title>
+		<imprint>
+			<biblScope unit="volume">107</biblScope>
+			<biblScope unit="page" from="990" to="1003" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Corporate failure prediction in the European energy sector: A multicriteria approach and the effect of country characteristics</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Doumpos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Andriosopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Galariotis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Makridou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zopounidis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">262</biblScope>
+			<biblScope unit="page" from="347" to="360" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Multi-period corporate default prediction with stochastic covariates</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Duffie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Saita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Financial Economics</title>
+		<imprint>
+			<biblScope unit="volume">83</biblScope>
+			<biblScope unit="page" from="635" to="665" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">The resource-based theory of the firm and firm survival</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Esteve-Pérez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Mañez-Castillejo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Small Bussiness Economics</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="231" to="249" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Bank shocks and firm performance: New evidence from the sovereign debt crisis</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Farinha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-E</forename><surname>Spaliara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tsoukas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Financial Intermediation</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page">100818</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Prediction of financial distress: An empirical study of listed Chinese companies using data mining</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Geng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Bose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">241</biblScope>
+			<biblScope unit="page" from="236" to="247" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Export market exit and financial health in crises periods</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Görg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-E</forename><surname>Spaliara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Banking and Finance</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page" from="150" to="163" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">To what extent does the interest burden affect firm survival? Evidence from a panel of UK firms during the recent financial crisis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Guariglia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Spaliara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tsoukas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oxford Bulletin of Economics and Statistics</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="576" to="594" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kamber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pei</surname></persName>
+		</author>
+		<title level="m">Data Mining: Concepts and techniques</title>
+		<meeting><address><addrLine>Burlington</addrLine></address></meeting>
+		<imprint>
+			<publisher>Elsevier Science</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>rd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+		<author>
+			<persName><forename type="first">W</forename><surname>Härdle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Simar</surname></persName>
+		</author>
+		<title level="m">Applied multivariate statistical analysis</title>
+		<imprint>
+			<publisher>Springer Verlag</publisher>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+	<note>rd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Variable selection and oversampling in the use of smooth support vector machine for predicting the default risk of companies</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Härdle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Schäfer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y. -R</forename><surname>Yeh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="512" to="534" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">Random forests, The elements of statistical learning</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="587" to="604" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Testing for unit roots in heterogeneous panels</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>Im</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Pesaran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Econometrics</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="53" to="74" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Corporate default predictions using machine learning: Literature review</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ryu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sustainability</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">6325</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Machine learning estimation of heterogeneous causal effects: Empirical monte Carlo evidence</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Knaus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lechner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Strittmatter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Econometrics Journal</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="134" to="161" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Bankruptcy prediction in banks and firms via statistical and intelligent techniques -A review</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Ravi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">180</biblScope>
+			<biblScope unit="page" from="1" to="28" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Machine learning in financial crisis prediction: A survey</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Y</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Tsai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Systems, Man and Cybernetics, Part C (Applications and Reviews)</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="421" to="436" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Forecasting inflation in a data-rich environment: The benefits of machine learning methods</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Medeiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Vasconcelos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Á</forename><surname>Veiga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Zilberman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business and Economic Statistics</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="98" to="119" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">On the pricing of corporate debt: The risk structure of interest rates</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Merton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Finance</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="449" to="470" />
+			<date type="published" when="1974">1974</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Subjectivity in sovereign credit ratings</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>De Moor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Luitel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sercu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Vanpee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Banking and Finance</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="page" from="366" to="392" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Machine learning: A probabilistic perspective</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">P</forename><surname>Murphy</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>MIT Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Financial ratios and the probabilistic prediction of bankruptcy</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Ohlson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Accounting Research</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="109" to="131" />
+			<date type="published" when="1980">1980</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Comparative analysis of data mining methods for bankruptcy prediction</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Olson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Delen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Meng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Decision Support Systems</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="464" to="473" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Evaluation of credit risk based on firm performance</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Psillaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Tsolas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Margaritis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">201</biblScope>
+			<biblScope unit="page" from="873" to="881" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Brexit&apos;s long-run effects on the U.K. economy</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Van Reenen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Brookings Papers on Economic Activity</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="367" to="383" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">An empirical study of the naive Bayes classifier</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Rish</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Workshop on Empirical Methods in Artificial Intelligence</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">22</biblScope>
+			<biblScope unit="page" from="41" to="46" />
+			<date type="published" when="2001">2001. 2001</date>
+		</imprint>
+	</monogr>
+	<note>IJCAI</note>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Small business financing: Differences between young and old firms</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Robb</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Enterprenerial Finance</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="45" to="64" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Sensitivity analysis of k-fold cross validation in prediction error estimation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Rodriguez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Lozano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Pattern Analysis and Machine Intelligence</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="569" to="575" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Bayesian models for early warning of bank failures</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sarkar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Sriram</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Management Science</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="page" from="1457" to="1475" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Forecasting bankruptcy more accurately: A simple hazard model</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shumway</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Business</title>
+		<imprint>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="101" to="124" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Variable selection and corporate bankruptcy forecasts</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Banking and Finance</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="89" to="100" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Regression shrinkage and selection via the Lasso</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the Royal Statistical Society. Series B (Methodological)</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<biblScope unit="page" from="267" to="288" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Firm default prediction: A Bayesian model-averaging approach</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Traczynski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Financial and Quantitative Analysis</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="1211" to="1245" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Big data: New tricks for econometrics</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Varian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Economic Perspectives</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="3" to="28" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

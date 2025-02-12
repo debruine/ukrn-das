@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Probabilistic Markov chain modeling of photonic crystal surface emitting lasers</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-12-29">29 December 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Jingzhao</forename><surname>Liu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yunyun</forename><surname>Gao</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Pavlo</forename><surname>Ivanov</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Vector Photonics</orgName>
+								<address>
+									<addrLine>Block 4.05, West of Scotland Science Park</addrLine>
+									<postCode>G20 0SP</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Harvey</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Richard</forename><surname>Hogg</surname></persName>
+							<email>r.hogg1@aston.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="institution" key="instit1">Aston Institute for Photonic Technologies</orgName>
+								<orgName type="institution" key="instit2">Aston University</orgName>
+								<address>
+									<addrLine>Aston Street</addrLine>
+									<postCode>B4 7ET</postCode>
+									<settlement>Birmingham</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Probabilistic Markov chain modeling of photonic crystal surface emitting lasers</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-12-29">29 December 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">15D711852542CCD04A13DEAA88167F12</idno>
+					<idno type="DOI">10.1063/5.0168073</idno>
+					<note type="submission">Submitted: 17 July 2023 . Accepted: 8 November 2023 .</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:35+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Probabilistic Markov chain modeling of photonic crystal surface emitting lasers (PCSELs) is reported. This simulation links the scattering parameters of the photonic crystal (PC) and device level losses of the PCSEL. The criteria for the conversion of the numerical model and agreement with data from the literature are discussed. We then explore the effect of increasing PC coupling coefficients and boundary mirror reflectivity on the in-plane power loss from the PCSEL. The effect of spatially varying the boundary reflectivity on the near-field is also explored.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The photonic crystal surface emitting laser (PCSEL) <ref type="bibr" target="#b0">1</ref> has emerged as a new class of laser diode. Interest has been sparked by characteristics such as high brightness, and the control of polarization and beam shapes with the PCSEL is the subject of significant current research activity worldwide. <ref type="bibr" target="#b1">2</ref> Two-dimensional (2D) distributed feedback results in the PCSEL operating in a single spatial and spectral mode with a very large area, hence power. From simulation and/or the measurement of band structure of the photonic crystal (PC), the coupling constants that represent the coupling of waves in 1D and 2D can be determined. <ref type="bibr" target="#b2">3</ref> Figure <ref type="figure" target="#fig_0">1</ref>(a) schematically shows these microscopic scattering parameters for a PC with square symmetry. With these scattering constants, the scattering of photons within the laser can be described. However, device level simulation of the loss mechanisms of PCSELs [shown schematically in Fig. <ref type="figure" target="#fig_0">1(b)</ref>] is complicated due to the large, yet finite 3D structure.</p><p>Several methods have been developed for PCSEL modeling. The finite difference time domain (FDTD) method is very powerful and utilizes approximate solutions to the associated system of differential equations. <ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b4">5</ref> However, the computational resource requirements can be a significant hurdle for FDTD of very large, yet finite PCSEL devices. <ref type="bibr" target="#b5">6</ref> The plane wave expansion (PWE) method describes the field as the superposition of a complete set of plane waves and then uses Floquet-Bloch representation to impose the periodicity of media. <ref type="bibr" target="#b6">7</ref> It is computationally less taxing than FDTD but can only consider an infinite PC area, which is a major drawback. Coupled mode theory (CMT) has allowed threshold gain analysis in PCSELs of limited area. <ref type="bibr" target="#b7">8</ref> However, it can be very complex in terms of analytical mathematics. Modal index analysis (MIA) views the two-dimensional PC as a multilayer waveguide with periodic longitudinal discontinuities, which makes the MIA method versatile in dealing with device level parameters such as boundary reflectors. However, only square PC atom shapes have so far been considered, limiting applications. <ref type="bibr" target="#b8">9</ref> In this paper, we describe the application of a probabilistic Markov chain to the simulation of PCSELs. The presented methodology incorporates microscopic input parameters (the in-plane scattering coefficients and those related to radiative and parasitic internal loss) <ref type="bibr" target="#b2">3</ref> and determines macroscopic device level PCSEL parameters such as in-plane optical power loss (allowing threshold gain and slope efficiency to be deduced) and the near-field profile. Following a description of the model, convergence criteria are discussed, and commissioning is completed by demonstrating agreement with stateof-the-art device results in the literature. We then go on to use the model to explore aspects of PCSEL design. <ref type="bibr" target="#b9">10</ref> The effect of increased inplane coupling loss and boundary reflectors on the parasitic in-plane loss is described. The effect of spatially varying the reflectivity at the boundary is then explored.</p><p>Figure <ref type="figure" target="#fig_0">1</ref>(a) schematically represents the microscopic scattering mechanisms for a PC structure with fourfold symmetry (square lattice). Each PC atom is considered as an element of a square. The square symmetry of the PC lattice defines cardinal directions for the transmission of power within the mode. Light traveling in a particular direction (yellow arrow) may remain unscattered or may be subject to 1D scattering resulting in retroreflected light, or in 2D scattering resulting in orthogonal in-plane scattering of optical power. Additionally, out-of-plane scattering (j rad ) may occur, contributing to output power and being analogous to the mirror loss in a Fabry-P erot laser. This is the so-called "absorbing state" that terminates a Markov chain. <ref type="bibr" target="#b10">11</ref> Similarly, the internal loss can be defined.</p><p>The scattering coefficients (j 1D and j 2D ) can be calculated from the corresponding coupling constants (j 1 and j 3 ), which were originally used to describe the coupling of waves propagating in the squarelattice DFB structure of PCSELs. <ref type="bibr" target="#b2">3</ref> The scattering coefficients describe how the photon density is distributed within the PC structure. These coefficients typically have units of inverse length (cm À1 ), but for our model, they are converted to scattering probabilities at each PC atom, with four scattering possible, being the aforementioned 1D (j 1D ), 2D (j 2D ), out of plane (j rad ), and internal loss (j i ) scattering. j 1D and j 2D are related to the PC structure. It is possible to engineer j 1D to almost 0 cm À1 . 12,13 j 2D 's value can relate to the asymmetry of PC structure. <ref type="bibr" target="#b12">13</ref> The asymmetry of the PC structure also affects j rad . j i is generally associated with free-carrier loss in the waveguide structure. In this paper, j 2D is assumed to be equal for scattering into the two possible resultant directions. It is possible to make these two scattering rates inequivalent within the model to accommodate more complex PC structures. <ref type="bibr" target="#b12">13</ref> The grating area of the PCSEL is described as a matrix of PC atoms with an associated optical power (cardinal directions, internal loss, and emitted power). A time step is defined, which is the time required for light to travel from one PC matrix element to the next. During each time step, new photons are generated within a PC element equally, propagating in each cardinal direction, and those photons in the element in the previous time step transit to a neighboring element and undergo scattering. This procedure is repeated until the system converges.</p><p>We note that this model requires a priori knowledge of the scattering constants, and these may be deduced by other simulation, <ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref> experimental methods, <ref type="bibr" target="#b2">3</ref> or assigned arbitrary values to explore new PCSEL device concepts. The use of optical power and no intrinsic solutions of the wave equations result in no consideration of phase difference for power reflected at the PCSEL boundary. While FDTD and our model are based on time-iterative computation, PMC modeling solves neither Maxwell's equations nor any time-dependent difference equations as in FDTD. <ref type="bibr" target="#b3">4</ref> We simulate the physical processes of photon power distribution inside the PCSEL device in a time-iterative manner. This requires a-priori determination of these parameters yet reduces computer run-time and memory requirements as compared with FDTD. <ref type="bibr" target="#b3">4</ref> The Markov chain model described here allows the in-plane loss to be determined for a PCSEL device of arbitrary size/shape. This, in turn, allows the threshold gain and slope efficiency to be described. Considering device level parameters, the threshold gain threshold (g th ) is described by the following equation:</p><formula xml:id="formula_0">g th ¼ a == þ a ? þ a i ;<label>(1)</label></formula><p>where a // is the in-plane loss, a ? is the out-of-plane loss, and is the a i internal loss. Slope efficiency is another device level parameter used to confirm efficacy of the model, which is described by following equation:</p><formula xml:id="formula_1">g ¼ 1:24 k g i a ? a ? þ a == þ a i g up ;<label>(2)</label></formula><p>where k (nm) is the wavelength of the laser, g i is the internal quantum efficiency, and g up is the ratio of upward-radiated loss with respect to the total vertical radiation loss. Due to symmetry of 2D scattering and square PCSEL device structure, the in-plane loss (a // ) will be evenly distributed on the four edges of PC grating matrix, with each edge contributing a quarter of total in-plane loss.</p><p>The model is run with power being continually added to the mode and lost through the edges, through surface emission, and through internal loss. The simulation stops at a time step where convergence is obtained, which is based on the accuracy required for the in-plane loss described in the following. The in-plane power lost at the edge of the PCSEL can be gathered from the edges of the matrix, and the out-of-plane power can be calculated from every atom in the matrix. The matrix is updated after calculating the power transfer of every atom in every direction. In most current work discussing gain measurements of laser didoes, threshold gain, mirror loss, and internal loss are usually discussed in terms of whole reciprocal centimeters (cm À1 ). <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref> We, therefore, set our convergence limits to be to within 60.1 cm À1 . However, this can be changed according to requirements.</p><p>Figure <ref type="figure" target="#fig_1">2</ref> shows how the calculated a // varies with elapsed time steps for a range of PCSEL sizes and input parameters as discussed earlier. <ref type="bibr" target="#b22">23</ref> The sizes are the number of PC atoms along a side of the PCSEL (e.g., 100 Â 100 has 100 PC atoms on a side). Also plotted are normalized 2D maps of the surface emitted power from the 700 Â 700 PCSEL at a range of time steps. This result should, therefore, depict the near-field of the lasing mode once convergence is achieved. We determine values of da/dt that provide values of a // to be within 0.1 cm À1 of those at "infinite time," which we assume to be at 100 000 time steps. From Fig. <ref type="figure" target="#fig_1">2</ref>, we also observe the following: larger size PCSEL devices have lower initial and final values of a // , and that smaller PCSEL devices reach convergence within fewer steps. Additionally, by eye, we see very little difference between near-field patterns in insets C and D, due to a variation in surface emitted optical power within each atom changing by no more than 1 part in 10 4 .</p><p>Figure <ref type="figure">3</ref> shows the calculated in-plane loss as a function of PCSEL size using input data for a triangular PC atom on a square lattice. <ref type="bibr" target="#b22">23</ref> This report gives j rad ¼ 38 cm À1 and j i ¼ 5 cm À1 , and we extract scattering coefficients 3 and j 1D ¼ 1334 cm À1 and j 2D ¼ 386 cm À1 from the reported band structure. <ref type="bibr" target="#b22">23</ref> The inset is the calculated near-field pattern for a 700 Â 700 PCSEL. The 3D mode shape is in qualitative agreement with other reports. <ref type="bibr" target="#b23">24</ref> The trend of the curve is in qualitative agreement with MIA simulation results of a // as a function of PCSEL size. <ref type="bibr" target="#b8">9</ref> For this PCSEL of size 700 Â 700, threshold current and slope efficiency have also been reported in addition to the band structure. <ref type="bibr" target="#b21">22</ref> Our simulation indicates a // ¼ 17.9 cm À1 predicting a slope efficiency of 0.74 WA À1 . This is in excellent quantitative agreement with the experimentally obtained slope efficiency of 0.73 WA À1 . Our source of errors in this calculation are in our convergence limits (0.1 cm À1 ) and in the practicalities of extracting input data from the literature.</p><p>The model now allows a range of effects to be explored. We first investigate the effect of modifying the microscopic scattering coefficients on in-plane power loss. In Fig. <ref type="figure">4</ref>, we consider a PCSEL, where the j 1D and j 2D input scattering coefficients are both simultaneously multiplied by a scalar M (0.5, 1, 2, and 3).</p><p>We see that multiplying the scattering coefficients does not significantly change the curve shape, and significant in-plane loss is still observed for a 700 Â 700 PC PCSEL (a // ¼ 10 cm À1 for M ¼ 3 as compared to a //4 ¼ 17 cm À1 for M ¼ 1). This result agrees with the general trend within the canon of increasing PCSEL area to achieve high slope efficiencies and powers. <ref type="bibr" target="#b24">25</ref> While our probabilistic Markov chain simulator cannot deal with different reflected phase conditions, we can consider the effect of reflecting light back into the PCSEL with the same phase as the emitted light. We consider a range of power reflectivity, R, from 0% to 95% at the lasing wavelength. Again, the general shape of the curve (shown in Fig. <ref type="figure" target="#fig_2">5</ref>) is unchanged, but the results indicate that with modest reflectivity at the boundary of the PCSEL, the in-plane loss can be significantly reduced.</p><p>This model also allows the spatial variation in reflectivity around the perimeter of the PCSEL. Figure <ref type="figure" target="#fig_3">6</ref>(b) plots the in-plane loss for four cases. Type A is a normal PCSEL device with no perimeter reflector; type B is a 95% reflector evenly spreading around the edges of a PCSEL device; for types C and D, each edge of the device has been evenly divided into three parts: type C with 95% reflector in the center of a side, type D with 95% reflector at each corner. In Fig. <ref type="figure" target="#fig_3">6</ref>(a), it can be seen that the reflector can reduce in-plane loss (compare A and B). It can also be seen that a reflector at the center of the perimeter side has a greater impact upon reducing a // than the corners of the perimeter (compare C and D).</p><p>The near-field pattern for all cases is also plotted in Fig. <ref type="figure" target="#fig_3">6(c</ref>). The scaling of four nearfield modes in Fig. <ref type="figure" target="#fig_3">6(c</ref>) is the same. It can be seen that a flatter, more uniform near-field is achieved using reflectors (compare A and B). We also note that the mode pattern is significantly modified by the use of more complex feedback schemes as shown for C and D.</p><p>In this paper, probabilistic Markov chain modeling of PCSELs has been discussed. The ability to input microscopic PC scattering parameters and describe device-level PCSEL performance has been demonstrated. The effect of scaling the in-plane scattering parameters, using reflective boundaries on in-plane optical power loss, and the use of spatially varying boundaries on the near-field have been explored.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUTHOR DECLARATIONS Conflict of Interest</head><p>The authors have no conflicts to disclose.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Author Contributions</head><p>Jingzhao Liu: Data curation (equal); Investigation (equal); Methodology (equal); Software (equal); Visualization (equal); Writingoriginal draft (equal). Yunyun Gao: Investigation (equal); Software  (equal). Pavlo Ivanov: Formal analysis (equal). Paul Harvey: Methodology (equal); Software (equal); Supervision (equal); Writingreview &amp; editing (equal). Richard Andrew Hogg: Conceptualization (equal); Supervision (equal); Writingreview &amp; editing (equal).</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>FIG. 1 .</head><label>1</label><figDesc>FIG. 1. Schematics of (a) microscopic PC atom level scattering and (b) device level losses.</figDesc><graphic coords="3,88.04,100.52,173.98,289.42" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>FIG. 2 .</head><label>2</label><figDesc>FIG. 2. Plot of in-plane optical loss as a function of time step for 100 Â 100 to 1000 Â 1000 atom scale PCSELs. A, B, C, and D indicate near-field mode patterns at different time steps for the 700 Â 700 device.</figDesc><graphic coords="4,53.12,100.52,243.80,324.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>FIG. 5 .</head><label>5</label><figDesc>FIG. 5. In-plane optical loss as a function of PCSEL dimension for various values of perimeter reflectivity, R.</figDesc><graphic coords="5,70.13,100.52,209.72,354.78" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>FIG. 6 .</head><label>6</label><figDesc>FIG. 6. (a) In-plane optical loss as a function of PCSEL dimension for various perimeter mirror (R ¼ 0.95) configurations. (b) Schematic of mirror configurations. (c) Normalized near-field pattern for the four different perimeter mirror schemes for a 700 Â 700 PC atom device.</figDesc><graphic coords="5,332.11,100.52,209.72,328.08" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="1,0.00,-0.00,116.21,852.41" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="1,130.00,645.29,435.00,116.71" type="bitmap" /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Appl. Phys. Lett. 123, 261107 (2023); doi: 10.1063/5.0168073</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>V C Author(s) 2023</p></note>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY</head><p>The data that support the findings of this study are available within the article.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Imada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chutinan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tokuda</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.124361</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page">316</biblScope>
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ishizaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Zoysa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/photonics6030096</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Photonics</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">96</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sakai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Miyai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.2220057</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="page">21101</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Antennas Propag</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="302" to="307" />
+			<date type="published" when="1966">1966</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Joannopoulos</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevB.65.235112</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. B</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="page">235112</biblScope>
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mattes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kofuji</surname></persName>
+		</author>
+		<title level="m">International Conference on Microwave and Millimeter Wave Technology</title>
+		<meeting><address><addrLine>Chengdu, China</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2010">2010. 2010</date>
+			<biblScope unit="page">1536</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Plihal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Maradudin</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevB.44.8565</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. B</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page">8565</biblScope>
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">I</forename><surname>Vurgaftman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Meyer</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JQE.2003.811943</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Quantum Electron</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="689" to="700" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sarma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J E</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T D</forename><surname>Childs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Hogg</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JSTQE.2019.2950795</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Sel. Top. Quantum Electron</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">4900309</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<ptr target="https://github.com/Jingzhao-Liu/Probabilistic-Markov-" />
+		<title level="m">Chains-Modelling-Quarter for &quot;Probabilistic-Markov-Chains-Modelling-(Quarter version)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Henk</surname></persName>
+		</author>
+		<title level="m">A First Course in Stochastic Models</title>
+		<meeting><address><addrLine>West Sussex</addrLine></address></meeting>
+		<imprint>
+			<publisher>John Wiley &amp; Sons Ltd</publisher>
+			<date type="published" when="2003">2003</date>
+			<biblScope unit="page">131</biblScope>
+		</imprint>
+	</monogr>
+	<note>nd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bravo-Abad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Joannopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Solja</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OL.39.002072</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="2072" to="2075" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>De Zoysa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ishizaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tanaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kawasaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hatsuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gelleta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41563-018-0242-y</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Mater</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">121</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Hakki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Paoli</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.321696</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Appl. Phys</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page">1299</biblScope>
+			<date type="published" when="1975">1975</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Hakki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Paoli</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1662905</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Appl. Phys</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">4113</biblScope>
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">P</forename><surname>Blood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Smowton</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JSTQE.2003.819472</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Sel. Top. Quantum Electron</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">1275</biblScope>
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Xin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Lester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Luong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Whittington</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zilko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Varangis</surname></persName>
+		</author>
+		<idno type="DOI">10.1117/12.591241</idno>
+		<title level="m">Proc. SPIE</title>
+		<meeting>SPIE</meeting>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="volume">5722</biblScope>
+			<biblScope unit="page">49</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Cassidy</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.333867</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Appl. Phys</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page">3096</biblScope>
+			<date type="published" when="1984">1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">V</forename><surname>Jordan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Inst. Elect. Eng</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="page">13</biblScope>
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">L</forename><surname>Shaklee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">F</forename><surname>Leheny</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.1653501</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">475</biblScope>
+			<date type="published" when="1971">1971</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Oster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Erbert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wenzel</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/el:19970605</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Electron. Lett</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">864</biblScope>
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Xin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Martinez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">J</forename><surname>Rotter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Luong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zilko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Varangis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">F</forename><surname>Lester</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JQE.2006.876709</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Quantum Electron</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page">725</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hirose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kurosaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Watanabe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sugiyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nphoton.2014.75</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Photonics</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">406</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app122010581</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">10581</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Inoue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gelleta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Izumi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yoshida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ishizaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Zoysa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Noda</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41467-022-30910-7</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">3262</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

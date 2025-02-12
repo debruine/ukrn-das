@@ -1,0 +1,1520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Numerical Investigations on Low-Speed Aerodynamic Characteristics of Generic UCAV Configurations</title>
+				<funder>
+					<orgName type="full">Aerodynamic Optimization of Nonplanar Lifting Systems</orgName>
+				</funder>
+				<funder ref="#_x5xAu6K">
+					<orgName type="full">NATO STO</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Hassan</forename><surname>Aleisa</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department" key="dep1">Postgraduate Research</orgName>
+								<orgName type="department" key="dep2">Aerospace Engineering Department</orgName>
+								<orgName type="department" key="dep3">Aerospace Engineering Department</orgName>
+								<orgName type="department" key="dep4">Faculty of Aeronautics and Astronautics</orgName>
+								<orgName type="department" key="dep5">Astronautical Engineering Department</orgName>
+								<orgName type="institution" key="instit1">AIAA Member. † Professor</orgName>
+								<orgName type="institution" key="instit2">AIAA Fellow</orgName>
+								<orgName type="institution" key="instit3">AIAA Associate Fellow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Konstantinos</forename><surname>Kontis</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Melike</forename><surname>Nikbay</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">Istanbul Technical University</orgName>
+								<address>
+									<postCode>34469</postCode>
+									<settlement>Istanbul</settlement>
+									<country>Türkiye</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Numerical Investigations on Low-Speed Aerodynamic Characteristics of Generic UCAV Configurations</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">280A45D382EDDA73BCF342D2A44964F4</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:00+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The leading-edge sweep angle significantly influences the flight performance of swept wings. The vortex flow structures affect the flow behavior of the moderate to highly swept wings, which form at low angles of attack because of leading-edge flow separation. This topic of investigation recently gained momentum due to its application to unmanned combat aerial vehicle (UCAV) configurations that are significantly affected by flow separation at high angles of attack. The present work investigates the flowfield and low-speed aerodynamic characteristics of the generic UCAV models with a constant and non-constant leading-edge sweep for a wide range of angles of attack. The open-source computational fluid dynamics (CFD) code OpenFOAM 8.0 is employed</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>UCAV aerodynamic performance at greater AOA values. On the other hand, the benefits of swept flying wing vortices are limited; at a greater AOA, vortex breakdowns result in an abrupt drop in lift owing to stalling.</p><p>In 1931, Alexander Lippisch initially developed a delta wing configuration in Germany. Darmstadt München-1 (DM-1) was created to research low-speed aerodynamics. However, the thick and blunt edges of the DM-1 glider design reduced the critical AOA and lift coefficient. A sharp LE strip was integrated into the 60 swept wing DM-1 glider, causing a vortex flow over the wing SS and delaying the stall point to a higher AOA <ref type="bibr" target="#b0">[1]</ref>. Haines <ref type="bibr" target="#b1">[2]</ref> compared the low-speed flow behavior around swept wings with a simple design. Furthermore, comparisons were made between the flow around a 2-D airfoil and the flow around swept wings. According to the report, AOA, Reynolds number, and wing configuration alter the area of detached flow and their related part-span vortex sheets. The flow physics of LE vortices and vortex flow separation at 65 delta wing with sharp LE were investigated by wind tunnel experiments of Lambourne and Bryer <ref type="bibr" target="#b2">[3]</ref>. They demonstrated the vortex breakdown using oil-flow patterns and concluded that the adverse pressure gradient significantly influences the vortex breakdown along with the vortex <ref type="bibr" target="#b3">[4]</ref>. <ref type="bibr">Earnshaw [5]</ref> studied the vortex pair on a delta wing experimentally and found that a sharp-edged delta wing produced a primary vortex that could be classified as a viscous sub-core, rotating core, or free shear layer. Earnshaw and Lawford <ref type="bibr">[6][7]</ref> conducted some studies on the effect of sweep angles on the flow over delta wings with sweep angles of 65 and 70 . Polhamus <ref type="bibr" target="#b7">[8]</ref> provided an analytical model based on the LE suction analogy to calculate the vortex lift of sharp-edged delta wings.</p><p>For a higher AOA value (≈20 ), it produced a better prediction of total lift.</p><p>At critical angles of incidence, these types of swept wings are subjected to LE separation, characterized by complex localized three-dimensional (3-D) vortical flow topologies such as separation structures or separation bubbles. The 3-D vortical flow is more complicated than the 2-D case; thus, the description of 3-D separated flows is challenging in many considerations. Various authors have made substantial contributions in reporting the flow field, in which 3-D separation effects occur significantly <ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref>. Furthermore, many studies have been conducted to analyze the vortex flow of delta wings using wind tunnel experiments and CFD <ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref>. These studies investigated the aerodynamic characteristics of wings with constant aspect ratio, LE sweep angles, and varied LE contours.</p><p>For a non-slender delta wing with a Λ ≤ 55 <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b15">16]</ref> a distinct dual primary vortex structure with the same sense of rotation at high AOA occurs and results in complex interactions with the secondary vortical structure and wingtip structures <ref type="bibr" target="#b15">[16]</ref>. In addition, the vortex flow behavior on a sharp LE non-slender delta wing varies significantly from the vortical flow on a slender delta wing <ref type="bibr" target="#b16">[17]</ref>. For the sharp LE slender delta wing Λ &gt; 55 , the primary flow detachment occurs at the sharp LE, and the detached flow rolls up to form a primary LE vortex <ref type="bibr" target="#b17">[18]</ref>. A suction peak is generated due to the spanwise flow over the wing SS which is induced by the primary vortical flow. Following this suction peak, the unfavorable spanwise pressure gradient detaches the spanwise boundary layer flow, causing a secondary flow detachment and a secondary vortical flow. This secondary vortical flow prompts a suction outboard of the primary vortical flow suction peak <ref type="bibr" target="#b17">[18]</ref>. These fundamental studies improved the understanding of delta wing aerodynamics and the investigations related to UCAV configurations (Fig. <ref type="figure" target="#fig_1">1</ref>). Also, the flying wings with a non-constant sweep angle and different TE configurations provide distinguished flow behavior characteristics compared to a basic delta wing configuration. thickness-caused vortex were observed <ref type="bibr" target="#b26">[27]</ref>. The vortex intensity, turbulent kinetic energy, and velocity oscillations near the surface rise as the AOA increased <ref type="bibr" target="#b30">[31]</ref>.</p><p>Flows over wings with moderate sweep angle, typically from 30-50 <ref type="bibr" target="#b38">[39]</ref>, have received increased investigations due to their use in UCAV for military applications. However, the constant LE with low to moderated sweep angle configurations tends to cause advanced stall because of vortex breakdown. To overcome this shortcoming, appropriate sweep angles for the inboard and outboard planes were adopted in designs such as Boeing X-45A/B (Λ = ±45 ,Λ = ±45 , Λ = ±45 ), and Northrop Grumman X-47B (Λ = ±55 ,Λ = ±30 , Λ = ±30 ) <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b40">41]</ref>.</p><p>Manshadi et al. <ref type="bibr" target="#b41">[42]</ref> studied the flow field for a planform similar to Northrop Grumman X-47B aircraft at low speeds.</p><p>They carried out velocity and pressure measurements for sharp LE and round LE in various cross planes on the wing SS of the model. They concluded that the sharp LE produced relatively high strength vortices compared to the round LE case. Additionally, Yaniktepe et al. <ref type="bibr" target="#b42">[43]</ref> performed an experimental study on X-45 A/B configuration to analyze the effects of AOA on flow structure. They found that the X-45 A/B planform wing has superior lift characteristics compared to the generic delta wing with a sweep angle of 60 .</p><p>Based on the above discussion, it is evident that the LE sweep angle is a critical parameter that affects the aerodynamic performance of UCAV wings. Furthermore, the performance, signature, and weight considerations of the real UCAVs often result in adopting planforms with swept edge-aligned of (40 ≤ Λ ≤ 60 ) <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b43">[44]</ref><ref type="bibr" target="#b44">[45]</ref><ref type="bibr" target="#b45">[46]</ref> with associated medium aspect ratios, which are adequate to induce LE vortex separations during the maneuver, nevertheless less than conventional slender wing values <ref type="bibr" target="#b39">[40]</ref>. However, the UCAVs must operate in complex conditions and expand their maneuvering envelope to higher AOA. For example, some of these UCAVs are required to takeoff and land on aircraft carriers, and they interact with the air ship wake during their landing on the carrier. UCAVs are subjected to complex mixed attached/separated flow fields at high lift conditions. The X-47B was the first UCAV to successfully takeoff and land for carrier-based operations <ref type="bibr" target="#b40">[41]</ref>.</p><p>Almost all the previous investigations related to UCAV configurations were focused on the aerodynamic performance and flow physics of planforms such as delta, cranked delta, double delta wing, and constant LE sweep angles lambda wings such as 1303, SACCON, and MULDICON. However, non-constant LE sweep angle lambda wing configuration, such as the X47-B, has been developed, but research data is rarely available on this planform. Hence, the novel wing planform like the X-47B configuration is considered to characterize the conditions of takeoff and landing of UCAVs.</p><p>The conceptual design of UCAVs is close to conventional attacker aircraft, and they can be developed between the bomber and the fighter <ref type="bibr" target="#b46">[47]</ref>. Hence, in this study, two planforms have been considered. The first planform is a flying </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>II. Model Geometry</head><p>Two flat plate lambda models with leeward beveled LE are used in the present study are shown in Fig. <ref type="figure" target="#fig_3">2</ref>. The wing models have identical dimensions except for the root chord length and LE sweep angle. The geometrical characteristics of the wing models (Model 1 and Model 2) utilized in the numerical analyses are listed in Table .1.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>III. Computational Methodology</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A. Flow Domain and Boundary Conditions</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Grid Generation</head><p>In the present study, the inbuilt OpenFOAM [49, 50] grid generators, namely blockMesh + snappyHexMesh, are used to discretize the flow domain with 2 to 6 million cells mesh sizes (Fig. <ref type="figure">4</ref> and Fig. <ref type="figure">5</ref>). The snappyHexMesh generates a 3D mesh from a triangulated surface geometry in STL format, incorporating hexahedral, polyhedral, and prism cells. In order to create a better mesh, the snappyHexMesh offers several options to enhance the edges, surfaces, and volumes. The blockMesh is used to produce the structured background mesh for the snappyHexMesh. In addition, the snappyHexMesh requires STL files that were exported from the Salome 2019 pre-processing package [51]. The STL files were placed on the triSurface folder and were used to carve out the geometry from the background mesh. After the generation of mesh, its quality was verified using the checkMesh command. The critical parameters such as aspect ratio, skewness and non-orthogonality were assessed and provided in Table <ref type="table" target="#tab_1">2</ref>. As shown in the table, the values of the parameters are within the acceptable range and the same mesh parameters were retained for all configurations used in this study. Moreover, to maintain the y+ ≤ 1, we generated 15 prism layers on the wing model with a layer growth ratio of 1.05 (Fig. <ref type="figure" target="#fig_6">6</ref>). The snappyHexMesh has an inherent limitation, such as the prism layers breakdown near the sharp edges, which increases the local y+ value in that region. Several authors who chose snappyHexMesh as their grid generator ran into a similar issue <ref type="bibr" target="#b48">[52]</ref>.    </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. Solver and Turbulence Model Selection</head><p>The flow over the UCAV at higher angle of attack exhibit high unsteadiness due to vortex breakdown, however the objective of the present study is to compute the aerodynamic performance of the UCAV model and not to investigate the complex vortex breakdown mechanism. It is noteworthy to mention Yavuz <ref type="bibr" target="#b49">[53]</ref> established that the steady and mean unsteady results exhibit marginal variation compared to the experiments. Moreover, the vortex location and rotation are similar for both RANS and URANS solutions <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b49">[53]</ref><ref type="bibr" target="#b50">[54]</ref><ref type="bibr" target="#b51">[55]</ref><ref type="bibr" target="#b52">[56]</ref>. Furthermore, k-w SST performs better in capturing the vortex breakdown with minimal computational time <ref type="bibr" target="#b53">[57]</ref>. Hence, the present study used RANS approach to compute the aerodynamic performance.</p><p>The </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>IV. Results and Discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A. Grid Independence Study</head><p>The grid convergence index (GCI) is used to evaluate the effect of grid resolution on the aerodynamic characteristics of the 40 lambda (Model 1) and the 60/40 lambda (Model 2) wings. Three grids such as coarse, medium, and fine are generated, and their lift to drag ratio ( / ) values at 20 AOA are compared. The GCI is computed based on the approach provided by Celik et al <ref type="bibr" target="#b60">[64]</ref>, as shown in Table <ref type="table" target="#tab_2">3</ref>. The / values at 20 AOA for the 40 lambda and the 65/40 lambda wings for various grids are shown in Fig. <ref type="figure">8</ref>. For the 40 lambda wing, the GCI and the 32 are about 0.14 and 0.11%, respectively, for the medium grid.</p><p>Likewise, for the fine grid, the values are 0.12 and 0.10%, respectively. It can be observed that uncertainty due to spatial discretization reduces with increase in the grid resolution. On the other hand, a similar trend is observed for the 60/40 lambda wing. The variation between the GCI of medium and fine grids are insignificant. Furthermore, the GCI between the coarse and medium grids are less than 2% and the spatial grid convergence was attained as the GCI between the progressively refined grids are lower than 3% <ref type="bibr" target="#b61">[65,</ref><ref type="bibr" target="#b62">66]</ref>. Hence, as a trade-off between the accuracy and the computational time, the present study retained the medium grid for the numerical analysis to reduce the computational cost for the simulations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. Validation</head><p>The present study examines the aerodynamic characteristics of constant and non-constant LE sweep angle lambda wing configurations using OpenFOAM for various AOA. The parameters such as coefficients of lift ( ), drag ( ) and pitching moments ( ) are compared with the experimental data of Ali and Chadwick for validation <ref type="bibr" target="#b44">[45]</ref>. coefficient reduces with an increase in AOA, and they exhibit a larger deviation from experimental data at higher AOA.</p><p>A similar behavior was observed in the study of Ali and Chadwick <ref type="bibr" target="#b44">[45]</ref>. Hence, it can be concluded that the present numerical model is sufficient to study the aerodynamic performance of lambda wing models. With a further increase in AOA, the region along the spanwise axis where this re-alignment takes place shifts further inboard, and the vortices align with the TEs, further decreasing lift on the wing's back. As a powerful apex vortex emerges, the lift close to the nose begins to rise. Furthermore, the 40 lambda wing exhibits reduced LE suction for AOA &gt; 20 , whereas the strength of LE suction is relatively higher for the 60/40 case for higher AOA values due to the influence of non-constant LE sweep angle. The higher suction implies highly energized vortices, and it delays stall inception and enhances aerodynamic performance. To comprehend the flow behavior of the wing models, the flow structure was visualized using and wall shear streamlines to describe the flow progression, attachment, detachment, and vortex breakdown with increasing AOA (Fig. <ref type="figure" target="#fig_1">18</ref>). For all cases, a vortex formation is observed at the wing apex, and the vortical flow expands as it moves downstream, and it weakens with the increase in AOA due to the rise in pressure. The increased radius of the streamlined rotational path implies an expanded vortex core. Also, the breakdown region shifts upstream and gradually stretches as the AOA increases. On the other hand, the local AOA at LE decreases with an increase in LE sweep angle; as a result, the higher sweep angle wings exhibit delayed stall compared to the low sweep angle wings <ref type="bibr" target="#b38">[39]</ref>. Additionally, the figure</p><p>shows that the vortex breakdown occurs for the 40 lambda wing. In contrast, the significant flow characteristics over the 60/40 lambda wing are the existence, interaction, coiling-up, merging, and vortex breakdown development of two distinct LE separation vortices originating from the inboard and outboard LEs, which form and remain separate at low AOA. The inboard vortex (IBV) is adequately strong to recirculate the flow at higher AOA, while the strength of the outboard vortex (OBV) reduces at higher AOA. The AOA and inboard and outboard LEs sweep angles affect the interaction development and breakdown of IBV and OBV. The Cp distribution over wing SS exhibits pair of vortices with high suction at their cores at AOA = 10 , as shown in (Fig. <ref type="figure" target="#fig_1">18</ref>). The IBV and OBV interaction increased as AOA increased because of the increase in their sizes and strengths. Consequently, the OBV shifted inward whereas the IBV shifted outward, covering a large wing area. The lateral velocity generated by the IBV energizes the OBV and increases its local strength. As the AOA is further increased, the length of the merging zone reduces. At 15 AOA, the two vortices merge into a single vortex. Along the downstream kink of wing LE, the IBV is cut off from the inboard LE vorticity, and its strength reduces because of the viscous effects. Furthermore, the suction is higher at the apex region and reduces along the chordwise direction as the vortices lose their strength as they move downstream towards the TE. The strength and suction of OBV decreases, and it breaks down for AOA larger than 15 .</p><p>In contrast, the strength and suction of IBV increases, and it breakdown for AOA greater than 25 .</p><p>Fig. <ref type="figure" target="#fig_10">19</ref> displays the vortical structures on SS visualized using the iso-surface Lambda 2 criterion (=25000). It can be seen that, for both cases, the primary vortex separates from the LE on the wing outboard, and the separation point shifts further upstream with the increase in AOA. The separated vortex that has less intensity grows in size and moves toward the inboard direction, as AOA increases. As discussed earlier, the flow behavior is identical for both cases for </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>V. Conclusion</head><p>The On the basis of the present computational study, future research is planned to investigate the aerodynamic characteristics of a conceptual design and aerodynamic design optimization of UCAV configuration with a non-constant LE sweep angle to enhance the aerodynamic performance.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>for the numerical simulations. The present numerical simulation results agree well with the experimental data in the literature. It is demonstrated that the lift and drag characteristics of the UCAV are sensitive to the leading-edge sweep angle, and a non-constant leading-edge sweep angle variant exhibits delayed stall and enhanced aerodynamic performance. dimensional wall distance [-] Λ = sweep angle [ ] = turbulence kinetic energy [m 2 /s 2 ] = specific turbulence dissipation rate [1/s] maneuverability of UCAVs are heavily reliant on the aerodynamic characteristics of the swept tailless flying wing at medium to higher AOA. A conventional two-dimensional (2-D) airfoil's stall angle is roughly 10-15 ; however, flying wing types, including delta, diamond, and lambda wing configurations, can increase</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1</head><label>1</label><figDesc>Fig. 1 Boeing X-45C (left) and Northrop Grumman X-47B (right) demonstrators [19].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>wing (lambda) with a 40 LE sweep angle close to the planform characteristics of a flying wing bomber. The second planform is a flying wing (lambda) with a 60/40 LE sweep angle, considering the planform characteristics of fighters. The present work aims to study the combined effect of a higher and moderate sweep angle (60/40 delta-lambda wing) on the vortex flow structure and compare it with a moderate sweep angle case (40 lambda wing). The present investigation also discusses the effect of constant and non-constant LE sweep angle on the vortex development, its strength, the location of the flow separation, and vortex breakdown. The flow field analyses of the wing models are presented and explained using the post-processed figures.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 2</head><label>2</label><figDesc>Fig. 2 Top view of Model 1 (left) and Model 2 (right) lambda wings.</figDesc><graphic coords="6,198.67,449.37,478.70,277.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 3 Fig. 3</head><label>33</label><figDesc>Fig.3displays the computational flow domain for the numerical analyses. The half-span of the model with a symmetry plane was employed to take advantage of the symmetrical nature of the wing model. The upstream and downstream distances were fixed as 2.4 m, and 5.4 m, respectively, and the domain was extended 2.4 m in the spanwise direction. The walls were placed away from the wing model and provided with slip wall boundary conditions, whereas the lambda wing model was kept as a no-slip wall.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 4 Fig. 5</head><label>45</label><figDesc>Fig. 4 3D view of meshed domain.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 6</head><label>6</label><figDesc>Fig.6The surface mesh of wing models at the symmetry plane.</figDesc><graphic coords="9,81.43,172.37,396.88,223.26" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 7</head><label>7</label><figDesc>Fig.7shows the SS y+ distribution for the two wing models. As shown in the figure, the value of y+ lies between 0 to 0.80 for both cases. As explained earlier, the maximum value of y+ occurs near the sharp edges; however, the average y+ value of the models is &lt;1. Hence, we can conclude that the present mesh is adequate to solve the boundary layer of the studied wing models.</figDesc><graphic coords="9,254.30,243.18,340.32,238.34" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 7</head><label>7</label><figDesc>Fig. 7 SS y+ distribution for the 40 (left) and 60/40 (right) lambda wings.</figDesc><graphic coords="9,-29.30,417.66,426.71,239.61" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head></head><label></label><figDesc>OpenFOAM offers various solvers[49,<ref type="bibr" target="#b47">50]</ref>, and based on the present problem definition, the simpleFOAM solver is selected for the analysis suitable for the steady and incompressible flow. Regarding the turbulence model, the present study uses the k-shear stress transport (SST) model, which is suitable for flows with separation. It is a hybrid model that uses k-in the region closer to the wall and k-in the region away from it. Moreover, accurate second-order schemes are used for the spatial discretization, and the under-relaxation factors used in this study are 0.3 for pressure and 0.70 for all other variables. Numerous studies have effectively applied the k-SST model to determine the aerodynamic characteristics of tailless flying wing models<ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b54">[58]</ref><ref type="bibr" target="#b55">[59]</ref><ref type="bibr" target="#b56">[60]</ref><ref type="bibr" target="#b57">[61]</ref><ref type="bibr" target="#b58">[62]</ref><ref type="bibr" target="#b59">[63]</ref>.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 9 compares</head><label>9</label><figDesc>the current study's computational results of , and for 40 and 60/40 lambda wing models with the experimental data from the literature. The results of , and are compared against the AOA ranging from 0 to 40 . As apparent in the plot, with an increase in AOA, the increases up to a certain AOA and then stalls, reducing the lift. In contrast, increases with AOA because the area resisting the airflow increases. The computational values of and agree well with the experimental data for the entire flow range. The critical stall points of the 40 and 60/40 lambda wings are approximately 20 and 30 , respectively. Moreover, as shown in the plot moment</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Fig. 9 Fig. 10 Fig. 11</head><label>91011</label><figDesc>Fig. 9 Validation of CFD with experimental data.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Fig. 12 Fig. 17</head><label>1217</label><figDesc>Fig. 12 Location of slices for pressure distribution for the 40 (left) and 60/40 (right) lambda wings.</figDesc><graphic coords="14,-36.27,236.88,325.97,612.69" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head></head><label></label><figDesc>Fig. 18 contour with wall shear streamlines for the 40 (left) and 60/40 (right) lambda wing.</figDesc><graphic coords="20,-232.09,346.53,714.73,406.19" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><head>AOA 20 .Fig. 19</head><label>2019</label><figDesc>Fig. 19 Iso-surface of Lambda 2 criterion (=25000) on SS for the 40 (top) and 60/40 (bottom) lambda wings.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_15"><head></head><label></label><figDesc>LE sweep angle is a critical parameter that affects the aerodynamic performance of the UCAVs. The present study compares the vortical flow behavior of moderate (40 ) and combined high-moderate (60/40 ) sweep angle wing configurations. The aerodynamic performance of the two generic UCAV lambda wing models was investigated for various AOA. The numerical simulations were performed using OpenFOAM 8.0, and the numerical results have been validated against the experimental data. The present computational results matched well with the available experimental data.With the increase in AOA, the pressure drop increased at the vortex core up to a critical AOA. The flow detachment originating on the wing outboard gradually shifted towards the wing inboard. The analyses of wall shear streamlines showed that the vortex flow moved inboard and became stronger and wider with increasing AOA. The vortex breakdown at the critical AOA and stall occurred. The wing model with a constant LE sweep angle of 40 showed increased LE vortex strength and the vortex breakdown at a relatively lower AOA value (&gt;20 ); alternatively, the wing with a non-constant LE sweep angle of 60/40 exhibited stable vortex and delayed stall.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 Geometrical parameters</head><label>1</label><figDesc></figDesc><table><row><cell cols="2">Parameters</cell><cell></cell><cell cols="2">Model 1 Model 2</cell></row><row><cell cols="2">LE inboard sweep angle, Λ</cell><cell>[ ]</cell><cell>40</cell><cell>60</cell></row><row><cell cols="2">LE outboard sweep angle, Λ</cell><cell>[ ]</cell><cell>-</cell><cell>40</cell></row><row><cell cols="2">TE sweep angle, Λ [ ]</cell><cell></cell><cell>40</cell><cell>40</cell></row><row><cell cols="2">Wing area, S [m 2 ]</cell><cell></cell><cell>0.145</cell><cell>0.15</cell></row><row><cell cols="2">Wing span, b [m]</cell><cell></cell><cell>0.75</cell><cell>0.75</cell></row><row><cell>Root chord,</cell><cell>[m]</cell><cell></cell><cell>0.40</cell><cell>0.52</cell></row><row><cell cols="2">Mean Aerodynamic Chord,</cell><cell>[m]</cell><cell>0.22</cell><cell>0.36</cell></row><row><cell cols="2">Wing thickness, t [m]</cell><cell></cell><cell>0.006</cell><cell>0.006</cell></row><row><cell>Bevel angle [ ]</cell><cell></cell><cell></cell><cell>45</cell><cell>45</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 Parameters of mesh quality Parameter Model 1 Model 2</head><label>2</label><figDesc></figDesc><table><row><cell>Maximum aspect ratio [-]</cell><cell>5.31</cell><cell>4.45</cell></row><row><cell>Maximum skewness [-]</cell><cell>4.69</cell><cell>3.25</cell></row><row><cell>Maximum non-orthogonality [ ]</cell><cell>63.97</cell><cell>64.90</cell></row><row><cell>Average non-orthogonality [ ]</cell><cell>6.89</cell><cell>11.90</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3 Numerical uncertainty assessment</head><label>3</label><figDesc></figDesc><table><row><cell>Parameter</cell><cell></cell><cell>Model 1</cell><cell>Model 2</cell></row><row><cell cols="2">Number of elements (million) Fine, medium and coarse</cell><cell>6.090, 4.471, 2.840</cell><cell>6.132, 4.370, 2.919</cell></row><row><cell>Average cell size</cell><cell>h 1 ,h 2 ,h 3</cell><cell cols="2">0.00547, 0.00607, 0.00706 0.00546, 0.00611, 0.00699</cell></row><row><cell>Grid refinement factor</cell><cell>r 21 ,r 32</cell><cell>1.1085, 1.1633</cell><cell>1.1195, 1.1440</cell></row><row><cell>Performance parameter</cell><cell>1 , 2 , 3</cell><cell>2.8486, 2.8427, 2.8397</cell><cell>2.8405, 2.8303, 2.8255</cell></row><row><cell>Apparent order</cell><cell>p</cell><cell>6.8738</cell><cell>6.5383</cell></row><row><cell>Approximate relative error</cell><cell>e 21 , 32</cell><cell>0.00103, 0.00209</cell><cell>0.00171, 0.00358</cell></row><row><cell>Extrapolated values</cell><cell>21 , 32</cell><cell>2.8369, 2.8394</cell><cell>2.82106, 2.82316</cell></row><row><cell>Extrapolated relative error</cell><cell>e 21 , 32</cell><cell>0.001001, 0.001145</cell><cell>0.00157, 0.00254</cell></row><row><cell>GCI</cell><cell>GCI 21 ,GCI 32</cell><cell>0.001250, 0.001430</cell><cell>0.00196, 0.00317</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>The authors would like to acknowledge <rs type="funder">NATO STO</rs> <rs type="projectName">Support</rs> Project <rs type="grantNumber">AVT-SP-002 Turbulence</rs> and the <rs type="funder">Aerodynamic Optimization of Nonplanar Lifting Systems</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_x5xAu6K">
+					<idno type="grant-number">AVT-SP-002 Turbulence</idno>
+					<orgName type="project" subtype="full">Support</orgName>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Full-scale investigation of the maximum lift and flow characteristics of an airplane having approximately triangular plan form</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">A</forename><surname>Wilson</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Lovell</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://ntrs.nasa.gov/citations/19930085702" />
+		<imprint>
+			<date type="published" when="1947">1947</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. rep.</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Some notes on the flow patterns observed over various swept-back wings at low Mach numbers (in the RAE 10-ft x 7-ft high speed tunnel)</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Haines</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/3761" />
+		<imprint>
+			<date type="published" when="1954">1954</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Some measurements in the vortex flow generated by a sharp leading edge having 65 degrees sweep</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lambourne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bryer</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/490" />
+		<imprint>
+			<date type="published" when="1960">1960</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">The bursting of leading-edge vortices-some observations and discussion of the phenomenon</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lambourne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bryer</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/3859" />
+		<imprint>
+			<date type="published" when="1961">1961</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">An experimental investigation of the structure of a leading-edge vortex</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Earnshaw</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/3858" />
+		<imprint>
+			<date type="published" when="1961">1961</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Low-speed wind-tunnel experiments on a series of sharp-edged delta wings</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Earnshaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lawford</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/4008" />
+		<imprint>
+			<date type="published" when="1964">1964</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Measurements of vortex-breakdown position at low speed on a series of sharp-edged symmetrical models</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">B</forename><surname>Earnshaw</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://reports.aerade.cranfield.ac.uk/handle/1826.2/841" />
+		<imprint>
+			<date type="published" when="1965">1965</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Predictions of vortex-lift characteristics by a leading-edge suctionanalogy</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">C</forename><surname>Polhamus</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/3.44254</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/3.44254" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of aircraft</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="193" to="199" />
+			<date type="published" when="1971">1971</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Topology of three-dimensional separated flows</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tobak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Peake</surname></persName>
+		</author>
+		<idno type="DOI">10.1146/annurev.fl.14.010182.000425</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1146/annurev.fl.14.010182.000425" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual review of fluid mechanics</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="61" to="85" />
+			<date type="published" when="1982">1982</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Physics of vortical flows</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Delery</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/3.46256</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/3.46256" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Aircraft</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="856" to="876" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Robert Legendre and Henri Werlé: toward the elucidation of three-dimensional separation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Délery</surname></persName>
+		</author>
+		<idno type="DOI">10.1146/annurev.fluid.33.1.129</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1146/annurev.fluid.33.1.129" />
+	</analytic>
+	<monogr>
+		<title level="j">Annual review of fluid mechanics</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page">129</biblScope>
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Analysis of delta-wing vortical substructures using detached-eddy simulation</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Morton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Forsythe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Cummings</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.755</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/1.755" />
+	</analytic>
+	<monogr>
+		<title level="j">AIAA journal</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="964" to="972" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Leading-edge vortex structure of nonslender delta wings at low Reynolds number</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">V</forename><surname>Ol</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gharib</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/2.1930</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/2.1930" />
+	</analytic>
+	<monogr>
+		<title level="j">AIAA journal</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="16" to="26" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Higher-order compact difference scheme applied to low sweep delta wing flow</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gordnier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Visbal</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2003-620</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2003-620" />
+	</analytic>
+	<monogr>
+		<title level="m">41st Aerospace Sciences Meeting and Exhibit</title>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<biblScope unit="page">620</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Flow structure on a delta wing of low sweep angle</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yaniktepe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rockwell</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.1207</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/1.1207" />
+	</analytic>
+	<monogr>
+		<title level="j">AIAA journal</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="513" to="523" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Unsteady aerodynamics of nonslender delta wings</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Gursul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gordnier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Visbal</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.paerosci.2005.09.002</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.paerosci.2005.09.002" />
+	</analytic>
+	<monogr>
+		<title level="j">Progress in Aerospace Sciences</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="515" to="557" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Effects of Leading-Edge Shape on the Flow Over 50-deg Delta Wings</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Verhaagen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elsayed</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2008-7330</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2008-7330" />
+	</analytic>
+	<monogr>
+		<title level="j">26 ℎ AIAA applied aerodynamics conference</title>
+		<imprint>
+			<biblScope unit="page">7330</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A survey of factors affecting blunt-leading-edge separation for swept and semi-slender wings</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Luckring</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2010-4820</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2010-4820" />
+	</analytic>
+	<monogr>
+		<title level="j">28 ℎ AIAA applied aerodynamics conference</title>
+		<imprint>
+			<biblScope unit="page">4820</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Unmanned aircraft systems roadmap 2005-2030</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Defense</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://rosap.ntl.bts.gov/view/dot/18248" />
+		<imprint>
+			<date type="published" when="2005-08">August, 2005</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. rep., Tech. rep</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Low speed wind tunnel tests on the 1303 UCAV concept</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mcparlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bruce</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hepworth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rae</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2006-2985</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2006-2985" />
+	</analytic>
+	<monogr>
+		<title level="m">24 ℎ AIAA Applied Aerodynamics Conference</title>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="page">2985</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">CFD analysis of the low-speed aerodynamic characteristics of a UCAV</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Petterson</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2006-1259</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2006-1259" />
+	</analytic>
+	<monogr>
+		<title level="m">44 ℎ AIAA Aerospace Sciences Meeting and Exhibit</title>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="page">1259</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Low-speed aerodynamic and flowfield characteristics of a UCAV</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Petterson</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2006-2986</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2006-2986" />
+	</analytic>
+	<monogr>
+		<title level="m">24 ℎ Applied Aerodynamics Conference</title>
+		<meeting><address><addrLine>San Francisco, California 5-8 June, AIAA Paper</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2006">2006-2986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">UCAV configuration &amp; performance trade-offs</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Woolvin</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2006-1264</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2006-1264" />
+	</analytic>
+	<monogr>
+		<title level="m">44 ℎ AIAA Aerospace Sciences Meeting and Exhibit</title>
+		<meeting><address><addrLine>Reno, Nevada</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2006-01">January, 2006</date>
+			<biblScope unit="page">1264</biblScope>
+		</imprint>
+	</monogr>
+	<note>AIAA Paper 2006-1264</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Low-speed wind-tunnel test results of a BWB-UCAV model</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">O</forename><surname>Park</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.proeng.2013.12.004</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.proeng.2013.12.004" />
+	</analytic>
+	<monogr>
+		<title level="j">Procedia Engineering</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="page" from="50" to="58" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Aerodynamics, stability and shape optimisation of unmanned combat air vehicles</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Coppin</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://etheses.whiterose.ac.uk/6987/1/thesis-Joe-Coppin.pdf" />
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+		<respStmt>
+			<orgName>University of Sheffield</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">An integrated computational/experimental approach to UCAV stability &amp; control estimation: overview of NATO RTO AVT-161</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schuette</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2010-4392</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2010-4392" />
+	</analytic>
+	<monogr>
+		<title level="m">28 ℎ AIAA Applied Aerodynamics Conference</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page">4392</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Static and dynamic SACCON PIV tests, part II: aft flow field</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Konrath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Roosenboom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schröder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pallek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Otter</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2010-4396</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2010-4396" />
+	</analytic>
+	<monogr>
+		<title level="j">28 ℎ AIAA applied aerodynamics conference</title>
+		<imprint>
+			<biblScope unit="page">4396</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">SACCON static wind tunnel tests at DNW-NWB and 14 x22 NASA LaRC</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Loeser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Vicroy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2010-4393</idno>
+		<idno>AIAA Paper 2010-4393</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2010-4393" />
+	</analytic>
+	<monogr>
+		<title level="j">28 ℎ AIAA applied aerodynamics conference</title>
+		<imprint>
+			<biblScope unit="page">4393</biblScope>
+			<date type="published" when="2010-06-28">28 June 2010 -01 July 2010</date>
+			<pubPlace>Chicago, Illinois</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">SACCON dynamic wind tunnel tests at DNW-NWB and 14´x22´NASA LaRC</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Vicroy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Loeser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2010-4394</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2010-4394" />
+	</analytic>
+	<monogr>
+		<title level="m">28 ℎ AIAA Applied Aerodynamics Conference</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page">4394</biblScope>
+		</imprint>
+	</monogr>
+	<note>AIAA Paper 2010-4394</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Integrated computational/experimental approach to unmanned combat air vehicle stability and control estimation</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Aircraft</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1542" to="1557" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">The effect of angle of attack on the flow structure over the nonslender lambda wing</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yayla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Canpolat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Sahin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Akilli</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ast.2012.12.007</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.ast.2012.12.007" />
+	</analytic>
+	<monogr>
+		<title level="j">Aerospace Science and Technology</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="417" to="430" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Static and dynamic numerical simulations of a generic UCAV configuration with and without control devices</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">J</forename><surname>Boelens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">32 AIAA Applied Aerodynamics Conference</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page">2132</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Multidisciplinary design and aerodynamic assessment of an agile and highly swept aircraft configuration</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Liersch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zimper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Siggel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">CEAS Aeronautical Journal</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="677" to="694" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">A UCAV Wing Design, Assessment and Comparisons</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Nangia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Coppin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ghoreyshi</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2018-2842</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2018-2842" />
+	</analytic>
+	<monogr>
+		<title level="m">Applied Aerodynamics Conference</title>
+		<meeting><address><addrLine>Atlanta, Georgia</addrLine></address></meeting>
+		<imprint>
+			<publisher>AIAA</publisher>
+			<date type="published" when="2018-06-29">2018. 25-29 June, 2018. 2018-2842</date>
+			<biblScope unit="page">2842</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">NATO STO/AVT-251: A Joint Exercise in Collaborative Combat Aircraft Design</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Liersch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://review.sto.nato.int/index.php/journal-issues/spring-2022/avt-324/39-a-joint-exercise-in-collaborative-combat-aircraft-design" />
+	</analytic>
+	<monogr>
+		<title level="j">NATO STO Review</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Conceptual design of a 53 deg swept flying wing UCAV configuration</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Liersch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bishop</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2018-2839</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2018-2839" />
+	</analytic>
+	<monogr>
+		<title level="m">2018 Applied Aerodynamics Conference</title>
+		<meeting><address><addrLine>Atlanta, Georgia</addrLine></address></meeting>
+		<imprint>
+			<publisher>AIAA</publisher>
+			<date type="published" when="2018">June 25-29, 2018. 2018-2839</date>
+			<biblScope unit="page">2839</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Aerodynamic shaping design and vortical flow design aspects of a 53 deg swept flying wing configuration</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schüttesch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vormweg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">G</forename><surname>Maye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Jeans</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2018-2841</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2018-2841" />
+	</analytic>
+	<monogr>
+		<title level="m">2018 Applied Aerodynamics Conference</title>
+		<meeting><address><addrLine>Atlanta, Georgia</addrLine></address></meeting>
+		<imprint>
+			<publisher>AIAA</publisher>
+			<date type="published" when="2018">June 25-29, 2018. 2018-2841</date>
+			<biblScope unit="page">2841</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Multi-disciplinary design and performance assessment of effective, agile NATO air vehicles</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Cummings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liersch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schuette</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2018-2838</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2018-2838" />
+	</analytic>
+	<monogr>
+		<title level="m">2018 Applied Aerodynamics Conference</title>
+		<meeting><address><addrLine>Atlanta, Georgia</addrLine></address></meeting>
+		<imprint>
+			<publisher>AIAA</publisher>
+			<date type="published" when="2014">June 25-29, 2018. 2014-2838. June 2018</date>
+			<biblScope unit="page">2838</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Effect of sweep angle on the vortical flow over delta wings at an angle of attack of 10</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Brett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ooi</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://jestec.taylors.edu.my/" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Engineering Science and Technology</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="768" to="781" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">A unit-problem investigation of blunt leading-edge separation motivated by AVT-161 SACCON research</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Luckring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">J</forename><surname>Boelens</surname></persName>
+		</author>
+		<ptr target="https://doi.org/https://ntrs.nasa.gov/citations/20110016428" />
+	</analytic>
+	<monogr>
+		<title level="m">NATO RTO Specialists Meeting AVT-189</title>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">A reduced-complexity investigation of blunt leading-edge separation motivated by UCAV aerodynamics</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Luckring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">J</forename><surname>Boelens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">53rd AIAA Aerospace Sciences Meeting</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page">61</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Experimental study of flow field distribution over a generic cranked double delta wing</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Manshadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Eilbeigi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Sobhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Zadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Vaziry</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cja.2016.08.002</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.cja.2016.08.002" />
+	</analytic>
+	<monogr>
+		<title level="j">Chinese Journal of Aeronautics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1196" to="1204" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Aerodynamics and flow characteristics of X-45 delta wing planform</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yaniktepe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Özalp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ç</forename><surname>Canpolat</surname></persName>
+		</author>
+		<ptr target="https://doi.org/http://jes.ksu.edu.tr/tr/download/article-file/181023" />
+	</analytic>
+	<monogr>
+		<title level="j">Kahramanmaraş Sütçü İmam Üniversitesi Mühendislik Bilimleri Dergisi</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="10" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Flow Physics Analyses of a Generic Unmanned Combat Aerial Vehicle Configuration</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schütte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hummel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Hitzel</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.C031386</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/1.C031386" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Aircraft</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="1638" to="1651" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Flow control and high-lift performance for flying-wing manned Combat Air Vehicle Configurations by inserting lots</title>
+		<author>
+			<persName><forename type="first">U</forename><surname>Ali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Chadwick</surname></persName>
+		</author>
+		<idno type="DOI">10.21152/1750-9548.10.2.117</idno>
+		<ptr target="https://doi.org/http://dx.doi.org/10.21152/1750-9548.10.2.117" />
+	</analytic>
+	<monogr>
+		<title level="j">The International Journal of Multiphysics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Control concepts for an agile and highly swept flying wing configuration</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Löchert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Huber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rütten</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="s">Deutsche Gesellschaft für Luft-und Raumfahrt-Lilienthal-Oberth eV</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Key parameters and conceptual configuration of unmanned combat aerial vehicle concept</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Ganglin</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S1000-9361(08)60116-8</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/S1000-9361(08)60116-8" />
+	</analytic>
+	<monogr>
+		<title level="j">Chinese Journal of Aeronautics</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="393" to="400" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">OpenFOAM user guide Version 8</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Greenshields</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The OpenFOAM Foundation</title>
+		<imprint>
+			<biblScope unit="volume">237</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Assessing the sensitivity of hybrid RANS-LES simulations to mesh resolution, numerical schemes and turbulence modelling within an industrial CFD process</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Ashton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Unterlechner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Blacha</surname></persName>
+		</author>
+		<idno type="DOI">10.4271/2018-01-0709</idno>
+		<ptr target="https://doi.org/https://doi.org/10.4271/2018-01-0709" />
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. rep., SAE Technical Paper</note>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Investigation of flow characteristics and vortex formations of lambda wing at high angles of attack</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yavuz</surname></persName>
+		</author>
+		<idno type="DOI">10.18186/thermal.829872</idno>
+		<ptr target="https://doi.org/10.18186/thermal.829872" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Thermal Engineering</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="282" to="297" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<monogr>
+		<title level="m" type="main">Aerodynamics of unmanned combat air vehicles: flow structure and control</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Elkhoury</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<pubPlace>Lehigh University</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Flow structure on diamond and lambda planforms: Trailing-edge region</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yaniktepe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rockwell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">AIAA journal</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1490" to="1500" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<monogr>
+		<title level="m" type="main">Numerical analysis of vortex breakdown of unmanned combat air vehicles</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Yavuz</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+		<respStmt>
+			<orgName>M. Sc. Dissertation, Mechanical Engineering Dept. Adana: Cukurova University</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">An evaluation of turbulence model for vortex breakdown detection over delta wing</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Wibowo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Rohmat</surname></persName>
+		</author>
+		<ptr target="http://journals.pan.pl/Content/108631/PDF/AME_124489.pdf" />
+	</analytic>
+	<monogr>
+		<title level="j">Archive of Mechanical Engineering</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<monogr>
+		<title level="m" type="main">Grid Study for Euler Simulations of a 70 Delta Wing with the Unstructured Flow Solver Edge</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Le Moigne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rizzi</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+	<note>RTO Rep-084</note>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Experimental and numerical investigation of 65 degree Delta and 65/40 degree double-delta wings</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Z</forename><surname>Al-Garni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Saeed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Al-Garni</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/1.20243</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/1.20243" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Aircraft</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="71" to="76" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">New systematic CFD methods to calculate static and single dynamic stability derivatives of aircraft</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>-G</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mathematical Problems in Engineering</title>
+		<imprint>
+			<biblScope unit="volume">2017</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<title level="m" type="main">Vortex Development for a 65 swept back Delta Wing with Varying Thickness and Maximum Thickness Location</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Stucke</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Ph.D. thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Aerodynamic investigation of twist angle variation based on wing smarting for a flying wing</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Kelayeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Djavareshkian</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cja.2020.06.022</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.cja.2020.06.022" />
+	</analytic>
+	<monogr>
+		<title level="j">Chinese Journal of Aeronautics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="201" to="216" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">A DOE-based method for the aerodynamic, stability and layout optimization of a tactical Blended-Wing-Body UAV</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kapsalis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kantouros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Panagiotou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yakinthos</surname></persName>
+		</author>
+		<idno type="DOI">10.2514/6.2022-0127</idno>
+		<ptr target="https://doi.org/https://doi.org/10.2514/6.2022-0127" />
+	</analytic>
+	<monogr>
+		<title level="m">AIAA SCITECH 2022 Forum</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page">127</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Procedure for estimation and reporting of uncertainty due to discretization in CFD applications</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">B</forename><surname>Celik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><surname>Ghia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Roache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Freitas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of fluids Engineering-Transactions of the ASME</title>
+		<imprint>
+			<biblScope unit="volume">130</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Optimization of a flight-worthy scramjet combustor through CFD</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Manna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dharavath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Sinha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ast.2012.07.005</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1016/j.ast.2012.07.005" />
+	</analytic>
+	<monogr>
+		<title level="j">Aerospace science and technology</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="138" to="146" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Nature-inspired design of a turbine blade harnessing wave energy</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Samad</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/0957650919874</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1177/0957650919874" />
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the Institution of Mechanical Engineers, Part A: Journal of Power and Energy</title>
+		<imprint>
+			<biblScope unit="volume">234</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="670" to="689" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Editorial policy statement on the control of numerical accuracy</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Roache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">N</forename><surname>Ghia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">M</forename><surname>White</surname></persName>
+		</author>
+		<idno type="DOI">10.1115/1.3242537</idno>
+		<ptr target="https://doi.org/https://doi.org/10.1115/1.3242537" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Fluids Engineering</title>
+		<imprint>
+			<biblScope unit="volume">108</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">2</biblScope>
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

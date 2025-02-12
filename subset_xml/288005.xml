@@ -1,0 +1,3661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Scientometric research and critical analysis of battery state-of-charge estimation</title>
+				<funder>
+					<orgName type="full">University of Glasgow</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2022-12-22">22 December 2022</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Fan</forename><surname>Yang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical Engineering</orgName>
+								<orgName type="institution">The Hong Kong Polytechnic University</orgName>
+								<address>
+									<settlement>Hong Kong</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Dongliang</forename><surname>Shi</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical Engineering</orgName>
+								<orgName type="institution">The Hong Kong Polytechnic University</orgName>
+								<address>
+									<settlement>Hong Kong</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Qian</forename><surname>Mao</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">School of Design</orgName>
+								<orgName type="institution">The Hong Kong Polytechnic University</orgName>
+								<address>
+									<settlement>Hong Kong</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Kwok-Ho</forename><surname>Lam</surname></persName>
+							<email>kwokho.lam@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Electrical Engineering</orgName>
+								<orgName type="institution">The Hong Kong Polytechnic University</orgName>
+								<address>
+									<settlement>Hong Kong</settlement>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Centre for Medical and Industrial Ultrasonics</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="department">Centre for Medical and Industrial Ultrasonics</orgName>
+								<orgName type="institution" key="instit1">James Watt School of Engineering</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Scientometric research and critical analysis of battery state-of-charge estimation</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2022-12-22">22 December 2022</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">4BE69D5A4E0B4973C894A1DE27CD6B79</idno>
+					<idno type="DOI">10.1016/j.est.2022.106283</idno>
+					<note type="submission">Received 16 May 2022; Received in revised form 12 August 2022; Accepted 26 November 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:46+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Battery SoC estimation Scientometric method Interrelated literature research Clustering analysis</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>With the advent of lithium-ion batteries (LIBs) and electric vehicle (EV) technology, the research on the battery State-of-Charge (SoC) estimation has begun to rise and develop rapidly. In order to objectively understand the current research status and development trends in the field of battery SoC estimation, this work uses an advanced search method to analyse the literature in the field of battery SoC estimation from 2004 to 2020 in the Web of Science (WoS) database. We employed bibliometrics analysis methods to make statistics on the publication year, the number of publications, discipline distribution, journal distribution, research institutions, application fields, test methods, analysis theories, and influencing factors in the field of battery SoC estimation. With using the Citespace software, a total of 2946 relevant research literature in the field of battery SoC estimation are analyzed. The research results show that the publication of relevant research documents keeps increasing from 2004 to 2020 in the field of battery SoC estimation. The research topics focus on battery model, management system, LIB, and EV. The research contents mainly involve Kalman filtering, wavelet neural network, impedance, and model predictive control. The main research approaches include model simulation, charging and discharging data recording, algorithm improvement, and environmental test. The research direction is shown to be more and more closely related to computer science and even artificial intelligence (AI). Intelligence, visualization, and multimethod collaboration are the future research trends of battery SoC estimation.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The environmental pollution caused by traditional energy is becoming more and more serious, accompanied by the issue of energy crisis <ref type="bibr" target="#b0">[1]</ref>. Many countries have developed novel energy technologies to slow down global warming <ref type="bibr" target="#b0">[1]</ref>. Battery technology has developed rapidly because of the capability of reducing carbon dioxide (CO 2 ) emission to a certain extent <ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref>. The State-of-Charge (SoC) of the battery is an important indicator in the process of battery use <ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref>. It is essential to ensure the reasonable energy distribution and safety of the battery <ref type="bibr" target="#b10">[11]</ref><ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref>. Therefore, the research on the SoC estimation of battery is significant for the long-term effective battery operation and the prevention of catastrophic accidents <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref>. The accurate estimation of SoC is important for battery safety <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b19">20]</ref>. As an essential index of the performance, the battery SoC estimation is defined as the available state of the charge remaining in the battery <ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref>.</p><p>The battery SoC estimation has become a new research hotspot and continued to develop rapidly since 2004 <ref type="bibr" target="#b20">[21,</ref><ref type="bibr" target="#b21">22]</ref>. The applications and expansion based on the battery SoC estimation are diverse and complex <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref>. However, few existing publications show a detailed analysis of the current research status of battery SoC estimation from the year 2004 to 2020. Therefore, scientometric research is needed to analyse the Abbreviations: AEKF, Adaptive extended Kalman filter; AKF, Adaptive Kalman filter; ANN, Artificial neural network; ANFIS, Adaptive neuro-fuzzy inference system; BECM, Battery equivalent circuit model; BMS, Battery managemenet system; CATC, China automotive test cycle; EKF, Extended Kalman filtering; EV, Electric vehicle; FFRLS, Forgetting factor recursive least square; HEV, Hybrid-electric-vehicle; LIB, Lithium-ion battery; LLR, Log-likelihood rate; OCV, Open-circuit-voltage; NEDC, New European driving cycle; PNGV, Partnership for a new generation of vehicles; RBFNN, Radial basis function neural network; RC, Resistance-capacitance; RSMO, Robust sliding mode observer; SEI, Solid electrolyte interphase; SMO, Sliding mode observer; SoC, State-of-Charge; SoH, State-of-Health; UDDS, Urban dynamometer driving schedule; WoS, Web of Science.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Research methodology</head><p>WoS is applied as the database in this work according to the authoritative and high-impact academic journals. The strategy of searching and analyzing relevant documents is critical due to multitudinous academic publications on the battery SoC estimation. To ensure the quality of the searched literature and quick visualization, the search conditions were set as peer-reviewed English-language journals and conferences. The frame of the present work is shown in Fig. <ref type="figure">1</ref>, in which Citespace was employed to analyse the reported work from WoS.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Scientometric analysis</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Yearly quantitative analysis of academic publications</head><p>2946 academic publications including journal articles and conference proceedings on battery SoC estimation from the year 2004 to 2020 are analyzed as shown in Fig. <ref type="figure">2</ref>.</p><p>The result shows that the number of academic publications in battery SoC estimation has been steadily growing from 2004 to 2020, reflecting the genuine continuous need in the community. There are three main explode years of academic publications with an increment of 52.63 %, 51.78 % and 78.82 % in 2008, 2012 and 2013, respectively. The launching of the world's first mass-produced plug-in hybrid vehicle based on lithium iron phosphate batteries in 2008 drove the development of SoC technologies. In 2012 and 2013, the successful commercialization of LIBs led to an increase in demand for battery SoC estimation. Since then, Kalman filter and neural network algorithms have started to be much widely applied to SoC estimation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Leading journals and conference proceedings</head><p>The leading journals and conference proceedings could give a rapid understanding of the domain research. Table <ref type="table" target="#tab_0">1</ref> and Table <ref type="table" target="#tab_1">2</ref> show the leading journals and conference proceedings on the SoC estimation aspect from 2004 to 2021, respectively. The top three journals are JOURNAL OF POWER SOURCES, ENERGIES, and APPLIED ENERGY, while the top three conference proceedings are IEEE INDUSTRIAL ELECTRONICS SOCIETY, PROCEEDINGS OF THE AMERICAN CON-TROL CONFERENCE, and ENERGY PROCEDIA. The results show that the publications of the battery SoC estimation research were mostly related to the power, energy, and control system. The lack of research content in this subsection will be supplemented later by keyword analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Timeline</head><p>In the long history of battery SoC estimation, many scientists and researchers have contributed to the development of methods, models and algorithms. Some parts with important contributions to SoC estimation are described as follows.</p><p>In 1992, Aylor et al. introduced a lead-acid battery SoC indicator on electric wheelchairs, which combined the Open-Circuit-Voltage (OCV) method and the coulometric technique <ref type="bibr" target="#b12">[13]</ref>. The study pointed out the direction in which SoC is needed to integrate into the battery monitoring system as a core part.</p><p>In 2001, Pang et al. proposed the lead-acid SoC estimation algorithm based on an accurate battery model, minimizing undesired errors in SoC estimation when the current changes <ref type="bibr" target="#b10">[11]</ref>. Besides, the estimation method for battery internal parameters was described in detail <ref type="bibr" target="#b10">[11]</ref>. This was the first comprehensive introduction to the combination of model estimation and battery SoC algorithm.</p><p>In 2003, Cai et al. proposed to integrate the artificial neural network (ANN) and the fuzzy logic for the first time, presenting an adaptive neuro-fuzzy inference system (ANFIS) model to estimate the SoC of a high-power Ni-MH rechargeable battery. The study showed that the results were better than those acquired using the ANN when interpolating <ref type="bibr" target="#b38">[39]</ref>.</p><p>In 2004, Plett et al. introduced that extended Kalman filtering (EKF) could fill the algorithmic requirements of a BMS for a hybrid-electricvehicle (HEV) <ref type="bibr" target="#b39">[40,</ref><ref type="bibr" target="#b40">41]</ref>. The principle of EKF for state and parameter estimations was interpreted and verified <ref type="bibr" target="#b39">[40,</ref><ref type="bibr" target="#b40">41]</ref>.</p><p>In 2005, Plett et al. also proposed the dual and joint EKF for estimating SoC and State-of-Health (SoH) simultaneously, which proved that the capacity estimation can be well achieved by the dual EKF method <ref type="bibr" target="#b41">[42]</ref>.</p><p>In 2008, Lee et al. combined the dual EKF with the modified OCV method for SoC and capacity estimations for the first time, which overcame the variations in the conventional OCV method <ref type="bibr" target="#b9">[10]</ref>.</p><p>In 2009, Han et al. proposed an adaptive Kalman filter (AKF) for the SoC estimation of lead-acid batteries, which could reduce the SoC estimation error compared the EKF method <ref type="bibr" target="#b42">[43]</ref>. Then, Wang et al. proved that the AEKF for SoC estimation of a Ni/MH battery pack was effective, which could correct the initial SoC value by Ampere-hour (Ah) method and avoid filtering divergence <ref type="bibr" target="#b43">[44]</ref>.</p><p>In 2010, Hu et al. proposed an adaptive Luenberger observer for SoC estimation of a lithium-ion battery pack for EVs, which could converge the SoC estimation error into a favorable range such as within 2.5 % <ref type="bibr" target="#b44">[45]</ref>.</p><p>In 2011, He et al. proposed an adaptive extended Kalman filter (AEKF) based on an improved Thevenin model for battery SoC estimation. The proposed method reduced the maximum SoC estimation error from 14.96 % to 2.54 %, and the mean SoC estimation error from 3.19 % to 1.06 % <ref type="bibr" target="#b45">[46]</ref>.</p><p>In 2012, Dai et al. proposed a dual time-scale Kalman filtering algorithm to estimate the SoC of each cell of lithium-ion battery packs in a series-connected battery system, which could perform well even without the requirements of large-memory and high-quality CPU for the BMS <ref type="bibr" target="#b46">[47]</ref>.</p><p>In 2013, He et al. applied an unscented particle filter to the new working model for SoC estimation of LIBs, which provided better robustness with the considerations of temperature, charge-discharge rate, and running mileage <ref type="bibr" target="#b47">[48]</ref>.</p><p>In 2014, Kang et al. proposed a new model based on the radial basis function neural network (RBFNN) and cycle life model to estimate the SoC of an 6-Ah LIB, which controlled the mean absolute error (MAE) of SoC estimation to be under 5 % at different temperatures <ref type="bibr" target="#b19">[20]</ref>.</p><p>In 2015, Chen et al. integrated the robust sliding mode observer (RSMO) with the online parameter identification for a battery equivalent circuit model (BECM) via applying the forgetting factor recursive least square (FFRLS) algorithm and the learning capability of RBFNN, in which the proposed RSMO is superior to conventional SMO for the SoC estimation in terms of accuracy and tracking capability <ref type="bibr" target="#b48">[49]</ref>.</p><p>In 2016, Sun et al. proposed a systematic SoC estimation framework for a multi-cell series-connected battery pack of EVs using the bias correction technique, which reduced the maximum absolute SoC estimation error of all cells in the battery pack to be less than 2 % <ref type="bibr" target="#b49">[50]</ref>.</p><p>In 2018, Chen et al. found that multi-scale dual H infinity filters have better robustness and higher estimation accuracy than single/multiscale dual Kalman filters <ref type="bibr" target="#b50">[51]</ref>.</p><p>In 2019, they proposed an improved neural battery model in which the SoC estimation errors could be maintained below 2 % after convergence by the EKF method <ref type="bibr" target="#b51">[52]</ref>.</p><p>In 2020, Deng et al. proposed that the data-driven methods were much superior to estimate the SoC of the battery pack. The estimation error based on the data-driven methods under different dynamic cycles, temperatures, aging conditions, and even extreme conditions could be lower than 3.9 % <ref type="bibr" target="#b52">[53]</ref>. The timeline summary of landmark research on battery SoC estimation shows that the accuracy has kept enhanced via developing novel methods and models throughout the years. As the chronological summary is lack of objective statistics of important research content, the analysis of keywords will be performed to demonstrate the details in the next Section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.">Keywords</head><p>To have more comprehensive and accurate understanding on the key points and trends of research and development of battery SoC estimation, keywords are analyzed as shown in Fig. <ref type="figure" target="#fig_3">3</ref>. It is found that "model", "management system", "pack" and "lithium-ion battery" are with the highest co-occurrence frequency, which means that those keywords have strong correlations with the study of battery SoC estimation. Among those 4 keywords, "model" appears most frequently, which was the earliest research area in the community. The study of the model is classified into the construction of battery model and the determination of system model. The battery model is mainly constructed for "lithiumion batteries", "LiFePo 4 batteries", etc. The system model is mainly determined using "the extended Kalman filter method", "neural network algorithm", "genetic algorithm", etc. It shows that "model predictive   control" is the recent research hotspot, which indicates the future trend in model research.</p><p>To further investigate the keywords in the research of SoC estimation, top 10 of 26 clusters in total with the highest frequency are displayed in areas of different colors as shown in Fig. <ref type="figure">4</ref>. The clustering is capable of analyzing research directions and hotspots in the field accurately. The algorithm for cluster analysis is Log-Likelihood Rate (LLR).</p><p>The modularity and silhouette are two indicators to judge the effectiveness of cluster analysis. The structure of cluster analysis is considered as reasonable when the index exceeds 0.3. The modularity and silhouette are 0.6183 and 0.8211 in Fig. <ref type="figure">4</ref>, respectively, showing the high reliability of cluster analysis. The first 10 categories are State of charge, State, Dual extended Kalman filter, Range estimation, Battery energy storage system, Fuel cell, EVs, Ni-MH battery, Wavelet neural network, and EKF. The number #0 -#9 represent that the number of keywords ranked from high to low. The Cluster #0 State of charge is the core research component and the year of starting this research is 1992, which belongs to the early research stage. It mainly focuses on the topics of EV, pack, management system, and parameter estimation. The Cluster #1 State includes the topics about the state of charge, state of health, impedance, and simulation. The Cluster #2 Dual extended Kalman filter involves the topics of OCV, degradation, capacity fade, and estimation. There is also the latest trend to combine the artificial neural network with this Cluster. The Cluster #3 Range estimation mainly focuses on the equivalent circuit, online estimation, and time constant. The equivalent circuit establishment is crucial to provide the battery parameters for SoC estimation. The online estimation takes into account the impact of temperature changes on the battery, while the time constant is the important indicator of the internal characteristics of battery. The Cluster #4 Battery energy storage system includes renewable energy, cycle life, and estimation algorithm, in which the average year is mainly in 2016. The Cluster #5 Fuel cell research involves optimization, strategy, and prognostics. The average year is 2015, which is the early stage. The Cluster #6 Electric vehicles (EVs) mainly includes filter research, electrochemical model, energy, and observer. The filter is mainly used to better estimate the state of the EV such as position, SoC, etc., while the observer is mainly used to estimate the SoC. The Cluster #7 Ni-MH battery research mainly focuses on parameter identification, equivalent circuit model, and diagnosis, in which the parameter identification is used to build accurate battery models. The Cluster #8 Wavelet neural network is the recent research hotspot, which contains particle filter, sliding mode observer, polymer battery, and health estimation. Particle filter is a generalized method of Kalman filter, which is mainly used to estimate the battery SoC in this field. The wavelet neural method is mainly used to estimate the state of the polymer battery. The Cluster #9 EKF is an algorithm for the battery SoC estimation, which includes an unscented Kalman filter, adaptive Kalman filter, and the combination of the neural network. The frequency of the neural network reaches 67, which is the highest one in the EKF research, showing the research trend in this area.</p><p>The cluster naming in Citespace is determined by the nominal terms extracted from the cited publications, which can be regarded as the future trend of the research. Research frontier is embodied in the documents forming the co-citation matrix and the clustering of keywords emerging in the cited documents. Therefore, the emerging clustering of research keywords is applied to determine the research frontiers in the field of battery SoC estimation. In order to identify and predict the latest evolution and development trend of battery SoC estimation research, the keywords with the strongest citation bursts are selected for analysis. Compared with high-frequency keywords in safe evacuation, keywords with the strongest citation bursts are much suitable for detecting emerging trends and sudden changes in the development of battery SoC estimation. Table <ref type="table" target="#tab_2">3</ref> shows the top 30 keywords with the strongest citation bursts detected by the burst detection algorithm.</p><p>Table <ref type="table" target="#tab_2">3</ref> shows the keywords burst from 2004 to 2021, and the order of arrangement is sorted by the strength of the burst. Lead-acid battery, EV, Pack, Online state, Degradation, Management system, Sliding mode observer, Optimization, Particle filter, Lead-acid, and Capacity estimation are the top 10 keywords with the strongest burst indicator. In the early stage, the research on the battery SoC estimation was mainly for lead-acid batteries, in which the burst is from 2004 to 2014. In the future, optimization, degradation, and unscented Kalman filter will be the new trend for battery SoC estimation because those keywords burst in recent three years. The online state is also an interesting topic with high burst in 2018 and 2019, in which the online state estimation could be useful for considering the environmental parameters in the field of Based on the aforementioned analysis, the optimization, degradation, and unscented Kalman filter would become the future research frontier of battery SoC estimation, while the capacity estimation and parameter identification would be the research focus of the unscented Kalman filter, and the impedance would be the focus of optimization and degradation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.">Countries</head><p>Fig. <ref type="figure">5</ref> shows the distribution of published literature on battery SoC estimation research in various countries. There are 84 nodes in the graph, representing 84 countries, and the circular radius of the nodes represents the number of publications. In terms of the number of publications, China ranks the first globally with 890 articles in total. The USA (300 articles), South Korea (103 articles), and England (79 articles) also made a significant contribution to the field of battery SoC estimation.</p><p>The burst index of citations indicates the frequency of publications in a particular country during a specific period, which could provide a reference for the trends and changes of countries/institutions/keywords in the field of battery SoC estimation. The top 25 countries with the strongest citation bursts are shown in Table <ref type="table" target="#tab_3">4</ref>.</p><p>The top 10 countries with the strongest citation burst index would affect the direction of battery SoC research based on the high-frequency published articles.</p><p>Taiwan, Iran, and South Korea have been working on battery SoC estimation research for longer time compared to other countries. The USA has the strongest citation burst index <ref type="bibr">(17.83)</ref>, showing that the research has been highly recognized by other countries. Since 2018, Pakistan, Algeria, Jordan, U Arab Emirates, and Sweden have begun to participate in the field of battery SoC estimation. Sweden ranks 8th with a citation burst index of 3, showing its strong competitiveness and great research potential in the field of battery SoC estimation. The countrywise analysis of the SoC estimation research combined with the information of timeline and burst strength is conducive to academic communication and cooperation among researchers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Research approaches for battery SoC estimation</head><p>Many experimental studies focus on the battery SoC estimation because the accurate prediction could allocate battery energy effectively and ensure battery safety <ref type="bibr" target="#b53">[54]</ref><ref type="bibr" target="#b54">[55]</ref><ref type="bibr" target="#b55">[56]</ref><ref type="bibr" target="#b56">[57]</ref><ref type="bibr" target="#b57">[58]</ref>. The research approaches for investigating the battery SoC estimation mainly include battery model, algorithm improvement, and experimental verification. The purpose of building a battery model is to simulate and predict the characteristics of the battery during the charging and discharging processes. Various algorithms are developed to accurately calculate the SoC at a specific time through the external characteristics of the battery, such as current and voltage. The experimental method could verify and improve the developed battery model and algorithm, which is usually verified by dynamic charging and discharging tests.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Battery models</head><p>There are many approaches to classify the battery models. Here, the battery models are classified into 3 types: Equivalent circuit models <ref type="bibr" target="#b58">[59]</ref><ref type="bibr" target="#b59">[60]</ref><ref type="bibr" target="#b60">[61]</ref><ref type="bibr" target="#b61">[62]</ref><ref type="bibr" target="#b62">[63]</ref><ref type="bibr" target="#b63">[64]</ref><ref type="bibr" target="#b64">[65]</ref><ref type="bibr" target="#b65">[66]</ref><ref type="bibr" target="#b66">[67]</ref><ref type="bibr" target="#b67">[68]</ref><ref type="bibr" target="#b68">[69]</ref>, Black-box models <ref type="bibr" target="#b69">[70]</ref><ref type="bibr" target="#b70">[71]</ref><ref type="bibr" target="#b71">[72]</ref>, and Electrochemical models <ref type="bibr" target="#b72">[73]</ref><ref type="bibr" target="#b73">[74]</ref><ref type="bibr" target="#b74">[75]</ref><ref type="bibr" target="#b75">[76]</ref><ref type="bibr" target="#b76">[77]</ref><ref type="bibr" target="#b77">[78]</ref><ref type="bibr" target="#b78">[79]</ref><ref type="bibr" target="#b79">[80]</ref><ref type="bibr" target="#b80">[81]</ref><ref type="bibr" target="#b81">[82]</ref>.</p><p>The Equivalent circuit models mainly include the internal resistance battery model (Rint), the resistance-capacitance battery model (RC), the Thevenin model, and the Partnership for a new generation of vehicles (PNGV model) <ref type="bibr" target="#b60">[61,</ref><ref type="bibr" target="#b82">83]</ref>. The feature of the equivalent circuit models is to estimate battery SoC through the resistance, capacitance, and voltage characteristics. For example, Fig. <ref type="figure" target="#fig_2">6</ref> is a schematic diagram of the Rint model in which the voltage and current can be calculated by Eq. ( <ref type="formula">1</ref>). Although the equivalent circuit model only simply simulates the internal changes of the battery through the parameters such as current, voltage and resistance, it is still widely used in SoC estimation due to its simplicity and accuracy.</p><formula xml:id="formula_0">U L = U OC -I L R 0 (1)</formula><p>Fuller et al. developed an electrochemical model for LIBs, which is based on the chemical processes that take place in the battery <ref type="bibr" target="#b83">[84]</ref>. The models describe the chemical processes of battery with great details, however, the user has to set many battery-related parameters such as the electrodes thickness and the initial salt concentration in the overall heat capacity <ref type="bibr" target="#b80">[81]</ref>. It is not user-friendly due to the complexity of parameter setting. Electrochemical impedance spectroscopy (EIS) is a nondestructive effective method to measure the parameters and dynamic Fig. <ref type="figure">5</ref>. The network of countries.</p><p>F. <ref type="bibr">Yang et al.</ref> behavior of battery <ref type="bibr" target="#b84">[85]</ref>. At present, research on EIS mainly focuses on SoC prediction, electrode material analysis, lithium-ion deintercalation process, and solid electrolyte interphase (SEI) research, etc. <ref type="bibr" target="#b77">[78,</ref><ref type="bibr" target="#b84">85]</ref>.</p><p>Black-box models are developed with the advancement of computer software technology, which can be treated as data-driven approaches to estimate the battery parameters <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b85">86]</ref>. The techniques for black-box modeling can be divided into fuzzy-based estimation, fuzzy-based neural network, bio-inspired algorithm, and support vector machines. The input variables of the model can be selected from the elements that affect the battery performance, while the model output variables are the state characteristics such as SoC, capacity, etc. <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b86">87]</ref>. Fig. <ref type="figure" target="#fig_4">7</ref> shows the process for black-box modeling. The Black-box model can accurately describe the changes inside the battery in real-time through data training. Although there are still issues in the data acquisition and the fusion of algorithms, the black-box model is still the popular battery model in the research community. Its goal is to accurately reflect the changes inside the battery in real-time regardless of the type of battery and the level of battery power. The process of building the battery model is mainly divided into two types: offline and online. The main difference between them is the capability of reflecting the changes of battery internal parameters caused by the environmental factors to the model in real-time. It is tedious and costly to calibrate the parameters at every moment during the use of the battery <ref type="bibr" target="#b87">[88]</ref><ref type="bibr" target="#b88">[89]</ref><ref type="bibr" target="#b89">[90]</ref><ref type="bibr" target="#b90">[91]</ref><ref type="bibr" target="#b91">[92]</ref><ref type="bibr" target="#b92">[93]</ref><ref type="bibr" target="#b93">[94]</ref><ref type="bibr" target="#b94">[95]</ref><ref type="bibr" target="#b95">[96]</ref>. Besides the high cost of online parameter identification and the high identification failure rate, the results of online parameter identification are required to verify and compare with offline parameters <ref type="bibr" target="#b96">[97]</ref><ref type="bibr" target="#b97">[98]</ref><ref type="bibr" target="#b98">[99]</ref><ref type="bibr" target="#b99">[100]</ref>. Therefore, it is widely accepted to establish a battery model offline to simulate the behavior of the battery before charging and discharging <ref type="bibr" target="#b96">[97,</ref><ref type="bibr" target="#b100">[101]</ref><ref type="bibr" target="#b101">[102]</ref><ref type="bibr" target="#b102">[103]</ref><ref type="bibr" target="#b103">[104]</ref>. Fotouhi et al. aimed at the issue of online parameter identification and focused on the cost and proper trade-offs between different methods and models with a unique perspective, and the proposed framework validated the key role of speed during the online parameter identification process <ref type="bibr" target="#b104">[105]</ref>. A promising battery model could simulate changes of the internal characteristics in the battery to estimate the battery SoC <ref type="bibr" target="#b105">[106]</ref><ref type="bibr" target="#b106">[107]</ref><ref type="bibr" target="#b107">[108]</ref>, while the combination of simulation and battery model could simplify the process of investigation <ref type="bibr" target="#b108">[109,</ref><ref type="bibr" target="#b109">110]</ref>.</p><p>There are some software available to investigate and establish the battery models. ANSYS is good at performing module thermal simulation and analysis of modules in battery packs. Zview is usually used to analyse and study the impedance of the battery to build an equivalent circuit model. Matlab Simulink is generally used to study the input current and output voltage of the circuit model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Algorithm and experimental verification</head><p>It is necessary to combine algorithms with the developed battery model to estimate the SoC of the battery <ref type="bibr" target="#b110">[111]</ref><ref type="bibr" target="#b111">[112]</ref><ref type="bibr" target="#b112">[113]</ref>. Currently, the approaches for estimating the SoC of batteries mainly include the OCV method, Coulomb counting method, Kalman filtering method, and neural network algorithm <ref type="bibr" target="#b112">[113]</ref><ref type="bibr" target="#b113">[114]</ref><ref type="bibr" target="#b114">[115]</ref>.</p><p>The OCV method is capable of estimating the SoC value from the measured OCV of the battery <ref type="bibr" target="#b25">[26,</ref><ref type="bibr" target="#b113">114,</ref><ref type="bibr" target="#b115">[116]</ref><ref type="bibr" target="#b116">[117]</ref><ref type="bibr" target="#b117">[118]</ref><ref type="bibr" target="#b118">[119]</ref><ref type="bibr" target="#b119">[120]</ref>. Since a long period of time is required to obtain a stable OCV value, the OCV method is not suitable for the SoC estimation when the battery current changes drastically <ref type="bibr" target="#b120">[121,</ref><ref type="bibr" target="#b121">122]</ref>. Nowadays, the Coulomb counting method is commonly used to estimate the SoC by integrating the load current against time <ref type="bibr" target="#b122">[123]</ref><ref type="bibr" target="#b123">[124]</ref><ref type="bibr" target="#b124">[125]</ref><ref type="bibr" target="#b125">[126]</ref>. However, the drawback origins from the difficulty of automatic determination of the initial value of SoC, resulting in a large cumulative error <ref type="bibr" target="#b126">[127]</ref>. The Kalman filtering method obtains the minimum variance estimation by a recursive algorithm according to the collected voltage and current <ref type="bibr" target="#b46">[47,</ref><ref type="bibr" target="#b127">[128]</ref><ref type="bibr" target="#b128">[129]</ref><ref type="bibr" target="#b129">[130]</ref><ref type="bibr" target="#b130">[131]</ref><ref type="bibr" target="#b131">[132]</ref><ref type="bibr" target="#b132">[133]</ref>. Thus, this method exhibits the merits of avoiding the inaccurate estimation of the initial value of SoC and eliminating the cumulative error <ref type="bibr" target="#b128">[129]</ref>. At present, the main trend of the Kalman filter algorithm is the in-depth study of unscented Kalman filters and the combination of the neural network model and the EKF method. <ref type="bibr" target="#b133">[134]</ref><ref type="bibr" target="#b134">[135]</ref><ref type="bibr" target="#b135">[136]</ref><ref type="bibr" target="#b136">[137]</ref>.</p><p>The neural network method relies on a large number of samples for data training to achieve high accuracy <ref type="bibr" target="#b127">[128,</ref><ref type="bibr" target="#b137">[138]</ref><ref type="bibr" target="#b138">[139]</ref><ref type="bibr" target="#b139">[140]</ref>. With the advanced development of computing power and artificial intelligence,  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Research contents of battery SoC estimation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Research objects</head><p>The types of battery can be divided into primary battery and rechargeable battery. The research of battery SoC estimation are mainly based on rechargeable type that is roughly classified into lead-acid batteries <ref type="bibr" target="#b42">[43,</ref><ref type="bibr" target="#b141">142,</ref><ref type="bibr" target="#b142">143]</ref>, nickel-metal hydride batteries <ref type="bibr" target="#b143">[144,</ref><ref type="bibr" target="#b144">145]</ref>, lithium cobalt-acid batteries <ref type="bibr" target="#b145">[146,</ref><ref type="bibr" target="#b146">147]</ref>, lithium manganate batteries <ref type="bibr" target="#b147">[148]</ref>, lithium iron phosphate batteries <ref type="bibr" target="#b148">[149]</ref>, lithium-sulfur (Li-S) batteries <ref type="bibr" target="#b149">[150]</ref><ref type="bibr" target="#b150">[151]</ref><ref type="bibr" target="#b151">[152]</ref>, ternary LIBs (nickel cobalt manganese lithium-ion batteries) <ref type="bibr" target="#b152">[153]</ref><ref type="bibr" target="#b153">[154]</ref><ref type="bibr" target="#b154">[155]</ref>, etc.</p><p>In addition to the type of battery, there is a certain difference between the SoC estimation of the battery pack and the battery cell. The battery parameters of different batteries vary, which is called battery inconsistency. This would cause the modeling of the battery pack different from that of the battery cell, resulting in the derivation of capacity and SoC estimations <ref type="bibr" target="#b155">[156,</ref><ref type="bibr" target="#b156">157]</ref>. As the SoC estimation is based on the accurate estimation of the battery capacity, the battery capacity estimation is also a key research content of the SoC estimation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Environments</head><p>The main environmental factor affecting the battery SoC estimation is temperature <ref type="bibr" target="#b157">[158]</ref>. In the battery management systems on mobile devices, EVs, and other devices, overheating or low temperature would cause adverse impacts on battery SoC estimation, resulting in serious security risks.</p><p>The electrochemical reaction at the electrode/electrolyte interface is dependent of the ambient temperature <ref type="bibr" target="#b147">[148]</ref>. For LIBs, the reaction rate of the electrode decreases along with the temperature <ref type="bibr" target="#b158">[159]</ref>. This is because the viscosity of electrolytes increases and even partially solidifies at low temperatures, leading to the increase of the charge transfer impedance and the decrease of the electrical conductivity of LIBs <ref type="bibr" target="#b158">[159,</ref><ref type="bibr" target="#b159">160]</ref>. Provided that the battery voltage remains constant, the discharge current and the power output would reduce. The chain reactions would lead to the change in battery capacity at low temperatures, making the battery SoC estimation much difficult.</p><p>The high-temperature effect on the capacity is relatively complex, which depends on the types of batteries <ref type="bibr" target="#b160">[161]</ref>. For example, lithium-ion migration speeds up at high temperatures such that the capacity of LIBs is slightly higher than that at the normal temperature <ref type="bibr" target="#b160">[161]</ref>. For nickelmetal hydride batteries, the charging efficiency and battery life would greatly reduce as hydrogen storage electrodes decompose at high temperatures <ref type="bibr" target="#b161">[162]</ref>. No matter how the battery changes at high temperatures, the estimation of battery SoC would be affected. The thermal runaway also leads to battery explosion.</p><p>In light of the thermal effect, the influence of temperature on the battery is needed to consider in the process of battery SoC estimation. Currently, there are two main approaches: (1) Set the temperature as a regulating factor on the estimation of battery capacity because the accurate battery capacity is a prerequisite for accurate estimation of SoC <ref type="bibr" target="#b147">[148]</ref>; (2) add the influence of temperature into the process of battery model establishment, while the influence of temperature on the battery can also be involved through the online parameter identification <ref type="bibr" target="#b109">[110]</ref>. In the future, the influence of temperature on battery SoC estimation will tend to be adjusted and simplified online.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Conclusion</head><p>The battery SoC estimation is of great significance for rationally distributing battery energy and ensuring battery safety. For example, with the rise of EVs, as a core component of the BMS, accurate and stable estimation of battery SoC ensure the safety of vehicles and drivers. This paper analyzes the knowledge base, research frontiers, and application trends of battery SoC estimation based on the WoS database. The research method is to conduct correlation analysis and processing of the literature using the Citespace. The research hotspots of battery SoC estimation is analyzed through co-citation theory and burst detection analysis. Through the visualization of research and analysis, the development path and research trend of battery SoC estimation can be clearly and intuitively observed.</p><p>1) The model, the model predictive control, and the neural network model are the research hotspot in the future. The management system is the next popular topic, in which the core algorithm is the Kalman filter. 2) In the battery SoC research field, the optimization, degradation, and unscented Kalman filter will be the future research frontier based on the burst detection analysis. For the unscented Kalman filter, capacity estimation and online parameter identification are the research focus. For the optimization and degradation, the impedance of the battery is critical for the model optimization and battery degradation.  Though various models and algorithms have been developed, the online status of the battery is still required to further investigate with effective and accurate ways. Besides, the errors induced by current and voltage measurements and estimations, and the variation of capacity are still high, which could be further reduced by optimizing the data-driven method with machine learning involving data training and algorithm fusion. Improving the speed and accuracy of online parameter identification based on artificial intelligence algorithms would also definitely become a research hotspot of battery modeling. Regarding the algorithm level of SoC estimation, the unscented Kalman filter, the dual Kalman filter, and the extended Kalman filter combined with the artificial intelligence (AI) neural network would be the other research hotspot. Improving and modifying the Kalman filter algorithms and combining them with AI neural networks are expected to improve the robustness and accuracy in the battery SoC estimation. Besides, a joint estimation algorithm for the battery status will be one of the future directions. Less research focus should be put on the SoC estimation for lead-acid batteries and discharging conditions of batteries.</p><p>Research on the SoC estimation will remain promising with high demands in the future. The challenge comes from the difficulty of the battery model describing the internal changes of the battery accurately and timely, which could be alleviated by combining the machine learning model with the online parameter identification. The combination of SoC estimation with other disciplines should also be an alternative promising pathway, such as the emerging ultrasonic detection of SoC of LIBs, which would be beneficial to developing sensor-based BMS. Overall, there are still rooms for further improvement on the research in the SoC estimation especially the real-time performance, accuracy, and burden of algorithm on the computer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Declaration of competing interest</head><p>All co-authors have seen and agreed with the content of the manuscript and there is no financial interest to report. We declare that the manuscript is original, which has not been published before or submitted elsewhere for the consideration of publication. We know of no conflicts of interest associated with this work, and there has been no significant financial support for this work that could have influenced its outcome.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .Fig. 2 .</head><label>12</label><figDesc>Fig. 1. Research approach for the battery SoC estimation.</figDesc><graphic coords="3,91.19,55.48,412.54,192.95" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 3 .Fig. 4 .</head><label>34</label><figDesc>Fig. 3. Scientific distribution map for keywords.</figDesc><graphic coords="5,105.62,55.41,384.00,318.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Equivalent circuit of Rint model.</figDesc><graphic coords="8,70.13,512.47,185.74,154.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>3 )</head><label>3</label><figDesc>As shown in Fig. 4, dual EKF and EKF rank second and ninth among top 10 clusters, which indicates that EKF is critical in the battery SoC estimation. The future trend of the Kalman filter will be with multiple algorithms. 4) The experimental verification of the battery SoC is divided into battery model verification and SoC estimation algorithm verification. The verification of the battery model tends to be intelligent by inputting the charging and discharging data into the simulation software. The verification of the battery SoC estimation algorithm depends on the type of battery, but the overall trend would be intelligent charging and discharging verifications combined with environmental factors.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Process flow of black-box modeling.</figDesc><graphic coords="9,77.16,56.12,440.88,59.28" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="7,136.66,510.69,321.84,215.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Journals publications in battery SoC estimation from 2004 to 2021.</figDesc><table><row><cell>Journal title</cell><cell>Number of</cell><cell>%Total</cell></row><row><cell></cell><cell>articles</cell><cell>publications</cell></row><row><cell>JOURNAL OF POWER SOURCES</cell><cell>215</cell><cell>12.04 %</cell></row><row><cell>ENERGIES</cell><cell>186</cell><cell>10.41 %</cell></row><row><cell>APPLIED ENERGY</cell><cell>105</cell><cell>5.88 %</cell></row><row><cell>JOURNAL OF ENERGY STORAGE</cell><cell>91</cell><cell>5.10 %</cell></row><row><cell>ENERGY</cell><cell>79</cell><cell>4.42 %</cell></row><row><cell>IEEE ACCESS</cell><cell>76</cell><cell>4.26 %</cell></row><row><cell>IEEE TRANSACTIONS ON VEHICULAR TECHNOLOGY</cell><cell>56</cell><cell>3.14 %</cell></row><row><cell>INTERNATIONAL JOURNAL OF ENERGY RESEARCH</cell><cell>56</cell><cell>3.14 %</cell></row><row><cell>IEEE TRANSACTIONS ON INDUSTRIAL ELECTRONICS</cell><cell>51</cell><cell>2.86 %</cell></row><row><cell>IEEE TRANSACTIONS ON POWER ELECTRONICS</cell><cell>37</cell><cell>2.07 %</cell></row><row><cell>ELECTROCHIMICA ACTA</cell><cell>35</cell><cell>1.96 %</cell></row><row><cell>IEEE TRANSACTIONS ON CONTROL SYSTEM TECHNOLOGY</cell><cell>32</cell><cell>1.80 %</cell></row><row><cell>JOURNAL OF THE ELECTROCHEMICAL SOCIETY</cell><cell>32</cell><cell>1.80 %</cell></row><row><cell>APPLIED SCIENCES BASEL</cell><cell>25</cell><cell>1.40 %</cell></row><row><cell>INTERNATIONAL JOURNAL OF ELECTROCHEMICAL SCIENCE</cell><cell>25</cell><cell>1.40 %</cell></row><row><cell>JOURNAL OF POWER ELECTRONICS</cell><cell>24</cell><cell>1.18 %</cell></row><row><cell>IEEE TRANSACTIONS ON INDUSTRY APPLICATIONS</cell><cell>21</cell><cell>1.00 %</cell></row><row><cell>JOURNAL OF RENEWABLE AND SUSTAINABLE ENERGY</cell><cell>18</cell><cell>0.95 %</cell></row><row><cell>BATTERIES BASEL</cell><cell>17</cell><cell>0.95 %</cell></row><row><cell>ELECTRONICS</cell><cell>17</cell><cell>0.95 %</cell></row><row><cell>IEEE TRANSACTIONS ON ENERGY CONVERSION</cell><cell>17</cell><cell>0.95 %</cell></row><row><cell>ENERGY CONVERSION AND MANAGEMENT</cell><cell>15</cell><cell>0.84 %</cell></row><row><cell>IEEE TRANSACTIONS ON TRANSPORTATION ELECTRIFICATION</cell><cell>15</cell><cell>0.84 %</cell></row><row><cell>INTERNATIONAL JOURNAL OF ELECTRICAL POWER ENERGY SYSTEMS</cell><cell>15</cell><cell>0.84 %</cell></row><row><cell>JOURNAL OF CLEANER PRODUCTION</cell><cell>14</cell><cell>0.78 %</cell></row><row><cell>MATHEMATICAL PROBLEMS IN ENGINEERING</cell><cell>14</cell><cell>0.78 %</cell></row><row><cell>CONTROL ENGINEERING PRACTICE</cell><cell>12</cell><cell>0.67 %</cell></row><row><cell>IET POWER ELECTRONICS</cell><cell>12</cell><cell>0.67 %</cell></row><row><cell>IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS</cell><cell>11</cell><cell>0.62 %</cell></row><row><cell>IEEE TRANSACTIONS ON SMART GRID</cell><cell>10</cell><cell>0.56 %</cell></row><row><cell>IET ELECTRICAL SYSTEMS IN TRANSPORTATION</cell><cell>9</cell><cell>0.50 %</cell></row><row><cell>JOURNAL OF DYNAMIC SYSTEMS</cell><cell></cell><cell></cell></row><row><cell>MEASUREMENT AND CONTROL</cell><cell>9</cell><cell>0.50 %</cell></row><row><cell>TRANSACTIONS OF THE ASME</cell><cell></cell><cell></cell></row><row><cell>JOURNAL OF ELECTRICAL ENGINEERING TECHNOLOGY</cell><cell>8</cell><cell>0.45 %</cell></row><row><cell>INTERNATIONAL JOURNAL OF HYDROGEN ENERGY</cell><cell>7</cell><cell>0.39 %</cell></row><row><cell>MICROELECTRONICS RELIABILITY</cell><cell>7</cell><cell>0.39 %</cell></row><row><cell>SUSTAINABILITY</cell><cell>7</cell><cell>0.39 %</cell></row><row><cell>ELECTRIC POWER SYSTEMS RESEARCH</cell><cell>6</cell><cell>0.34 %</cell></row><row><cell>ELECTRICAL ENGINEERING</cell><cell>6</cell><cell>0.34 %</cell></row><row><cell>ENERGY STORAGE</cell><cell>6</cell><cell>0.34 %</cell></row><row><cell>IONICS</cell><cell>6</cell><cell>0.34 %</cell></row><row><cell>CHINESE JOURNAL OF MECHANICAL ENGINEERING</cell><cell>5</cell><cell>0.28 %</cell></row><row><cell>ELECTRONICS LETTERS</cell><cell>5</cell><cell>0.28 %</cell></row><row><cell>ENERGY SCIENCE ENGINEERING</cell><cell>5</cell><cell>0.28 %</cell></row><row><cell>IEEE TRANSACTIONS ON SUSTAINABLE ENERGY</cell><cell>5</cell><cell>0.28 %</cell></row><row><cell>INTERNATIONAL JOURNAL OF AUTOMOTIVE TECHNOLOGY</cell><cell>5</cell><cell>0.28 %</cell></row><row><cell>JOURNAL OF ENGINEERING JOE</cell><cell>5</cell><cell>0.28 %</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2</head><label>2</label><figDesc>Conference proceedings in battery SoC estimation from 2004 to 2021.</figDesc><table><row><cell>Conference title</cell><cell>Number of</cell><cell>%Total</cell></row><row><cell></cell><cell>articles</cell><cell>publications</cell></row><row><cell>IEEE INDUSTRIAL ELECTRONICS SOCIETY</cell><cell>52</cell><cell>4.20 %</cell></row><row><cell>PROCEEDINGS OF THE AMERICAN CONTROL CONFERENCE</cell><cell>50</cell><cell>4.04 %</cell></row><row><cell>ENERGY PROCEDIA</cell><cell>40</cell><cell>3.23 %</cell></row><row><cell>IEEE VEHICLE POWER AND PROPULSION CONFERENCE</cell><cell>37</cell><cell>2.99 %</cell></row><row><cell>IEEE ENERGY CONVERSION CONGRESS AND EXPOSITION</cell><cell>35</cell><cell>2.82 %</cell></row><row><cell>IEEE CONFERENCE ON INDUSTRIAL ELECTRONICS AND APPLICATIONS</cell><cell>27</cell><cell>2.18 %</cell></row><row><cell>IEEE TRANSPORTATION ELECTRIFICATION CONFERENCE AND EXPO</cell><cell>26</cell><cell>2.10 %</cell></row><row><cell>IFAC PAPERSONLINE</cell><cell>24</cell><cell>1.94 %</cell></row><row><cell>ANNUAL IEEE APPLIED POWER ELECTRONICS CONFERENCE AND EXPOSITION APEC</cell><cell>20</cell><cell>1.61 %</cell></row><row><cell>CHINESE AUTOMATION CONGRESS</cell><cell>20</cell><cell>1.61 %</cell></row><row><cell>CHINESE CONTROL CONFERENCE</cell><cell>20</cell><cell>1.61 %</cell></row><row><cell>ADVANCED MATERIALS RESEARCH</cell><cell>19</cell><cell>1.53 %</cell></row><row><cell>IEEE TRANSATIONS ON INDUSTRY APPLICATIONS</cell><cell>16</cell><cell>1.29 %</cell></row><row><cell>APPLIED ENERGY</cell><cell>15</cell><cell>1.21 %</cell></row><row><cell>APPLIED MECHANICS AND MATERIALS</cell><cell>14</cell><cell>1.13 %</cell></row><row><cell>ASIA PACIFIC POWER AND ENERGY ENGINEERING CONFERENCE</cell><cell>14</cell><cell>1.13 %</cell></row><row><cell>IEEE TRANSPORTATION ELECTRIFICATION CONFERENCE AND EXPO ASIA PACIFIC</cell><cell>14</cell><cell>1.13 %</cell></row><row><cell>PROCEEDINGS OF THE IEEE INTERNATIONAL SYMPOSIUM ON INDUSTRAL ELECTRONICS</cell><cell>13</cell><cell>1.05 %</cell></row><row><cell>2014 IEEE TRANSPORTATION ELECTRIFICATION CONFERENCE AND EXPO ASIA PACIFIC 2014</cell><cell>11</cell><cell>0.89 %</cell></row><row><cell>8TH INTERNATIONAL CONFERENCE ON APPLIED ENERGY ICAE 2016</cell><cell>11</cell><cell>0.89 %</cell></row><row><cell>DESTECH TRANSACTIONS ON ENVIRONMENT ENERGY AND EARTH SCIENCES</cell><cell>11</cell><cell>0.89 %</cell></row><row><cell>IEEE CONFERENCE ON DECISION AND CONTROL</cell><cell>11</cell><cell>0.89 %</cell></row><row><cell>INTERNATIONAL TELECOMMUNICATIONS ENERGY CONFERENCE INTELEC</cell><cell>11</cell><cell>0.89 %</cell></row><row><cell>2017 CHINESE AUTOMATION CONGRESS CAC</cell><cell>10</cell><cell>0.81 %</cell></row><row><cell>CHINESE CONTROL AND DECISION CONFERENCE</cell><cell>10</cell><cell>0.81 %</cell></row><row><cell>2016 AMERICAN CONTROL CONFERENCE ACC</cell><cell>9</cell><cell>0.73 %</cell></row><row><cell>EUROPEAN CONFERENCE ON POWER ELECTRONICS AND APPLICATIONS</cell><cell>9</cell><cell>0.73 %</cell></row><row><cell>JOINT INTERNATIONAL CONFERENCE ON</cell><cell></cell><cell></cell></row><row><cell>ENERGY ECOLOGY AND ENVIRONMENT ICEE 2018 AND ELECTRIC AND INTELLIGENT</cell><cell>9</cell><cell>0.73 %</cell></row><row><cell>VEHICLES ICEIV 2018</cell><cell></cell><cell></cell></row><row><cell>JOURNAL OF POWER SOURCES</cell><cell>9</cell><cell>0.73 %</cell></row><row><cell>2020 IEEE TRANSPORTATION ELECTRIFICATION CONFERENCE EXPO ITEC</cell><cell>8</cell><cell>0.65 %</cell></row><row><cell>IECON 2015 41ST ANNUAL CONFERENCE OF THE IEEE INDUSTRIAL ELECTRONICS SOCIETY</cell><cell>8</cell><cell>0.65 %</cell></row><row><cell>IECON 2020 THE 46TH ANNUAL CONFERENCE OF THE IEEE INDUSTRIAL ELECTRONICS SOCIETY</cell><cell>8</cell><cell>0.65 %</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3</head><label>3</label><figDesc>Top 30  keywords with the strongest citation bursts (Red boxes represent the burst time from the beginning into the end while blue ones represent the time without burst). SoC estimation. In 2013, the research about the pack had a burst, which indicates that the SoC estimation of the battery pack has become a new research trend based on its high capacity, low cost, and other advantages. Besides, the impedance and parameter identification had long burst periods of 9 and 8 years from 2007 to 2016, and from 2010 to 2018, respectively, which means that both are always the Research frontier.</figDesc><table><row><cell cols="2">Keywords</cell><cell>Year</cell><cell>Burst</cell><cell>Begin</cell><cell>End</cell><cell>2004-2021</cell></row><row><cell></cell><cell></cell><cell></cell><cell>Strength</cell><cell></cell><cell></cell></row><row><cell>Lead</cell><cell>acid</cell><cell>2004</cell><cell>16.93</cell><cell>2004</cell><cell>2014</cell></row><row><cell>battery</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Electric</cell><cell></cell><cell>2004</cell><cell>15.51</cell><cell>2017</cell><cell>2018</cell></row><row><cell>vehicle</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Pack</cell><cell></cell><cell>2004</cell><cell>11.31</cell><cell>2013</cell><cell>2014</cell></row><row><cell cols="2">Online state</cell><cell>2004</cell><cell>8.91</cell><cell>2018</cell><cell>2019</cell></row><row><cell cols="2">Degradation</cell><cell>2004</cell><cell>8.52</cell><cell>2019</cell><cell>2021</cell></row><row><cell cols="2">Management</cell><cell>2004</cell><cell>7.06</cell><cell>2013</cell><cell>2015</cell></row><row><cell>system</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Sliding mode</cell><cell>2004</cell><cell>6.98</cell><cell>2017</cell><cell>2018</cell></row><row><cell>observer</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="3">Optimization 2004</cell><cell>6.59</cell><cell>2019</cell><cell>2021</cell></row><row><cell cols="3">Particle filter 2004</cell><cell>6.48</cell><cell>2016</cell><cell>2018</cell></row><row><cell>Lead acid</cell><cell></cell><cell>2004</cell><cell>6.38</cell><cell>2010</cell><cell>2015</cell></row><row><cell>Capacity</cell><cell></cell><cell>2004</cell><cell>6.17</cell><cell>2012</cell><cell>2017</cell></row><row><cell cols="2">Estimation</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Parameter</cell><cell>2004</cell><cell>5.86</cell><cell>2010</cell><cell>2018</cell></row><row><cell cols="2">estimation</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Polymer</cell><cell></cell><cell>2004</cell><cell>5.76</cell><cell>2014</cell><cell>2016</cell></row><row><cell>battery</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Battery</cell><cell></cell><cell>2004</cell><cell>5.37</cell><cell>2006</cell><cell>2015</cell></row><row><cell cols="2">management</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>system</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Framework</cell><cell>2004</cell><cell>5.01</cell><cell>2017</cell><cell>2018</cell></row><row><cell>LiFeO4</cell><cell></cell><cell>2004</cell><cell>4.83</cell><cell>2016</cell><cell>2018</cell></row><row><cell>battery</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Impedance</cell><cell>2004</cell><cell>4.64</cell><cell>2007</cell><cell>2016</cell></row><row><cell cols="3">Li-ion battery 2004</cell><cell>4.6</cell><cell>2016</cell><cell>2017</cell></row><row><cell cols="2">Predicting</cell><cell>2004</cell><cell>4.15</cell><cell>2010</cell><cell>2013</cell></row><row><cell>state</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Nickel metal</cell><cell>2004</cell><cell>4.07</cell><cell>2006</cell><cell>2013</cell></row><row><cell>hydride</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Cycle life</cell><cell></cell><cell>2004</cell><cell>3.94</cell><cell>2015</cell><cell>2016</cell></row><row><cell cols="2">Intercalation</cell><cell>2004</cell><cell>3.91</cell><cell>2014</cell><cell>2015</cell></row><row><cell cols="3">Capacity fade 2004</cell><cell>3.65</cell><cell>2006</cell><cell>2014</cell></row><row><cell cols="2">Unscented</cell><cell>2004</cell><cell>3.62</cell><cell>2018</cell><cell>2021</cell></row><row><cell cols="2">kalman filter</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Vehicle</cell><cell></cell><cell>2004</cell><cell>3.49</cell><cell>2015</cell><cell>2017</cell></row><row><cell cols="2">Equivalent</cell><cell>2004</cell><cell>3.41</cell><cell>2014</cell><cell>2017</cell></row><row><cell>circuit</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Adaptive</cell><cell></cell><cell>2004</cell><cell>3.37</cell><cell>2014</cell><cell>2016</cell></row><row><cell>state</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Electrode</cell><cell></cell><cell>2004</cell><cell>3.19</cell><cell>2009</cell><cell>2014</cell></row><row><cell>Discharge</cell><cell></cell><cell>2004</cell><cell>3.17</cell><cell>2004</cell><cell>2010</cell></row><row><cell>Behavior</cell><cell></cell><cell>2004</cell><cell>2.96</cell><cell>2015</cell><cell>2016</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 4</head><label>4</label><figDesc>Top 25  Countries with the strongest citation bursts.</figDesc><table><row><cell>Countries</cell><cell></cell><cell>Year</cell><cell cols="3">Strength Begin End 2004 -2021</cell></row><row><cell>USA</cell><cell></cell><cell>2004</cell><cell>17.83</cell><cell>2010</cell><cell>2015</cell></row><row><cell>TAIWAN</cell><cell></cell><cell>2004</cell><cell>6.43</cell><cell>2005</cell><cell>2013</cell></row><row><cell>FRANCE</cell><cell></cell><cell>2004</cell><cell>5.93</cell><cell>2016</cell><cell>2017</cell></row><row><cell>JAPAN</cell><cell></cell><cell>2004</cell><cell>5.58</cell><cell>2014</cell><cell>2015</cell></row><row><cell cols="2">SOUTH KOREA</cell><cell>2004</cell><cell>5.48</cell><cell>2007</cell><cell>2012</cell></row><row><cell>SINGAPORE</cell><cell></cell><cell>2004</cell><cell>4.06</cell><cell>2014</cell><cell>2018</cell></row><row><cell>IRAN</cell><cell></cell><cell>2004</cell><cell>3.75</cell><cell>2007</cell><cell>2013</cell></row><row><cell>SWEDEN</cell><cell></cell><cell>2004</cell><cell>3</cell><cell>2018</cell><cell>2019</cell></row><row><cell>AUSTRIA</cell><cell></cell><cell>2004</cell><cell>2.51</cell><cell>2012</cell><cell>2015</cell></row><row><cell>EGYPT</cell><cell></cell><cell>2004</cell><cell>2.05</cell><cell>2015</cell><cell>2017</cell></row><row><cell>PEOPLES CHINA</cell><cell>R</cell><cell>2004</cell><cell>2.04</cell><cell>2005</cell><cell>2007</cell></row><row><cell>TURKEY</cell><cell></cell><cell>2004</cell><cell>2.03</cell><cell>2004</cell><cell>2007</cell></row><row><cell>BELGIUM</cell><cell></cell><cell>2004</cell><cell>2.01</cell><cell>2011</cell><cell>2012</cell></row><row><cell>DENMARK</cell><cell></cell><cell>2004</cell><cell>2</cell><cell>2019</cell><cell>2021</cell></row><row><cell cols="2">SOUTH KOREA</cell><cell>2004</cell><cell>1.99</cell><cell>2006</cell><cell>2010</cell></row><row><cell>BANGLADESH</cell><cell></cell><cell>2004</cell><cell>1.85</cell><cell>2017</cell><cell>2018</cell></row><row><cell>JORDAN</cell><cell></cell><cell>2004</cell><cell>1.69</cell><cell>2018</cell><cell>2019</cell></row><row><cell>NETHERLAND</cell><cell></cell><cell>2004</cell><cell>1.42</cell><cell>2015</cell><cell>2016</cell></row><row><cell>FRANCE</cell><cell></cell><cell>2004</cell><cell>1.36</cell><cell>2006</cell><cell>2007</cell></row><row><cell>JAPAN</cell><cell></cell><cell>2004</cell><cell>1.36</cell><cell>2006</cell><cell>2007</cell></row><row><cell cols="2">U EMIRATES ARAB</cell><cell>2004</cell><cell>1.3</cell><cell>2016</cell><cell>2019</cell></row><row><cell>ARGENTINA</cell><cell></cell><cell>2004</cell><cell>1.2</cell><cell>2009</cell><cell>2012</cell></row><row><cell>PAKISTAN</cell><cell></cell><cell>2004</cell><cell>1.03</cell><cell>2018</cell><cell>2019</cell></row><row><cell>ALGERIA</cell><cell></cell><cell>2004</cell><cell>1</cell><cell>2018</cell><cell>2019</cell></row><row><cell cols="2">U EMIRATES ARAB</cell><cell>2004</cell><cell>0.9</cell><cell>2018</cell><cell>2020</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>This research was funded by the <rs type="funder">University of Glasgow</rs> and the <rs type="institution">Hong Kong Polytechnic University</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>Data will be made available on request.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The pollutant emissions from diesel-engine vehicles and exhaust aftertreatment systems</title>
+		<author>
+			<persName><forename type="middle">A</forename><surname>˙i</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Res ¸itoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Altinis ¸ik</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Keskin</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10098-014-0793-9</idno>
+		<ptr target="https://doi.org/10.1007/s10098-014-0793-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Clean Techn. Environ. Policy</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="15" to="27" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Energy storage and the environment: the role of battery technology</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ruetschi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0378-7753(93)80132-9</idno>
+		<ptr target="https://doi.org/10.1016/0378-7753(93)80132-9" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page">7</biblScope>
+			<date type="published" when="1993">1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Energy use and environmental impacts: a general review</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Omer</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.3220701</idno>
+		<ptr target="https://doi.org/10.1063/1.3220701" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Renew. Sustain. Energy</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">53101</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The advent of battery-based societies and the global environment in the 21st century</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yoda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ishihara</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(98)00210-9</idno>
+		<ptr target="https://doi.org/10.1016/S0378-7753(98)00210-9" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="162" to="169" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Lowering greenhouse gas emissions in the built environment by combining ground source heat pumps, photovoltaics and battery storage</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B M A</forename><surname>Litjens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Worrell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">G J H M</forename><surname>Van Sark</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.enbuild.2018.09.026</idno>
+		<ptr target="https://doi.org/10.1016/j.enbuild.2018.09.026" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Build</title>
+		<imprint>
+			<biblScope unit="volume">180</biblScope>
+			<biblScope unit="page" from="51" to="71" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Development of a real-time testing environment for battery energy storage systems in renewable energy applications</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PES.2011.6039733</idno>
+		<ptr target="https://doi.org/10.1109/PES.2011.6039733" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Energy Society General Meeting</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="8" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A high-performance and environment-friendly gel polymer electrolyte for lithium ion battery based on composited lignin membrane</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10008-017-3814-x</idno>
+		<ptr target="https://doi.org/10.1007/s10008-017-3814-x" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Solid State Electrochem</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="807" to="816" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Methods for state-of-charge determination and their applications</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Piller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Perrin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jossen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(01)00560-2</idno>
+		<ptr target="https://doi.org/10.1016/S0378-7753" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">01</biblScope>
+			<biblScope unit="page" from="560" to="562" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Estimating the state of charge of a battery</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chiasson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A V R A</forename><surname>Han</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TCST.2004.839571</idno>
+		<ptr target="https://doi.org/10.1109/TCST.2004.839571" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE 2003 American Control</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="2863" to="2868" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+	<note>Conference</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">State-of-charge and capacity estimation of lithium-ion battery using a new open-circuit voltage versus state-of-charge</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2008.08.103</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2008.08.103" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">185</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1367" to="1373" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Battery state-of-charge estimation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Shuo Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Barth</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACC.2001.945964</idno>
+		<ptr target="https://doi.org/10.1109/ACC.2001.945964" />
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Am. Control Conf</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1644" to="1649" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Enhanced coulomb counting method for estimating state-of-charge and state-of-health of lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>Ng</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2008.11.021</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2008.11.021" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">86</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1506" to="1511" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A battery state-of-charge indicator for electric wheelchairs</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Aylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Zeee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">W</forename><surname>Johnson</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/41.161471</idno>
+		<ptr target="https://doi.org/10.1109/41.161471" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Electron</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="398" to="409" />
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">State-of-charge estimation for lithium-ion batteries using neural networks and EKF</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Charkhgard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Farrokhi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIE.2010.2043035</idno>
+		<ptr target="https://doi.org/10.1109/TIE.2010.2043035" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Electron</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="4178" to="4187" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">State-of-the-art of battery state-of-charge determination</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Pop</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/0957-0233/16/12/R01</idno>
+		<ptr target="https://doi.org/10.1088/0957-0233/16/12/R01" />
+	</analytic>
+	<monogr>
+		<title level="j">Meas. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="93" to="R110" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Online estimation of the state of charge of a lithium ion cell</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Santhanagopalan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>White</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2006.04.146</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2006.04.146" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">161</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1346" to="1355" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Support vector based battery state of charge estimator</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-J</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2004.09.020</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2004.09.020" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="351" to="358" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Modeling battery behavior for accurate state-of-charge indication</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Pop</surname></persName>
+		</author>
+		<idno type="DOI">10.1149/1.2335951</idno>
+		<ptr target="https://doi.org/10.1149/1.2335951" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Electrochem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">153</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<date type="published" when="2006">2006. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Determination of state-of-charge and state-of-health of batteries by fuzzy logic methodology</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Salkind</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(99)00079-8</idno>
+		<ptr target="https://doi.org/10.1016/S0378-7753(99)00079-8" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="293" to="300" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A new neural network model for the state-of-charge estimation in the battery degradation process</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ma</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2014.01.066</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2014.01.066" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="page" from="20" to="27" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Fractional modeling and SOC estimation of lithium-ion battery</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">Z</forename><surname>Yan Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bingsi</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hong</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JAS.2016.7508803</idno>
+		<ptr target="https://doi.org/10.1109/JAS.2016.7508803" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE/CAA J. Automatica Sin</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="281" to="287" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Modeling and online parameter identification of Li-Polymer battery cells for SOC estimation</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Rahimi-Eichi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Baronti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Y</forename><surname>Chow</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ISIE.2012.6237284</idno>
+		<ptr target="https://doi.org/10.1109/ISIE.2012.6237284" />
+	</analytic>
+	<monogr>
+		<title level="m">2012 IEEE International Symposium on Industrial Electronics</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="1336" to="1341" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">A comparative study on air transport safety of lithium-ion batteries with different SOCs</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.applthermaleng.2020.115679</idno>
+		<ptr target="https://doi.org/10.1016/j.applthermaleng.2020.115679" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Therm. Eng</title>
+		<imprint>
+			<biblScope unit="volume">179</biblScope>
+			<biblScope unit="page">115679</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Comparison between two model-based algorithms for Li-ion battery SOC estimation in electric vehicles</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zou</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.simpat.2013.01.001</idno>
+		<ptr target="https://doi.org/10.1016/j.simpat.2013.01.001" />
+	</analytic>
+	<monogr>
+		<title level="j">Simul. Model. Pract. Theory</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Design and implementation of a battery management system with active charge balance based on the SOC and SOH online estimation</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ren</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2018.10.133</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2018.10.133" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="page" from="908" to="917" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A generalized SOC-OCV model for lithium-ion batteries and the SOC estimation for LNMCO battery</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en9110900</idno>
+		<ptr target="https://doi.org/10.3390/en9110900" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">900</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">The state of charge estimating methods for battery: a review</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Y</forename><surname>Chang</surname></persName>
+		</author>
+		<idno type="DOI">10.1155/2013/953792</idno>
+		<ptr target="https://doi.org/10.1155/2013/953792" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. Sch. Res. Notices</title>
+		<imprint>
+			<date type="published" when="2013">2013. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">A comprehensive review of battery modeling and state estimation approaches for advanced battery management systems</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2020.110015</idno>
+		<ptr target="https://doi.org/10.1016/j.rser.2020.110015" />
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sust. Energ. Rev</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page">110015</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">SoC estimation for lithium-ion batteries: review and future challenges</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Rivera-Barrera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Muñoz-Galeano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">O J E</forename><surname>Sarmiento-Maldonado</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/electronics6040102</idno>
+		<ptr target="https://doi.org/10.3390/electronics6040102" />
+	</analytic>
+	<monogr>
+		<title level="j">Electronics</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Critical review on the battery state of charge estimation methods for electric vehicles</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2017.2780258</idno>
+		<ptr target="https://doi.org/10.1109/ACCESS.2017.2780258" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="1832" to="1843" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">An overview and comparison of online implementable SOC estimation methods for lithium-ion battery</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Meng</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIA.2017.2775179</idno>
+		<ptr target="https://doi.org/10.1109/TIA.2017.2775179" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Appl</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1583" to="1591" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Towards a smarter battery management system for electric vehicle applications: a critical review of lithium-ion battery state of charge estimation</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">U</forename><surname>Ali</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en12030446</idno>
+		<ptr target="https://doi.org/10.3390/en12030446" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">446</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">A review of lithium-ion battery state of charge estimation and management system in electric vehicle applications: challenges and recommendations</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Hannan</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2017.05.001</idno>
+		<ptr target="https://doi.org/10.1016/j.rser.2017.05.001" />
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sust. Energ. Rev</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="834" to="854" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">State estimation for advanced battery management: key challenges and future trends</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2019.109334</idno>
+		<ptr target="https://doi.org/10.1016/j.rser.2019.109334" />
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sust. Energ. Rev</title>
+		<imprint>
+			<biblScope unit="volume">114</biblScope>
+			<biblScope unit="page">109334</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">State of charge estimation for lithium-ion batteries using model-based and data-driven methods: a review</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">N</forename><surname>How</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Hannan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Lipu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Ker</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2019.2942213</idno>
+		<ptr target="https://doi.org/10.1109/ACCESS" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="136116" to="136136" />
+			<date type="published" when="2019">2019. 2019.2942213</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Current trends for state-of-charge (SoC) estimation in lithiumion battery electric vehicles</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">B</forename><surname>Espedal</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en14113284</idno>
+		<ptr target="https://doi.org/10.3390/en14113284" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">3284</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Modeling, state of charge estimation, and charging of lithium-ion battery in electric vehicle: a review</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Adaikkappan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Sathiyamoorthy</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/er.7339</idno>
+		<ptr target="https://doi.org/10.1002/er.7339" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Energy Res</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="2141" to="2165" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">A comprehensive review on the state of charge estimation for lithium-ion battery based on neural network</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Cui</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/er.7545</idno>
+		<ptr target="https://doi.org/10.1002/er.7545" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Energy Res</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="5423" to="5440" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Battery state-of-charge (SOC) estimation using adaptive neuro-fuzzy inference system (ANFIS)</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/FUZZ.2003.1206580</idno>
+		<ptr target="https://doi.org/10.1109/FUZZ.2003.1206580.FUZZ&apos;03" />
+	</analytic>
+	<monogr>
+		<title level="m">The 12th IEEE International Conference on Fuzzy Systems</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2003">2003. 2003</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page">2</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Extended Kalman filtering for battery management systems of LiPBbased HEV battery packs</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Plett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2004.02.033</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2004.02.033" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">134</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="277" to="292" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Extended Kalman filtering for battery management systems of LiPBbased HEV battery packs</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Plett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2004.02.033</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2004.02.033" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">134</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="252" to="261" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Dual and joint EKF for simultaneous SOC and SOH estimation</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Plett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 21st Electric Vehicle Symposium</title>
+		<meeting>the 21st Electric Vehicle Symposium<address><addrLine>Monaco</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page" from="1" to="2" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">State-of-charge estimation of lead-acid batteries using an adaptive extended Kalman filter</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sunwoo</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2008.11.143</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2008.11.143" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">188</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="606" to="612" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">An adaptive Kalman filtering based state of charge combined estimator for electric vehicle battery pack</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Junping</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Jingang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lei</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.enconman.2009.08.015</idno>
+		<ptr target="https://doi.org/10.1016/j.enconman.2009.08.015" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="3182" to="3186" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Estimation of state of charge of a lithium-ion battery pack for electric vehicles using an adaptive Luenberger observer</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zou</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en3091586</idno>
+		<ptr target="https://doi.org/10.3390/en3091586" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="1586" to="1603" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">State-of-charge estimation of the lithium-ion battery using an adaptive extended Kalman filter based on an improved Thevenin model</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hongwen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVT.2011.2132812</idno>
+		<ptr target="https://doi.org/10.1109/TVT.2011.2132812" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Veh. Technol</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1461" to="1469" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Online cell SOC estimation of Li-ion battery packs using a dual timescale Kalman filtering for EV applications</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Dai</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2012.02.044</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2012.02.044" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="page" from="227" to="237" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">A new model for state-of-charge (SOC) estimation for high-power Liion batteries</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2012.08.031</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2012.08.031" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="page" from="808" to="814" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Robust adaptive sliding-mode observer using RBF neural network for lithium-ion battery state of charge estimation in electric vehicles</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVT.2015.2427659</idno>
+		<ptr target="https://doi.org/10.1109/TVT.2015.2427659" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Veh. Technol</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1936" to="1947" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">A systematic state-of-charge estimation framework for multi-cell battery pack in electric vehicles using bias correction technique</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>He</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2014.12.021</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2014.12.021" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">162</biblScope>
+			<biblScope unit="page" from="1399" to="1409" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">A lithium-ion battery-in-the-loop approach to test and validate multiscale dual H infinity filters for state-of-charge and capacity estimation</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Shen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TPEL.2017.2670081</idno>
+		<ptr target="https://doi.org/10.1109/TPEL.2017.2670081" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Electron</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="332" to="342" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">State-of-charge estimation of lithium-ion battery using an improved neural network model and extended Kalman filter</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jclepro.2019.06.273</idno>
+		<ptr target="https://doi.org/10.1016/j.jclepro.2019.06.273" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Clean. Prod</title>
+		<imprint>
+			<biblScope unit="volume">234</biblScope>
+			<biblScope unit="page" from="1153" to="1164" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Data-driven state of charge estimation for lithium-ion battery packs based on gaussian process regression</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Deng</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2020.118000</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2020.118000" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">205</biblScope>
+			<biblScope unit="page">118000</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Review and recent advances in battery health monitoring and prognostics technologies for electric vehicle (EV) safety and mobility</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Rezvanizaniani</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2014.01.085</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2014.01.085" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">256</biblScope>
+			<biblScope unit="page" from="110" to="124" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">A LiFePO4 battery pack capacity estimation approach considering in-parallel cell safety in electric vehicles</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2014.12.081</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2014.12.081" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">142</biblScope>
+			<biblScope unit="page" from="293" to="302" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Reliable battery operationa challenge for the battery management system</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jossen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(99)00329-8</idno>
+		<ptr target="https://doi.org/" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">84</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="283" to="286" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">A review of safety strategies of a Li-ion battery</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">V</forename><surname>Chombo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2020.228649</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2020.228649" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">478</biblScope>
+			<biblScope unit="page">228649</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">A novel safety anticipation estimation method for the aerial lithium-ion battery pack based on the real-time detection and filtering</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jclepro.2018.01.236</idno>
+		<ptr target="https://doi.org/10.1016/j.jclepro.2018.01.236" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Clean. Prod</title>
+		<imprint>
+			<biblScope unit="volume">185</biblScope>
+			<biblScope unit="page" from="187" to="197" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Comparative research on RC equivalent circuit models for lithium-ion batteries of electric vehicles</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app7101002</idno>
+		<ptr target="https://doi.org/10.3390/app7101002" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">1002</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">A comparative study of global optimization methods for parameter identification of different equivalent circuit models for Li-ion batteries</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Lai</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.electacta.2018.11.134</idno>
+		<ptr target="https://doi.org/10.1016/j.electacta.2018.11.134" />
+	</analytic>
+	<monogr>
+		<title level="j">Electrochim. Acta</title>
+		<imprint>
+			<biblScope unit="volume">295</biblScope>
+			<biblScope unit="page" from="1057" to="1066" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Evaluation of lithium-ion battery equivalent circuit models for state of charge estimation by an experimental approach</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en4040582</idno>
+		<ptr target="https://doi.org/10.3390/en4040582" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="582" to="598" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">A comparative study of equivalent circuit models of ultracapacitors for electric vehicles</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2014.10.170</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2014.10.170" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">274</biblScope>
+			<biblScope unit="page" from="899" to="906" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">A comparative study of equivalent circuit models and enhanced equivalent circuit models of lithium-ion batteries with different model structures</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ITEC-AP.2014.6940946</idno>
+		<ptr target="https://doi.org/10.1109/ITEC-AP.2014.6940946" />
+	</analytic>
+	<monogr>
+		<title level="j">ITEC Asia-Pac</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="6" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">A review of Li-ion battery equivalent circuit models</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Lei</surname></persName>
+		</author>
+		<idno type="DOI">10.4313/TEEM.2016.17.6.311</idno>
+		<ptr target="https://doi.org/10.4313/TEEM.2016.17.6.311" />
+	</analytic>
+	<monogr>
+		<title level="j">Trans. Electr. Electron. Mater</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="311" to="316" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">A systematic review of lumped-parameter equivalent circuit models for real-time estimation of lithium-ion battery states</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nejad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Gladwin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Stone</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2016.03.042</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2016.03.042" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">316</biblScope>
+			<biblScope unit="page" from="183" to="196" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">A survey of mathematics-based equivalentcircuit and electrochemical battery models for hybrid and electric vehicle simulation</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Seaman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T.-S</forename><surname>Dao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mcphee</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2016.03.042</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2016.03.042" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">256</biblScope>
+			<biblScope unit="page" from="410" to="423" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Charging time and loss optimization for LiNMC and LiFePO4 batteries based on equivalent circuit models</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2013.03.157</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2013.03.157" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">239</biblScope>
+			<biblScope unit="page" from="449" to="457" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Time-domain parameter extraction method for Thévenin-equivalent circuit battery models</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hentunen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lehmuspelto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Suomela</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TEC.2014.2318205</idno>
+		<ptr target="https://doi.org/10.1109/TEC.2014.2318205" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="558" to="566" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Lithium-ion battery cell-level control using constrained model predictive control and equivalent circuit models</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Xavier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Trimboli</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2015.03.074</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2015.03.074" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">285</biblScope>
+			<biblScope unit="page" from="374" to="384" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Box-Jenkins black-box modeling of a lithium-ion battery cell based on automotive drive cycle data</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Khalfi</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/wevj12030102</idno>
+		<ptr target="https://doi.org/10.3390/wevj12030102" />
+	</analytic>
+	<monogr>
+		<title level="j">World Electr. Veh. J</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">102</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">System identification black box approach for modeling performance of PEM fuel cell</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Chavan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">B</forename><surname>Talange</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2018.05.014</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2018.05.014" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="327" to="332" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Automated multi-zone linear parametric black box modeling approach for building hvac systems</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Chintala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Rasmussen</surname></persName>
+		</author>
+		<idno type="DOI">10.1115/DSCC2015-9933</idno>
+		<ptr target="https://doi.org/10.1115/DSCC2015-9933" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ASME 2015 Dynamic Systems and Control Conference</title>
+		<meeting>the ASME 2015 Dynamic Systems and Control Conference</meeting>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">Model-based electrochemical estimation of lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Rahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-Y</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/CCA.2008.4629589</idno>
+		<ptr target="https://doi.org/10.1109/CCA.2008.4629589" />
+	</analytic>
+	<monogr>
+		<title level="m">The 17th IEEE International Conference on Control Applications</title>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="714" to="719" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">Enhanced performance of Liion batteries via modified reference governors and electrochemical models</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Perez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Shahmohammadhamedani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Moura</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TMECH.2014.2379695</idno>
+		<ptr target="https://doi.org/10.1109/TMECH.2014.2379695" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE/ ASME Trans. Mechatron</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1511" to="1520" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">Electrochemical control of lithium-ion batteries [applications of control</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Smith</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MCS.2010.935882</idno>
+		<ptr target="https://doi.org/10.1109/MCS.2010.935882" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Control Syst</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="18" to="25" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">Data-driven systematic parameter identification of an electrochemical model for lithium-ion batteries with artificial intelligence</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Demir</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jöst</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ringbeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Junker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">U</forename><surname>Sauer</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ensm.2021.10.023</idno>
+		<ptr target="https://doi.org/10.1016/j.ensm.2021.10.023" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Storage Mater</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="557" to="570" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<analytic>
+		<title level="a" type="main">A parameter estimation method for a simplified electrochemical model for Li-ion batteries</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.electacta.2018.04.098</idno>
+		<ptr target="https://doi.org/10.1016/j.electacta.2018.04.098" />
+	</analytic>
+	<monogr>
+		<title level="j">Electrochim. Acta</title>
+		<imprint>
+			<biblScope unit="volume">275</biblScope>
+			<biblScope unit="page" from="50" to="58" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">Electrochemical model-based state estimation for lithium-ion batteries with adaptive unscented Kalman filter</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2020.228534</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2020.228534" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">476</biblScope>
+			<biblScope unit="page">228534</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">A comparison of model order reduction techniques for electrochemical characterization of lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">P</forename><surname>Guodong Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marcello</forename><surname>Canova</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/CDC.2015.7402829</idno>
+		<ptr target="https://doi.org/10.1109/CDC.2015.7402829" />
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 54th Annual Conference on Decision and Control (CDC)</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="3922" to="3931" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">A reduced-order electrochemical model for all-solid-state batteries</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Deng</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TTE.2020.3026962</idno>
+		<ptr target="https://doi.org/10.1109/TTE.2020.3026962" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Transp. Electrificat</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="464" to="473" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">Electrochemical modelling of lead/ acid batteries under operating conditions of electric vehicles</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Karden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mauracher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Friedhelm</forename><surname>Schijpe</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(96)02518-9</idno>
+		<ptr target="https://doi.org/10.1016/S0378-7753(96)02518-9" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="175" to="180" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Equivalent circuit model parameters extraction for lithium ion batteries using electrochemical impedance spectroscopy</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Vyroubal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kazda</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2017.10.019</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2017.10.019" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="23" to="31" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<analytic>
+		<title level="a" type="main">Battery performance models in ADVISOR</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">H</forename><surname>Johnson</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0378-7753(02)00194-5</idno>
+		<ptr target="https://doi.org/10.1016/S0378-7753(02)00194-5" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="320" to="329" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<analytic>
+		<title level="a" type="main">Simulation and optimization of the dual lithium ion insertion cell</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">F</forename><surname>Fuller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Doyle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Newman</surname></persName>
+		</author>
+		<idno type="DOI">10.1149/1.2054684</idno>
+		<ptr target="https://doi.org/10.1149/1.2054684" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Electrochem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="page">1</biblScope>
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Electrochemical impedance spectroscopy</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Orazem</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annu. Rev. Anal. Chem</title>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<analytic>
+		<title level="a" type="main">Lithium-ion battery modeling based on big data</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egypro.2018.12.046</idno>
+		<ptr target="https://doi.org/10.1016/j.egypro.2018.12.046" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Procedia</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="page" from="168" to="173" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<analytic>
+		<title level="a" type="main">A merged fuzzy neural network and its applications in battery stateof-charge estimation</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TEC.2007.895457</idno>
+		<ptr target="https://doi.org/10.1109/TEC.2007.895457" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="697" to="708" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">Rachid Outbib, Parameter identification of the lead-acid battery model</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Nazih Moubayed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ali</forename><surname>Ei-Aii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hala</forename><surname>Dernayka</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PVSC.2008.4922517</idno>
+		<ptr target="https://doi.org/10.1109/PVSC.2008.4922517" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE PVSC</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="6" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<analytic>
+		<title level="a" type="main">Parameter identification and SOC estimation of a battery under the hysteresis effect</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kwak</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIE.2019.2956394</idno>
+		<ptr target="https://doi.org/10.1109/TIE.2019.2956394" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Electron</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="9758" to="9767" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<analytic>
+		<title level="a" type="main">Lithium-ion battery modeling and parameter identification based on fractional theory</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2018.09.101</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2018.09.101" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">165</biblScope>
+			<biblScope unit="page" from="153" to="163" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<analytic>
+		<title level="a" type="main">General parameter identification procedure and comparative study of li-ion battery models</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Miniguano</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVT.2019.2952970</idno>
+		<ptr target="https://doi.org/10.1109/TVT.2019.2952970" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Veh. Technol</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="235" to="245" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<analytic>
+		<title level="a" type="main">Lithium ion battery models and parameter identification techniques</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Barcellona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Piegari</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en10122007</idno>
+		<ptr target="https://doi.org/10.3390/en10122007" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<analytic>
+		<title level="a" type="main">Signal-disturbance interfacing elimination for unbiased model parameter identification of lithium-ion battery</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wei</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TII.2020.3047687</idno>
+		<ptr target="https://doi.org/10.1109/TII.2020.3047687" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Informa</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="5887" to="5897" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<analytic>
+		<title level="a" type="main">Accurate Thevenin&apos;s circuit-based battery model parameter identification</title>
+		<author>
+			<persName><forename type="first">C.-S</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-Y</forename><surname>Chow</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ISIE.2016.7744902</idno>
+		<ptr target="https://doi.org/10.1109/ISIE.2016.7744902" />
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 25th International Symposium on Industrial Electronics (ISIE)</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="274" to="279" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<analytic>
+		<title level="a" type="main">Historical data demand in window-based battery parameter identification algorithm</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Huai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2019.05.092</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2019.05.092" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">433</biblScope>
+			<biblScope unit="page">126686</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<analytic>
+		<title level="a" type="main">Data-efficient parameter identification of electrochemical lithiumion battery model using deep Bayesian harmony search</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kim</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2019.113644</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2019.113644" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">254</biblScope>
+			<biblScope unit="page">113644</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<analytic>
+		<title level="a" type="main">A robust online parameter identification method for lithium-ion battery model under asynchronous sampling and noise interference</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Cui</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIE.2020.3028799</idno>
+		<ptr target="https://doi.org/10.1109/TIE.2020.3028799" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Electron</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="9550" to="9560" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<analytic>
+		<title level="a" type="main">Update battery model for photovoltaic application based on comparative analysis and parameter identification of lead-acid battery models behaviour</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Degla</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/iet-rpg.2017.0409</idno>
+		<ptr target="https://doi.org/10.1049/iet-rpg.2017.0409" />
+	</analytic>
+	<monogr>
+		<title level="j">IET Renew. Power Gener</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="484" to="493" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<analytic>
+		<title level="a" type="main">A novel method for lithium-ion battery online parameter identification based on variable forgetting factor recursive least squares</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lao</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en11061358</idno>
+		<ptr target="https://doi.org/10.3390/en11061358" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">1358</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<analytic>
+		<title level="a" type="main">Online parameter identification of the lithium-ion battery with refined instrumental variable estimation</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wen</surname></persName>
+		</author>
+		<idno type="DOI">10.1155/2020/8854618</idno>
+		<ptr target="https://doi.org/10.1155/2020/8854618" />
+	</analytic>
+	<monogr>
+		<title level="j">Complexity</title>
+		<imprint>
+			<biblScope unit="volume">2020</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b100">
+	<analytic>
+		<title level="a" type="main">Data pieces-based parameter identification for lithium-ion battery</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Gao</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2016.08.018</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2016.08.018" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">328</biblScope>
+			<biblScope unit="page" from="174" to="184" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b101">
+	<analytic>
+		<title level="a" type="main">Adaptive passivity-based control of a photovoltaic/battery hybrid power source via algebraic parameter identification</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Mojallizadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Badamchizadeh</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JPHOTOV.2016.2514715</idno>
+		<ptr target="https://doi.org/10.1109/JPHOTOV.2016.2514715" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE J. Photovoltaics</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="532" to="539" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b102">
+	<analytic>
+		<title level="a" type="main">Parameter identification of lithium-ion battery pack for different applications based on Cramer-Rao bound analysis and experimental study</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Song</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2018.09.126</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2018.09.126" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">231</biblScope>
+			<biblScope unit="page" from="1307" to="1318" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b103">
+	<analytic>
+		<title level="a" type="main">Electric vehicle battery parameter identification and SOC observability analysis: NiMH and Li-S case studies</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fotouhi</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/iet-pel.2016.0777</idno>
+		<ptr target="https://doi.org/10.1049/iet-pel.2016.0777" />
+	</analytic>
+	<monogr>
+		<title level="j">IET Power Electron</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1289" to="1297" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b104">
+	<analytic>
+		<title level="a" type="main">Accuracy versus simplicity in online battery model identification</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fotouhi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TSMC.2016.2599281</idno>
+		<ptr target="https://doi.org/10.1109/TSMC.2016.2599281" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Syst. Man Cybern</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="195" to="206" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b105">
+	<analytic>
+		<title level="a" type="main">Accurate electrical battery model capable of predicting runtime and I-V performance</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Rincon-Mora</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TEC.2006.874229</idno>
+		<ptr target="https://doi.org/10.1109/TEC.2006.874229" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="504" to="511" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b106">
+	<analytic>
+		<title level="a" type="main">Dynamic lithium-ion battery model for system simulation</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Lijun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shengyi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename></persName>
+		</author>
+		<idno type="DOI">10.1109/TCAPT.2002.803653</idno>
+		<ptr target="https://doi.org/10.1109/TCAPT.2002.803653" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Compon. Packag. Technol</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="495" to="505" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b107">
+	<analytic>
+		<title level="a" type="main">A hybrid battery model capable of capturing dynamic circuit characteristics and nonlinear capacity effects</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Qiao</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TEC.2011.2167014</idno>
+		<ptr target="https://doi.org/10.1109/TEC.2011.2167014" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1172" to="1180" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b108">
+	<analytic>
+		<title level="a" type="main">An advanced HIL simulation battery model for battery management system testing</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Barreras</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TIA.2016.2585539</idno>
+		<ptr target="https://doi.org/10.1109/TIA.2016.2585539" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Appl</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="5086" to="5099" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b109">
+	<analytic>
+		<title level="a" type="main">A dynamic lithium-ion battery model considering the effects of temperature and capacity fading</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Erdinc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">V A M U</forename></persName>
+		</author>
+		<idno type="DOI">10.1109/ICCEP.2009.5212025</idno>
+		<ptr target="https://doi.org/10.1109/ICCEP.2009.5212025" />
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 2009 International Conference on Clean Electrical Power</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="383" to="386" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b110">
+	<analytic>
+		<title level="a" type="main">Kalman filtering state of charge estimation for battery management system based on a stochastic fuzzy neural network battery model</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.enconman.2011.06.003</idno>
+		<ptr target="https://doi.org/10.1016/j.enconman.2011.06.003" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="33" to="39" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b111">
+	<analytic>
+		<title level="a" type="main">Multi-objective optimization of lithium-ion battery model using genetic algorithm approach</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2014.07.110</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2014.07.110" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">270</biblScope>
+			<biblScope unit="page" from="367" to="378" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b112">
+	<analytic>
+		<title level="a" type="main">A novel combined battery model for state-of-charge estimation in lead-acid batteries based on extended Kalman filter for hybrid electric vehicle applications</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vasebi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Partovibakhsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M T</forename><surname>Bathaee</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2007.04.011</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2007.04.011" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="30" to="40" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b113">
+	<analytic>
+		<title level="a" type="main">A novel approach to reconstruct open circuit voltage for state of charge estimation of lithium ion batteries in electric vehicles</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2019.11375</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2019.11375" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">255</biblScope>
+			<biblScope unit="page">113758</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b114">
+	<analytic>
+		<title level="a" type="main">Advancements in OCV measurement and analysis for lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Petzl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Danzer</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TEC.2013.2259490</idno>
+		<ptr target="https://doi.org/10.1109/TEC.2013.2259490" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Energy Convers</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="675" to="681" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b115">
+	<analytic>
+		<title level="a" type="main">Online state of charge estimation and open circuit voltage hysteresis modeling of LiFePO4 battery using invariant imbedding method</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dong</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2015.10.092</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2015.10.092" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">162</biblScope>
+			<biblScope unit="page" from="163" to="171" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b116">
+	<analytic>
+		<title level="a" type="main">The state and parameter estimation of an Li-ion battery using a new OCV-SOC concept</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">H</forename><surname>Cho</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PESC.2007.4342462</idno>
+		<ptr target="https://doi.org/10.1109/PESC.2007.4342462" />
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 2007 IEEE Power Electronics Specialists Conference</title>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="2799" to="2803" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b117">
+	<analytic>
+		<title level="a" type="main">Battery open-circuit voltage estimation by a method of statistical analysis</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Snihir</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2005.11.090</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2005.11.090" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1484" to="1487" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b118">
+	<analytic>
+		<title level="a" type="main">Influence of different open circuit voltage tests on state of charge online estimation for lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2016.09.010</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2016.09.010" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">183</biblScope>
+			<biblScope unit="page" from="513" to="525" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b119">
+	<analytic>
+		<title level="a" type="main">State of charge estimation of lithium-ion batteries using the opencircuit voltage at various ambient temperatures</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Xing</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2013.07.008</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2013.07.008" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="page" from="106" to="115" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b120">
+	<analytic>
+		<title level="a" type="main">Lithium-ion open circuit voltage (OCV) curve modelling and its ageing adjustment</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lavigne</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2016.05.121</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2016.05.121" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">324</biblScope>
+			<biblScope unit="page" from="694" to="703" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b121">
+	<analytic>
+		<title level="a" type="main">Open circuit voltage characterization of lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Pattipati</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2014.06.152</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2014.06.152" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">269</biblScope>
+			<biblScope unit="page" from="317" to="333" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b122">
+	<analytic>
+		<title level="a" type="main">A study on the impact of open circuit voltage tests on state of charge estimation for lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lin</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2017.08.124</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2017.08.124" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">205</biblScope>
+			<biblScope unit="page" from="892" to="902" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b123">
+	<analytic>
+		<title level="a" type="main">A rapid online calculation method for state of health of lithiumion battery based on coulomb counting method and differential voltage analysis</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2020.228740</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2020.228740" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">479</biblScope>
+			<biblScope unit="page">228740</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b124">
+	<monogr>
+		<author>
+			<persName><forename type="first">Y.-K</forename><forename type="middle">C</forename><surname>Yong-Min</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jung-Hoon</forename><surname>Jeong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seung-Hee</forename><surname>Ahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Byoung-Kuk</forename><surname>Ryu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lee</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ECCE.2014.6953989</idno>
+		<ptr target="https://doi.org/10.1109/ECCE.2014.6953989" />
+		<title level="m">Enhanced Coulomb counting method with adaptive SOC reset time for estimating OCV</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="1313" to="1318" />
+		</imprint>
+	</monogr>
+	<note>IEEE 2014 IEEE Energy Conversion Congress and Exposition (ECCE)</note>
+</biblStruct>
+
+<biblStruct xml:id="b125">
+	<analytic>
+		<title level="a" type="main">An improved coulomb counting method based on dual opencircuit voltage and real-time evaluation of battery dischargeable capacity considering temperature and battery aging</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/er.7042</idno>
+		<ptr target="https://doi.org/10.1002/er.7042" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Energy Res</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="17609" to="17621" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b126">
+	<analytic>
+		<title level="a" type="main">A novel method to obtain the open circuit voltage for the state of charge of lithium ion batteries in electric vehicles by using H infinity filter</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2017.05.136</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2017.05.136" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">207</biblScope>
+			<biblScope unit="page" from="346" to="353" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b127">
+	<analytic>
+		<title level="a" type="main">A novel charged state prediction method of the lithium ion battery packs based on the composite equivalent modeling and improved splice Kalman filtering algorithm</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2020.228450</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2020.228450" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">471</biblScope>
+			<biblScope unit="page">228450</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b128">
+	<analytic>
+		<title level="a" type="main">State of charge estimation of vanadium redox battery based on improved extended Kalman filter</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Qiu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.isatra.2019.04.008</idno>
+		<ptr target="https://doi.org/10.1016/j.isatra.2019.04.008" />
+	</analytic>
+	<monogr>
+		<title level="j">ISA Trans</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="page" from="326" to="337" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b129">
+	<analytic>
+		<title level="a" type="main">Adaptive unscented Kalman filtering for state of charge estimation of a lithium-ion battery for electric vehicles</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Sun</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2011.03.059</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2011.03.059" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="3531" to="3540" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b130">
+	<analytic>
+		<title level="a" type="main">Sigma-point Kalman filtering for battery management systems of LiPBbased HEV battery packs</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">L</forename><surname>Plett</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2006.06.003</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2006.06.003" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">161</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1356" to="1368" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b131">
+	<analytic>
+		<title level="a" type="main">State of charge estimation for electric vehicle batteries using unscented Kalman filtering</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>He</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.microrel.2012.11.010</idno>
+		<ptr target="https://doi.org/10.1016/j.microrel.2012.11.010" />
+	</analytic>
+	<monogr>
+		<title level="j">Microelectron. Reliab</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="840" to="847" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b132">
+	<analytic>
+		<title level="a" type="main">A data-driven multi-scale extended Kalman filtering based parameter and state estimation approach of lithium-ion polymer battery in electric vehicles</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Xiong</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.apenergy.2013.07.061</idno>
+		<ptr target="https://doi.org/10.1016/j.apenergy.2013.07.061" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="page" from="463" to="476" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b133">
+	<analytic>
+		<title level="a" type="main">An adaptive unscented Kalman filtering approach for online estimation of model parameters and state-of-charge of lithium-ion batteries for autonomous Mobile robots</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Partovibakhsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Guangjun</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TCST.2014.2317781</idno>
+		<ptr target="https://doi.org/10.1109/TCST.2014.2317781" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Control Syst. Technol</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="357" to="363" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b134">
+	<analytic>
+		<title level="a" type="main">An improved adaptive unscented Kalman filtering for state of charge online estimation of lithium-ion battery</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2020.101980</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2020.101980" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">101980</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b135">
+	<analytic>
+		<title level="a" type="main">Model-based estimation of lithium concentrations and temperature in batteries using soft-constrained dual unscented Kalman filtering</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Marelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Corno</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TCST.2020.2974176</idno>
+		<ptr target="https://doi.org/10.1109/TCST.2020.2974176" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Control Syst. Technol</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="926" to="933" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b136">
+	<analytic>
+		<title level="a" type="main">SOC and SOH joint estimation of the power batteries based on fuzzy unscented Kalman filtering algorithm</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zeng</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en12163122</idno>
+		<ptr target="https://doi.org/10.3390/en12163122" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">16</biblScope>
+			<biblScope unit="page">3122</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b137">
+	<analytic>
+		<title level="a" type="main">Battery state of charge estimation using a loadclassifying neural network</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Lacap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Park</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2016.07.002</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2016.07.002" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="236" to="243" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b138">
+	<analytic>
+		<title level="a" type="main">Open-circuit voltage-based state of charge estimation of lithiumion battery using dual neural network fusion battery model</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Dang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.electacta.2015.12.001</idno>
+		<ptr target="https://doi.org/10.1016/j.electacta.2015.12.001" />
+	</analytic>
+	<monogr>
+		<title level="j">Electrochim. Acta</title>
+		<imprint>
+			<biblScope unit="volume">188</biblScope>
+			<biblScope unit="page" from="356" to="366" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b139">
+	<analytic>
+		<title level="a" type="main">Neural network-based learning and estimation of battery state-ofcharge: a comparison study between direct and indirect methodology</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Sun</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/er.5654</idno>
+		<ptr target="https://doi.org/10.1002/er.5654" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Energy Res</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page" from="10307" to="10319" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b140">
+	<analytic>
+		<title level="a" type="main">State-of-charge estimation of lithium-ion batteries based on gated recurrent neural network</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2019.03.059</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2019.03.059" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">175</biblScope>
+			<biblScope unit="page" from="66" to="75" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b141">
+	<analytic>
+		<title level="a" type="main">Overview of model-based online state-of-charge estimation using Kalman filter family for lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Shrivastava</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2019.06.040</idno>
+		<ptr target="https://doi.org/10.1016/j.rser.2019.06.040" />
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sust. Energ. Rev</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="page">109233</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b142">
+	<analytic>
+		<title level="a" type="main">Fuzzy modelling for the state-of-charge estimation of lead-acid batteries</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Burgos</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2014.10.036</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2014.10.036" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">274</biblScope>
+			<biblScope unit="page" from="355" to="366" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b143">
+	<analytic>
+		<title level="a" type="main">Adaptive state of charge algorithm for nickel metal hydride batteries including hysteresis phenomena</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Verbrugge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Tate</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2003.08.042</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2003.08.042" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">126</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="236" to="249" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b144">
+	<analytic>
+		<title level="a" type="main">Fuzzy logic modelling of state-of-charge and available capacity of nickel/metal hydride batteries</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Singh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fennie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Reisner</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2004.03.035</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2004.03.035" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">136</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="322" to="333" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b145">
+	<analytic>
+		<title level="a" type="main">Battery management system for Li-ion battery</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zhu</surname></persName>
+		</author>
+		<idno type="DOI">10.1049/joe.2017.0569</idno>
+		<ptr target="https://doi.org/10.1049/joe.2017.0569" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Eng</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="1437" to="1440" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b146">
+	<analytic>
+		<title level="a" type="main">Accuracy improvement of SOC estimation in lithium-ion batteries</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Awadallah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Venkatesh</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2016.03.003</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2016.03.003" />
+	</analytic>
+	<monogr>
+		<title level="j">J.Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="95" to="104" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b147">
+	<analytic>
+		<title level="a" type="main">Effect analysis on SOC values of the power lithium manganate battery during discharging process and its intelligent estimation</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zuo</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2021.121854</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2021.121854" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">238</biblScope>
+			<biblScope unit="page">121854</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b148">
+	<analytic>
+		<title level="a" type="main">Particle filter for state of charge and state of health estimation for lithium-iron phosphate batteries</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schwunk</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2012.10.058</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2012.10.058" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">239</biblScope>
+			<biblScope unit="page" from="705" to="710" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b149">
+	<analytic>
+		<title level="a" type="main">Lithium-sulfur battery state-of-charge observability analysis and estimation</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fotouhi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TPEL.2017.2740223</idno>
+		<ptr target="https://doi.org/10.1109/TPEL.2017.2740223" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Electron</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="5847" to="5859" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b150">
+	<analytic>
+		<title level="a" type="main">Lithium-sulfur cell equivalent circuit network model parameterization and sensitivity analysis</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fotouhi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVT.2017.2678278</idno>
+		<ptr target="https://doi.org/10.1109/TVT.2017.2678278" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Veh. Technol</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="7711" to="7721" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b151">
+	<analytic>
+		<title level="a" type="main">Improved state of charge estimation for lithium-sulfur batteries</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Propp</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2019.100943</idno>
+		<ptr target="https://doi.org/10.1016/j.est" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page">100943</biblScope>
+			<date type="published" when="2019">2019. 2019.100943</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b152">
+	<analytic>
+		<title level="a" type="main">Ternary-material lithium-ion battery SOC estimation under various ambient temperature</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Luo</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11581-018-2444-3</idno>
+		<ptr target="https://doi.org/10.1007/s11581-018-2444-3" />
+	</analytic>
+	<monogr>
+		<title level="j">Ionics</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1907" to="1917" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b153">
+	<analytic>
+		<title level="a" type="main">State of charge estimation of lithium-ion batteries over wide temperature range using unscented Kalman filter</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Du</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2018.2860050</idno>
+		<ptr target="https://doi.org/10.1109/ACCESS.2018.2860050" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="41993" to="42003" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b154">
+	<analytic>
+		<title level="a" type="main">Joint estimation of ternary lithium-ion battery state of charge and state of power based on dual polarization model</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Electrochem. Sci</title>
+		<imprint>
+			<biblScope unit="page" from="1128" to="1147" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b155">
+	<analytic>
+		<title level="a" type="main">An online SOC and capacity estimation method for aged lithiumion battery pack considering cell inconsistency</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.est.2020.101250</idno>
+		<ptr target="https://doi.org/10.1016/j.est.2020.101250" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Energy Storage</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page">101250</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b156">
+	<analytic>
+		<title level="a" type="main">State-of-charge inconsistency estimation of lithium-ion battery pack using mean-difference model and extended Kalman filter</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jpowsour.2018.02.058</idno>
+		<ptr target="https://doi.org/10.1016/j.jpowsour.2018.02.058" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Power Sources</title>
+		<imprint>
+			<biblScope unit="volume">383</biblScope>
+			<biblScope unit="page" from="50" to="58" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b157">
+	<analytic>
+		<title level="a" type="main">Battery-management system (BMS) and SOC development for electrical vehicles</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">W E</forename><surname>Cheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVT.2010.2089647</idno>
+		<ptr target="https://doi.org/10.1109/TVT.2010.2089647" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Veh. Technol</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="76" to="88" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b158">
+	<analytic>
+		<title level="a" type="main">A new approach toward improved low temperature performance of li-ion battery</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Jow</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S1388-2481(02)00490-3</idno>
+		<ptr target="https://doi.org/10.1016/S1388-2481(02)00490-3" />
+	</analytic>
+	<monogr>
+		<title level="j">Electrochem. Commun</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="928" to="932" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b159">
+	<analytic>
+		<title level="a" type="main">How electrolytes influence battery safety</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">P</forename><surname>Roth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Orendorff</surname></persName>
+		</author>
+		<idno type="DOI">10.1149/2.F04122if</idno>
+		<ptr target="https://doi.org/10.1149/2.F04122if" />
+	</analytic>
+	<monogr>
+		<title level="j">Electrochem. Soc. Interface</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">45</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b160">
+	<analytic>
+		<title level="a" type="main">Influence of temperature on lithium-oxygen battery behavior</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Park</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/nl401439b</idno>
+		<ptr target="https://doi.org/10.1021/nl401439b" />
+	</analytic>
+	<monogr>
+		<title level="j">Nano Lett</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2971" to="2975" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b161">
+	<analytic>
+		<title level="a" type="main">The influence of nickel-hydroxide composition and microstructure on the high-temperature performance of nickel metal hydride batteries</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fierro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zallen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Koch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Fetcenko</surname></persName>
+		</author>
+		<idno type="DOI">10.1149/1.2161577</idno>
+		<ptr target="https://doi.org/10.1149/1.2161577" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Electrochem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">153</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">492</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

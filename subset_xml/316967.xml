@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+				<funder ref="#_uvAySCb">
+					<orgName type="full">Medical Research Council</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">MRC Human Genetics Unit</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">University of Edinburgh</orgName>
+				</funder>
+				<funder ref="#_fsT4ryr">
+					<orgName type="full">Wellcome Trust Hosts, Pathogens and Global Health Programme</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-12-04">4 December 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Eric</forename><surname>Latorre-Crespo</surname></persName>
+							<email>eric.latorrecrespo@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Tamir</forename><surname>Chandra</surname></persName>
+							<email>tamir.chandra@igmm.ed.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Christopher</forename><surname>Faulk</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Vera</forename><surname>Gorbunova</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="laboratory">MRC Human Genetics Unit</orgName>
+								<orgName type="institution">University of Edinburgh</orgName>
+								<address>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">School of Biological Sciences</orgName>
+								<orgName type="institution">University of Edinburgh</orgName>
+								<address>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-12-04">4 December 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">DBEFAB51E4B1F7DC864DEFC2194CF71A</idno>
+					<idno type="DOI">10.1038/s43587-023-00535-6</idno>
+					<note type="submission">Received: 15 May 2023 Accepted: 2 November 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:32+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Extended Data Fig. 1 | PCA-based outlier removal. a, Left: Result of outlier detection using the density-based spatial clustering of applications with noise (DBSCAN) algorithm on PC1 vs PC2 plots resulting from principal component analysis (PCA) of all blood samples combined. Right: Same as the lefthand plot, but coloured by species instead of outlier status. b) Same analysis as in a), except on skin samples.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>DNA methylation rates have previously been found to broadly correlate with maximum lifespan in mammals, yet no precise relationship has been observed. We developed a statistically robust framework to compare methylation rates at conserved age-related sites across mammals. We found that methylation rates negatively scale with maximum lifespan in both blood and skin. The emergence of explicit scaling suggests that methylation rates are, or are linked to, an evolutionary constraint on maximum lifespan acting across diverse mammalian lineages.</p><p>Organisms display enormous variation as the result of evolution, spanning many orders of magnitude in characteristics such as size, energy requirements and lifespan. Despite this remarkable diversity, it has been observed that biological traits often share underlying mechanisms and constraints <ref type="bibr" target="#b0">1</ref> . These fundamental connections between organisms can be reflected in scaling laws, which mathematically describe an association between two physical quantities over several orders of magnitude.</p><p>A notable example of a scaling law in the field of biology is Max Kleiber's observation that an animal's metabolic rate is proportional to its mass to the power of three-quarters <ref type="bibr" target="#b1">2</ref> . This observation was later shown to hold across not just whole organisms but also cells and mitochondria, spanning a total of 27 orders of magnitude in mass <ref type="bibr" target="#b2">3</ref> . It has been proposed that this relationship arises from the transport of materials through branching fractal-like networks and that evolution tends to minimize the energy required to supply these materials <ref type="bibr" target="#b3">4</ref> . Such an explanation demonstrates the power of scaling laws to reveal fundamental processes that govern biological systems.</p><p>DNA methylation is an epigenetic modification in which a methyl group is added to a cytosine base followed by a guanine (CpG). Methylation status at a given CpG site can vary between cells, meaning a methylation proportion can be calculated for each CpG site across a population of cells. Methylation proportions of some CpG sites change in a predictable way with age. This observation led to the development of the first 'epigenetic clocks' in the early 2010s (refs. 5-7), which used methylation proportions of selected CpG sites to predict chronological age in humans. Since then, epigenetic clocks have been extended to numerous other organisms, including the development of clocks that measure age across mammalian species <ref type="bibr" target="#b7">8</ref> .</p><p>Recently, in mammals, DNA methylation rates have been shown to generally correlate with a species' maximum lifespan, although no scaling has been observed and the biological mechanisms behind the correlation remain unclear. Lowe et al. <ref type="bibr">9</ref> looked at age-related CpG sites across six mammals and found a negative trend between methylation rates and maximum lifespan. Similarly, Wilkinson et al. <ref type="bibr" target="#b9">10</ref> looked at age-related CpG sites in 26 bat species and again found a negative correlation between methylation rate and longevity. More generally, methylation dynamics have recently been used to develop epigenetic predictors of life history traits <ref type="bibr" target="#b10">11</ref> and to attempt to identify specific CpG sites and associated genes involved in both aging and longevity <ref type="bibr" target="#b11">12</ref> . Findings such as these have led to the prediction that a scaling relationship might exist between methylation rates and maximum lifespan <ref type="bibr" target="#b12">13</ref> .</p><p>We compared the methylation rates of conserved age-related CpG sites in blood and skin in a total of 42 mammalian species, representing nine taxonomic orders and covering almost the entire range of mammalian lifespans (Supplementary Tables <ref type="table">1</ref> and<ref type="table" target="#tab_1">2</ref>). In contrast to previous studies, we removed the impact of potential statistical artifacts, which arise when comparing linear rates in a bounded space of methylation values across species of different lifespans, by developing a statistically robust framework and analyzing the effect of CpG selection (described below). We found that methylation rates in both tissues scaled tightly with maximum lifespan. The emergence of explicit scaling suggests that epigenetic mechanisms are, or are linked to, an underlying evolutionary constraint on lifespan that is shared across species.</p><p>We aimed to compare methylation rates, defined as the slope from linear regressions of methylation proportion versus age, in conserved age-related sites across mammals. An overview of our workflow is depicted in Fig. <ref type="figure" target="#fig_2">1a</ref>. We initially curated our data for each tissue by removing outliers using density-based clustering <ref type="bibr" target="#b13">14</ref> on principal components (PCs; step 1 in Fig. <ref type="figure" target="#fig_2">1a</ref> and Extended Data Fig. <ref type="figure" target="#fig_2">1</ref>). Additionally,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Brief Communication</head><p>https://doi.org/10.1038/s43587-023-00535-6 longer-lived animals. This is because shorter-lived species might not be sampled long enough for small trends to become statistically apparent. Working with cohort data, these concerns arise when comparing mammalian species across different ranges of sampled ages rather than different lifespans. In a simulation based on the lifespans observed in our data, we show that not accounting for these differences in sample age ranges results in an artificial negative association with maximum lifespan (Extended Data Fig. <ref type="figure">2b</ref>).</p><p>To develop a statistically robust framework, we therefore ordered the datasets by maximum observed age and compared each mammal we removed samples below the age of sexual maturity known to exhibit non-linear dynamics 7 (step 2 in Fig. <ref type="figure" target="#fig_2">1a</ref>).</p><p>Next, we aimed to avoid any biases arising from the calculation of rates across different lifespans. First, as methylation levels are constrained between 0 and 1, they are more likely to reach these boundaries in age-related sites and start to stabilize in longer-lived mammals. Consequently, simply fitting linear regression lines to these data will result in slower methylation rates for longer-lived animals (Extended Data Fig. <ref type="figure">2a</ref>). Second, R <ref type="bibr" target="#b1">2</ref>     </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Brief Communication</head><p>https://doi.org/10.1038/s43587-023-00535-6</p><p>with its neighbors in a sequential pairwise manner (step 3 in Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods). We started from the mammal with the shortest observed age, which we refer to as the baseline species. For each comparison, we restricted the datasets of both mammals to be as close as possible to each other (step 4 in Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods).</p><p>For each pairwise comparison, we selected the common set of age-related CpG sites passing an R 2 threshold and sharing the same directionality. For each CpG in this set, we calculated the methylation rate for each species (step 5 in Fig. <ref type="figure" target="#fig_2">1a</ref>). We then calculated the methylation rate ratio of the longer-sampled species compared to the shortersampled species and extracted the median ratio across all selected CpG sites. Next, we computed the cumulative product of median ratios to compare all species together (step 6 of Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods). This cumulative product can be thought of simply as the methylation rate of each species (indirectly) compared to that of the baseline species. In this way, we were able to compare the methylation rates of the shortestsampled animals with those of the longest-sampled animals while at all steps comparing rates over the same timespans.</p><p>We explored incremental R 2 thresholds from 0 to 0.2 to define an age-related site and show the emergence of a stable scaling law for each tissue (Extended Data Fig. <ref type="figure">3</ref>).</p><p>To validate that our methodology removes any biases resulting in artificial scaling, we applied it to simulated data that use the ages observed in our dataset but with rates randomly drawn for each site from all the observed rates across all mammals. The absence of any scaling law observed in this simulation emphasizes the robustness of our approach in contrast to previous methods (Extended Data Fig. <ref type="figure">4</ref>) <ref type="bibr">9,</ref><ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b14">15</ref> .</p><p>To explore the existence of a scaling law between methylation rate and lifespan, we plotted the methylation rate for each species (as explained above) against maximum lifespan in two tissues for which we had sufficient data: blood and skin (Fig. <ref type="figure" target="#fig_2">1b-e</ref>). For each tissue, this revealed a relationship in which methylation rates decay to an asymptote as lifespan increases (Fig. <ref type="figure" target="#fig_2">1b,</ref><ref type="figure">d</ref>). Taking the logarithm of the x and y axes (see the Methods for details) resulted in strong linear associations with slopes equal to -0.95 in blood (95% confidence interval (CI), -1.14 to -0.76) and -0.60 in skin (95% CI, -0.74 to -0.47) (Fig. <ref type="figure" target="#fig_2">1c,</ref><ref type="figure">e</ref>). This implies power law relationships for each tissue in which methylation rates are proportional to lifespan to the power of -0.95 (blood) and -0.60 (skin). The relationships were strong and consistent in both tissues, with relatively little variation in methylation rates unexplained by differences in maximum lifespan (R 2 = 0.81 in blood, R 2 = 0.80 in skin). Similar associations were seen when CpG sites were stratified into hypermethylating and hypomethylating sites (Extended Data Fig. <ref type="figure">5</ref>) and in a sensitivity analysis in which we omitted the initial trimming of ages up to the age of sexual maturity (Extended Data Fig. <ref type="figure">6</ref>). Notably, the three largest outliers in blood samples were livestock species (pigs, sheep and cattle).</p><p>Overall, our analysis of DNA methylation data in mammals reveals scaling between maximum lifespan and DNA methylation rate over approximately two orders of magnitude and in two distinct tissue types. For blood, for example, this relationship means that the methylation rate of humans is about half as fast as that of chimpanzees, given that our lifespan is about twice as long. An interesting application of such scaling relationships is that it allows estimations of maximum lifespan for newly discovered species through longitudinal sampling, in which only the time interval between samples is needed instead of any knowledge of chronological ages.</p><p>Many physiological characteristics exhibit scaling with lifespan because they are indirectly associated through body mass <ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b15">16</ref> . However, the relationship we observed is largely independent of body mass, with no clear trend seen when regressing against mass instead of lifespan (Extended Data Fig. <ref type="figure">7</ref>). For example, the naked mole rat, which is an outlier in body mass relationships, scaled appropriately in our data <ref type="bibr" target="#b16">17</ref> .</p><p>The fact that specific and quantitative relationships exist between methylation rate and maximum lifespan suggests that there is an evolutionary constraint acting across diverse mammalian lineages. This means that, when an organism's lifespan evolves, its methylation rates also change. A scaling law emerges when these changes occur in a predictable way.</p><p>Methylation changes over a lifespan can be most simply described by the occurrence of epimutations in stem cells and their inheritance through cell divisions. As such, methylation rate in a mammal, M L , of lifespan L can be thought of as the product of two underlying quantities: R, the rate of stem cell division, and p, the probability that a cell division results in a change in methylation state <ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b18">19</ref> .</p><formula xml:id="formula_0">M L ∝ pR ∝ L a ,<label>(1)</label></formula><p>where a denotes the scaling law. Under this model, the quantity pR must scale with lifespan. As for which of these factors may be responsible for the scaling we observe, we discuss two non-mutually exclusive scenarios below. First, the probability p of methylation changes with each stem cell division may scale with maximum lifespan. In this scenario, aberrant methylation levels themselves are an evolutionary constraint on maximum lifespan. In other words, epimutation burden is deleterious, and so mechanisms to reduce it are selected for in longer-lived organisms (that is, p decreases as L increases in equation ( <ref type="formula" target="#formula_0">1</ref>)). This scenario would support an instructive role of DNA methylation in the associations observed between epigenetic changes and physiological outcomes in aging <ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b20">[20]</ref><ref type="bibr" target="#b21">[21]</ref><ref type="bibr" target="#b22">[22]</ref> .</p><p>Second, it is possible that stem cell replication rates scale with maximum lifespan (that is, R decreases as L increases in equation ( <ref type="formula" target="#formula_0">1</ref>)). In the hematopoietic system, it has previously been suggested that the rate of stem cell divisions in mammals decreases with lifespan such that the total number of divisions per stem cell is approximately constant, regardless of lifespan <ref type="bibr" target="#b23">23</ref> . Additionally, it has recently been observed by Cagan et al. that somatic mutation rates also exhibit negative scaling with maximum lifespan <ref type="bibr" target="#b24">24</ref> . Given that cell division plays a role in both processes, one possibility is that the scaling of both methylation and mutation rates is driven by stem cell replication rates.</p><p>While our study unambiguously shows the existence of scaling between methylation rates and maximum lifespan in mammals, the precise value of the scaling is subject to some uncertainty. First, the data are one source of error. Specifically, although the Mammalian Methylation Consortium dataset provided an unprecedented resource for the community, the number of observations per mammal was sometimes limited. Additionally, the sampling distribution of ages in some mammals was uneven or sparse or covered only a small proportion of their maximum lifespan. Combined, these factors added uncertainty to the calculation of methylation rates. Similarly, the age and maximum lifespan estimates in some mammalian species are imprecise, adding further uncertainty to the calculations. Second, while it is well established that methylation dynamics can be approximated by linear functions, they do not provide a comprehensive model. Some age-associated CpG sites exhibit non-linear dynamics later in life as they approach a stable value and begin to plateau. This phenomenon would result in an underestimation of the true methylation rate in faster methylating mammals and likely bias our results toward the null (Extended Data Fig. <ref type="figure">8</ref>), although we partially mitigated this phenomenon by excluding CpG sites with methylation values concentrated near the boundaries. Given all these limitations, there is some uncertainty around the exact value of the scaling laws in blood and skin, and it is unclear whether they are distinct or converge on a common value. However, regardless of the precise values, it is striking that such strong scaling relationships exist even with all these potential sources of error. Future studies could evaluate whether these scaling relationships hold for other classes and tissues and whether non-linear models may shed more light on the precise values of the scaling laws.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Brief Communication</head><p>https://doi.org/10.1038/s43587-023-00535-6</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Considerations in the calculation of methylation rates</head><p>In contrast to previous studies <ref type="bibr">9,</ref><ref type="bibr" target="#b9">10</ref> , we restricted our analysis to CpG sites that were related to age in each mammal being compared. We did this because even a conserved CpG site may behave markedly differently between species. For example, the ELOVL2 CpG site (cg16867657) is very strongly associated with age in humans and other primates but shows no association with age in most other species (Extended Data Fig. <ref type="figure">9</ref>). As such, using this CpG site to compare methylation rates between a primate and non-primate species may not be appropriate.</p><p>Additionally, we compared species across the same timespans because various statistical issues may arise when comparing methylation rates of species across different age ranges. In our study, there were two main considerations. First, use of an R 2 threshold (or equivalent) to select age-related sites may bias results toward slower rates in longer-lived animals. This is because slowly methylating sites may not be detected in shorter-lived animals due to smaller timespans and the fact that methylation data are often noisy. In other words, shorter-lived animals might not be sampled long enough for small trends to become statistically apparent. Second, methylation proportions are bounded at 0 and 1. This is important, as it means that, if any given site is related to age, then methylation levels may be more likely to have approached these boundaries and begun to plateau in longer-lived mammals. If this is the case, then simply fitting linear regression lines to these data would result in slower methylation rates for longer-lived animals even with the same underlying dynamics (Extended Data Fig. <ref type="figure">2</ref>).</p><p>Our initial approach was to find age-related CpG sites common to all species and compare the average slope. However, very few CpG sites satisfied this criterion, resulting in unstable estimates. This method would also extend poorly to additional animals, as the number of common CpG sites would decrease with each addition. Furthermore, we were not able to compare animals over the same timespan given the vastly different sampling ranges between the shortest-and longestlived animals.</p><p>Because of all the above reasons, we decided to compare each species in a pairwise manner. This maximized the number of common age-related sites we could use in each comparison. Additionally, if we first ordered our dataset by maximum observed age, we could compare neighboring species across the same timespan by appropriately trimming the datasets in each comparison. This would ensure a fair comparison while maximizing the amount of data retained in each comparison. Finally, as we can sequentially move across the dataset, at each point calculating how the rates of the next mammal compare to those of the one before it, we can (indirectly) compare the methylation rates of the shortest-sampled animals with those of the longest-sampled animals while at all points comparing rates over the same timespans.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Primary analysis</head><p>We aimed to compare methylation rates, defined as the slope from linear regressions of methylation proportion versus age, in conserved age-related sites across mammals. An overview of our workflow is depicted in Fig. <ref type="figure" target="#fig_2">1a</ref>. We initially curated our data for each tissue by conducting PC analysis on all species combined. We then projected each tissue onto the PC1 and PC2 components to detect and remove outlier samples using density-based spatial clustering (DBSCAN) for each species separately (step 1 in Fig. <ref type="figure" target="#fig_2">1a</ref> and Extended Data Fig. <ref type="figure" target="#fig_2">1</ref>; see code for further details). Additionally, we removed samples below the age of sexual maturity known to exhibit non-linear dynamics 7 (step 2 in Fig. <ref type="figure" target="#fig_2">1a</ref>). The age of sexual maturity, as reported in the AnAge database <ref type="bibr" target="#b25">25</ref> , was then subtracted from all ages so that 0 represented the age of sexual maturity.</p><p>To develop a statistically robust framework, we ordered the datasets by maximum observed age and compared each mammal with its neighbors in a sequential pairwise manner (step 3 in Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods). We started from the mammal with the shortest observed age, which we refer to as the baseline species. For each comparison, we restricted the datasets of both mammals to be as close as possible to each other (step 4 in Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods). Specifically, we calculated the maximum sample age of the shorter-observed species and then found the sample with closest age from the comparison species (either above or below the maximum sample age of the shorterobserved species). If the differences in samples was greater than 2% of the lifespan of the shortest mammal or 1 year (whichever was smallest), we used the next-oldest sample in the shorter-observed species and repeated the process. Once two ages were found that satisfied these criteria, we then restricted the observations in each of the compared species accordingly. Mammals that had fewer than 15 samples after this restriction (or 20 initially) were excluded, as were species for which the maximum sampled age was below 25% of the reported maximum lifespan.</p><p>For each pairwise comparison, we selected the common set of age-related CpG sites passing an R 2 threshold and sharing the same directionality. A CpG site was considered associated with age if the R 2 value from a simple linear regression passed a certain threshold (see Methods). CpG sites with a mean methylation proportion above 0.9 or below 0.1 (calculated after any data trimming) were removed, as these sites tend to display non-linear dynamics due to being near the maximum or minimum methylation values.</p><p>For each CpG site satisfying these criteria in both mammals in each pairwise comparison, we calculated the methylation rate for each species (step 5 in Fig. <ref type="figure" target="#fig_2">1a</ref>). We then calculated the methylation rate ratio of the longer-sampled species compared to the shorter-sampled species. That is, for each CpG site, methylation rate ratio = (rate of longersampled species)/(rate of shorter-sampled species). For example, a ratio of 0.5 would mean that the methylation rate of the longer-sampled species is half as fast as the methylation rate of the shorter-sampled species in a particular CpG site. We calculated these ratios across all CpG sites included for each comparison and extracted the median ratio. Use of the median was chosen over the mean, as the mean was severely affected by large outliers (resulting from the division of very small numbers in some ratio calculations).</p><p>Next, we computed the cumulative product of median ratios to compare all species together (step 6 of Fig. <ref type="figure" target="#fig_2">1a</ref> and the Methods). This cumulative product can be thought of simply as the methylation rate of each species (indirectly) compared to that of the baseline species. For example, the first mammal in the list (for example, the rat) is given a rate ratio of 1. Suppose that the next mammal in the list (mouse) is compared to the rat, yielding a rate ratio of 0.94 (that is, its median methylation rate is 0.94 as fast as that of a mouse in common conserved age-related CpG sites). Suppose the next mammal in the list (sheep) is then compared to the mouse, yielding a rate ratio of 0.53. We can indirectly compare the rates of the sheep to those of the rat by the cumulative rate ratio of 0.94 × 0.53 = 0.49 and so on. In this way, we can compare the methylation rates of the shortest-sampled animals with those of the longest-sampled animals while at all steps comparing rates over the same timespans.</p><p>We include a more detailed mathematical description of this process below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mathematical description of scaling and power laws</head><p>Mathematically, scaling between two variables x and y can generally be described as a power law relationship of the form</p><formula xml:id="formula_1">y = ax s ,</formula><p>where s is the scaling law and a is a constant. Alternatively, taking the logarithm on both sides allows for linear inference of both s and a, log(y) = log(a) + s log(x).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Brief Communication</head><p>https://doi.org/10.1038/s43587-023-00535-6</p><p>In our case, we are interested in inferring the scaling law relating the lifespan l m of a mammal, m, with the slope s c,m of the methylation values in a CpG site c. This translates to the following scaling relation:</p><formula xml:id="formula_2">log(l m ) = log(b c ) + s log(s c,m ),</formula><p>where b c denotes the baseline slope in site c or the slope predicted for a mammal with a lifespan of 1 year.</p><p>Our pairwise comparison algorithm exploits the following relation for any two mammals m 0 and m 1 :</p><formula xml:id="formula_3">log ( s c,m 1 s c,m 0 ) = s log (l m 1 ) -s log (l m 0 ) .</formula><p>In other words, the ratio between the slopes in two mammals replaces the intercept in the linear relation with one that is relative to the lifespan of the baseline species m 0 .</p><p>Finally, given an arbitrarily ordered set of species m 0 , m 1 , … m i , the cumulative product of slopes results in an estimator of the desired scaling law s:</p><formula xml:id="formula_4">log ( s c,m 1 s c,m 0 s c,m 2 s c,m 1 … s c,m i s c,m i-1 ) = s log (l m i ) -s log (l m 0 ) .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Stability of the scaling law</head><p>We calculated the impact of varying the minimum R 2 threshold to define an age-related CpG site (Extended Data Fig. <ref type="figure">3</ref>). A grid of R 2 values between 0 and 0.2 was explored for each tissue (Extended Data Fig. <ref type="figure">3a,</ref><ref type="figure">c</ref>). We then assessed the stability of our results using the kernel density estimate of all reported values and selected the optimal scaling as the point of maximum density (Extended Data Fig. <ref type="figure">3b,</ref><ref type="figure">d</ref>). R 2 values that resulted in less than ten CpG sites in any one comparison were not considered, even if below the threshold of 0.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Biases and statistical robustness</head><p>We conducted various analyses to explore the robustness of our results. First, we conducted a random null simulation, showing that not accounting for differences in sample age ranges results in an artificial negative association with maximum lifespan (Extended Data Fig. <ref type="figure">2b</ref>). Specifically, we created synthetic data representing a scenario that was as similar as possible to the real data, except with no scaling of methylation rates. We used the observed species and associated lifespans in our datasets but with synthetic methylation data. For each species and site, we uniformly sampled ages within its lifespan and randomly drew slopes and initial methylation values from normal distributions to create linear data with random noise and constrained their values to within 0 and 1. In this analysis, we simply calculated the methylation rates of each mammal across their entire sampled age ranges.</p><p>Second, we again used synthetic data but instead conducted our primary analysis method (Fig. <ref type="figure" target="#fig_2">1a</ref>) on it. In this case, we used the observed species and used exact sampled ages in our datasets but randomly drew slopes and intercepts from all those observed across all mammals in this study to create synthetic linear data. https://doi.org/10.1038/s43587-023-00535-6</p><p>Extended Data Fig. <ref type="figure">2</ref> | Potential statistical issues arising when comparing methylation rates across different timespans. a, Differences arising in fitting a linear slope to identically generated synthetical data in a shorter-lived mammal that is sampled to a certain age (50 years, dotted blue line) and a longer-lived mammal sampled for a longer time (100 years, dotted brown line). Linear regression lines and corresponding 95% confidence intervals (shaded regions) are shown in their respective colours. The estimated slope for the longer-lived species is under-estimated as the result of constraints in methylation range. b, Results from a random simulation, demonstrating that not accounting for differences in sample age ranges results in an artificial negative association between methylation rate and maximum lifespan. Each point corresponds to the median slope inferred in synthetically generated data for all mammals included in our analysis of the blood tissue (see Methods). Regression line from a linear regression of the form y ~ x is shown in blue with its associated shaded region representing the 95% confidence interval. c, Log methylation rate (ratio compared to baseline species) versus log maximum lifespan, with R 2 threshold used to define an age-related site taken from the maximum density value in b) (red line). The y-coordinate for each point shows the log 10 cumulative product of the median slope ratio (see Methods). Regression line from simple linear regressions of the form y ~ x. Shaded region represents the 95% confidence interval. d-f, Equivalent analysis as in a-c, but in skin samples. Extended Data Fig. <ref type="figure">5</ref> | Scaling relationships stratified into hyper-and hypomethylating sites. a, Log methylation rate ratio, compared to baseline species, versus log maximum lifespan in blood samples in hypermethylating (that is, increasing) sites only. The y-coordinate for each point shows the log 10 cumulative product of the median slope ratio (see Methods). Regression line from simple linear regression of the form y ~ x. Shaded region represents the 95% confidence interval. b, Equivalent analysis as in a, but in hypomethylating sites only. c,d Equivalent analysis as in a and b, but in skin samples.</p><p>Extended Data Fig. <ref type="figure">6</ref> | Scaling relationships without initial trimming of ages below sexual maturity. a, Log methylation rate ratio, compared to baseline species, versus log maximum lifespan in blood samples. Methylation rates are calculated for each species without initial trimming of ages below sexual maturity. The y-coordinate for each point shows the log 10 cumulative product of the median slope ratio (see Methods). Regression line from simple linear regression of the form y ~ x. Shaded region represents the 95% confidence interval. b, Equivalent analysis as in a), but in skin samples.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 1 |</head><label>1</label><figDesc>Fig. 1 | DNA methylation rates scale with maximum lifespan. a, Workflow overview. M, methylation proportion. b, Methylation rate (*ratio compared to baseline species) versus maximum lifespan in blood samples. The y coordinate of each point is the cumulative product of the median rate ratio (Methods). The regression line is plotted from the transformed log-linear association shown</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>6 Extended Data Fig. 3 | 6 Extended Data Fig. 4 |</head><label>6364</label><figDesc>https://doi.org/10.1038/s43587-023-00535-Scaling relationships across varying R 2 thresholds used to define an age-related site. a, Scaling relationship (that is, slope of the log-log plot of methylation rate ratio versus maximum lifespan) across varying R 2 thresholds used to define an age-related site, in blood samples. Also shown is the mean number of CpGs used across all pairwise comparisons, and the minimum number of CpGs used in any single comparison. b, Kernel density estimate (KDE) plot of the scaling relationships shown in a). Red line shows the maximum density value. c, d, Same as in a) and b) except in skin samples.Brief Communicationhttps://doi.org/10.1038/s43587-023-00535-Scaling relationships using simulated null data. a, Scaling relationship (that is, slope of the log-log plot of methylation rate ratio versus maximum lifespan) across varying R 2 thresholds used to define an agerelated site, in a random null simulation using blood samples. Also shown is the mean number of CpGs used across all comparisons, and the minimum number of CpGs used in any single comparison. b, Kernel density estimate (KDE) plot of the scaling relationships shown in a). Red line shows the maximum density value.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>-based thresholds to select age-related sites may bias the selection of CpG sites toward those with slower rates in</figDesc><table><row><cell>a</cell><cell cols="2">Data curation</cell><cell cols="2">Removing lifespan</cell><cell>Calculation of methylation rates</cell></row><row><cell></cell><cell cols="2">1. Remove outliers</cell><cell cols="2">biases</cell><cell>5. For each pair, calculate the median rate ratio</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="2">3. Order species by sampled age range and then look at neighboring pairs</cell><cell>CpG 1</cell><cell>Slope = a</cell><cell>Rate ratio = b/a</cell><cell>Calculate for all included CpGs</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Slope = b</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Median rate ratio</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">6. Calculate the cumulative rate ratio (CRR) for each</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">species (i.e., median rate compared to baseline species</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>CRR</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">CRR = 1 (baseline)</cell><cell>CRR = 1 × 0.05 = 0.05</cell><cell>= 1 × 0.05 × 0.6 = 0.03</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Median rate ratio</cell><cell>Median rate ratio</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>= 0.05</cell><cell>= 0.6</cell></row><row><cell>b</cell><cell></cell><cell></cell><cell></cell><cell>c</cell></row><row><cell>1.00</cell><cell>Rat</cell><cell></cell><cell></cell><cell>Rat</cell></row><row><cell></cell><cell>Mouse</cell><cell></cell><cell></cell><cell></cell><cell>Mouse</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Sheep</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Pig</cell><cell>Red kangaroo</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Cattle</cell><cell>Red deer</cell></row><row><cell></cell><cell cols="3">Sheep Pig California sea lion Red kangaroo Yellow-bellied marmot Beluga whale Red deer Cattle Naked mole rat Wapity elk Roe deer Dog Zebra Rhesus macaque Asian elephant Vervet Horse Chimpanzee Savanna elephant Marmoset Harbor seal Bottlenose dolphin Cat Killer whale</cell><cell>Human</cell><cell>Yellow-bellied marmot Wapity elk Roe deer Marmoset Dog Vervet Rhesus macaque Cat Beluga whale Naked mole rat Zebra Horse California sea lion Savanna elephant Killer whale Harbor seal Bottlenose dolphin Chimpanzee Asian elephant Human</cell></row><row><cell>d</cell><cell></cell><cell></cell><cell></cell><cell>e</cell></row><row><cell></cell><cell>Rat</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">Rat</cell></row><row><cell></cell><cell>Mouse</cell><cell></cell><cell></cell><cell></cell><cell>Mouse</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Naked mole rat</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Cattle</cell></row><row><cell></cell><cell cols="2">Hector's dolphin</cell><cell></cell><cell></cell><cell>Hector's dolphin</cell><cell>Beluga whale</cell></row><row><cell></cell><cell></cell><cell cols="2">Naked mole rat</cell><cell></cell><cell>Rhesus macaque</cell><cell>Humpback whale</cell></row><row><cell></cell><cell>Rhesus macaque</cell><cell>Cattle Beluga whale</cell><cell>Indo-Pacific bottlenose dolphin Humpback whale</cell><cell></cell><cell>Indo-Pacific bottlenose dolphin Killer whale</cell></row><row><cell></cell><cell cols="2">Bottlenose dolphin</cell><cell>Human</cell><cell></cell><cell>Bottlenose dolphin</cell><cell>Human</cell></row><row><cell></cell><cell></cell><cell>Killer whale</cell><cell cols="2">Bowhead whale</cell><cell>Bowhead whale</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2</head><label>2</label><figDesc></figDesc><table /><note><p>for details). Created with BioRender.com.</p></note></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>We thank <rs type="person">T. Little</rs> for critical reading of the manuscript and <rs type="person">M. Dönertaş</rs> for bringing our attention to additional statistical considerations. We thank all members of the <rs type="institution">Chandra laboratory</rs> for their input. S.J.C.C. is supported by the <rs type="funder">Wellcome Trust Hosts, Pathogens and Global Health Programme</rs> (grant number grant.<rs type="grantNumber">226831/Z/22/Z</rs>). E.L.-C. is a cross-disciplinary postdoctoral fellow supported by funding from the <rs type="funder">University of Edinburgh</rs> and the <rs type="funder">Medical Research Council</rs> (<rs type="grantNumber">MC_UU_00009/2</rs>). T.C. is supported through a <rs type="grantName">Chancellor's Fellow award</rs> at the <rs type="institution">University of Edinburgh</rs> and the <rs type="funder">MRC Human Genetics Unit</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_fsT4ryr">
+					<idno type="grant-number">226831/Z/22/Z</idno>
+				</org>
+				<org type="funding" xml:id="_uvAySCb">
+					<idno type="grant-number">MC_UU_00009/2</idno>
+					<orgName type="grant-name">Chancellor&apos;s Fellow award</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>The majority of the methylation dataset used was created by the Mammalian Methylation Consortium <ref type="bibr" target="#b26">26</ref> and is publicly available on the Gene Expression Omnibus under accession number GSE223748. The chimpanzee (Pan troglodytes) dataset is available at GSE136296 (ref. <ref type="bibr" target="#b27">27</ref>). Data on maximum lifespan and mass were taken from the AnAge database (https://genomics.senescence.info/species/index.html) <ref type="bibr" target="#b25">25</ref> . Results of the primary analysis in blood and skin samples can be found in Supplementary Tables <ref type="table">3</ref> and<ref type="table">4</ref>, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Code availability</head><p>All code used for the analysis (conducted in Python 3.11.4) is available at https://github.com/elc08/meth_scaling_law.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Reporting summary</head><p>Further information on research design is available in the Nature Portfolio Reporting Summary linked to this article. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Author contributions</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Competing interests</head><p>The authors declare no competing interests.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">The origin of allometric scaling laws in biology from genomes to ecosystems: towards a quantitative unifying theory of biological structure and organization</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>West</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Brown</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Exp. Biol</title>
+		<imprint>
+			<biblScope unit="volume">208</biblScope>
+			<biblScope unit="page" from="1575" to="1592" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Body size and metabolism</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kleiber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Hilgardia</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="315" to="353" />
+			<date type="published" when="1932">1932</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Allometric scaling of metabolic rate from molecules and mitochondria to cells and mammals</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>West</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Woodruff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Brown</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl Acad. Sci. USA</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="page" from="2473" to="2478" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A general model for the origin of allometric scaling laws in biology</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>West</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Enquist</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">276</biblScope>
+			<biblScope unit="page" from="122" to="126" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Epigenetic predictor of age</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bocklandt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS ONE</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page">14821</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Genome-wide methylation profiles reveal quantitative views of human aging rates</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hannum</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Cell</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="359" to="367" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">DNA methylation age of human tissues and cell types</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Horvath</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">115</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Universal DNA methylation age across mammalian tissues</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Aging</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="1144" to="1166" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Ageing-associated DNA methylation dynamics are a molecular readout of lifespan variation among mammalian species</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lowe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Genome Biol</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">22</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">DNA methylation predicts age and provides insight into exceptional longevity of bats</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Wilkinson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">1615</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Epigenetic predictors of maximum lifespan and other life history traits in mammals</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Z</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2021.05.16.444078</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Preprint at bioRxiv https</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Divergent age-related methylation patterns in long and short-lived mammals</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Haghani</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2022.01.16.476530</idno>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Preprint at bioRxiv https</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">F 1 F 0 ATP hydrolysis is a determinant of metabolic rate, a correlate of lifespan, and a weakness of cancer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Forrest</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2021.10.28.466310</idno>
+		<ptr target="https://doi.org/10.1101/2021.10.28.466310" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>Preprint at bioRxiv</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Density-based algorithm for discovering clusters in large spatial databases with noise</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H.-P</forename><surname>Kriegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">A</forename><surname>Xu</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="page" from="226" to="231" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">DNA methylation rates scale with maximum lifespan across mammals</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J C</forename><surname>Crofts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Latorre-Crespo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chandra</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2023.05.15.540689</idno>
+		<ptr target="https://doi.org/10.1101/2023.05.15.540689" />
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Preprint at bioRxiv</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Telomerase activity coevolves with body mass not lifespan</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Seluanov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Aging Cell</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="45" to="52" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The naked mole-rat: a new long-living model for human aging research</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Buffenstein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Gerontol. A Biol. Sci. Med. Sci</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="page" from="1369" to="1377" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Polymerase chain reaction-aided genomic sequencing of an X chromosome-linked CpG island: methylation patterns suggest clonal inheritance, CpG site autonomy, and an explanation of activity state stability</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Pfeifer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Steigerwald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Gartler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Riggs</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Natl Acad. Sci. USA</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page" from="8252" to="8256" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Probabilistic inference of epigenetic age acceleration from cellular dynamics</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Dabrowski</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2023.03.01.530570</idno>
+		<ptr target="https://doi.org/10.1101/2023.03.01.530570" />
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Preprint at bioRxiv</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<idno type="DOI">10.1038/s43587-023-00535-6</idno>
+		<ptr target="https://doi.org/10.1038/s43587-023-00535-6" />
+		<title level="m">Brief Communication</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Partial reprogramming induces a steady decline in epigenetic age before loss of somatic identity</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Olova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Simpson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Marioni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chandra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Aging Cell</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">12877</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">In vivo amelioration of age-associated hallmarks by partial reprogramming</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ocampo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cell</title>
+		<imprint>
+			<biblScope unit="volume">167</biblScope>
+			<biblScope unit="page" from="1719" to="1733" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">DNA methylation-based biomarkers and the epigenetic clock theory of ageing</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Horvath</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raj</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Rev. Genet</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="371" to="384" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Dynamics of haemopoiesis across mammals</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dingli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Traulsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Pacheco</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Biol. Sci</title>
+		<imprint>
+			<biblScope unit="volume">275</biblScope>
+			<biblScope unit="page" from="2389" to="2392" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Somatic mutation rates scale with lifespan across mammals</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cagan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">604</biblScope>
+			<biblScope unit="page" from="517" to="524" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Human ageing genomic resources: new and updated databases</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tacutu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucleic Acids Res</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="1083" to="D1090" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">DNA methylation networks underlying mammalian traits</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Haghani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">381</biblScope>
+			<biblScope unit="page">5693</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Age-associated epigenetic change in chimpanzees and humans</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">E</forename><surname>Guevara</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s43587-023-00535-6</idno>
+		<ptr target="https://doi.org/10.1038/s43587-023-00535-6" />
+	</analytic>
+	<monogr>
+		<title level="j">Philos. Trans. R. Soc. Lond. B Biol. Sci</title>
+		<imprint>
+			<biblScope unit="volume">375</biblScope>
+			<biblScope unit="page">20190616</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">Extended Data Fig. 7 | Scaling relationship between methylation rate and body mass. a, Log methylation rate (ratio compared to baseline species) versus log body mass in blood samples. The y-coordinate for each point shows the log 10 cumulative product of the median slope ratio (see Methods)</title>
+		<idno type="DOI">10.1038/s43587-023-00535-6</idno>
+		<ptr target="https://doi.org/10.1038/s43587-023-00535-6" />
+		<imprint/>
+	</monogr>
+	<note>Regression line from simple linear regression of the form y ~ x. Shaded region represents the 95% confidence interval. b, Equivalent analysis as in a. but in skin samples</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Extended Data Fig. 8 | Potential remaining bias, leading to an underestimation of methylation rates of faster-methylating species. Synthetic data showing a faster methylating site (blue) that reaches the maximum methylation value (1) and begins to plateau, compared to a slower methylating site (red) that does not plateau</title>
+		<idno type="DOI">10.1038/s43587-023-00535-6</idno>
+		<ptr target="https://doi.org/10.1038/s43587-023-00535-6" />
+		<imprint/>
+	</monogr>
+	<note>In each case, the resulting inferred methylation rates (represented by the linear regression lines) are identical</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Extended Data Fig</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Example a CpG (ELOVL2) that is strongly age-related in some species but relatively age-invariant in others</title>
+		<author>
+			<persName><forename type="first">| Elovl2</forename><surname>Cpg</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>Regression lines from simple linear regressions of the form methylation ~ age</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

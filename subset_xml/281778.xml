@@ -1,0 +1,2400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Graph Neural Pre-training for Recommendation with Side Information</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-09-05">5 September 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Siwei</forename><surname>Liu</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+							<email>craig.macdonald@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Zaiqiao</forename><surname>Meng</surname></persName>
+							<email>zaiqiao.meng@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+							<email>iadh.ounis@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<address>
+									<addrLine>41(3), 74</addrLine>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">ZAIQIAO MENG *</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="department">IADH OUNIS</orgName>
+								<orgName type="institution" key="instit1">University of Glasgow</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff6">
+								<orgName type="department">Zaiqiao Meng</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff7">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff8">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Graph Neural Pre-training for Recommendation with Side Information</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-09-05">5 September 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">5AA22C4E9A001B94FB37096696E70562</idno>
+					<idno type="DOI">10.1145/3568953</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>There may be differences between this version and the published version. You are advised to consult the publisher's version if you wish to cite from it.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>The goal of recommender systems is to assist users in filtering out non-relevant information and selecting a personalized set of interesting items to maximize the users' satisfaction. Modern recommendation models achieve this goal by learning representation vectors (i.e. embeddings) of the two entities (i.e. users and items) that capture the users' interests and items' attractiveness <ref type="bibr" target="#b78">[79,</ref><ref type="bibr" target="#b79">80]</ref>, so that the learned embeddings can be used to accurately predict which items a user might choose in the future, e.g., by computing the dot product or a multilayer perceptron (MLP) <ref type="bibr" target="#b47">[48]</ref> of the users' and items' embeddings. Typically, recommendation models are collaborative in nature, learning the users' interests and items' attractiveness through users' ratings, clicking or other interactive knowledge crossing the two entities, which we refer to as the cross-entity knowledge. For example, the NGCF <ref type="bibr" target="#b61">[62]</ref> model leverages the high-order connectivity between users and items (i.e. the interaction signal in the user-item interactive graph) to enhance the recommendation performance. However, these cross-entity interactions are typically sparse <ref type="bibr" target="#b46">[47]</ref>. Therefore, a number of side information-aware recommendation models <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b53">54]</ref> have been designed to alleviate the sparsity issue by integrating the rich side information of users and items such as the users' age groups and the items' textual descriptions. Such side information about entities can be used to learn the within-entity knowledge to further enhance the recommendation performance. For instance, movies with the same features (e.g. same genres and actors) may attract the same users, and such feature relations between movies are a type of knowledge within the side information of movies. Fig. <ref type="figure">1</ref>. Box-and-whisker diagrams for the NDCG performances of the MF <ref type="bibr" target="#b47">[48]</ref> and LightGCN <ref type="bibr" target="#b13">[14]</ref> models on the Epinions and Foursquare datasets.</p><p>To leverage the side information associated with users and items, many approaches have been proposed, most of which follow the conventional integration scheme, which encodes the side information simultaneously with the training of user-item interactions <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b42">43]</ref>. These integration-based approaches normally optimize a loss function consisting of two components, i.e. the recommendation loss and one (or even more) additional side information-aware loss(es), where a hyperparameter is usually used to control the importance of each loss component <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b60">61,</ref><ref type="bibr" target="#b80">81]</ref>. It is often difficult to find one single adequate solution to optimise all of the loss components since different tasks might conflict with each others <ref type="bibr" target="#b30">[31]</ref>. Intuitively, if two users share an interest in the same type of side information but without having a similar purchase behaviour, the two loss components may have different optimisation directions, making the combined loss hard to optimise and requiring a trade-off between the two objectives. However, it requires tremendous efforts to tune one (or more) hyperparameter(s) to find a good trade-off solution between the two objectives <ref type="bibr" target="#b33">[34,</ref><ref type="bibr" target="#b80">81]</ref>. Moreover, entity side information is typically heterogeneous, meaning that it may consist of many different feature types (e.g. age, gender and education level) and be represented by different data types (e.g. binary-values, categorical-values or real-values). These types of side information usually play different roles when contributing to the generation of each entity's representation and need to be jointly modeled to capture their heterogeneous semantics. However, existing side informationaware models usually use one or more fixed hyperparameter(s) <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b33">34]</ref> to control the importance of all different types of side information. Alternatively, they follow the paradigm of multi-task learning by using a constant value to balance the sum of the main loss and the side information-aware loss <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b58">59]</ref>, thereby leading to a lack of generalization and/or reduced performance robustness.</p><p>Furthermore, while there have been many powerful neural network-based recommendation models proposed in recent years <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b47">48,</ref><ref type="bibr" target="#b61">62]</ref>, most of these models are unable to give stable recommendation results. Indeed, as we can see from Figure <ref type="figure">1</ref>, with the different random initialisation of the model's parameters, high variances can be observed in the performances of both the conventional model (i.e. MF <ref type="bibr" target="#b47">[48]</ref>) and the deep neural network-based model (i.e. LightGCN <ref type="bibr" target="#b13">[14]</ref>) over different embedding dimensions in both the Epinions and Foursquare datasets, demonstrating the lack of stability of these models. In this paper, we argue that a better initialization of the model's parameters encapsulating the entity side information could alleviate this issue, and allows the underlying recommendation model to find a stable local optimal recommendation solution.</p><p>To address the aforementioned issues, we propose a novel pre-training scheme for leveraging the side information in recommender systems, namely, we first pre-train the embeddings of entities using their side information, and then fine-tune the pre-trained embeddings using an existing recommendation model. Specifically, we explore two types of graph-structured data to capture the interdependent relationships among the entities, and propose two pre-training models based on Graph Neural Networks (GNNs), namely, the Single-P model and the Multi-P model. The Single-P model learns the entity embeddings on the single-relational graphs using Graph Convolutional Networks <ref type="bibr" target="#b24">[25]</ref>, while the Multi-P model learns entity embeddings on multi-relational graphs using Composition-based Multi-Relational Graph Convolutional Networks <ref type="bibr" target="#b52">[53]</ref>. With the expressive power of GNNs that recursively propagate messages and aggregate features over neighbours, our pre-training models are able to encode the within-entity context knowledge from the side information of users and items. Note that our proposed pre-training scheme is a general framework to pre-train entity embeddings with side information in recommender systems. Once these embeddings are obtained, they can be applied to existing general representation-based recommenders to enhance their effectiveness and stability. We deploy our pre-trained embeddings into four existing representative general recommender models, i.e., MF <ref type="bibr" target="#b47">[48]</ref>, NCF <ref type="bibr" target="#b14">[15]</ref> NGCF <ref type="bibr" target="#b61">[62]</ref> and LightGCN <ref type="bibr" target="#b13">[14]</ref>, to validate the effectiveness of our proposed pre-training scheme.</p><p>The contributions of this work can be summarized as follows <ref type="foot" target="#foot_0">1</ref> :</p><p>(1) We introduce a novel pre-training scheme for leveraging side information by first pre-training the entity embeddings using entity side information and then fine-tuning them using an existing recommender model.</p><p>(2) We propose two pre-training models using graph neural networks, namely, the Single-P and the Multi-P models, which learn entity embeddings based on the single-relational and the multi-relational graphs, respectively, where both types of graphs are constructed from the entity side information. Both of our models can be deployed to fine-tune and enhance existing general representation-based recommender systems.</p><p>(3) An extensive empirical evaluation of our pre-training model -through the fine-tuning of four existing recommender models on three real-world datasets -shows that our pre-training scheme can significantly enhance those four models in terms of both the recommendation performance and the model stability.</p><p>The remainder of this paper is organized as follows. In §2, we position our work in the literature. §3 introduces all relevant notions used in this paper and formally defines the task. §4 describes our pre-training scheme and details the two proposed pre-training models. The experimental setup and the results of our empirical experiments are presented in §5 and §6 respectively, followed by some concluding remarks in §7.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>In this section, we give a brief introduction about four bodies of related works: recommendation models, integrating side information for recommendation, graph neural networks and graph neural recommendation models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Recommendation Models</head><p>Recommender systems are essential tools that help resolve the information overload, which have attracted much interest in both academia and industry. Among the various methodologies in the evolution of recommender systems, the representation-based methods, which learn latent embeddings for users and items, have been shown to be the most effective and popular ones in the literature because of their capability of capturing complex user preferences and items' popularity <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b47">48]</ref>. Moreover, with the recent development of various deep neural networks, such as Convolution Neural Networks (CNNs) <ref type="bibr" target="#b75">[76]</ref>, Recurrent Neural Networks (RNNs) <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b36">37]</ref>, Attention Networks <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b76">77]</ref> and Graph Neural Networks (GNNs) <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b37">38,</ref><ref type="bibr" target="#b61">62]</ref>, more and more deep neural network-based recommendation models are being proposed to cope with various recommendation scenarios, such as temporal-aware <ref type="bibr" target="#b36">[37,</ref><ref type="bibr" target="#b77">78]</ref>, social-aware <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b71">72,</ref><ref type="bibr" target="#b73">74]</ref>, knowledgeaware <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b60">61]</ref> and entity-context-aware <ref type="bibr" target="#b63">[64]</ref> recommendation, making the learned embeddings capture more contextual information. In particular, traditional collaborative filtering methods cannot deliver satisfactory recommendations in the presence of various critical issues such as the data sparsity issue in the datasets and the cold start problem when recommending items to new users. To address this data sparsity issue, existing works have leveraged the self-supervised learning method in order to generate enough augmented samples <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b26">27,</ref><ref type="bibr" target="#b67">68]</ref>. Another line of research focusing on exploiting the side information of users and items has been widely recognized as an important modeling dimension to address these issues <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b66">67]</ref>. The main focus of our present work is to provide a general scheme to integrate such widely available heterogeneous side information of both users and items into general representation-based recommender system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Integrating Side Information for Recommendation</head><p>Indeed, before the prevalence of deep neural network-based recommendation methods, there have been many variants of the Matrix Factorization-based methods, such as the sparse linear methods with side information (SSLIM) <ref type="bibr" target="#b39">[40]</ref>, the hierarchical Bayesian matrix factorization method <ref type="bibr" target="#b42">[43]</ref> and factorization machine <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b45">46]</ref>, which adopt the integration scheme that incorporates the entity side information by combining the recommendation loss function with an extra side information-aware loss. Even in recent years, this line of research still pervades many works in the literature. For example, xLightFM <ref type="bibr" target="#b19">[20]</ref> is proposed to tackle the high memory-consumption issue of factorization machine <ref type="bibr" target="#b45">[46]</ref> and its variants <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b10">11]</ref> by using the quantization-based <ref type="bibr" target="#b29">[30]</ref> and neural architecture search <ref type="bibr" target="#b43">[44]</ref> method. Moreover, the HIRE model proposed by Liu et al. <ref type="bibr" target="#b33">[34]</ref> uses a weighted matrix factorization to encode both flat and hierarchical forms of side information into the users' and items' representations, while combining the recommendation loss and two side information-aware losses. Although the HIRE <ref type="bibr" target="#b33">[34]</ref> model can effectively incorporate two types of features, it needs to explicitly design different objectives for different types of features. Another line of research examined the integration of side information using deep neural networks, such as the stacked denoising auto-encoder <ref type="bibr" target="#b57">[58]</ref> and the marginalized denoising auto-encoder <ref type="bibr" target="#b28">[29]</ref>. More recently, many recommendation models have explored using Variational auto-encoders (VAEs) <ref type="bibr" target="#b41">[42,</ref><ref type="bibr" target="#b65">66,</ref><ref type="bibr" target="#b68">69]</ref>, which jointly encode user ratings and side information during the training, in order to overcome the (often) high-dimensionality of side information. However, most of these methods only consider one type of relation from the entity features, namely they treat all the feature columns equally, thereby ignoring the variance in the feature types' importance to the recommendation performance. Moreover, most of the existing methods <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b45">46]</ref> adopt the integration scheme, which needs a trade-off between the recommendation loss function and the side information-aware loss, thereby restricting the model design and making it hard to deploy into other more effective general recommender systems. Instead, in this paper, we propose a general scheme for pre-training entity embeddings using the entity side information, such that these embeddings can be fine-tuned by an existing representation-based recommender system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Graph Neural Networks</head><p>GNNs are powerful frameworks for learning representations of graph-structured data. They have shown superior performances not only in the network analysis task <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b24">25,</ref><ref type="bibr" target="#b38">39,</ref><ref type="bibr" target="#b54">55,</ref><ref type="bibr" target="#b62">63,</ref><ref type="bibr" target="#b69">70]</ref> but also in other domains, such as natural language processing <ref type="bibr" target="#b35">[36,</ref><ref type="bibr" target="#b70">71,</ref><ref type="bibr" target="#b81">82]</ref>, recommender systems <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b61">62,</ref><ref type="bibr" target="#b64">65]</ref> and molecular design <ref type="bibr" target="#b20">[21]</ref>. Recently, various graph learning technique <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b8">9,</ref><ref type="bibr" target="#b40">41,</ref><ref type="bibr" target="#b44">45]</ref> have been proposed to further boost the accuracy and efficiency of existing GNNs. For example, GRL <ref type="bibr" target="#b8">[9]</ref> is more robust against the removal of vertexes by using the graph reconstruction technique so that it gains enhanced expressive power compared with existing GNNs. Moreover, contrastive learning and pre-training techniques are both incorporated in <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b44">45]</ref> to generate additional views for each node in order to learn more generalized graph representations. Although effective, most of the existing GNNs focus on learning representations of nodes on simple graphs that contain nodes and relations of a single type. The Graph Convolutional Network (GCN) <ref type="bibr" target="#b24">[25]</ref> model and its variants <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b38">39,</ref><ref type="bibr" target="#b54">55,</ref><ref type="bibr" target="#b62">63]</ref> are probably the most popular models for handling this type of networks. However, real-world networks are normally organized with multiple types of relations (e.g. links in social networks can denote both friendships and co-worker relationships), which are commonly modeled through multi-graphs <ref type="bibr" target="#b48">[49,</ref><ref type="bibr" target="#b52">53]</ref>. Since these multi-graphs can capture more comprehensive information and richer semantics than the simple graphs, they have been widely used in many tasks that mine knowledge graphs, such as lexical word networks <ref type="bibr" target="#b51">[52,</ref><ref type="bibr" target="#b59">60]</ref> and biomedical knowledge graphs <ref type="bibr" target="#b2">[3]</ref>. Relational-GCN <ref type="bibr" target="#b48">[49]</ref> and Compositional-GCN <ref type="bibr" target="#b52">[53]</ref> are two generalizations of the GCN model for handling multi-graphs. Inspired by the promising performance and generalizability of GNNs with multiple relations, we propose to use a multi-graph neural network to capture the within-entity knowledge based on the entity side information, where heterogeneous features of users and items are explored for pre-training the entity embeddings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Graph Neural Recommendation Models</head><p>Inspired by the wide variety of applications in many fields, graph neural networks have also been widely applied in many recommendation models, showing promising results on various recommendation benchmarking datasets <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b31">32,</ref><ref type="bibr" target="#b60">61,</ref><ref type="bibr" target="#b63">64]</ref>. Among which, NGCF <ref type="bibr" target="#b61">[62]</ref> can be regarded as an early implementation of the GCN model for the recommendation task. Building on NGCF, LightGCN <ref type="bibr" target="#b13">[14]</ref> obtains a better performance and a higher efficiency by removing redundant neural operations and networks from NGCF. Recently, GF-CF <ref type="bibr" target="#b49">[50]</ref> has been proposed to further enhance the performance by incorporating the graph filtering method. However, GF-CF is not an embeddingbased model, hence it cannot be adapted to our proposed scheme. Other variants of LightGCN including SGL <ref type="bibr" target="#b64">[65]</ref> and UltraGCN <ref type="bibr" target="#b37">[38]</ref> have also achieved a competitive performances, however they incorporate memory-consuming data augmentation methods, which will be more challenging if side information is also considered. Most of the existing graph-based recommenders <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b13">14,</ref><ref type="bibr" target="#b61">62,</ref><ref type="bibr" target="#b64">65]</ref> consider the user-item interactions in a recommendation task as a user-item graph, and use the power of GNNs to capture the higher-order dependencies among the entities, resulting in an enhanced recommendation performance. Many prior works also exploited using GNNs to model various cross-entity knowledge (i.e. interactions across different types of entities) <ref type="bibr" target="#b31">[32,</ref><ref type="bibr" target="#b63">64]</ref> and within-entity knowledge (i.e. relations within a type of entity) <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b72">73]</ref>. However, all of the existing recommendation models discussed above are either unable to effectively leverage the entity side information, or are unable to effectively encode the heterogeneous within-entity knowledge from the side information in a general manner. In this paper, we provide a general scheme for leveraging the heterogeneous entity side information using a novel graph neural pre-training scheme, as detailed in the following sections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">PRELIMINARIES</head><p>In this section, we introduce the notations used across the whole article and formally define our research task.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Notations</head><p>Throughout this paper, regular letters are used to denote scalars (e.g. 𝑛 is the number of users), while calligraphy typeface alphabets are used to denote sets (e.g. V is the set of nodes in a graph). Matrices and vectors are denoted by bold letters with uppercase letters representing matrices and lowercase letters (or uppercase letters with a subscript) representing vectors (e.g. 𝑭 𝑢 is the user feature matrix and 𝑯 𝑢 𝑖 is represented as the latent vector of a user 𝑖.).</p><p>Let 𝑹 ∈ R 𝑚×𝑛 be the user-item feedback matrix of 𝑛 users and 𝑚 items. In general, the entries of 𝑹 can be either binary-valued (i.e. through implicit feedback such as the click and purchase behaviours) or real-valued (i.e. through explicit feedback such as the rating scores). However, not all of the values can be observed and the observed values may also contain noise. While the observed entries at least reflect the real users' interests on items, most of the entries are typically missing due to the natural sparsity of negative feedback.</p><p>To facilitate the description of graph neural networks, we use V to denote the set of nodes in a graph. If the graph contains only one type of edges, then we call it a single-graph, or simply a graph; while a graph containing multiple edge types is normally called a multi-graph. We use G = (V, E, 𝑿 ) to denote a single-graph, where E is a tuple set with (𝑢, 𝑣) ∈ E being an edge between nodes 𝑢, 𝑣 ∈ V and 𝑿 ∈ R | V |×𝑑 is the 𝑑-dimensional feature metric of nodes. Then we denote a multi-graph G ′ by G ′ = (V, E ′ , R, 𝑿 ), where R is the set of edge types, each edge (𝑢, 𝑣, 𝑟 ) ∈ E ′ represents that the relation 𝑟 ∈ R exists from node 𝑢 to 𝑣.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Task Definition</head><p>Given the feedback matrix 𝑹, a typical recommendation task aims to predict the preference scores for all the user-item pairs. To address such a task, the general representation-based recommendation models typically learn latent embeddings for the users and items such that these latent entity embeddings can be used to reconstruct the given feedback matrix 𝑹. Then, these learned embeddings can be in turn used to calculate the preference scores of the unseen user-item pairs. In particular,  </p><formula xml:id="formula_0">A x Q Q w Y i v v Q 5 Y + 8 S M j q F t t f x + 9 q o = " &gt; A A A B + X i c b V D L S s N A F L 2 p r 1 p f U Z d u B o v g Q k o i F V 0 W 3 L i s Y h / Q h j C Z T t q x k 0 m Y m R R K 6 J + 4 c a G I W / / E n X / j p M 1 C W w 8 M H M 6 5 l 3 v m B A l n S j v O t 1 V a W 9 / Y 3 C p v V 3 Z 2 9 / Y P 7 M O j t o p T S W i L x D y W 3 Q A r y p m g L c 0 0 p 9 1 E U h w F n H a C 8 W 3 u d y Z U K h a L R z 1 N q B f h o W A h I 1 g b y b f t f o T 1 K A i z h 5 m f s Y u n m W 9 X n Z o z B 1 o l b k G q U K D p 2 1 / 9 Q U z S i A p N O F a q 5 z q J 9 j I s N S O c z i r 9 V N E E k z E e 0 p 6 h A k d U e d k 8 + Q y d G W W A w l i a J z S a q 7 8 3 M h w p N Y 0 C M 5 n n V M t e L v 7 n 9 V I d 3 n g Z E 0 m q q S C L Q 2 H K k Y 5 R X g M a M E m J 5 l N D M J H M Z E V k h C U m 2 p R V M S W 4 y 1 9 e J e 3 L m l u v X d 3 X q 4 3 L o o 4 y n M A p n I M L 1 9 C A O 2 h C C w h M 4 B l e 4 c 3 K r B f r 3 f p Y j J a s Y u c Y / s D 6 / A G / 8 J O x &lt; / l a t e x i t &gt;</formula><p>Ui &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " T T t j b k y k L X e q h 8 h 9   such methods try to learn a model 𝜃 to obtain the embeddings of users and items:</p><formula xml:id="formula_1">K 1 P u N k 8 t Y l k = " &gt; A A A B 9 X i c b V B N S 8 N A F H y p X 7 V + V T 1 6 W S y C p 5 K U F j 0 W v H i s Y N p C G 8 t m u 2 m X b j Z h d 6 O U k P / h x Y M i X v 0 v 3 v w 3 b t o c t H V g Y Z h 5 j z c 7 f s y Z 0 r b 9 b Z U 2 N r e 2 d 8 q 7 l b 3 9 g 8 O j 6 v F J V 0 W J J N Q l E Y 9 k 3 8 e K c i a o q 5 n m t B 9 L i k O f 0 5 4 / u 8 n 9 3 i O V i k X i X s 9 j 6 o V 4 I l j A C N Z G e h i G W E / 9 I H W z U c q y U b V m 1 + 0 F 0 D p x C l K D A p 1 R 9 W s 4 j k g S U q E J x 0 o N H D v W X o q l Z o T T r D J M F I 0 x m e E J H R g q c E i V l y 5 S Z + j C K G M U R N I 8 o d F C / b 2 R 4 l C p e e i b y T y l W v V y 8 T 9 v k O j g 2 k u Z i B N N B V k e C h K O d I T y C t C Y S U o 0 n x u C i W Q m K y J T L D H R p q i K K c F Z / f I 6 6 T b q T r P e u m v W 2 o 2 i j j K c w T l c g g N X 0 I Z b 6 I A L B C Q 8 w y u 8 W U / W i / V u f S x H S 1 a x c w p / Y H 3 + A B P a k t k = &lt; / l a t e x i t &gt; Vj &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " S o x / 2 0 u X t S + t S 4 E i n H K 4 6 Q 8 j G P c = " &gt; A A A B 9 X i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C G 5 c V 7 A P a W C b T S T t 2 M g k z E 6 W E / I c b F 4 q 4 9 V / c + T d O 0 i y 0 9 c D A 4 Z x 7 u W e O F 3 G m t G 1 / W 6 W 1 9 Y 3 N r f J 2 Z W d 3 b / + g e n j U V W E s C e 2 Q k I e y 7 2 F F O R O 0 o 5 n m t B 9 J i g O P 0 5 4 3 u 8 7 8 3 i O V i o X i T s 8 j 6 g Z 4 I p j P C N Z G u h 8 G W E 8 9 P + m m o + Q h H V V r d t 3 O g V a J U 5 A a F G i P q l / D c U j i g A p N O F Z q 4 N i R d h M s N S O c p p V h r G i E y Q x P 6 M B Q g Q O q 3 C R P n a I z o 4 y R H 0 r z h E a 5 + n s j w Y F S 8 8 A z k 1 l K t e x l 4 n / e I N b + l Z s w E c W a C r I 4 5 M c c 6 R B l F a A x k 5 R o P j c E E 8 l M V k S m W G K i T V E V U 4 K z / O V V 0 m 3 U n W b 9 4 r Z Z a z W K O s p w A q d w D g 5 c Q g t u o A 0 d I C D h G V 7 h z X q y X q x 3 6 2 M x W r K K n W P 4 A + v z B x b o k t s = &lt; / l a t e x i</formula><formula xml:id="formula_2">k L X e q h 8 h 9 K 1 P u N k 8 t Y l k = " &gt; A A A B 9 X i c b V B N S 8 N A F H y p X 7 V + V T 1 6 W S y C p 5 K U F j 0 W v H i s Y N p C G 8 t m u 2 m X b j Z h d 6 O U k P / h x Y M i X v 0 v 3 v w 3 b t o c t H V g Y Z h 5 j z c 7 f s y Z 0 r b 9 b Z U 2 N r e 2 d 8 q 7 l b 3 9 g 8 O j 6 v F J V 0 W J J N Q l E Y 9 k 3 8 e K c i a o q 5 n m t B 9 L i k O f 0 5 4 / u 8 n 9 3 i O V i k X i X s 9 j 6 o V 4 I l j A C N Z G e h i G W E / 9 I H W z U c q y U b V m 1 + 0 F 0 D p x C l K D A p 1 R 9 W s 4 j k g S U q E J x 0 o N H D v W X o q l Z o T T r D J M F I 0 x m e E J H R g q c E i V l y 5 S Z + j C K G M U R N I 8 o d F C / b 2 R 4 l C p e e i b y T y l W v V y 8 T 9 v k O j g 2 k u Z i B N N B V k e C h K O d I T y C t C Y S U o 0 n x u C i W Q m K y J T L D H R p q i K K c F Z / f I 6 6 T b q T r P e u m v W 2 o 2 i j j K c w T l c g g N X 0 I Z b 6 I A L B C Q 8 w y u 8 W U / W i / V u f S x H S 1 a x c w p / Y H 3 + A B P a k t k = &lt; / l a t e x i t &gt; Vj &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " S o x / 2 0 u X t S + t S 4 E i n H K 4 6 Q 8 j G P c = " &gt; A A A B 9 X i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C G 5 c V 7 A P a W C b T S T t 2 M g k z E 6 W E / I c b F 4 q 4 9 V / c + T d O 0 i y 0 9 c D A 4 Z x 7 u W e O F 3 G m t G 1 / W 6 W 1 9 Y 3 N r f J 2 Z W d 3 b / + g e n j U V W E s C e 2 Q k I e y 7 2 F F O R O 0 o 5 n m t B 9 J i g O P 0 5 4 3 u 8 7 8 3 i O V i o X i T s 8 j 6 g Z 4 I p j P C N Z G u h 8 G W E 8 9 P + m m o + Q h H V V r d t 3 O g V a J U 5 A a F G i P q l / D c U j i g A p N O F Z q 4 N i R d h M s N S O c p p V h r G i E y Q x P 6 M B Q g Q O q 3 C R P n a I z o 4 y R H 0 r z h E a 5 + n s j w Y F S 8 8 A z k 1 l K t e x l 4 n / e I N b + l Z s w E c W a C r I 4 5 M c c 6 R B l F a A x k 5 R o P j c E E 8 l M V k S m W G K i T V E V U 4 K z / O V V 0 m 3 U n W b 9 4 r Z Z a z W K O s p w A q d w D g 5 c Q g t u o A 0 d I C D h G V 7 h z X q y X q x 3 6 2 M x W r K K n W P 4 A + v z B x b o k t s = &lt; / l a t</formula><formula xml:id="formula_3">𝑹 𝜃 -→ 𝑼 , 𝑽,<label>(1)</label></formula><p>where 𝑼 ∈ R 𝑛×𝑑 and 𝑽 ∈ R 𝑚×𝑑 are the embeddings of users and items with 𝑑 being the embedding dimension.</p><p>Usually, recommender systems use randomly initialised users and items' embeddings, i.e. 𝑼 and 𝑽 <ref type="bibr" target="#b61">[62]</ref>, respectively. As we have shown in the introduction section, these random initialised embedding have a strong impact on the model effectiveness and robustness. In real-world recommender systems, users and items are often associated with features, also called side information, such as the age groups of users and the textual descriptions/names of items. The different values of side information across different entities characterise the differences between entities, which is a type of within-entity knowledge. We use 𝑭 𝑢 and 𝑭 𝑣 to denote the feature matrices of the users and items, respectively. We later show that these types of features can be transformed into feature edges in multi-graphs. Then, the corresponding recommendation task is to learn a model 𝜃 :</p><formula xml:id="formula_4">𝑭 𝑢 , 𝑭 𝑣 , 𝑹 𝜃 -→ 𝑼 , 𝑽 .<label>(2)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">METHODOLOGY</head><p>We first introduce our pre-training scheme for recommender systems ( §4.1), and detail two pretraining models, namely Single-P for single-graph pre-training ( §4.2) and Multi-P for multi-graph pre-training ( §4.3). We then describe the fine-tuning process using the existing recommender models ( §4.6) and discuss connections between our scheme and the existing works in §4.7.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">The Pre-training Scheme for Recommendation</head><p>In this paper, we argue that a suitable initialization of the entity embeddings encapsulating the entity side information is critical to help recommenders learn a stable and enhanced local optimal solution for the existing recommender systems. We propose to learn such an initialization of entity embeddings by exploiting knowledge from the entity side information. To this end, we propose a general pre-training scheme for leveraging the entity side information using graph neural networks. The overall scheme is illustrated in Figure <ref type="figure" target="#fig_4">2</ref>. Our pre-training scheme consists of two processes: pre-training and fine-tuning. During pre-training, a graph neural network is used to learn an initialization of the entity embeddings based on both the side information of users and items (i.e. 𝑭 𝑢 and 𝑭 𝑣 ) and the feedback matrix 𝑹. On the other hand, in the fine-tuning process, an existing recommendation model leverages the pre-trained embeddings as an embedding initialization and fine-tunes these embeddings by using the feedback matrix 𝑹 only.</p><p>In order to learn the user-item preferences from the cross-entity contextual interactions between users and items, many recent models, such as NGCF <ref type="bibr" target="#b61">[62]</ref> and LightGCN <ref type="bibr" target="#b13">[14]</ref>, have explored encoding the collaborative signals from the graph-structure interactions, showing promising performances. However, these methods only investigate the mutual interactions between users and items, ignoring the within-entity contextual knowledge, i.e. the collaborative signal within each type of entities, which can be acquired from the entity side information. To capture such within-entity contextual knowledge, we propose to use GNNs to pre-train the entity representations using the side information of both the users and items, so that the independent knowledge of each type of entities can be captured from the entity relations. Hence, extracting the relations from the entity side information is a crucial step for the pre-training process, since it determines how much information we can obtain from the entity features and how important such information can help to improve a recommendation model. To extract user-user and item-item relationships from their entity features (i.e. the users' and items' respective features), we propose to build two different types of feature graphs, i.e. the single-relational graphs and the multi-relational graphs, by constructing both the homogeneous and heterogeneous links between the entity pairs, respectively. We then explore how entity relations from various entity features affect the recommendation performance.    </p><formula xml:id="formula_5">f c U V b C h X + v E o + T O 0 4 E = " &gt; A A A B 9 H i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C C 1 1 W s A 9 o Q 5 l M J + 3 Q y S T O o 1 B C v 8 O N C 0 X c + j H u / B s n b R b a e m D g c M 6 9 3 D M n S D h T 2 n W / n c L G 5 t b 2 T n G 3 t L d / c H h U P j 5 p q 9 h I Q l s k 5 r H s B l h R z g R t a a Y 5 7 S a S 4 i j g t B N M b j O / M 6 V S s V g 8 6 l l C / Q i P B A s Z w d p K f j / C e k w w T + / m A z M o V 9 y q u w B a J 1 5 O K p C j O S h / 9 Y c x M R E V m n C s V M 9 z E + 2 n W G p G O J 2 X + k b R B J M J H t G e p Q J H V P n p I v Q c X V h l i M J Y 2 i c 0 W q i / N 1 I c K T W L A j u Z h V S</formula><formula xml:id="formula_6">k i x k B B s r + X 2 B z Z h g n t 7 N B 9 N B u e J W 3 Q X Q O v F y U o E c z U H 5 q z + M S C K o N I R j r X u e G x s / x c o w w u m 8 1 E 8 0 j T G Z 4 B H t W S q x o N p P F 6 H n 6 M I q Q x R G y j 5 p 0 E L 9 v Z F i o f V M B H Y y C 6 l X v U z 8 z + s l J r z x U y b j x F B J l o f C h C M T o a w B N G S K E s N n l m C i m M 2 K y B g r T I z t q W R L 8 F a / v E 7 a t a p X r 1 4 9 1 C u N W l 5 H E c 7 g H C 7 B g 2 t o w D 0 0 o Q U E n u A Z X u H N m T o v z r v z s R w t O P n O K f y B 8 / k D D W G S P g = = &lt; / l a t e x i t &gt; Single-GNNs Single-GNNs R i,j &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " A x Q Q w Y i v v Q 5 Y + 8 S M j q F t t f x + 9 q o = " &gt; A A A B + X i c b V D L S s N A F L 2 p r 1 p f U Z d u B o v g Q k o i F V 0 W 3 L i s Y h / Q h j C Z T t q x k 0 m Y m R R K 6 J + 4 c a G I W / / E n X / j p M 1 C W w 8 M H M 6 5 l 3 v m B A l n S j v O t 1 V a W 9 / Y 3 C p v V 3 Z 2 9 / Y P 7 M O j t o p T S W i L x D y W 3 Q A r y p m g L c 0 0 p 9 1 E U h w F n H a C 8 W 3 u d y Z U K h a L R z 1 N q B f h o W A h I 1 g b y b f t f o T 1 K A i z h 5 m f s Y u n m W 9 X n Z o z B 1 o l b k G q U K D p 2 1 / 9 Q U z S i A p N O F a q 5 z q J 9 j I s N S O c z i r 9 V N E E k z E e 0 p 6 h A k d U e d k 8 + Q y d G W W A w l i a J z S a q 7 8 3 M h w p N Y 0 C M 5 n n V M t e L v 7 n 9 V I d 3 n g Z E 0 m q q S C L Q 2 H K k Y 5 R X g M a M E m J 5 l N D M J H M Z E V k h C U m 2 p R V M S W</formula><formula xml:id="formula_7">+ Q h H V V r d t 3 O g V a J U 5 A a F G i P q l / D c U j i g A p N O F Z q 4 N i R d h M s N S O c p p V h r G i E y Q x P 6 M B Q g Q O q 3 C</formula><formula xml:id="formula_8">V k S m W G K i T V E V U 4 K z / O V V 0 m 3 U n W b 9 4 r Z Z a z W K O s p w A q d w D g 5 c Q g t u o A 0 d I C D h G V 7 h z X q y X q x 3 6 2 M x W r K K n W P 4 A + v z B x b o k t s = &lt; / l a t e x i t &gt;</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Fine-tuning Recommender</head><p>Embedding Initialization Single-P Fig. <ref type="figure">3</ref>. An illustration describing the input features, single-relational graphs and output entity embeddings of Single-P.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Pre-training on Single-Graphs</head><p>We construct two single-graphs, i.e. G 𝑢 and G 𝑣 , from the features of users and items respectively, by considering the similarities between users and items as the homogeneous edges, and calculate the edge weights using the cosine similarities between each pair of entities. For example, we construct a user single-graph G 𝑢 = (V 𝑢 , E 𝑢 , 𝑨 𝑢 , 𝑿 𝑢 ) by taking all the users as the set of nodes V 𝑢 and all the user pairs as the set of edges E 𝑢 in the graph. For each (𝑖, 𝑗) ∈ E 𝑢 , we calculate the edge weight 𝑨 𝑖 𝑗 using the cosine similarity of their feature vectors (i.e. 𝑭 𝑢 𝑖 and 𝑭 𝑢 𝑗 ): 𝑨 𝑖 𝑗 = 𝑭 𝑢 𝑖 •𝑭 𝑢 𝑗 ∥𝑭 𝑢 𝑖 ∥ ∥𝑭 𝑢 𝑗 ∥ . 𝑿 𝑢 ∈ R 𝑛×𝑑 is an initial node feature matrix of the graph, the values of which are initialized from the uniform distribution U (-0.01, 0.01). For brevity, in the following, we only describe the encoding process for the user single-graph G 𝑢 , since the item single-graph G 𝑣 is constructed and processed in a similar fashion.</p><p>The Single-P model. To obtain the pre-trained embeddings of entities (i.e. users and items) and to exploit the potential correlation among entities based on their single-graphs, three GCN layers <ref type="bibr" target="#b24">[25]</ref> are applied to encode the entity embeddings according to their relations. The key point of GCN is to propagate the feature information through neighbourhoods of nodes in each iteration during training. The detailed framework of the Single-P model is illustrated in Figure <ref type="figure">3</ref>. Specifically, given a graph G 𝑢 , the GCN model adopts the following propagation rule:</p><formula xml:id="formula_9">𝑯 (𝑙) 𝑢 = 𝜎 Â𝑢 𝑯 (𝑙-1) 𝑢 𝑾 (𝑙-1) 𝑢 ,<label>(3)</label></formula><p>where Â𝑢 = 𝑫 -1<ref type="foot" target="#foot_3">2</ref> (𝑨 𝑢 + 𝑰 ) 𝑫 -1 2 is the symmetric normalized adjacency matrix 2 , 𝑾 (𝑙) 𝑢 is the weight matrix of the 𝑙 𝑡ℎ layer, and 𝜎 (•) denotes an activation function (e.g. the ReLU function). 𝑯 (𝑙)  𝑢 is the hidden node representation in the 𝑙 𝑡ℎ layer with 𝑯 (0) 𝑢 = 𝑿 𝑢 . As mentioned earlier in this section, we use the uniform distribution to initialize 𝑿 𝑢 , which means that 𝑯 (0)</p><p>𝑢 also starts with this uniform distribution. In particular, we initialize the entity embeddings using the entity side information by training over the side information encapsulated in 𝑨 instead of directly incorporating an initial embedding consisting of the entity side information.</p><p>To facilitate the later description of our proposed model, Eq. (3) can also be formulated in the message passing form <ref type="bibr" target="#b52">[53]</ref>:</p><formula xml:id="formula_10">𝑯 (𝑙) 𝑢 𝑖 = 𝜎 (𝑢 𝑖 ,𝑢 𝑗 ) ∈ E 𝑢 ∪(𝑢 𝑖 ,𝑢 𝑖 ) 𝑾 (𝑙-1) 𝑢 𝑯 (𝑙-1) 𝑢 𝑗 ,<label>(4)</label></formula><p>where 𝑾 (𝑙-1)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝑢</head><p>is the layer-wise parameter and here we only consider the undirected relation and the self-loop relation. The final output embeddings of the maximum depth in the GCN layers, i.e. 𝑼 = 𝑯 (𝑙)  𝑢 , are the pre-training embeddings to be fed into the pre-training loss function. Similarly, the item embeddings are obtained by 𝑽 = 𝑯 (𝑙)  𝑣 , where 𝑯 (𝑙)</p><formula xml:id="formula_11">𝑣 𝑖 = 𝜎 (𝑣𝑖,𝑣𝑗 ) ∈E 𝑣 ∪(𝑣 𝑖 ,𝑣 𝑖 ) 𝑾 (𝑙-1) 𝑣 𝑯 (𝑙-1)</formula><p>𝑣 𝑗 , which is aligned with Eq. ( <ref type="formula" target="#formula_10">4</ref>).</p><formula xml:id="formula_12">Item Multi-graph F v &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " 4 o f X y 8 i a b c r X n g 2 P U S 5 T i 9 p A n c U = " &gt; A A A B 8 3 i c b V B N S w M x F H x b v 2 r 9 q n r 0 E i y C p 7 J b K n o s C O K x g q 2 F 7 l K y a b Y N z S Z L k i 2 U p X / D i w d F v P p n v P l v z L Z 7 0 N a B w D D z H m 8 y Y c K Z N q 7 7 7 Z Q 2 N r e 2 d 8 q 7 l b 3 9 g 8 O j 6 v F J V 8 t U E d o h k k v V C 7 G m n A n a M c x w 2 k s U x X H I 6 V M 4 u c 3 9 p y l V m k n x a G Y J D W I 8 E i x i B B s r + X 6 M z T i M s r v 5 Y D q o 1 t y 6 u w B a J 1 5 B a l C g P a h + + U N J 0 p g K Q z j W u u + 5 i Q k y r A w j n M 4 r f q p p g s k E j 2 j f U o F j q o N s k X m O L q w y R J F U 9 g m D F u r v j Q z H W s / i 0 E 7 m G f W q l 4 v / e f 3 U R D d B x k S S G i r I 8 l C U c m Q k y g t A Q 6 Y o M X x m C S a K 2 a y I j L H C x N i a K r Y E b / X L 6 6 T b q H v N + t V D s 9 Z q F H W U 4 Q z O 4 R I 8 u I Y W 3 E M b O k A g g W d 4 h T c n d V 6 c d + d j O V p y i p 1 T + A P n 8 w d E X p H L &lt; / l a t e x i t &gt; G v &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " A G A Z 0 t A n m h M 2 f M O D x S L d 6 w p K U 9 g = " &gt; A A A B 9 H i c b V D L S g M x F L 1 T X 7 W + q i 7 d B I v g q s y U i i 4 L L n R Z w T 6 g H U o m z b S h S W Z M M o U y 9 D v c u F D E r R / j z r 8 x 0 8 5 C W w 8 E D u f c y z 0 5 Q c y Z N q 7 7 7 R Q 2 N r e 2 d 4 q 7 p b 3 9 g 8 O j 8 v F J W 0 e J I r R F I h 6 p b o A 1 5 U z S l m G G 0 2 6 s K B Y B p 5 1 g c p v 5 n S l V m k X y 0 c x i 6 g s 8 k i x k B B s r + X 2 B z Z h g n t 7 N B 9 N B u e J W 3 Q X Q O v F y U o E c z U H 5 q z + M S C K o N I R j r X u e G x s / x c o w w u m 8 1 E 8 0 j T G Z 4 B H t W S q x o N p P F 6 H n 6 M I q Q x R G y j 5 p 0 E L 9 v Z F i o f V M B H Y y C 6 l X v U z 8 z + s l J r z x U y b j x F B J l o f C h C M T o a w B N G S K E s N n l m C i m M 2 K y B g r T I z t q W R L 8 F a / v E 7 a t a p X r 1 4 9 1 C u N W l 5 H E c 7 g H C 7 B g 2 t o w D 0 0 o Q U E n u A Z X u H N m T o v z r v z s R w t O P n O K f y B 8 / k D D W G S P g = = &lt; / l a t e x i t &gt; G u &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " R Y 5 2 D T f 7 p f c U V b C h X + v E o + T O 0 4 E = " &gt; A A A B 9 H i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C C 1 1 W s A 9 o Q 5 l M J + 3 Q y S T O o 1 B C v 8 O N C 0 X c + j H u / B s n b R b a e m D g c M 6 9 3 D M n S D h T 2 n W / n c L G 5 t b 2 T n G 3 t L d / c H h U P j 5 p q 9 h I Q l s k 5 r H s B l h R z g R t a a Y 5 7 S a S 4 i j g t B N M b j O / M 6 V S s V g 8 6 l l C / Q i P B A s Z w d p K f j / C e k w w T + / m A z M o V 9 y q u w B a J 1 5 O K p C j O S h / 9 Y c x M R E V m n C s V M 9 z E + 2 n W G p G O J 2 X + k b R B J M J H t G e p Q J H V P n p I v Q c X V h l i M J Y 2 i c 0 W q i / N 1 I c K T W L A j u Z h V S r X i b + 5 / W M D m / 8 l I n E a C r I 8 l B o O N I x y h p A Q y Y p 0 X x m C S a S 2 a y I j L H E R N u e S r Y E b / X L 6 6 R d q 3 r 1 6 t V D v d K o 5 X U U 4 Q z O 4 R I 8 u I Y G 3 E M T W k D g C Z 7 h F d 6 c q f P i v D s f y 9 G C k + + c w h 8 4 n z 8 L 3 Z I 9 &lt; / l a t e x i t &gt; R i,j &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " A x Q Q w Y i v v Q 5 Y + 8 S M j q F t t f x + 9 q o = " &gt; A A A B + X i c b V D L S s N A F L 2 p r 1 p f U Z d u B o v g Q k o i F V 0 W 3 L i s Y h / Q h j C Z T t q x k 0 m Y m R R K 6 J + 4 c a G I W / / E n X / j p M 1 C W w 8 M H M 6 5 l 3 v m B A l n S j v O t 1 V a W 9 / Y 3 C p v V 3 Z 2 9 / Y P 7 M O j t o p T S W i L x D y W 3 Q A r y p m g L c 0 0 p 9 1 E U h w F n H a C 8 W 3 u d y Z U K h a L R z 1 N q B f h o W A h I 1 g b y b f t f o T 1 K A i z h 5 m f s Y u n m W 9 X n Z o z B 1 o l b k G q U K D p 2 1 / 9 Q U z S i A p N O F a q 5 z q J 9 j I s N S O c z i r 9 V N E E k z E e 0 p 6 h A k d U e d k 8 + Q y d G W W A w l i a J z S a q 7 8 3 M h w p N Y 0 C M 5 n n V M t e L v 7 n 9 V I d 3 n g Z E 0 m q q S C L Q 2 H K k Y 5 R X g M a M E m J 5 l N D M J H M Z E V k h C U m 2 p R V M S W 4 y 1 9 e J e 3 L m l u v X d 3 X q 4 3 L o o 4 y n M A p n I M L 1 9 C A O 2 h C C w h M 4 B l e 4 c 3 K r B f r 3 f p Y j J a s Y u c Y / s D 6 / A G / 8 J O x &lt; / l a t e x i t &gt; U i</formula><p>&lt; l a t e x i t s h a 1 _ b a s e 6 4 = " T T t j b k y k L X e q h 8 h 9  </p><formula xml:id="formula_13">K 1 P u N k 8 t Y l k = " &gt; A A A B 9 X i c b V B N S 8 N A F H y p X 7 V + V T 1 6 W S y C p 5 K U F j 0 W v H i s Y N p C G 8 t m u 2 m X b j Z h d 6 O U k P / h x Y M i X v 0 v 3 v w 3 b t o c t H V g Y Z h 5 j z c 7 f s y Z 0 r b 9 b Z U 2 N r e 2 d 8 q 7 l b 3 9 g 8 O j 6 v F J V 0 W J J N Q l E Y 9 k 3 8 e K c i a o q 5 n m t B 9 L i k O f 0 5 4 / u 8 n 9 3 i O V i k X i X s 9 j 6 o V 4 I l j A C N Z G e h i G W E / 9 I H W z U c q y U b V m 1 + 0 F 0 D p x C l K D A p 1 R 9 W s 4 j k g S U q E J x 0 o N H D v W X o q l Z o T T r D J M F I 0 x m e E J H R g q c E i V l y 5 S Z + j C K G M U R N I 8 o d F C / b 2 R 4 l C p e e i b y T y l W v V y 8 T 9 v k O j g 2 k u Z i B N N B V k e C h K O d I T y C t C Y S U o 0 n x u C i W Q m K y J T L D H R p q i K K c F Z / f I</formula><formula xml:id="formula_14">o + Q h H V V r d t 3 O g V a J U 5 A a F G i P q l / D c U j i g A p N O F Z q 4 N i R d h M s N S O c p p V h r G i E y Q x P 6 M B Q g Q O q 3 C R P n a I z o 4 y R H 0 r z h E a 5 + n s j w Y F S 8 8 A z k 1 l K t e x l 4 n / e I N b + l Z s w E c W a C r I 4 5 M c c 6 R B l F a A x k 5 R o P j c E E 8 l M V k S m W G K i T V E V U 4 K z / O V V 0 m 3 U n W b 9 4 r Z Z a z W K O s p w A q d w D g 5 c Q g t u o A 0 d I C D h G V 7 h z X q y X q x 3 6 2 M x W r K K n W P 4 A + v z B x b o k t s = &lt; / l a t e x i t &gt; Multi-GNNs Multi-GNNs User Multi-graph</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Pre-training on Multi-Graphs</head><p>In the existing side information-aware models <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b28">29,</ref><ref type="bibr" target="#b57">58]</ref>, different types of features associated with users and items contribute equally to the latent relationships between entities. However, in the real-world scenario, the features of users and items are typically heterogeneous, with different types of features having different usefulness for enhancing a recommender's performance. For example, users are normally associated with different types of features (e.g. age, gender and education level), which clearly characterize different aspects of the users' preferences <ref type="bibr" target="#b33">[34]</ref>. To distinguish the importance of different feature types, we pre-train the entity embeddings through message propagation over the different feature types of the entities by using a multi-graph neural network <ref type="bibr" target="#b52">[53]</ref>.</p><p>Since the entity features can be real-valued, we first need to categorize such real-valued features into some groups, such that all the features of entities are sparsely categorized. Next, we can regard each feature category value as an edge type, and create an edge of this type between a pair of entities if they share the same feature value. In particular, to extract the heterogeneous relations between entities, we construct two multi-graphs for the users and items, i. (e.g. if both are in the age group <ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref><ref type="bibr" target="#b28">[29]</ref><ref type="bibr" target="#b29">[30]</ref><ref type="bibr" target="#b30">[31]</ref><ref type="bibr" target="#b31">[32]</ref><ref type="bibr" target="#b32">[33]</ref><ref type="bibr" target="#b33">[34]</ref><ref type="bibr" target="#b34">[35]</ref>. 𝑿 𝑢 is set to be the random initialized user embeddings. The item multi-graph G ′ 𝑣 is constructed in a similar fashion. We use Figure <ref type="figure" target="#fig_10">4</ref>  Ê𝑢</p><formula xml:id="formula_15">=E ′ 𝑢 ∪ 𝑣, 𝑢, 𝑟 -1 | (𝑢, 𝑣, 𝑟 ) ∈ E ′ 𝑢 ∪ {(𝑢, 𝑢, ⊤) | 𝑢 ∈ V 𝑢 ), R𝑢 =R 𝑢 ∪ R 𝑖𝑛𝑣 𝑢 ∪ {⊤},<label>(5)</label></formula><p>where R 𝑖𝑛𝑣 𝑢 = 𝑟 -1 | 𝑟 ∈ R 𝑢 denotes the inverse relations (i.e. (𝑣, 𝑢, 𝑟 -1 ) = (𝑢, 𝑣, 𝑟 )) and ⊤ indicates the self-loop. Then, inspired by Composition-GCN <ref type="bibr" target="#b52">[53]</ref>, the node embeddings are propagated through edges based on the following propagation rule:</p><formula xml:id="formula_16">𝑯 (𝑙) 𝑢 𝑖 = 𝜎 (𝑢 𝑖 ,𝑢 𝑗 ,𝑟 ) ∈ Ê𝑢 𝑾 (𝑙-1) 𝜆 (𝑟 ) 𝜙 𝑯 (𝑙-1) 𝑢 𝑗 , 𝒁 (𝑙-1) 𝑟 , (<label>6</label></formula><formula xml:id="formula_17">)</formula><p>where 𝑙 is the number of layers, 𝒁 𝑟 = 𝑏 𝑘=1 𝛼 𝑘𝑟 𝑩 𝑘 is the relation embedding with {𝑩 1 , 𝑩 2 , . . . , 𝑩 𝑏 } being a set of learnable basis vectors and 𝛼 𝑘𝑟 is the basis-specific learnable scalar weight. 𝑏 is a hyperparameter corresponding to the number of basis vectors. 𝜙 (•) is the composition operator defined as: 𝜙 (𝒆 𝑠 , 𝒆 𝑟 ) = 𝒆 𝑠 -𝒆 𝑟 , which is inspired by the TransE model <ref type="bibr" target="#b0">[1]</ref>. 𝑾 (𝑙-1) 𝜆 (𝑟 ) ∈ R 𝑑 1 ×𝑑 0 is a relation-type specific parameter, where 𝑾 𝜆 (𝑟 ) are given below:</p><formula xml:id="formula_18">𝑾 𝜆 (𝑟 ) =          𝑾 𝑂 , 𝑟 ∈ R 𝑢 𝑾 𝐼 , 𝑟 ∈ R 𝑖𝑛𝑣 𝑢 𝑾 𝑆 , 𝑟 = ⊤ (self -loop) (7)</formula><p>where 𝑾 𝑂 , 𝑾 𝐼 and 𝑾 𝑆 are all trainable weights.</p><p>Then the output embeddings of the final layer are taken as pre-training embeddings (i.e. 𝑼 = 𝑯 (𝑙)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝑢</head><p>). We use the Binary Cross-Entropy (BCE) loss <ref type="bibr" target="#b14">[15]</ref> described below as the objective function. The item embeddings are obtained similarly to Eq. ( <ref type="formula" target="#formula_16">6</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Pre-training Loss</head><p>For most graph neural networks, the embeddings can be learned by the reconstruction of the graph structure or the labels of the corresponding entities <ref type="bibr" target="#b24">[25]</ref>. Therefore, for both our Single-P and Multi-P models, we pre-train the user and item embeddings with a rating/interaction-based loss, in order to encapsulate the potential information between entities for recommendation. Specifically, with the embeddings of both users and items learned from the multi-relational or single-relation graphs, we construct our pre-training loss using the Binary Cross-Entropy (BCE) loss function <ref type="bibr" target="#b14">[15]</ref>:</p><formula xml:id="formula_19">L 𝑃𝑇 = - 𝑹 𝑖,𝑗 ∈𝑹 𝑹 𝑖,𝑗 • log R𝑖,𝑗 + 1 -𝑹 𝑖,𝑗 • log 1 -R𝑖,𝑗 + 𝜂 ∥𝚯∥ 2 ,<label>(8)</label></formula><p>where R𝑖,𝑗 is the predicted score calculated by the embedding dot product R𝑖,𝑗 = 𝑼 tr 𝑖 • 𝑽 𝑗 , 𝚯 denotes all parameter embeddings and 𝜂 denotes the regularization weight. Two explicit entity biases are also used for calculating the scores, following <ref type="bibr" target="#b47">[48]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Complexity Analysis</head><p>The complexity of our pre-training scheme highly depends on the complexity of the underlying graph neural models. For example, our Single-P holds a complexity of</p><formula xml:id="formula_20">𝑂 𝑙𝑑 |E | + 𝑙𝑑 2 |V | [25],</formula><p>which is the same as the GCN model. The complexity of our Multi-P model is 𝑂 (𝑙𝑑 2 + 𝑏𝑑 + 𝑏 |R|)|E | , which is similar to the complexity of the Composition-GCN model <ref type="bibr" target="#b52">[53]</ref>, where 𝑙 denotes the number of layers, 𝑏 is the number of learnable basis vectors, 𝑑 is the embedding dimension, and |R| is the number of relation types. The number of edges |E | in the entity graphs (multi-graphs) typically accounts for the largest complexity in the Multi-P model, and if the entities contain dense features, the number of edges |E | could be much larger than the number of interactions (e.g. the generated user multi-relational feature graph of the Movielens-1M dataset contains around 2.7 million edges). Some variants of these neural models, such as FastGCN <ref type="bibr" target="#b3">[4]</ref> and ClusterGCN <ref type="bibr" target="#b7">[8]</ref>, could enhance the efficiency of our scheme but at the possible cost of reducing effectiveness. Once the entity embeddings are pre-trained, they can be reused and fine-tuned by many existing recommenders to enhance their effectiveness and stability. We leave the investigation of the impact and added-value of these existing variants for future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.6">Fine-tuning with Existing Recommenders</head><p>Most of the modern recommenders are trained based on gradient-based optimization methods, which usually obtain locally-optimal solutions. Due to the non-convexity of their objective functions, parameter initialization plays an important role for the convergence and performances of these recommendation models <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b14">15]</ref>. Most of the existing recommendation models initialize their embeddings using a uniform distribution <ref type="bibr" target="#b56">[57]</ref>, a normal distribution <ref type="bibr" target="#b47">[48]</ref> or the Xavier uniform distribution <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b61">62]</ref>. Due to the randomness of the generated embeddings and the lack of prior knowledge, these models often fall into some poor locally-optimal solutions, resulting in high instabilities, as illustrated in Figure <ref type="figure">1</ref>.</p><p>To address this issue, we propose to initialize the entity embeddings of an existing recommendation model from the output embeddings of our pre-training model, then we further fine-tune these embeddings with the recommendation model's own optimizer. Specifically, we first pre-train both the embeddings of users and items by our proposed Multi-P or Single-P models until convergence, then feed these pre-trained embeddings into an existing recommendation model as the parameter initialization to train the recommendation model with the interactions/ratings only. The training frameworks of the pre-training and fine-tuning processes are summarized in Algorithm 1 and Algorithm 2, respectively. During the fine-tuning stage, the training objective is chosen depending on the underlying base model. For example, in this paper, we integrate our pre-trained embeddings into four existing recommender models, i.e., MF <ref type="bibr" target="#b47">[48]</ref>, NCF <ref type="bibr" target="#b14">[15]</ref> NGCF <ref type="bibr" target="#b61">[62]</ref> and LightGCN <ref type="bibr" target="#b13">[14]</ref>, where two training objective functions are used in these models, i.e. the BCE loss and the Bayesian Personalized Ranking (BPR) loss. Specifically, the MF, NGCF and LightGCN models optimize the pairwise BPR loss, which is formulated as follows:</p><formula xml:id="formula_21">L 𝐹𝑇 = - ln 𝜎 ( R𝑖,𝑗 -R𝑖,𝑧 ) + 𝜂 ∥𝚯∥ 2 ,<label>(9)</label></formula><p>while the NCF model is trained based on the BCE loss:</p><formula xml:id="formula_22">L 𝐹𝑇 = - 𝑹 𝑖,𝑗 • log R𝑖,𝑗 + 1 -𝑹 𝑖,𝑗 • log 1 -R𝑖,𝑗 + 𝜂 ∥𝚯∥ 2 , (<label>10</label></formula><formula xml:id="formula_23">)</formula><p>where R𝑖,𝑗 denotes the predicted scores for the observed interactions, and R𝑖,𝑧 denotes the predicted scores for the unobserved interactions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.7">Discussion</head><p>The idea of pre-training embeddings for recommender systems has already been investigated in the literature. For example, to avoid saddle points and poorly performing local minima, both NCF <ref type="bibr" target="#b14">[15]</ref> and CMN <ref type="bibr" target="#b9">[10]</ref> apply the Generalized Matrix Factorization (GMF) as a pre-training model  <ref type="formula" target="#formula_21">9</ref>) or Eq. ( <ref type="formula" target="#formula_22">10</ref>); end L 𝐹𝑇 ← L 𝐹𝑇 + ∇L; Update Θ, Û , V ; end Do recommendation to find the recommended list S based on Û and V ; to initialize the embedding weights of users and items. In particular, the embedding vectors of users and items in GMF are simply obtained by training from the weighted output of the embedding dot product using the interaction matrix:</p><formula xml:id="formula_24">R𝑢,𝑣 = 𝑾𝜎 (𝑼 𝑢 ⊙ 𝑽 𝑉 ) ,<label>(11)</label></formula><p>where ⊙ denotes the element-wise product of vectors, 𝜎 is an activation function and 𝑾 is the trainable parameter. However, these models are unable to leverage the within-entity knowledge from the heterogeneous entity features. We note that our pre-training model using the graph neural network can be seen as a generalization of the GMF model, since our Multi-P model can be reduced to the GMF model by removing all the links of the constructed multi-graphs and setting the maximum depth of the multi-graph neural network to be 1. More recently, Hao et al. <ref type="bibr" target="#b12">[13]</ref> exploited how to use GNN to conduct pre-training for downstream tasks, inspired by the GNN pre-training <ref type="bibr" target="#b15">[16]</ref>. However, their proposed models only leverage the graph structure, which lacks the ability to incorporate heterogeneous side information about the entities, compared with our proposed scheme.</p><p>In relation to the graph neural-based recommender systems, the most relevant works to our Multi-P model is the Multi-GCCF model <ref type="bibr" target="#b50">[51]</ref>, which, similarly, considers the user-to-user and item-to-item relations as graphs and uses a graph convolution network to train the embeddings of the two entities. However, the entity graphs in Multi-GCCF are constructed from the rating/click matrix, rather than from the entity side information. Hence, the heterogeneous relations from the entity side information cannot be captured by the Multi-GCCF model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">EXPERIMENTAL SETUP</head><p>In this section, we first introduce the research questions that we aim to answer in this paper ( §5.1). Next, we present the datasets used for conducting the experiments as well as the relevant pre-processing procedures to prepare the datasets including all interaction data and different types of side information ( §5.2). Finally, we present the experimental settings and describe the used baselines ( §5.3).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Research Questions</head><p>We aim to answer the following research questions: RQ1. Do our pre-trained models help existing recommendation systems obtain better performances? RQ2. Do our pre-trained models outperform the existing state-of-the-art recommenders that use side information? RQ3. Are the performance improvements gained through our pre-training models due to the within-entity knowledge? RQ4. Does the pre-training process help to improve the stability of the existing models? RQ5. Does the pre-training process help to alleviate the classical cold-start problem? RQ6. How do the embeddings dimension and different ranking cut-offs affect the recommendation performances of the pre-trained recommenders? </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Datasets</head><p>To evaluate the effectiveness of our introduced pre-training scheme, we use three datasets, namely Foursquare<ref type="foot" target="#foot_4">3</ref> , Movielens-1M<ref type="foot" target="#foot_5">4</ref> , and Epinions<ref type="foot" target="#foot_6">5</ref> . Table <ref type="table" target="#tab_3">2</ref> shows their statistics. For the Movielens-1M dataset, the users' features (i.e. side information) are "gender", "age" and "occupation", while the items' features are the 18 different genres. For the Foursquare dataset, we use the tags provided by online users as features for the restaurants, while we represent each user as a bag-of-words feature vector from his/her own reviews (stopwords are removed). Similarly, for the Epinions dataset, we represent both users and items with bag-of-words feature vectors from their associated reviews with stopwords removed, selecting the 10 most frequent words to represent both users and items. Among the three datasets, there is only one real-valued feature, namely ages in the Movielens-1M dataset, which needs to be pre-processed into one-hot representations by a categorization operation. Specifically, the users' age feature in the Movielens-1M dataset is categorized into 8 age groups, each with a step of 10 years. Then an one-hot vector is used to represent the users' age feature. Below, we summarise how to construct the single-relational graph and the multi-relational graph for our proposed Multi-P and Single-P models, respectively. Single-relational graph construction. To construct a single-relation graph for Single-P, we first need to build the one-hot vectors for each user and item. Taking the Movielens-1M dataset as an example, we know that there are 18 different genres for all movies; therefore, each movie is represented as a binary vector of size 1×18. If one movie is labelled as a comedy movie, its vector will have 1 at the corresponding column of "comedy" and 0 elsewhere if no other labels are given. Hence, the feature matrix 𝑭 𝑣 of the Movielens-1M dataset has a size of 3704×18. Next, we compute cosine similarities between each pair of the users' one-hot vectors or each pair of the items' one-hot vectors so that we obtain cosine similarities between each user pair and each item pair. Such a single relational graph will have a size of 3704×3704 containing all similarity values. Finally, this single-relational graph can be used as an input for the proposed Single-P model. We follow a similar procedure to compute the single-relational graph for users.</p><p>Multi-relational graph construction. To construct a multi-relational graph for Multi-P, we also follow a similar procedure to build the one-hot vectors for each user and item so as to compute the feature matrices 𝑭 𝑣 and 𝑭 𝑢 . Instead of using the cosine similarity to capture the similarity values between each entity, the input of Multi-P is a series of graphs, where each graph contains all entities possessing one specific type of side information. Therefore, if we take again the Movielens-1M dataset as an example, the input of Multi-P for items will be 18 different graphs, where each graph has a size of 𝑚 × 𝑚. Here, the value of 𝑚 depends on how many entities are involved in the multi-relational graph. Different with the graphs used by Compositional-GCN <ref type="bibr" target="#b52">[53]</ref>, our multi-relational graphs incorporate more types of edges and relations.</p><p>Table <ref type="table">3</ref>. Summary of all baselines and our proposed schemes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model Side information</head><formula xml:id="formula_25">Pre-training Graph-based MF ✗ ✗ ✗ NCF ✗ ✗ ✗ NGCF ✗ ✗ ✓ LightGCN ✗ ✗ ✓ HIRE ✓ ✗ ✗ cVAE ✓ ✗ ✗ SSLIM ✓ ✗ ✗ SGL ✗ ✗ ✓ PT-GNN ✗ ✓ ✓ SimGCL ✗ ✗ ✓ Single-P ✓ ✓ ✓ Multi-P ✓ ✓ ✓</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Experimental Settings</head><p>We use the leave-one-out splitting <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b46">47,</ref><ref type="bibr" target="#b47">48]</ref> method to split the interactions of each dataset into training, validation and testing sets. To speed up the evaluation, we adopt the sampled metrics <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b47">48,</ref><ref type="bibr" target="#b61">62]</ref>, which randomly sample a small set of the non-interactive items as negative items (rather than take all the non-interactive items as negatives) of the validation and testing sets, and evaluate the metric performance on this smaller set. Here, we sample 100 negative items for each user in the testing sets for evaluation <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b21">22,</ref><ref type="bibr" target="#b47">48]</ref>. However, different from prior works <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b47">48]</ref> that only use one oracle testing set per dataset with the sampled negative items, we construct 10 different testing sets with different sampled negative items for each dataset using different random seeds, in order to reduce the evaluation bias on some specific testing negatives <ref type="bibr" target="#b25">[26]</ref>. Hence, the reported performance of each run is based on the average of the 10 testing sets. Three ranking evaluation metrics, namely the Normalised Discounted Cumulative Gain (NDCG), Recall and Mean Average Precision (MAP) metrics, are applied for evaluating the performances of our evaluated models.</p><p>We evaluate the effectiveness of our pre-training scheme by comparing it with ten existing stateof-the-art recommendation models. Among the baselines, four are general (representation-based) recommendation models, which are also used for the subsequent fine-tuning:</p><p>• MF <ref type="bibr" target="#b47">[48]</ref>: This is the conventional matrix factorization model, which can be optimized by the Bayesian personalized ranking (BPR <ref type="bibr" target="#b46">[47]</ref>) or the BCE losses.</p><p>• NCF <ref type="bibr" target="#b14">[15]</ref>: This is a neural recommendation method, which learns the user and item embeddings while integrating the GMF &amp; MLP models to capture their non-linear feature interactions.</p><p>• NGCF <ref type="bibr" target="#b61">[62]</ref>: NGCF is devised to employ a multi-layer GCN on the user-item interaction graph to propagate the collaborative signals across multi-hops user-item neighbourhoods.</p><p>• LightGCN <ref type="bibr" target="#b13">[14]</ref>: Building on NGCF, LightGCN has fewer redundant neural components compared with the NGCF model, which makes it more efficient and effective.</p><p>The other three baselines are recommenders that use an integration scheme to incorporate side information of both users and items:</p><p>• HIRE <ref type="bibr" target="#b33">[34]</ref>: This is a side information-aware recommendation model, which combines the flat and hierarchical side information to alleviate the challenge brought by the heterogeneity of the side information.</p><p>• cVAE <ref type="bibr" target="#b5">[6]</ref>: cVAE is a side information-aware recommendation model that uses the variational auto-encoder to encode the entity side information into entities for enhancing the performance. • SSLIM <ref type="bibr" target="#b39">[40]</ref>: This is a classical sparse linear recommender, which can use both the users and items' side information. In particular, we choose the binary representation to remain consistent with our feature representations.</p><p>In addition, we incorporate three other baselines, which use different methods to enhance their corresponding graph-based recommenders:</p><p>• SGL <ref type="bibr" target="#b64">[65]</ref>: SGL uses self-supervised learning, including the node dropout, edge dropout and random walk augmentation techniques to generate multiple representations of users and items based on the structure of the graph. In addition, SGL has the ability to explore hard negative samples. • PT-GNN <ref type="bibr" target="#b12">[13]</ref> <ref type="foot" target="#foot_8">6</ref> : PT-GNN uses the pre-trained GNN model to enhance the embeddings of the cold-start users or items. The pre-training task of PT-GNN consists in directly reconstructing the cold-start user/item embeddings by mimicking the meta-learning setting via episode-based training Vinyals et al. <ref type="bibr" target="#b55">[56]</ref>. In <ref type="bibr" target="#b12">[13]</ref>, many state-of-the-art baseline models (including LightGCN <ref type="bibr" target="#b13">[14]</ref>, GraphSAGE <ref type="bibr" target="#b11">[12]</ref> and GAT <ref type="bibr" target="#b54">[55]</ref>) have been shown to be enhanced by PT-GNN. We choose the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">RESULTS AND ANALYSIS</head><p>In this section, we report the results obtained from four main experiments aimed at answering the research questions listed in §5.1. In particular, we first address RQ1 by analysing whether both Single-P and Multi-P can help to improve the four existing representative recommenders. Then, we further compare the performances of these models with three competitive recommenders, which incorporate different graph-based techniques and three recommenders that leverage both the users' and items' side information (RQ2). We provide an ablation study where we randomly drop {20%,40%,60%,80%} of the entity features during the pre-training process in order to seek an answer to RQ3. To answer RQ4, we conduct experiments over different random seeds, and analyze the standard deviations of these models' performances. To address RQ5, we conduct an analysis, where we compare the best performing pre-trained models (i.e. LightGCN +Single-P and LightGCN +Multi-P ) with PT-GNN and LightGCN across different groups of users to examine whether our proposed scheme can help to alleviate the cold-start problem. Finally, to answer RQ6, we provide a detailed analysis of the performances of the pre-training models on different embedding dimensions and different cut-offs for the recommended items.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Effectiveness of Pre-training</head><p>To validate the effectiveness of our pre-training scheme, we compare the performances of the four selected recommender models (i.e. MF <ref type="bibr" target="#b47">[48]</ref>, NCF <ref type="bibr" target="#b14">[15]</ref>, NGCF <ref type="bibr" target="#b61">[62]</ref> and LightGCN <ref type="bibr" target="#b13">[14]</ref>) with their pre-trained variants under the pre-training processes defined by our Multi-P and Single-P. Figure <ref type="figure" target="#fig_13">5</ref> reports the recommendation performances comparison in terms of the NDCG, Recall and MAP metrics at a rank cut-off of 10. From Figure <ref type="figure" target="#fig_13">5</ref>, we can clearly observe that, over the three used datasets, all the selected 4 recommender models exhibit significantly improved performances when Multi-P is applied. Moreover, we can also see that a baseline pre-trained with our Multi-P can always outperform the baseline pre-trained with Single-P. This is somewhat expected, as Multi-P is trained using the multi-graphs constructed from the entities' side information. Therefore, Multi-P is capable of capturing the heterogeneous relations between entities within the side information, in contrast to the Single-P, which can only leverage the similarity between each feature vector.</p><p>To conclude on RQ1, we have shown that our proposed Multi-P model can effectively leverage various users and items' side information, thereby enhancing the existing representation-based recommenders with significant performance improvements, consistent across the three used datasets, three measures and four baselines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">Effectiveness of Integrating Side Information</head><p>Having shown that our proposed Multi-P is effective at enhancing the performances of the existing recommenders through the leveraging of side information, we next examine whether these recommenders with our pre-training scheme perform better than the existing state-of-the-art models. To answer this, we further compare the pre-trained models (i.e. MF +Multi-P , NCF +Multi-P ,NGCF +Multi-P and LightGCN +Multi-P ) with their corresponding baselines pre-trained with Single-P as well as three state-of-the-art recommenders where both side information of users and items are used. Table <ref type="table" target="#tab_6">4</ref> reports the recommendation performances in terms of the NDCG and MAP metrics at rank cut-off 10 for each model across all three datasets. From Table <ref type="table" target="#tab_6">4</ref>, we observe that although the relative performance ranking of systems is different across the used datasets, the three baselines (i.e. HIRE, cVAE and SSLIM) do not achieve the highest performances on any of the used datasets. Specifically, the LightGCN +Multi-P model performs the best on both the Epinions and Foursquare datasets, outperforming the NDCG@10 score of the HIRE side information-aware baseline by 18.7% (0.0667 → 0.0792) and 21.6% (0.5232 → 0.6364), respectively. For the Movielens-1M dataset, MF +Multi-P achieves the best performance on the MAP metric, outperforming the HIRE model by 3.76% (0.0692 → 0.0718). Furthermore, we compare the pre-trained models with four variants that also use side information: Single-P (pre. only), Multi-P (pre. only), MTL +Single-P and MTL +Multi-P . Recall that Single-P (pre. only) and Multi-P (pre. only) are two variants that only use the pre-training models without fine-tuning; MTL +Single-P and MTL +Multi-P are two variants that use multi-task learning to train the models. From Table <ref type="table" target="#tab_6">4</ref>, we find that the variants using multi-task learning always outperform the two pre-training only variants. However, none of these variants can reach the best or second best performances on all three used datasets, further demonstrating our proposed scheme's superiority. We also notice that models pre-trained by our proposed scheme cannot consistently outperform the pre-training only variant. For example, the NCF Single-P model is less effective than the pre-training only variant Single-P (pre. only) on the Foursquare dataset. This suggests that the performance of Single-P has decreased after being fine-tuned by the NCF model. Such an observation is related to the well-known issue of training a deep neural network with a warm restart <ref type="bibr" target="#b34">[35]</ref> when a pre-trained model cannot even achieve the previous local optima during the fine-tuning process. We leave such an issue to future work, for example investigating how to at least maintain the previous local optima when fine-tuning a recommender system.</p><p>In addition to comparing our proposed scheme with side information-based baselines, we incorporate another three baselines, which use different graph-based methods to enhance the recommendation performance instead of relying on side information. Specifically, the SGL model uses the graph self-supervised learning method, PT-GNN uses the graph pre-training method, and SimGCL uses the graph contrastive learning method. By comparing the SGL, PT-GNN and SimGCL models with our proposed scheme in Table <ref type="table" target="#tab_6">4</ref>, we observe that our proposed scheme can achieve the best performances for all cases in terms of NDCG@10. This observation shows that using our proposed pre-training scheme to integrate side information outperforms baselines that use other competitive graph-based techniques.</p><p>Overall, to answer RQ2, we have shown that the four selected representative recommendation models with our Multi-P pre-training scheme can outperform the other three baseline models that also leverage entity side information using the integration scheme on all the three used datasets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3">Ablation Study of Side Information</head><p>Having observed that all the evaluated existing baseline models are significantly improved by our pre-training scheme, we now check whether these improvements are actually the result of using the within-entity knowledge captured by our pre-training models (RQ3). To answer this question, we conduct an ablation study to examine the effect of randomly removing entity features, thereby revealing the connection between the performance improvements and the within-entity knowledge. Specifically, we randomly drop different proportions ({20%, 40%, 60%, 80%}) of entity features during the pre-training process, and evaluate the recommendation performances of the fine-tuned models given these pre-trained embeddings. Figure <ref type="figure" target="#fig_14">6</ref> reports the obtained results. From Figure <ref type="figure" target="#fig_14">6</ref>, we can see that all the NDCG@10 performances of all fine-tuned models decrease as the features dropout ratio increases from 0% (i.e. no dropped features) to 80% (80% of features are dropped) in all the three datasets. This result suggests that randomly dropping entity features does hurt the overall recommendation performance. This result also suggests that the performance improvements are indeed gained from the entity features and our Single-P and Multi-P models are able to accurately capture the within-entity knowledge from the entities' side information.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.4">Stability Analysis</head><p>In the previous sections, we have demonstrated the general applicability and effectiveness of our introduced pre-training scheme. To address RQ4, we calculate the standard deviations of the NDCG@10 performances of the baseline models (i.e. MF, NCF, NGCF and LightGCN) and their enhanced variants by our Multi-P and Single-P models. Table <ref type="table" target="#tab_7">5</ref> presents the obtained results on the Foursquare and Epinions datasets. From the table, we observe that Multi-P markedly improves the performances and stabilities of all the used baselines, with much smaller observed standard deviations in each paired comparison of a baseline model with and without the use of the pretraining scheme. Noticeably, although less effective than our Multi-P model, the Single-P model can also bring a marked stability enhancement to all baselines, which demonstrates the superiority of the graph pre-training scheme for recommender systems. To conclude, our proposed pre-training scheme can enhance the performance of each of the representation-based recommender systems as well as their stability, thereby alleviating the high variances issue observed in Figure <ref type="figure">1</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.5">Cold-start Analysis</head><p>To answer RQ5, we evaluate the performances of LightGCN, PT-GNN, LightGCN +Single-P and LightGCN +Multi-P on the Foursquare and Epinions datasets<ref type="foot" target="#foot_10">8</ref> over different groups of users, respectively. Specifically, following existing work <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b32">33]</ref>, we consider that the cold-start users Table <ref type="table">6</ref>. NDCG@10 performances of our proposed scheme and those of the baselines across different groups of users on the two used datasets. are those users with fewer than 10 interactions and the regular users are those users with more than 10 interactions. In Table <ref type="table">6</ref>, we report the NDCG@10 performances of the overall (i.e. all users included), cold-start (i.e. cold-start users only) and regular groups (i.e. regular users only) using all the evaluated models, respectively. In particular, we specifically choose PT-GNN as a baseline since it is especially designed to improve the cold-start recommendation <ref type="bibr" target="#b12">[13]</ref>. In addition, we choose LightGCN and its two pre-trained variants LightGCN +Single-P and LightGCN +Multi-P for their excellent overall performances as shown in Table <ref type="table" target="#tab_6">4</ref>. From Table <ref type="table">6</ref>, we observe that our LightGCN +Single-P and LightGCN +Multi-P models consistently outperform the original LightGCN model and the pre-training baseline, i.e. PT-GNN, on both used datasets across different groups of users. It is worth noting that although PT-GNN markedly outperforms the LightGCN baseline for the cold-start users on the Foursquare dataset (0.5117 → 0.5334) and on the Epinions dataset (0.0532 → 0.0603), the improvements for the regular users are relatively marginal, especially for the Foursquare dataset, where NDCG@10 is only improved from 0.6238 to 0.6239. On the contrary, our proposed scheme can boost the recommendation performance for different groups of users instead of only focusing on the cold-start users. The reason why our proposed scheme can consistently improve the performance of the original model is that we use abundant side information to construct the relational graphs. Since the side information is available for different groups of users (sometimes the regular users have even more attributes), in general our proposed scheme can evenly enhance the representations of users. In comparison, PT-GNN relies on the interaction graph to construct the embeddings of the cold-start users, which might only benefit these cold-start users instead of all users.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model</head><p>To conclude, we have shown that our proposed scheme is able to alleviate the cold-start problem, while still ensuring an effective recommendation for all other users in comparison to strong baselines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.6">Hyperparameter Analysis</head><p>To answer RQ6, we study how the embedding dimension affects the recommendation performance. Figure <ref type="figure" target="#fig_16">7</ref> shows the performance comparison results of our pre-trained models (i.e. LightGCN +Single-P , NCF +Single-P , NCF +Multi-P and LightGCN +Multi-P ) with their baselines (i.e. LightGCN and NCF). From Figure <ref type="figure" target="#fig_16">7</ref>, we observe that the size of the embedding dimension does affect the final recommendation performances of all these evaluated models. We can also observe that when the size of the latent dimensions is ≤40, all three models show relatively poor performances, which can be further boosted when the dimension size increases; almost all models' performances reach their highest points when the dimensions are between 60 to 80. Recall that, for a fair comparison, we fixed the embedding dimension to 64 for all the implemented models, which can be further justified from these obtained results. Moreover, Figure <ref type="figure" target="#fig_16">7</ref> demonstrates that our pre-training scheme can bring consistent improvements to the exiting models across different embedding dimensions. We also plot the performances evaluated by NDCG over different cut-offs (𝑘) of the items ranking in Figure <ref type="figure" target="#fig_17">8</ref>. We can also see that both LightGCN +Multi-P and NCF +Multi-P consistently improve over their baseline models for different cut-offs. In particular, we see that even for some low rank cut-offs (e.g. 𝑘 = {1, 3, 5}) or for deep cut-offs (e.g. 𝑘 = 50) our Multi-P model can still enhance the LightGCN and NCF models with a marked improvement, which means that our per-training scheme can help improve the recommendation performance under different circumstances when different amount of items (i.e. cut-off values) are chosen to be exposed to the users.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">CONCLUSIONS</head><p>In this paper, we introduced a novel pre-training scheme for recommender systems to leverage the entity side information in a general manner. In particular, we proposed two models for pre-training the entity representations to capture the within-entity contextual knowledge, based on the graphs constructed from the entity side information. The extensive evaluation of our pre-training scheme with the fine-tuning of four existing representation-based recommenders showed that effectively pre-training the embeddings with both the users and items' side information improved these existing models in terms of both effectiveness (always significantly, see Figure <ref type="figure" target="#fig_13">5</ref>) and stability (see Table <ref type="table" target="#tab_7">5</ref>). Furthermore, compared to the existing state-of-the-art recommender baselines, which integrate the same side information, our Multi-P model exhibited up to 7% improvement in NDCG@10 for the Movielen-1M dataset, 21% improvement on the Foursquare dataset and 48.6% improvement on the Epinions dataset (see Table <ref type="table" target="#tab_6">4</ref>). In addition, our Multi-P model consistently and significantly outperformed recent baselines that incorporate self-supervised learning, graph contrastive learning or graph pre-training techniques. Moreover, we have also shown through an in-depth analysis that by leveraging the side information through pre-training, our Single-P and Multi-P models can successfully alleviate the classical cold-start problem while ensuring effective recommendations for all other users. We also showed that the Multi-P model, pre-trained using multi-graphs, can always outperform the Single-P model, which suggests that more information is captured through the use multi-graphs. Our pre-training scheme provides a general framework for leveraging side information, which can be used to enhance a general representation-based recommendation model. As future work, we aim to investigate using other types of graph neural networks in the pretraining scheme. We will also explore whether the proposed pre-training scheme can benefit other recommendation scenarios, such as in sequential and session-based recommendations.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>ACM</head><label></label><figDesc>Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022. Graph Neural Pre-training for Recommendation with Side Information 1:3</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>t e x i t s h a 1 _ b a s e 6 4 = "</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>t e x i t s h a 1 _ b a s e 6 4 = " T T t j b k y</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. An overview of our graph neural pre-training/fine-tuning scheme. Our pre-training model constructs relational graphs based on the feature of entities, and pre-trains the embeddings of entities by using Multi-P or Single-P.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head></head><label></label><figDesc>t e x i t s h a 1 _ b a s e 6 4 = " R Y 5 2 D T f 7 p</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>r X i b + 5 / W M D m / 8 l I n E a C r I 8 l B o O N I x y h p A Q y Y p 0 X x m C S a S 2 a y I j L H E R N u e S r Y E b / X L 6 6 R d q 3 r 1 6 t V D v d K o 5 X U U 4 Q z O 4 R I 8 u I Y G 3 E M T W k D g C Z 7 h F d 6 c q f P i v D s f y 9 G C k + + c w h 8 4 n z 8 L 3 Z I 9 &lt; / l a t e x i t &gt; Item Feature Edges Item Single Graph cosine similarity G v &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " A G A Z 0 t A n m h M 2 f M O D x S L d 6 w p K U 9 g = " &gt; A A A B 9 H i c b V D L S g M x F L 1 T X 7 W + q i 7 d B I v g q s y U i i 4 L L n R Z w T 6 g H U o m z b S h S W Z M M o U y 9 D v c u F D E r R / j z r 8 x 0 8 5 C W w 8 E D u f c y z 0 5 Q c y Z N q 7 7 7 R Q 2 N r e 2 d 4 q 7 p b 3 9 g 8 O j 8 v F J W 0 e J I r R F I h 6 p b o A 1 5 U z S l m G G 0 2 6 s K B Y B p 5 1 g c p v 5 n S l V m k X y 0 c x i 6 g s 8</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>4 y 1 9 e J e 3 L m l u v X d 3 X q 4 3 L o o 4 y n M A p n I M L 1 9 C A O 2 h C C w h M 4 B l e 4 c 3 K r B f r 3 f p Y j J a s Y u c Y / s D 6 / A G / 8 J O x &lt; / l a t e x i t &gt;U i&lt; l a t e x i t s h a 1 _ b a s e 6 4 = " T T t j b k y k L X e q h 8 h 9K 1 P u N k 8 t Y l k = " &gt; A A A B 9 X i c b V B N S 8 N A F H y p X 7 V + V T 1 6 W S y C p 5 K U F j 0 W v H i s Y N p C G 8 t m u 2 m X b j Z h d 6 O U k P / h x Y M i X v 0 v 3 v w 3 b t o c t H V g Y Z h 5 j z c 7 f s y Z 0 r b 9 b Z U 2 N r e 2 d 8 q 7 l b 3 9 g 8 O j 6 v F J V 0 W J J N Q l E Y 9 k 3 8 e K c i a o q 5 n m t B 9 L i k O f 0 5 4 / u 8 n 9 3 i O V i k X i X s 9 j 6 o V 4 I l j A C N Z G e h i G W E / 9 I H W z U c q y U b V m 1 + 0 F 0 D p x C l K D A p 1 R 9 W s 4 j k g S U q E J x 0 o N H D v W X o q l Z o T T r D J M F I 0 x m e E J H R g q c E i Vl y 5 S Z + j C K G M U R N I 8 o d F C / b 2 R 4 l C p e e i b y T y l W v V y 8 T 9 v k O j g 2 k u Z i B N N B V k e C h K O d I T y C t C Y S U o 0 n x u C i W Q m K y J T L D H R p q i K K c F Z / f I 6 6 T b q T r P e u m v W 2 o 2 i j j K c w T l c g g N X 0 I Z b 6 I A L B C Q 8 w y u 8 W U / W i / V u f S x H S 1 a x c w p / Y H 3 + A B P a k t k = &lt; / l a t e x i t &gt; V j &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " S o x / 2 0 u X t S + t S 4 E i n H K 4 6 Q 8 j G P c = " &gt; A A A B 9 X i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C G 5 c V 7 A P a W C b T S T t 2 M g k z E 6 W E / I c b F 4 q 4 9 V / c + T d O 0 i y 0 9 c D A 4 Z x 7 u W e O F 3 G m t G 1 / W 6 W 1 9 Y 3 N r f J 2 Z W d 3 b / + g e n j U V W E s C e 2 Q k I e y 7 2 F F O R O 0 o 5 n m t B 9 J i g O P 0 5 4 3 u 8 7 8 3 i O V i o X i T s 8 j 6 g Z 4 I p j P C N Z G u h 8 G W E 8 9 P + m m o</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head></head><label></label><figDesc>R P n a I z o 4 y R H 0 r z h E a 5 + n s j w Y F S 8 8 A z k 1 l K t e x l 4 n / e I N b + l Z s w E c W a C r I 4 5 M c c 6 R B l F a A x k 5 R o P j c E E 8 l M</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head></head><label></label><figDesc>6 6 T b q T r P e u m v W 2 o 2 i j j K c w T l c g g N X 0 I Z b 6 I A L B C Q 8 w y u 8 W U / W i / V u f S x H S 1 a x c w p / Y H 3 + A B P a k t k = &lt; / l a t e x i t &gt; V j &lt; l a t e x i t s h a 1 _ b a s e 6 4 = " S o x / 2 0 u X t S + t S 4 E i n H K 4 6 Q 8 j G P c = " &gt; A A A B 9 X i c b V D L S s N A F L 2 p r 1 p f V Z d u B o v g q i S l o s u C G 5 c V 7 A P a W C b T S T t 2 M g k z E 6 W E / I c b F 4 q 4 9 V / c + T d O 0 i y 0 9 c D A 4 Z x 7 u W e O F 3 G m t G 1 / W 6 W 1 9 Y 3 N r f J 2 Z W d 3 b / + g e n j U V W E s C e 2 Q k I e y 7 2 F F O R O 0 o 5 n m t B 9 J i g O P 0 5 4 3 u 8 7 8 3 i O V i o X i T s 8 j 6 g Z 4 I p j P C N Z G u h 8 G W E 8 9 P + m m</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. An illustration describing the input features, multi-relational graphs and output entity embeddings of Multi-P.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head></head><label></label><figDesc>e. G ′ 𝑢 and G ′ 𝑣 , respectively. For example, to construct the user multi-graph G ′ 𝑢 = (V 𝑢 , E ′ 𝑢 , R 𝑢 , 𝑿 𝑢 ), we take all the users as the set of nodes V 𝑢 , and the feature category values as the set of relations R 𝑢 in the graph. For any pairs of nodes 𝑖, 𝑗 ∈ V 𝑢 , we create an edge if the two users share the same feature category value ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head></head><label></label><figDesc>to illustrate the overall framework of the Multi-P model. The Multi-P model. Given a multi-graph, e.g. the user multi-graph G ′ 𝑢 = (V 𝑢 , E ′ 𝑢 , R 𝑢 , 𝑿 𝑢 ), we first extend E ′ 𝑢 and R 𝑢 with the corresponding inverse edges and relations:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head>Fig. 5 .</head><label>5</label><figDesc>Fig.5. Performance comparison of the four selected existing recommenders with Single-P and Multi-P pre-training processes. We use * to denote a significant difference between the performances of the baselines and their pre-trained variants, according to the paired t-test with the Holm-Bonferroni correction for p&lt;0.01.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Results of the baselines deploying the Multi-P and Single-P models over different dropout ratio of entity features.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. The performance comparison over different dimensions on the Foursquare dataset.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. The performance comparison over different cut-off values on the Foursquare dataset.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Main Notations Used in this Article</figDesc><table><row><cell>Notation</cell><cell>Description</cell></row><row><cell>𝑹</cell><cell>the matrix of implicit feedback data</cell></row><row><cell>𝑼 , 𝑽</cell><cell>the latent embeddings of users and items</cell></row><row><cell>𝑭 𝑢</cell><cell>the feature matrix of users</cell></row><row><cell>𝑭 𝑣</cell><cell>the feature matrix of items</cell></row><row><cell>𝑿</cell><cell>the feature matrix of all nodes</cell></row><row><cell>L</cell><cell>the loss</cell></row><row><cell>V</cell><cell>the set of nodes</cell></row><row><cell>E</cell><cell>the set of edges</cell></row><row><cell>R G 𝑢 , G 𝑢 ′ G 𝑣 , G ′ 𝑣</cell><cell>the set of edge types the single/multi-graph of users the single/multi-graph of items</cell></row><row><cell>G</cell><cell>a graph (or multi-graph)</cell></row><row><cell>R 𝑖𝑛𝑣</cell><cell>the inverse relation</cell></row><row><cell>⊤</cell><cell>the self-loop relation</cell></row><row><cell>𝒁 𝑟</cell><cell>the embedding of relation 𝑟</cell></row><row><cell>𝑩 𝑏</cell><cell>the basis vector</cell></row><row><cell>𝜙</cell><cell>the composition operator</cell></row><row><cell>𝑾 𝜆 (𝑟 )</cell><cell>the relation-type specific parameter</cell></row><row><cell>𝑾 𝑂 , 𝑾 𝐼 , 𝑾 𝑆</cell><cell>the trainable weights</cell></row><row><cell>𝑙</cell><cell>the number of neural layers</cell></row><row><cell>𝑑</cell><cell>the dimension of embeddings</cell></row><row><cell>𝑏</cell><cell>the number of basis vectors</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>e x i t &gt;</figDesc><table><row><cell cols="2">Single/Multi Relational Graph</cell><cell></cell></row><row><cell>same</cell><cell>same age</cell><cell></cell></row><row><cell>occupation</cell><cell>group</cell><cell></cell></row><row><cell>same</cell><cell>same</cell><cell></cell></row><row><cell>director</cell><cell>genre</cell><cell>Initialization</cell></row><row><cell cols="2">Pre-trained embeddings</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>Algorithm 1: The pre-training process Input: Rating matrix 𝑹; Feature matrices 𝑭 𝑢 and 𝑭 𝑣 ; Multi-graphs G 𝑣 or Single-graphs G 𝑢 and G 𝑣 . Output: Pre-trained embeddings Û , V . Initialise embeddings 𝑼 , 𝑽 and other learnable parameters Θ; while not convergent do L 𝑃𝑇 = 0; for each training instance in G 𝑢 and G 𝑣 (or G Rating matrix 𝑹; Pre-trained embeddings Û , V ; A general recommender 𝑞. Output: The recommended list S for each user. Inherit Û V to initialise 𝑞; Initialise other learnable parameters Θ; while not convergent do L</figDesc><table><row><cell>′ 𝑢 and G 𝑣 ) do ′</cell></row><row><cell>Propagate information according to Eq. (6);</cell></row><row><cell>end</cell></row><row><cell>for each training instance in 𝑹 do</cell></row><row><cell>Compute epoch loss ∇L according to Eq. (8);</cell></row><row><cell>end</cell></row><row><cell>L 𝑃𝑇 ← L 𝑃𝑇 + ∇L;</cell></row><row><cell>Update Θ, 𝑼 , 𝑽 ;</cell></row><row><cell>end</cell></row><row><cell>Algorithm 2: The fine-tuning process</cell></row><row><cell>Input:</cell></row></table><note><p>′ 𝑢 and G ′ 𝐹𝑇 = 0; for each training instance in 𝑹 do Compute epoch loss ∇L according to Eq. (</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 2 .</head><label>2</label><figDesc>Statistics of the datasets.</figDesc><table><row><cell>Dataset</cell><cell># Users</cell><cell># Items</cell><cell># Interactions</cell><cell># User/Item</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>Features</cell></row><row><cell>Foursquare</cell><cell>2,060</cell><cell>2,876</cell><cell>27,149</cell><cell>2,108/47</cell></row><row><cell>Movielens-1M</cell><cell>6,040</cell><cell>3,704</cell><cell>1,000,209</cell><cell>21/18</cell></row><row><cell>Epinions</cell><cell>5,598</cell><cell>4,064</cell><cell>542,741</cell><cell>10/10</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 4 .</head><label>4</label><figDesc>Performance comparison of recommenders with side information. The best and second best performances are marked in boldface or underlined, respectively. We use * to denote a significant difference between the performances of the side information-aware baselines and the best proposed model, according to the paired t-test with the Holm-Bonferroni correction for 𝑝 &lt; 0.01.</figDesc><table><row><cell>Model</cell><cell cols="2">Foursquare NDCG MAP</cell><cell cols="2">Movielens-1M NDCG MAP</cell><cell cols="2">Epinions NDCG MAP</cell></row><row><cell>HIRE</cell><cell>0.5232  *</cell><cell>0.4575  *</cell><cell>0.0997  *</cell><cell>0.0692  *</cell><cell>0.0667  *</cell><cell>0.0518  *</cell></row><row><cell>cVAE</cell><cell>0.5326  *</cell><cell>0.4438  *</cell><cell>0.0678  *</cell><cell>0.0453  *</cell><cell>0.0532  *</cell><cell>0.0410  *</cell></row><row><cell>SSLIM</cell><cell>0.5894  *</cell><cell>0.4691  *</cell><cell>0.0655  *</cell><cell>0.0441  *</cell><cell>0.0533  *</cell><cell>0.0401  *</cell></row><row><cell>SGL</cell><cell>0.6051  *</cell><cell>0.5691  *</cell><cell>0.0739  *</cell><cell>0.0485  *</cell><cell>0.0710  *</cell><cell>0.0484  *</cell></row><row><cell>PT-GNN</cell><cell>0.6048  *</cell><cell>0.5687  *</cell><cell>0.0755  *</cell><cell>0.0501  *</cell><cell>0.0697  *</cell><cell>0.0503  *</cell></row><row><cell>SimGCL</cell><cell>0.6121  *</cell><cell>0.5891  *</cell><cell>0.0758  *</cell><cell>0.0541  *</cell><cell>0.0723  *</cell><cell>0.0481  *</cell></row><row><cell>MF +Single-P</cell><cell>0.6206</cell><cell>0.5901</cell><cell>0.0979</cell><cell>0.0646</cell><cell>0.0527</cell><cell>0.0434</cell></row><row><cell>MF +Multi-P</cell><cell>0.6249</cell><cell>0.5944</cell><cell>0.1019</cell><cell>0.0718</cell><cell>0.0587</cell><cell>0.0498</cell></row><row><cell>NGCF +Single-P</cell><cell>0.6016</cell><cell>0.5683</cell><cell>0.0713</cell><cell>0.0450</cell><cell>0.0708</cell><cell>0.0454</cell></row><row><cell>NGCF +Multi-P</cell><cell>0.6138</cell><cell>0.5844</cell><cell>0.0752</cell><cell>0.0461</cell><cell>0.0719</cell><cell>0.0485</cell></row><row><cell>LightGCN +Single-P</cell><cell>0.6162</cell><cell>0.5940</cell><cell>0.0952</cell><cell>0.0631</cell><cell>0.0717</cell><cell>0.0594</cell></row><row><cell>LightGCN +Multi-P</cell><cell>0.6364</cell><cell>0.6089</cell><cell>0.1068</cell><cell>0.0689</cell><cell>0.0792</cell><cell>0.0623</cell></row><row><cell>NCF +Single-P</cell><cell>0.5677</cell><cell>0.4939</cell><cell>0.0870</cell><cell>0.0551</cell><cell>0.0620</cell><cell>0.0531</cell></row><row><cell>NCF +Multi-P</cell><cell>0.6021</cell><cell>0.5340</cell><cell>0.0913</cell><cell>0.0584</cell><cell>0.0691</cell><cell>0.0583</cell></row><row><cell>Single-P (pre. only)</cell><cell>0.5758</cell><cell>0.5093</cell><cell>0.0700</cell><cell>0.0431</cell><cell>0.0517</cell><cell>0.0421</cell></row><row><cell>Multi-P (pre. only)</cell><cell>0.5912</cell><cell>0.5235</cell><cell>0.0812</cell><cell>0.0481</cell><cell>0.0601</cell><cell>0.0510</cell></row><row><cell>MTL +Single-P</cell><cell>0.6012</cell><cell>0.5093</cell><cell>0.0725</cell><cell>0.0453</cell><cell>0.0522</cell><cell>0.0431</cell></row><row><cell>MTL +Multi-P</cell><cell>0.6100</cell><cell>0.5337</cell><cell>0.0810</cell><cell>0.0482</cell><cell>0.0615</cell><cell>0.0530</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 5 .</head><label>5</label><figDesc>Standard deviations (denoted std.) and means of the NDCG@10 performances over 50 random seeds. Lower standard deviation (in bold) means a better stability.</figDesc><table><row><cell>Model</cell><cell cols="2">Foursquare std. mean</cell><cell>std.</cell><cell cols="2">Epinions mean</cell></row><row><cell>MF</cell><cell>0.0197</cell><cell>0.5163</cell><cell cols="2">0.0127</cell><cell>0.0501</cell></row><row><cell>MF +Single-P</cell><cell>0.0046</cell><cell>0.6206</cell><cell cols="2">0.0049</cell><cell>0.0527</cell></row><row><cell>MF +Multi-P</cell><cell>0.0029</cell><cell>0.6249</cell><cell cols="2">0.0043</cell><cell>0.0587</cell></row><row><cell>NGCF</cell><cell>0.0237</cell><cell>0.5162</cell><cell cols="2">0.0108</cell><cell>0.0681</cell></row><row><cell>NGCF +Single-P</cell><cell>0.0053</cell><cell>0.6016</cell><cell cols="2">0.0042</cell><cell>0.0708</cell></row><row><cell>NGCF +Multi-P</cell><cell>0.0044</cell><cell>0.6138</cell><cell cols="2">0.0038</cell><cell>0.0719</cell></row><row><cell>LightGCN</cell><cell>0.0209</cell><cell>0.5365</cell><cell cols="2">0.0092</cell><cell>0.0706</cell></row><row><cell>LightGCN +Single-P</cell><cell>0.0050</cell><cell>0.6262</cell><cell cols="2">0.0039</cell><cell>0.0717</cell></row><row><cell>LightGCN +Multi-P</cell><cell>0.0039</cell><cell>0.6264</cell><cell cols="2">0.0031</cell><cell>0.0792</cell></row><row><cell>NCF</cell><cell>0.0283</cell><cell>0.4621</cell><cell cols="2">0.0159</cell><cell>0.0591</cell></row><row><cell>NCF +Single-P</cell><cell>0.0091</cell><cell>0.5777</cell><cell cols="2">0.0079</cell><cell>0.0620</cell></row><row><cell>NCF +Multi-P</cell><cell>0.0086</cell><cell>0.6021</cell><cell cols="2">0.0064</cell><cell>0.0691</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>Our source code is available at https://github.com/pretrain/pretrain. ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2022" xml:id="foot_1"><p></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_2"><p>ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_3"><p>𝑫 is defined as 𝑫 𝑖𝑖 = 𝑗 (𝑨 𝑢 + 𝑰 ) 𝑖 𝑗 , where 𝑰 is the identity matrix. ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_4"><p>https://sites.google.com/site/yangdingqi/home/foursquare-dataset</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_5"><p>https://grouplens.org/datasets/movielens/</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_6"><p>http://cseweb.ucsd.edu/~jmcauley/datasets.html ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_7"><p>Siwei Liu, Zaiqiao Meng, Craig Macdonald, and Iadh Ounis</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_8"><p>In<ref type="bibr" target="#b12">[13]</ref>, no explicit name has been given for the proposed graph pre-training model. For simplicity, we use PT-GNN to denote the model. ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_9"><p>Note that a more thorough tuning of this parameter may further improve the recommendation performances, but we did not observe a clear performance trend over different 𝑏 values in our experiments, and under this setting we have already obtained excellent performances that can be used to draw our conclusions.ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_10"><p>We only use the Foursquare and Epinions datasets because the Movielens-1M dataset has only users with more than 20 interactions. However, typically, users with more than 20 interactions can hardly be called as cold-start users. ACM Transactions on Information Systems, Vol. 1, No. 1, Article 1. Publication date: January 2022.</p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>variant using GraphSAGE as one of our baselines due to its competitive overall performance. In the following, for simplicity, we use PT-GNN to denote the variant using GraphSAGE.</p><p>• SimGCL <ref type="bibr" target="#b74">[75]</ref>: This is a recently proposed graph contrastive recommender with a high effectiveness and flexibility. SimGCL can enhance the contrastive representations of users and items by introducing a regulated noise sampled from the uniform distribution instead of relying on any graph augmentation techniques.</p><p>Furthermore, we compare our proposed pre-training scheme with variants, consisting of pretraining only and multi-task learning:</p><p>• Single-P (pre. only) &amp; Multi-P (pre. only): These two models only use the users and items' embeddings learned during the Single-P or Multi-P pre-training stages to make recommendations. By comparing these two variants with the models pre-trained by our proposed scheme, we can directly observe the obtained improvements. • MTL +Single-P &amp; MTL +Multi-P : These two variants use multi-task learning to train Single-P or Multi-P together with a baseline recommender, instead of following our proposed scheme. These two variants use L 𝑃𝑇 + 𝛽 * L 𝐹𝑇 as the overall training loss, where 𝛽 is a constant and the detailed equations of L 𝑃𝑇 and L 𝐹𝑇 can be found in Section 4.3 and Section 4.6, respectively.</p><p>We apply our two pre-training models on the four existing widely used representation-based baselines, namely MF, NCF, NGCF and LightGCN. We use Single-P and Multi-P to denote the two pre-training models, respectively, while MF +Multi-P stands for a model, pre-trained by Multi-P and fine-tuned with MF. To summarise, we use Table <ref type="table">3</ref> to indicate which model uses side information, pre-training and graph-based techniques, respectively.</p><p>We adopt the Adam <ref type="bibr" target="#b23">[24]</ref> optimizer in both Multi-P and Single-P as well as the four fine-tuning baselines. To determine the values of all hyperparameters, we randomly sample one interaction for each user as the validation set and tune the hyperparameters on it for all of the models. In particular, we tune the pre-training models (i.e. Multi-P and Single-P) by varying the learning rate in 10 -2 , 10 -3 , 10 -4 and the regularization weight 𝜂 in 10 -2 , ..., 10 -5 . The learning rates of the baseline models are also tuned according to the suggested ranges from the original papers. The depths for all GNNs of the graph-based recommenders (i.e. NGCF, LightGCN, SGL and SimGCL) and the pre-training models are kept to 3 with each layer having a size of 64, while the dropout ratios of all GNNs vary among {0.3, 0.4, ..., 0.8} as suggested in the existing literature <ref type="bibr" target="#b13">[14]</ref>. We set the maximum number of training epochs to 500; the batch size to 1000 and the latent dimension to 64 for all models. Moreover, we use an early stopping strategy, i.e., we apply a premature stopping if NDCG@10 on the validation data does not increase for 50 successive epochs. Note that the embedding dimension 𝑑 is a hyperparameter for both the pre-training models and the fine-tuning models (i.e. the baseline models). For a fair comparison, we set this hyperparameter to 64, since most of our experimental models can almost achieve their best performances for this dimension size across our three datasets. To make a fair comparison between our proposed scheme and those three baselines, i.e., HIRE, cVAE and SSLIM, which also incorporate the side information of both users and items, we train the baselines using the same side information used by our proposed scheme for pre-training. For our Multi-P model, the number of learnable basis vectors 𝑏 is set to 10, which is empirically tuned from the set {5, 7, 10, 20} by using the validation set for all datasets. 7  For those two multi-task learning model variants, i.e., MTL +Single-P &amp; MTL +Multi-P , we tune the hyperparameter 𝛽 among {0.1, 0.5, 1} following <ref type="bibr" target="#b64">[65]</ref>.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Translating Embeddings for Modeling Multi-relational Data</title>
+		<author>
+			<persName><forename type="first">Antoine</forename><surname>Bordes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Usunier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alberto</forename><surname>Garcia-Duran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jason</forename><surname>Weston</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oksana</forename><surname>Yakhnenko</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Graphnorm: A Principled Approach to Accelerating Graph Neural Network Training</title>
+		<author>
+			<persName><forename type="first">Tianle</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shengjie</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Keyulu</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Di</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liwei</forename><surname>Tie-Yan Liu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Machine Learning</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1204" to="1215" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Benchmark and Best Practices for Biomedical Knowledge Graph Embeddings</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivana</forename><surname>Balazevic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carl</forename><surname>Allen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Chawla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cynthia</forename><surname>Brandt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Andrew</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Taylor</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Biomedical Natural Language Processing Workshop</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="167" to="176" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">FastGCN: Fast Learning with Graph Convolutional Networks via Importance Sampling</title>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tengfei</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cao</forename><surname>Xiao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Revisiting Graph Based Collaborative Filtering: A Linear Residual Graph Convolutional Network Approach</title>
+		<author>
+			<persName><forename type="first">Lei</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richang</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kun</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Meng</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="27" to="34" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">A Collective Variational Autoencoder for Top-N Recommendation with Side Information</title>
+		<author>
+			<persName><forename type="first">Yifan</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maarten</forename><surname>De Rijke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Deep Learning for Recommender Systems</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="3" to="9" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Wide &amp; Deep Learning for Recommender Systems</title>
+		<author>
+			<persName><forename type="first">Heng-Tze</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Levent</forename><surname>Koc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeremiah</forename><surname>Harmsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tal</forename><surname>Shaked</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tushar</forename><surname>Chandra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hrishi</forename><surname>Aradhye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Glen</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Greg</forename><surname>Corrado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Chai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mustafa</forename><surname>Ispir</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Workshop on Deep Learning for Recommender Systems</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="7" to="10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Cluster-gcn: An Efficient Algorithm for Training Deep and Large Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Wei-Lin</forename><surname>Chiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xuanqing</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Si</forename><surname>Si</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samy</forename><surname>Bengio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cho-Jui</forename><surname>Hsieh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="257" to="266" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Reconstruction for Powerful Graph Representations</title>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Cotta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Morris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruno</forename><surname>Ribeiro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Collaborative Memory Network for Recommendation Systems</title>
+		<author>
+			<persName><forename type="first">Travis</forename><surname>Ebesu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Fang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="515" to="524" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">DeepFM: A Factorization-machine Based Neural Network for CTR Prediction</title>
+		<author>
+			<persName><forename type="first">Huifeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ruiming</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yunming</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhenguo</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiuqiang</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Joint Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1725" to="1731" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Inductive Representation Learning on Large Graphs</title>
+		<author>
+			<persName><forename type="first">Will</forename><surname>Hamilton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhitao</forename><surname>Ying</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jure</forename><surname>Leskovec</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1024" to="1034" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Pre-training Graph Neural Networks for Cold-start Users and Items Representation</title>
+		<author>
+			<persName><forename type="first">Bowen</forename><surname>Hao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cuiping</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hong</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Web Search and Data Mining</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="265" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation</title>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kuan</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yan</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yongdong</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Meng</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="639" to="648" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Neural Collaborative Filtering</title>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lizi</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hanwang</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liqiang</forename><surname>Nie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tat-Seng</forename><surname>Chua</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="173" to="182" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">GPT-GNN: Generative Pre-training of Graph Neural Networks</title>
+		<author>
+			<persName><forename type="first">Ziniu</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuxiao</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kuansan</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yizhou</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Knowledge-aware Coupled Graph Neural Network for Social Recommendation</title>
+		<author>
+			<persName><forename type="first">Chao</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Huance</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yong</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lianghao</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mengyin</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liefeng</forename><surname>Bo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hao</forename><surname>Xing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaoping</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanfang</forename><surname>Ye</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="4115" to="4122" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">MixGCF: An Improved Training Method for Graph Neural Network-based Recommender Systems</title>
+		<author>
+			<persName><forename type="first">Tinglin</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuxiao</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhen</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenzheng</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xinyu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="665" to="674" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Node-Polysemy Aware Recommendation by Matrix Completion with Side Information</title>
+		<author>
+			<persName><forename type="first">Bo</forename><surname>Hui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Da</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei-Shinn</forename><surname>Ku</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Big Data</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="636" to="642" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">xLightFM: Extremely Memory-Efficient Factorization Machine</title>
+		<author>
+			<persName><forename type="first">Gangwei</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hao</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jin</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haoyu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Defu</forename><surname>Lian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Enhong</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="337" to="346" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">LR-GNN: A Graph Neural Network Based on Link Representation for Predicting Molecular Associations</title>
+		<author>
+			<persName><forename type="first">Chuanze</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Han</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuo</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shenwei</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanbin</forename><surname>Yin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Briefings in Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+	<note>bbab513</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Self-attentive Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Wang-Cheng</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julian</forename><surname>Mcauley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Data Mining</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="197" to="206" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Capsmf: A Novel Product Recommender System Using Deep Learning Based Text Analysis Model</title>
+		<author>
+			<persName><forename type="first">Rahul</forename><surname>Katarya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yamini</forename><surname>Arora</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Multimedia Tools and Applications</title>
+		<imprint>
+			<biblScope unit="volume">79</biblScope>
+			<biblScope unit="page" from="35927" to="35948" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Adam: A Method for Stochastic Optimization</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Diederik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jimmy</forename><surname>Kingma</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ba</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Semi-Supervised Classification with Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Thomas</forename><forename type="middle">N</forename><surname>Kipf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Max</forename><surname>Welling</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">On Sampled Metrics for Item Recommendation</title>
+		<author>
+			<persName><forename type="first">Walid</forename><surname>Krichene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</title>
+		<meeting>the 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1748" to="1757" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Bootstrapping User and Item Representations for One-class Collaborative Filtering</title>
+		<author>
+			<persName><forename type="first">Dongha</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seongku</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hyunjun</forename><surname>Ju</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chanyoung</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hwanjo</forename><surname>Yu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="317" to="326" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Multi-task Learning for Recommendation over Heterogeneous Information Network</title>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanlin</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ziyu</forename><surname>Lyu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jieming</forename><surname>Shi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Knowledge and Data Engineering</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="789" to="802" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Deep Collaborative Filtering via Marginalized Denoising Auto-encoder</title>
+		<author>
+			<persName><forename type="first">Sheng</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaya</forename><surname>Kawale</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Fu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="811" to="820" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Lightrec: A Memory and Search-efficient Recommender System</title>
+		<author>
+			<persName><forename type="first">Defu</forename><surname>Lian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haoyu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zheng</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianxun</forename><surname>Lian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Enhong</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xing</forename><surname>Xie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="695" to="705" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Pareto multi-task learning</title>
+		<author>
+			<persName><forename type="first">Xi</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hui-Ling</forename><surname>Zhen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhenhua</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qing-Fu</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sam</forename><surname>Kwong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in neural information processing systems</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Aˆ2-GCN: An Attribute-aware Attentive GCN Model for Recommendation</title>
+		<author>
+			<persName><forename type="first">Fan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyong</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lei</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenghao</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liqiang</forename><surname>Nie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Knowledge and Data Engineering</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="1" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">A Heterogeneous Graph Neural Model for Cold-start Recommendation</title>
+		<author>
+			<persName><forename type="first">Siwei</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zaiqiao</forename><surname>Meng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="2029" to="2032" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Recommender Systems with Heterogeneous Side Information</title>
+		<author>
+			<persName><forename type="first">Tianqiao</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiwei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiliang</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Songfan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gale</forename><forename type="middle">Yan</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zitao</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="3027" to="3033" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Sgdr: Stochastic gradient descent with warm restarts</title>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Loshchilov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Frank</forename><surname>Hutter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Label-Specific Dual Graph Neural Network for Multi-Label Text Classification</title>
+		<author>
+			<persName><forename type="first">Qianwen</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chunyuan</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Songlin</forename><surname>Hu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3855" to="3864" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">A Deep Recurrent Collaborative Filtering Framework for Venue Recommendation</title>
+		<author>
+			<persName><forename type="first">Jarana</forename><surname>Manotumruksa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1429" to="1438" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">UltraGCN: Ultra Simplification of Graph Convolutional Networks for Recommendation</title>
+		<author>
+			<persName><forename type="first">Kelong</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jieming</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xi</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Biao</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhaowei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiuqiang</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1253" to="1262" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Semi-supervisedly Co-embedding Attributed Networks</title>
+		<author>
+			<persName><forename type="first">Zaiqiao</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shangsong</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinyuan</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Teng</forename><surname>Xiao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="6507" to="6516" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Sparse Linear Methods with Side Information for Top-n Recommendations</title>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Ning</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><surname>Karypis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender Systems Conference</title>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="155" to="162" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Multi-view Contrastive Graph Clustering</title>
+		<author>
+			<persName><forename type="first">Erlin</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhao</forename><surname>Kang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Neural Information Processing Systems</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">A Novel Top-n Recommendation Approach Based on Conditional Variational Auto-encoder</title>
+		<author>
+			<persName><forename type="first">Bo</forename><surname>Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chongjun</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Pacific-Asia Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="357" to="368" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Hierarchical Bayesian Matrix Factorization with Side Information</title>
+		<author>
+			<persName><forename type="first">Sunho</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yong-Deok</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seungjin</forename><surname>Choi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Joint Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="1593" to="1599" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Efficient Neural Architecture Search via Parameters Sharing</title>
+		<author>
+			<persName><forename type="first">Hieu</forename><surname>Pham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Melody</forename><surname>Guan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Barret</forename><surname>Zoph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Quoc</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Dean</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International conference on machine learning</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="4095" to="4104" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Gcc: Graph Contrastive Coding for Graph Neural Network Pre-training</title>
+		<author>
+			<persName><forename type="first">Jiezhong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qibin</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuxiao</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongxia</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kuansan</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1150" to="1160" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Factorization Machines</title>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International conference on data mining</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="995" to="1000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">BPR: Bayesian Personalized Ranking from Implicit Feedback</title>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christoph</forename><surname>Freudenthaler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zeno</forename><surname>Gantner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lars</forename><surname>Schmidt-Thieme</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Uncertainty in Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="452" to="461" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Neural Collaborative Filtering vs. Matrix Factorization Revisited</title>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Walid</forename><surname>Krichene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Anderson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender Systems Conference</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="240" to="248" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Modeling Relational Data with Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Schlichtkrull</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><forename type="middle">N</forename><surname>Kipf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Bloem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rianne</forename><surname>Van Den</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivan</forename><surname>Berg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Max</forename><surname>Titov</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Welling</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">European Semantic Web Conference</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="593" to="607" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">How Powerful is Graph Convolution for Recommendation?</title>
+		<author>
+			<persName><forename type="first">Yifei</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yongji</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yao</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Caihua</forename><surname>Shan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jun</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Khaled Letaief</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dongsheng</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1619" to="1629" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Multi-Graph Convolution Collaborative Filtering</title>
+		<author>
+			<persName><forename type="first">Jianing</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yingxue</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Coates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Data Mining</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1306" to="1311" />
+		</imprint>
+	</monogr>
+	<note>Huifeng Guo, Ruiming Tang, and Xiuqiang He</note>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space</title>
+		<author>
+			<persName><forename type="first">Zhiqing</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhi-Hong</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian-Yun</forename><surname>Nie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Composition-based Multi-Relational Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Shikhar</forename><surname>Vashishth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Soumya</forename><surname>Sanyal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nitin</forename><surname>Vikram</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Partha</forename><surname>Talukdar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Meta-prod2vec: Product Embeddings Using Side-information for Recommendation</title>
+		<author>
+			<persName><forename type="first">Flavian</forename><surname>Vasile</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elena</forename><surname>Smirnova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexis</forename><surname>Conneau</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender Systems Conference</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="225" to="232" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Graph Attention Networks</title>
+		<author>
+			<persName><forename type="first">Petar</forename><surname>Veličković</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guillem</forename><surname>Cucurull</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arantxa</forename><surname>Casanova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adriana</forename><surname>Romero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pietro</forename><surname>Lio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Matching networks for one shot learning</title>
+		<author>
+			<persName><forename type="first">Oriol</forename><surname>Vinyals</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Blundell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Timothy</forename><surname>Lillicrap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daan</forename><surname>Wierstra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Advances in neural information processing systems</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Representing and Recommending Shopping Baskets with Complementarity, Compatibility and Loyalty</title>
+		<author>
+			<persName><forename type="first">Mengting</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Di</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Bennett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julian</forename><surname>Mcauley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="1133" to="1142" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Relational Stacked Denoising Autoencoder for Tag Recommendation</title>
+		<author>
+			<persName><forename type="first">Hao</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xingjian</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dit-Yan</forename><surname>Yeung</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="3052" to="3058" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Multi-task Feature Learning for Knowledge Graph Enhanced Recommendation</title>
+		<author>
+			<persName><forename type="first">Hongwei</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fuzheng</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Miao</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenjie</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xing</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Minyi</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2000">2019. 2000-2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Mixed-curvature Multi-relational Graph Neural Network for Knowledge Graph Completion</title>
+		<author>
+			<persName><forename type="first">Shen</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaokai</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cicero</forename><surname>Nogueira Nogueira Dos Santos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiguo</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ramesh</forename><surname>Nallapati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Arnold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bing</forename><surname>Xiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><forename type="middle">S</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Isabel</forename><forename type="middle">F</forename><surname>Cruz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1761" to="1771" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">KGAT: Knowledge Graph Attention Network for Recommendation</title>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixin</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Meng</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tat-Seng</forename><surname>Chua</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD international conference on knowledge discovery &amp; data mining</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="950" to="958" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Neural Graph Collaborative Filtering</title>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Meng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fuli</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tat-Seng</forename><surname>Chua</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="165" to="174" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Simplifying Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Felix</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Amauri</forename><surname>Souza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tianyi</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Fifty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tao</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kilian</forename><surname>Weinberger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International conference on machine learning</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="6861" to="6871" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Graph Convolution Machine for Context-aware Recommender System</title>
+		<author>
+			<persName><forename type="first">Jiancan</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qifan</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weijian</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianxun</forename><surname>Lian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xing</forename><surname>Xie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers of Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Self-supervised Graph Learning for Recommendation</title>
+		<author>
+			<persName><forename type="first">Jiancan</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fuli</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liang</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianxun</forename><surname>Lian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xing</forename><surname>Xie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Conference on Research and Development in Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="726" to="735" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">A Hybrid Conditional Variational Autoencoder Model for Personalised Top-n Recommendation</title>
+		<author>
+			<persName><forename type="first">Yaxiong</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR on International Conference on Theory of Information Retrieval</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="89" to="96" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Knowledge-enhanced Hierarchical Graph Transformer Network for Multi-behavior Recommendation</title>
+		<author>
+			<persName><forename type="first">Lianghao</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chao</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yong</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiyue</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongsheng</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian</forename><surname>Pei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liefeng</forename><surname>Bo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="4486" to="4493" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Self-supervised Hypergraph Convolutional Networks for Session-based Recommendation</title>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Junliang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qinyong</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lizhen</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangliang</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="4503" to="4511" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Adversarial and Contrastive Variational Autoencoder for Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Zhe</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chengxuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yichi</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongtao</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dong</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yue</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="449" to="459" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">How Powerful are Graph Neural Networks</title>
+		<author>
+			<persName><forename type="first">Keyulu</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weihua</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jure</forename><surname>Leskovec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stefanie</forename><surname>Jegelka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Frog-GNN: Multi-perspective Aggregation Based Graph Neural Network for Few-shot Text Classification</title>
+		<author>
+			<persName><forename type="first">Shiyao</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Xiang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Systems with Applications</title>
+		<imprint>
+			<biblScope unit="volume">176</biblScope>
+			<biblScope unit="page">114795</biblScope>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Xin Xia, Xiangliang Zhang, and Nguyen Quoc Viet Hung. 2021. Socially-aware Self-supervised Tri-training for Recommendation</title>
+		<author>
+			<persName><forename type="first">Junliang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGKDD Conference on Knowledge Discovery &amp; Data Mining</title>
+		<imprint>
+			<biblScope unit="page" from="2084" to="2092" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">Enhancing Social Recommendation with Adversarial Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">Junliang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jundong</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lizhen</forename><surname>Cui</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Knowledge and Data Engineering</title>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">Nguyen Quoc Viet Hung, and Xiangliang Zhang. 2021. Selfsupervised Multi-channel Hypergraph Convolutional Network for Social Recommendation</title>
+		<author>
+			<persName><forename type="first">Junliang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jundong</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qinyong</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Conference</title>
+		<imprint>
+			<biblScope unit="page" from="413" to="424" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">Are Graph Augmentations Necessary? Simple Graph Contrastive Learning for Recommendation</title>
+		<author>
+			<persName><forename type="first">Junliang</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tong</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lizhen</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nguyen</forename><surname>Quoc</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Viet</forename><surname>Hung</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR conference on research and development in information retrieval</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">A Simple Convolutional Generative Network for Next Item Recommendation</title>
+		<author>
+			<persName><forename type="first">Fajie</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandros</forename><surname>Karatzoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ioannis</forename><surname>Arapakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joemon</forename><forename type="middle">M</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Web Search &amp; Data Mining</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="582" to="590" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<analytic>
+		<title level="a" type="main">Attention-based Context-aware Sequential Recommendation Model</title>
+		<author>
+			<persName><forename type="first">Weihua</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hong</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaomei</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhenghao</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Sciences</title>
+		<imprint>
+			<biblScope unit="volume">510</biblScope>
+			<biblScope unit="page" from="122" to="134" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">Spatio-temporal Dual Graph Attention Network for Query-poi Matching</title>
+		<author>
+			<persName><forename type="first">Zixuan</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hao</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanchi</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Denghui</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Yi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nengjun</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Xiong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR conference on research and development in information retrieval</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="629" to="638" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">Deep Learning Based Recommender System: A Survey and New Perspectives</title>
+		<author>
+			<persName><forename type="first">Shuai</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lina</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aixin</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Tay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Surveys</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="1" to="38" />
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">Joint Representation Learning for Top-n Recommendation with Heterogeneous Information Sources</title>
+		<author>
+			<persName><forename type="first">Yongfeng</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingyao</forename><surname>Ai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xu</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Information &amp; Knowledge Management</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1449" to="1458" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">Learning Discriminative Recommendation Systems with Side Information</title>
+		<author>
+			<persName><forename type="first">Feipeng</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuhong</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Joint Conference on Artificial Intelligence</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="3469" to="3475" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Graph Neural Networks with Generated Parameters for Relation Extraction</title>
+		<author>
+			<persName><forename type="first">Yankai</forename><surname>Hao Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Fu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Annual Meeting of the Association for Computational Linguistics</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1331" to="1339" />
+		</imprint>
+	</monogr>
+	<note>Tat-seng Chua, and Maosong Sun</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

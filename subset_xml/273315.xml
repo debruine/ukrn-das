@@ -1,0 +1,1965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Relative Information Gain-based Query Performance Prediction Framework with Generated Query Variants</title>
+				<funder ref="#_zSMMe6d">
+					<orgName type="full">Science Foundation Ireland</orgName>
+					<orgName type="abbreviated">SFI</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Suchana</forename><surname>Datta</surname></persName>
+							<email>suchana.datta@ucdconnect.ie</email>
+						</author>
+						<author>
+							<persName><roleName>Indian</roleName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+							<email>mandar@isical.ac.in</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University College Dublin</orgName>
+								<address>
+									<country key="IE">Ireland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">DEBASIS GANGULY</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution" key="instit1">MANDAR MITRA</orgName>
+								<orgName type="institution" key="instit2">Indian Statistical Institute</orgName>
+								<address>
+									<country key="IN">India</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="department">DEREK GREENE</orgName>
+								<orgName type="institution">University College Dublin</orgName>
+								<address>
+									<country key="IE">Ireland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff4">
+								<orgName type="institution">University College Dublin</orgName>
+								<address>
+									<settlement>Dublin</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<address>
+									<country key="IE">Ireland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff6">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff7">
+								<orgName type="institution">Statistical Institute</orgName>
+								<address>
+									<settlement>Kolkata</settlement>
+									<country key="IN">India</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff8">
+								<orgName type="department">Derek Greene</orgName>
+								<orgName type="institution">University College Dublin</orgName>
+								<address>
+									<settlement>Dublin</settlement>
+									<country key="IE">Ireland</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A Relative Information Gain-based Query Performance Prediction Framework with Generated Query Variants</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">D4FB3385DD14E36BFCC1786C6A50796A</idno>
+					<idno type="DOI">10.1145/nnnnnnn.nnnnnnn</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:49+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>CCS Concepts:</term>
+					<term>Information systems → Query intent; Information retrieval query processing Query Performance Prediction</term>
+					<term>Neural Model Retrieval Scores</term>
+					<term>Query Variant Generation</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Query performance prediction (QPP) methods, which aim to predict the performance of a query, often rely on evidences in the form of different characteristic patterns in the distribution of Retrieval Status Values (RSVs). However, for neural IR models, it is usually observed that the RSVs are often less reliable for QPP because they are bounded within short intervals, different from the situation for statistical models. To address this limitation, we propose a model-agnostic QPP framework that gathers additional evidences by leveraging information from the characteristic patterns of RSV distributions computed over a set of automatically-generated query variants, relative to that of the current query. Specifically, the idea behind our proposed method -Weighted Relative Information Gain (WRIG), is that a substantial relative decrease or increase in the standard deviation of the RSVs of the query variants is likely to be a relative indicator of how easy or difficult the original query is. To cater for the absence of human-annotated query variants in real-world scenarios, we further propose an automatic query variant generation method. This can produce variants in a controlled manner by substituting terms from the original query with new ones sampled from a weighted distribution, constructed either via a relevance model or with the help of an embedded representation of query terms. Our experiments on the TREC-Robust, ClueWeb09B and MS MARCO datasets show that WRIG, by the use of this relative changes in QPP estimate, leads to significantly better results than a state-of-the-art baseline method which leverages information from (manually created) query variants by the application of additive smoothing <ref type="bibr" target="#b64">[64]</ref>. The results also show that our approach can improve the QPP effectiveness of neural retrieval approaches in particular.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Query performance prediction (QPP) remains an active area of research in Information Retrieval (IR), primarily because of its usefulness in estimating whether the top-retrieved documents satisfy the underlying information needs of queries without requiring the availability of relevance assessments. This is particularly important because the retrieval effectiveness of IR models can vary substantially for queries with different characteristics <ref type="bibr" target="#b64">[64]</ref>, spanning from specific to generic <ref type="bibr" target="#b10">[11]</ref>, or from short to verbose <ref type="bibr" target="#b26">[27]</ref>.</p><p>To introduce the notion of QPP, it represents a class of automated methods that facilitates an IR model to retrospect on its retrieval quality for a given query without the presence of relevance assessments <ref type="bibr" target="#b21">[22]</ref>. A QPP method may thus enable an IR system to use this estimate to retrieve more relevant information by applying a number of additional processing steps, either in a user-agnostic or in a user-engaging manner. Instances of user-agnostic processing include selective application of pseudo-relevance feedback <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b49">50]</ref> involving the automatic augmentation of a user's initial query to retrieve more informative content during a subsequent retrieval step <ref type="bibr" target="#b35">[36,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b51">52,</ref><ref type="bibr" target="#b63">63]</ref>. Methods requiring user engagement include query suggestion <ref type="bibr" target="#b38">[39]</ref>, or presenting the user with a list of potentially useful query reformulations <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b23">24,</ref><ref type="bibr" target="#b36">37,</ref><ref type="bibr" target="#b43">44]</ref>. QPP methods are intended to allow a selective application of these user-agnostic or user-aware processing steps to further improve the quality of the retrieved information for those queries for which a QPP method estimates a low likelihood of success in finding relevant information <ref type="bibr" target="#b49">[50]</ref>.</p><p>In general, a QPP method estimates the likelihood of relevance of the top-retrieved documents by measuring the distinctiveness of the information need of the current query with respect to the overall topic distribution of the collection. In other words, a QPP method estimates how feasible it is to topically separate the top-retrieved documents from the rest of the collection <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b52">53,</ref><ref type="bibr" target="#b56">56,</ref><ref type="bibr" target="#b62">62,</ref><ref type="bibr" target="#b70">70]</ref>.</p><p>Recently, supervised deep neural ranking models have been shown to improve retrieval effectiveness as compared to their unsupervised statistical counterparts <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b32">33,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b60">60]</ref>. In contrast to human engineered similarity heuristics (e.g., relative term frequency and IDF in BM25), these supervised models rely on a completely data-driven approach of learning these similarity functions for ranking documents. These supervised models either typically leverage an early interaction mechanism by computing the similarities between the word vectors of queries and top-retrieved documents <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b60">60]</ref>, or alternately applying a late interaction between the queries and the documents to minimize a triplet-based ranking loss function <ref type="bibr" target="#b33">[34]</ref>.</p><p>However, applying off-the-shelf QPP estimators on neural ranking models is likely to yield limited QPP effectiveness (and this is something that we confirm via our experiments reported later in this paper). This is likely due to the inherently different ways in which the similarity scores or the retrieval status values (RSVs) are computed in the supervised neural models, as compared to their traditional statistical counterparts, e.g., BM25 <ref type="bibr" target="#b44">[45]</ref>, or Language Model (LM) <ref type="bibr" target="#b42">[43,</ref><ref type="bibr" target="#b65">65,</ref><ref type="bibr" target="#b66">66]</ref>. Specifically, RSVs in a neural model are computed via the application of a neural activation function, such as tanh or relu <ref type="bibr" target="#b24">[25]</ref>. The range of these neural activation functions, and hence the value of a document score (RSV), is thus strictly bounded within a short interval (e.g., tanh : x ↦ → [-1, 1] and relu : x ↦ → [0, 1], x ∈ R 𝑑 ). This is characteristically different from traditional statistical models, where these bounds are not fixed. In the latter case, they rather depend on the maximum and the minimum values of the term weights in documents and the collection statistics of terms across the collection <ref type="bibr" target="#b28">[29]</ref>. Due to the use of the non-linear activation functions, the features that are typically useful for QPP approaches, e.g., the variance <ref type="bibr" target="#b56">[56]</ref> or information gain <ref type="bibr" target="#b70">[70]</ref> of the document scores, are expected to be less reliable for supervised neural models.</p><p>As an illustrative example, Figure <ref type="figure">1</ref> compares the distribution of the NQC values (variances of the RSVs) obtained on the TREC-Robust and TREC-DL query sets using two different retrieval models -an unsupervised statistical model and a neural one. More specifically, the statistical model used here is LM with Dirichlet smoothing <ref type="bibr" target="#b65">[65]</ref> (henceforth abbreviated as LM-Dir), and the neural Fig. <ref type="figure">1</ref>. Comparing the distribution of NQC (a QPP method) scores, normalized in [0, 1], for LM-Dirichlet <ref type="bibr" target="#b65">[65]</ref> (a statistical model) and two neural models, DRMM <ref type="bibr" target="#b25">[26]</ref> (left) and ColBERT <ref type="bibr" target="#b33">[34]</ref> (right) on the TREC-Robust and the TREC-DL topic sets, respectively. It can be seen that the NQC scores for the neural models exhibit a heavier tail. models used are the DRMM (Deep Relevance Matching Model) <ref type="bibr" target="#b25">[26]</ref> and ColBERT (Contextualized Late Interaction over BERT) <ref type="bibr" target="#b33">[34]</ref>.</p><p>Figure <ref type="figure">1</ref> shows that not only do the QPP estimates of neural models exhibit a heavier tail as evident from the median line shifted towards the left, but they are also restricted to a much smaller range (compare the spans of the box plots). This behaviour is likely to make it more challenging to effectively estimate the QPP scores, or in other words, effectively distinguish between the queries for which a retrieval model performs well and those for which it does not.</p><p>Contributions of this research. We propose an unsupervised post-retrieval QPP estimator, which we refer to as Weighted Relative Information Gain (WRIG). This approach is particularly targeted at neural re-rankers, where the only inputs available to a QPP estimator are the RSVs computed by neural activation functions. Since WRIG relies only on the RSVs obtained from a (neural) model and does not make any specific assumptions about the model architecture itself, it can be applied to the output of any neural, or in fact, any statistical IR model.</p><p>To alleviate the limitation in the diversity and range of the RSVs obtained from a neural model, for a given query 𝑄, first we automatically generate a set of equivalent queries with a similar information need, which we call E 𝑄 . We then retrieve documents for these query variants and subsequently characterize the retrieval quality of the original query 𝑄 with an increase (or decrease) in the aggregated QPP estimate of the variants relative to that of 𝑄 itself. To summarise, the novel contributions of this research are: <ref type="bibr" target="#b0">(1)</ref> To the best of our knowledge, this is the first proposal for a generic framework for QPP that leverages information from equivalent expressions of information needs, where there is no requirement on the availability of pre-existing query variants (unlike. e.g., <ref type="bibr" target="#b64">[64]</ref>), thus making our proposed method more appealing from a pragmatic point-of-view.</p><p>(2) This is the first comprehensive study involving comparisons between statistical and neural models. There do exists neural supervised approaches that estimate QPP for statistical models <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b62">62]</ref>, and also supervised approaches that estimate QPP for neural models <ref type="bibr" target="#b2">[3]</ref>, but our work is different from both these threads. More precisely, we study the application of an unsupervised QPP approach that is particularly appropriate for neural models, although our model is generic enough to be applied even to statistical models. The remainder of the paper is organized as follows. Section 2 reviews related work on QPP. After establishing the prerequisites in Section 3, we describe our proposed method in Sections 4 and 5. We then present the experimental setup in Section 6, which is followed by a presentation and analysis of the results in Section 7. Finally, in Section 8 we conclude with directions for future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>The problem of query performance prediction (QPP) has been widely studied in the literature over a number of years <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b13">14,</ref><ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b29">30,</ref><ref type="bibr" target="#b34">35,</ref><ref type="bibr" target="#b46">47,</ref><ref type="bibr" target="#b53">54,</ref><ref type="bibr" target="#b56">56,</ref><ref type="bibr" target="#b58">58,</ref><ref type="bibr" target="#b69">69,</ref><ref type="bibr" target="#b70">70]</ref>. Generally speaking, QPP is intended to automatically estimate the retrieval effectiveness of a query without relying on relevance judgments <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b61">61]</ref>. Instead, a QPP method typically relies on two broad sources: i) pre-retrieval information, which is available from the collection statistics of an index; and ii) post-retrieval information, which becomes available only after a top-set of documents is actually retrieved from an indexed collection in response to a given query.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Pre-retrieval approaches</head><p>A pre-retrieval estimator uses aggregated collection-level statistics (e.g., maximum or average of the inverse document frequencies of the query terms) as a measure of the QPP estimate of an input query. This is based on the assumption that queries with higher QPP estimates are likely to lead to a more topically-coherent set of top-documents <ref type="bibr" target="#b28">[29,</ref><ref type="bibr" target="#b30">31,</ref><ref type="bibr" target="#b68">68]</ref>, and hence are likely candidates for effective retrieval. More recently, a pre-retrieval QPP approach that makes use of the clustering hypothesis of the embedded space of word vectors was proposed in <ref type="bibr" target="#b52">[53]</ref>. This method assumes that a query is more specific (hence potentially yielding better retrieval effectiveness) if the cluster membership of the word vectors in the neighborhood of the query terms exhibit a relatively non-uniform distribution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Post-retrieval unsupervised approaches</head><p>A post-retrieval estimator, on the other hand, makes use of the information from the set of topretrieved documents to estimate how topically distinct are the top-retrieved documents from the rest of the collection, a large difference indicating potentially better retrieval quality <ref type="bibr" target="#b13">[14]</ref>. Various evidences extracted from the top-retrieved documents have been shown to be useful for different post-retrieval QPP estimation methods. This includes those of the KL divergence between the language model of the top-retrieved documents and the collection model in Clarity <ref type="bibr" target="#b13">[14]</ref>, the aggregated values of the information gains of each top-retrieved document with respect to the collection in WIG (Weighted Information Gain) <ref type="bibr" target="#b70">[70]</ref>, the skew of the RSVs measured with variance in NQC (Normalized Query Commitment) <ref type="bibr" target="#b56">[56]</ref>, and ideas based on the clustering hypothesis for a pairwise document similarity matrix <ref type="bibr" target="#b21">[22]</ref>.</p><p>Among ensemble-based approaches, it has been shown that a linear combination of different QPP estimators yield improvements over the individual performance of each <ref type="bibr" target="#b34">[35,</ref><ref type="bibr" target="#b52">53]</ref>. This is somewhat analogous to the use of fusion in retrieval models to yield better retrieval performance <ref type="bibr" target="#b6">[7]</ref>.</p><p>Among the different ways of utilizing RSVs for post-retrieval QPP estimation, assessing the standard deviation of retrieval scores has consistently been employed as an indicator of query performance <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b41">42,</ref><ref type="bibr" target="#b56">56,</ref><ref type="bibr" target="#b57">57]</ref>. It has been observed that the higher the standard deviation, the lower the chances of a query drift <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b56">56]</ref>. This has led researchers to improve the estimation of standard deviation by applying a bootstrap sampling approach to the top-retrieved list <ref type="bibr" target="#b48">[49]</ref>. Another work in this area revisited the estimation of NQC, claiming that NQC computation can be derived as a scaled calibrated-mean estimator <ref type="bibr" target="#b47">[48]</ref>, which is, in fact, employed as a baseline in this paper.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Unsupervised approaches involving Evidence Combination</head><p>As an alternative to statistical QPP approaches, which leverage information from a single set of topretrieved documents, there also exists a thread of work that uses a decision theory-based approach for optimally aggregating the evidences from a number of samples drawn from the top-retrieved document sets for the purpose of achieving a more robust QPP estimate <ref type="bibr" target="#b34">[35,</ref><ref type="bibr" target="#b45">46,</ref><ref type="bibr" target="#b50">51,</ref><ref type="bibr" target="#b53">54]</ref>.</p><p>Another line of research has shown that using information from reference queries (i.e., those that possess a similar information need to that of the original query) can improve QPP estimates. These reference queries or query variants are either manually created (i.e. extracted from search sessions for computational purposes <ref type="bibr" target="#b4">[5]</ref>) or are automatically created by a term association based approach such as the relevance model (RLM) <ref type="bibr" target="#b46">[47,</ref><ref type="bibr" target="#b55">55]</ref>.</p><p>Among these reference list based QPP approaches, we utilize a recent method -RLS <ref type="bibr" target="#b46">[47]</ref> as one of the baselines in this paper. Specifically, the RLS method estimates the performance of a query by making use of information from lists of documents retrieved with a number of augmented queries. The basic difference of RLS with our proposed method is that we generate query variants by substituting, in general, a multiple number of terms (more details in Section 5), whereas the query augmentation process in RLS <ref type="bibr" target="#b46">[47]</ref> involves adding only a single term.</p><p>While these reference-list based approaches generally aim to predict the effectiveness of the initial result list by taking into account the additional reference list of queries, the study in <ref type="bibr" target="#b50">[51]</ref> attempted to predict the quality of a second-stage retrieval step obtained via relevance feedback. Since the focus of this paper is to investigate QPP for neural models, which usually involve a re-ranking step similar to <ref type="bibr" target="#b50">[51]</ref>, we employed this pseudo-feedback based QPP method as one of our baselines as well.</p><p>A major difference of our proposed method from <ref type="bibr" target="#b50">[51]</ref> is that our model makes use of only the RSVs obtained by the neural re-rankers, whereas PFR-QPP -the method of <ref type="bibr" target="#b50">[51]</ref>, leverages information from both the feedback and the initial result lists (more details in Section 3.1).</p><p>Zendel et al. <ref type="bibr" target="#b64">[64]</ref> reported improvements in QPP effectiveness by using a set of manually generated query variants. In particular, their method involved applying a linear smoothing technique to combine estimated scores obtained from other variants into an estimated score for the original query. Our method differs from <ref type="bibr" target="#b64">[64]</ref> in two important ways. First, in contrast to the additive smoothing-based approach, our method employs relative differences, and more importantly, second, as a part of our proposed framework, we automatically generate the alternative expressions of the information need of a query, which means that the use-case of our method is not restricted by the availability of manually-formulated query variants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Supervised approaches</head><p>Among supervised approaches, the authors of <ref type="bibr" target="#b62">[62]</ref> proposed a weakly supervised neural approach to learn the relative importance of different estimators to find an optimal combination. In contrast to weak supervision of <ref type="bibr" target="#b62">[62]</ref>, end-to-end supervised QPP approaches were proposed in <ref type="bibr" target="#b2">[3]</ref> and <ref type="bibr" target="#b18">[19]</ref>. These approaches seek to learn a functional association between the input data (query-document interaction) and the ground-truth values of retrieval effectiveness measures on a training set of queries.</p><p>The main difference between our work in this paper and the previously proposed supervised approaches is that we propose an unsupervised QPP method for supervised ranking models. In fact, due to this reason we do not compare our proposed unsupervised model with the supervised QPP approaches existing in the literature <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b62">62]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">PREREQUISITES</head><p>Before describing the details of our proposed QPP method in Section 4, we first discuss the necessary prerequisites, specifically relating to existing QPP methods and neural re-rankers. Suchana Datta, Debasis Ganguly, Mandar Mitra, and Derek Greene</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">An overview of post-retrieval QPP estimators</head><p>In this section, we introduce a generic framework for post-retrieval QPP that makes use of query variants. Standard QPP estimators are first established as special cases in the framework -ones that do not make use of the variants. In general, given a query, 𝑄, a post-retrieval QPP method estimates the probability of successfully retrieving useful information in response to 𝑄, 𝑃 (𝑆 |𝑄), as a function Φ of the query itself and its top-𝑘 retrieved document set 𝑀 𝑘 , i.e.,</p><formula xml:id="formula_0">𝑃 (𝑆 |𝑄) ≈ Φ(𝑄, 𝑀 𝑘 (𝑄)), 𝑀 𝑘 = {𝐷 𝑖 } 𝑘 𝑖=1 .<label>(1)</label></formula><p>Existing post-retrieval QPP methods use different forms of the function Φ(𝑄, 𝑀 𝑘 (𝑄)). We now describe a number of such forms.</p><p>Normalized Query Commitment (NQC) <ref type="bibr" target="#b56">[56]</ref>. This is a commonly used post-retrieval QPP method that predicts the retrieval effectiveness of a query using the standard deviation of the document scores. This follows the hypothesis that a query with a well-defined information need is likely to lead to a more non-uniform (heavy-tailed) distribution of the RSVs. To compute the variance of the RSVs in NQC, the function Φ of Equation 1 takes the form</p><formula xml:id="formula_1">Φ NQC (𝑄, 𝑀 𝑘 (𝑄)) def == 1 𝑘 𝑘 𝑖=1 (𝑃 (𝐷 𝑖 |𝑄) -P (𝐷 |𝑄)) 2 𝑃 (𝑄 |𝐶) ,<label>(2)</label></formula><p>where 𝑃 (𝐷 𝑖 |𝑄) denotes the similarity score of the document 𝐷 𝑖 to 𝑄, P (𝐷 |𝑄) denotes the mean of the RSVs, and 𝑃 (𝑄 |𝐶) denotes the similarity of 𝑄 to the collection, which is computed by aggregating collection statistics over the query terms.</p><p>Scaled Calibrated NQC (SCNQC) <ref type="bibr" target="#b47">[48]</ref>. This model is a generalization of NQC which involves a number of parameters, both in terms of calibration and scaling. The optimal values of these parameters are found by a coordinate ascent or a grid-based exploration. This measure is formally written as</p><formula xml:id="formula_2">Φ SCNQC (𝑄, 𝑀 𝑘 (𝑄)) def == 1 𝑘 𝑘 𝑖=1       𝑃 (𝐷 𝑖 |𝑄) 1 𝑃 (𝑄 |𝐶) 𝛼 𝑃 (𝐷 𝑖 |𝑄) -P (𝐷 |𝑄) 𝑃 (𝐷 𝑖 |𝑄) 𝛽       𝛾 ,<label>(3)</label></formula><p>where the expressions 𝑃 (𝐷 𝑖 |𝑄), P (𝐷 |𝑄), and 𝑃 (𝑄 |𝐶) carry the same meaning as in Equation <ref type="formula" target="#formula_1">2</ref>. Additionally, 𝛼 is an idf-weighting factor, 𝛽 is a weighting factor associated with the deviations in scores and 𝛾 is a calibration parameter.</p><p>Weighted Information Gain (WIG) <ref type="bibr" target="#b70">[70]</ref>. WIG uses the aggregated value of the information gain of each top-retrieved document with respect to the collection. The more topically distinct a document is from the collection, the higher its gain will be. This means that the underlying hypothesis of WIG is mostly similar to that of NQC. The average of these information gains characterizes how topically distinct the overall set of top-documents is. Formally,</p><formula xml:id="formula_3">Φ WIG (𝑄, 𝑀 𝑘 (𝑄)) def == 1 |𝑀 𝑘 (𝑄)| 𝐷 ∈𝑀 𝑘 (𝑄) 1 |𝑄 | 𝑞 ∈𝑄 log 𝑃 (𝐷 |𝑄) -log 𝑃 (𝑞|𝐶),<label>(4)</label></formula><p>where 𝑃 (𝐷 |𝑄) denotes the score of a document 𝐷 with respect to the query 𝑄, and 𝑃 (𝑞|𝐶) denotes the collection statistics of a query term 𝑞 ∈ 𝑄. Zhou and Croft <ref type="bibr" target="#b70">[70]</ref> proposed the use of 1/ |𝑄 | as a normalization constant so that the WIG scores across queries of different lengths become comparable.</p><p>Clarity <ref type="bibr" target="#b13">[14]</ref>. This method estimates a relevance model (RLM) <ref type="bibr" target="#b35">[36]</ref> distribution of term weights from a set of top-ranked documents and then computes its KL divergence with the collection model. The hypothesis is that higher the KL divergence score is, the higher is the QPP estimate. For estimating the clarity score of a query 𝑄, the generic function Φ of Equation 1 takes up the following form.</p><formula xml:id="formula_4">Φ Clarity (𝑄, 𝑀 𝑘 (𝑄)) def == 𝑤 ∈𝑉 𝑀 𝑘 (𝑄 ) 𝑃 (𝑤 |𝜃 𝑀 𝑘 (𝑄) ) log 𝑃 (𝑤 |𝜃 𝑀 𝑘 (𝑄) ) 𝑃 (𝑤 |𝜃 𝐶 ) ,<label>(5)</label></formula><p>where 𝐶 denotes the collection, 𝑀 𝑘 (𝑄) denotes the set of top-𝑘 retrieved documents for a query 𝑄, 𝑉 𝑀 𝑘 (𝑄) is the vocabulary of 𝑀 𝑘 (𝑄), and 𝜃 𝑀 𝑘 (𝑄) and 𝜃 𝐶 are, respectively, the relevance model estimated from 𝑀 𝑘 (𝑄), and the language model of the collection.</p><p>UEF <ref type="bibr" target="#b53">[54]</ref>. Different from the estimators discussed so far in this section, the UEF method involves estimating a confidence score for a set of top documents itself, assuming that the value of the estimator itself is potentially more reliable for certain sets of top-retrieved documents than others. As a first step, the UEF method estimates how robust a set of top-retrieved documents is by checking the relative stability in the rank order before and after relevance feedback (e.g., by RLM). The higher the perturbation of a ranked list is following the feedback operation, the greater is the likelihood that the retrieval effectiveness of the initial list was poor, which in turn suggests that a smaller confidence should be associated with the QPP estimate of such a query. Formally,</p><formula xml:id="formula_5">Φ UEF (𝑄, 𝑀 𝑘 (𝑄), 𝜙) def == 𝜎 (𝑀 𝑘 (𝑄), 𝑀 𝑘 (𝜃 𝑄 ))𝜙 (𝑄, 𝑀 𝑘 (𝑄)),<label>(6)</label></formula><p>where 𝜙 (𝑄, 𝑀 𝑘 (𝑄)) is, as per the terminology of <ref type="bibr" target="#b53">[54]</ref>, a 'base QPP estimator' (e.g. WIG or NQC), 𝑀 𝑘 (𝜃 𝑄 ) denotes the re-ranked set of documents post-RLM feedback, the RLM being estimated on the initially retrieved set of top-𝑘 documents 𝑀 𝑘 (𝑄) , and 𝜎 is a rank correlation coefficient (e.g. Spearman's 𝜌 or Kendall's 𝜏) of two ordered sets.</p><p>PFR-QPP <ref type="bibr" target="#b50">[51]</ref>. The PFR-QPP method estimates the QPP effectiveness on a second-stage retrieved list of documents (usually obtained via relevance feedback). The method involves estimating the QPP score of the second-stage retrieval as a combination of two different scores: a) an independent estimate of the second list, and b) its estimation conditioned on the initial retrieval. Formally,</p><formula xml:id="formula_6">Φ PFR-QPP (𝑄, 𝑀 𝑘 (𝑄), 𝜃 ) def == 𝑃 (𝑀 𝑘 (𝜃 𝑄 ), 𝜃 ) 𝜂 𝑃 (𝑀 𝑘 (𝜃 𝑄 ), 𝑀 𝑘 (𝑄), 𝜃 ) (1-𝜂) ,<label>(7)</label></formula><p>where, 𝑀 𝑘 (𝑄) is the initial retrieval list of top-𝑘 pseudo-relevant documents for the query 𝑄, 𝜃 and 𝑀 𝑘 (𝜃 𝑄 ) denote the relevance model estimated from 𝑀 𝑘 (𝑄) and re-retrieved list obtained by 𝜃 , respectively. Additionally, 𝜂 acts as a parameter controlling the relative importance of the two different estimators (see <ref type="bibr" target="#b50">[51]</ref> for additional details on how these QPP components are computed).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">QPP using reference queries</head><p>Any statistical estimation method can, in principle, be improved with the availability of a large number of observation points. In the context of QPP, since a post-retrieval estimator relies on the computation of statistical measures (e.g., the variance of the RSVs in NQC), the estimate for a query 𝑄 can be improved by leveraging information from other queries similar to 𝑄. The post-retrieval estimator of Equation 1 can thus be further generalized as</p><formula xml:id="formula_7">𝑃 (𝑆 |𝑄, E 𝑄 ) ≈ Φ + (𝑄, E 𝑄 , 𝑀 𝑘 (𝑄), ∪ 𝑄 ′ ∈E 𝑄 𝑀 𝑘 (𝑄 ′ )),<label>(8)</label></formula><p>where the function Φ + is a generalization of the function Φ of Equation 1 with additional parameters, namely E 𝑄 and ∪ 𝑄 ′ ∈ E 𝑄 𝑀 𝑘 (𝑄 ′ ). In particular, E 𝑄 denotes a set of expressions of information need equivalent to that of 𝑄 and ∪ 𝑄 ′ ∈ E 𝑄 𝑀 𝑘 (𝑄 ′ ) represents the top-documents retrieved with each query 𝑄 ′ in this set E 𝑄 . The effect of these additional parameters is that not only does Φ + depend on the top-retrieved list for 𝑄, but it is also characterized by E 𝑄 and the top-list retrieved for each query in this set.</p><p>As a concrete realization of the generic function Φ + of Equation <ref type="formula" target="#formula_7">8</ref>, the authors of <ref type="bibr" target="#b64">[64]</ref> proposed to use linear smoothing. More precisely, the QPP estimate for a query is combined with the QPP estimate from other similar queries. Formally,</p><formula xml:id="formula_8">𝑃 (𝑆 |𝑄, E 𝑄 ) =(1 -𝜆)Φ(𝑄, 𝑀 𝑘 (𝑄)) + 𝜆 |E 𝑄 | 𝑄 ′ ∈E 𝑄 Φ(𝑄 ′ , 𝑀 𝑘 (𝑄 ′ ))𝜎 (𝑄, 𝑄 ′ ),<label>(9)</label></formula><p>where 𝜆 is a smoothing parameter, Φ represents a generic QPP estimator (NQC being specifically used in <ref type="bibr" target="#b64">[64]</ref>), and E 𝑄 denotes the set of equivalent queries, also known as query variants or reference queries <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b11">12,</ref><ref type="bibr" target="#b64">64]</ref>. The factor 𝜎 (𝑄, 𝑄 ′ ) in Equation <ref type="formula" target="#formula_8">9</ref>denotes a relative contribution from each variant, allowing the provision for the information from some variants to be more reliable than others. The study <ref type="bibr" target="#b64">[64]</ref> investigated different ways of considering the similarity between a query 𝑄 and its variant 𝑄 ′ and reported that the rank-biased overlap (RBO) <ref type="bibr" target="#b59">[59]</ref> is the most effective way of accounting for this relative weight, among other alternatives, such as Jaccard similarity between query terms or the similarity between the sets 𝑀 𝑘 (𝑄) and 𝑀 𝑘 (𝑄 ′ ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Neural models</head><p>In this paper, we provide a brief introduction to how neural models work and argue why off-theshelf QPP approaches may fail to work well for these models. In particular, for our experiments we use two query-document interaction-based neural re-rankers with largely different characteristics, namely (i) Deep Relevance Matching Model (DRMM), the early interaction-based model where the combined information from the embeddings of a query and a document is passed on to a feedforward network <ref type="bibr" target="#b25">[26]</ref>, and (ii) ColBERT, the late interaction-based model, where the interaction takes place at a much later stage between the encoded representation of the constituent terms of a document and a query <ref type="bibr" target="#b33">[34]</ref>. Supervised neural models are generally trained in a pairwise manner to minimize a triplet loss of the form</p><formula xml:id="formula_9">L (𝑄, 𝐷 𝑟 , 𝐷 𝑛 ) = 𝜎 (𝑄 ⊙ 𝐷 𝑟 ; 𝜃 ) -𝜎 (𝑄 ⊙ 𝐷 𝑛 ; 𝜃 ),<label>(10)</label></formula><p>where 𝐷 𝑟 represents a relevant document and 𝐷 𝑛 denotes a non-relevant one.</p><p>The objective of the loss function is to learn the optimal representation of the interaction vector (parameterized by the set of 𝜃 matrices) so as to maximize, on the one hand, the query's similarity with a relevant document, and minimize its similarity with a non-relevant document on the other. We now explain each component of Equation 10 in the subsequent part of this section.</p><p>The function ⊙ : (𝑄, 𝐷) ↦ → R 𝑝 in Equation 10 represents an interaction operation between a query and a document, that outputs a vector of a fixed dimension. For instance, in DRMM, this maps a query term and a document in a histogram indicating the number of times the cosine similarity between a given query term and a constituent term of a document 𝐷 falls within a quantized interval of [-1, 1].</p><p>The other function 𝜎 (x; 𝜃 ) ↦ → R is a linear 1 function parameterized by the learnable set of parameters 𝜃 . In general, the matrix 𝜃 represents the parameters of a feed-forward network with 𝑙 ≥ 1 layers, in which case, 𝜃 = {𝜃 (1) , . . . , 𝜃 (𝑙) }, such that the outputs of the intermediate layers are given by 𝜎 (𝑖) = 𝜃 𝑇 (𝑖) • 𝜎 (𝑖-1) with 𝜎 (1) = 𝜃 𝑇 (1) • (𝑄 ⊙ 𝐷) denoting the output of the first layer. It is worth mentioning that the output from the final layer of a network (and also those of the intermediate layers) are usually bounded within the range of the activation function used. For example, 𝜎 (x; 𝜃 ) ↦ → [-1, 1] if the activation employed in the parameterized linear function of Equation 10 is 'tanh' (likewise, with 'sigmoid' the range becomes [0, 1]).</p><p>In ColBERT the interaction operator takes a different form in the sense that the function ⊙ in Equation 10 corresponds to the sum of maximum cosine similarities between the encoded representations of the constituent terms between a query and a document. In particular, ColBERT computes the relevance score as a sum over the maximum cosine similarity values obtained from the query-document BERT embeddings, i.e., the score takes the form of 𝜎 (x; 𝜃 ) :</p><formula xml:id="formula_10">𝑖 ∈𝑄 max 𝑗 ∈𝐷 v 𝑄 𝑖 v T 𝐷 𝑗 ↦ → [0, ∞],</formula><p>where v 𝑄 and v 𝐷 are the BERT <ref type="bibr" target="#b20">[21]</ref> embeddings of a query 𝑄 and a document 𝐷, respectively.</p><p>From Equation <ref type="formula" target="#formula_9">10</ref>, it can be realized that the scores obtained with a neural model are characteristically different from those obtained with statistical models. While the RSVs in DRMM is essentially restricted within [0, 1], for ColBERT they usually occupy a wider range (as the ColBERT score is an aggregation over the pairwise cosine similarities between query-document terms). However, these ColBERT scores when compared with the RSVs of a statistical model, are still restricted within a much shorter range. This behaviour of the neural models may eventually limit the effectiveness of off-the-shelf QPP approaches. With this background, in the next section we delve into the details of our proposed approach.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">WEIGHTED RELATIVE INFORMATION GAIN-BASED MODEL -WRIG</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Motivation</head><p>The method previously proposed in <ref type="bibr" target="#b64">[64]</ref> for estimating QPP with query variants uses the RSVs obtained from statistical models, such as BM25 or LM. The method itself (Equation <ref type="formula" target="#formula_8">9</ref>) does not make any specific assumptions on the range of the RSVs. However, unlike the RSVs of statistical models, the similarity scores from a neural reranking model are essentially parameterized; for instance, compare the function Φ(𝑄, 𝐷) of Equation <ref type="formula" target="#formula_0">1</ref>with 𝜎 (𝑄, 𝐷; 𝜃 ) of Equation <ref type="formula" target="#formula_9">10</ref>. Moreover, the final output value of a network (and also those of the intermediate layers) are in fact necessarily bounded within the range of the activation function used. For example, 𝜎 (x; 𝜃 ) ↦ → [-1, 1] if the activation employed in the parameterized linear function of Equation 10 is tanh.</p><p>Therefore, due to the strictly bounded nature of the RSVs, an RSV-based post-retrieval QPP estimator, such as NQC (Equation <ref type="formula" target="#formula_1">2</ref>), may not be effective in predicting retrieval quality for a query. In fact, our experiments with standard QPP approaches confirm this hypothesis. In Section 7, we show that there is a substantial difference between the effectiveness of standard QPP approaches when applied on statistical vs. neural ranking models.</p><p>Our initial experiments showed a similar trend for a state-of-the-art QPP approach <ref type="bibr" target="#b64">[64]</ref> that relies on augmenting information from (manually created pre-existing) query variants. Even though this method had reported to improve QPP effectiveness <ref type="bibr" target="#b64">[64]</ref>, our experiments show that:</p><p>• The method proposed in <ref type="bibr" target="#b64">[64]</ref> is substantially less effective for neural models than for statistical models (we discuss this later in Section 7). • Even worse, a straightforward application of the QPP method of <ref type="bibr" target="#b64">[64]</ref> leads to a decrease in the QPP effectiveness for neural models with respect to standard baselines. We discuss more about this observation in Section 7. Motivated by these observations, we now propose a method that seeks to use additional data from query variants in a manner that is different from that of the additive smoothing based technique. As in <ref type="bibr" target="#b64">[64]</ref>, we first describe our QPP method assuming that the variants of a query are available Table <ref type="table">1</ref>. A contingency table demonstrating the four possible cases of QPP estimation with the method of relative differences. The relative ratio of QPP difference, ΔΦ(𝑄, E 𝑄 ), is computed as (Φ(𝑄, 𝑀 𝑘 (𝑄)) -Φ(E 𝑄 ))/Φ(𝑄, 𝑀 𝑘 (𝑄)) (see Equation <ref type="formula" target="#formula_11">11</ref>). The warmth of a color indicates the QPP estimate of 𝑄, whereas the intensity of a color denotes the confidence in the QPP estimation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Magnitude of ΔΦ(𝑄, E 𝑄 )</head><p>High Low</p><p>Sign of ΔΦ(𝑄, E 𝑄 ) &gt; 0 QPP estimate↑ QPP estimate↑ ≤ 0 QPP estimate↓ QPP estimate↓ to the QPP estimator. Later, in Section 5, we describe two methods to automatically generate an effective set of query variants. This is particularly important in cases where either query variants are unavailable, or manually generating variants is prohibitively time consuming.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Relative Differences in QPP estimate</head><p>Instead of using additive smoothing from the likelihood of QPP estimate of query variants of <ref type="bibr" target="#b64">[64]</ref> (Equation <ref type="formula" target="#formula_8">9</ref>), we propose a different realization of the generic function Φ + of Equation <ref type="formula" target="#formula_7">8</ref>. In particular, we first compute the estimated likelihoods of QPP estimate of these variants, after which we compute the relative difference in the expected likelihood (average value) of the QPP estimate of the variants with respect to that of the given query itself. Formally speaking,</p><formula xml:id="formula_11">𝑃 (𝑆 |𝑄, E 𝑄 ) = ΔΦ(𝑄, E 𝑄 ) = Φ(𝑄, 𝑀 𝑘 (𝑄)) -Φ(E 𝑄 ) Φ(𝑄, 𝑀 𝑘 (𝑄)) , Φ(E 𝑄 ) = 1 𝑄 ′ ∈ E 𝑄 𝜎 (𝑄, 𝑄 ′ ) 𝑄 ′ ∈ E 𝑄 Φ(𝑄 ′ , 𝑀 𝑘 (𝑄 ′ ))𝜎 (𝑄, 𝑄 ′ ).<label>(11)</label></formula><p>Equation 11 can be interpreted as follows. A large value of the predictor for the original query, Φ(𝑄, 𝑀 𝑘 (𝑄)) in conjunction with a small average value of the predictor for the variants, Φ(E 𝑄 ), means that their relative ratio of difference, ΔΦ(𝑄, E 𝑄 ), is likely to be close to 1. This indicates that the variants are, on average, less specific than the original query. This, in turn, increases the confidence of the prediction of the original query to be a specific one. Likewise, a small value of Φ(𝑄, 𝑀 𝑘 (𝑄)) coupled with a large value of Φ(E 𝑄 ) indicates that the relative ratio of difference ΔΦ(𝑄, E 𝑄 ), should considerably be less than zero. This, in turn, indicates that the variants, on an average, are substantially more specific than the original query, thereby increasing the confidence in predicting 𝑄 to be less specific. For the other two cases, i.e. when |ΔΦ(𝑄, E 𝑄 )| is close to 0, the confidence in prediction is smaller. Table <ref type="table">1</ref> shows a contingency table depicting the four different situations.</p><p>We refer to our method of using differences in the QPP estimate of the query variants relative to the original query as Weighted Relative Information Gain (WRIG). The nomenclature reflects the fact that, similar to WIG <ref type="bibr" target="#b70">[70]</ref>, WRIG uses the concept of weighted information as evident from the 𝜎 (𝑄, 𝑄 ′ ) factor of Equation 11. However, the weights themselves rather than being interpreted as the contribution of each top-retrieved document in the QPP estimate of the original query 𝑄, are, in fact, reflective of the relative importance of each query variant.</p><p>Specifically, as per the findings of <ref type="bibr" target="#b64">[64]</ref>, we make use of the rank-biased overlap (RBO) based similarity <ref type="bibr" target="#b59">[59]</ref> between a query 𝑄 and its variant 𝑄 ′ . In fact, our experiments demonstrated that the RBO similarity measure outperformed the Jaccard similarity between the query terms and Fig. <ref type="figure">2</ref>. A schematic representation of the idea of using the RSV distribution of query variants, 𝑄 ′ ∈ E 𝑄 (shown with dotted lines), to estimate the QPP of the current query (𝑄). Left: The non-uniformity (skew) of the variants is higher than that of the current query (𝑄), which means that the QPP estimator predicts a low value of 𝑃 (𝑆 |𝑄). Right: The non-uniformity of 𝑄 is higher than those of its variants, in which case our predictor outputs a high 𝑃 (𝑆 |𝑄). the cosine similarity between the sets 𝑀 𝑘 (𝑄) and 𝑀 𝑘 (𝑄 ′ ) thus corroborating the findings of <ref type="bibr" target="#b64">[64]</ref>. Therefore, we only report results with the RBO-based instantiation of 𝜎 (𝑄, 𝑄 ′ ) of Equation <ref type="formula" target="#formula_11">11</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">An Illustrative Example with NQC</head><p>While the generic description of WRIG in Section 4.2 involved computing the relative differences with respect to any predictor function Φ(𝑄, 𝑀 𝑘 (𝑄)), we now demonstrate the working principle of WRIG with NQC (i.e., variances of the RSVs) as a particular choice of the estimator function (Equation <ref type="formula" target="#formula_1">2</ref>). For instance, substituting the generic estimator function, 𝜙 of Equation 11 with the NQC estimator yields</p><formula xml:id="formula_12">𝑃 (𝑆 |𝑄, E 𝑄 ) = 1 - 1 𝜈 (𝑄, 𝑘) 𝑄 ′ ∈ E 𝑄 𝜌 (𝑄, 𝑄 ′ ) 𝑄 ′ ∈E 𝑄 𝜈 (𝑄 ′ , 𝑘)𝜌 (𝑄, 𝑄 ′ ), 𝜈 (𝑄, 𝑘) = Var(𝜎 (𝐷 𝑄 1 ), . . . , 𝜎 (𝐷 𝑄 𝑘 )),<label>(12)</label></formula><p>where Var denotes the variance function, 𝐷 𝑄 𝑖 denotes the 𝑖 th document retrieved with query 𝑄, 𝜎 (𝐷 𝑄 𝑖 ) denotes the RSV of the 𝑖 th document 𝐷 𝑖 retrieved in response to the query 𝑄, and 𝜌 (𝑄, 𝑄 ′ ) measures the RBO-based similarity between the ranked lists retrieved with the variant 𝑄 ′ and the original query 𝑄. Although we used RBO in our experiments as prescribed in <ref type="bibr" target="#b64">[64]</ref>, it is possible to use any other function to define the similarity measure between the top-retrieved lists of 𝑄 ′ and 𝑄, e.g., Jaccard etc.</p><p>Sample distributions of similarity scores for a query with respect to its variants are shown in Figure <ref type="figure">2</ref> to illustrate the working principle of WRIG with the variance based NQC estimator. The RSVs provided are in the range of [0, 1], which is the case if either sigmoid or ReLU is used as an activation function for a neural model.</p><p>The plot on the left of Figure <ref type="figure">2</ref> shows that the RSV distributions of the variants are more skewed (higher variance), in which case the average of the variances aggregated over the set of reference queries is also higher. This means that the sign of the relative change of variance (Equation <ref type="formula" target="#formula_11">11</ref>) is negative and the magnitude is high (corresponding to the bottom-right case in the contingency of Table <ref type="table">1</ref>). The NQC-based predictor thus in this case predicts a low QPP estimate for 𝑄. Conversely, the plot on the right shows the situation where the RSVs of the current query are more skewed than those of its variants, thus corresponding to the top-left case in the contingency of Table <ref type="table">1</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Comparisons with Additive Smoothing</head><p>Both the additive smoothing methodology <ref type="bibr" target="#b64">[64]</ref> and our proposed relative difference-based approach (Equation <ref type="formula" target="#formula_11">11</ref>) use estimates from a set of query variants in addition to the estimated QPP value for the current query. Compared to the additive smoothing approach, the advantage of our method is that it does not involve an additional smoothing parameter, 𝜆, to control the relative importance of the estimated QPP of the original query with respect to its variants.</p><p>Another advantage of WRI over additive smoothing is that WRIG allows a more intuitive interpretation of the estimated QPP value of the current query by using the values of the variants as reference points (see Figure <ref type="figure">2</ref>). For instance, it is not obvious if a query 𝑄 with an absolute QPP estimate of 𝑃 (𝑆 |𝑄) = 0.6 qualifies as being a difficult or an easy one. With our proposed method, however, it is possible to interpret this QPP value from the relative perspective of these variants.</p><p>Example 4.1. Consider the query 'Parkinson's disease', say with 𝑃 (𝑆 |𝑄) = 0.6, which may seem to be one that is reasonably specific, pointing to a precise information need. However, with respect to one of its variants 'Parkinson's disease treatment', the QPP estimate of which is expected to be higher, say 𝑃 (𝑆 |𝑄) = 0.75, it is possible to conclude that the original query itself was not particularly an easy one to yield sufficiently high retrieval performance. Our method, with reference to this example, would make use of the (0.75 -0.6)/0.6 = 25% observed increase in the relative QPP estimate of a variant to eventually help interpret that the original query itself is likely not to be an easy one for an IR system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Regression-based QPP Estimation</head><p>As a generalized function to compute the non-uniformity of a set of RSVs, we propose to use a linear regression based solution. Assuming that the similarity scores are a function of the document ranks, we estimate the parameters of a line that best fits a given observation -in our case the given set of 𝑘 pairs of document ranks and scores, i.e. 𝑀 𝑘 (𝑄) = {(𝑖, 𝑃 (𝐷 𝑖 |𝑄))} 𝑘 𝑖=1 . Formally speaking, we fit a line, parameterized by 𝜃 ∈ R 2 , of the form σ (𝑖; 𝜃 ) = 𝜃 1 𝑖 + 𝜃 0 (i.e. a line with slope of 𝜃 1 and intercept of 𝜃 0 ) to the observed data, 𝑀 𝑘 (𝑄).</p><p>It is a well-known result that the closed form solution of the slope of the best fitting line in a two dimensional 𝑥-𝑦 plane is given by 𝐶𝑜𝑣 (𝑋, 𝑌 )/𝑉 𝑎𝑟 (𝑋 ) (X and Y denoting the sets of values for the abscissa and the ordinate, respectively). In the context of our problem, we need to compute only the slope of this regressor line, which is computed as</p><formula xml:id="formula_13">𝜃 1 = 𝑘 𝑖=1 (𝑖 -k) (𝑃 (𝐷 𝑖 |𝑄) -𝑃 ( D |𝑄) 𝑘 𝑖=1 (𝑖 -k) 2 , (<label>13</label></formula><formula xml:id="formula_14">)</formula><p>where k = (𝑘 + 1)/2 denotes the average of the document ranks and 𝑃 ( D |𝑄) = 1/𝑘 𝑘 𝑖=1 𝑃 (𝐷 𝑖 |𝑄) denotes the average of the RSVs.</p><p>Since the slope of a parametric line indicates the general trend of how rapidly the RSVs decrease over ranks, it is easy to see that the higher the magnitude of the slope, the higher the non-uniformity of the RSVs (i.e., the QPP estimate of a query). As an instance of the linear regression-based predictor function Φ, we therefore use the absolute value of the slope estimated from the fitted document scores. More formally, Φ LR (𝑄, 𝑀 𝑘 (𝑄))</p><formula xml:id="formula_15">def == |𝜃 1 |,<label>(14)</label></formula><p>where 𝜃 1 is given by Equation <ref type="formula" target="#formula_13">13</ref>, and LR denotes linear regression.</p><p>Previous studies, such as <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b15">16]</ref>, has applied specific models of statistical distributions, such as the Gamma distribution, Power law distribution or Gaussian Mixture models to fit a given RSV distribution with approaches such as the method of moments (MME) or expectation maximization (EM). Different to these approaches, our method of linear regression to fit the RSV score distribution does not require making any specific assumptions about the inherent nature of the document scores distribution. This makes our estimator a generic one without any specific assumptions about the nature of the retrieval scores produced by a neural model. Off-the-shelf applications of distributions that are known to work well for statistical IR models, such as the Poisson or the Gamma distributions, may not work well for neural models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">AUTOMATICALLY GENERATING QUERY VARIANTS</head><p>Recall from Section 4 that in contrast to existing QPP approaches, such as NQC <ref type="bibr" target="#b56">[56]</ref> or WIG <ref type="bibr" target="#b70">[70]</ref>, our method relies on the existence of a set of variants or reference queries, similar to the requirement of <ref type="bibr" target="#b64">[64]</ref>. However, in practice such reference queries are usually unavailable. Therefore, we explore two different methods for automatically constructing variants from a user's query. Before describing these methods, we first discuss the desirable characteristics of automatically-generated variants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Characteristics of the generated variants</head><p>Since our goal is to estimate the retrieval quality of a query relative to its variants, the QPP estimate of the variants should not be substantially different from that of the original one. Previous research on query sessions has shown that even one additional term can make a query significantly more specific. In contrast, removing one term can make a query substantially more general, leading to loss of specificity. Returning to Example 4.1, adding the term treatment to the query Parkinson's disease makes it substantially more specific.</p><p>To ensure that the QPP estimate of the variants in WRIG are comparable to that of the original query, while generating the query variants we only allow substituting a randomly chosen term of the original query with another term. The probability of this substitution is given by a distribution of neighboring (semantically related) words to the constituent terms of 𝑄, denoted by N (𝑄). More formally,</p><formula xml:id="formula_16">𝑄 ′ ← (𝑄 -{𝑡 }) ∪ {𝑤 } : 𝑡 ∼ 𝑄, 𝑤 ∼ N (𝑄),<label>(15)</label></formula><p>where the probability of selecting a term 𝑤 ∈ N (𝑄) is given by the maximum likelihood estimate over the weights of the terms. We then repeat the sampling step of Equation <ref type="formula" target="#formula_16">15</ref>, 𝑚 number of times, where 1 ≤ 𝑚 ≤ |𝑄 | -1. This ensures that we substitute 𝑚 terms from the original query with those sampled from N (𝑄), thus ending up retaining |𝑄 | -𝑚 terms from the original query with 𝑚 new related terms being added. As a word of note, we mention that in our experiments we varied 𝑚 within the range of 1 to |𝑄 | -1, and observed that the effect of 𝑚 on the final QPP effectiveness measures were non-significant. Hence, we report the results only with the best setting of 𝑚, which, as per our observation, was |𝑄 | -1. In other words, the best results were obtained when we retained only a single term from the original query 𝑄.</p><p>We now describe two ways to define the set of weighted term distributions from which terms to be substituted are sampled.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Relevance model-based term substitution</head><p>In this case, the set N (𝑄) from which related query terms are chosen for substituting an original query term, refers to a distribution of term weights estimated from a standard feedback model, namely the relevance model (RLM) <ref type="bibr" target="#b31">[32,</ref><ref type="bibr" target="#b35">36]</ref>. The weight for a term 𝑤 in RLM, 𝑃 (𝑤 |𝑄, 𝑀 𝑘 (𝑄)), is estimated by computing the likelihood of the local co-occurrences of 𝑤 with the query terms from the set of top-𝑘 retrieved documents, 𝑀 𝑘 (𝑄).</p><p>Our methodology of query variant generation is a simplification of the method proposed in <ref type="bibr" target="#b11">[12]</ref>, where the number of terms in the generated query was itself a random integer. In contrast, for our case, the number of terms in each generated variant is identical to the number of terms in the original query. In our experiments, we varied the number of top-selected documents 𝑘 ′ for feedback (϶ 𝑘 ′ &lt; 𝑘) in the range of 5 to 20. We observed the best results for 𝑘 ′ = 10.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Word embedding-based term substitution</head><p>For this query variant generation method, instead of leveraging the relevance feedback based local (top-retrieved) term statistics, we instead define N (𝑄) as the union over the set of 𝑡 nearest neighbors of each query term (in an embedded space of word vectors). Specifically, we used skipgram <ref type="bibr" target="#b37">[38]</ref> vectors trained on the part of Google News dataset (about 100 billion words). The model contains 300-dimensional vectors for nearly 3 million words and phrases. Formally,</p><formula xml:id="formula_17">N (𝑄) = ∪ 𝑞 ∈𝑄 {𝑤 : w ∈ N 𝑡 (q)},<label>(16)</label></formula><p>where N 𝑡 (q) denotes the set of 𝑡-nearest word vectors relative to the vector for each constituent query term 𝑞. The distance function used to define the neighborhood is the cosine distance <ref type="bibr" target="#b37">[38]</ref>.</p><p>In our experiments, we set the values of 𝑡 in the range from 5 to 20 and found that the best QPP results were obtained with variants generated with 5 nearest neighbors. Table <ref type="table" target="#tab_0">2</ref> lists a number of variants generated for 3 different example queries selected from the TREC-Robust, ClueWeb09B and TREC-DL topic sets respectively. We observe that seemingly generic variants, such as 'peace exercise agreement' and 'peace talks operation', could potentially be useful in WRIG to infer that the original query 'Ireland peace talks' is most likely to be a specific one.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">EXPERIMENT SETUP</head><p>In this section, we first describe the specific research questions related to the QPP of neural re-ranking models, following which we describe the datasets and the methods investigated.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Research questions</head><p>As discussed in Sections 1 and 4.1, existing QPP approaches are not expected to work effectively for neural rankers, because the relatively small differences in the scores may pose a difficulty in estimating retrieval effectiveness. Therefore, we formulate the first two research questions: RQ-1: How well do existing QPP estimators work on neural models? Can a simple approach of applying an inverse neural activation function improve QPP effectiveness for neural models? RQ-2: How effective is our proposed method WRIG of relative difference-based QPP for neural re-ranking models, in comparison to standard post-retrieval QPP approaches?</p><p>While existing QPP approaches, such as NQC, WIG etc., are capable of predicting the QPP estimate of a query without the presence of any reference set of other similar queries, the WRIG estimator (Equation <ref type="formula" target="#formula_11">11</ref>), essentially relies on the availability of a set of query variants to be able to compute the relative differences. This means that the first step to investigate RQ-2 is to automatically generate a set of reference queries. In our experiments, we explore two ways of automatically generating reference queries and also compare the QPP effectiveness obtained with manually formulated reference queries (similar to <ref type="bibr" target="#b64">[64]</ref>, we used the UQV dataset). Our third research question is thus: RQ-3: Among the local and global approaches for query variants generation (Section 5.2 and 5.3), which one is the most effective for WRIG? What is the relative performance of WRIG with these automatically generated variants as compared to manually formulated ones?</p><p>In our fourth research question, the aim is to find the most effective way for WRIG to measure the non-uniformity in the RSVs of the top-retrieved documents: RQ-4: Among the alternatives of using the variance or linear regression (Equation <ref type="formula" target="#formula_15">14</ref>), which one is the most effective for WRIG? 6.2 Settings 6.2.1 Neural model and activation functions. We conduct experiments with two neural rankers of considerably different characteristics (see <ref type="bibr">Section 3.3)</ref>. The first neural model that we employ is the deep relevance matching model (DRMM). We choose DRMM because being an interaction-driven model, it involves a much smaller number of parameters (usually of the order of 50-100K). This is a likely reason why the model is reported to generalize well for standard ad-hoc test collections with minimal amount of training data <ref type="bibr" target="#b25">[26]</ref>. The size of the input for a model like DRMM is relatively small because it uses a quantized interaction operation (histograms of counts of word vector similarities between query and document terms computed over discrete intervals). In contrast, other early interaction-based models, such as KNRM <ref type="bibr" target="#b60">[60]</ref>, operate on a full matrix of pairwise word vector similarities, and thus the number of parameters in such models is in the order of millions <ref type="bibr" target="#b60">[60]</ref>. To explore the effect of our QPP method for different ranges of RSVs, we use two different activation functions, tanh and sigmoid, with corresponding models denoted as DRMM tanh and DRMM sigmoid , respectively.</p><p>As our second neural model, we consider the BERT-based late interaction architecture, ColBERT <ref type="bibr" target="#b33">[34]</ref>. This model independently encodes the document and the query using BERT <ref type="bibr" target="#b67">[67]</ref> and then captures their fine-grained similarities by employing interactions between them (see Section 3.3). We choose ColBERT for our investigation on the effectiveness of QPP because it is one of the state-of-the-art IR models that has been reported to work well on the MS MARCO passage retrieval benchmark <ref type="bibr" target="#b33">[34]</ref>. The implementation<ref type="foot" target="#foot_4">2</ref> for our proposed method and the baselines is made available for research purposes. 6.2.2 Datasets. We experiment with three standard ad-hoc IR collections, namely the TREC-Robust collection (comprised of news articles), ClueWeb09B <ref type="bibr" target="#b12">[13]</ref> (comprised of crawled web pages), and the MS MARCO passage dataset <ref type="bibr" target="#b40">[41]</ref> (a question answering dataset that features over 100𝐾 Bing queries). Table <ref type="table" target="#tab_1">3</ref> provides an overview of the three datasets. For the ClueWeb09B experiments, we used the Waterloo spam scores <ref type="bibr" target="#b0">[1]</ref> to remove documents with spam confidence &gt; 70%. We denote this subset as CWeb09B-S70 in Table <ref type="table" target="#tab_1">3</ref>. Note that all the experiments involving ColBERT <ref type="bibr" target="#b33">[34]</ref> are executed only on MS MARCO dataset. This is because training a large parameter-driven model such as ColBERT is likely to be ineffective on IR test collections with relevance judgments for a small number of queries. Therefore, we do not report results for ColBERT on either of TREC-Robust or ClueWeb09B (corresponding columns in the results tables are left empty).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.2.3</head><p>Train and test splits. The most common setup for QPP experiments in the literature usually involves repeatedly partitioning a set of queries randomly into two parts. The train set is used to tune the hyper-parameters for each method under investigation, and the optimal values of these hyper-parameters are then used to evaluate the QPP effectiveness on the test set of queries <ref type="bibr" target="#b56">[56,</ref><ref type="bibr" target="#b62">62,</ref><ref type="bibr" target="#b64">64]</ref>. In our experiments, we also use an identical setup for the TREC-Robust and ClueWeb09B collections, which do not have dedicated training data. Across 30 splits, we randomly generate equally-sized train:test partitions. Each time we train the model on the train split and evaluate the QPP effectiveness on the test split with the optimal setting of hyper-parameters. Finally we report the average outcome obtained for 30 test-folds.</p><p>However, for the MS MARCO test collection, since a designated train:test split is available, we tune model hyper-parameters on the training set and report results on the TREC-DL dataset (a subset of the MS MARCO test set) with the optimal parameter setting as prescribed in <ref type="bibr" target="#b2">[3]</ref>.</p><p>It is worth noting that the training set is only used to optimally learn the parameters of a supervised neural model; this set of topics is not used for QPP evaluation. Moreover, since we investigate unsupervised QPP approaches only, the training set of topics has no effect on learning the parameter values (unlike the case of a supervised approach). 6.2.4 Query variants. In addition to using automatically-generated query variants, to allow a direct comparison between WRIG and the additive smoothing technique proposed in <ref type="bibr" target="#b64">[64]</ref>, we also conducted experiments using the manually-formulated variants of the TREC-Robust queries from the UQV dataset <ref type="bibr" target="#b4">[5]</ref>. To generate the variants for each TREC query in the UQV dataset, authors in <ref type="bibr" target="#b4">[5]</ref> provided a narrative illustrating the information seeking situation to a number of participants, who were then asked to formulate queries and their interactions were logged. The authors of <ref type="bibr" target="#b4">[5]</ref> then post-processed those logged queries, e.g., duplicates were removed, spelling errors were corrected etc. Finally, given a manually-created back-story corresponding to a TREC query, they asked participants to formulate appropriate queries. In our work, for investigating how the number of query variants, |E 𝑄 |, influences the relative effectiveness of an input query, we tried out different values of |E 𝑄 | from {5, 10, 15, 20, 25}. We observed that the optimal results were obtained at |E 𝑄 | = 10, both for WRIG and the additive smoothing technique <ref type="bibr" target="#b64">[64]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.5">Retrieval settings.</head><p>As the initial retrieval model (the output of which is provided as an input to neural re-rankers, DRMM and ColBERT), we employ language modeling with Dirichlet smoothing <ref type="bibr" target="#b65">[65]</ref>, denoted as LM-Dir. We report results with the value of the hyper-parameter 𝜇 set to 1000, as prescribed in <ref type="bibr" target="#b66">[66]</ref> on top-retrieved 𝑘 = 100 documents. We conducted a grid search to find the optimal value of 𝑘 from the set {5, 10, 15, 20, 25, 50, 100, 300, 500, 1000}, as suggested by <ref type="bibr" target="#b62">[62]</ref> and we also obtain the best MAP values with 𝑘 = 100 both for statistical and neural models as reported in Table <ref type="table">4</ref>. For all our reported experiments, we measure QPP effectiveness on the top-100 documents.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.6">Neural model hyper-parameters. The hyper-parameters to optimize for DRMM are:</head><p>• 𝑀, the number of quantization intervals used to discretize the cosine similarity values between the constituent word vector pairs of documents and queries, and • 𝐿, the number of feed-forward layers.</p><p>The hyper-parameter 𝑀 of DRMM was optimized by conducting a grid search in the range 10 to 50. We selected 𝑀 = 30 (as in <ref type="bibr" target="#b25">[26]</ref>) because this value yielded the highest MAP on target test collections (see Table <ref type="table">4</ref>). The number of hidden layers, 𝐿, was also chosen via a grid search over {1, 2, . . . , 5}. As prescribed in <ref type="bibr" target="#b25">[26]</ref>, we used the log-count based histogram coupled with idf weighting as inputs for training the DRMM.</p><p>For ColBERT, we do not fine-tune the hyper-parameter 𝑚 -the dimension of the latent layer on which BERT embedding vectors (768 dimensional) are projected. Instead, as prescribed in the paper <ref type="bibr" target="#b33">[34]</ref>, we set the dimension of the embedding, 𝑚, to 128. Other hyper-parameters of ColBERT were set as suggested by the authors <ref type="bibr" target="#b33">[34]</ref>. Specifically, the learning rate was set to 3𝑥10 -6 with a batch size 32 and the upper limit of the number of tokens per query 𝑁 𝑞 was set to 32.</p><p>To show that the neural models were indeed trained in an effective manner in our experimental setup, we report the mean average precision (MAP) values obtained with LM-Dir, DRMM and ColBERT models on the three of the test collections, i.e. TREC-Robust, ClueWeb09B and TREC-DL as in Table <ref type="table">4</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.7">Evaluation metrics.</head><p>To measure the correlation between predicted and the ground-truth AP values, we employ the standard QPP effectiveness metrics: Pearson's 𝜌 and Kendall's 𝜏. While the former is a value-based correlation, the latter is a rank-based one. Note that we do not report results with Spearman's rank correlation metric because it exhibited similar trends to 𝜌.</p><p>To measure Kendall's 𝜏, the reference or ground-truth ordering of the queries was constructed by sorting the set of the queries in the test-folds by their average precision (AP) values computed with the help of the available relevance judgments. Contrary to other work that reports results with the ground-truth being computed only once for the initial retrieval, our experiments involve two separate ground-truth orderings. The first is for the initial retrieval (LM-Dir) and the second is for the list re-ranked with the neural models.</p><p>In addition to the correlation metrics, we also utilize the rank differences of each query to obtain a per query analysis as proposed in <ref type="bibr" target="#b22">[23]</ref>. Specifically, for each query the difference (or error in other words) in the rank position assigned by the ground truth AP and that assigned by a QPP method is measured. The authors of <ref type="bibr" target="#b22">[23]</ref> named this per query rank error measure as scaled Absolute Rank Error (abbreviated as sARE). Formally speaking, for a given query 𝑞 of a query set 𝑄, sARE of 𝑞 with respect to its ground truth AP value is defined as</p><formula xml:id="formula_18">sARE 𝐴𝑃 (𝑞 ) = |𝑟 𝑝 -𝑟 𝑒 | |𝑄 | , (<label>17</label></formula><formula xml:id="formula_19">)</formula><p>where 𝑟 𝑝 and 𝑟 𝑒 are the ranks assigned to 𝑞 by the QPP system and the evaluation metric (here, AP), respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3">QPP methods investigated</head><p>We experiment with a number of standard QPP methods that have been reported to work well in the literature, namely (i) Clarity <ref type="bibr" target="#b13">[14]</ref>, (ii) WIG <ref type="bibr" target="#b70">[70]</ref>, (iii) NQC <ref type="bibr" target="#b56">[56,</ref><ref type="bibr" target="#b64">64]</ref>, (iv) UEF <ref type="bibr" target="#b53">[54]</ref> with NQC as the base estimator denoted as UEF(NQC), and (v) SCNQC <ref type="bibr" target="#b47">[48]</ref> (see Section 3.1 for more details on these baseline methods.) In our experiments with UEF as a baseline, we use NQC as the base estimator 𝜙 (Equation <ref type="formula" target="#formula_5">6</ref>) because among all post-retrieval estimator for neural re-rankers, NQC exhibits the maximum correlation as observed in Table <ref type="table" target="#tab_3">6</ref>. As the rank correlation function of UEF(NQC) (Equation <ref type="formula" target="#formula_5">6</ref>), we use the Pearson's-𝜌 as prescribed in <ref type="bibr" target="#b53">[54]</ref>.</p><p>We experimented with two additional baselines, namely i) PFR-QPP <ref type="bibr" target="#b48">[49]</ref> (detailed in Section 3.1) and ii) RLS <ref type="bibr" target="#b46">[47]</ref>. Recall from Section 3.1 that PFR-QPP in Equation 7 incorporates information both from the initial result list obtained in response to the original query and a second retrieved list produced by the expanded queries obtained with RLM. This method thus conducts a QPP on the re-retrieved list of documents.</p><p>Our proposed relative difference-based model WRIG, on the other hand, leverages information only from the re-ranked list of documents produced by neural re-rankers (e.g. DRMM or ColBERT). WRIG captures relative information gain through query perturbation from a set of automatically generated query variants instead of expanding the original query by RLM. The reason PFR-QPP is employed as a baseline is because it makes use of the re-ranked list of documents as one of the components involved in predicting the performance of the original query.</p><p>The working mechanism of RLS, a reference list-based QPP model, is relatively closer to our proposed model WRIG. Both WRIG and RLS make use of the relative information gain from an additional list of equivalent queries and hence RLS serves as a relevant baseline in this paper.</p><p>The main difference between WRIG and RLS is that while WRIG generates a set of query variants with similar information needs automatically (as detailed in Section 5), the RLS method on the other hand, augments the original query by adding a single term chosen from a distribution of term weights estimated by RLM <ref type="bibr" target="#b35">[36]</ref>. The model then makes a decision about the inclusion of each generated variants based on a statistical hypothesis test, the hypothesis being that the means of the two RSV distributions -one for the original query and the other that of the variant, are equal.</p><p>It is worth noting in this context that in terms of creating query variants, additive smoothing methodology, i.e JM <ref type="bibr" target="#b64">[64]</ref> (detailed in Section 3.2) is, in principle, closer to WRIG than RLS. This is because, as argued in Section 4.4, both WRIG and JM make use of a set of analogous query variants generated either manually (in case of JM) or automatically. Since JM is the closest to WRIG in terms of the working principle, from Table <ref type="table">7</ref> onward, we directly compare the results only between WRIG and JM for ensuring fairness in the comparisons.</p><p>Note that we do not include the pre-retrieval QPP approaches, such as AvgIDF or MaxIDF <ref type="bibr" target="#b28">[29,</ref><ref type="bibr" target="#b30">31]</ref> etc. in our empirical investigation because they have been reported to be outperformed by postretrieval approaches in a number of existing studies <ref type="bibr" target="#b52">[53,</ref><ref type="bibr" target="#b56">56,</ref><ref type="bibr" target="#b62">62,</ref><ref type="bibr" target="#b70">70]</ref>. Moreover, since our proposed method is unsupervised, for fair comparisons, we do not consider supervised QPP approaches of <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b62">62]</ref> as our baselines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.4">QPP method hyper-parameters</head><p>Most of the baseline predictors that we have reported in this paper involve a number of free parameters to be tuned; we made sure that the results for each method reported uses the optimal parameter settings. For instance, in NQC <ref type="bibr" target="#b56">[56]</ref> the free parameter that we tune is the number of top documents (𝑘), used to compute the standard deviation which we choose from {5, 10, 15, 20, 25, 50, 100, 300, 500, 1000}. In addition to 𝑘, SCNQC <ref type="bibr" target="#b47">[48]</ref> involves a number of hyper-parameters, namely, 𝛼, 𝛽 and 𝛾 as can be seen in Equation <ref type="formula" target="#formula_2">3</ref>. We choose the optimal setting of these 3 parameters by a grid search, where 𝛼, 𝛽, 𝛾 ∈ {0.25, 0.5, 1.0, 1.5, 2.0} as prescribed by <ref type="bibr" target="#b46">[47]</ref>.</p><p>The baseline methods of Clarity <ref type="bibr" target="#b13">[14]</ref>, UEF <ref type="bibr" target="#b53">[54]</ref> (Equations 5 and 6, respectively), the reference list based method -RLS <ref type="bibr" target="#b46">[47]</ref>, and the pseudo-feedback based PFR-QPP <ref type="bibr" target="#b48">[49]</ref> involve estimating a feedback model using the top-𝑚 documents. For our experiments, the optimal values of 𝑚 for each method were obtained with a grid search over the set 𝑚 ∈ {10, <ref type="bibr">15, 20, 25, 30, 35, 40, 45, 50}.</ref> Both RLS and PFR-QPP include a parameter that indicates number of reference lists 𝐿 to use in the final prediction which we tune from the set {5, 6, . . . , 15} as suggested by the authors. There is an additional weighting parameter 𝜂 involved in PFR-QPP (see Equation <ref type="formula" target="#formula_6">7</ref>) which is chosen from the set {0.1, 0.2, . . . , 0.9}.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.5">Revisiting the research questions</head><p>We now describe the different settings of the QPP methods investigated, as appropriate to the particular research questions.</p><p>(a) To investigate RQ-1, we apply a relatively simple approach of "stretching out" the RSVs of a neural model to a much larger (theoretically unbounded) interval. More specifically, we apply the tanh -1 and logit, which, respectively, are the inverse of the tanh and sigmoid functions used as the output layers of DRMM. (b) In relation to RQ-2, to find out if the relative difference based approach is better than the additive smoothing of Equation <ref type="formula" target="#formula_8">9</ref>, we employ several post-retrieval estimators as the Baseline from <ref type="bibr" target="#b64">[64]</ref>, extended with automatically generated query variants NQC WRIG UQV, RLM, W2V Our proposed method underlying estimator within the WRIG model, i.e., we instantiate Φ of Equation 11 with NQC, WIG etc. (c) To address RQ-3, instead of using only an existing set of reference queries to augment a particular estimator (e.g. NQC or Clarity), we tried out two different ways of automatically constructing the set of query variants. The first one among these uses relevance feedback based query term substitution, whereas the second one uses word vector embeddings (see Section 5). We name these two approaches as 'RLM' and 'W2V' in our experiments, respectively. (d) Next, to investigate RQ-4, instead of making use of the variances in the retrieval scores of top-documents, we adopt the more general approach of using the slope of the regressor line as an estimate of QPP (Section 4.5). To distinguish the existing variance-based NQC with the regressor based one, in our experiments we name the former as NQC while the latter is termed as 'LR', e.g., UEF(LR).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.6">Nomenclature of methods</head><p>For the convenience of referring to the QPP methods in our experiments, we adopt the naming convention of identifying a method as a triple of the form ⟨Φ, Λ, Q⟩. Each component of a triple is explained as follows:</p><p>• Φ is a base QPP estimator, e.g. NQC or WIG.</p><p>• Λ ∈ { WRIG, JM, ∅} indicates whether our proposed method of relative differences (Equation <ref type="formula" target="#formula_11">11</ref>), or the existing method of additive smoothing <ref type="bibr" target="#b64">[64]</ref> was used to harness information from the query variants (∅ corresponds the case of not using any variants). • Q ∈ {No-QV, UQV, RLM, W2V} denotes the set of query variants used. More precisely, this set of query variants is either the pre-existing set of queries from the UQV dataset (corresponding to the TREC-Robust set of experiments), or a set of automatically generated queries using either of RLM or W2V (section 5.2 and 5.3). 'No-QV' means that no query variations were used. Note that all method names of the form ⟨*, WRIG, *⟩ originate as a contribution from this paper. On the other hand, the names ⟨NQC, JM, *⟩ correspond to the experiments conducted in <ref type="bibr" target="#b64">[64]</ref>. See Table <ref type="table" target="#tab_2">5</ref> for examples.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">RESULTS</head><p>We now present the results of our experiments and the observations made for each QPP method investigated. This is then followed by a detailed analysis of the observed results.  It can be seen that the QPP effectiveness values of neural rankers are considerably lower as compared to the LM-Dir results. Moreover, a post-hoc transformation of the range of the activation functions to (-∞, ∞) by tanh -1 (inverse tanh) or to [0, ∞) by logit (inverse sigmoid) also has a negative impact on QPP effectiveness. PFR-QPP involves reranking of initial retrieved lists which is why we apply these estimators only on neural rerankers (cells for LM-Dir are grayed out). Reported values along the RLS column are to be compared with corresponding WRIG values in Table <ref type="table" target="#tab_6">8</ref> where we compare the performance of JM based extensions (e.g. ⟨UEF(LR), JM, UQV⟩) to our proposed method WRIG using either existing query variants (UQV) or automatically generated ones (RLM/W2V).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.1">Main Observations</head><p>To interpret the results of Table <ref type="table" target="#tab_6">8</ref>, comparisons should be made across each group of results, e.g., the best results on DRMM tanh with our proposed approach is 0.6524 (see Table <ref type="table" target="#tab_6">8</ref>), whereas the best achievable with the extended baseline of JM is only 0.5281 (i.e. WRIG improves the prediction by about 23.54% over JM). Since results reported for RLS in Table <ref type="table" target="#tab_3">6</ref> are reasonably related to that of WRIG in Table <ref type="table" target="#tab_6">8</ref>, we repeat the performance of RLS and WRIG in Table <ref type="table" target="#tab_7">9</ref> for convenience.</p><p>Since there exists no manually-generated query variants for the ClueWeb09B and TREC-DL datasets, the corresponding rows are shown as shaded in both Tables <ref type="table">7</ref> and<ref type="table" target="#tab_6">8</ref>. Moreover, since we report results for the TREC-DL dataset with the ColBERT model only (recall from the discussion in Section 6.2.2 that ColBERT is a data-hungry model and requires a large training set, which is not available for the TREC Robust and the Clueweb datasets), the cells corresponding to the DRMM models are also shown shaded. We now enlist the other observations that can be made from the results of the experiments.</p><p>Off-the-shelf QPP methods do not work effectively for neural models. This observation is in relation to RQ-1 and can be observed from Table <ref type="table" target="#tab_3">6</ref>, by comparing the 𝜌 and 𝜏 values obtained for LM-Dir vs. the ones obtained for both the neural models. It can be seen that there is a significant Table <ref type="table">7</ref>. QPP results on the 3 individual datasets for the use of the proposed automatically-generated query variants (shown as RLM and W2V in the table), coupled with the proposed regression-based estimator (LR) to improve the effectiveness of the baseline additive smoothing based approach of <ref type="bibr" target="#b64">[64]</ref>, denoted as JM in the table. As per the nomenclature in Table <ref type="table" target="#tab_2">5</ref>, these results correspond to tuples of the form ⟨UEF(LR), JM, *⟩. The best results in each group are bold-faced. difference between the QPP effectiveness values obtained for LM-Dir and neural re-rankers. This indicates that the simplistic approach of stretching out the range of RSVs does not prove beneficial; in fact, it slightly degrades results (see the numbers that correspond to the rows of DRMM tanh -1 and DRMM logit in Table <ref type="table" target="#tab_3">6</ref>). Improvements with WRIG are higher than those with JM. This observation, evident from the fact that the bold-faced numbers for DRMM tanh in the Table <ref type="table" target="#tab_6">8</ref> are better than the results for JM, answers RQ-2 in the affirmative. An important implication of this observation is that the 'relative differences' method in WRIG is a better way to leverage additional information from the query variants for QPP estimation.</p><p>WRIG outperforms reference list-based approach RLS. This observation is in relation to RQ-2. Results from Table <ref type="table" target="#tab_7">9</ref> confirms the fact that the relative gain from the query variants can be captured more effectively by substituting terms estimated by RLM or W2V model in the original query (in WRIG), than augmenting the query by a single term (as in RLS).</p><p>Additive smoothing based augmentation from manually constructed query variants is mostly ineffective for neural models. This is a crucial observation, evident from the drops in the 𝜌 and 𝜏 values of (DRMM tanh , UQV) with respect to (LM-Dir, UQV). The implication of this is that the existing smoothing based technique of <ref type="bibr" target="#b64">[64]</ref>, originally intended to improve QPP effectiveness, contributes to a decrease in QPP effectiveness for neural models. Again, the reason for this is likely attributed to the fact that RSVs (for the original query and its variants) are restricted to a small interval (e.g. [-1, 1] for tanh).</p><p>Automatically generated queries improve the performance of the baseline additive smoothing method <ref type="bibr" target="#b64">[64]</ref>. This observation relates to the experiments conducted with the additive smoothing based method of <ref type="bibr" target="#b64">[64]</ref>, to which we feed in the query variants automatically generated by our method presented in Section 5. The purpose of these experiments was to obtain the best possible baseline with additive smoothing against which we could then later compare our proposed method WRIG. It can be seen from Table <ref type="table">7</ref> that <ref type="bibr" target="#b64">[64]</ref> works optimally with the presence of automatically generated queries -compare UQV rows with 'RLM' and 'W2V' rows in each group for each dataset.</p><p>Improvements with automatic variants are higher than those with manual ones. Our proposed way of making use of the information from query variants (Equation <ref type="formula" target="#formula_11">11</ref>) produces the most effective results on both the tanh and sigmoid activation functions of DRMM, and also on the sigmoids in ColBERT. This is evident from the WRIG group of results, where correlation values are higher (results with tanh are better in case of DRMM). This observation is related to RQ-3, and it demonstrates the following.</p><p>Firstly, the automatic generation of query variants yields better results than the manual ones, a likely reason for which is the controlled QPP estimate of the variants (a partial number of query terms from the original query being substituted with other related terms). Comparisons are made between the baseline method of additive smoothing with query variants (JM) vs. our proposed way of using relative differences (WRIG). Both the WRIG and JM methods use the best performing base QPP estimate UEF(LR) (Table <ref type="table" target="#tab_6">8</ref>). The order in which results are presented from top-left to bottom-right is as follows: first row, left: ⟨UEF(LR), JM, UQV⟩, first row, middle: ⟨UEF(LR), WRIG, UQV⟩, first row, right: ⟨UEF(LR), JM, RLM⟩, second row, left: ⟨UEF(LR), WRIG, RLM⟩, second row, middle: ⟨UEF(LR), JM, W2V⟩, and second row, right: ⟨UEF(LR), WRIG, W2V⟩. See Table <ref type="table" target="#tab_2">5</ref> for the naming conventions.</p><p>Secondly, we also observe that using the global semantics of word embeddings (W2V) for variant generation is more useful than the local statistics computed from the top-retrieved documents (RLM).</p><p>Linear regression outperforms variance-based estimation of QPP. Our proposed methods for estimating the non-uniformity in RSVs outperforms the existing QPP methods. This confirms our hypothesis that existing QPP methods may not be directly effective for neural models when the retrieval scores are strictly bounded within a short interval.</p><p>In the context of WRIG, this means that RQ-4 is answered in affirmative (see in Table <ref type="table" target="#tab_6">8</ref> that WRIG in combination with the different types of variants, e.g. UQV etc., is particularly beneficial for DRMM). ⟨UEF(LR), WRIG, *⟩ turns out to be the best configuration for WRIG. It is worth mentioning that our proposed regression-based estimator improves additive smoothing based QPP of <ref type="bibr" target="#b64">[64]</ref> to a notable extent. Moreover, this observation is also irrespective of manual or automatic query variants as shown in Table <ref type="table">7</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.2">Analysis</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.2.1</head><p>Visualizing the correlations between QPP scores and the retrieval effectiveness. In this section, we present the per-query comparisons between the QPP effectiveness measures obtained with the two methods of leveraging information from the variants, -the baseline JM, and our proposed method WRIG. A convenient way to present the per-query effectiveness results is via a scatter-plot between the normalized values of predicted QPP scores and the true AP values, denoting the predicted and the true query difficulties, respectively.  <ref type="table" target="#tab_6">8</ref>. The presentation of results follows the same ordering as in Figure <ref type="figure" target="#fig_2">3</ref>, e.g., top-left: ⟨UEF(LR), JM, UQV⟩, and so on.</p><p>Figures <ref type="figure" target="#fig_2">3</ref> and<ref type="figure" target="#fig_3">4</ref> present the results between the best settings (as per Table <ref type="table" target="#tab_6">8</ref>) obtained with WRIG and JM, i.e., specifically with UEF(LR) as the underlying QPP estimator for both WRIG and JM. Per-query effectiveness measures are shown for two separate combinations of datasets and neural re-rankers, the first being TREC-Robust with DRMM tanh (Figure <ref type="figure" target="#fig_2">3</ref>), and the second being TREC-DL with ColBERT (Figure <ref type="figure" target="#fig_3">4</ref>).</p><p>A comparison between the adjacent scatter-plots of the same color shows a higher number of outlier points for the plots on the left. This means there is a higher number of cases where the predicted and the true query difficulties do not agree with each other (points away from the left-right diagonal). From Figure <ref type="figure" target="#fig_2">3</ref> and<ref type="figure" target="#fig_3">4</ref>, it is observed that the semantic information leveraged with the help of skip-gram word vectors leads to the best results, as evident from the fact that most observations concentrated around the left-right diagonal.</p><p>7.2.2 Per-query comparisons of QPP effectiveness. Figure <ref type="figure" target="#fig_4">5</ref> shows a per-query analysis of the QPP effectiveness between the additive smoothing-based JM and our proposed relative differencebased WRIG, in terms of the sARE values (see Equation <ref type="formula" target="#formula_18">17</ref>). A convenient way to visualize these differences in ranks, computed respectively by AP values and by QPP scores, is via bar graphs. Each vertical bar in Figure <ref type="figure" target="#fig_4">5</ref> represents the rank error difference for a query with respect to AP values between ⟨UEF(LR), JM, W2V⟩ and ⟨UEF(LR), WRIG, W2V⟩. In other words, we plot the value of ΔsARE 𝐴𝑃 (𝑞 𝑖 ) = sARE 𝐴𝑃 (𝑞 𝑖 ; JM) -sARE 𝐴𝑃 (𝑞 𝑖 ; WRIG) for each 𝑞 𝑖 in the set of queries Q. The green bars indicate that the sARE 𝐴𝑃 of JM (i.e. the rank error of JM) is higher than that of WRIG. Equivalently, these cases represent those queries for which WRIG outperformed JM, since lower sARE 𝐴𝑃 values indicate better performance. Rank error differences for the first two rows are measured on DRMM tanh for TREC-Robust (1 𝑠𝑡 row) and ClueWeb09B (2 𝑛𝑑 row). The 3 𝑟𝑑 row shows the difference for ColBERT on the TREC-DL dataset. Note that the green values indicate that the sARE error values for JM are larger, which means that WRIG performs better (smaller error) for these queries. Moreover, the magnitude of the green bars are substantially higher than those of the red ones, which indicates that the relative gains are higher than the losses. 7.2.3 Relative differences in QPP estimates. In this section, we conduct an additional analysis on the relative differences between the QPP estimates of an original query and its variants. A high magnitude of relative differences is likely to be more useful to WRIG for QPP. We now investigate if that is indeed the case.</p><p>The plots of Figure <ref type="figure" target="#fig_5">6</ref> show that the magnitude of relative differences is fairly large. The dots along a single column correspond to the QPP scores obtained for a query and its variants, the former shown in red, and the latter in green (manual variants) or blue (automatically generated variants). In fact, it is seen that in the case of the manually existing variants of TREC Robust queries (the plot where the QPP estimates of the variants are shown in green), the QPP estimates of some of the queries are higher (potentially these queries being more specific, likely being composed of a higher number of terms), whereas the others are lower. In contrast, we observe that most of the W2V generated variants have higher QPP estimates in comparison to the original queries. It turns out that for DRMM this actually leads to better estimation of the QPP scores (as seen from the higher correlation values in the W2V row as compared to the UQV ones in Table <ref type="table" target="#tab_6">8</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.2.4</head><p>Sensitivity to the number of query variants. We now investigate the effects of parameter choices in the query variant generation process on QPP effectiveness. Similar to the results in Section 7.2.1, we focus on QPP for the neural models DRMM tanh and ColBERT, comparing across the additive smoothing (JM) or the WRIG methods of leveraging information from the query variants. Figure <ref type="figure" target="#fig_6">7</ref> shows that including too few or too many variants does not work well. For both the RLM and the W2V variant generation methods, the optimal results are obtained with 10 query variants. An interesting observation is that the QPP effectiveness of the additive smoothing method is quite sensitive to the number of variants, with results only improving over the baseline method ⟨UEF(LR), JM, *⟩ for |E 𝑄 | = 10.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">CONCLUSIONS AND FUTURE WORK</head><p>In this paper, we demonstrated that off-the-shelf application of existing query performance prediction (QPP) approaches fail to yield effective results for neural models. This can be attributed to the fact that the retrieval scores obtained from a neural model are restricted within a small interval, e.g. in [0, 1]. To improve the QPP estimate for neural models, we propose to use additional information from a set of queries that express a similar information need to the current one (these queries are called variants). The key idea of our proposed method, named Weighted Relative Information Gain (WRIG), is to estimate the performance of these variants, and then to improve the QPP estimate of the original query based on the relative differences with the variants. The hypothesis is that if a query's estimate is significantly higher than the average QPP score of its variants, then the original query itself is assumed (with a higher confidence) to be one for which a retrieval model works well.</p><p>Another contribution of the paper is the finding that a linear regression based estimate fitted to the retrieval scores outperforms existing approaches, such as standard deviation <ref type="bibr" target="#b56">[56]</ref> or information gain <ref type="bibr" target="#b70">[70]</ref> based estimates. Our experiments showed that WRIG outperforms the previously studied way of incorporating information from query variants in the form of additive smoothing <ref type="bibr" target="#b64">[64]</ref>. We also reported that automatically generated query variants prove effective (even more effective than manually generated variants) in improving QPP estimates. This indicates that one may not require a set of highly-precise equivalent queries for the purpose of improving QPP estimates on the original queries. We found that among our two proposed ways of generating the query variants -a) via RLM-based and b) via word embedding based term substitutions, the latter performs better. In future, we plan to leverage the information from query variants in a supervised manner to potentially improve the QPP estimates.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>𝑄 (Difficult) 1 𝑠𝑡 variant (more specific than 𝑄) 2 𝑛𝑑 variant (more specific than 𝑄) 𝑄 (Easy)1 𝑠𝑡 variant (less specific than 𝑄) 2 𝑛𝑑 variant (less specific than 𝑄)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Table 4 .= 1 ,= 1 ,</head><label>411</label><figDesc>Retrieval effectiveness obtained with the statistical model LM-Dir and two different neural re-rankers (DRMM and ColBERT) on the TREC-Robust, ClueWeb09B, and TREC-DL datasets, with 𝑘 = 100 top-retrieved documents. The DRMM parameters, 𝐿 and 𝑀, denote the number of feed-forward layers and the number of quantization intervals, respectively; and 𝑚 stands for embedding dimension in ColBERT model. 𝑀 = 30 0.2743 DRMM sigmoid 𝐿 = 1, 𝑀 = 30 0𝑀 = 30 0.1876 DRMM sigmoid 𝐿 = 1, 𝑀 = 30 0.1504 TREC-DL LM-Dir 𝜇 = 1000 0.2954 DRMM tanh 𝐿 = 1, 𝑀 = 30 0.3206 DRMM sigmoid 𝐿 = 1, 𝑀 = 30 0.3085 ColBERT 𝑚 = 128 0.4189</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig.3. An analysis of the per-query QPP scores for the DRMM tanh model for queries in the TREC-Robust dataset. Comparisons are made between the baseline method of additive smoothing with query variants (JM) vs. our proposed way of using relative differences (WRIG). Both the WRIG and JM methods use the best performing base QPP estimate UEF(LR) (Table8). The order in which results are presented from top-left to bottom-right is as follows: first row, left: ⟨UEF(LR), JM, UQV⟩, first row, middle: ⟨UEF(LR), WRIG, UQV⟩, first row, right: ⟨UEF(LR), JM, RLM⟩, second row, left: ⟨UEF(LR), WRIG, RLM⟩, second row, middle: ⟨UEF(LR), JM, W2V⟩, and second row, right: ⟨UEF(LR), WRIG, W2V⟩. See Table5for the naming conventions.</figDesc><graphic coords="25,60.45,187.30,107.73,89.17" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Similar to Figure 3, the performance of JM vs. WRIG is shown for the ColBERT re-ranker on the TREC-DL dataset. Results are provided for both manual and automatic generation of query variants, as reported in Table8. The presentation of results follows the same ordering as in Figure3, e.g., top-left: ⟨UEF(LR), JM, UQV⟩, and so on.</figDesc><graphic coords="26,308.59,143.46,126.20,106.51" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5 .</head><label>5</label><figDesc>Fig.5. The difference of scaled Absolute Ranked Error with respect to AP values between ⟨UEF(LR), JM, W2V⟩ and ⟨UEF(LR), WRIG, W2V⟩, i.e., ΔsARE 𝐴𝑃 (𝑞 𝑖 ) = sARE 𝐴𝑃 (𝑞 𝑖 ; JM) -sARE 𝐴𝑃 (𝑞 𝑖 ; WRIG), for each query 𝑞 𝑖 . Rank error differences for the first two rows are measured on DRMM tanh for TREC-Robust (1 𝑠𝑡 row) and ClueWeb09B (2 𝑛𝑑 row). The 3 𝑟𝑑 row shows the difference for ColBERT on the TREC-DL dataset. Note that the green values indicate that the sARE error values for JM are larger, which means that WRIG performs better (smaller error) for these queries. Moreover, the magnitude of the green bars are substantially higher than those of the red ones, which indicates that the relative gains are higher than the losses.</figDesc><graphic coords="27,65.55,174.79,354.90,83.39" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. QPP scores obtained with UEF(LR) -the base estimator in WRIG for each query (both the original and its variants). Vertically aligned points in the plots refer to the QPP scores of the variants (a red point indicates the QPP score of the original query). Top-left: DRMM tanh on TREC Robust with UQV variants; Top-center: DRMM tanh on TREC Robust with W2V variants; Top-right: DRMM tanh on Clueweb with W2V variants; Bottom-left: DRMM tanh on TREC-DL with W2V variants; Bottom-right: ColBERT on TREC-DL with W2V variants.</figDesc><graphic coords="28,176.69,163.39,130.14,78.69" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Sensitivity of WRIG and JM with respect to the number of variants used to estimate the QPP score for each query. Row 1, Col 1: DRMM tanh on TREC Robust with RLM for variant generation; Row 1, Col 2: DRMM tanh on TREC Robust with W2V for variant generation; Row 1, Col 3: DRMM tanh on Clueweb with RLM for variant generation; Row 1, Col 4: DRMM tanh on TREC Clueweb with W2V for variant generation; Row 2, Col 1: DRMM tanh on TREC-DL with RLM for variant generation; Row 2, Col 2: DRMM tanh on TREC-DL with W2V for variant generation; Row 1, Col 3: ColBERT on TREC-DL with RLM for variant generation; Row 1, Col 4: ColBERT on TREC-DL with W2V for variant generation.</figDesc><graphic coords="29,244.25,174.35,193.23,77.05" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 2 .</head><label>2</label><figDesc>Examples of automatically-generated query variants for 3 different topics from the TREC-Robust, ClueWeb09B, and TREC-DL datasets respectively. Variants are obtained by substituting terms in the original query with those sampled (biased) from a weighted term distribution, constructed either with relevance feedback (RLM) or with embedded word vectors (W2V).</figDesc><table><row><cell>Dataset</cell><cell>Original Query</cell><cell cols="2">Generated Variants</cell></row><row><cell></cell><cell></cell><cell>RLM</cell><cell>W2V</cell></row><row><cell></cell><cell>Ireland peace talks</cell><cell>Ireland economy paramilitary</cell><cell>peace mideastern footdrag</cell></row><row><cell>TREC-Robust</cell><cell>qid: 404</cell><cell>peace exercise agreement</cell><cell>talks agreement negotiate</cell></row><row><cell></cell><cell></cell><cell>peace talks operation</cell><cell>talks resume insist</cell></row><row><cell></cell><cell>signs of a heartattack</cell><cell>heartattack bezoar</cell><cell>sign prognosis</cell></row><row><cell>ClueWeb09B</cell><cell>qid: 175</cell><cell>heartattack motorsport</cell><cell>heartattack features</cell></row><row><cell></cell><cell></cell><cell>heartattack dormant</cell><cell>heartattack seizure</cell></row><row><cell></cell><cell cols="2">how long is life cycle of flea life larva detailed stage</cell><cell>flea cycle pupae larva</cell></row><row><cell>TREC-DL</cell><cell>qid: 264014</cell><cell cols="2">flea quickly annihilates control cycle application pupae methoprene</cell></row><row><cell></cell><cell></cell><cell>cycle leads female cocoons</cell><cell>long fleas dormant annihilates</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 3 .</head><label>3</label><figDesc>Characteristics of the datasets used in our QPP experiments. The suffix 'S70' indicates that documents detected as spam with confidence scores higher than 70% were removed from the collection. 'Avg.|𝑄 |' and 'Avg.#Rel' denote the average number of query terms and the average number of relevant documents, respectively. Since the topic identifiers for MS MARCO training set and TREC-DL are in no particular order, the corresponding column is left empty.</figDesc><table><row><cell>Collection (#docs)</cell><cell>Topic Set</cell><cell>Ids</cell><cell cols="3">#topics Avg.|𝑄 | Avg.#Rel</cell></row><row><cell>Disks 4,5 minus CR</cell><cell>TREC-6</cell><cell>301-350</cell><cell>50</cell><cell>2.54</cell><cell>79.36</cell></row><row><cell>(528,155)</cell><cell>TREC-7</cell><cell>351-400</cell><cell>50</cell><cell>2.42</cell><cell>93.48</cell></row><row><cell></cell><cell>TREC-Robust</cell><cell>601-700</cell><cell>100</cell><cell>2.88</cell><cell>37.20</cell></row><row><cell></cell><cell>TREC-8</cell><cell>400-450</cell><cell>50</cell><cell>2.38</cell><cell>94.56</cell></row><row><cell cols="2">CWeb09B-S70 (29,038,220) TREC-Web</cell><cell>1-200</cell><cell>200</cell><cell>2.42</cell><cell>16.02</cell></row><row><cell>MS MARCO Passage</cell><cell>MS MARCO Train</cell><cell>-</cell><cell>808,731</cell><cell>6.37</cell><cell>1.06</cell></row><row><cell>(8,841,823)</cell><cell>TREC-DL'19</cell><cell>-</cell><cell>43</cell><cell>5.40</cell><cell>58.16</cell></row><row><cell></cell><cell>TREC-DL'20</cell><cell>-</cell><cell>54</cell><cell>6.04</cell><cell>30.85</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 5 .</head><label>5</label><figDesc>Examples of nomenclature associated with the methods investigated.</figDesc><table><row><cell>Φ</cell><cell>Λ</cell><cell>Q</cell><cell>Description</cell></row><row><cell cols="2">NQC ∅</cell><cell>No-QV</cell><cell>Baseline from [56]</cell></row><row><cell cols="2">NQC JM</cell><cell>UQV</cell><cell>Baseline from [64]</cell></row><row><cell cols="2">NQC JM</cell><cell>RLM, W2V</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 6</head><label>6</label><figDesc>corresponds to the existing baseline approaches. Table 7 investigates how our proposed automatically generated query variants coupled with regression-based estimator -LR, improves the additive smoothing based QPP model -JM. Table 8 presents the main results of our experiments,</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 6 .</head><label>6</label><figDesc>Comparisons of rank correlation values (measured with Pearson's 𝜌 and Kendall's 𝜏) between statistical model (LM-Dir) and neural models (DRMM and ColBERT) on the 3 different datasets. A post-hoc application of an activation function's inverse is also used to transform the RSV's of DRMM into a wider range.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head></head><label></label><figDesc>.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">LM-Dir</cell><cell cols="2">DRMM tanh</cell><cell cols="2">DRMM tanh -1</cell><cell cols="2">DRMM sigmoid</cell><cell cols="2">DRMM logit</cell><cell cols="2">ColBERT</cell></row><row><cell>Dataset</cell><cell>QPP System</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell></row><row><cell></cell><cell>Clarity</cell><cell cols="10">0.4863 0.3140 0.3621 0.2618 0.3417 0.2569 0.3314 0.2511 0.3298 0.2523</cell><cell></cell><cell></cell></row><row><cell></cell><cell>WIG</cell><cell cols="10">0.5240 0.4379 0.4010 0.2984 0.3782 0.2903 0.3887 0.2641 0.3753 0.2610</cell><cell></cell><cell></cell></row><row><cell></cell><cell>NQC</cell><cell cols="10">0.5129 0.4331 0.4228 0.3045 0.4100 0.3017 0.4126 0.2775 0.4005 0.2738</cell><cell></cell><cell></cell></row><row><cell>Robust</cell><cell>UEF(NQC)</cell><cell cols="10">0.5423 0.4454 0.4517 0.3189 0.4378 0.3120 0.4409 0.2913 0.4196 0.2954</cell><cell></cell><cell></cell></row><row><cell></cell><cell>SCNQC</cell><cell cols="10">0.5859 0.4493 0.4831 0.3302 0.4489 0.3136 0.4521 0.2978 0.4201 0.2973</cell><cell></cell><cell></cell></row><row><cell></cell><cell>PFR-QPP</cell><cell></cell><cell></cell><cell cols="8">0.4983 0.3389 0.5024 0.3372 0.4922 0.3074 0.4719 0.3153</cell><cell></cell><cell></cell></row><row><cell></cell><cell>RLS</cell><cell cols="10">0.6219 0.4507 0.5153 0.3682 0.5022 0.3648 0.5198 0.3654 0.4941 0.3507</cell><cell></cell><cell></cell></row><row><cell></cell><cell>Clarity</cell><cell cols="10">0.2911 0.1841 0.1742 0.1238 0.1730 0.1204 0.1679 0.1224 0.1614 0.1221</cell><cell></cell><cell></cell></row><row><cell></cell><cell>WIG</cell><cell cols="10">0.3492 0.2420 0.2229 0.1547 0.2213 0.1531 0.2187 0.1490 0.2173 0.1425</cell><cell></cell><cell></cell></row><row><cell></cell><cell>NQC</cell><cell cols="10">0.3478 0.2313 0.2293 0.1601 0.2278 0.1589 0.2215 0.1456 0.2190 0.1538</cell><cell></cell><cell></cell></row><row><cell>CW09B</cell><cell>UEF(NQC)</cell><cell cols="10">0.3562 0.2351 0.2347 0.1612 0.2334 0.1598 0.2246 0.1554 0.2238 0.1543</cell><cell></cell><cell></cell></row><row><cell></cell><cell>SCNQC</cell><cell cols="10">0.3588 0.2463 0.2363 0.1674 0.2358 0.1656 0.2271 0.1578 0.2256 0.1546</cell><cell></cell><cell></cell></row><row><cell></cell><cell>PFR-QPP</cell><cell></cell><cell></cell><cell cols="8">0.3019 0.2105 0.2641 0.1988 0.2549 0.1923 0.2511 0.1945</cell><cell></cell><cell></cell></row><row><cell></cell><cell>RLS</cell><cell cols="10">0.4051 0.2685 0.2976 0.2133 0.2519 0.2078 0.2688 0.1974 0.2621 0.2042</cell><cell></cell><cell></cell></row><row><cell></cell><cell>Clarity</cell><cell cols="12">0.2672 0.2206 0.2043 0.1822 0.2035 0.1751 0.2112 0.1853 0.2091 0.1834 0.2314 0.2146</cell></row><row><cell></cell><cell>WIG</cell><cell cols="12">0.3973 0.3789 0.2802 0.2300 0.2794 0.2287 0.2788 0.2257 0.2763 0.2248 0.3086 0.2919</cell></row><row><cell></cell><cell>NQC</cell><cell cols="12">0.3929 0.3659 0.2774 0.2241 0.2745 0.2212 0.2723 0.2198 0.2717 0.2132 0.3041 0.2848</cell></row><row><cell>TREC-DL</cell><cell>UEF(NQC)</cell><cell cols="12">0.3991 0.3672 0.2813 0.2315 0.2791 0.2303 0.2806 0.2278 0.2790 0.2245 0.3185 0.2963</cell></row><row><cell></cell><cell>SCNQC</cell><cell cols="12">0.4013 0.3689 0.2841 0.2359 0.2822 0.2319 0.2790 0.2326 0.2767 0.2321 0.3192 0.2978</cell></row><row><cell></cell><cell>PFR-QPP</cell><cell></cell><cell></cell><cell cols="10">0.3362 0.2601 0.3276 0.2544 0.2842 0.2296 0.2743 0.2221 0.3278 0.3312</cell></row><row><cell></cell><cell>RLS</cell><cell cols="12">0.4177 0.3523 0.3553 0.2556 0.3324 0.2579 0.3018 0.2398 0.3043 0.2321 0.3502 0.3354</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 8 .</head><label>8</label><figDesc>A comparison between the additive smoothing<ref type="bibr" target="#b64">[64]</ref> enhanced with the use of query variants for a fair comparison with WRIG. The best results from Table7, i.e., ⟨UEF(LR), JM, *⟩, are repeated here for convenience. Bold-faced numbers denote the best results in each group. The improvements of the best results obtained with WRIG vs. the extended baselines are significant (t-test with 95% confidence).</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell cols="2">TREC-Robust</cell><cell></cell><cell></cell><cell cols="2">ClueWeb09B</cell><cell></cell><cell></cell><cell cols="2">TREC-DL</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell>JM</cell><cell></cell><cell></cell><cell></cell><cell>JM</cell><cell></cell><cell></cell><cell></cell><cell>JM</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">SCNQC</cell><cell cols="2">UEF(LR)</cell><cell cols="2">SCNQC</cell><cell cols="2">UEF(LR)</cell><cell cols="2">SCNQC</cell><cell cols="2">UEF(LR)</cell></row><row><cell>Model</cell><cell>Variants</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell></row><row><cell></cell><cell>No-QV</cell><cell cols="12">0.5859 0.4493 0.5931 0.4467 0.3588 0.2463 0.3604 0.2515 0.4013 0.3689 0.4078 0.3653</cell></row><row><cell>LM-Dir</cell><cell cols="13">UQV [64] 0.6482 0.4607 0.6583 0.4729 RLM 0.6502 0.4891 0.6610 0.4938 0.4072 0.2766 0.4146 0.2874 0.4268 0.3809 0.4311 0.3857</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.6717 0.4834 0.6801 0.4973 0.4186 0.2994 0.4248 0.3083 0.4219 0.3873 0.4302 0.3896</cell></row><row><cell></cell><cell>No-QV</cell><cell cols="12">0.4831 0.3302 0.4974 0.3409 0.2363 0.1674 0.2481 0.1735 0.2841 0.2359 0.2924 0.2342</cell></row><row><cell>DRMM tanh</cell><cell cols="13">UQV [64] 0.4426 0.3213 0.4533 0.3341 RLM 0.5047 0.3772 0.5172 0.3818 0.2956 0.2132 0.3010 0.2103 0.3404 0.2653 0.3498 0.2714</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.5204 0.4089 0.5281 0.4111 0.3144 0.2289 0.3302 0.2314 0.3482 0.2907 0.3502 0.3042</cell></row><row><cell></cell><cell>No-QV</cell><cell cols="12">0.4521 0.2978 0.4602 0.3110 0.2271 0.1578 0.2351 0.1649 0.2790 0.2326 0.2865 0.2389</cell></row><row><cell>DRMM sigmoid</cell><cell cols="13">UQV [64] 0.4303 0.3018 0.4428 0.3082 RLM 0.4882 0.3642 0.4921 0.3504 0.2955 0.2043 0.2987 0.2076 0.3240 0.2612 0.3395 0.2633</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.5091 0.3987 0.5118 0.4029 0.3083 0.2038 0.3076 0.2242 0.3362 0.2811 0.3431 0.2913</cell></row><row><cell></cell><cell>No-QV</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="4">0.3192 0.2978 0.3311 0.3004</cell></row><row><cell>ColBERT</cell><cell>UQV [64] RLM</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="4">0.3541 0.3278 0.3662 0.3314</cell></row><row><cell></cell><cell>W2V</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="4">0.3808 0.3412 0.3854 0.3469</cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="2">TREC-Robust</cell><cell></cell><cell></cell><cell cols="2">ClueWeb09B</cell><cell></cell><cell></cell><cell cols="2">TREC-DL</cell><cell></cell></row><row><cell></cell><cell></cell><cell>JM</cell><cell></cell><cell>WRIG</cell><cell></cell><cell>JM</cell><cell></cell><cell>WRIG</cell><cell></cell><cell>JM</cell><cell></cell><cell>WRIG</cell><cell></cell></row><row><cell>Model</cell><cell>Variants</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell></row><row><cell></cell><cell cols="5">UQV [64] 0.6583 0.4729 0.6349 0.4590</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>LM-Dir</cell><cell>RLM</cell><cell cols="12">0.6610 0.4938 0.6558 0.4725 0.4146 0.2874 0.3781 0.2793 0.4311 0.3857 0.4129 0.3622</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.6801 0.4973 0.6732 0.4793 0.4248 0.3083 0.4092 0.2764 0.4302 0.3896 0.4223 0.3721</cell></row><row><cell></cell><cell cols="5">UQV [64] 0.4533 0.3341 0.5167 0.3694</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>DRMM tanh</cell><cell>RLM</cell><cell cols="12">0.5172 0.3818 0.6109 0.4493 0.3010 0.2103 0.3709 0.2541 0.3498 0.2714 0.3856 0.3318</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.5281 0.4111 0.6524 0.4782 0.3302 0.2314 0.4136 0.2979 0.3502 0.3042 0.4097 0.3511</cell></row><row><cell></cell><cell cols="5">UQV [64] 0.4428 0.3082 0.4921 0.3502</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>DRMM sigmoid</cell><cell>RLM</cell><cell cols="12">0.4921 0.3504 0.5632 0.4202 0.2687 0.1776 0.3490 0.2113 0.3395 0.2633 0.3807 0.3158</cell></row><row><cell></cell><cell>W2V</cell><cell cols="12">0.5118 0.4029 0.6072 0.4545 0.3076 0.2042 0.3717 0.2577 0.3431 0.2913 0.3815 0.3209</cell></row><row><cell></cell><cell>UQV [64]</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>ColBERT</cell><cell>RLM W2V</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="4">0.3662 0.3314 0.4003 0.3784 0.3854 0.3469 0.4317 0.3820</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 9 .</head><label>9</label><figDesc>Comparisons between RLS and WRIG with W2V variants. WRIG improves the correlation significantly (bold-faced) as compared to RLS (t-test with 95% confidence).</figDesc><table><row><cell></cell><cell></cell><cell cols="2">TREC-Robust</cell><cell></cell><cell></cell><cell cols="2">ClueWeb09B</cell><cell></cell><cell></cell><cell cols="2">TREC-DL</cell><cell></cell></row><row><cell></cell><cell>RLS</cell><cell></cell><cell>WRIG</cell><cell></cell><cell>RLS</cell><cell></cell><cell>WRIG</cell><cell></cell><cell>RLS</cell><cell></cell><cell>WRIG</cell><cell></cell></row><row><cell>Model</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell><cell>P-𝜌</cell><cell>K-𝜏</cell></row><row><cell>LM-Dir</cell><cell cols="12">0.6219 0.4507 0.6732 0.4793 0.4051 0.2685 0.4092 0.2764 0.4177 0.3523 0.4223 0.3721</cell></row><row><cell>DRMM tanh</cell><cell cols="12">0.5153 0.3682 0.6524 0.4782 0.2976 0.2133 0.4136 0.2979 0.3553 0.2554 0.4097 0.3511</cell></row><row><cell cols="13">DRMM sigmoid 0.5198 0.3654 0.6072 0.4545 0.2688 0.1974 0.3717 0.2577 0.3018 0.2398 0.3815 0.3209</cell></row><row><cell>ColBERT</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="4">0.3502 0.3354 0.4317 0.3820</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>ACM Transactions on Information Systems, Vol. 1, No. 1, Article . Publication date: June 2022.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>The activation of each neuron, however, is a non-linear function, e.g. the sigmoid. ACM Transactions on Information Systems, Vol. 1, No. 1, Article . Publication date: June</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2022" xml:id="foot_2"><p>Weighted Relative Information Gain-based QPP</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_3"><p>ACM Transactions on Information Systems, Vol. 1, No. 1, Article . Publication date: June 2022. Weighted Relative Information Gain-based QPP</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_4"><p>https://github.com/suchanadatta/WRIG.git</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_5"><p>Suchana Datta, Debasis Ganguly, Mandar Mitra, and Derek Greene</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgement. This work was partially supported by <rs type="funder">Science Foundation Ireland (SFI)</rs> under Grant Number <rs type="grantNumber">SFI/12/RC/2289_P2</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_zSMMe6d">
+					<idno type="grant-number">SFI/12/RC/2289_P2</idno>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<ptr target="https://plg.uwaterloo.ca/~gvcormac/clueweb09spam/" />
+		<title level="m">Spam Rankings for the ClueWeb09 Dataset</title>
+		<imprint>
+			<biblScope unit="page" from="2021" to="2025" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Context Attentive Document Ranking and Query Suggestion</title>
+		<author>
+			<persName><forename type="first">Ahmad</forename><surname>Wasi Uddin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongning</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="385" to="394" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">BERT-QPP: Contextualized Pre-Trained Transformers for Query Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Negar</forename><surname>Arabzadeh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maryam</forename><surname>Khodabakhsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ebrahim</forename><surname>Bagheri</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 30th ACM International Conference on Information and Knowledge Management</title>
+		<meeting>the 30th ACM International Conference on Information and Knowledge Management<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="2857" to="2861" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Modeling Score Distributions in Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Avi</forename><surname>Arampatzis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Robertson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Retr</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="26" to="46" />
+			<date type="published" when="2011-02">2011. Feb. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">UQV100: A Test Collection with Query Variability</title>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alistair</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Falk</forename><surname>Scholer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR &apos;16</title>
+		<meeting>of SIGIR &apos;16<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="725" to="728" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Retrieval Consistency in the Presence of Query Variations</title>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alistair</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Falk</forename><surname>Scholer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR &apos;17</title>
+		<meeting>of SIGIR &apos;17<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="395" to="404" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Combining evidence of multiple query representation for information retrieval</title>
+		<author>
+			<persName><surname>Nj Belken</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Kantor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Fox</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Shaw</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Processing and Management</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="431" to="448" />
+			<date type="published" when="1995">1995. 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Selecting Good Expansion Terms for Pseudo-Relevance Feedback</title>
+		<author>
+			<persName><forename type="first">Guihong</forename><surname>Cao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian-Yun</forename><surname>Nie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Robertson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR &apos;08</title>
+		<meeting><address><addrLine>Singapore, Singapore; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="243" to="250" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Estimating the Query Difficulty for Information Retrieval</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elad</forename><surname>Yom-Tov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 33rd International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;10)</title>
+		<meeting>the 33rd International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;10)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page">911</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Weighted Relative Information Gain-based QPP</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Elad</forename><surname>Yom-Tov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Darlow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dan</forename><surname>Pelleg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 29th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 29th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Seattle; Washington, USA; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2006-06">2006. June 2022</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="390" to="397" />
+		</imprint>
+	</monogr>
+	<note>SIGIR &apos;06)</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2014 Session Track</title>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>Carterette</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evangelos</forename><surname>Kanoulas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><forename type="middle">M</forename><surname>Hall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">D</forename><surname>Clough</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="volume">500</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Retrievability Based Document Selection for Relevance Feedback with Automatically Generated Query Variants</title>
+		<author>
+			<persName><forename type="first">Anirban</forename><surname>Chakraborty</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debasis</forename><surname>Ganguly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Owen</forename><surname>Conlan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Association for Computing Machinery</publisher>
+			<biblScope unit="page" from="125" to="134" />
+			<pubPlace>New York, NY, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Overview of the TREC 2010 Web Track</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Charles</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nick</forename><surname>Clarke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ian</forename><surname>Craswell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gordon</forename><forename type="middle">V</forename><surname>Soboroff</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Cormack</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="volume">500</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Predicting Query Performance</title>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Cronen-Townsend</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 25th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;02)</title>
+		<meeting>the 25th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;02)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2002">2002</date>
+			<biblScope unit="page" from="299" to="306" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Precision Prediction Based on Ranked List Coherence</title>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Cronen-Townsend</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Retr</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="723" to="755" />
+			<date type="published" when="2006-12">2006. Dec. 2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Document Score Distribution Models for Query Performance Inference and Prediction</title>
+		<author>
+			<persName><forename type="first">Ronan</forename><surname>Cummins</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">28</biblScope>
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Improved Query Performance Prediction Using Standard Deviation</title>
+		<author>
+			<persName><forename type="first">Ronan</forename><surname>Cummins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joemon</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Colm O'</forename><surname>Riordan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 34th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;11)</title>
+		<meeting>the 34th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;11)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="1089" to="1090" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Convolutional Neural Networks for Soft-Matching N-Grams in Ad-Hoc Search</title>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Eleventh ACM International Conference on Web Search and Data Mining (WSDM &apos;18)</title>
+		<meeting>the Eleventh ACM International Conference on Web Search and Data Mining (WSDM &apos;18)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="126" to="134" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Deep-QPP: A Pairwise Interaction-based Deep Learning Model for Supervised Query Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Suchana</forename><surname>Datta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debasis</forename><surname>Ganguly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Derek</forename><surname>Greene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WSDM</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="201" to="209" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Neural Ranking Models with Weak Supervision</title>
+		<author>
+			<persName><forename type="first">Mostafa</forename><surname>Dehghani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aliaksei</forename><surname>Severyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaap</forename><surname>Kamps</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR 2017</title>
+		<meeting>of SIGIR 2017<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="65" to="74" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</title>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Devlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of NAACL&apos;19</title>
+		<meeting>of NAACL&apos;19</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="4171" to="4186" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Performance Prediction Using Spatial Autocorrelation</title>
+		<author>
+			<persName><forename type="first">Fernando</forename><surname>Diaz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 30th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;07)</title>
+		<meeting>the 30th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;07)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="583" to="590" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">An Enhanced Evaluation Framework for Query Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Guglielmo</forename><surname>Faggioli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oleg</forename><surname>Zendel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Shane</forename><surname>Culpepper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicola</forename><surname>Ferro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Falk</forename><surname>Scholer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Information Retrieval</title>
+		<meeting><address><addrLine>Cham</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer International Publishing</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="115" to="129" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Task-aware Query Recommendation</title>
+		<author>
+			<persName><forename type="first">Henry</forename><surname>Feild</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Allan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR 2013</title>
+		<meeting>of SIGIR 2013<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="83" to="92" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Deep Sparse Rectifier Neural Networks</title>
+		<author>
+			<persName><forename type="first">Xavier</forename><surname>Glorot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antoine</forename><surname>Bordes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshua</forename><surname>Bengio</surname></persName>
+		</author>
+		<idno>PMLR</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics (Proceedings of Machine Learning Research</title>
+		<editor>
+			<persName><forename type="first">Geoffrey</forename><surname>Gordon</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">David</forename><surname>Dunson</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Miroslav</forename><surname>Dudík</surname></persName>
+		</editor>
+		<meeting>the Fourteenth International Conference on Artificial Intelligence and Statistics ( Machine Learning Research<address><addrLine>Fort Lauderdale, FL, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="315" to="323" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A Deep Relevance Matching Model for Ad-Hoc Retrieval</title>
+		<author>
+			<persName><forename type="first">Jiafeng</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yixing</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingyao</forename><surname>Ai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)</title>
+		<meeting>the 25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Manish</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Bendersky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Retrieval with Verbose Queries. Found. Trends Inf. Retr</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="91" to="208" />
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Predicting the Effectiveness of Queries and Retrieval Systems</title>
+		<author>
+			<persName><forename type="first">Claudia</forename><surname>Hauff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SIGIR Forum</title>
+		<imprint>
+			<date type="published" when="2010-08">2010. Aug. 2010</date>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page">88</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A Survey of Pre-Retrieval Query Performance Predictors</title>
+		<author>
+			<persName><forename type="first">Claudia</forename><surname>Hauff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Djoerd</forename><surname>Hiemstra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franciska</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jong</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 17th ACM Conference on Information and Knowledge Management (CIKM &apos;08)</title>
+		<meeting>the 17th ACM Conference on Information and Knowledge Management (CIKM &apos;08)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="1419" to="1420" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A Survey of Pre-Retrieval Query Performance Predictors</title>
+		<author>
+			<persName><forename type="first">Claudia</forename><surname>Hauff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Djoerd</forename><surname>Hiemstra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franciska</forename><surname>De</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jong</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 17th ACM Conference on Information and Knowledge Management (CIKM &apos;08)</title>
+		<meeting>the 17th ACM Conference on Information and Knowledge Management (CIKM &apos;08)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="1419" to="1420" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Inferring Query Performance Using Pre-retrieval Predictors</title>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">String Processing and Information Retrieval</title>
+		<meeting><address><addrLine>Berlin Heidelberg, Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="page" from="43" to="54" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">UMass at TREC 2004: Novelty and HARD</title>
+		<author>
+			<persName><forename type="first">Abdul</forename><surname>Nasreen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Jaleel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Allan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fernando</forename><surname>Croft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leah</forename><forename type="middle">S</forename><surname>Diaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaoyan</forename><surname>Larkey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><forename type="middle">D</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Courtney</forename><surname>Smucker</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Wade</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">TREC</title>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">500</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>National Institute of Standards and Technology (NIST</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<author>
+			<persName><forename type="first">Yongyu</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dawei</forename><surname>Song</surname></persName>
+		</author>
+		<title level="m">A Quantum Interference Inspired Neural Matching Model for Ad-Hoc Retrieval</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="19" to="28" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT</title>
+		<author>
+			<persName><forename type="first">Omar</forename><surname>Khattab</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matei</forename><surname>Zaharia</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Association for Computing Machinery</publisher>
+			<biblScope unit="page" from="39" to="48" />
+			<pubPlace>New York, NY, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">A Unified Framework for Post-Retrieval Query-Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shay</forename><surname>Hummel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Third International Conference on Advances in Information Retrieval Theory (ICTIR&apos;11)</title>
+		<meeting>the Third International Conference on Advances in Information Retrieval Theory (ICTIR&apos;11)<address><addrLine>Berlin Heidelberg; Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="15" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Relevance Based Language Models</title>
+		<author>
+			<persName><forename type="first">Victor</forename><surname>Lavrenko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR &apos;01</title>
+		<meeting>of SIGIR &apos;01<address><addrLine>New Orleans, Louisiana, USA; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="page" from="120" to="127" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">DQR: A Probabilistic Approach to Diversified Query Recommendation</title>
+		<author>
+			<persName><forename type="first">Ruirui</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ben</forename><surname>Kao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Reynold</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Lo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of CIKM 2012</title>
+		<meeting>of CIKM 2012<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="16" to="25" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Distributed Representations of Words and Phrases and their Compositionality</title>
+		<author>
+			<persName><forename type="first">Tomas</forename><surname>Mikolov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kai</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">S</forename><surname>Corrado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Dean</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of NIPS 2013</title>
+		<meeting>NIPS 2013<address><addrLine>Red Hook, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Curran Associates Inc</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="3111" to="3119" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">On User Interactions with Query Autocompletion</title>
+		<author>
+			<persName><forename type="first">Milad</forename><surname>Bhaskar Mitra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Filip</forename><surname>Shokouhi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Katja</forename><surname>Radlinski</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hofmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 37th International ACM SIGIR Conference on Research Development in Information Retrieval</title>
+		<meeting>the 37th International ACM SIGIR Conference on Research Development in Information Retrieval<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="1055" to="1058" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+		<title level="m" type="main">A Reinforcement Learning Framework for Relevance Feedback</title>
+		<author>
+			<persName><forename type="first">Ali</forename><surname>Montazeralghaem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Allan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Association for Computing Machinery</publisher>
+			<biblScope unit="page" from="59" to="68" />
+			<pubPlace>New York, NY, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">MS MARCO: A Human Generated MAchine Reading COmprehension Dataset</title>
+		<author>
+			<persName><forename type="first">Tri</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mir</forename><surname>Rosenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xia</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianfeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saurabh</forename><surname>Tiwary</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rangan</forename><surname>Majumder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Deng</surname></persName>
+		</author>
+		<idno>CoRR abs/1611.09268</idno>
+		<imprint>
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Standard Deviation as a Query Hardness Estimator</title>
+		<author>
+			<persName><forename type="first">Joaquín</forename><surname>Pérez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">-Iglesias</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lourdes</forename><surname>Araujo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">String Processing and Information Retrieval</title>
+		<editor>
+			<persName><forename type="first">Edgar</forename><surname>Chavez</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Stefano</forename><surname>Lonardi</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Berlin Heidelberg; Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="207" to="212" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">A Language Modeling Approach to Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Jay</forename><forename type="middle">M</forename><surname>Ponte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR 1998</title>
+		<meeting>of SIGIR 1998<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="page" from="275" to="281" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">An exploration of reasons for query reformulations</title>
+		<author>
+			<persName><forename type="first">Eun</forename><surname>Youp Rha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicholas</forename><forename type="middle">J</forename><surname>Belkin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Diversity of Engagement: Connecting People and Information in the Physical and Virtual Worlds -Proceedings of the 80th ASIS&amp;T Annual Meeting</title>
+		<meeting><address><addrLine>Washington, DC, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Wiley</publisher>
+			<date type="published" when="2017-10-27">2017. 2017. October 27 -November 1, 2017</date>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="337" to="346" />
+		</imprint>
+	</monogr>
+	<note>ASIST</note>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Robertson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Beaulieu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gatford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Payne</surname></persName>
+		</author>
+		<idno>TREC-4</idno>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">The Probability Ranking Principle in IR</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Robertson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997">1997</date>
+			<publisher>Morgan Kaufmann Publishers Inc</publisher>
+			<biblScope unit="page" from="281" to="286" />
+			<pubPlace>San Francisco, CA, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">An Enhanced Approach to Query Performance Prediction Using Reference Lists</title>
+		<author>
+			<persName><surname>Haggai Roitman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 40th International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 40th International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Shinjuku, Tokyo, Japan; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="869" to="872" />
+		</imprint>
+	</monogr>
+	<note>SIGIR &apos;17)</note>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Normalized Query Commitment Revisited</title>
+		<author>
+			<persName><surname>Haggai Roitman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Paris, France; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1085" to="1088" />
+		</imprint>
+	</monogr>
+	<note>SIGIR&apos;19)</note>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Robust Standard Deviation Estimation for Query Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Shai</forename><surname>Haggai Roitman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bar</forename><surname>Erera</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Weiner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM SIGIR International Conference on Theory of Information Retrieval</title>
+		<meeting>the ACM SIGIR International Conference on Theory of Information Retrieval<address><addrLine>Amsterdam, The Netherlands; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="245" to="248" />
+		</imprint>
+	</monogr>
+	<note>) (ICTIR &apos;17)</note>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Query Performance Prediction for Pseudo-Feedback-Based Retrieval</title>
+		<author>
+			<persName><forename type="first">Haggai</forename><surname>Roitman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3331184.3331369</idno>
+		<ptr target="https://doi.org/10.1145/3331184.3331369" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Paris, France; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1261" to="1264" />
+		</imprint>
+	</monogr>
+	<note>SIGIR&apos;19)</note>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Query Performance Prediction for Pseudo-Feedback-Based Retrieval</title>
+		<author>
+			<persName><forename type="first">Haggai</forename><surname>Roitman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Paris, France; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1261" to="1264" />
+		</imprint>
+	</monogr>
+	<note>SIGIR&apos;19)</note>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Word Vector Compositionality Based Relevance Feedback Using Kernel Density Estimation</title>
+		<author>
+			<persName><forename type="first">Dwaipayan</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debasis</forename><surname>Ganguly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Gareth</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jones</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)</title>
+		<meeting>the 25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="1281" to="1290" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Estimating Gaussian mixture models in the local neighbourhood of embedded word vectors for query performance prediction</title>
+		<author>
+			<persName><forename type="first">Dwaipayan</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Debasis</forename><surname>Ganguly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mandar</forename><surname>Mitra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Gareth</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jones</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Processing and Management</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page" from="1026" to="1045" />
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Using Statistical Decision Theory and Relevance Models for Query-Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 33rd International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;10)</title>
+		<meeting>the 33rd International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;10)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="259" to="266" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Publication date</title>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2022-06">June 2022</date>
+		</imprint>
+	</monogr>
+	<note>Weighted Relative Information Gain-based QPP</note>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Query Performance Prediction Using Reference Lists</title>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page">34</biblScope>
+			<date type="published" when="2016-06">2016. June 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Predicting Query Performance by Query-Drift Estimation</title>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Fiana Raiber, and Gad Markovits</title>
+		<imprint>
+			<date type="published" when="2012">2012. 2012</date>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page">35</biblScope>
+		</imprint>
+	</monogr>
+	<note>Article</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Query Performance Prediction By Considering Score Magnitude and Variance Together</title>
+		<author>
+			<persName><forename type="first">Yongquan</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shengli</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 23rd ACM International Conference on Conference on Information and Knowledge Management</title>
+		<title level="s">CIKM &apos;14</title>
+		<meeting>the 23rd ACM International Conference on Conference on Information and Knowledge Management<address><addrLine>Shanghai, China; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="1891" to="1894" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Tasks, Queries, and Rankers in Pre-Retrieval Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Falk</forename><surname>Scholer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alistair</forename><surname>Moffat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 22nd Australasian Document Computing Symposium</title>
+		<meeting>the 22nd Australasian Document Computing Symposium<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+	<note>Article 11, 4 pages</note>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">A Similarity Measure for Indefinite Rankings</title>
+		<author>
+			<persName><forename type="first">William</forename><surname>Webber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alistair</forename><surname>Moffat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Justin</forename><surname>Zobel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+	<note>Article</note>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">End-to-End Neural Ad-Hoc Ranking with Kernel Pooling</title>
+		<author>
+			<persName><forename type="first">Chenyan</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhuyun</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jamie</forename><surname>Callan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhiyuan</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Russell</forename><surname>Power</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 40th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;17)</title>
+		<meeting>the 40th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;17)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="55" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Learning to Estimate Query Difficulty: Including Applications to Missing Content Detection and Distributed Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Elad</forename><surname>Yom-Tov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shai</forename><surname>Fine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Carmel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Darlow</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR &apos;05</title>
+		<meeting>SIGIR &apos;05<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page" from="512" to="519" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Neural Query Performance Prediction Using Weak Supervision from Multiple Signals</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Hamed Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Shane</forename><surname>Croft</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Culpepper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The 41st International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;18)</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="105" to="114" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Pseudo-Relevance Feedback Based on Matrix Factorization</title>
+		<author>
+			<persName><forename type="first">Hamed</forename><surname>Zamani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Javid</forename><surname>Dadashkarimi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Azadeh</forename><surname>Shakery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. 25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)</title>
+		<meeting>25th ACM International on Conference on Information and Knowledge Management (CIKM &apos;16)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="1483" to="1492" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Information Needs, Queries, and Query Performance Prediction</title>
+		<author>
+			<persName><forename type="first">Oleg</forename><surname>Zendel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Shtok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fiana</forename><surname>Raiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Oren</forename><surname>Kurland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Shane</forename><surname>Culpepper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of SIGIR &apos;19</title>
+		<meeting>of SIGIR &apos;19<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="395" to="404" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">A Study of Smoothing Methods for Language Models Applied to Ad Hoc Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Chengxiang</forename><surname>Zhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Lafferty</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 24th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;01)</title>
+		<meeting>the 24th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;01)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="page" from="334" to="342" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">A Study of Smoothing Methods for Language Models Applied to Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Chengxiang</forename><surname>Zhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Lafferty</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/984321.984322</idno>
+		<ptr target="https://doi.org/10.1145/984321.984322" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="179" to="214" />
+			<date type="published" when="2004-04">2004. April 2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<monogr>
+		<title level="m" type="main">An Analysis of BERT in Document Ranking</title>
+		<author>
+			<persName><forename type="first">Jingtao</forename><surname>Zhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiaxin</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yiqun</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shaoping</forename><surname>Ma</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Association for Computing Machinery</publisher>
+			<biblScope unit="page" from="1941" to="1944" />
+			<pubPlace>New York, NY, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Effective Pre-Retrieval Query Performance Prediction Using Similarity and Variability Evidence</title>
+		<author>
+			<persName><forename type="first">Ying</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Falk</forename><surname>Scholer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yohannes</forename><surname>Tsegay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ECIR&apos;08</title>
+		<meeting>ECIR&apos;08<address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="2008">2008</date>
+			<biblScope unit="page" from="52" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Ranking Robustness: A Novel Framework to Predict Query Performance</title>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 15th ACM International Conference on Information and Knowledge Management (CIKM &apos;06)</title>
+		<meeting>the 15th ACM International Conference on Information and Knowledge Management (CIKM &apos;06)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2006">2006</date>
+			<biblScope unit="page" from="567" to="574" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Query Performance Prediction in Web Search Environments</title>
+		<author>
+			<persName><forename type="first">Yun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">Bruce</forename><surname>Croft</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. 30th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;07)</title>
+		<meeting>30th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR &apos;07)<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="543" to="550" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

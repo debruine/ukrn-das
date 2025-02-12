@@ -1,0 +1,1844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">More is Better: English Language Statistics are Biased Toward Addition</title>
+				<funder ref="#_WjVMSVd">
+					<orgName type="full">UKRI</orgName>
+				</funder>
+				<funder ref="#_xZGkksh">
+					<orgName type="full">unknown</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Bodo</forename><surname>Winter</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of English Language &amp; Linguistics</orgName>
+								<orgName type="institution">University of Birmingham</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Martin</forename><forename type="middle">H</forename><surname>Fischer</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Division of Cognitive Sciences</orgName>
+								<orgName type="institution">University of Potsdam</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Christoph</forename><surname>Scheepers</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">School of Neuroscience and Psychology</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Andriy</forename><surname>Myachykov</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Department of Psychology</orgName>
+								<orgName type="institution">Northumbria University</orgName>
+							</affiliation>
+							<affiliation key="aff4">
+								<orgName type="department" key="dep1">Institute for Cognitive Neuroscience</orgName>
+								<orgName type="department" key="dep2">Higher School of Economics</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff5">
+								<orgName type="department">Department of English Language &amp; Linguistics</orgName>
+								<orgName type="institution">University of Birmingham</orgName>
+								<address>
+									<addrLine>Frankland Building</addrLine>
+									<postCode>B15 2TT</postCode>
+									<settlement>Edgbaston</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">More is Better: English Language Statistics are Biased Toward Addition</title>
+					</analytic>
+					<monogr>
+						<idno type="ISSN">1551-6709</idno>
+					</monogr>
+					<idno type="MD5">76D060971B83118D05744065FBB7C817</idno>
+					<idno type="DOI">10.1111/cogs.13254</idno>
+					<note type="submission">Received 15 April 2022; received in revised form 10 November 2022; accepted 30 December 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:53+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Addition</term>
+					<term>Subtraction</term>
+					<term>Subtraction neglect</term>
+					<term>Latent semantic analysis</term>
+					<term>Word frequency</term>
+					<term>Heuristics and biases</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>We have evolved to become who we are, at least in part, due to our general drive to create new things and ideas. When seeking to improve our creations, ideas, or situations, we systematically overlook opportunities to perform subtractive changes. For example, when tasked with giving feedback on an academic paper, reviewers will tend to suggest additional explanations and analyses rather than delete existing ones. Here, we show that this addition bias is systematically reflected in English language statistics along several distinct dimensions. First, we show that words associated with an increase in quantity or number (e.g., add, addition, more, most) are more frequent than words associated with a decrease in quantity or number (e.g., subtract, subtraction, less, least). Second, we show that in binomial expressions, addition-related words are mentioned first, that is, add and subtract rather than subtract and add. Third, we show that the distributional semantics of verbs of change, such as to improve and to transform, overlap more with the distributional semantics of add/increase than subtract/decrease, which suggests that change verbs are implicitly biased toward addition. Fourth, addition-related words have more positive connotations than subtraction-related words. Fifth, we demonstrate that state-of-the-art large language models, such as the Generative Pre-trained Transformer Correspondence should be sent to Bodo Winter,</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Existing research demonstrates that people more often talk about what is important or noteworthy to them. For example, people talk more about animals that are culturally significant or visually salient <ref type="bibr" target="#b31">(Ladle, Jepson, Correia, &amp; Malhado, 2019)</ref>, about diseases when there have been recent outbreaks <ref type="bibr" target="#b44">(Michel et al., 2011)</ref>, about ice and snow when living in colder climates <ref type="bibr" target="#b52">(Regier, Carstensen, &amp; Kemp, 2016)</ref>, and about visual experiences in vision-dominant cultures <ref type="bibr" target="#b68">(Winter, Perlman, &amp; Majid, 2018)</ref>. Another example of a tendency to prioritize culturally salient conceptual features is the tendency of English speakers to verbalize positively valenced words more frequently than negatively valenced ones <ref type="bibr" target="#b2">(Augustine, Mehl, &amp; Larsen, 2011;</ref><ref type="bibr" target="#b10">Boucher &amp; Osgood, 1969;</ref><ref type="bibr" target="#b29">Kloumann, Danforth, Harris, Bliss, &amp; Dodds, 2012;</ref><ref type="bibr" target="#b59">Warriner &amp; Kuperman, 2015;</ref><ref type="bibr">Zajonc, 1968, p.</ref> 2), which is thought to reflect a general prosocial bias for communicative acts to be benevolent in nature <ref type="bibr" target="#b59">(Warriner &amp; Kuperman, 2015)</ref>. Together, these findings suggest that word frequency statistics reflect what is important to speakers.</p><p>Language reflects cultural preoccupations not only via the overall frequencies of words, but also via how words pattern together with other words. Following <ref type="bibr">Firth's (1957, p. 179)</ref> credo that "you shall know a word by the company it keeps," distributional semantics quantifies the similarity between words by looking at the similarity of the linguistic contexts in which they occur <ref type="bibr" target="#b20">(Günther, Rinaldi, &amp; Marelli, 2019;</ref><ref type="bibr" target="#b22">Hilpert &amp; Saavedra, 2020;</ref><ref type="bibr" target="#b32">Landauer &amp; Dumais, 1997;</ref><ref type="bibr" target="#b34">Lenci, 2008;</ref><ref type="bibr" target="#b39">Lund &amp; Burgess, 1996)</ref>. Just like word frequencies, distributional semantics can reveal biases that exist within a culture <ref type="bibr" target="#b14">(Caliskan, Bryson, &amp; Narayanan, 2017)</ref>, or across cultures: In their analysis of 25 different languages, <ref type="bibr" target="#b35">Lewis and Lupyan (2020)</ref> showed that people's implicit gender biases, measured in a behavioral task, are predicted by language statistics; such as, how much occupation terms like nurse and philosopher overlap with gender-specific language in their distributional semantics (he/she, male/female, boy/girl, man/woman, etc.). Similarly, the fact that colors have culture-specific associations with gender in purely perceptual tasks <ref type="bibr" target="#b25">(Jonauskaite et al., 2019)</ref> is reflected in whether color terms have semantic overlap with male-or female-biased words <ref type="bibr" target="#b26">(Jonauskaite, Sutton, Cristianini, &amp; Mohr, 2021)</ref>. Even moral beliefs are reflected in the semantics 15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License extracted from corpora <ref type="bibr" target="#b25">(Jentzsch, Schramowski, Rothkopf, &amp; Kersting, 2019)</ref>. Together, these studies indicate that the pattern of word usage in context can reveal biases in human cognition.</p><p>The fact that language reflects our conceptualization of the world has also been explored in discussions surrounding embodied approaches to cognition. For example, <ref type="bibr" target="#b70">Zwaan and Yaxley (2003)</ref> showed that responses to word pairs presented on the screen were faster when in congruent vertical position (the word attic above basement) than in an incongruent one (the word basement above attic). This effect was first attributed to purely "embodied" effects, that is, visual-spatial representations becoming active during the processing of the noun pairs. Subsequently, <ref type="bibr" target="#b36">Louwerse (2008)</ref> showed that the processing advantage of spatially congruent displays could in part be attributed to the order in which the corresponding words feature in binomial expressions, for example, attic and basement tends to be more frequent than the reverse order basement and attic. Findings such as these led <ref type="bibr" target="#b36">Louwerse (2011)</ref> to propose a "symbol interdependency" theory according to which findings previously attributed to purely embodied effects (e.g., people performing simulations of spatial arrangements) may also have a linguistic component, given that language statistics reflect "embodied" relations <ref type="bibr" target="#b36">(Louwerse, 2008)</ref>. For example, the fact that taste and smell are highly associated sensory modalities in perception is reflected in the fact that taste and smell words are associated with language <ref type="bibr" target="#b37">(Louwerse, 2018;</ref><ref type="bibr" target="#b38">Louwerse &amp; Connell, 2011;</ref><ref type="bibr">Winter, 2016</ref><ref type="bibr" target="#b64">Winter, , 2019))</ref>. New research suggests that even perceptual color spaces can be partially reconstructed from large language models <ref type="bibr" target="#b0">(Abdou et al., 2021)</ref>.</p><p>In this paper, we use language statistics to investigate whether there is a cultural preference for addition and "more" over subtraction and "less." Our analysis is motivated by <ref type="bibr" target="#b1">Adams, Converse, Hales, and Klotz (2021)</ref>, who provided behavioral evidence that people systematically prefer adding elements to existing objects, ideas, or situations for "improvement," and that they generally fail to consider opportunities to subtract elements. For example, when asked to improve recipes, participants are more likely to add ingredients rather than remove them. Or when asked to make suggestions for improvement within their university, people are more likely to favor adding new systems and policies than removing existing ones. Even rather abstract and decontextualized tasks reveal a bias toward additive solutions. To demonstrate this, <ref type="bibr" target="#b1">Adams et al. (2021)</ref> presented participants with asymmetrical visual displays and asked them to produce symmetry either by adding or removing elements. Overall, very few participants even considered that they could also remove elements from the visual display to make things symmetrical. Instead, most participants produced symmetry via adding elements. These results suggest that there is a general bias toward additive solutions to problems and tasks, or on the flipside, a general neglect of subtractive solutions, which may have deep-rooted evolutionary as well as cultural origins (see <ref type="bibr">Klotz, 2021)</ref>.</p><p>If, as argued above, language statistics reflect existing biases, we should expect that language also reflects the "subtraction neglect" bias observed in the behavioral data. Our general assumption is that just as there is a behavioral bias toward addition, as evidenced by the studies conducted by <ref type="bibr" target="#b1">Adams et al. (2021)</ref>, there is a comparable linguistic bias. If such a linguistic bias existed, this would show that culture writ large-seen through the lens of language statistics-reflects a preoccupation with addition and "more" at the expense of subtraction and "less," in line with the ideas presented by <ref type="bibr">Klotz (2021)</ref>. We considered multiple different dimensions of this bias, including (1) word frequency, (2) binomial expressions, (3) semantic prosody, (4) distributional semantics using word2vec embeddings, and (5) sequential word probabilities of the state-of-the-art deep learning model GPT-3. Each of these approaches will be explained in turn.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">This study: Multiple dimensions of addition bias</head><p>The first part focuses on a small set of words that are highly diagnostic of addition and subtraction, or more generally, the ideas of "more" as opposed to "less." These words were also chosen to limit polysemy, specifically, contexts that are not used with some invocation of quantity concepts. This has the advantage that the items included in the analyses are clearly and unambiguously related to addition or subtraction. A disadvantage of focusing on such a small set is that it is not clear to which extent the reported results generalize beyond the selected items. Therefore, a second analysis uses distributional semantics to look at a larger set of words. Distributional semantics represents words as vectors in a semantic space that is inferred from textual co-occurrences (for introduction, see <ref type="bibr" target="#b20">Günther et al., 2019;</ref><ref type="bibr" target="#b21">Heylen, Wielfaert, Speelman, &amp; Geeraerts, 2015)</ref>. Such word vectors have successfully been used to predict lexical ambiguity structure <ref type="bibr" target="#b7">(Beekhuizen, Armstrong, &amp; Stevenson, 2021)</ref>, word association judgments, synonymy, analogy, and the selection preferences of words <ref type="bibr" target="#b4">(Baroni, Dinu, &amp; Kruszewski, 2014;</ref><ref type="bibr" target="#b50">Pereira, Gershman, Ritter, &amp; Botvinick, 2016)</ref>. The utility of word space models has also been demonstrated in lexicographical analyses of polysemy <ref type="bibr" target="#b21">(Heylen et al., 2015)</ref> and in research on grammaticalization <ref type="bibr" target="#b22">(Hilpert &amp; Saavedra, 2020)</ref>. Here, we investigate whether proximity to addition-related words in distributional-semantic space predicts a word's frequency and emotional valence, that is, whether a word is positive or negative.</p><p>We start out with the simplest way to investigate a linguistic bias toward addition, which is to look at the occurrence frequencies of words that are strongly associated with addition and compare it to words strongly associated with subtraction. In fact, <ref type="bibr">Zajonc (1968, pp. 4-5)</ref> already showed that the English word add is more frequent than subtract. In our first analysis, we build on this insight and generalize this anecdotal observation for a single item to a small set of words that are diagnostic of addition versus subtraction. We also replicate this result with more modern corpora that span a more diverse range of registers, and we use modern statistical approaches that are able to take the hierarchical nature of corpora into account <ref type="bibr" target="#b66">(Winter &amp; Grice, 2021)</ref>.</p><p>Second, we looked at English binomial expressions, such as salt and pepper and ladies and gentlemen. There are many different factors that determine the ordering of terms in such conjoined binomial expressions; among them are semantic factors <ref type="bibr" target="#b8">(Benor &amp; Levy, 2006)</ref>, according to which members of the pair are "ordered in accordance with a hierarchy of values inherent in the structure of a given society" <ref type="bibr">(Malkiel, 1959, p. 145)</ref>. The fact that binomial expressions can reveal real-world biases is also demonstrated by <ref type="bibr" target="#b36">Louwerse's (2008)</ref> study mentioned above showing that the vertically higher member of a pair (attic as opposed to basement) tends to be mentioned first, for example, attic and basement. Thus, in line with a linguistic bias toward addition, we expect that addition-related terms are mentioned first in these types of expressions, for example, add and subtract as opposed to subtract and add.</p><p>Third, we examined emotional valence, an important component of many lexical representations <ref type="bibr" target="#b16">(Fazio, Sanbonmatsu, Powell, &amp; Kardes, 1986;</ref><ref type="bibr" target="#b23">Houwer &amp; Randell, 2004;</ref><ref type="bibr" target="#b30">Kuperman, Estes, Brysbaert, &amp; Warriner, 2014;</ref><ref type="bibr" target="#b58">Vigliocco, Meteyard, Andrews, &amp; Kousta, 2009)</ref>. Specifically, we were interested in establishing whether "more" is also generally "better" across words. That is, we seek to establish whether addition-related words are more positive overall than subtraction-related words in their usage. This may be expected because people value "more" for cultural reasons (e.g., more income), but also because of the mere exposure effect, following from the frequency result: things that are more frequent are generally more liked <ref type="bibr" target="#b69">(Zajonc, 1968)</ref>. Another reason to expect addition-related words to be more positively valenced is that people also prefer objects of relatively larger as opposed to a smaller size <ref type="bibr" target="#b43">(Meier, Robinson, &amp; Caven, 2008)</ref>.</p><p>Fourth, we investigated whether words of change that do not explicitly signal addition/subtraction, such as to improve and to transform, may be biased toward addition. This is a key transition point in our manuscript where we move beyond the small set of highly diagnostic words to demonstrate a more general bias that has widespread manifestations in the English language. Specifically, we investigated the distributional semantics of verbs of change (to change, to improve, to transform, etc.). We decided to focus on these verbs because they allow us to specifically look at whether there is a linguistic bias with respect to making suggestions for changes, which closely corresponds to the behavioral studies of <ref type="bibr" target="#b1">Adams et al. (2021)</ref>, where participants were asked to "change" or "improve" things. For this analysis, we use distributional semantics. As is done in distributional-semantic research on such topics as gender biases (e.g., <ref type="bibr" target="#b26">Jonauskaite et al., 2021;</ref><ref type="bibr" target="#b35">Lewis &amp; Lupyan, 2020)</ref>, we computed each word vector's similarity to the vectors of target words, in this case, words that denote addition or subtraction. If verbs of change have meanings biased toward addition rather than subtraction, this would suggest that when people use language to describe change, or instruct people to undertake changes, this language will lead people to consider additive solutions more than subtractive solutions (cf. <ref type="bibr" target="#b19">Fischer et al., 2021)</ref>. After showing that this analysis works for a small set of synonyms of to change and to improve, we extend it to a wider set of 8000 words. The latter shows that, as words are closer to add/addition in semantic space, they are also much more frequent, and slightly more positively valenced.</p><p>We also include a final set of analyses where we use OpenAI's GPT-3 (Generative Pretrained Transformer 3) large language model <ref type="bibr" target="#b11">(Brown et al., 2020)</ref>. This deep learning model was designed to produce naturalistic text. The model was trained on a large collection of texts to tune a total of 175 billion parameters. As part of its sequential text generation process, GPT-3 assigns probabilities to specific words, depending on their contextual probability. We use this to assess whether GPT-3 is more likely to expect positive words such as good and bad in input sentences that contain addition-as opposed to subtraction-related words. Furthermore, we examine probe contexts such as I suggest we change this by adding/removing to assess whether for different verbs of change, the word adding is assigned a higher probability than the word removing, thereby replicating our word2vec analysis with cloze probabilities.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Method</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Statistical analyses</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.1.">Statistical tools</head><p>All statistical analyses were conducted with R version 4.0.2 (R Core Team, 2019). We used the tidyverse package version 1.3.1 <ref type="bibr" target="#b62">(Wickham et al., 2019)</ref> and the patchwork package version 1.1.1 <ref type="bibr" target="#b49">(Pedersen, 2020)</ref> for data processing and visualization. We used the brms package version 2.15.0 <ref type="bibr" target="#b12">(Bürkner, 2017)</ref> for Bayesian modeling. The tidybayes package version 3.0.1 was used for plotting models <ref type="bibr" target="#b28">(Kay, 2021)</ref>. The effsize package version 0.8.1 <ref type="bibr" target="#b57">(Torchiano, 2019)</ref> was used to calculate Cohen's d. The lsa package version 0.73.2 (Wild, 2020) was used to calculate cosine similarities between word vectors.</p><p>We used Bayesian analyses for several reasons. First, for complex models, especially those involving both complex random effects structures and non-normal distributions, Bayesian models estimated via Markov Chain Monte Carlo are much more likely to converge than corresponding frequentist models fitted with the widely used lme4 package <ref type="bibr" target="#b5">(Bates, Maechler, Bolker, &amp; Walker, 2015)</ref>. A second reason is that we deal with several non-normal models in this analysis which require approaches such as negative binomial regression <ref type="bibr" target="#b65">(Winter &amp; Bürkner, 2021)</ref>. The models we used to characterize the underlying data-generating processes are not implemented in lme4, but in brms (see <ref type="bibr" target="#b12">Bürkner, 2017</ref><ref type="bibr" target="#b13">Bürkner, , 2018</ref>, for a discussion of supported model types). Third and finally, Bayesian models allow us to incorporate "mild skepticism" (McElreath, 2020) into our models via the incorporation of "regularizing" or "weakly informative" priors <ref type="bibr" target="#b33">(Lemoine, 2019)</ref>. These priors bias fixed effects coefficients slightly toward zero. This is especially important given that several of our analyses deal with relatively small datasets, for which estimates are known to be inherently more variable. The specific prior choices are explained for the respective analyses below, and more information about prior choices can also be found in the OSF repository (https://osf.io/detuy/), which give more detailed explanations for why we chose particular priors for each specific analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.2.">Stimuli</head><p>We analyze the target words in Table <ref type="table" target="#tab_0">1</ref>, which is a hand-selected group of words directly connected to addition or subtraction. While other words can also be used in quantitative contexts, for example, to rise and to fall, or to grow and to shrink, many of these words also have alternative uses, for example, in reference to vertical position or size rather than quantity. The words in Table <ref type="table" target="#tab_0">1</ref> all have a quantity-related sense that corresponds to adding or subtracting as their primary meaning. While our first analysis relies heavily on this set of hand-selected words, our analysis that uses distributional semantics extends beyond the words just considered in Table <ref type="table" target="#tab_0">1</ref>, thereby affording more generalizability. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.3.">Word frequencies</head><p>Word frequencies for the words in Table <ref type="table" target="#tab_0">1</ref> were extracted from the Corpus of Contemporary American English (COCA, <ref type="bibr" target="#b15">Davies, 2010)</ref>. COCA is balanced for five registers: spoken conversations, magazines, academic language, fiction, and news. Within each of these registers, there are 24 separate text files, one for each year from 1990 to 2012. To analyze frequencies, we used negative binomial regression <ref type="bibr" target="#b65">(Winter &amp; Bürkner, 2021)</ref>. This type of model was chosen because frequencies are a discrete count variable, and because we expect and want to account for over-dispersion (variance in excess of what would be expected under a regular count model, such as Poisson). Over-dispersion is characteristic of word frequency data (see, e.g., <ref type="bibr" target="#b68">Winter et al., 2018)</ref>, and hence, negative binomial regression rather than Poisson regression is preferred.</p><p>The only fixed effect was "type," which separates addition-and subtraction-related words. As random effects, we included item (paired, e.g., the pair add and subtract form one item) and by-item varying slopes for the "type" fixed effect. This allows some pairs to have stronger addition bias than others. We also added register and text file as random effects to incorporate as much of the hierarchical structure of the corpus into our multilevel model as possible (cf. <ref type="bibr" target="#b66">Winter &amp; Grice, 2021)</ref>. Specifically, these random effects were by-register and by-file varying random slopes for the "type" fixed effect. 1  We used the default priors specified by brms except for the "type" fixed effect, for which we chose the following weakly informative prior: Normal(0, 2). This normally distributed prior is centered at zero, therefore, building in the "mildly skeptical" assumption that most effects are small <ref type="bibr" target="#b42">(McElreath, 2020)</ref>, and that we should be conservative when data are sparse. The standard deviation represents how conservative the model is, with smaller values biasing the model more toward zero. For generalized linear models, weakly informative priors need to be chosen while keeping both the intercept and the nonlinear transformations resulting from the link function in mind <ref type="bibr" target="#b33">(Lemoine, 2019)</ref>. If we calculated the logged mean for the reference level of this model (= subtract), a weakly informative prior with SD = 2 amounts to assuming that 68% of all differences (+/-1 SD) are smaller than 7500 in terms of token frequency, which, as shown in Table <ref type="table" target="#tab_0">1</ref>, is a very conservative assumption. Sensitivity analysis shows that we are able to obtain the main result with an even more conservative prior (SD = 1).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.4.">Binomial expressions</head><p>We created a list of all possible binomial expressions using two linking words (and, or) from Table <ref type="table" target="#tab_0">1</ref>, that is, add and subtract, subtract and add, add or subtract, subtract or add, addition and subtraction, and so on. The corresponding COCA frequencies were collapsed across the and/or distinction which is irrelevant for our purposes. 2 The frequencies were analyzed with a mixed negative binomial regression model in the same way that we analyzed word frequencies (including the same item, register, and file random intercepts and slopes, as well as the same weakly informative prior). The main fixed effect was about whether the order was addition-first or subtraction-first. The only difference between the model structure and the word frequency analysis is that we had to add a zero-inflation component to our count model <ref type="bibr" target="#b13">(Bürkner, 2018;</ref><ref type="bibr" target="#b70">Zuur, Ieno, Walker, Saveliev, &amp; Smith, 2009)</ref> because many of the binomial expressions we consider are not attested in the corpus, that is, there were more zeros than would be expected under the negative binomial distribution.</p><p>It is known that frequency itself is a factor that biases word order in binomial expressions <ref type="bibr" target="#b8">(Benor &amp; Levy, 2006)</ref>. However, to assess whether there is an addition bias that goes beyond word frequency, one would need to sample a larger number of expressions that show more variation in frequencies. As it stands, our analysis of binomial expressions could, therefore, be an inevitable outcome of the word frequency results we also present in this paper. We nevertheless decided to include this analysis for two reasons: First, it is yet another reflection of the bias in language (regardless of whether it is ultimately caused by frequency or not), and knowing about this is relevant for behavioral studies on addition bias and subtraction neglect, which may use expressions such as add or subtract, as was the case in the instructions by <ref type="bibr" target="#b1">Adams et al. (2021)</ref>. Second, at a deeper level, it is not clear whether the factors of salience and frequency are distinct to begin with, given that salience may be driving frequency, or frequency may be driving salience. For these reasons, our models of the binomial expressions only test the addition versus subtraction difference, not incorporating word frequency as an additional factor.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.5.">Emotional valence</head><p>Warriner, <ref type="bibr" target="#b60">Kuperman, and Brysbaert (2013)</ref> collected emotional valence ratings for 13,000+ English words. Unfortunately, only four of our target words from Table <ref type="table" target="#tab_0">1</ref> are represented in this dataset. For this reason, we chose to analyze contextual valence, as computed by <ref type="bibr" target="#b54">Snefjella and Kuperman (2016)</ref>. This contextual valence measure is based on the average emotional valence of the five words immediately preceding and the five words immediately following the target word, which is correlated with the emotional valence ratings of the words themselves (r = .58, reported in <ref type="bibr">Snefjella &amp; Kuperman, 2016, p. 139</ref>, their Table <ref type="table">3</ref>). The contextual valence measure can be thought of as tapping into what corpus linguists call "semantic prosody" <ref type="bibr" target="#b24">(Hunston, 2007;</ref><ref type="bibr" target="#b47">Morley &amp; Partington, 2009;</ref><ref type="bibr" target="#b55">Stewart, 2010)</ref>, that is, the connotation of a word as is revealed through the surrounding context. When we consider the distributional-semantic closeness to addition-related words in our large-scale analysis of 8000+ English verbs (discussed below), we are not bound by data sparsity and will consider the emotional valence ratings from <ref type="bibr" target="#b60">Warriner et al. (2013)</ref>.</p><p>The contextual valence measure from <ref type="bibr" target="#b54">Snefjella and Kuperman (2016)</ref> was available for only four pairs from Table <ref type="table" target="#tab_0">1</ref>. Even though this dataset was sparse, we decided to regress it onto the fixed effect "type" (addition-vs. subtraction-related) in a mixed Bayesian regression with a random effect for pair (random intercept only) and a weakly informative Normal(0, 0.05) prior. This prior is adapted to the scale of the contextual valence measure, which has a rather narrow range for this dataset <ref type="bibr">[5.4, 5.7]</ref>. Within this range, a normal distribution centered at SD = 0.05 embodies the conservative assumption that 68% of all differences are expected to be between [-0.05,+0.05], and 95% of all differences between [-0.1,+0.1].</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.6.">Distributional semantics (word vectors)</head><p>We used pretrained "word2vec" word vectors <ref type="bibr" target="#b45">(Mikolov et al., 2013)</ref> from the Wikipedia corpus <ref type="bibr" target="#b46">(Mikolov et al., 2017)</ref>. We selected word2vec because it is a readily available database of word embeddings based on a large, relatively general-purpose corpus, and because several comparison studies suggest that these word vectors slightly outperform several other off-theshelf word embeddings in a variety of contexts <ref type="bibr" target="#b4">(Baroni et al., 2014;</ref><ref type="bibr" target="#b7">Beekhuizen et al., 2021;</ref><ref type="bibr" target="#b50">Pereira et al., 2016)</ref>. One use of word vectors is to look at how much a set of words overlaps with a specific set of probe words <ref type="bibr" target="#b7">(Beekhuizen et al., 2021;</ref><ref type="bibr" target="#b26">Jonauskaite et al., 2021;</ref><ref type="bibr" target="#b35">Lewis &amp; Lupyan, 2020)</ref>.</p><p>Following the discussion in <ref type="bibr" target="#b19">Fischer et al. (2021)</ref>, our aim was to examine whether verbs of change, as used in the instructions of the behavioral studies conducted by <ref type="bibr" target="#b1">Adams et al. (2021)</ref>, are semantically biased toward addition. We assessed this by analyzing how such change verbs are similar in semantic space to the verbs in Table <ref type="table" target="#tab_0">1</ref> that are diagnostic of addition or subtraction, add/increase and subtract/decrease. We chose the addition-and subtractionrelated verbs from Table <ref type="table" target="#tab_0">1</ref> as diagnostic words since they are most comparable to the verbs we investigate in our analysis of distributional semantics. 3 The verb set we investigate involves synonyms of to change and to improve, two of the words used by <ref type="bibr" target="#b1">Adams et al. (2021)</ref>. We selected all synonyms from the Collins dictionary, except for phrasal verbs (e.g., touch up, polish up) because word2vec does not include these. The full dataset includes the words to change and to improve.</p><p>Our analysis is based on cosine similarity, a measure of the angle between word vectors. The word vectors are derived from their contextual uses, with the assumption that two words occurring in similar contexts will generally tend to share meaning. Cosine values range from 0 (no similarity in contexts whatsoever) to 1 (complete overlap in contexts). We computed this measure for each verb in the "change" and "improve" set separately, each time with respect to the words add/increase and subtract/decrease. We then took the average cosine similarity for subtract/decrease and subtracted this from the average cosine similarity of add/increase to generate a difference score which represents the degree to which a given word is more similar to addition-than to subtraction-related concepts. In our large-scale analysis reported below, we computed this measure for over 8000 verbs to assess whether words outside the set shown in Table 2 also exhibit a bias toward addition over subtraction.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.7.">GPT-3 analysis</head><p>Our GPT-3 analyses are based on the "text-davinci-002" model, accessed via the GPT-3 playground GUI (https://beta.openai.com/playground) with the following settings: temperature zero, frequency penalty zero, and presence penalty zero. We enabled "inject start text," and set "show probabilities" to "full spectrum." We used GPT-3 in two test cases. The first was based on the sentence frame The word "…" has a good/bad connotation. 4 We investigated the cloze probability of the word good as opposed to bad to see whether a preceding addition-related word made good more contextually probable than bad, and vice versa for subtraction-related words. The second case for which we used GPT-3 was to prompt the language model with the probe sentence I suggest we change this by adding/removing. Similar to our word2vec analysis of "change" and "improve" verbs, we used this sentential context to assess the probability of the word adding as opposed to the word removing following each one of the verbs from Table <ref type="table" target="#tab_1">2</ref>. This can be thought of as a conceptual replication of our word2vec analysis. We decided to use the word removing rather than subtracting because the latter is much less frequent, thereby having overall lower cloze probability, and GPT-3's responses to our prompt revealed that it was "thinking" of the word largely in a mathematical sense. The results we present below would be even stronger for adding versus subtracting, which is why adding versus removing is the more conservative comparison. For ease of presentation, we will display probabilities in the figures if they are large enough to be visualized, but we will use log probabilities in our analyses as these give us more granularity in the low probability range. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Word frequency</head><p>As can be seen in Table <ref type="table" target="#tab_0">1</ref>, the total frequency (across all files and registers) was always higher for the addition-related than the subtraction-related target words. The addition-related words were substantially more frequent, as revealed by frequency ratios: from largest to smallest ratios, addition was 249.0 times more frequent than subtraction; add was 200.0 times more frequent than subtract; increase was 7.8 times more frequent than decrease; plus was 7.4 times more frequent than minus; most was 4.3 more frequent than least; more was 2.4 times more frequent than less; and many was 1.7 times more frequent than few. Notice that this pattern was without exception: in every single case, the word associated with addition or "more" was more frequent than the corresponding word associated with subtraction or "less." Fig. <ref type="figure" target="#fig_0">1a</ref> shows the log 10 frequencies for each word pair. Pairwise Cohen's d on the log 10 frequencies shows that the frequency difference was of a large effect size: d = 1.10.</p><p>The negative binomial regression model generalizing over the random effects of pair, file, and register revealed a strong effect of "type" (addition vs. subtraction) on frequencies, with the estimate (log coefficient = 2.10, SE = 0.8) having a 95% credible interval that is clearly above zero [0.45, 3.62]. The posterior distribution of the "type" effect is shown in Fig. <ref type="figure" target="#fig_0">1b</ref>. 99% of all posterior samples were above zero. Together with the large Cohen d, this Bayesian analysis suggests that there is substantial evidence for a consistent frequency bias toward addition over subtraction, and this bias in fact characterizes all of our probe words, even when generalizing over the hierarchical structure of the corpus (register, file) via random effects. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Binomial expressions</head><p>English binomial expressions in which the addition-related term comes first (e.g., add and subtract) were more frequent than those where the addition-related term comes second (e.g., subtract and add), and this was the case for all pairs without exception. This can again be shown by frequency ratios, which were as follows, from largest to smallest: infinite (plus and/or minus occurred 430 times, minus and/or plus occurred never); 92.5 (more and/or less vs. less and/or more); 59.0 (addition and/or subtraction vs. subtraction and/or addition); 53.5 (add and/or subtract vs. subtract and/or add); 13.4 (increase and/or decrease vs. decrease and/or increase); 9.7 (most and/or least vs. least and/or most); and 1.4 (many and/or few vs. few and/or many). Fig. <ref type="figure" target="#fig_1">2a</ref> shows the log 10 frequencies for each binomial expression. Pairwise Cohen's d on the log frequencies shows that the frequency difference between addition-first and addition-second has a large effect size: d = 1.86.</p><p>The negative binomial regression model generalizing over the random effects of pair, file, and register revealed a strong effect of "order" (addition first vs. addition second), with the estimate (log coefficient = 2.87, SE = 0.9) having a 95% credible interval that is clearly above zero [0.88, 4.48]. The posterior distribution of the "order" effect is shown in Fig. <ref type="figure" target="#fig_1">2b</ref>. 99% of all posterior samples were above zero. Together with the effect size, this Bayesian analysis shows that addition-related words have a strong preference to come first in binomial expressions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Emotional valence</head><p>For all four pairs for which we had contextual valence data from Snefjella and Kuperman ( <ref type="formula">2016</ref>), the addition-related words occurred in overall more positive contexts than  the subtraction-related words, a difference which is associated with a large effect size, d = 0.94. The linear mixed effects model with random intercept for pair showed a positive coefficient (with addition-related words being more positive: 0.04, SE = 0.04) whose 95% credible interval did, however, substantially overlap with zero [-0.05, 0.11]. Fig. <ref type="figure" target="#fig_2">3</ref> shows the posterior distribution of the coefficient. 81% of all posterior samples are above zero. This means that it is still plausible that the effect could be reversed (19% of all posterior samples), but clearly, more credibility is allocated toward positive coefficients, that is, addition-related words being more positive. More conservative prior choices (narrower standard deviations for the weakly informative prior) make this result even weaker. Such an uncertain result is to be expected given that we are only analyzing four-word pairs. We obtained a numerical trend for contextual valence or what corpus linguists call "semantic prosody," albeit one of large effect size with a direction that is consistent with our "more is better" hypothesis for all tested pairs.</p><p>To circumvent the data sparsity issues arising from the lack of overlap with the data from Snefjella and Kuperman (2016), we gave GPT-3 the prompt The word "…" has a good/bad connotation, each time with a different addition-or subtraction-related word inside the quotes, for all words shown in Table <ref type="table" target="#tab_0">1</ref>. The reasoning here is that if addition-related words are indeed more positively connoted, the GPT-3 language model should expect the word good more in this context than the word bad, and vice versa for subtraction-related words. Fig. <ref type="figure" target="#fig_3">4</ref> shows that this is indeed the case: the subtraction-related members of each pair have lower average log probability (M = -8.70) in the "bad" context than addition-related words (M = -7.63). The effect size for this comparison was large (pairwise Cohen's d = 1.11). The picture is reversed, but much less pronounced, in the "bad" context: here, addition-related words are lower in log probability (M = -9.31) than subtraction-related words (M = -8.93), a small effect (d = 0.48). A Bayesian linear model with predictors for type (addition vs. subtraction), context (good and bad), the type * context interaction, and a random intercept term for word pair provided strong evidence for an interaction, with subtraction-related words being less probable in the good context, compared to addition-related words (-0.37 log probability, SE = 0.15). The 95% credible interval of this interaction coefficient did not include zero: [-0.66, -0.07], with 99% of all posterior samples being above zero. These results suggest that GPT-3 expects talk of good connotation more so in relation to addition-related words than subtraction-related words.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.">Distributional semantics (word vectors)</head><p>Fig. <ref type="figure" target="#fig_4">5a</ref> shows that without exception, "change" words were semantically more similar in their contextually derived word vectors to the addition-related words than to the subtractionrelated ones. The same pattern of results is obtained for the verbs that are synonyms of to improve (see Fig. <ref type="figure" target="#fig_4">5b</ref>). Cohen's d suggests a small effect size for the "change" words, d = 0.41, and a large effect size for the "improve" words, d = 0.94.</p><p>To assess the reliability of this finding, we fitted an intercepts-only Bayesian regression model to the difference scores (average cosine of addition minus subtraction), analogous to a paired t-test (with an additional Normal(0, 0.1) weakly informative prior to make the analysis more conservative). 5 For the "change" words, this analysis revealed a positive estimate of the difference (+0.05), with a small standard error (SE = 0.01), and a Bayesian 95% credible interval that excluded zero [0.03, 0.07]. 100% of all posterior samples were above zero. For the "improve" words, the same model structure reveals a similarly robust effect that is stronger in magnitude (+0.08, SE = 0.01). Again, 100% of all posterior samples were above zero; the posterior distributions for "change" and "improve" words are shown in Fig. <ref type="figure" target="#fig_5">6</ref>.   It is possible, however, that this result does not only characterize verbs of change and improvement, but all verbs. Could it be that the results discussed so far are inevitable because all words are closer in semantic space to add/increase than to subtract/decrease? In other words, what is the baseline of cosine similarities and how do the change/improve verbs above compare to this baseline? To address this question, we performed a baseline analysis for which we selected 10,000 random verbs from the English Lexicon Project <ref type="bibr" target="#b3">(Balota et al., 2007)</ref>. Due to imperfect overlap between the English Lexicon Project and the word2vec data, the dataset for analysis resulted in 8,813 verbs. We calculated the addition-over-subtraction bias for each of these verbs just as we did before. The resultant distribution of cosine values is shown in Fig. <ref type="figure" target="#fig_6">7</ref>, which shows that verbs overall have a bias toward being more related to addition than to subtraction. The synonyms of to change were, however, still relatively high in their addition bias, with the average cosine difference of change verbs being in the 81th percentile of the random verb distribution; synonyms of to improve were in 86th percentile. This analysis suggests that the words add/increase occupy a more central position in the overall semantic space (being closer to all verbs), but within this general bias toward addition semantic structure, synonyms of to change and to improve are even more biased toward addition.</p><p>GPT-3 substantiates these results obtained with word2vec. We prompted the language model with I suggest we "…" this by adding/subtracting, swapping in different "change" and "improve" verbs, and examining whether this impacts the cloze probability that GPT-3 assigns to adding versus removing. Fig. <ref type="figure" target="#fig_7">8a</ref> shows that GPT-3 does indeed expect the word adding much more so after any of the "change" verbs (average log probability = -2.80), compared to the word removing <ref type="bibr">(-3.83)</ref>. The difference between adding and removing was associated with a large effect size (paired Cohen's d = 1.31). A simple intercept-only model fitted on the difference scores between the adding/removing case (Bayesian equivalent of a paired t-test) estimates the average log probability difference to be 1.01 (SE = 0.22), with a 95% credible interval that does not include zero (100% of all posterior samples above zero).</p><p>Similar, and in fact stronger, results are obtained for synonyms of the word to improve. The probabilities in Fig. <ref type="figure" target="#fig_7">8b</ref> demonstrate that GPT-3 expects the word removing (average log probability = -4.83) much less after any of the "improve" verbs, compared to adding (-2.21). The difference in log probabilities between these two contexts is associated with a large effect size (d = 3.27). An intercept-only model fitted onto the difference scores 6 between the two words estimates that adding has an estimated log probability that is on average 2.39 higher (SE = 0.47), with a 95% credible interval far above zero [1.35, 2.34] (100% of posterior samples above zero). It is noteworthy that a numerically stronger asymmetry between adding and removing is obtained for synonyms of "improve", given that improving generally has a more positive connotation than changing, which is relatively more neutral. This was also apparent in the word2vec analysis, which yielded a stronger addition bias for "improve" than "change" synonyms. The observed numerical trend could be taken as another reflection of the association between addition and positive language.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5.">Relating distributional semantics to frequency and valence</head><p>As shown in the above analyses, verbs in general appear to be closer in semantic space to add/increase than to subtract/decrease, albeit this pattern is clearly more pronounced for the "change" and "improve" verbs we consider here. In this section, we use the addition bias score for all 8,813 verbs that overlap between the English Lexicon Project and the word2vec data, which allows us to establish whether the distributional-semantic addition bias is correlated with frequency and emotional valence. Since we are not bound by working with a small dataset for this analysis, we are using the emotional valence ratings by <ref type="bibr" target="#b60">Warriner et al. (2013)</ref> here, rather than the contextual valence measure by <ref type="bibr" target="#b54">Snefjella and Kuperman (2016)</ref>.</p><p>We computed our addition bias score (distance in semantic space to add/increase minus distance to subtract/decrease) for all 8,813 random verbs. With these scores, we can generalize the frequency and valence results beyond the hand-selected target words in Table <ref type="table" target="#tab_0">1</ref>, allowing us to assess whether addition bias influences frequency or valence across a whole swath of verbs. Here, we regressed the addition bias score on emotional valence from <ref type="bibr" target="#b60">Warriner et al. (2013)</ref> and the total log 10 frequency from COCA (sum across all registers and files) with Normal(0, 1) weakly informative priors on coefficient terms. For this analysis, all response and predictor variables were z-scored to facilitate a comparison of effect size. Fig. <ref type="figure" target="#fig_8">9</ref> shows how addition bias can be predicted from (a) frequency and (b) emotional valence.</p><p>Fig. <ref type="figure" target="#fig_0">10</ref> shows the posterior distributions of the frequency and valence coefficients from this analysis. There was a positive effect of frequency, with more frequent words also being Fig. <ref type="figure" target="#fig_0">10</ref>. Posterior distributions for coefficients of a simultaneous regression of addition bias on frequency (COCA) and valence <ref type="bibr" target="#b60">(Warriner et al., 2013)</ref>. more addition-biased (0.49, SE = 0.03). The 95% credible interval of this coefficient was far above zero: [0.43, 0.54] and 100% of all posterior samples were above zero. The results were much weaker for emotional valence ratings, but there was also a positive effect (0.12, SE = 0.03) for which the 95% credible interval did not overlap with zero: [0.07, 0.17]. Although weak, this effect was indicated to be highly reliable, as revealed by the fact that 100% of all posterior samples were above zero.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Discussion</head><p>Motivated by previous evidence of saliency biases and cultural preoccupations leading to systematic patterns of language production, we examined whether a general addition bias/subtraction neglect observed in behavioral data by <ref type="bibr" target="#b1">Adams et al. (2021)</ref> is systematically reflected in language statistics along a number of distinct dimensions. Our results demonstrate that this is indeed the case: the English language reflects a bias toward addition over subtraction in language statistics, as assessed via word frequency statistics, word order preferences in binomial expressions, contextual emotional valence and regular emotional valence, and the distributional semantics of "change" and "improve" verbs. These biases also carry over into the large language model GPT-3. Indeed, the quote that we started this paper with, which GPT-3 generated in response to the prompt The word "add" is a positive word, beautifully reflects the extent to which this state-of-the-art natural language processing tool follows the "more is better" heuristic.</p><p>It is remarkable just how deep the addition bias runs, which even includes how this paper was written and edited. For example, when writing this paper, we found that it was more natural for us to discuss how addition-related words were over-represented, even though it would have been equally possible to frame things in terms of subtraction-related words being under-represented. And, throughout the previous sections, we followed the preferred order of mentioning addition before subtracting in almost all cases, similar to the results from our analysis of English binomial expressions. This paper also dealt with the addition bias in other ways: during the review process, reviewers overwhelmingly made additive suggestions (additional analysis, additional explanations, etc.), with only one suggestion involving a genuine removal.</p><p>We do not claim that our results exhaust the extent to which language reflects a bias toward addition. It is likely that there are other dimensions. For example, given the word frequency result and the general tendency for frequent words to also become shorter over time, words related to addition may also be shorter than words related to subtraction, as is indeed the case for several of the words shown in Table <ref type="table" target="#tab_0">1</ref>. Or, consider the English words positive and negative: these words have a quantitative sense affiliated with the notions of "more" and "less," but they are also used as evaluative descriptors in line with our emotional valence results.</p><p>One obvious limitation of our analyses is our reliance on English data. This is in part motivated because the behavioral studies by <ref type="bibr" target="#b1">Adams et al. (2021)</ref> were conducted with Englishspeaking participants. Another motivation was the ease with which linguistic data could be accessed for English (e.g., emotional valence ratings, language models, etc.). As it is inappropriate to view English as some kind of normative "default case" (cf. <ref type="bibr" target="#b9">Blasi, Henrich, Adamou, Kemmerer, &amp; Majid, 2022;</ref><ref type="bibr" target="#b63">Wierzbicka, 2014)</ref>, we have to remain agnostic about the extent to which our results generalize to other languages. Future research needs to establish whether other languages exhibit the same linguistic biases. It could even be the case that the extent to which participants from different cultural backgrounds demonstrate subtraction neglect is correlated with the extent to which language reflects this bias, as has indeed been shown for gender biases <ref type="bibr" target="#b35">(Lewis &amp; Lupyan, 2020)</ref>. It is also possible that cross-linguistic variation in addition bias is modulated by such factors as population size or a country's gross domestic product.</p><p>Our findings clearly resonate with <ref type="bibr" target="#b1">Adams et al. (2021)</ref>, who showed that people are more likely to consider additive rather than subtractive solutions when thinking about tasks or problems. In a commentary to the findings by <ref type="bibr" target="#b1">Adams et al. (2021</ref><ref type="bibr" target="#b19">), Fischer et al. (2021)</ref> suggested that the instructions used in their behavioral studies may already be biased toward addition. For example, the instructions mention that participants could add or subtract, with no counterbalanced word order (subtract or add). <ref type="bibr" target="#b19">Fischer et al. (2021)</ref> also performed a simple Latent Semantic Analysis <ref type="bibr" target="#b32">(Landauer &amp; Dumais, 1997)</ref> to show that the verbs used in their instructions, such as to improve and to arrange, were closer in semantic space to additionthan to subtraction-related words. The ideas presented in this commentary gain support from the more extensive analyses presented here, and we show that these ideas extend to other facets of language, such as a word's emotional valence.</p><p>From one perspective, our findings can be seen as a conceptual replication of the addition bias identified by <ref type="bibr" target="#b1">Adams et al. (2021)</ref>, but using language statistics instead of behavioral preferences. From another perspective, our results also point to a chicken-and-egg problem in designing behavioral studies investigating subtraction neglect: given that these studies inevitably have to use language to give instructions to participants, it is possible that the linguistic biases investigated here may influence behavioral preferences. It is possible that language merely reflects an underlying cognitive bias toward addition, but conversely, it is also possible that language itself exerts influence on whether or not participants show subtraction neglect in behavioral tasks. Either way, one needs to be aware of the linguistic biases uncovered here when designing studies on subtraction neglect, and the tools discussed here, such as distributional-semantic vectors, could be used in pursuit of this. For example, to ensure that language exerts minimal bias on behavioral results, researchers could select verbs of change that are least close in semantic space to add/increase, for which word2vec or other word embeddings could be used.</p><p>The present set of results also connects to the literature on linguistic markedness <ref type="bibr" target="#b6">(Battistella, 1996;</ref><ref type="bibr" target="#b40">Lyons, 1977)</ref>. For word pairs, such as odd/even and left/right, the first member is marked (odd and left), compared to the second (even and right) <ref type="bibr" target="#b48">(Nuerk, Iversen, &amp; Willmes, 2004)</ref>. <ref type="bibr" target="#b40">Lyons (1977</ref><ref type="bibr">, as cited in Battistella, 1996, p. 13</ref>) distinguished three aspects of lexical marking: formal (e.g., lioness is the marked version of lion because it is associated with additional morphological material), semantic (as in young vs. old; we typically ask how old are you?, evidencing that old is the default case that stands for the whole scale), and distributional (as indicated by occurring in a smaller range of contexts). Markedness is often associated with word frequency, and from this perspective, our results suggest that addition is the unmarked case in English. A number of experiments have shown that linguistic markedness predicts response times in behavioral tasks, such as number classification by parity (reviewed in <ref type="bibr" target="#b18">Fischer &amp; Shaki, 2014;</ref><ref type="bibr" target="#b67">Winter, Matlock, Shaki, &amp; Fischer, 2015)</ref>. The polarity correspondence hypothesis <ref type="bibr" target="#b51">(Proctor &amp; Cho, 2006</ref>) accounts for such congruency effects and biases in behavior by postulating that we mentally align the unmarked poles of stimulus and response dimensions so that concepts such as "addition" and "more" become associated with "good" and "right."</p><p>Our results have also applied implications, as do the findings in <ref type="bibr" target="#b1">Adams et al. (2021)</ref>. In his book-length treatment of subtraction neglect, <ref type="bibr">Klotz (2021)</ref> outlines many different realworld situations in which people failed to see subtraction as an option. As is the case with any biases and heuristics, these are not necessarily always detrimental, but we need to be aware of them when making decisions <ref type="bibr" target="#b27">(Kahneman, 2011</ref>). Take, for example, the finding that when staff are given opportunities to suggest improvement ideas for a university, only 11% of the suggestions were subtractive in nature <ref type="bibr" target="#b1">(Adams et al., 2021)</ref>. It is easy to see how such neglect of subtractive solutions, if left unchecked, can lead to rampant bureaucracy, for example, more policies, more forms, and no simplification of procedures. The fact that we documented that even seemingly neutral words such as to change already implicitly suggest additive as opposed to subtractive changes in their semantic connotations shows that people need to work extra hard to emphasize the possibility of subtractive solutions in language, so that these will be considered.</p><p>Our results also relate to the corpus linguistic literature on the topic of "semantic prosody" in an interesting way. Semantic prosody is a term used by corpus linguists to refer to emotional or affective connotations of words that often cannot readily be intuited when seeing a word in isolation <ref type="bibr" target="#b24">(Hunston, 2007;</ref><ref type="bibr" target="#b47">Morley &amp; Partington, 2009;</ref><ref type="bibr" target="#b53">Sinclair, 1991;</ref><ref type="bibr" target="#b55">Stewart, 2010;</ref><ref type="bibr" target="#b56">Stubbs, 2001;</ref><ref type="bibr" target="#b61">Whitsitt, 2005)</ref>. For example, the word to cause would seem rather neutral without any extra information provided, but this verb is almost invariably used in negative contexts, such as causing death, disease, or war. In the same way, we have shown here that verbs such as to change and to improve and their synonyms, which do not appear to be particularly related to addition at first sight, are actually biased toward addition when looked at from the perspective of their contextual usage, as revealed through word embeddings and GPT-3. We suggest that corpus linguists interested in semantic prosody should consider incorporating word vectors more closely into their tool kit.</p><p>More generally, the present results speak to the utility of word frequency statistics and distributional semantics in uncovering general biases in cultures. As we demonstrated in this paper, the fact that people think more readily about additive solutions across a large range of tasks <ref type="bibr" target="#b1">(Adams et al., 2021)</ref> is reflected in language statistics. In line with results from domains, such as perception words <ref type="bibr" target="#b68">(Winter et al., 2018)</ref> or environmental terms <ref type="bibr" target="#b52">(Regier et al., 2016)</ref>, our results lend further support to the idea that language use mimics cognitive biases (see also <ref type="bibr" target="#b36">Louwerse, 2008)</ref>. Our findings are also broadly in line with the general idea that languages are geared toward communicative efficiency, that is, those aspects of reality that speakers care most about are also those that most prominently feature in language.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Open Research Badges</head><p>This article has earned Open Data and Open Materials badges. Data and materials are available at https://osf.io/detuy/. and or (d = 1.36). The online repository (https://osf.io/detuy/) contains an additional analysis that incorporates an interaction between addition versus subtraction cases and the and/or distinction. As this model is harder to interpret (requiring sum codes to aid main effects in the presence of interactions) and the effect is obtained for both function words separately anyway, we decided to only present the results that disregard the and/or distinction for ease of presentation. 3 Our previous analysis (prior to review) was based on the diagnostic word pairs add/addition and subtract/subtraction. A reviewer suggested that one could also use the entire set of words used in Table <ref type="table" target="#tab_0">1</ref>, which in fact yields the same substantive conclusions (see online Supplementary Materials). We decided that add/increase and subtract/decrease are the best probe words for this particular analysis, because like the synonyms of to change and to improve, they are verbs. 4 Comparable (and in some cases even stronger) results are obtained for the sentence frames The word "…" is a good/negative word or The word "…" is a positive/negative word. 5 Given a normally distributed prior centered at zero, the specific value we chose for the standard deviation (SD = 0.1) reflects the assumption that 68% of all differences in cosines would lie between [-0.1, +0.1], and 95% would lie between [-0.2, +0.2]. This value is suitable for the relatively narrow range of cosine values, which, as discussed above, is restricted to 0 and 1. 6 This model used a weakly informative Normal(0, 1.5) prior with the standard deviation chosen to slightly bias the model toward zero: for probabilities close to 0.0, a log probability difference of +/-1.5 entails probabilities between ∼0.0 and ∼0.04 (one standard deviation around zero: 68% of the a priori expected differences), and between ∼0.0 and ∼0.20 for +/ 3 (two standard deviations around zero: 95%).</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. (a) Log 10 frequencies by word pairs; (b) Posterior distribution (Kernel density graph) of the type coefficient (log difference of addition to the reference level subtraction) from the mixed negative binomial regression.</figDesc><graphic coords="11,41.37,82.25,396.00,187.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. (a) Log 10 frequencies by binomial expression; (b) Posterior distribution (Kernel density graph) of the type coefficient (log difference of addition first to the reference level addition second) from the mixed negative binomial regression.</figDesc><graphic coords="12,48.17,82.29,396.00,176.64" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. (a) Contextual valence from Snefjella and Kuperman (2016); (b) Posterior distribution (Kernel density graph) of the type coefficient (difference of addition-related vs. subtraction-related words) from the linear mixedeffects model.</figDesc><graphic coords="13,41.37,81.53,396.00,176.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Log probability of the word bad (left facet) or good (right facet) for the context The word "…" has a good/bad connotation for each word pair.</figDesc><graphic coords="14,96.17,82.32,300.00,198.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Average cosine similarities for addition words (add, increase) and subtraction words (subtract, decrease) for (a) synonyms of to change and (b) synonyms of to improve; lines represent individual words (paired observations).</figDesc><graphic coords="15,89.37,81.45,300.00,183.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Posterior distributions (Kernel density graph) of the cosine similarity difference between addition-and subtraction-related words corresponding to our analyses reported in the text; positive values indicate that words are more related to addition than to subtraction; (a) "change" words, (b) "improve" words.</figDesc><graphic coords="15,41.37,314.67,396.00,152.64" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Kernel density plots of the distribution of cosine similarity differences (closeness to add/addition over subtract/subtraction) computed for 8813 random verbs; solid black line indicates the average cosine similarity difference of synonyms of to change; solid gray line indicates the average cosine similarity difference of synonyms of to improve.</figDesc><graphic coords="16,126.17,82.00,240.00,118.92" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 8 .</head><label>8</label><figDesc>Fig. 8. The probability assigned to the word adding or removing by GPT-3 in the context I suggest we change this by adding/removing; separately for (a) verbs that are synonyms of to change and (b) verbs that are synonyms of to improve.</figDesc><graphic coords="17,89.37,82.09,300.00,177.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 9 .</head><label>9</label><figDesc>Fig. 9. Addition bias regressed onto (a) frequency and (b) valence, with superimposed lines taken from the simultaneous regression with both frequency and valence as predictors; all variables are z-scored; each datapoint is a word.</figDesc><graphic coords="18,48.17,81.97,396.00,156.96" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Notes1</head><label></label><figDesc>The R formula used was: brm (freq∼ 1 + type + (1 + type | pair) + (1 + type | file) + (1 + type | register), family = negbinomial) 2The effect size we report in the paper is of a similar magnitude for and (Cohen's d = 1.50)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Target words used for the frequency analysis; word frequencies from the Corpus of Contemporary American English (grand total over all registers)</figDesc><table><row><cell>Pair number</cell><cell>Word</cell><cell>Type</cell><cell>Frequency</cell></row><row><cell>1</cell><cell>a d d</cell><cell>+</cell><cell>361,246</cell></row><row><cell></cell><cell>subtract</cell><cell>-</cell><cell>1802</cell></row><row><cell>2</cell><cell>addition</cell><cell>+</cell><cell>78,032</cell></row><row><cell></cell><cell>subtraction</cell><cell>-</cell><cell>313</cell></row><row><cell>3</cell><cell>plus</cell><cell>+</cell><cell>110,178</cell></row><row><cell></cell><cell>minus</cell><cell>-</cell><cell>14,078</cell></row><row><cell>4</cell><cell>more</cell><cell>+</cell><cell>1,051,783</cell></row><row><cell></cell><cell>less</cell><cell>-</cell><cell>435,504</cell></row><row><cell>5</cell><cell>most</cell><cell>+</cell><cell>596,854</cell></row><row><cell></cell><cell>least</cell><cell>-</cell><cell>139,502</cell></row><row><cell>6</cell><cell>m a n y</cell><cell>+</cell><cell>388,983</cell></row><row><cell></cell><cell>few</cell><cell>-</cell><cell>230,946</cell></row><row><cell>7</cell><cell>i n c r e a s e</cell><cell>+</cell><cell>35,247</cell></row><row><cell></cell><cell>decrease</cell><cell>-</cell><cell>4791</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2</head><label>2</label><figDesc>Words considered in the distributional semantic analysis; synonyms of to change and to improve in the Collins dictionary; our final analysis also included the seed words themselves (to change and to improve)</figDesc><table><row><cell>Synonyms of to change</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head></head><label></label><figDesc>15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head></head><label></label><figDesc>15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>15516709, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/cogs.13254 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [14/04/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>Bodo Winter was supported by the <rs type="funder">UKRI</rs> <rs type="grantName">Future Leaders Fellowship</rs> <rs type="grantNumber">MR/T040505/1</rs>. <rs type="person">Andriy Myachykov</rs> was supported by the <rs type="programName">Basic Research Program</rs> at the <rs type="institution">National Research University Higher School of Economics</rs>. <rs type="person">Martin Fischer</rs> was supported by grant <rs type="grantNumber">DFG-FI-1915/8-1</rs> "<rs type="projectName">Competing heuristics and biases in mental arithmetic</rs>."</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_WjVMSVd">
+					<idno type="grant-number">MR/T040505/1</idno>
+					<orgName type="grant-name">Future Leaders Fellowship</orgName>
+					<orgName type="program" subtype="full">Basic Research Program</orgName>
+				</org>
+				<org type="funded-project" xml:id="_xZGkksh">
+					<idno type="grant-number">DFG-FI-1915/8-1</idno>
+					<orgName type="project" subtype="full">Competing heuristics and biases in mental arithmetic</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability statement</head><p>All summary data and analysis code used to reproduce the figures in this paper are available under the following Open Science Framework repository: https://osf.io/detuy/</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Abdou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kulmizev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hershcovich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Frank</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Pavlick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Søgaard</surname></persName>
+		</author>
+		<idno>arXiv:2109</idno>
+		<title level="m">Can language models encode perceptual structure without grounding? A case study in color</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">People systematically overlook subtractive changes</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Adams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">A</forename><surname>Converse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">H</forename><surname>Hales</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E</forename><surname>Klotz</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41586-021-03380-y</idno>
+		<ptr target="https://doi.org/10.1038/s41586-021-03380-y" />
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">592</biblScope>
+			<biblScope unit="issue">7853</biblScope>
+			<biblScope unit="page" from="258" to="261" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A positivity bias in written and spoken English and its moderation by personality and gender</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Augustine</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Mehl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Larsen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Social Psychological and Personality Science</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="508" to="515" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Balota</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Yap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Hutchison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Cortese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kessler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Loftis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Neely</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Nelson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">B</forename><surname>Simpson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Treiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The English lexicon project</title>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="445" to="459" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Don&apos;t count, predict! A systematic comparison of contextcounting vs. context-predicting semantic vectors</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Baroni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dinu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kruszewski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics</title>
+		<meeting>the 52nd Annual Meeting of the Association for Computational Linguistics</meeting>
+		<imprint>
+			<publisher>Long Papers</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Fitting linear mixed-effects models using lme4</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Maechler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bolker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Walker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="48" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">The logic of markedness</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">L</forename><surname>Battistella</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<publisher>Oxford University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Probing lexical ambiguity: Word vectors encode number and relatedness of senses</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Beekhuizen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">C</forename><surname>Armstrong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Stevenson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognitive Science</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">12943</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The chicken or the egg? A probabilistic analysis of English binomials</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">B</forename><surname>Benor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Levy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Language</title>
+		<imprint>
+			<biblScope unit="volume">82</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="233" to="278" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Over-reliance on English hinders cognitive science</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">E</forename><surname>Blasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Henrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Adamou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kemmerer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Majid</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.tics.2022.09.015</idno>
+		<ptr target="https://doi.org/10.1016/j.tics.2022.09.015" />
+	</analytic>
+	<monogr>
+		<title level="j">Trends in Cognitive Sciences</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1153" to="1170" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The Pollyanna hypothesis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Boucher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">E</forename><surname>Osgood</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0022-5371(69)80002-2</idno>
+		<ptr target="https://doi.org/10.1016/S0022-5371(69)80002-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Verbal Learning and Verbal Behavior</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="8" />
+			<date type="published" when="1969">1969</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Language models are few-shot learners</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Ryder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Subbiah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Kaplan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Dhariwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Neelakantan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Shyam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sastry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Askell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Agarwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Herbert-Voss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Krueger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Henighan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Child</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ziegler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Amodei</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Neural Information Processing Systems</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="page" from="1877" to="1901" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">brms: An R package for Bayesian multilevel models using Stan</title>
+		<author>
+			<persName><forename type="first">P.-C</forename><surname>Bürkner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="28" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Advanced Bayesian multilevel modeling with the R package brms</title>
+		<author>
+			<persName><forename type="first">P.-C</forename><surname>Bürkner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">R Journal</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="395" to="411" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Semantics derived automatically from language corpora contain human-like biases</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Caliskan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Bryson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Narayanan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">356</biblScope>
+			<biblScope unit="issue">6334</biblScope>
+			<biblScope unit="page" from="183" to="186" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">The Corpus of Contemporary American English as the first reliable monitor corpus of English</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Davies</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Literary and Linguistic Computing</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="447" to="464" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">On the automatic activation of attitudes</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Fazio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Sanbonmatsu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Powell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">R</forename><surname>Kardes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Personality and Social Psychology</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">229</biblScope>
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Papers in linguistics, 1934-1951</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Firth</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1957">1957</date>
+			<publisher>Oxford University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Spatial associations in numerical cognition-From single digits to arithmetic</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Fischer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shaki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quarterly Journal of Experimental Psychology</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1461" to="1483" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">More instructions make fewer subtractions</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Fischer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Felisatti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Myachykov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Mende</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shaki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers in Psychology</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">720616</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Vector-space models of semantic representation from a cognitive perspective: A discussion of common misconceptions</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Günther</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Rinaldi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Perspectives on Psychological Science</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1006" to="1033" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Monitoring polysemy: Word space models as a tool for large-scale lexical semantic analysis</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Heylen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wielfaert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Speelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Geeraerts</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lingua</title>
+		<imprint>
+			<biblScope unit="volume">157</biblScope>
+			<biblScope unit="page" from="153" to="172" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Using token-based semantic vector spaces for corpus-linguistic analyses: From practical applications to tests of theoretical claims</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hilpert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Saavedra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Corpus Linguistics and Linguistic Theory</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="393" to="424" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Robust affective priming effects in a conditional pronunciation task: Evidence for the semantic representation of evaluative information</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Houwer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Randell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognition and Emotion</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="251" to="264" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Online Library for rules of use; OA articles are governed by the applicable Creative Commons License B</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hunston</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/cogs.13254</idno>
+		<idno>14/04/2023</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions)onWiley" />
+	</analytic>
+	<monogr>
+		<title level="m">by NHS Education for Scotland NES</title>
+		<imprint>
+			<publisher>Edinburgh Central Office, Wiley Online Library</publisher>
+			<date type="published" when="2007">2007. 15516709. 2023. 2023</date>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="249" to="268" />
+		</imprint>
+	</monogr>
+	<note>Cognitive Science</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Pink for girls, red for boys, and blue for both genders: Colour preferences in children and adults</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jentzsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Schramowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Rothkopf</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">;</forename><surname>Kersting</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jonauskaite</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Dael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chèvre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Althaus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tremea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Charalambides</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Mohr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2019 AAAI/ACM Conference on AI, Ethics, and Society</title>
+		<meeting>the 2019 AAAI/ACM Conference on AI, Ethics, and Society</meeting>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="630" to="642" />
+		</imprint>
+	</monogr>
+	<note>Semantics derived automatically from language corpora contain human-like moral choices</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">English colour terms carry gender and valence biases: A corpus study using word embeddings</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jonauskaite</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sutton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cristianini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Mohr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">251559</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kahneman</surname></persName>
+		</author>
+		<title level="m">Thinking, fast and slow</title>
+		<imprint>
+			<publisher>Macmillan</publisher>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">tidybayes: Tidy data and geoms for Bayesian models</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kay</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>Package Version 3.0.1</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Subtract: The untapped science of less</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Klotz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>Flatiron Kloumann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Danforth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Bliss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Dodds</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Positivity of the English language</title>
+		<imprint>
+			<date type="published" when="2012">2021. 2012</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">29484</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Emotion and language: Valence and arousal affect word recognition</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kuperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Estes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brysbaert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Warriner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Experimental Psychology: General</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">1065</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A culturomics approach to quantifying the salience of species on the global internet</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Ladle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jepson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Correia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Malhado</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">People and Nature</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="524" to="532" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">A solution to Plato&apos;s problem: The latent semantic analysis theory of acquisition, induction, and representation of knowledge</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">K</forename><surname>Landauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">T</forename><surname>Dumais</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Psychological Review</title>
+		<imprint>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">211</biblScope>
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Moving beyond noninformative priors: Why and how to choose weakly informative priors in Bayesian analyses</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">P</forename><surname>Lemoine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oikos</title>
+		<imprint>
+			<biblScope unit="volume">128</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="912" to="928" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Distributional semantics in linguistic and cognitive research</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lenci</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Italian Journal of Linguistics</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="31" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Gender stereotypes are reflected in the distributional structure of 25 languages</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lewis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Lupyan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature Human Behaviour</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="1021" to="1028" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Symbol interdependency in symbolic and embodied cognition</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Louwerse</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Psychonomic Bulletin &amp; Review</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="273" to="302" />
+			<date type="published" when="2008">2008. 2011</date>
+		</imprint>
+	</monogr>
+	<note>Topics in Cognitive Science</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Knowing the meaning of a word by the linguistic and perceptual company it keeps</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Louwerse</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Topics in Cognitive Science</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="573" to="589" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A taste of words: Linguistic context and perceptual simulation predict the modality of words</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Louwerse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Connell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognitive Science</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="381" to="398" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Producing high-dimensional semantic spaces from lexical co-occurrence</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Burgess</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Behavior Research Methods</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="203" to="208" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">Semantics: 1</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lyons</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1977">1977</date>
+			<publisher>Cambridge University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Malkiel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Studies in irreversible binomials</title>
+		<imprint>
+			<date type="published" when="1959">1959</date>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="113" to="160" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mcelreath</surname></persName>
+		</author>
+		<title level="m">Statistical rethinking: A Bayesian course with examples in R and Stan</title>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>nd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Why a Big Mac is a Good Mac: Associations between affect and size</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Meier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Robinson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Caven</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Basic and Applied Social Psychology</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="46" to="55" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Quantitative analysis of culture using millions of digitized books</title>
+		<author>
+			<persName><forename type="first">J.-B</forename><surname>Michel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">K</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Aiden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Veres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Gray</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Pickett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hoiberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Clancy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Norvig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Orwant</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">331</biblScope>
+			<biblScope unit="issue">6014</biblScope>
+			<biblScope unit="page" from="176" to="182" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">Efficient estimation of word representations in vector space</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mikolov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Corrado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Dean</surname></persName>
+		</author>
+		<idno>ArXiv:1301.3781</idno>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">ArXiv Preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<monogr>
+		<title level="m" type="main">Advances in pre-training distributed word representations</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mikolov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Grave</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bojanowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Puhrsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Joulin</surname></persName>
+		</author>
+		<idno>ArXiv:1712.09405</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">ArXiv Preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">A few frequently asked questions about semantic-Or evaluative-Prosody</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Morley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Partington</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Corpus Linguistics</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="139" to="158" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Notational modulation of the SNARC and the MARC (linguistic markedness of response codes) effect</title>
+		<author>
+			<persName><forename type="first">H.-C</forename><surname>Nuerk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Iversen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Willmes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quarterly Journal of Experimental Psychology</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="835" to="863" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Pedersen</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">A comparative evaluation of off-the-shelf distributed semantic representations for modelling behavioural data</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pereira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gershman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ritter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Botvinick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognitive Neuropsychology</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">3-4</biblScope>
+			<biblScope unit="page" from="175" to="190" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Polarity correspondence: A general principle for performance of speeded binary classification</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Proctor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Cho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Psychological Bulletin</title>
+		<imprint>
+			<biblScope unit="volume">132</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">416</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">R: A language and environment for statistical computing. R Foundation for Statistical Computing</title>
+		<author>
+			<persName><forename type="first">Core</forename><surname>Team ; Regier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Carstensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kemp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename></persName>
+		</author>
+		<idno type="DOI">10.1371/journal.pone.0151138</idno>
+		<ptr target="https://doi.org/10.1371/journal.pone.0151138" />
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">151138</biblScope>
+			<date type="published" when="2016">2019. 2016</date>
+		</imprint>
+	</monogr>
+	<note>Languages support efficient communication about the environment: Words for snow revisited</note>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<monogr>
+		<title level="m" type="main">Corpus, concordance, collocation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Sinclair</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1991">1991</date>
+			<publisher>Oxford University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">It&apos;s all in the delivery: Effects of context valence, arousal, and concreteness on visual word processing</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Snefjella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kuperman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognition</title>
+		<imprint>
+			<biblScope unit="volume">156</biblScope>
+			<biblScope unit="page" from="135" to="146" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<monogr>
+		<title level="m" type="main">Semantic prosody: A critical evaluation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Stewart</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<publisher>Routledge</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<monogr>
+		<title level="m" type="main">Words and phrases</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Stubbs</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<publisher>Blackwell</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><surname>Torchiano</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.1480624</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.1480624" />
+		<title level="m">Efficient effect size computation</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Toward a theory of semantic representation</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Vigliocco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Meteyard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Andrews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kousta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Language and Cognition</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="219" to="247" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Affective biases in English are bi-dimensional</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Warriner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kuperman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognition and Emotion</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1147" to="1167" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Norms of valence, arousal, and dominance for 13,915 English lemmas</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Warriner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Kuperman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brysbaert</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Behavior Research Methods</title>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1191" to="1207" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">A critique of the concept of semantic prosody</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Whitsitt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Corpus Linguistics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="283" to="305" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Welcome to the Tidyverse</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wickham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Averick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">D</forename><surname>Mcgowan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>François</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Grolemund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hayes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Henry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hester</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Open Source Software</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">43</biblScope>
+			<biblScope unit="page">1686</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">emotionally flexible part of the English lexicon</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wierzbicka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Language, Cognition and Neuroscience</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="975" to="988" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<monogr>
+		<title level="m" type="main">Sensory linguistics: Language, perception, and metaphor</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>John Benjamins</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Poisson regression for linguists: A tutorial introduction to modeling count data with brms</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P.-C</forename><surname>Bürkner</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/lnc3.12439</idno>
+		<ptr target="https://doi.org/10.1111/lnc3.12439" />
+	</analytic>
+	<monogr>
+		<title level="j">Language and Linguistics Compass</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">12439</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Independence and generalizability in linguistics</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Grice</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Linguistics</title>
+		<imprint>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1251" to="1277" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Mental number space in three dimensions</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Matlock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Shaki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Fischer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neuroscience &amp; Biobehavioral Reviews</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="page" from="209" to="219" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Vision dominates in perceptual language: English sensory vocabulary is optimized for usage</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Winter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Perlman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Majid</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cognition</title>
+		<imprint>
+			<biblScope unit="volume">179</biblScope>
+			<biblScope unit="page" from="213" to="220" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Attitudinal effects of mere exposure</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">B</forename><surname>Zajonc</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Personality and Social Psychology</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1" to="27" />
+			<date type="published" when="1968">1968</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Mixed effects models and extensions in ecology with</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zuur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">N</forename><surname>Ieno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Walker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">A</forename><surname>Saveliev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Springer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Zwaan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Yaxley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Spatial iconicity affects semantic relatedness judgments</title>
+		<imprint>
+			<date type="published" when="2003">2009. 2003</date>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="954" to="958" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

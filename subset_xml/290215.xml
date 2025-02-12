@@ -1,0 +1,1220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Disentangling global and local ring currents †</title>
+				<funder>
+					<orgName type="full">National Computational Infrastructure</orgName>
+					<orgName type="abbreviated">NCI</orgName>
+				</funder>
+				<funder ref="#_dQfGuzF #_PdcuKxd">
+					<orgName type="full">European Research Council</orgName>
+					<orgName type="abbreviated">ERC</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Australian Government</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">UNSW</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-01-16">16 January 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">David</forename><surname>Bradley</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Chemistry</orgName>
+								<orgName type="institution">University of New South Wales</orgName>
+								<address>
+									<postCode>2052</postCode>
+									<settlement>Sydney</settlement>
+									<region>NSW</region>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Michael</forename><surname>Jir</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">School of Chemistry</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Harry</forename><forename type="middle">L</forename><surname>Anderson</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Chemistry</orgName>
+								<orgName type="institution">University of Oxford</orgName>
+								<address>
+									<postCode>OX1 3TA</postCode>
+									<settlement>Oxford</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Martin</forename><forename type="middle">D</forename><surname>Peeks</surname></persName>
+							<email>m.peeks@unsw.edu.au</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Chemistry</orgName>
+								<orgName type="institution">University of New South Wales</orgName>
+								<address>
+									<postCode>2052</postCode>
+									<settlement>Sydney</settlement>
+									<region>NSW</region>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Disentangling global and local ring currents †</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-01-16">16 January 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">C2E4D7230D15DFB9345DDCDA5DE69817</idno>
+					<idno type="DOI">10.1039/d2sc05923a</idno>
+					<note type="submission">Received 26th October 2022 Accepted 13th January 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:53+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Magnetic field-induced ring currents in aromatic and antiaromatic molecules cause characteristic shielding and deshielding effects in the molecules' NMR spectra. However, it is difficult to analyze (anti)aromaticity directly from experimental NMR data if a molecule has multiple ring current pathways. Here we present a method for using the Biot-Savart law to deconvolute the contributions of different ring currents to the experimental NMR spectra of polycyclic compounds. This method accurately quantifies local and global ring current susceptibilities in porphyrin nanorings, as well as in a bicyclic dithienothiophene-bridged</p><p>[34]octaphyrin. There is excellent agreement between ring current susceptibilities derived from both experimental and computationally-predicted chemical shifts, and with ring currents calculated by the GIMIC method. Our method can be applied to any polycyclic system, with any number of ring currents, provided that appropriate NMR data are available.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Despite being one of the most enduring concepts in chemistry, <ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b1">2</ref> the assignment of aromaticity in novel molecules remains rife with controversy. <ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b3">4</ref> Most recent assignments of aromaticity in large molecules have relied heavily on their magnetic properties, which are oen easy to measure by NMR spectroscopy, and for which there are relevant computational metrics. These magnetic effects arise, in a classical picture, from a ring current of circulating p-electrons established in response to a magnetic ux through the molecule. <ref type="bibr" target="#b4">5</ref> The direction of the ring current is opposite for aromatic and antiaromatic molecules, where it is referred to as diatropic and paratropic, respectively. A ring current induces its own magnetic eld, which perturbs the molecule's NMR chemical shis. Although the ring current model is straightforward to apply to monocyclic neutral annulenes (C 2n H 2n , e.g. benzene), the presence of multiple ring current pathways introduces complications. Multiple potential (anti)aromatic circuits can be sketched in most large aromatic molecules (e.g. Fig. <ref type="figure" target="#fig_0">1</ref>). <ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b1">2,</ref><ref type="bibr" target="#b5">6</ref> Which of these rings and sub-rings are (anti)aromatic, and can the direction and magnitude of their ring currents be quantied by experiment?</p><p>Here we introduce a method for analyzing experimental NMR data which allows us to distinguish the magnetic ring currents of different circuits in large p-conjugated molecules. We apply this method to two systems where both local and global ring current pathways can be drawn: a six-porphyrin nanoring in various oxidation states (c-P6$T6 Q , Q = 0, +2, +4, +6, +12) <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref> and a dithienothiophene (DTT)-bridged [34]octaphyrin (Fig. <ref type="figure" target="#fig_0">1</ref>). <ref type="bibr" target="#b8">9</ref> We use the NMR data of both systems to disentangle their local and global ring currents, and compare the results to predictions from computational chemistry.</p><p>There are several computational methods for quantifying the magnetic criterion of aromaticity. Such methods are extremely valuable in providing insight that oen surpasses that accessible by experiment, provided that a suitable level of theory is employed. The challenge of this latter point should not be understated: the choice of DFT functional can dramatically affect the magnitude (and even the direction 8 ) of calculated ring currents. <ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b10">11</ref> The most widely used method for assigning magnetic aromaticity is the nucleus independent chemical shi (NICS), popularized by Schleyer, which calculates the magnetic (de)shielding at points in space within or around a molecule. <ref type="bibr" target="#b11">12</ref> NICS can give information about (anti)aromaticity in complex molecules, <ref type="bibr" target="#b12">13</ref> and has recently been used to predict the magnitude of ring currents in polycyclic aromatic compounds and porphyrin nanorings. <ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b13">14</ref> The earliest quantum mechanical methods to predict ring currents were reported in the late 1950s, <ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b15">16</ref> and several further methods and approaches have since been developed. <ref type="bibr" target="#b16">17</ref> The gauge-including magnetically-induced currents (GIMIC) method allows the integration of current density through bonds in a molecule in the presence of a magnetic eld, and has been used to quantify global ring currents in porphyrin nanorings. <ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref> GIMIC has also been used to quantify ring currents in zinc porphyrin nanoshells, <ref type="bibr" target="#b21">22</ref> norcorrole dimers, <ref type="bibr" target="#b22">23</ref> and in molecules with bicyclic aromatic pathways. <ref type="bibr" target="#b23">24</ref> Finally, the Ampère-Maxwell law has been applied to the results of magnetic shielding calculations on symmetric molecules to recover ring current susceptibilities. <ref type="bibr" target="#b24">25</ref> In the experimental realm, several authors have previously shown how NMR data can be interpreted using the Biot-Savart law to extract ring current susceptibilities (I/B, i.e. the ratio of the ring current to the external magnetic eld strength, in nA T -1 ) for a single current loop. <ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b26">27</ref> Here the (anti)aromatic psystem is treated as a wire loop through which the ring current ows, and the Biot-Savart law is used to calculate the strength of the induced magnetic eld at points around this loop corresponding to the locations of NMR-accessible probe nuclei. This approach requires: (i) A set of chemical shi differences for the probe nuclei (Dd = d sampled ref , ppm, referred to as the "ring current chemical shi" (RCCS) by Haddon) <ref type="bibr" target="#b25">26</ref> where d ref is the chemical shi of the same resonance in the absence of the ring current (ESI Fig. <ref type="figure" target="#fig_0">S1 †</ref>).</p><p>(ii) A dened ring current pathway through the molecular structure. This current pathway is used to assign a sensitivity factor known as a ring current geometric factor (RCGF) to each probe nucleus. <ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b25">26</ref> In ideal cases, the relationship between RCGFs (in mT nA -1 ) and chemical shi differences (Dd, in ppm) is linear and the slope of the line is the ring current susceptibility (I/B in nA T -1 ):</p><formula xml:id="formula_0">Dd = I/B$RCGF<label>(1)</label></formula><p>Some of the present authors recently used this equation to quantify global ring currents in a series of porphyrin nanorings, as function of ring size and oxidation state, treating the molecules as containing only a single macrocyclic ring current circuit. <ref type="bibr" target="#b5">6</ref> The experimental NMR data for many p-conjugated macrocycles t well to the simple linear relationship in eqn (1), <ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b25">26</ref> although Monaco and coworkers have suggested that this model may overlook differences in local ring currents between the macrocycle in question and the reference compound used to estimate d ref . <ref type="bibr" target="#b27">28</ref> Recently, Matito and coworkers have argued that some of the NMR shis that we have attributed to global (anti)aromatic ring currents in porphyrin nanorings could arise from local porphyrin ring currents. <ref type="bibr" target="#b2">3</ref> While we disagreed with this conclusion on both computational and experimental grounds, <ref type="bibr" target="#b10">11</ref> the debate raises a valuable question: When local and global aromatic circuits coexist in a molecule, how can we determine their relative magnitudes? Here, we present a method for quantifying both local and global ring currents from experimental or calculated NMR data and we benchmark our method with GIMIC calculations, demonstrating that ring current shielding effects in complex, polycyclic molecules can be reliably deconvoluted into both local and global ring current susceptibilities.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Methods</head><p>In our multiple current loop (MCL) model, we expand eqn (1) to include the contributions of multiple ring currents to the observed change in chemical shi Dd. Each ring current pathway in a complex molecule is associated with its own set of RCGFs. In the molecules studied here, the inclusion of both local and global currents reduces the need for an intercept term in the t (see ESI Section S7 † for discussion). The success of our method relies on the RCGFs associated with each ring current path not being linearly dependent (see ESI Section S3 † for more discussion and diagnostics). The MCL method is written, in general form, as:</p><formula xml:id="formula_1">Dd ¼ X i ðI=BÞ i $RCGF i<label>(2)</label></formula><p>We studied both porphyrin nanorings (c-P6$T6 Q ) and the DTT-bridged [34]octaphyrin (Fig. <ref type="figure" target="#fig_0">1</ref>) using this method. Extensive experimental NMR data are available for both compounds. <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref> All of our DFT calculations were performed using Gaussian16, <ref type="bibr" target="#b28">29</ref> and molecular structures were optimized at the BLYP35/6-31G* level, <ref type="bibr" target="#b29">[30]</ref><ref type="bibr" target="#b30">[31]</ref><ref type="bibr" target="#b31">[32]</ref><ref type="bibr" target="#b32">[33]</ref><ref type="bibr" target="#b33">[34]</ref> in accordance with our previous studies showing that this combination accurately predicts the 1 H NMR spectra of porphyrin nanorings. <ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b34">35</ref> NMR chemical shis were calculated at the same level of theory using a solvent model (polarizable continuum model, PCM, with dichloromethane (c-P6$T6 Q ) or tetrahydrofuran (DTT- [34]octaphyrin)). For the DTT-bridged [34]octaphyrin, we also calculated NMR chemical shis at the B3LYP/def2-TZVP level for comparison with the literature, using the published geometry. <ref type="bibr" target="#b23">24</ref> The calculations on both series used (closed shell) singlet multiplicity, except that c-P6$T6 2+ was treated as the open-shell (broken symmetry) singlet since we previously found that this multiplicity better reproduces experimental NMR chemical shis. <ref type="bibr" target="#b10">11</ref> For calculations with GIMIC, the porphyrin nanorings c-P6$T6 were oriented with the xy plane dened as the mean plane of the six zinc atoms, leaving the z-axis pointing through the central benzene of the T6 template. Global ring currents were calculated by placing a magnetic eld along the +z axis, whereas local ring currents were calculated for each porphyrin subunit in turn, using a magnetic eld parallel to the vector from the center of the nanoring to the center of the porphyrin (approximately in the xy plane). The DTT-bridged [34]octaphyrin was oriented with the mean plane of the "big" ring (referred to as "global" in Fig. <ref type="figure" target="#fig_0">1</ref>) dened as the xy plane, and the magnetic eld in GIMIC calculations was applied parallel to the z axis.</p><p>In a GIMIC calculation, the current through each bond is measured by bisecting it with an integration plane. The size of this plane was optimized as described in ESI Section S4, † to capture as much meaningful current as possible while minimizing spurious contributions from nearby bonds. For c-P6$T6 Q , the global ring current is given by the average current through the six central bonds of the butadiyne linkers. The local ring currents for each porphyrin unit were estimated from the average of the integrated currents through each C a -C m porphyrin bond (i.e., 6 × 8 bonds per nanoring, see ESI Fig. <ref type="figure" target="#fig_0">S1</ref> † for atom labels). We adopt the convention that diatropic (aromatic) ring currents have negative sign, whereas paratropic (antiaromatic) ring currents are positive.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results and discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Porphyrin nanorings</head><p>Global (anti)aromaticity has been reported in cationic, anionic, and excited states of p-conjugated porphyrin nanorings. <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b35">36</ref> The archetypal porphyrin nanoring is c-P6$T6 (Fig. <ref type="figure" target="#fig_0">1a</ref>), in which experimental and computational evidence suggest a change from local aromaticity in each porphyrin subunit in the neutral oxidation state, to global aromaticity/antiaromaticity consistent with Hückel's rule in the +2, +4, and +6 oxidation states. <ref type="bibr" target="#b5">6</ref> The +12 oxidation state, corresponding to six dicationic porphyrin subunits, has been assigned as locally antiaromatic. <ref type="bibr" target="#b6">7</ref> This molecule is an ideal test case for our model, because the local porphyrin and global macrocycle aromatic pathways are easy to identify, and extensive experimental NMR data are available. <ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref> To quantify the ring current susceptibilities in porphyrin nanorings, we rewrite eqn   A global ring current fraction f global = 0 denotes an NMR spectrum with only local ring current effects, and f global = 1 indicates that all of the chemical shi differences (Dd) can be explained by global (anti)aromaticity. The results are summarized in full in Table <ref type="table" target="#tab_0">1</ref> and Fig. <ref type="figure" target="#fig_2">2</ref>, and show that the Q = 0 and Q = +12 states evidence only local ring currents, while the spectra of the Q = +2, +4, and +6 states evidence both global and local ring current effects.</p><p>Oxidation states with dominant local (anti)aromaticity. MCL analysis of the Q = 0 and +12 oxidation states corroborates the earlier reported analysis, <ref type="bibr" target="#b6">7</ref> conrming that c-P6$T6 has a negligible global ring current in both of these oxidation states. In the neutral state, the porphyrin subunits are locally aromatic (-26.1 nA T -1 , Table <ref type="table" target="#tab_0">1</ref> and Fig. <ref type="figure" target="#fig_2">2</ref>), while the 12+ state shows local antiaromaticity (13.6 nA T -1 ). (I/B) global is so small that the chemical shi differences for the Q = 0 and +12 oxidation states t well to the earlier single current-loop model (eqn (1)) using only RCGF local values (ESI Table <ref type="table">S4</ref>, Fig. <ref type="figure" target="#fig_3">S23</ref> and S27 † for the t using RCGF global values). We performed the same analysis with chemical shi differences predicted by DFT calculations, and as Fig. <ref type="figure" target="#fig_2">2</ref> and Table <ref type="table" target="#tab_0">1</ref> show, the results are almost identical.</p><p>Oxidation states with dominant global (anti)aromaticity. Next, we quantied the ring current susceptibilities in the Q = +2, +4 and +6 nanorings, which were previously reported to be dominated by global ring currents. The results from the MCL model support our previous assignmentsthe nanorings exhibit signicant global ring currents (Table <ref type="table" target="#tab_0">1</ref> and Fig. <ref type="figure" target="#fig_2">2</ref>). Surprisingly, the MCL model yields higher global ring currents for Q = +4 and +6 than our previously-reported results from the single current-loop model (ESI Table <ref type="table">S4</ref> †). <ref type="bibr" target="#b10">11</ref> In addition, each of these globally (anti)aromatic nanorings also feature local porphyrin ring currents. These local currents have opposite signs to the global currents and so partially cancel the latter's effect on the NMR spectra, thus requiring larger values of (I/B) global to t the NMR chemical shis. The values of (I/B) global (Table <ref type="table" target="#tab_0">1</ref>) are consistent with the presence of global aromatic ring currents in the +2 (-23 nA T -1 ) and +6 (-14 nA T -1 ) states, and a globally antiaromatic ring current in the +4 (72 nA T -1 ) state. For comparison, the ring current susceptibility of benzene, the archetypal aromatic molecule, is -12 nA T -1 . <ref type="bibr" target="#b5">6,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b21">22,</ref><ref type="bibr" target="#b26">27,</ref><ref type="bibr" target="#b36">37</ref> When we used chemical shi differences from DFT (BLYP35) with eqn (3), the signs of the resulting (I/B) global were consistent with those derived from experimental NMR data, but the magnitudes were smaller, consistent with our previous work. <ref type="bibr" target="#b10">11</ref> The difference is especially pronounced for Q = +2, for which the experimental (I/B) global is approximately four times higher than that predicted using DFT chemical shis. This result probably reects the uncertainty in the electronic state of the Q = +2 state from DFT calculations. <ref type="bibr" target="#b10">11</ref> The 95% condence intervals in Fig. <ref type="figure" target="#fig_2">2</ref> illustrate that most of the uncertainty in the ts is associated with (I/B) local . The sign of (I/B) global , and hence the presence (or absence) of global (anti) aromaticity, can be condently described. A major cause of uncertainty is that some experimental spectra provide relatively few Dd values for the t. In particular, the +4 oxidation state has only four Dd values. The ts of DFT NMR data have much less uncertainty, because in every case the model includes eight Dd values.</p><p>Comparing the MCL model to direct calculation of ring current susceptibilities. The MCL model provides an indirect way to quantify ring current susceptibilities from either experimental or calculated NMR data. In the computational realm, the accuracy of this method can be checked by directly measuring the current induced by a magnetic eld using GIMIC. If the MCL model is reliable, then we would expect to obtain similar ring current susceptibilities from GIMIC as we do from MCL analysis of DFT chemicals shis, since both methods are based on the same DFT computational model. The local and global ring current susceptibilities from GIMIC calculations, indicated by crosses in Fig. <ref type="figure" target="#fig_2">2</ref>, and listed in Table <ref type="table" target="#tab_0">1</ref>, conrm a high level of consistency with results from the MCL model. A more detailed view of the ring currents from GIMIC is provided by Fig. <ref type="figure" target="#fig_3">3</ref>, which shows the global (le) and local (right) ring current susceptibilities for each oxidation state. Figures showing the individual bond currents in these molecules, and discussion of the current pathways, are available in ESI Section S5. †</p><p>For the Q = 0 and +12 oxidation states, the GIMIC calculations reveal ring current susceptibilities which are negligible for the global pathway (Fig. <ref type="figure" target="#fig_3">3a</ref> and<ref type="figure">i</ref>), but signicant for the porphyrin subunits (Fig. <ref type="figure" target="#fig_3">3b</ref> and<ref type="figure">j</ref>), in keeping with our MCL analysis for both oxidation states.</p><p>The global ring current susceptibilities from GIMIC for Q = +2, +4, and +6 match extremely well with the values determined using the MCL with DFT chemical shis (Table <ref type="table" target="#tab_0">1</ref> and Fig. <ref type="figure" target="#fig_2">2</ref>, crosses vs. squares), but the local currents show more variability. One explanation for the discrepancy in the (I/B) local values may be that, by denition, the MCL model requires that all the porphyrin subunits are identical, whereas GIMIC allows us to examine each individually. According to GIMIC, while all six porphyrin subunits have equivalent antiaromatic ring currents (3.1 nA T -1 , Fig. <ref type="figure" target="#fig_3">3h</ref>) in c-P6$T6 6+ , the same is not true for the Q = 2+ and 4+ states (Fig. <ref type="figure" target="#fig_3">3d</ref> and<ref type="figure">f</ref>). In c-P6$T6 2+ , four porphyrins have local ring current susceptibilities of -12.8 nA T -1 , and the remaining two porphyrins have stronger currents of -18.9 nA T -1 (Fig. <ref type="figure" target="#fig_3">3d</ref>). The difference is more profound in c-P6$T6 4+ , where four porphyrins are locally aromatic (-10.5 nA T -1 ) and two opposing porphyrins are locally antiaromatic (4.3 nA T -1 , Fig. <ref type="figure" target="#fig_3">3f</ref>). This asymmetry is also apparent in the NICS(0) iso grids for both oxidation states (ESI Fig. <ref type="figure" target="#fig_2">S28 †</ref>). This observation might be attributable to these states bearing a non-integer charge per porphyrin. Interestingly, in both c-P6$T6 4+ and c-P6$T6 6+ , we can also discern diatropic ring currents (blue shading, Fig. <ref type="figure" target="#fig_3">3f</ref> and<ref type="figure">h</ref>) in the pyrrole subunits.</p><p>The difference between (I/B) local values from GIMIC and those from MCL/DFT may also be a consequence of the dimensions of our GIMIC integration planes (ESI Section S4 †), or in the choice of d ref for MCL. Nonetheless, the GIMIC results clearly demonstrate that the MCL model performs well at recovering ring current susceptibilities from NMR data. This result is important because it shows that the MCL model is consistent with the widely accepted GIMIC method, when both methods are applied to the same underlying computational model.</p><p>Finally, the f global (fraction of global ring current) values for all the nanoring oxidation states, from experimental NMR data, are shown in Fig. <ref type="figure" target="#fig_4">4</ref>. These values reveal a surprising feature: the spectra of all three oxidation states previously described as globally (anti)aromatic (Q = +2, +4, +6) also exhibit approximately the same fraction (∼20%) of local ring current effects.</p><p>DTT-bridged [34]octaphyrin Having validated our model on porphyrin nanorings, we turned its application to the DTT-bridged [34]octaphyrin reported by Kim, Chandrashekar, Sessler, Park, Fukuzumi and coworkers. <ref type="bibr" target="#b8">9</ref> Sundholm and co-workers reported the results of GIMIC calculations at the B3LYP/def2-TZVP level, which predict ring current susceptibilities of -10.5 nA T -1 in the small ring (Fig. <ref type="figure" target="#fig_0">1b</ref>) and -22.0 nA T -1 in the big ring (Fig. <ref type="figure" target="#fig_0">1d</ref>). <ref type="bibr" target="#b23">24</ref> We performed our own GIMIC calculations at the BLYP35/6-31G* level (Fig. <ref type="figure">5a</ref>), which suggested a different assignment: a weaker ring current in the big ring (-12.6 nA T -1 ) than in the small ring (-17.3 nA T -1 ). The effects of the choice of functional can also  Fig. <ref type="figure">5</ref> (a) Numerically-integrated currents through bonds in DTTbridged [34]octaphyrin at the BLYP35/6-31G* level; (b) the relative strengths of small and large ring currents, calculated using eqn (5) (left) and using GIMIC at the BLYP35/6-31G* (middle) and B3LYP/def2-TZVP (right) levels.</p><p>be observed in the calculated NMR spectra, where BLYP35 chemical shis are signicantly closer to experiment than those from B3LYP (ESI Table S7 †).</p><p>We then quantied the ring currents using the MCL model (eqn ( <ref type="formula">5</ref>)) with experimental NMR data: Dd = (I/B) small $RCGF small + (I/B) big $RCGF big (5)   where the symbols are dened analogously to eqn (3). We calculated RCGFs for the bicyclic compound (see ESI Section S1 †) and tted them to the published experimental NMR data (ESI Tables S6-S8 †). The MCL method gives ring current susceptibilities of -22.0 nA T -1 and -12.2 nA T -1 in the small ring and big ring, respectively, broadly consistent with our GIMIC results calculated using the BLYP35 functional, although inconsistent with the earlier-reported GIMIC//B3LYP results (Fig. <ref type="figure">5b</ref>). The MCL analysis supports the claim that DTTbridged [34]octaphyrin has two coexistent ring currents and shows that the MCL method can be used to deconvolute chemical shielding in systems other than porphyrin nanorings. This short study also illustrates the value of experimental NMR data, with the MCL method, in helping to discriminate between inconsistent computational results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusions</head><p>Large p-conjugated molecules can exhibit multiple ring currents arising from different p-electron pathways. We have shown that a simple model based on the Biot-Savart law can be used to disentangle effects of these multiple ring currents on experimental NMR data. Our MCL model reveals that oxidized porphyrin nanorings, c-P6$T6 Q (Q = +2, +4 and +6) exhibit both local and global ring currents, the latter consistent with Hückel's rule and at least as strong as the ring current in benzene. For Q = 0 and +12, no signicant global ring currents are observed and the NMR chemical shi differences are fully described by local porphyrin-based ring currents. We also applied our method to a bicyclic [34]octaphyrin using experimental 1 H NMR data. Our results indicate that this molecule sustains two overlapping aromatic pathways, and the reported experimental NMR data allow us to assign the relative strengths of each current path. In contrast, DFT calculations give inconsistent estimates of the relative ring current susceptibilities between B3LYP and BLYP35. Our method requires clear NMR assignments of suitably located atoms. In the absence of such data, the method recently reported by Paenurk and Gershoni-Poranne is likely to be more applicable, because it uses the Biot-Savart rule to extract bond currents from NICS values, which can be obtained for arbitrary positions around a molecule. <ref type="bibr" target="#b13">14</ref> Our approach is, to the best of our knowledge, unique in its ability to use experimental NMR chemical shis to quantify the strengths of multiple ring current pathways in complex organic molecules.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1</head><label>1</label><figDesc>Fig. 1 Different local and global ring current paths (blue shading) can be defined in some molecules: a six-porphyrin nanoring c-P6$T6 (a and c), and a DTT-bridged [34]octaphyrin (b and d).</figDesc><graphic coords="2,55.73,50.57,223.14,318.10" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>(2) to include local (porphyrin) and global (macrocycle) ring currents: Dd = (I/B) local $RCGF local + (I/B) global $RCGF global (3) where (I/B) local and (I/B) global are the local and global ring current susceptibilities in nA T -1 , and RCGF local and RCGF global quantify the sensitivity of each probe nucleus to local and global ring currents (in mT nA -1 ) owing through a pathway offset 0.7 Å inside and outside the nanoring, to approximate the p-electron density (see Fig. S21 and ESI Section S1 † for discussion). The results of tting eqn (3) using chemical shi differences (Dd) from DFT and experiment are shown in Table 1 and Fig. 2. The 95% condence intervals for the values of the tted parameters are indicated by ellipses. Fig. 2 also compares the results from the MCL model (eqn (3)) to currents predicted computationally using GIMIC, as discussed below. To quantify the balance between local and global ring currents, we introduce the parameter 'global ring current fraction', f global , which describes the relative magnitude of the global and local (anti) aromatic ring currents. We dene this quantity as: f global = j(I/B) global j/(j(I/B) global j + j(I/B) local j)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 2</head><label>2</label><figDesc>Fig. 2 Comparison of local and global current susceptibilities estimated using the MCL model for c-P6$T6 Q from experimental NMR data (+ symbols), DFT NMR data (squares), and by GIMIC (crosses). The ellipses define the 95% confidence interval for the fit. DFT level of theory: BLYP35/6-31G*. For Q = 0 and Q = +2, the 95% confidence ellipses from DFT NMR data are hidden by the symbols for the points of best fit.</figDesc><graphic coords="3,313.80,449.80,228.69,201.03" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 3</head><label>3</label><figDesc>Fig. 3 Ring current susceptibilities in c-P6$T6 Q for Q = 0, +2, +4, +6 and +12, calculated using GIMIC at the BLYP35/6-31G* level. Shaded cycles are colored according to their ring current susceptibility. Left: (I/B) global induced by a magnetic field along the z-axis, perpendicular to the nanoring plane. Right: composite figure showing (I/B) local induced by a magnetic field through each porphyrin subunit. Red = paratropic currents, blue = diatropic currents. Hydrogen and zinc atoms, T6 template and phenyl groups were removed for clarity.</figDesc><graphic coords="5,59.02,67.81,216.69,555.99" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 4</head><label>4</label><figDesc>Fig. 4 Global ring current fraction, f global , of c-P6$T6 Q (Q = 0, +2, +4, +6 and +12), calculated using (I/B) global and (I/B) local values from the MCL model using experimental NMR chemical shifts.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Comparison of ring current susceptibilities (in nA T -1 ) in c-P6$T6 Q (where Q = 0, +2, +4, +6, +12) calculated by different methods. GIMIC and DFT results were calculated with BLYP35/6-31G*. RCGFs were calculated from BLYP35-optimized geometries. f global is the global ring current fraction as defined by eqn(4)   </figDesc><table><row><cell>Method</cell><cell>I/B (nA T -1 )</cell><cell>0</cell><cell>+2</cell><cell>+4</cell><cell>+6</cell><cell>+12</cell></row><row><cell cols="2">MCL (expt.) (I/B) global</cell><cell>0.0</cell><cell>-23.1</cell><cell>71.6</cell><cell>-13.8</cell><cell>0.4</cell></row><row><cell></cell><cell>(I/B) local</cell><cell>-26.1</cell><cell>-6.8</cell><cell>-13.7</cell><cell>3.0</cell><cell>13.6</cell></row><row><cell></cell><cell>f global</cell><cell>0.00</cell><cell>0.77</cell><cell>0.84</cell><cell>0.82</cell><cell>0.03</cell></row><row><cell cols="2">MCL (DFT) (I/B) global</cell><cell>0.3</cell><cell>-6.0</cell><cell>58.4</cell><cell>-6.8</cell><cell>0.9</cell></row><row><cell></cell><cell>(I/B) local</cell><cell>-24.8</cell><cell>-18.1</cell><cell>-8.5</cell><cell>-1.6</cell><cell>14.8</cell></row><row><cell></cell><cell>f global</cell><cell>0.01</cell><cell>0.25</cell><cell>0.87</cell><cell>0.81</cell><cell>0.06</cell></row><row><cell>GIMIC</cell><cell>(I/B) global</cell><cell>1.0</cell><cell>-5.6</cell><cell>60.0</cell><cell>-6.8</cell><cell>0.2</cell></row><row><cell></cell><cell>(I/B) local a</cell><cell>-22.3</cell><cell>-14.8</cell><cell>-5.6</cell><cell>3.1</cell><cell>18.8</cell></row><row><cell></cell><cell>f global</cell><cell>0.04</cell><cell>0.27</cell><cell>0.91</cell><cell>0.69</cell><cell>0.01</cell></row><row><cell cols="7">a These values are the mean (I/B) local averaged over the six porphyrin</cell></row><row><cell>subunits.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>© 2023 The Author(s). Published by the Royal Society of Chemistry Chem. Sci., 2023, 14, 1762-1768 | 1763</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>© 2023 The Author(s). Published by the Royal Society of Chemistry</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_2"><p>© 2023 The Author(s). Published by the Royal Society of Chemistry Chem. Sci., 2023, 14, 1762-1768 | 1767</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>This project was undertaken using resources and services from the <rs type="funder">National Computational Infrastructure (NCI)</rs>, which is supported by the <rs type="funder">Australian Government</rs>. <rs type="funder">UNSW</rs> provided support in the form of a Scientia Lectureship (M. D. P.) and PhD scholarship (D. B.). H. L. A. acknowledges the <rs type="funder">ERC</rs> (Advanced Grants <rs type="grantNumber">320969</rs> and <rs type="grantNumber">885606</rs>).</p></div>
+<div><head>Notes and references</head></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_dQfGuzF">
+					<idno type="grant-number">320969</idno>
+				</org>
+				<org type="funding" xml:id="_PdcuKxd">
+					<idno type="grant-number">885606</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>The Cartesian coordinates of molecules which we optimized for this paper are available on FigShare: https://doi.org/10.6084/ m9.gshare.21391266. The MATLAB code for calculating RCGFs is available on GitHub at https://github.com/mjirasek/ Local_vs_Global_RMC. Other data are available in the ESI. †</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicts of interest</head><p>There are no conicts to declare.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Aromaticity and Other Conjugation Effects</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gleiter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Haberhauer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>Wiley-VCH</publisher>
+			<pubPlace>Weinheim, Germany</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">I</forename><surname>Fernandez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aromaticity</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">1st edn, 2021</date>
+			<publisher>Elsevier</publisher>
+			<pubPlace>Amsterdam, Netherlands</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">I</forename><surname>Casademont-Reig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Guerrero-Avilés</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ramos-Cordoba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Torrent-Sucarrat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Matito</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Angew. Chem., Int. Ed</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="page" from="24080" to="24088" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">El</forename><surname>Bakouri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">W</forename><surname>Szczepanik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jorner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Am. Chem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">144</biblScope>
+			<biblScope unit="page" from="8560" to="8575" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">P</forename><surname>Lazzeretti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Prog. Nucl. Magn. Reson. Spectrosc</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="1" to="88" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jirásek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Peeks</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acc. Chem. Res</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="3241" to="3251" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Peeks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D W</forename><surname>Claridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Anderson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">541</biblScope>
+			<biblScope unit="page" from="200" to="203" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rickhaus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jirasek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Tejerina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Chem</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="236" to="241" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W.-Y</forename><forename type="middle">Y</forename><surname>Cha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ghosh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Chem</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="1243" to="1248" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Landi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">F</forename><surname>Summa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Monaco</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chemistry</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="991" to="1004" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J.-R</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bradley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jirásek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">L</forename><surname>Anderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Peeks</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Angew. Chem., Int. Ed</title>
+		<imprint>
+			<biblScope unit="page">61</biblScope>
+			<date type="published" when="2022">2022. 202201231</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">P</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Von</forename><forename type="middle">R</forename><surname>Schleyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Maerker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dransfeld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J R</forename><surname>Van Eikema</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Hommes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Am. Chem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="page" from="6317" to="6318" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gershoni-Poranne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stanger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem. -Eur. J</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="5673" to="5688" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">E</forename><surname>Paenurk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gershoni-Poranne</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Chem. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="8631" to="8644" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Pople</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Phys</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="175" to="180" />
+			<date type="published" when="1958">1958</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mcweeny</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mol. Phys</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="311" to="321" />
+			<date type="published" when="1958">1958</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fliegl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wiley</forename><surname>Interdiscip</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Rev.: Comput. Mol. Sci</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="639" to="678" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jusélius</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gauss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">121</biblScope>
+			<biblScope unit="page" from="3952" to="3963" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fliegl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Taubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Lehtonen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Chem. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="20500" to="20518" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Taubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jusélius</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">134</biblScope>
+			<biblScope unit="page">54123</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">I</forename><surname>Casademont-Reig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Soriano-Agueda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ramos-Cordoba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Torrent-Sucarrat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Matito</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Angew. Chem., Int. Ed</title>
+		<imprint>
+			<biblScope unit="page">61</biblScope>
+			<date type="published" when="2022">2022. 202206836</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mahmood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dimitrova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">N</forename><surname>Wirz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Chem. A</title>
+		<imprint>
+			<biblScope unit="volume">126</biblScope>
+			<biblScope unit="page" from="1936" to="1945" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Nozawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Oh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<date type="published" when="2019">2019, 10, 3576</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Valiev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fliegl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Chem. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="17705" to="17713" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J F</forename><surname>Berger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dimitrova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">T</forename><surname>Nasibullin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">R</forename><surname>Valiev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Chem. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="624" to="628" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">C</forename><surname>Haddon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Tetrahedron</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="3613" to="3633" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">G</forename><surname>Monaco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zanasi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Chem. A</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="page" from="1673" to="1683" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Landi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">F</forename><surname>Summa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Zanasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Monaco</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ChemPhysChem</title>
+		<imprint>
+			<date type="published" when="2022">2022, 23, e202200411</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Frisch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Trucks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">B</forename><surname>Schlegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Scuseria</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Robb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Cheeseman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Scalmani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Barone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Petersson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Nakatsuji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Caricato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Marenich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bloino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">G</forename><surname>Janesko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gomperts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Mennucci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">P</forename><surname>Hratchian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Ortiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Izmaylov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Sonnenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Williams-Young</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lipparini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Egidi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Goings</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Petrone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Henderson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ranasinghe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">G</forename><surname>Zakrzewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Rega</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ehara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Toyota</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Fukuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hasegawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ishida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nakajima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Honda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Kitao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Nakai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Vreven</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Throssell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Montgomery</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Peralta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ogliaro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Bearpark</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Heyd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">N</forename><surname>Brothers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">N</forename><surname>Kudin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">N</forename><surname>Staroverov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">A</forename><surname>Keith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kobayashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Normand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Raghavachari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Rendell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Burant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Iyengar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tomasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cossi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Millam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Klene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Adamo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Cammi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Ochterski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Martin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Morokuma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Farkas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Foresman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Fox</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<pubPlace>Wallingford CT</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Gaussian 16 Revision C.01</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ditcheld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Hehre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Pople</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="724" to="728" />
+			<date type="published" when="1971">1971</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Hehre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ditcheld</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Pople</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page" from="2257" to="2261" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">C</forename><surname>Hariharan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Pople</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theor. Chim. Acta</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="213" to="222" />
+			<date type="published" when="1973">1973</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">A</forename><surname>Rassolov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Pople</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Ratner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Windus</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Chem. Phys</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="1223" to="1229" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Renz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Theilacker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lambert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kaupp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Am. Chem. Soc</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page" from="16292" to="16302" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Parthey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kaupp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem. Soc. Rev</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="5067" to="5088" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Peeks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Q</forename><surname>Gong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Mcloughlin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Chem. Lett</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="2017" to="2022" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fliegl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sundholm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Taubert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jusélius</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Klopper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Phys. Chem. A</title>
+		<imprint>
+			<biblScope unit="volume">113</biblScope>
+			<biblScope unit="page" from="8668" to="8676" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

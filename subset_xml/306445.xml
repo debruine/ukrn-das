@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Optimal path planning using psychological profiling in drone-assisted missing person search</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Jan-Hendrik</forename><surname>Ewers</surname></persName>
+							<email>j.ewers.1@research.gla.ac.uk</email>
+							<idno type="ORCID">0000-0002-8498-1410</idno>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><surname>Anderson</surname></persName>
+							<idno type="ORCID">0000-0001-6301-9532</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Douglas</forename><surname>Thomson</surname></persName>
+							<idno type="ORCID">0000-0003-3588-5710</idno>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Aerospace Sciences Research Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Aerospace Sciences Research Division</orgName>
+								<orgName type="institution" key="instit1">Correspondence Jan-Hendrik Ewers</orgName>
+								<orgName type="institution" key="instit2">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Optimal path planning using psychological profiling in drone-assisted missing person search</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">2E2A7FB7B5785E8BBFB110BB8FAB3058</idno>
+					<idno type="DOI">10.1002/adc2.167</idno>
+					<note type="submission">Received: 16 July 2022 Revised: 4 April 2023 Accepted: 7 September 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:07+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Search and rescue operations are all time-sensitive and this is especially true when searching for a vulnerable missing person, such as a child or elderly person suffering dementia. Recently, Police Scotland Air Support Unit has begun the deployment of drones to assist in missing person searches with success, although the efficacy of the search relies upon the expertise of the drone operator. In this paper, several algorithms for planning the search path are compared to determine which approach has the highest probability of finding the missing person in the shortest time. In addition to this, the use of á priori psychological profile information of the subject to create a probability map of likely locations within the search area was explored. This map is then used within a nonlinear optimization to determine the optimal flight path for a given search area and subject profile. Two optimization solvers were compared; genetic algorithms, and particle swarm optimization. Finally, the most effective algorithm was used to create a coverage path for a real-life location, for which Police Scotland Air Support Unit completed multiple test flights. The generated flight paths based on the predicted intent of the lost person were found to perform statistically better than those of the expert police operators.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Search and Rescue (SAR) of vulnerable missing persons is unfortunately a common task for the Police and other emergency services. Organizations like the Centre for Search and Rescue (CSR) <ref type="bibr" target="#b0">1</ref> carry out research and training in areas related to SAR and while their training and published papers offer a valuable resource to the people responsible for finding lost or missing persons, they focus only on land-based search that is, directing teams of individuals. This is a slow and methodical process that would undoubtedly benefit from the assistance of an airborne surveillance platform. As a result of rapid advances in the drone sector over the last decade, multirotors have become cheaper and more accessible than ever before. Consequently, several concept evaluation trials for measuring the efficacy of incorporating drones into the search process have recently been undertaken in Scotland. <ref type="bibr" target="#b1">2</ref> Air-based SAR is a core operational requirement of the Police Scotland Air Support Unit (PS ASU), which regularly carry out SAR operations using a Eurocopter EC135 helicopter. However, operating a single helicopter platform to service the whole of Scotland introduces significant limitations. The main problem is that the transit time taken to reach the more remote locations adds a lot of lead time to the search operation in instances where seconds could be the difference between life and death. Hence, PS ASU is placing a small fleet of drones in key locations around Scotland for rapid deployment to assist in missing person search (MPS) operations. <ref type="bibr" target="#b1">2</ref> These will not be replacing the helicopter, but are rather intended to complement its operations.</p><p>To achieve a similar spatial resolution, and thus the probability of detection, as the costlier high-resolution sensors onboard the helicopter, the sensor footprint on each drone must be significantly smaller. Therefore, if little thought is given to the path-planning algorithm used to guide the drones, their use may well be suboptimal in time-sensitive, MPS scenarios. As with all optimization problems, the efficacy of any optimal path will only be as good as the information used in the cost function construction. Unfortunately there exists no deterministic algorithm to predict the exact location of any specific missing person, but there are psychological markers extracted via forensic analysis of previous cases by organisations such as the CSR that could be exploited to assign typical behaviors to classes of subject <ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr">[4]</ref><ref type="bibr">[5]</ref><ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref> and so doing generate location probabilities. Our research hypothesis is that using the predicted intent of the lost person in the form of psychological profiles, better probability maps may be generated for a given search area resulting in lower time-to-finds compared to naïve methods.</p><p>This article is organized as follows. Section 2 will present a short overview of the current popular search patterns and algorithms. Following this, in Section 3, the models used to capture the drone dynamics, sensor characteristics, and generate trajectories are presented. Section 4 develops the nonlinear program and introduces the probability heat-map concept and illustrates how this is integrated into the final cost function. Section 5 presents the results of a Monte-Carlo analysis of a typical scenario, comparing the performance of each optimization algorithm. Finally, the most successful technique was compared against real-world flight data from PS ASU.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">CURRENT SEARCH ALGORITHMS</head><p>Search operations are a specialization or subset of the more general trajectory generation problem that has been widely investigated in the research literature. <ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref> Most, if not all trajectory generation methods utilise the concept of waypoints or special-points-of-interest (SPI) to define the trajectory constraints with various interpolation schemes used to connect them and form a continuous trajectory. <ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref> The resulting trajectories can be flown either by a pilot or autonomously.</p><p>Search algorithms may then be interpreted as trajectory generation problems with additional constraints and should ideally exhibit the following properties:</p><p>• incorporate as many constraints as possible</p><p>• yields a feasible trajectory in the form of a waypoint sequence</p><p>• be computationally efficient</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• be simple to use and interpret</head><p>Trajectory generation with simple search patterns is a core functionality in many ground station control software packages. Figure <ref type="figure" target="#fig_0">1</ref> shows example images from QGroundControl and Mission Planner displays showing the standard trajectory specification software. Waypoints specified by the user can be seen for defining a search area in Figure <ref type="figure" target="#fig_0">1A</ref> and a specific flightpath in Figure <ref type="figure" target="#fig_0">1B</ref>.</p><p>The most basic kind of search algorithm is known as the parallel swaths pattern (also know as the lawn-mower pattern) <ref type="bibr" target="#b15">16,</ref><ref type="bibr" target="#b16">17</ref> due to its distinctive, regular structure. Parallel swaths are particularly well suited for flat areas with uniform probability distributions <ref type="bibr" target="#b17">18</ref> and operations where complete coverage of the search area is the goal. Furthermore, parallel swaths is highly accessible and is the de facto coverage algorithm within popular open-source ground control software such as QGroundControl and Mission Planner 1. However, as it does not use any á priori knowledge of the search area, although yielding complete coverage, it is suboptimal for a time-critical missing person search task. Some of the most simple informed search algorithms are Reference 19 LHC_GW_CONV (local hill climb, global warming, convolution) and Reference 20 greedy algorithm. Both superimpose a grid over the search area and use local search <ref type="bibr" target="#b20">21</ref> to move to the adjacent cell with the best fitness, with each using tie-breaker algorithms in the case of two cells having equal values. Reference 19 used convolution kernels to determine which direction is the most promising whereas Reference 20 proposes multiple solutions with LA_MaxMax (a greedy l-step look ahead algorithm) being the most successful. However, Reference 20 still ran into the greedy algorithm problem of getting stuck in a mode and not exploring other areas. This is where Reference 22 algorithm is superior as it introduces the global warming aspect which forces exploration of the area by artificially making probability more scarce. An issue with LHC_GW_CONV is that it does not consider the area as a whole. It is computationally fast but potentially misses regions of high interest due to the core of it being a greedy algorithm.</p><p>To explore the full search area, <ref type="bibr" target="#b21">22</ref> proposes the use of hierarchical heuristics using mode goodness (MG) ratio which is based on Gaussian Mixture Models (GMM). Furthermore, this work <ref type="bibr" target="#b21">22</ref> uses a glimpse factor to differentiate between areas where a sensor might struggle, whilst most other literature does not. This allowed <ref type="bibr" target="#b21">22</ref> to more accurately tune their algorithm to what a real-world scenario might require. Ultimately, the TopN search algorithm was found to be profoundly better than the previously mentioned LHC_GW_CONV due to its ability to easily break free from modes. However, LHC_GW_CONV did beat both TopN and Top2 in certain scenarios. A reason for this could be that LHC_GW_CONV was tested using single or dual-mode PDMs, which it is well suited for, whilst <ref type="bibr" target="#b18">19</ref> may have changed aspects of the algorithm at the time had their PDMs used more information about the search area. Nonetheless, Reference 22 algorithms only managed to reach maximum efficiency of 77.36% in their realistic testing leaving 22.64% left to explore. The efficiency was defined as a path's accumulated probability along it divided by the theoretical maximum found by teleporting between cells with the maximum probabilities.</p><p>Another method to break free from modes within a multi-modal area whilst potentially exploring closer to 100% of the area could be optimization algorithms. Reference 23 proposes the LRH-B for the search planning whilst <ref type="bibr" target="#b19">20</ref> proposes partially observable Markov decision process (POMDP). LRH-B primarily focuses on being faster than standard methods (like Interior Point), whereas POMDP focuses on being more optimal. However, the computational complexity of either cannot be fairly compared as <ref type="bibr" target="#b22">23</ref> used a 2D single robot whereas <ref type="bibr" target="#b19">20</ref> used multiple quadrotors at various altitudes. As well as this, <ref type="bibr" target="#b22">23</ref> does not compare their paths to ones of merit, nor do they use informed PDMs, so its performance cannot be determined. POMDP, on the other hand, was extensively compared to various permutations of the aforementioned greedy algorithms (which POMDP reliably outperformed) and used PDMs based on what a real-world SAR scenario might look like.</p><p>Whilst a single optimization algorithm might excel in a specific given search area, the work of Reference 24 combines 5 different standard optimization algorithms to create the hyper-heuristic method (HHM). This works on the principle that a single optimizer cannot be ideal for every case. Thus, HHM uses a fitness function to make the Low-Level Heuristics (LLH) compete. Wang compared 15 differently sized areas, and in each scenario, the HHM out-competed the 5 individual algorithms. In particular, the larger areas proved highly difficult for the LLHs with HHM performing 34% better than the next best LLH in the largest area.</p><p>It is easy to see that relative to parallel swaths, the more information available to an algorithm the better it performs. Reference 20 greedy algorithm was trumped by Reference 19 LHC_GW_CONV as the global warming aspect allowed it to explore more of the area. However, Reference 20 POMDP further outperforms the greedy algorithms due to its ability to see the map as a whole. Similarly, Reference 22 extracts further heuristics from the PDM and applies objectively simple search algorithms yet outperforms LHC_GW_CONV.</p><p>The optimal method to generate a heuristic-the PDM-is to fit a surface across the landscape based on large amounts of historical data. This would be the most representative of where a lost person may be found, resulting in a highly accurate map for path-planning algorithms and searchers to use. However, the reality is that SAR data is sparse at best with the most complete dataset being ISRID 7 at 50,000 entries from less than 20 countries. High-incident areas, such as Yosemite National Park, may have more dense datasets but in general, there is not enough high-quality data to do accurate curve fitting. Thus, Reference 25 developed MapScore which scores PDMs through heuristics. Similarly, Reference 26 used transfer learning to make smaller datasets usable based on non-SAR data. Another type of historical data is the general trends in the behavior of a lost person's movement. This can be in the form of locations found, 1 dispersion angle, <ref type="bibr" target="#b6">7</ref> and so forth. This type of data is usually split into various profiles with different characteristics leading to highly customized PDMs for every incident.</p><p>Due to the lack of historical data in SAR, combining models is a common occurrence. A popular method to plan a search is the Mattson model <ref type="bibr" target="#b26">27</ref> which uses a consensus across all searchers at hand to inform where to begin the search in an objective manner. Reference 28 generalizes on this concept by showing that combining models can yield better results due to the total information available increasing. As current SAR datasets do not typically incorporate psychological data due to the difficulty in fusing the environment/geographic data with psychological profiles, there is an opportunity to significantly increase the performance of path planning algorithms through the use of intelligently designed, high-fidelity PDMs. <ref type="bibr" target="#b26">27,</ref><ref type="bibr" target="#b27">28</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">SYSTEM MODELLING</head><p>As the purpose of this research is to assess algorithms for autonomously creating optimal trajectories for missing person search, realistic constraints must be applied to the optimization to ensure that any computed trajectories are feasible. Physical constraints require physical models and there are plenty of dynamic UAV models in the literature. <ref type="bibr" target="#b11">12,</ref><ref type="bibr" target="#b13">14,</ref><ref type="bibr" target="#b28">29</ref> However, as the physical model is going to be placed inside of a numerical optimization cost function, model fidelity must be minimized to reduce computational overhead while retaining only the necessary physical constraints, that is, the physical model needs to be fit-for-purpose.</p><p>Figure <ref type="figure">2</ref> illustrates the typical drone operation for search and rescue missions. Quadcopter UAVs are nonholonomic requiring the aircraft to first pitch or roll to induce either forward or lateral motion in the xy plane. Any platform attitude change will alter the sensor footprint if the sensor is rigidly mounted to the UAV base. Fortunately, most drones use a form of platform stabilization (usually a two-axis gimbal) to isolate the camera orientation from platform angular motion. Assuming the sensor is stabilized, this motion can be neglected. No specific sensor configuration or modality was assumed to ensure the generality of the results, apart from the sensor instantaneous field-of-view (IFoV) which is shown in Figure <ref type="figure">2</ref> as the angle 𝜃. The final assumption is that the drone maintains a constant altitude h throughout the mission.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">UAV platform model</head><p>To ensure sufficient physical constraints are included, to minimize computational complexity and impose constant altitude, a simple holonomic 2D point-mass model is sufficient fidelity to represent the UAV platform from 1.</p><formula xml:id="formula_0">[ ẍ ÿ] = 1 m [ F Tx -d ̇x2 F Ty -d ̇y2 ] , (<label>1</label></formula><formula xml:id="formula_1">)</formula><p>where d is the drag coefficient. F T = [F Tx , F Ty ] is the thrust acting on the UAV, and x = [x, y] is the UAV's position vector. Drag is added to the system to match flight through the still air. An average flight speed of 1.5m s -1 was used.</p><p>The model was controlled through a basic inverse-kinematics controller such that</p><formula xml:id="formula_2">F T = m ẍdes + FD , (<label>2</label></formula><formula xml:id="formula_3">)</formula><p>where ẍdes is the desired acceleration (defined in Section 3.3) and FD is the estimated force due to drag on the model. The resultant force input applied to the model was limited to prevent unrealistic behavior.</p><formula xml:id="formula_4">F T = { F T , |F T | ≤ F T,max F T,max , |F T | &gt; F T,max ,<label>(3)</label></formula><p>where F T,max is the maximum force value that can be applied at any time step. For the use-case of PS ASU, an equivalent value of 3m s -2 was used, however during testing it was found that the acceleration never exceeded 0.42m s -2 regardless.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Sensor characteristics</head><p>The UAV is assumed to fly at h m above a flat ground plane. A perfect sensor, that will detect a person with 100% accuracy, is mounted below the UAV with an unobstructed vision of the ground plane, and parallel to said ground plane. A typical UAV sensor is the DJI Zenmuse Z30, which has a Field Of View (FOV) range from 2. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Trajectory generation</head><p>A quintic polynomial scheme <ref type="bibr" target="#b29">30</ref> with low computational complexity boundary conditions was employed. These polynomials will give adequate estimations of a valid and realistic path for the point-mass model to follow. The position, velocity, and acceleration for the quintic polynomial scheme are defined by,</p><formula xml:id="formula_5">x = c 0 t 5 + c 1 t 4 + c 2 t 3 + c 3 t 2 + c 4 t + c 5 ,<label>(4)</label></formula><p>where the coefficients c = {c i |i ∈ [0, ..., 5]} are found by solving the system of equations at x t=0 and x t=T n . T n is the finishing time of the line segment n as calculated by</p><formula xml:id="formula_6">T n = {distance} {mean velocity} [s],<label>(5)</label></formula><p>x t=0 and x t=T n are the starting and finishing waypoints, respectively. Furthermore, ẍt=0 = 0m s -2 and ẍt=T n = 0m s -2 .  For the velocity vector v g at each waypoint, the waypoints before and after a waypoint are used to calculate the boundary conditions for ̇x</p><formula xml:id="formula_7">cos(𝜃) = (-r fg ) ⋅ r gh |r fg ||r gh | (6) v g,-= v g,+ = V ⋅ r fh |r fh | ⋅ ( 1 -cos(𝜃) 2 ) n , (<label>7</label></formula><formula xml:id="formula_8">)</formula><p>where V is the mean desired speed. Waypoints f and h are the waypoints before and after respectively with g being the current waypoint-as seen in Figures <ref type="figure" target="#fig_2">3</ref> and<ref type="figure">4</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">TRAJECTORY OPTIMIZATION</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Optimization algorithms</head><p>Probability Accumulation Based optimization (PABO) is the concept of using probability accumulation over an area to create a path using numerical optimization. As with most topics, there is no clear best solution as <ref type="bibr" target="#b23">24</ref> showed. For the case of optimum path planning, optimization is taken to mean finding the set of waypoints in a problem space that optimizes various cost parameters. In this case, the cost function J(q), where q is the set of control inputs, is to be maximized to find the set optimal control inputs q * . This is achieved through the numerical solution of the following optimization problem</p><formula xml:id="formula_9">q * = arg max ∀q ∫ T 0 p(q(t))dt,<label>(8)</label></formula><formula xml:id="formula_10">s.t.</formula><p>T ≤ {endurance limit} (9)</p><formula xml:id="formula_11">x min ≤ q ≤ x max , (<label>10</label></formula><formula xml:id="formula_12">)</formula><p>where q * is the optimal path with q ∈ R m , m is the number of 2D coordinates in path q, and p(q(t)) is the probability seen by the sensor at time t. T is the total path flight time, and n waypoint = 10 for the experiments conducted.</p><p>x min ∈ [x min , y min ], x max ∈ [x max , y max ] creates a rectangular constraint around the area where p(x, y) &gt; 0.</p><p>To find the solution to the optimization problem, and thus the optimal path, two optimization algorithms were selected due to their evolutionary nature: particle swarm optimization <ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b30">[31]</ref><ref type="bibr" target="#b31">[32]</ref><ref type="bibr" target="#b32">[33]</ref> (PSO), and genetic algorithm <ref type="bibr" target="#b33">[34]</ref><ref type="bibr" target="#b34">[35]</ref><ref type="bibr" target="#b35">[36]</ref> (GA). For PSO, the particles within the swarm (the initial values of q(t)) are randomly initialized and maintain a record of what their individual best score has been. To avoid convergence on local minima, PSO filters out identical particles and selects the top third for the next generation. The remaining particles are discarded and replaced with new particles in different and randomly-chosen dimensions. Similarly, GA undergoes a random mutation phase at each step allowing beneficial traits to be passed onto the next generation whilst the population continues to explore. This ability to incorporate random mutations in both algorithms encourages exploration of the global space which makes them well-suited for exploring the problem space at hand.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Probability heatmap</head><p>The Centre for Search and Rescue regularly publishes a study on the behaviors of missing persons 1 which is used by the likes of Police Scotland and Northumberland National Park Mountain Rescue Team. This study analyses data gathered by multiple Mountain Rescue Teams (MRT) and segments it into useful categories such as dementia, despondent (defined as "any person who is thought to have disappeared deliberately" 1 ), and developmental problems. Within these categories, there are common statistics analyzed such as location found.</p><p>The "location found" is of particular interest as it gives a powerful insight into the search area (this search area is predefined by other means and how the area was determined is not important). Table <ref type="table">1</ref> gives an understanding into how the data is organized. For a person with dementia, it is clear that they are more likely to be near a travel aid (i.e., road) than a body of water. This allows us to draw a PDM for an area with travel aids and water focusing the search on these travel aids, then water.</p><p>In order to do this, one can represent a higher likelihood of a person being at (x 1 , y 1 ) than at (x 2 , y 2 ) by placing a bivariate Gaussian at (x 1 , y 1 ) such that</p><formula xml:id="formula_13">p(x, y, 𝜎) = 1 2𝜋𝜎 2 exp [ -(x -x 1 ) 2 + (y -y 1 ) 2 2𝜎 2 ] , (<label>11</label></formula><formula xml:id="formula_14">)</formula><p>where p(x, y, 𝜎) is the probability of finding a person at (x, y). This is a continuous probability function and would yield a different probability for any x, y ∈ R which is favorable for numerical optimization methods. This can then be discretized into a probability distribution map (PDM) for performance. However, using a PDM for a numeric optimization problem poses some issues. primarily, numerical optimization methods rely on small changes to the input giving a change in the cost function. If these small changes are carried out on a discrete probability map, there may be no change in cost function and thus the optimization algorithm assumes a minimum is found, exiting prematurely. A solution is to use a continuous gaussian function to represent hotspots. This would work with a few locations and associated radii, however, once the problem is applied to the real world this becomes tedious and difficult to set up. A method of having a local expert (mountain rescue leader, police search leader, etc.) using  brushes, akin to digital drawing, to manually draw hotspots on a map is more intuitive and one can imagine someone in the field with a tablet taking seconds to create a map. An example of this can be seen in Figure <ref type="figure">5</ref>.</p><p>To solve this problem, it is possible to extrapolate a pseudo-continuous function from the discrete probability map. This is done by taking the theoretical search path and moving a search radius along it. All grid squares within this radius are completely seen (100% of the grid square is within the search area), but those at the edge will be partially seen (&lt; 100% of the grid square is within the search area). Figure <ref type="figure">6</ref> shows a grid square within the b∕2 search radius of the path being partially seen. The intersection polygon is the polygon created by the common intersection area of the grid square and the search area. Its area is then normalized and the probability from this square is A int ⋅ P x,y where A int is the area of the intersection polygon and P x,y is the probability of the grid square at (x, y). This is repeated for all grid squares intersecting with the edge of the search area.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Experimental setup</head><p>To test the effectiveness of each algorithm, a Monte Carlo simulation was run over multiple generated paths to gather data on the time to find. Lost persons were then placed over the abstract search area using the generated PDM as seen in Figure <ref type="figure">7</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Comparison against figures-of-merit</head><p>There were two PDMs used for the comparison of the algorithms-a 300 m × 300 m area and a 700 m × 700 m area (Figure <ref type="figure">8A</ref> and Figure <ref type="figure">8B</ref> respectively). The larger area is used to give an insight into the endurance capabilities of the algorithm. In this section, Figure <ref type="figure">8A</ref> and Figure <ref type="figure">8B</ref> will be referred to as PDM A and PDM B respectively. The parallel swaths path can be seen in Figure <ref type="figure">9A</ref>. The back-and-forth path covers the whole left area of PDM A. However, due to its inability to use á priori information, the parallel swaths do not cover the right region of higher probability before the endurance limit. As well as this, the algorithm spends a substantial amount of time in the bottom left region of very low probability.</p><p>Looking at Figure <ref type="figure">9B</ref>, it can be seen that the first sweep of PDM B completely misses all higher probability regions. The second sweep is not much better, barely gathering any probability from any of the high-probability regions.</p><p>It is easy to see that this algorithm is great for complete coverage, if either endurance is not a problem or multiple flights are possible. However, for the use case in SAR, this algorithm is unusable due to its inability to use the information at hand.</p><p>The genetic algorithm works very well for the PDM A. GA also has long parallel lines (from (50,225) to (250, 50) in Figure <ref type="figure" target="#fig_0">10A</ref>) showing the probability accumulation aspect of the cost function in action. The path traversed in PDM A avoids low-probability regions very effectively, and it targets the regions of high probability quickly.</p><p>In Figure <ref type="figure" target="#fig_0">10B</ref>, GA can be flying out to (650,250) whilst a lot of the high probability area and then returning home. Most importantly, it adheres to the endurance constraint.</p><p>The particle swam path yields similar results to GA. Particle swarm spends too much time in the low probability regions of PDM A (Figure <ref type="figure">9A</ref>). However, it does not stick to the PDM limits like GA. Furthermore, particle swarm sticks to the high probability regions very effectively in PDM A. Nonetheless, it does not adhere to the endurance constraint nearly as well as GA for PDM A.</p><p>Like GA, the PDM B performance of particle swarm is very targeted to high probability areas. It may not return home exactly within the endurance limit, but it follows a realistic path (Figure <ref type="figure" target="#fig_0">11</ref>). The below data was gathered by creating new paths for each PDM multiple times and combining the time-to-find data to give a general insight into the performance. This is preferential over a single attempt, as it prevents a single excellent path for an algorithm to influence the conclusion. SAR object placements were random given the PDM and thence all algorithms were treated the same.</p><p>Inspecting Figure <ref type="figure" target="#fig_0">12A</ref>, it can be seen that parallel swaths find the least amount of people at any given time than the other algorithms, up until the very end. This is expected as it gives almost perfect coverage of the area but it does not use the á priori information of the PDM like the optimization-based algorithms.</p><p>Similarly, for PDM B in Figure <ref type="figure" target="#fig_0">12B</ref>, the parallel swaths algorithm is outperformed by all others. The optimization-based algorithms accumulate more probability at all times.</p><p>From these results, it is evident that increasing the information available to a search planning algorithm massively increases its performance. The paths over PDM B in particular show this as the parallel swaths will search all areas no matter how irrelevant they are.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Comparison of PABO against human pilots</head><p>PS ASU performed experimental flights to collect data for analysis. In total 3 test flights were performed for this project: two were piloted by trained officers based on their training and experience, and one attempted to follow a parallel swaths path. These will be referred to as PS ASU 1, PS ASU 2, and Attempted Parallel Swaths henceforth. The area used for these flights can be seen in Figure <ref type="figure" target="#fig_2">13A</ref> and the flights were designed to be as close to a real-case SAR scenario as possible in a simulated environment. PABO GA was selected to be pitched against the pilots as it outperformed the particle swarms optimization across both tests. The simulated flight for PABO GA was given an input value for an average flight speed of 1.2m s -1 which was derived from the provided flight data. The PDM for this area can be seen in Figure <ref type="figure" target="#fig_2">13B</ref> where emphasis was put on the tree lines, the dry pond, and linear features as per Table <ref type="table">1</ref>. Note that PS ASU could not fly out with their grounds which limited the search area. The PDM was created with this in mind.</p><p>Figure <ref type="figure" target="#fig_0">14</ref> shows the aforementioned paths, as well as PABO GA, superimposed onto Figure <ref type="figure" target="#fig_2">13A</ref> along with the PDM associated with said area. From this it can be seen that PS ASU 1 and PABO GA share a common take-off location (this was intentional), however the others take-off around 100m further east, and 50m further south. This should not affect performance but will be noted nonetheless.</p><p>Inspecting PS ASU 1, it can be seen that the path follows the edge of the PDM. PS ASU 2 seemed to find the bottom-right of the PDM very interesting which corresponds to a grouping of trees, something that the CSR outlines as being an area of higher probability for finding missing persons. <ref type="bibr" target="#b0">1</ref> Looking at PABO GA, it is clear that a major problem with down-sampling the PDM to b sized pixels is that the cost function believes it is in an area of higher probability, but once converted back into a higher resolution PDM it is grossly off the mark. This can be fixed by not down-sampling the PDM but would require much longer computing times or higher computational power. However, ignoring this, the path does explore the area very well. Focusing on locations like the group of trees in the bottom-right similarly to PS ASU 2.</p><p>From Figure <ref type="figure" target="#fig_0">15</ref> the effectiveness of the paths at finding a person can be PABO GA performs well from t = 0s by staying ahead of the real-world paths for almost the whole flight time, reaching a maximum of ≈ 73%.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">CONCLUSION AND FUTURE WORK</head><p>A benchmark search algorithm and two cost-function-based algorithms were implemented. A 2D point-mass model was used along with a quintic polynomial trajectory generation scheme to simulate a SAR flight. Two different PDMs were created to compare the three algorithms through Monte Carlo simulations. It was shown that the PABO GA was found to be the most effective algorithm overall. Parallel swaths, the benchmark, were by far the least effective overall PDMs. PS ASU officers conducted multiple flights to which PABO GA was compared. The PS ASU officers are highly trained in SAR and piloted the UAV similar to what the PDM created from the CSR report 1 would predict. This resulted in PABO GA outperforming all PS ASU SAR scenario flight paths.</p><p>Overall, this study has shown the viability of merging multiple information streams that are available to an optimization-based search algorithm to greatly increase its performance over an area. The psychological profile of an LP is a core part of this information, as is the physical landscape at hand. With a simple algorithm like PABO GA outperforming trained experts, it is clear that the future of SAR is data-driven.</p><p>This work is a keystone result to build from. Future work will explore automatically generating a PDM based on psychological, and geographical information. This has a potential application for machine learning which will also need to be explored.</p><p>As well as increasing the state of the art of PDM generation using ML, the application of a Deep Q-Network will be explored to create a generalized search planning agent for all PDMs. If the PDM generation is advanced enough, reinforcement learning will have the massive amounts of data it needs to closely predict a lost person's intent.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>1</head><label>1</label><figDesc>Illustration of the path-planning tools in (A) QGroundControl and (B) Mission Planner.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>3 •</head><label>3</label><figDesc>to 63.7 • . The value for b, the sensor footprint diameter, is then calculated by b = 2 ⋅ h ⋅ tan 𝜃. Where b is the footprint diameter, h is the flight altitude and 𝜃 is the FOV. It was assumed that the normal flight altitude is from h = 20 m to h = 30 m. These parameters are further defined in Figure 2. To simplify the sensor model a constant FOV of 𝜃 = 31 • and a constant flight altitude of h = 25 m where chosen with a resultant search footprint diameter of b = 30 m.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>F I G U R E 3</head><label>3</label><figDesc>Geometric layout of waypoints for 7. F I G U R E 4 |v g,+ | over 𝜃 ∶ R ∈ [0, 𝜋] with n ∶ N ∈ [1, 6] and V = 2m s -1 .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Example of how the brush method might be used out in the field by an expert to create a PDM.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>F I G U R E 6 F I G U R E 7</head><label>67</label><figDesc>Pseudo-continuous probability map technique. Using a PDM to place a reduced number (200) of persons. Once the LPs have been placed, the distance comparison |p i -x| &lt; b 2 was used to determine if the ith LP's position p i was within the search range of the UAV at position x.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>8 9</head><label>89</label><figDesc>The PDMs used for this project. Simulated parallel swaths.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>U R E 11 PABO particle swarm.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>F</head><label></label><figDesc>I G U R E 14 Police Scotland and PABO GA paths. F I G U R E 15 Percentage found up until time.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>25780727, 0, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/adc2.167 by University Of Glasgow, Wiley Online Library on [25/09/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Location found by terrain and gender for a person with dementia.<ref type="bibr" target="#b0">1</ref> </figDesc><table><row><cell></cell><cell>Farmland</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>Female</cell><cell></cell><cell>Male</cell><cell></cell><cell>Urban</cell><cell></cell><cell>Other</cell><cell></cell></row><row><cell>Location</cell><cell>n</cell><cell>%</cell><cell>n</cell><cell>%</cell><cell>n</cell><cell>%</cell><cell>n</cell><cell>%</cell></row><row><cell>Travel aid</cell><cell>8</cell><cell>42</cell><cell>12</cell><cell>29</cell><cell>35</cell><cell>36</cell><cell>1</cell><cell>4</cell></row><row><cell>Building</cell><cell>5</cell><cell>26</cell><cell>8</cell><cell>20</cell><cell>29</cell><cell>30</cell><cell>2</cell><cell>7</cell></row><row><cell>Linear feature</cell><cell>2</cell><cell>11</cell><cell>12</cell><cell>29</cell><cell>17</cell><cell>17</cell><cell>5</cell><cell>21</cell></row><row><cell>Open ground</cell><cell>1</cell><cell>5</cell><cell>7</cell><cell>17</cell><cell>11</cell><cell>11</cell><cell>8</cell><cell>29</cell></row></table><note><p>TA B L E 1</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>25780727, 0, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/adc2.167 by University Of Glasgow, Wiley Online Library on [25/09/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>I thank <rs type="person">PC Stuart Neilson</rs> and <rs type="institution">PC Steven Preece of the Police Scotland Air Support Unit</rs> for their generous help in providing insight into SAR and performing real-world flight testing. It would have been impossible to get this sort of data as a student otherwise during the COVID-19 pandemic.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are available from the corresponding author upon reasonable request.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" />			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Missing Person Behaviour Study</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Perkins</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Feeney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mrt</forename><forename type="middle">P</forename><surname>The</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">K</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<publisher>CSR</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Remotely Piloted Aircraft System (RPAS) Evaluation Report</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Skeleton</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">SPA Policing Performance Committee</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Smith</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">SPA Policing Performance Committee</orgName>
+			</affiliation>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. Rep.</note>
+	<note>Scottish Police Authority</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Geographies of Missing People: Improving Police Education and Response to Missing Persons</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Stevenson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Woolnough</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Parr</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+		<respStmt>
+			<orgName>Scottish Institute for Policing Research; Edinburgh Napier University</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Tech. Rep</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Missing Persons: Understanding, Planning, Responding</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Police</surname></persName>
+		</author>
+		<imprint>
+			<pubPlace>Grampian Police</pubPlace>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech. Rep.</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Burnside</forename><surname>St</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<pubPlace>Rothes, Aberlour AB38 7AA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Characteristics of Travel by Persons Lost in Albertan Wilderness Areas</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">D</forename><surname>Heth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">H</forename><surname>Cornell</surname></persName>
+		</author>
+		<idno type="DOI">10.1006/jevp.1998.0093</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Environ Psychol</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="223" to="235" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Lost Person Behavior: A Search and Rescue Guide on Where to Look for Land</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Koester</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Air, and Water. dbS Productions</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Rapidly-exploring random trees: A new tool for path planning</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Lavalle</surname></persName>
+		</author>
+		<ptr target="https://msl.cs.illinois.edu/∼lavalle/papers/Lav98c.pdf" />
+	</analytic>
+	<monogr>
+		<title level="j">Annu Res Rep</title>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Reactive route selection from pre-calculated trajectories -application to micro-UAV path planning</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/S0001924000006321</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Aeronaut J</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="635" to="640" />
+			<date type="published" when="1172">2011. 1172</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Border Patrol and Surveillance Missions Using Multiple Unmanned Air Vehicles</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Girard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Howell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hedrick</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+			<publisher>IEEE</publisher>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="620" to="625" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Investigating methods for integrating unmanned aerial systems in search and rescue operations</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">T</forename><surname>Weldon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hupy</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/drones4030038</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Drones</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">38</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Small Unmanned Aircraft: Theory and Practice</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Beard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">W</forename><surname>Mclain</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>Princeton University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Trajectory optimization for high-altitude long-endurance UAV maritime radar surveillance</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TAES.2019.2949384</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Aerosp Electron Syst</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="2406" to="2421" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Cooperative Path Planning of Unmanned Aerial Vehicles. 1st ed</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Tsourdos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shanmugavel</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<publisher>Wiley</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Optimisation of trajectories for wireless power transmission to a quadrotor aerial robot</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Ireland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10846-018-0824-6</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Intell Robot Syst</title>
+		<imprint>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="567" to="584" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Approximation algorithms for lawn mowing and milling</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Arkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">P</forename><surname>Fekete</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Mitchell</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0925-7721(00)00015-8</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geom</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="25" to="50" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Sweep Width Estimation for Ground Search and Rescue</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Koester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Cooper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Frost</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">Q</forename><surname>Robe</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Supporting wilderness search and rescue using a camera-equipped mini UAV: UAV-enabled WiSAR</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Goodrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">S</forename><surname>Morse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Gerhardt</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/rob.20226</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Field Robotics</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">1-2</biblScope>
+			<biblScope unit="page" from="89" to="110" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">UAV intelligent path planning for wilderness search and rescue</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Goodrich</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/IROS.2009.5354455</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE/RSJ Int Conf Intell Robots Syst</title>
+		<imprint>
+			<biblScope unit="volume">0</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="709" to="714" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Supporting Search and Rescue Operations with UAVs</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Waharte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Trigoni</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="volume">2010</biblScope>
+			<biblScope unit="page" from="142" to="147" />
+		</imprint>
+		<respStmt>
+			<orgName>University of Oxford</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">The Algorithm Design Manual</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Skiena</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Springer</publisher>
+			<pubPlace>London</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Hierarchical heuristic search using a Gaussian mixture model for UAV coverage planning</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Goodrich</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TCYB.2014.2309898</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Cybern</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="2532" to="2544" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">A Probabilistic Path Planning Framework for Optimizing Feasible Trajectories of Autonomous Search Vehicles Leveraging the Projected-Search Reduced Hessian Method</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Alimo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Bewley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Gill</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>American Institute of Aeronautics and Astronautics</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A hyper-heuristic method for UAV search planning</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">J</forename><surname>Zheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Advances in Swarm Intelligence</title>
+		<editor>
+			<persName><forename type="first">Y</forename><surname>Tan</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">H</forename><surname>Takagi</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">B</forename><surname>Niu</surname></persName>
+		</editor>
+		<imprint>
+			<publisher>Springer International Publishing</publisher>
+			<biblScope unit="volume">10386</biblScope>
+			<biblScope unit="page" from="454" to="464" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Evaluating lost person behavior models</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Sava</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Twardy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Koester</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sonwalkar</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/tgis.12143</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Trans GIS</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="38" to="53" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Lost person search area prediction based on regression and transfer learning models</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Šeri Ć</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Pinjušić</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Topić</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Blaževi Ć T</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/ijgi10020080</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IJGI</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">80</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Establishing Search Priorities</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Mattson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Search Theory and Applications NATO Conference Series</title>
+		<editor>
+			<persName><forename type="first">K</forename><forename type="middle">B</forename><surname>Haley</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">L</forename><forename type="middle">D</forename><surname>Stone</surname></persName>
+		</editor>
+		<imprint>
+			<publisher>Springer US</publisher>
+			<date type="published" when="1980">1980</date>
+			<biblScope unit="page" from="93" to="97" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">The Wisdom of Crowds: Why the Many Are Smarter than the Few</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Surowiecki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Abacus</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+	<note>repr ed</note>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">System Identification of Multi-Rotor UAV&apos;s Using Echo State Networks</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vargas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ireland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Anderson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<publisher>University of Glasgow</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Trajectory Planning for Automatic Machines and Robots</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Biagiotti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Melchiorri</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">A Modified Particle Swarm Optimizer</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Eberhart</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<publisher>IEEE</publisher>
+			<biblScope unit="page" from="69" to="73" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Particle Swarm Optimization</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kiranyaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ince</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gabbouj</surname></persName>
+		</author>
+		<imprint>
+			<publisher>Springer</publisher>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="45" to="82" />
+			<pubPlace>Berlin Heidelberg</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Enhanced discrete particle swarm optimization path planning for UAV vision-based surface inspection</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Phung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">H</forename><surname>Quach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Dinh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Ha</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.autcon.2017.04.013</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Autom Constr</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="25" to="33" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">An Introduction to Genetic Algorithms</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mitchell</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<publisher>The MIT Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">A genetic algorithm tutorial</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Whitley</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BF00175354</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Stat Comput</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="65" to="85" />
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">UAV search-and-rescue planning using an adaptive memetic algorithm</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zheng</surname></persName>
+		</author>
+		<idno type="DOI">10.1631/FITEE.2000632</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front Inform Technol Electron Eng</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1477" to="1491" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

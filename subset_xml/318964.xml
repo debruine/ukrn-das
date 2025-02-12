@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">TOWARDS AUTONOMOUS OPEN RADIO ACCESS NETWORKS</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Adrian</forename><surname>Kliks</surname></persName>
+							<email>adrian.kliks@put.poznan.pl</email>
+							<affiliation key="aff0">
+								<orgName type="institution">Poznan University of Technology</orgName>
+								<address>
+									<country key="PL">Poland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Marcin</forename><surname>Dryjanski</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="laboratory">Rimedo Labs</orgName>
+								<address>
+									<country key="PL">Poland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Vishnu</forename><surname>Ram</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Independent Expert</orgName>
+								<address>
+									<country key="IN">India</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Leon</forename><surname>Wong</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="institution">Rakuten Mobile</orgName>
+								<address>
+									<country key="JP">Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Harvey</surname></persName>
+							<affiliation key="aff4">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country>Scotland, United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">TOWARDS AUTONOMOUS OPEN RADIO ACCESS NETWORKS</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">C47FB416214D3AEE31C13F796967E2FD</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:12+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>5G</term>
+					<term>6G</term>
+					<term>network automation</term>
+					<term>open RAN</term>
+					<term>O-RAN</term>
+					<term>virtualization</term>
+					<term>xApp design</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>In this paper we give an overview of an open disaggregated network architecture based on an Open Radio Access Network (O-RAN), including the current work from standards bodies and industry bodies in this area. Based on this architecture, a framework for the automation of xApp development and deployment is proposed. This is then aligned with the key concepts described in ITU-T in terms of the evolution, experimentation, and adaptation of controllers. The various steps in such an aligned work low, including design, validation, and deployment of xApps, are discussed, and use case examples are provided to illustrate further our position regarding the mechanisms needed to achieve automation.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">INTRODUCTION</head><p>For the last few decades, telecommunication networks have been focused on connecting people.</p><p>As the years have progressed, this connectivity has grown from human-orientated communication, such as web browsing, to include data-centric communication or machine-centric communication, as found in IoT device communication. To support this expanded role, telecommunication networks have continuously been innovating in order to meet current needs. Thanks to over 15 years of innovation, partial or full production deployments of virtualized end-to-end hardware infrastructure is now a reality. Most notably, this includes the virtualization of the Radio Access Network, known as (RAN). In order to achieve interoperability for the use and development of management and operation software in the context of a virtualized RAN, the community is embracing the concept of an Open RAN (O-RAN) architecture, see Section 2. Here, control and monitoring functionality is encapsulated in either highly responsive software xApps or higher-level strategic software rApps. Each application is then used to drive an associated runtime referred to as the RAN Intelligent Controller (RIC). This way, engineers are presented with a clear way in which to design control and monitoring functionalities for RAN in software. Despite the clear conceptual architecture for O-RAN using which xApps can be created, the design, implementation, testing, maintenance, and deployment of the xApp is the responsibility of the developer. Furthermore, there is currently no common RIC implementation, meaning that xApp developers must design for a given platform, limiting reuse and deployment on other RIC platforms and precluding mass deployment. Consequently, in order to achieve widespread adoption of xApp-driven control of the RAN, it is necessary to introduce automation to the adaptation of the xApp both at the RIC platform level that it operates upon as well as in the RAN that it is supposed to operate.</p><p>This work proposes an approach to achieve automation in the lifecycle of xApps. Thus, starting from the use case, requirements, design of the xApp, validation of the xApp, and inally, deployment in networks, the steps in the lifecycle are analyzed. The key considerations and challenges in achieving this automation are called out.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">OPEN RAN OVERVIEW</head><p>The open RAN concept is based on the following principles: open interfaces, functional RAN disaggregation, hardware-software split, and native data-driven intelligence brought by the RIC concept <ref type="bibr" target="#b0">[1]</ref>. The following section provides an overview of the O-RAN architecture, introduces RIC, xApps and rApps, and discusses standardization developments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">O-RAN architecture</head><p>Open RAN architecture, along with its building blocks with their functionalities and open interfaces, is standardized by the O-RAN ALLIANCE and is shown in Fig. <ref type="figure" target="#fig_0">1</ref>  <ref type="bibr" target="#b1">[2]</ref>. The O-RAN architecture adopts the 3GPP-based Higher-Level Split (HLS, or split 2) and Lower-Level Split (LLS, or split 7.2) building on the disaggregated base station structure that divides its functionality into a Central Unit (CU), a Distributed Unit (DU), and a Radio Unit (RU). A CU is further split into the control plane (CU-CP) and the user plane (CU-UP). In O-RAN language, those are preixed with O-, namely O-CU-UP, O-CU-CP, O-DU, and O-RU, to refer to the fact that they are 3GPP-based functionalities adapted to O-RAN architecture. Besides the functional split of a gNB, the O-RAN architecture is also de ining a concept of the RAN Intelligent Controller (RIC), abstracting out RAN control and monitoring from a base station. The RIC is further split into two logical entities, namely Near-Real-Time (Near-RT) RIC and • Control interfaces, namely: A1, between Non-RT RIC and Near-RT RIC for policy management, enrichment information transfer, and ML models updates; and E2, between Near-RT RIC and RAN nodes serving as a control loop to execute commands and provide measurements from the O-CU and O-DU nodes.</p><p>• Management interfaces (also called Failure, Con iguration, Accounting, Performance, Security (FCAPS)), </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Non-RT RIC vs. Near-RT RIC</head><p>As mentioned, the RIC is split into two following logical entities as shown in Fig. <ref type="figure" target="#fig_1">2</ref>.</p><p>The Non-RT RIC's general task is to support non-realtime network and procedures optimization. The Non-RT RIC is composed of AI/ML model training, and service and policy management, which create the policies to be sent over the A1 interface and rApp management functions. As an input to the Non-RT RIC, besides the measurements and statistics, there is also so-called Enrichment Information (EI), i.e., additional information from network functions, and from external non-network functions, like user priority. The Non-RT RIC is responsible for con iguration management, analytics, creation of the AI-based feeds, and provision of the recommendations to the Near-RT RIC <ref type="bibr" target="#b1">[2]</ref>.</p><p>The Near-RT RIC, on the contrary, serves as a software platform to allow the xApps to control the RAN. This is supported by the RAN and the User Equipment (UE) database storing the network state, along with xApp management, security, and con lict mitigation functions. It enables near real-time control optimization of the RAN elements (called E2 Nodes) via actions sent over the E2 interface <ref type="bibr" target="#b1">[2]</ref>. The RICs are accompanied by two control loops.</p><p>One is called a non-real-time control loop (linked to Non-RT RIC) with a time span larger than one second (» 1s). In this time frame, the policies are set, the RAN analytics are gathered, and the AI/ML models are trained based on long data sets. The time is used to deduct the trends in the network (e.g., traf ic pattern over an hour, over a day, over a week, etc.) to optimize the overall RAN behavior.</p><p>The Near-RT RIC, in turn, closes the near-real-time control loop, which is between ten milliseconds and one second (&gt; 10ms, &lt; 1s). This is the time period for the operation of xApps, deciding on control actions, or producing policy updates, and gathering the key performance measurements. It is a time-scale related to aspects like connection management where e.g., an xApp decides to change the cell that the UE is connected to.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">rApps vs xApps</head><p>In the architecture we discussed in the previous sections, E2 Nodes (i.e Similarities between xApps and rApps are that:</p><p>• they work as independent applications at the Near-RT RIC or Non-RT RIC, respectively;</p><p>• they need to ful ill the requirements for open API to be able to communicate with the other part of RIC.</p><p>The differences between xApps and rApps are the following:</p><p>• an xApp directly controls an actual function within the RAN element, while an rApp is used within the Non-RT RIC framework helping to create policies (i.e. indirectly in luences the RAN behavior); • The ITU-T Focus Group on Autonomous Networks (FG-AN) studied the use cases for autonomous networks. This study centered around the three key concepts of exploratory evolution, online experimentation, and dynamic adaptation of "controllers" to networks. A controller is a work low, open loop or closed loop composed of modules, integrated into a speci ic sequence, using interfaces exposed by the modules, which can be developed independently of the network implementations. Architecture components, subsystems, and their interactions which enable the key concepts, were described. This framework provides the fundamental building blocks for autonomy, and by representing xApps in the form of controllers and applying the concepts developed in FG-AN, it is possible to achieve a high level of automation in their lifecycle.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">Research in the O-RAN domain</head><p>Open RAN has become an attractive research topic, as RAN openness, modularity and disaggregation paved the way for new scienti ic challenges and opportunities. The functioning of RICs and their internal components (such as the subscription management module, con lict mitigation module, etc.), although partially standardized, constitute a very viable investigation domain. Moreover, the development of xApps/rApps is an interesting investigation topic, as new and sophisticated solutions can be provided that address speci ic aspects of RAN functions. For example, in <ref type="bibr" target="#b5">[6]</ref>, the authors discussed ways for ef icient spectrum sharing through data-driven dynamic control in real time. Likewise, the paper <ref type="bibr" target="#b6">[7]</ref> addresses how policy-based traf ic steering can be implemented in future wireless networks. As the impact of arti icial intelligence on Open RAN is foreseen to be crucial, in <ref type="bibr" target="#b7">[8]</ref>, the role of AI/ML tools in xApp design is widely discussed. In that context, it is worth mentioning the great overview of Open RAN and ongoing research activities presented in <ref type="bibr" target="#b8">[9]</ref> In our context, it is important to concentrate also on the implementation and, in particular, on automation aspects. In <ref type="bibr" target="#b9">[10]</ref>, a dedicated framework called OrchestRAN has been discussed, which allows for network automation through orchestrated intelligence. In a similar spirit, in <ref type="bibr" target="#b10">[11]</ref>, the closed-loop automation in 5G Open RAN was presented, where the authors focus on enabling the optimization of 5G network resources and services in an automated and self-con igured manner. Finally, it is worth mentioning the ongoing work in the ield of tight cross-layer optimization through application-to-network communication, where one of the examples is the MPEG Server and Network Assisted DASH (SAND) solution <ref type="bibr" target="#b11">[12]</ref>. In that context, let us notice that rApps (as entities operating on a longer time scale) of a different kind may be provided to cooperate with the SMO for better network-to-application support. Next, lexible policies down to the near-real-time RICs for better support of SAND-like applications to guarantee the assumed quality of service or experience. Finally, dedicated xApps may be deployed, which improve the network performance in such a way that SAND-line solutions are supported. An interesting approach for using SAND has been discussed in <ref type="bibr" target="#b12">[13]</ref>, where heterogeneous Quality of Service requirements of different applications in 5G systems are managed in the so-called xStream platform. The authors have proposed the improvement of the SAND limitations by enabling communication between various applications and the 5G system. It paved the way for innovative solutions for various types of traf ic, as proved by extensive simulations. Such an approach can be considered for xApp/rApp implementation and simulation. Next, in <ref type="bibr" target="#b13">[14]</ref> the new architecture called ARBAT has been proposed. It uses the concept of the Universal Network Device and Uni ied Cellular Network; moreover, it utilizes the AirHYPE wireless hypervisor, together with the above-mentioned network-user application interaction through the xStream platform as well as the ServiceBRIDGE. Following this idea, in <ref type="bibr" target="#b14">[15]</ref>, the design of an optimization-based power allocation model to increase effective power ef iciency was discussed in the context of guaranteed QoS. The same hypervisor AirHYPE has been considered for designing novel architectural solutions for the upcoming sixth generation of cellular in <ref type="bibr" target="#b15">[16]</ref>. A very interesting roadmap paper has been published recently, i.e., <ref type="bibr" target="#b16">[17]</ref>, where the enabling techniques and recent advancements on 6G-related topics are highlighted, and open problems with possible solutions are discussed.</p><p>In </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">THE NEED FOR XAPP DEVELOPMENT AND DEPLOYMENT AUTOMATION</head><p>As with any emerging technology, current x/rApp implementations are strongly coupled to the use case(s) for which they are created, as well as with vendor-speci ic RIC implementations. This requires engineers to manually adapt x/rApps from one use case to another and possibly re-implement them for use on different RIC implementations. Such effort prevents reuse, slows development, requires (programming) development skills from domain experts, and ultimately acts as a barrier to O-RAN adoption.</p><p>In this section, we discuss existing efforts that seek to achieve autonomy in O-RAN and then present our vision on how to achieve autonomous O-RAN taking xApps as a representative exemplar.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">ITU-T-related work</head><p>The ITU-T Focus Group on Autonomous Networks (FG-AN)<ref type="foot" target="#foot_4">2</ref> has been working towards understanding and describing the elements required for autonomy in networks, especially in the context of the three key concepts of exploratory evolution, online experimentation, and dynamic adaptation <ref type="bibr" target="#b17">[18]</ref>. The concept of exploratory evolution introduces the mechanisms and processes of exploration and evolution to adapt a controller in response to changes in the network. Generation of new controllers or update (evolve) of existing controllers to respond to such changes are part of evolution. Validation of controllers and their logic, using simulated and/or real data, may be done before the deployment of controllers in the network. This contin-uous process, based on monitoring and optimization of deployed controllers in the network, is called real-time responsive experimentation. The adapted and validated controllers are integrated at run time to underlay networks. Thus, dynamic adaptation is the inal concept in equipping the network with autonomy and the ability to handle new and hitherto unseen changes in network scenarios.</p><p>The current use cases studied in FG-AN in this context include analysis-driven evolution in virtualized RAN based on DevOps <ref type="bibr" target="#b18">[19]</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Towards xApp automation</head><p>Open RAN architecture creates opportunities for the Mobile Network Operators (MNOs) for modular improvement of the access network domain through installation, uninstallation, or upgrade of speci ic functions, mainly xApps and rApps. It means that the MNOs should be able to download, test, verify and, depending on the evaluation results, either keep the application or simply roll it back. Moreover, the immediate consequence of such an approach is the need for secure and mature space (domain) from where the software could be purchased by the MNOs.</p><p>In a classic model, the MNOs will directly order the implementation of the desired function by one of its collaborators, subcontractors or will outsource it via some software houses. However, another approach is also possible, which is widely known in the domain of applications for mobile phones and regular PC, where tested and certi ied application can be downloaded from the dedicated stores. Analogously, in the context of xApps and rApps, the usage of reputable and trusted application stores may be beneicial to the MNO. The xApp/rApp store is highly dependent on the RIC platform deployed underneath, as each RIC may have diffe- rent rules of coexistence of different applications, con lict mitigation, conformance reasoning, exception handling (and many more). One may see again the analogy to the mobile application stores, which are adjusted to the speci ic operating systems running on the mobile device. The xApp/rApp provider follows then the rules speci ied by the RIC provider and delivers the requested application to the store, which, after detailed evaluation and veri ication, makes it accessible from its online resources and exposes it to the network operators. The latter, being the end users of the xApp/ rApp stores, select the most appropriate solution, analyze its performance benchmarks and metrics, and inally install and deploy them in the network. Thus, there are three players in the described model, as illustrated in Fig. <ref type="figure" target="#fig_2">3</ref>, mainly: certi ied (trusted) xApp/ rApp providers, xApp/rApp stores, and MNOs. One may recognize two possible variants of cooperation between the software providers and the stores, which are directly related to how the RIC providers are positioned to the underlying base station software (i.e., O-RAN's O-CU/O-DU software). In the irst approach, the RIC is fully associated and dependent on the RAN software and, in consequence, is highly optimized for it. For example, there could be some parameters or pre-standard service models available which are not compliant with the O-RAN ALLIANCE speci ications, which would enable more insights and more granular optimization of the base station operation. Following another way, the RIC is more generic and thus is independent of the base station software, which it will be controlling; in consequence, it is not optimized for it. In such a case, the E2 service models will be following the O-RAN ALLIANCE's speci ication, and the usability of the speci ic xApp may be limited to the parameters im-plemented by the software provider of the underlying O-CU/O-DU.</p><p>In the former case (indicated in Fig. <ref type="figure" target="#fig_2">3</ref> in blue), the xApp/rApp provider is also strictly bounded with the certain RIC platform and with the underlying software. Thus, it may deliver software only to the speci ic store as it is certi ied for it. Contrarily, in the second approach (marked in green in Fig. <ref type="figure" target="#fig_2">3</ref>), the xApp/rApp providers may provide more generic (yet not that effectively optimized) solutions. Clearly, xApp/rApp providers may target both kinds of stores as well. In terms of security and reliability of the xApp/rApp providers, the stores may require dedicated certi icates, which may be issued either by the dedicated Certi icate Authority (CA) or by any third party yet trusted CA. Once the applications are deployed in the store, the MNO may check them and inally purchase if they ful ill all of their performance, security, and quality requirements.</p><p>However, one immediate conclusion is that there is a strong need for automation procedures at various phases of the above process, as it will be described in detail in the following sections. The store owner has to be fully convinced that the application delivered by the xApp/rApp provider fully matches all of the de ined requirements of the store, follows all of its guidelines, and is written with good programming practices. Thus, the delivered software has to be checked for its integrity and completeness of all its internal components; it has to be veri ied from the perspective of potential security issues it could generate in the inal system of the MNO. Finally, it has to be checked for its conformance, performance, and dependencies with other applications running on the desired RIC. All of these tests are necessary, yet many others may be speci ied. It is also important for the MNO to have the possibility to test the performance of the xApp/rApp in the context of its actual use case. This puts a requirement on the xApp/rApp store to have a tight connection to a Digital Twin (DT) <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b20">21,</ref><ref type="bibr" target="#b21">22]</ref>, where the speci ic scenario can be emulated with the xApp/rApp under test. In consequence, it is impossible to perform an ef icient veri ication loop (marked in Fig. <ref type="figure" target="#fig_2">3</ref> with dashed line) without automation and proper preparation of the whole xApp/rApp package. Finally, it is worth mentioning here that both the store and the MNO may provide evaluation and performance reports back to the xApp/rApp provider and the store, respectively. Such reports may be periodic or may be sent by request; nevertheless, the presence of the feedback loop has to be considered, as it allows for permanent application improvement based on the delivered reports. Such a procedure should also be automated, at least to some extent.</p><p>It is worth mentioning the importance of marketplace ownership in the above context. For the time being, various cases are possible from a business perspective. In the above discussion, we have considered two scenarios, a common marketplace (also called 3rd party xApp store) and a customized one (called a customized xApp store). Although it would be possible from the standardization perspective that the third-party xApp/ rApp providers may deploy their software in all available marketplaces, the ownership aspects of the marketplace, if not considered carefully, may somehow impact in various ways the performance of open RAN solutions.</p><p>Finally, let us comment on the impact of the underlying hardware (i.e., E2 Nodes in the O-RAN architecture) on the template-based xApp/rApp delivery. One has to notice that by standardization of all interfaces, protocols, messages, service models, and modules on the RIC, the whole concept is, to some extent, hardware-independent. The software, i.e., xApps/rApps, will receive all network performance parameters by subscribing to the appropriate services exposed by RICs. Thus, as long as the concept is implemented completely, the xApp/rApp implementation will be hardware-independent. However, every base station (E2 Node) operating on speci ic hardware will be characterized by some performance metrics (such as the frequency of key performance indicators delivery from the base station to the RIC). In consequence, the underlying hardware may have an indirect impact on the performance of the xApp/rApp, as, for example, not all of the required data by the xApp/rApp will be available. In general, however, the xApp/rApp can be understood as strongly independent from the underlying hardware applied in the E2 Nodes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Three perspectives in xApp/rApp automation</head><p>To push the concept of xApps and rApps closer to practical implementation, each phase of the application lifecycle has to be fully automated. It includes not only the design and implementation stage but also veri ication and testing by the store and purchasing, downloading, and de-ployment by the MNO in the real network. Processing any of the above steps manually would be highly inef icient in terms of consumed time, utilized human and computing resources, and the total price at the end. Thus, one may identify three, to some extent, excluding perspectives on xApp/rApp design and deployment process. First, from the perspective of the xApp/rApp developer, the main effort should be made the investigation of new technical and algorithmic solutions for speci ic problems in wireless networks. It will be mainly possible if the whole programming environment guarantees ef icient tools for code veri ication, performance evaluation, and advanced debugging. It should be assumed that the xApp/rApp developer will be, in general, not an in-depth specialist in the software environment offered by the xApp/rApp store associated with the speci ic RIC provider. The process of uploading a new application to the xApp/rApp market shall be seamless for the developer, as the fundamental assumption is that the developer follows the well-established programming rules accurately speci ied by the xApp/rApp store and RIC provider. Next, from the store's point of view, a similar observation can be made. The store owner should be in possession of such software tools (environment) that will allow smooth and easy uploading of new applications from external developers. The store owner does not necessarily need to be an algorithmic expert in the ield of wireless communications, as its key role is to manage the entire application ef iciently. On the contrary, the xApp/rApp store should be prepared not only to process new applications but also to permanently monitor the status and dependencies with other, already existing applications available on the market. Based on detected con licts or potential dangerous dependencies among various applications, the store should be able to automatically inform interested xApp/rApp developers about the encountered con licts or possibly dangerous relations. Finally, the store shall be able to perform permanent and on-request effectiveness tests of any set of uploaded applications and react accordingly to the observed performance metrics (benchmarks). In Fig. <ref type="figure" target="#fig_3">4</ref>, the three typical phases of the development and deployment of new xApp / rApp are illustrated from a high-level perspective. When the external xApp/rApp provider decides to develop a new application, he needs to download the appropriate template of such an application and follow the store and RIC rule of application implementation, as will be discussed in Section 4. Then, applying any of the company-suitable programming principles (such as following the continuous integration continuous development paradigm, known as CI/CD), the main programming effort is made. In this phase, local veri ication, testing, and improvement have to be done based on the installed simulation environment. Once the application is ready and veri ied, it can be uploaded to the store, where the new application will irst be validated and veri ied (for example, completeness), as de ined in Section 5. After that, the performance of the newly uploaded application will be measured in various ways (such as fol- lowing some prede ined benchmark procedures), and its functionality performance metrics should be monitored to update the developer in case of any issues. Finally, if the application passes all of the veri ication tests, it will be exposed to the MNO, who can request it, and after downloading, verify it in its own environment. As will be analyzed in Section 6, such an environment could be realized in the form of a digital twin, which can mimic the architecture of the real network and the use case. Once the veri ication tests in the virtual environment pass positively, the MNO may decide to deploy it in the true network. At the same time, it may provide updates to the store (and to the developer) about the truly achieved key performance indicators.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">TEMPLATE-BASED XAPP DESIGN</head><p>One of the immediate observations that can be made here is the need for dedicated software for the development of speci ic xApps/rApps. The presence of Software Development Kits (SDK) together with speci ied Application Programming Interfaces (API) is of utmost need to allow ef icient xApp/rApp development by third-party companies. In practice, such a set of SDKs and APIs will be strongly related to the considered RIC offered by a certain provider. As it will support effective xApp/rApp development by the application providers, such an approach will entail portability issues; that is, the application adjusted to the speci ic RIC will probably not be compliant with other RIC platforms. Various solutions could be applied here, such as the implementation of xApps/rApps in na-tive code; however, such discussion is out of the scope of this work.</p><p>As stated above, to upload any newly developed application to the xApp/rApp store, it has to ful ill various requirements speci ied by the store itself. To make this process ef icient and maximally autonomous, the templatebased approach could be applied, where the store releases technical guidelines on how to implement storecompliant software packages. These technical guidelines should contain not only the rules describing the particular steps for uploading the new xApp/rApp to the store or the pre-upload checklist but should also specify the whole format of the inal package of iles to be uploaded. It could include, for example, the detailed template for the project structure and all necessary project items. The developer will then know which iles are obligatory and which play a supportive role. One can imagine that, depending on the applied software architecture, like modelview-controller or any other, some speci ic types of iles may be stored in dedicated folders and forms. For example, various resources like images, icons, sets of strings or constant variables, language packages, or even trained models for the used AI tools could have dedicated folders in the project structure; the internal databases could be another example of the resource that require separate storage rules. Moreover, the developer shall follow the rules accepted by the store and/or RIC provider related to, e.g., applied ways for exception handling, usage of threads and processes, the ways for handling permissions, as well as the way for expressing dependencies with other xApps/rApps and the underlying network elements.</p><p>By default, the application uploaded to the store will be implemented by a third-party company (i.e., external to the store and the RIC provider). In that context, the inal store client (i.e., the MNO) should be aware of the xApp/rApp authorship, the type of the application, its version, and the type of license. Moreover, the MNO would be interested in knowing what necessary permissions should be granted to the application to work; in other words, what are the required input arguments (such as number and location of active user equipment, UE, the receives signal strengths by the base stations, type of generated traf ic by the UEs or applied modulation and coding schemes to certain UEs, etc.). The xApp/rApp provider shall also explicitly inform the MNO about the expected output parameters and list all potentially modi ied or affected features of the controlled network. Next, since the xApp/rApp will, in most cases, not run independently from other applications of that kind, all dependencies with other typical applications should be speci ied to detect and mitigate prospective con licts. It seems obvious that most or at least some of the above parameters and pieces of information should be standardized by authorized standardization bodies. Nevertheless, such kind of information forms a collection of metadata, which could also be gathered in the dedicated ile(s), such as in a manifest ile when following the popular approach. In Listing 1 in A, we propose the content of the prospective manifest ile that could be applied as a template for the delivery of xApp/ rApp. Let us brie ly summarize the key features of the xApp/rApp design from the perspective of effective automation of the whole process:</p><p>• the template-based application design can be used by both, the customized and the third-party xApp/rApp providers;</p><p>• there is a strong need for the standardized API/SDK, which should be secure, stable, upgradeable, etc.;</p><p>• the template-based xApp/rApp design should promote lexible, secure, and continuous implementation;</p><p>• there should be a speci ic project structure, which assumes the presence of, e.g., dedicated space for speci ic modules (resources), application of the common ways for exceptions handling, threads, and resource management, etc.;</p><p>• the process of template-based application design should be as much as possible independent of the target application, including, e.g., the topology of the controlled wireless networks, type of underlying hardware facilities, and ways of implementation (e.g., server-less or server-based);</p><p>• the application design should be prepared for intelligent coexistence of various xApps;</p><p>• the application design should be associated with various service models (E2SM); in other words, it should be compliant with various O-RAN ALLIANCE standard versions (guaranteeing backward compatibility and interoperability);</p><p>• similarly to the above, the application design should be associated with the A1-interface to consume standardized policies, which are O-RAN ALLIANCE compliant (again guaranteeing backward compatibility and interoperability between RIC platforms);</p><p>• following the best practices of application design, the template-based xApp/rApp implementation should allow automatic package generation and upload to the store.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">XAPP EXPERIMENTATION AND VERIFI-CATION</head><p>Once the xApp/rApp is completely designed and tested locally, it should be delivered to the store with the aim of offering it for download by any interested stakeholder.</p><p>As can be envisaged, the whole uploading process should be automated, but it should guarantee precise and accurate veri ication of the new contribution by applying numerous tests. These tests include various conformance tests (e.g., conformance with the expected project structure, conformance with the applied subscription models to the events occurring in the network, etc.), and compliance tests (e.g., compliance with the O-RAN ALLIANCE standards), as well as performance tests (i.e., how various resources are utilized and consumed, such as processing power, memory, etc.; but also what is the performance of the application in various benchmarks). Finally, each application shall pass through advanced security tests and through dedicated AI-oriented tests, following, e.g., the ITU-T Y.3176 recommendations <ref type="bibr" target="#b22">[23]</ref>. Such AI-focused tests should verify the robustness of the applied AI tools against various focused attacks on AI models and algorithms and the effectiveness of applied tools in critical situations. A separate aspect from the store's point of view is to ind a way to obtain fast, yet reliable, accurate, and precise veri ication of the true performance of the newly delivered xApp/rApp. As the application provider performs numerous internal tests locally, such a way of performance veri ication will not be detailed enough from the MNO point of view. The MNO will most likely search for numerous additional information about any new piece of software they are considering for installation.</p><p>As some performance (benchmark) metrics will be available openly to every interested user, the store may offer advanced performance test results as one of its paid offers. To achieve this the store should have facilities and ways for an independent and, to some extent, standardized way for true performance evaluation of the selected xApp/rApp. The test could be performed in a dedicated sandbox, which will allow for the precise identi ication of any safety issues or symptoms of inef iciency. A sandbox can be interpreted as an isolated testing environment that will create opportunities for advanced testing and veri ication of the xApps/rApps without affecting the network and/or other applications or running systems. Moreover, following the concept of Digital Twins (DT) <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b20">21,</ref><ref type="bibr" target="#b21">22]</ref>, the store can run xApp/rApp on the DT of an existing network to check the true impact of the application tested. Let us note that such a veri ication process may be multiphase by nature. First, the store may run the new xApp/rApp solely in the sandbox (or DT domain) to check its performance. Once it is done, mutual dependencies and relations with other xApps/rApps should be tested again within the dedicated sandbox or in the DT domain. Finally, short-term performance evaluation provides a view of the true functioning of the application. However, it is evident that long-term performance evaluation is also very important. Thus, the store should be able to run long-term simulations to provide detailed benchmark results of this kind.</p><p>Let us summarize the prospective steps of the automated application upload procedure:</p><p>• Step I -Execution of the completeness check (i.e., if all necessary iles and modules are included in the package);</p><p>-execution of the conformance check (format, type, etc.).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• Step II</head><p>-Setup of the priorities and hierarchy of the new xApp/rApp in the generic network environment;</p><p>-establishing relations between the applications (mandatory, optional) based on the exposed list of addressed events the application is responding to.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• Step III</head><p>-Veri ication of the rules for accessing the databases -veri ication of the required permissions and of the impact of modi ied parameters;</p><p>-veri ication of the APIs within the RIC (e.g., using the API Enablement element from the Near-RT RIC).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>• Step IV</head><p>-Identi ication of all prospective con licts between applications;</p><p>-classi ication of con licts to various classes under the management of the con lict mitigation module in the RIC;</p><p>-identi ication of any critical con licts. -generation of generic reports delivered to the provider and for the customer;</p><p>-generation of detailed reports available after payment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">XAPP CUSTOMIZATION AND DEPLOY-MENT</head><p>Very similar observations (to those associated with the xApp/rApp store) can be made while analyzing the automation in the inal deployment stage. The MNO shall be able to easily and safely buy the application of interest, test and verify it on its own environment, customize it to its needs, and, if all tests pass positively, inally deploy it in the network. Again, the application of the DT of the true underlying network of the MNO can be considered an effective and secure way for the true veri ication of the downloaded xApp/rApp in a real environment. However, as the installation of any new software may cause some unpredictable consequences, the MNO shall have the possibility to easily uninstall the application and roll back to the setup before its irst run.</p><p>One very interesting option that appears to the MNOs, is the automated generation of new xApps/rApps, customized to the MNO's needs, based on the observations of the behavior of already installed applications. However, this item has been left for further study and is not a subject of this paper. In Fig. <ref type="figure" target="#fig_4">5</ref>, we have illustrated the concept of usage of the digital twin concept for testing purposes by the MNO. One may observe two layers, physical twin and digital twin, where the former re lects the true network physically deployed in a real environment, and the latter, its digital representation in the virtual world. One can notice that in the physical twin layer, the MNO performs typical monitoring activities for the network performance, it analyses the status of the network and also the impact of really installed applications (xApps, in this example, mobile handover xApp, MHO, and load balancing xApp, LB). Based on such analysis, it will make decisions on network con iguration. In parallel, however, there is a digital twin running in the virtual domain. It is fed with information from the real world and performs short and long-term analysis of the behavior of the network operating in one or more -based on the observations of the functioning of various applications, the intelligent creation of the new xApp bene iting from the already installed ones.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">CONCLUSION</head><p>This position paper describes the need for autonomous operation in O-RAN; based on current O-RAN implementations, engineers are focused on creating solutions that are tightly-coupled to esoteric platform implementations, rather than reusable, platform-portable innovative solutions in their expert domains. In luenced by active efforts in various standards bodies, as well as hyperscaler app marketplaces, we propose a straightforward approach to the assisted design and automated testing in O-RAN. Via a concrete example, we describe our platform (RIC)independent approach, in which an xApp may be described, veri ied, tested, and deployed by operators and third parties in an autonomous manner. We believe that our approach will enable engineers to more easily focus on improving RAN operations and providing high-quality service and experience for users.</p><p>Looking forward, we plan to develop our platformindependent RIC to demonstrate autonomous development and deployment for various xApp use cases, as well as explore the same approach to automatically con igure testing sandboxes and use them to perform experimental validation of xApps. Additionally, we will explore a common marketplace for xApp and testing based on our template system. Together, we see this as a pathway to platform-independent autonomous devops for open radio access networks.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDICES A. THE XAPP/RAPP TEMPLATE</head><p>In this appendix, we present the proposed xApp template (1), followed by a discussion of its components. Let us brie ly describe the main blocks of the proposed xApp/rApp manifest ile. First, in the &lt;metadata&gt; section, all necessary information about the author and the version of the application could be provided. In addition, the version of the O-RAN ALLIANCE standard to which the application is compliant should be exposed. Next, the second key block in the manifest could de ine all input and output arguments &lt;IOParameters&gt;. These could be further categorized into subcategories depending on the type of interface, as speci ied in Fig. <ref type="figure" target="#fig_0">1</ref>. In Listing 1, one can see some examples of such parameters depending on the associated interface; for example, one can ind the type of base station under the control of certain RICs, available bandwidths and reported radio signal strengths observed as E2 parameters, and policy ID and enrichment information as A1 parameters.</p><p>Those are examples, while possibly exact aspects shall be de ined, e.g., if the xApp refers to a certain E2 Node type, i.e. O-CU-CP, O-CU-UP, O-DU, or O-eNB, such that the MNO has a speci ic knowledge, which network elements are affected. Therefore, the list of input and output parameters should be possibly standardized, and it could be used by the con lict detection and mitigation modules to manage the co-functioning of various xApps/rApps. Once the input and output parameters are speci ied, xApp/rApp may de ine the dependencies between other applications from the same provider and other applications offered by other reputable providers. Next, xApp/rApp may require access to some sensitive data, such as UE location or UE capabilities. It may happen that access to some kind of such data will be mandatory (for the proper functioning of the application) and, to some, only supportive. The interested MNO may ilter and select the xApp/rApp also based on the type of information shared with the third-party application. Please note that the relation between the input-output parameters and the permission is not unique. A separate section in the proposed manifest ile deals with the applied AI tool within the xApp/rApp. The application of any AI tool is associated with decisions on applied training models, ways of veri ication, etc. The MNO may have a choice to select between non-trained AI models (following the description of the provider and rules de ined by the RIC provider) and initially trained model (i.e., to choose the model trained by reputable xApp/rApp providers). However, such a decision can be dif icult to make, so the application provider should include a description (following the prede ined template) of the applied AI tools, models, and the ways in which to use them. Moreover, the application of the selected AI tool entails speci ic security threats; various advanced and focused attacks against speci ic AI models are possible nowadays; thus, the MNO shall be informed in detail about the proposed AI tool. The last section of the proposed manifest ile is related to the events to which the xApp/rApp should react and have access. If the considered application deals with improving the mobile handover, it should be informed by the controller about any event of interest that could trigger the start of the application. Similar to the permission section, the event one could be further split into obligatory events and supportive events. The presence of such a section would also support the effective functioning of the RIC. In particular, by exposing the list of events to which the xApp/rApp should be subscribed, the application can be correctly classi ied by the RIC, proper priorities and hierarchy levels can be assigned to it. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. USE CASE EXAMPLE</head><p>Let us now discuss the above observations in the speci ic use case, the creation and deployment of the Traf ic Steering (TS) use case, as speci ied in <ref type="bibr" target="#b23">[24]</ref>. The considered TS xApp has been, in practice, implemented and tested using the open-source environment by Rimedo Labs, i.e., the SD-RAN by Open Networking Foundation. The TS application should be deployed at the Near-RT RIC as its goal is to provide network optimization within the control loop of between 10 ms and 1 s.</p><p>The following set of mandatory parameters (from the TS xApp design perspective) can be identi ied as de ined in the standard: Distribution of Synchronization Signal Reference Signal Received Power (SS-RSRP), User Equipment Identity (UE ID), Cell Global Identity (CGI), Single -Network Slice Selection Assistance Information (S-NSSAI), 5G QoS Identi ier (5QI), Mean number of RRC Connections, and max number of RRC Connections. Next, besides the mandatory items, optional (supportive) parameters may be used, such as Distribution of DL/UL UE throughput in gNB, Radio Resource Utilization (including DL/UL total available PRB, Mean, and Peak DL/UL PRB used for data traf ic), and mobility management-related measurements (including the number of inter-gNB handovers, intra-gNB handovers, intra/inter-frequency handover related measurements). Finally, the following output parameters can be identi ied, such as User Equipment Identity (UE ID), Primary Cell ID, Target Primary Cell ID, List of PDU sessions for handover, List of Data Radio Bearers (DRB) for handover, List of Secondary cells to be set up (optional). The TS xApp assumes that it will follow the policies speci ied by the MNO, as de ined in <ref type="bibr" target="#b24">[25]</ref>. In our implementation, four policies are considered, named as SHALL, FOR-BID, PREFER and AVOID. In addition, the vanilla AI tool applied (logistic regression) was used to select the best policy for a given user deployment. Finally, the TS xApp should respond to the following events:</p><p>• Registration of the new UE in the network;</p><p>• change in network status due to the mobile handover;</p><p>• start and end of the mobile handover;</p><p>• deregistration of a UE in the network;</p><p>• change of the TS policy (addition of new policy, selection of new policy, change of the policy setup);</p><p>• change the 5QI, as a result of the changed service;</p><p>• switching on/off of base station or its elements (like spectrum bands, antennas/rf-chains, carriers, etc.).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B.1 Template example</head><p>Based on the above xApp characterization, the following example of the template manifest ile could be speci ied, as shown in Listing 2. One may notice the presence of the metadata block that speci ies the generic description of the Traf ic Steering Application (TS xApp). Next, all input and output parameters associated with the E2 and A1 interfaces are discussed. It is followed by the de inition of the dependencies with the other xApps delivered by xApp provider, namely Quality-of-Service-based Resource Allocation (QRA) and Load Balancing (LB). As in the case of TS and QRA one may state that they are fully complementary, it is envisaged that TS and LB have an impact on a similar set of parameters. As a proposed policy, it is suggested that TS xApp overwrites all decisions of the LB xApp. For proper functioning, the TS application requires some speci ic permissions, such as access to the power of the signal from each UE in the network. As mentioned above, the application performs the logistic regression algorithm, being an example of supervised learning. Finally, the set of events to which the application should be subscribed is provided. Note, the description of the xApp is taken from <ref type="bibr" target="#b25">[26]</ref>  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B.2 Veri ication and deployment procedure</head><p>Based on the information provided in the manifest ile, the store and the MNO shall perform numerous tests to verify the true performance of the application. In addition to various typical tests for performance evaluation, dedicated tests could be performed in the scenario described in the manifest. It was mentioned there that logistic regression models had been trained and veri ied in the network consisting of ive base stations over one million UE deployments. Short and long-term tests should be run to assess the performance of xApp in various network conigurations. Next, it is mentioned that the TS xApp has identi ied dependency with the LB application of the same provided, thus test for the mutual impact of these applications shall be performed at least by the store (and by the MNO, if it already has the LB application installed). Finally, the set of events to which the TS should be registered is provided. In that context, advanced testing scenarios shall be de ined and tests should be carried out to check possible con licts between other applications also being dependent on and in luencing the same network parameters.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 -</head><label>1</label><figDesc>Fig. 1 -O-RAN architecture Non-RT RIC. Those serve as platforms for external applications aiming at radio network optimization, respectively, xApps and rApps, operating in different timescales and scopes, as discussed in the following sections. To complete the picture, O-RAN architecture also covers: O-Cloud i.e., a cloud computing platform on which the virtual elements (like, O-CU, O-DU, or Near-RT RIC) can be deployed; and Service Management and Orchestration (SMO), the management platform, with one of the functions being Non-RT RIC. The above-mentioned elements are connected via the O-RAN-speci ied interfaces. They could be split into three types: • RAN-internal, namely: Open Front-Haul (OFH), an eCPRI-based interface between O-DU and O-RU to transfer I/Q samples; E1 and F1, 3GPP-based interfaces de ined for HLS, between CU-CP and CU-UP and CUs and DU, respectively.</figDesc><graphic coords="2,42.52,70.87,240.95,327.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 2 -</head><label>2</label><figDesc>Fig. 2 -Near-RT RIC and Non-RT RIC namely: O1, a management interface for all RAN elements but O-RU; O2, interface for O-Cloud platform resources and workload management (e.g., scaling up/down resources); OFH M-Plane, the management interface for the O-RU.</figDesc><graphic coords="2,311.81,70.86,240.95,231.22" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 -</head><label>3</label><figDesc>Fig. 3 -Relations between the xApp/rApp providers, store and the network operator; Mobile Network Operator (MNO), Certi icate Authority (CA)</figDesc><graphic coords="6,42.52,70.88,525.60,240.83" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 -</head><label>4</label><figDesc>Fig. 4 -Key phases in automated xApp/rApp development, upload and deployment</figDesc><graphic coords="8,42.52,70.87,525.60,277.31" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5 ---</head><label>5</label><figDesc>Fig. 5 -Illustration of the usage of digital twin concept for xApp/rApp automated testing</figDesc><graphic coords="11,42.52,70.92,525.60,482.31" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>June 2022, O-RAN ALLIANCE founded a research task force called the next Generation Research Group (nGRG), which focuses on the research of open and intelligent RAN principles in 6G and future network standards. nGRG work is split into several research streams, including requirements, architecture, AI/ML, security, and research platforms. Supplementing the prior and ongoing research activities, in our paper, we focus on the de inition of the automation of the xApp/rApp development and veri ication process.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>Such use cases take advantage of the programmability and interfaces exposed by RAN components in open RANs while allowing developers the opportunity to create applications (e.g., xApps) based on data from RAN. Provisioning and analysis of closed loops at nearreal-time RIC allows operators to analyze the data and arrive at the new use case needs at the edge. This can then be used to drive the process of evolution of new xApps to enable the development, instantiation, and deployment of xApps based on the capabilities of various RAN nodes. An initial proof of concept, done under the initiative of</figDesc><table /><note><p>"Build-a-thon 2021" by FG-AN produced a demonstration of a YAML-driven docker container-based instantiation of controllers. This was independently supported by an xApp implementation however, integrated automation of the xApp lifecycle was not achieved in FG-AN Build-a-thon 2021. Conceptually, the study of x/rApp lifecycle automation discussed in this work is well aligned with the concepts discussed in standards and industry bodies, including in ITU-T, and can even be considered as a realization of the concepts in the O-RAN context.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head></head><label></label><figDesc>as developed by Rimedo Labs. the xApp is to intelligently and flexibly associate users -to-cells based on predefined policies. Controls cell preferences and mobile handovers related to individual users, users within the same QoS flow, or users associated with a given network slice, to improve the utilization of radio resources within the network and meet the QoS demands of users. Registration of the new UE in the network Change in network status due to the mobile handover Start and end of the mobile handover Unregistration of a UE in the network Change of the TS policy (addition of new policy, selection of new policy, change of the policy setup)Change of the 5QI parameters of give users Switching on/off of base station, its elements (like active bearers, spectrum bands, antennas, etc.) &lt;/events-obligatory&gt; &lt;/Events&gt;</figDesc><table><row><cell></cell><cell>List of Data Radio Bearers (DRB)</cell></row><row><cell>&lt;AITools_tests&gt;</cell><cell>for handover</cell></row><row><cell>&lt;input_data&gt;</cell><cell>&lt;/E2Out&gt;</cell></row><row><cell>In_data:{TRAINED_MODELS}</cell><cell>&lt;IOParameters&gt;</cell></row><row><cell>In_data_desc:{The model is trained</cell><cell></cell></row><row><cell>over million of user deployments in the 5</cell><cell>&lt;Dependencies&gt;</cell></row><row><cell>base station scenario}</cell><cell>&lt;ownApps&gt;</cell></row><row><cell>&lt;/input_data&gt;</cell><cell>&lt;appName&gt;</cell></row><row><cell>&lt;output_data&gt;</cell><cell>xAppName:QRA</cell></row><row><cell>OutData:{TRAINED_MODEL}</cell><cell>xAppVersion:1.0</cell></row><row><cell>&lt;/output_data&gt;</cell><cell>List of jointly modified parameters:</cell></row><row><cell>&lt;/AITools_tests&gt;</cell><cell>None</cell></row><row><cell>&lt;metadata&gt;</cell><cell>Required_data_from_QRA:</cell></row><row><cell>AuthorList: Author1, Author 2 &lt;Events&gt;</cell><cell>Radio Resource Utilization</cell></row><row><cell>AuthorAffil: xApp Provider &lt;events-obligatory&gt;</cell><cell>DL/UL throughput distribution</cell></row><row><cell>AuthorEmail: email@address.com</cell><cell>Modified_data_in_QRA:</cell></row><row><cell>xAppName: Traffic Steering xApp</cell><cell>Number of active PDU sessions</cell></row><row><cell>xAppVersion: 1.0</cell><cell>Number of active UEs</cell></row><row><cell>xApp subversion: 1.0</cell><cell>Action: {NONE}</cell></row><row><cell>Standard_version: 03.2022</cell><cell>&lt;/appName&gt;</cell></row><row><cell>&lt;BriefDescription&gt;</cell><cell>&lt;appName&gt;</cell></row><row><cell>The goal of &lt;/BriefDescription&gt; &lt;/metadata&gt; Listing 2 -TS manifest example</cell><cell>xAppName:LB xAppVersion:2.0 List of jointly modified parameters: List of DRBs for handover List of PDU sessions for handover UE ID Target Primary Cell ID Required_data_from_LB: None Modified_data_in_LB: None Action: {OVERWRITE TS DECISIONS}</cell></row><row><cell>&lt;IOParameters&gt;</cell><cell>&lt;/appName&gt;</cell></row><row><cell>&lt;E2In&gt;</cell><cell>&lt;/ownApps&gt;</cell></row><row><cell>E2InParamList:</cell><cell>&lt;/Dependencies&gt;</cell></row><row><cell>User Equipment Identity (UE ID)</cell><cell></cell></row><row><cell>Cell Global Identity (CGI)</cell><cell>&lt;Permissions&gt;</cell></row><row><cell>Single -Network Slice Selection</cell><cell>&lt;perm-obligatory&gt;</cell></row><row><cell>Assistance</cell><cell>Access-to-UE-RSSI reports</cell></row><row><cell>Information (S-NSSAI)</cell><cell>&lt;/perm-obligatory &gt;</cell></row><row><cell>5G QoS Identifier (5QI)</cell><cell>&lt; perm-preferred&gt;</cell></row><row><cell>Mean number of RRC Connections</cell><cell>List-of-neighboring-cells</cell></row><row><cell>Max number of RRC Connections</cell><cell>List-of-UE-from-neighboring-cells</cell></row><row><cell>&lt;/E2In&gt;</cell><cell>&lt;/perm-preferred &gt;</cell></row><row><cell>&lt;A1In&gt;</cell><cell>&lt;/ Permissions &gt;</cell></row><row><cell>A1InParamLIst:</cell><cell></cell></row><row><cell>AVOID, SHALL, FORBID, PREFER</cell><cell>&lt;AITools&gt;</cell></row><row><cell>PolicyID: {AVOID, rules}{SHALL, rules</cell><cell>&lt;type&gt;</cell></row><row><cell>}{FORBID, rules}{PREFER, rules}</cell><cell>AIType:{supervised}</cell></row><row><cell>&lt;/A1In&gt;</cell><cell>&lt;/type&gt;</cell></row><row><cell></cell><cell>&lt;alg&gt;</cell></row><row><cell>&lt;E2Out&gt;</cell><cell>algType:{Logistic Regression}</cell></row><row><cell>E2OutParamList:</cell><cell>algDesc:{The algorithm decides on the</cell></row><row><cell>User Equipment Identity (UE ID)</cell><cell>best policy for a given distribution of</cell></row><row><cell>Primary Cell ID</cell><cell>UEs}</cell></row><row><cell>Target Primary Cell ID</cell><cell>&lt;/alg&gt;</cell></row><row><cell>List of PDU sessions for handover</cell><cell>&lt;/AITools &gt;</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>ITU Journal on Future and Evolving Technologies, Volume 4, Issue 2, June 2023 ©International Telecommunication Union, 2023</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_1"><p>While a detailed study of Intellectual Property Rights (IPR) is out of the scope of this work, enabling the xApps/rApps delivered by the thirdparty requires, in general, careful consideration of the IPR issues. It is indeed possible that sophisticated IPR policies applied by contemporary IPR holders in the communications domain may have to be considered during software development and deployment. However, it is possible that the disaggregation of RAN functions as well as the assumed modularity paves the way for the creation of an innovation ecosystem for the third parties. Kliks et al.: Towards autonomous open radio access networks ©International Telecommunication</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2023" xml:id="foot_2"><p> Union, 2023  </p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_3"><p>©International Telecommunication Union, 2023</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_4"><p>www.itu.int/en/ITU-T/focusgroups/an/Pages/default.aspx -Accessed 14/10/2022</p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUTHORS</head><p>Vishnu Ram holds a masters degree in computer science and engineering from Indian Institute of Technology, Delhi. He has hands-on experience in the ield of the telecommunications industry for more than two decades, developing and implementing standards, and holds 15 international granted patents. He was nominated to Scienti ic Advisory Board Associate (SABA) member of Motorola Networks and was a senior specialist in the Advanced Technologies group of Nokia Networks. Currently, he works as an independent expert, coordinating standards initiatives, liaisons with other SDOs, industry bodies, open source and academia, mentoring student projects and coordinating the ITU "AI/ML in 5G" Challenge around the globe. Vishnu is a senior member of IEEE and a vice chair of the ITU-T Focus Group on Autonomous Networks (FG-AN) and co-convener of ITU-T Correspondence Group on datasets applicable for AI/ML in networks (CG-datasets for AI/ML in networks). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Leon</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">O-RAN ALLIANCE website</title>
+		<ptr target="https://www.o-ran.org" />
+		<imprint>
+			<date type="published" when="2022-07">July 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">O-RAN Architecture Description, v.6.0</title>
+		<author>
+			<persName><forename type="first">O-Ran</forename><surname>Wg1</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Alliance</surname></persName>
+		</author>
+		<ptr target="https://orandownloadsweb.azurewebsites.net/specifications" />
+		<imprint>
+			<date type="published" when="2022-03">Mar. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">O-RAN Working Group 3, Near-Real-time RAN Intelligent Controller Near-RT RIC Architecture, v.2.1</title>
+		<author>
+			<persName><forename type="first">O-Ran Alliance</forename><surname>Wg3</surname></persName>
+		</author>
+		<ptr target="https://orandownloadsweb.azurewebsites.net/specifications" />
+		<imprint>
+			<date type="published" when="2022-03">Mar. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">O-RAN Working Group 2, Non-RT RIC Architecture, v.2.0</title>
+		<author>
+			<persName><forename type="first">O-Ran Alliance</forename><surname>Wg2</surname></persName>
+		</author>
+		<ptr target="https://orandownloadsweb.azurewebsites.net/specifications" />
+		<imprint>
+			<date type="published" when="2022-07">July 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">dApps: Distributed Applications for Real-Time Inference and Control in O-RAN</title>
+		<author>
+			<persName><forename type="first">D'</forename><surname>Salvatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Oro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Polese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hai</forename><surname>Bonati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Melodia</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MCOM.002.2200079</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Communications Magazine</title>
+		<imprint>
+			<biblScope unit="volume">60</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="52" to="58" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">ChARM: NextG Spectrum Sharing Through Data-Driven Real-Time O-RAN Dynamic Control</title>
+		<author>
+			<persName><forename type="first">Luca</forename><surname>Baldesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Restuccia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Melodia</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/INFOCOM48880.2022.9796985</idno>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE INFOCOM</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="240" to="249" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Toward Modular and Flexible Open RAN Implementations in 6G Networks: Traf ic Steering Use Case and O-RAN xApps</title>
+		<author>
+			<persName><forename type="first">Marcin</forename><surname>Dryjański</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Łukasz</forename><surname>Kułacz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adrian</forename><surname>Kliks</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/s21248173</idno>
+		<ptr target="https://www.mdpi.com/1424-8220/21/24/8173" />
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<idno type="ISSN">1424-8220</idno>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">ColO-RAN: Developing Machine Learning-based xApps for Open RAN Closed-loop Control on Programmable Experimental Platforms</title>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Polese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Bonati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D'</forename><surname>Salvatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stefano</forename><surname>Oro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Basagni</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Melodia</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TMC.2022.3188013</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Mobile Computing</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="14" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Understanding O-RAN: Architecture, Interfaces, Algorithms, Security, and Research Challenges</title>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Polese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Bonati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D'</forename><surname>Salvatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stefano</forename><surname>Oro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Basagni</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Melodia</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/COMST.2023.3239220</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Communications Surveys &amp; Tutorials</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="1" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">OrchestRAN: Network Automation through Orchestrated Intelligence in the Open RAN</title>
+		<author>
+			<persName><forename type="first">D'</forename><surname>Salvatore</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leonardo</forename><surname>Oro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michele</forename><surname>Bonati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Polese</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Melodia</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/INFOCOM48880.2022.9796744</idno>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="270" to="279" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Towards Closed-loop Automation in 5G Open RAN: Coupling an Open-Source Simulator with xApps</title>
+		<author>
+			<persName><forename type="first">Theofanis</forename><surname>Karamplias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sotirios</forename><forename type="middle">T</forename><surname>Spantideas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anastasios</forename><forename type="middle">E</forename><surname>Giannopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Panagiotis</forename><surname>Gkonis</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/EuCNC/6GSummit54941.2022.9815658</idno>
+	</analytic>
+	<monogr>
+		<title level="m">2022 Joint European Conference on Networks and Communications &amp; 6G Summit (EuCNC/6G Summit</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="232" to="237" />
+		</imprint>
+	</monogr>
+	<note>Nikolaos Kapsalis, and Panagiotis Trakadas</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">DASH-IF Position Paper: Server and Network Assisted DASH (SAND)</title>
+		<ptr target="https://dashif.org/docs/SAND-Whitepaper-Dec13-final.pdf" />
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<publisher>DASH Industry Forum</publisher>
+		</imprint>
+	</monogr>
+	<note>In: position paper</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">F</forename><surname>Akyildiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Khorov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kiryanov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kovkov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Krasilov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Liubogoshchev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Shmelkin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tang</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/GLOCOMW.2018.8644183</idno>
+		<title level="m">xStream: A New Platform Enabling Communication Between Applications and the 5G Network</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+	<note>2018 IEEE Globecom Workshops (GC Wkshps)</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">ARBAT: A lexible network architecture for QoE-aware communications in 5G systems</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">F</forename><surname>Akyildiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Khorov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Krasilov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kureev</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.comnet.2018.10.016</idno>
+		<idno>2018 . 10 . 016</idno>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S1389128618311228" />
+	</analytic>
+	<monogr>
+		<title level="j">Computer Networks</title>
+		<idno type="ISSN">1389-1286</idno>
+		<imprint>
+			<biblScope unit="volume">147</biblScope>
+			<biblScope unit="page" from="262" to="279" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Hybrid Optimization Assisted Green Power Allocation Model for QoS-Driven Energy-Ef iciency in 5G Networks</title>
+		<author>
+			<persName><forename type="first">Shriganesh</forename><surname>Yadav</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sameer</forename><surname>Nanivadekar</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01969722.2023.2175147</idno>
+		<ptr target="https://doi.org/10.1080/01969722.2023.2175147" />
+	</analytic>
+	<monogr>
+		<title level="j">Cybernetics and Systems</title>
+		<imprint>
+			<biblScope unit="volume">0</biblScope>
+			<biblScope unit="page" from="1" to="16" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Towards 6G Through SDN and NFV-Based Solutions for Terrestrial and Non-Terrestrial Networks</title>
+		<author>
+			<persName><forename type="first">Ahan</forename><surname>Kak</surname></persName>
+		</author>
+		<ptr target="http://hdl.handle.net/1853/64746" />
+		<imprint>
+			<date type="published" when="2023">2023</date>
+			<biblScope unit="volume">30332</biblScope>
+			<pubPlace>Atlanta, GA</pubPlace>
+		</imprint>
+	</monogr>
+	<note>PhD thesis. 266 4th Street NW</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">6G and Beyond: The Future of Wireless Communications Systems</title>
+		<author>
+			<persName><forename type="first">Ian</forename><forename type="middle">F</forename><surname>Akyildiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ahan</forename><surname>Kak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shuai</forename><surname>Nie</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2020.3010896</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="133995" to="134030" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Focus Group on Autonomous Networks. Architecture Networks framework for Autonomous. ITU-T</title>
+		<author>
+			<persName><surname>Itu-T</surname></persName>
+		</author>
+		<ptr target="https://www.itu.int/en/ITU-T/focusgroups/an/Documents/Architecture-AN.pdf" />
+		<imprint>
+			<date type="published" when="2022-09">Sept. 2022</date>
+			<biblScope unit="page" from="1" to="55" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Focus Group on Autonomous Networks. Use cases for Autonomous Networks. United Nation&apos;s ITU-T</title>
+		<author>
+			<persName><surname>Itu-T</surname></persName>
+		</author>
+		<ptr target="https://www.itu.int/rec/T-REC-Y.Sup71-202207-P/en" />
+		<imprint>
+			<date type="published" when="2022-09">Sept. 2022</date>
+			<biblScope unit="page" from="1" to="56" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Digital Twin in Industry: State-of-the-Art</title>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">He</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ang</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Y C</forename><surname>Nee</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TII.2018.2873186</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Industrial Informatics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="2405" to="2415" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Digital Twin and Big Data Towards Smart Manufacturing and Industry 4.0: 360 Degree Comparison</title>
+		<author>
+			<persName><forename type="first">Qinglin</forename><surname>Qi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Tao</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2018.2793265</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="3585" to="3593" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Digital Twin: Values, Challenges and Enablers From a Modeling Perspective</title>
+		<author>
+			<persName><forename type="first">Adil</forename><surname>Rasheed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Omer</forename><surname>San</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Trond</forename><surname>Kvamsdal</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ACCESS.2020.2970143</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="21980" to="22012" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Machine learning marketplace integration in future networks including IMT-2020</title>
+		<author>
+			<persName><forename type="first">Itu-T Y</forename><surname>Itu-T. Recommendation</surname></persName>
+		</author>
+		<ptr target="https://www.itu.int/rec/T-REC-Y.3176-202009-I/en" />
+		<imprint>
+			<date type="published" when="2020-09">Sept. 2020</date>
+			<biblScope unit="volume">3176</biblScope>
+			<biblScope unit="page" from="1" to="32" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<title level="m" type="main">O-RAN Working Group 1, Use Cases Detailed Speci ication</title>
+		<author>
+			<persName><forename type="first">O-Ran Alliance</forename><surname>Wg1</surname></persName>
+		</author>
+		<idno>v.7.0</idno>
+		<ptr target="https://orandownloadsweb.azurewebsites.net/specifications" />
+		<imprint>
+			<date type="published" when="2022-03">Mar. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">O-RAN Working Group 2, A1 interface: Type De initions, v.2.0</title>
+		<author>
+			<persName><forename type="first">O-Ran Alliance</forename><surname>Wg2</surname></persName>
+		</author>
+		<ptr target="https://orandownloadsweb.azurewebsites.net/specifications" />
+		<imprint>
+			<date type="published" when="2022-03">Mar. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">O-RAN Traf ic Steering xApp -Technical Speci ication</title>
+		<author>
+			<persName><forename type="first">Rimedo</forename><surname>Labs</surname></persName>
+		</author>
+		<ptr target="https://mailchi.mp/0eec92853d8f/o-ran-ts-xapp-techspec" />
+		<imprint>
+			<date type="published" when="2022-03">Mar. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

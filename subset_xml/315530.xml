@@ -1,0 +1,3041 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Lessons learned: Symbiotic autonomous robot ecosystem for nuclear environments</title>
+				<funder ref="#_SawkFZ8 #_zkuZbT9">
+					<orgName type="full">unknown</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Sellafield Ltd., The University of Manchester</orgName>
+				</funder>
+				<funder ref="#_JsSe2P9 #_faNX5Ph">
+					<orgName type="full">EPSRC</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">EPSRC, Chinese Scholarship Council-University of Manchester</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Daniel</forename><surname>Mitchell</surname></persName>
+							<email>d.mitchell.5@research.gla.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Paul</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Dominick</forename><surname>Emor Baniqued</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Abdul</forename><surname>Zahid</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Andrew</forename><surname>West</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Bahman</forename><surname>Nouri</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Rahmat</forename><surname>Abadi</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Barry</forename><surname>Lennox</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Bin</forename><surname>Liu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Burak</forename><surname>Kizilkaya</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><surname>Flynn</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>David</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">John</forename><surname>Francis</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Erwin</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Jose</forename><surname>Lopez Pulgarin</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Guodong</forename><surname>Zhao</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Hasan Kivrak</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jamie</forename><surname>Rowland</surname></persName>
+							<idno type="ORCID">0000-0002-3782-309X</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Douglas</forename><surname>Blanche</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jennifer</forename><surname>David</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Bristol Robotics Laboratory</orgName>
+								<orgName type="institution">University of the West of England</orgName>
+								<address>
+									<settlement>Bristol</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jingyan</forename><surname>Wang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Joseph</forename><surname>Bolarinwa</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Bristol Robotics Laboratory</orgName>
+								<orgName type="institution">University of the West of England</orgName>
+								<address>
+									<settlement>Bristol</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Kanzhong</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Keir</forename><surname>Groves</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Liyuan Qi</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mahmoud</forename><forename type="middle">A</forename><surname>Shawky</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Manuel</forename><surname>Giuliani</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Bristol Robotics Laboratory</orgName>
+								<orgName type="institution">University of the West of England</orgName>
+								<address>
+									<settlement>Bristol</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Melissa</forename><surname>Sandison</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Olaoluwa</forename><surname>Popoola</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Ognjen</forename><surname>Marjanovic</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Paul</forename><surname>Bremner</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Bristol Robotics Laboratory</orgName>
+								<orgName type="institution">University of the West of England</orgName>
+								<address>
+									<settlement>Bristol</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Samuel</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Thomas</forename><surname>Harper</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><surname>Shivoh Nandakumar</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="institution">Heriot-Watt University</orgName>
+								<address>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Simon</forename><surname>Watson</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Subham</forename><surname>Agrawal</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Bristol Robotics Laboratory</orgName>
+								<orgName type="institution">University of the West of England</orgName>
+								<address>
+									<settlement>Bristol</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Theodore</forename><surname>Lim</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="institution">Heriot-Watt University</orgName>
+								<address>
+									<settlement>Edinburgh</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Thomas</forename><surname>Johnson</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Wasim</forename><surname>Ahmad</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Xiangmin</forename><surname>Xu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Zhen</forename><surname>Meng</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">James Watt School of Engineering, Autonomous Systems and Connectivity Division</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Zhengyi</forename><surname>Jiang</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Manchester</orgName>
+								<address>
+									<settlement>Manchester</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><forename type="middle">Dominick</forename><surname>Emor</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Mitchell</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Dominick</surname></persName>
+							<idno type="ORCID">0000-0002-9390-4150</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Emor</forename><surname>Baniqued</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Andrew</forename><surname>West</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Barry</forename><surname>Lennox</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Burak</forename><surname>Kizilka</surname></persName>
+							<idno type="ORCID">0000-0003-0905-8324</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Guodong</forename><surname>Zha</surname></persName>
+							<idno type="ORCID">0000-0002-1024-3618</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Hasan</forename><surname>Kivrak</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Mahmoud</forename><forename type="middle">A</forename><surname>Shaw</surname></persName>
+							<idno type="ORCID">0000-0001-8508-3439</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Manuel</forename><surname>Giuliani</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Olaoluwa</forename><surname>Popool</surname></persName>
+							<idno type="ORCID">0000-0003-3781-7623</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Ognjen</forename><surname>Marjanovic</surname></persName>
+							<idno type="ORCID">0000-0002-4566-3567</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Bremner</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Samuel</forename><forename type="middle">Thoma</forename><surname>Harpe</surname></persName>
+							<idno type="ORCID">0000-0001-7716-5100</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Thomas</forename><surname>Johnso</surname></persName>
+							<idno type="ORCID">0000-0001-8931-2745</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Xiangmin</forename><surname>Xu</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Zhengyi</forename><surname>Jiang</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Samuel</forename><forename type="middle">Thomas</forename><surname>Harper</surname></persName>
+						</author>
+						<author>
+							<persName><roleName>Pulgarin</roleName><forename type="first">Erwin</forename><forename type="middle">Jose</forename><surname>Lopez</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Keir</forename><surname>Groves</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Shivoh</forename><surname>Nandakumar</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Bin</forename><surname>Liu</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Burak</forename><surname>Kizilkaya</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Kanzhong</forename><surname>Yao</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Liquan</forename><surname>Qi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Rahmat</forename><surname>Aabadi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Douglas</forename><surname>Blance</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Kanzhong</forename><surname>Yao</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Liyuan</forename><surname>Qi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Abdul</forename><surname>Zahid</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">David</forename><forename type="middle">John</forename><surname>Francis</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Kanzhong</forename><surname>Yao</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Liyuan</forename><surname>Qi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Muhammad</forename><forename type="middle">Ali</forename><surname>Imran</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Kanzhong</forename><surname>Yao</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Liyuan</forename><surname>Qi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Kangzhong</forename><surname>Yao</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Liyuan</forename><surname>Qi</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Olaluwa</forename><surname>Popoola</surname></persName>
+						</author>
+						<title level="a" type="main">Lessons learned: Symbiotic autonomous robot ecosystem for nuclear environments</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">43D94326CAADEE6D1A2D84D648D7BE96</idno>
+					<idno type="DOI">10.1049/csy2.12103</idno>
+					<note type="submission">Received: 14 July 2023 -Revised: 19 September 2023 -Accepted: 30 October 2023 -IET Cyber-Systems and Robotics</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:11+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>cyber-systems</term>
+					<term>field robotics</term>
+					<term>hazardous inspection</term>
+					<term>human robot interaction</term>
+					<term>industrial robotics</term>
+					<term>mobile robots</term>
+					<term>multi-agent systems</term>
+					<term>multi-robot systems</term>
+					<term>robotics</term>
+					<term>service robots Mitchell</term>
+					<term>D.</term>
+					<term>et al.: Lessons learned: Symbiotic autonomous robot ecosystem for nuclear environments. IET Cyber-Syst. Robot. e12103</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Nuclear facilities have a regulatory requirement to measure radiation levels within Post Operational Clean Out (POCO) around nuclear facilities each year, resulting in a trend towards robotic deployments to gain an improved understanding during nuclear decommissioning phases. The UK Nuclear Decommissioning Authority supports the view that human-in-the-loop (HITL) robotic deployments are a solution to improve procedures and reduce risks within radiation characterisation of nuclear sites. The authors present a novel implementation of a Cyber-Physical System (CPS) deployed in an analogue nuclear environment, comprised of a multi-robot (MR) team coordinated by a HITL operator through a digital twin interface. The development of the CPS created efficient partnerships across systems including robots, digital systems and human. This was presented as a multi-staged mission within an inspection scenario for the heterogeneous Symbiotic Multi-Robot Fleet (SMuRF). Symbiotic interactions were achieved across the SMuRF where robots utilised automated collaborative governance to work together, where a single robot would face challenges in full characterisation of radiation. Key contributions include the demonstration of symbiotic autonomy and query-based learning of an autonomous mission supporting scalable autonomy and autonomy as a service. The coordination of the CPS was a success and displayed further challenges and improvements related to future MR fleets.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>Nuclear facilities are required to undergo frequent Inspection, Maintenance and Repair (IMR) activities to ensure safe processes throughout a facility. At the end of their life-cycle, such facilities undergo strict decommissioning protocols due to the hazardous nature of handling nuclear materials <ref type="bibr" target="#b0">[1]</ref>. For example, in Sellafield Ltd. (Seascale, West Cumbria, UK), the Post Operational Clean Out (POCO) programme was established to ensure the consistency in the processes that support both site operations and nuclear decommissioning <ref type="bibr" target="#b1">[2]</ref>. The key objectives of this programme include reducing the general risks and hazards, minimising the radiological and chemotoxic constraints and facilitating the safe decommissioning and demolition of its buildings <ref type="bibr" target="#b2">[3]</ref>.</p><p>Robotics and Autonomous Systems (RAS) are key enablers in gaining an improved understanding of a nuclear facility whilst increasing the safety of personnel who conduct POCO operations <ref type="bibr" target="#b3">[4]</ref>. Mobile robots can access confined spaces, perform routine inspection and clean-up activities, all whilst a human remains at a safe distance from radioactivity <ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b5">[6]</ref><ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref>. This research demonstrates a broad spectrum of potential applications across diverse sectors. Within the current state-of-the-art for robots in nuclear environments, systems are deployed individually and evaluated under single use-case deployments via a sequence of events where in most examples, when safety is increased via robotics, efficiency decreases <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b10">11]</ref>. In addition, presently sectors such as defence <ref type="bibr" target="#b11">[12]</ref>, offshore (inclusive of both renewable and petrochemical domains) <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref>, healthcare <ref type="bibr" target="#b14">[15]</ref>, logistics <ref type="bibr" target="#b15">[16]</ref> and agriculture <ref type="bibr" target="#b16">[17]</ref> are also actively assessing the merits of deploying individual mobile robots. These evaluations aim to validate the accrued benefits of single-unit deployments. However, as the advantages of such deployments become evident, these sectors will inevitably seek to scale their operations by deploying increased number of robots with heterogeneity to acquire benefits for more tasks and requirements. This endeavour, though a requirement in scalability, will encounter a notable bottleneck stemming from challenges associated with coordinating and comprehending the large datasets generated by these robot teams <ref type="bibr" target="#b17">[18]</ref>. For Multi-Robot (MR) fleets operating in dangerous environments, such as discussed in this article for the nuclear sector, resilience and coordination of robots at a distance in a safe environment from a user interface by a human are identified as additional key challenges in the future <ref type="bibr" target="#b18">[19]</ref>. The advancement of MRfleets represents a key opportunity to maximise the characteristics from a range of robots to improve IMR activities, productivity (due to the ability to complete tasks in parallel) and resilience in operations <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b20">21]</ref>.</p><p>Nuclear facilities undergoing decommissioning present several challenges to robotics including unstructured, high consequence environments with hazards, such as radiological, chemical, thermal and other risks, which are often not visible to the eye. Whilst current operations that take place have high precision, are well planned and safe via defence in depth, often operations are substandard, resulting in loss of critical plant knowledge, additional costs and extended completion timelines <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b22">23]</ref>. To improve current procedures, research is being conducted on heterogeneous MR fleets for task allocation <ref type="bibr" target="#b23">[24]</ref>. This also leverages the unique capabilities of a range of individual platforms, varying in size and function. MR fleets can provide an opportunity to harness information, access difficult-to-reach areas, provide more frequent IMR and ensure safe procedures <ref type="bibr" target="#b24">[25,</ref><ref type="bibr" target="#b25">26]</ref>. Albeit the next generation of nuclear reactors are being designed with improved accessibility for robotics <ref type="bibr" target="#b26">[27,</ref><ref type="bibr" target="#b27">28]</ref>, several inherent challenges are also presented for legacy and decommissioning management including radiological activity, poor access (e.g., where shielding prevents wireless communications), contamination, power supplies and variable packages <ref type="bibr" target="#b28">[29]</ref>.</p><p>The prospect of a MR-fleet within a nuclear facility is highly desirable where a Human-In-The-Loop (HITL) can coordinate the fleet to complete a range of tasks throughout a facility where RAS can access areas where dose rates of radiation may be too high for humans <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b30">31]</ref>. A MR-fleet is of key importance as a range of robots allows for their different capabilities to be exploited. For example, tasks can be allocated to different robotic platforms based on different priorities (robotic ability, availability and sensing payload) and can be conducted repeatedly with precision. However, considerations must be made in terms of resilient communications, real-time data, visualisation, interpretation of data and deployability <ref type="bibr" target="#b31">[32]</ref>. This allows for a HITL to trust the deployment of the MRfleet and ensure safe deployment of robots, which do not risk a safe state across the facility.</p><p>The term Cyber-Physical System (CPS) has been created due to the advancement of inter connectivity between embedded physical systems (robots, sensors and actuators) with computation technologies (digital twins, simulations and dashboard interfaces), where an overview is displayed in Figure <ref type="figure" target="#fig_4">1</ref>  <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b33">34]</ref>. A DT (digital twin) is a copy of a physical object, environment and system that is connected and shares operational and functional data <ref type="bibr" target="#b34">[35]</ref>. These areas have had significant development in recent years where the state-of-theart has improved due to physical attributes of robotic platforms <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b36">37]</ref>, processing in computing (e.g. Nvidia and Intel processors), digital modelling <ref type="bibr" target="#b37">[38]</ref><ref type="bibr" target="#b38">[39]</ref><ref type="bibr" target="#b39">[40]</ref> and wireless connectivity including developments in the Internet of things <ref type="bibr" target="#b40">[41,</ref><ref type="bibr" target="#b41">42]</ref>. Currently there are limitations enabling a fully functional CPS with bidirectional communications across HITL, DT, robotic platforms and sensors. The motivation of this work aims to overcome these issues via a symbiotic approach where robots can communicate with each other and exhibit robotic teamwork in overcoming challenges in cluttered environments and inspection missions <ref type="bibr" target="#b19">[20]</ref>.</p><p>This research article presents the first implementation of a MR CPS coordinated by a HITL operator through a DT interface in a representative, non-active nuclear scenario. A multi-staged IMR mission for the heterogeneous Symbiotic Multi-Robot Fleet (SMuRF) based within an analogue nuclear environment was demonstrated at RAICo1 facility, Cumbria, UK. An overview of the SMuRF mission and performance can be accessed via a video <ref type="bibr" target="#b42">[43]</ref>. The facility was created to remove the challenges associated with working on nuclear sites and provides an intermediate stage for testing RAS in a facility that mirrors obstacles found at Sellafield <ref type="bibr">Ltd. [44]</ref>. The SMuRF consisted of Boston Dynamics SPOT with ARM, Agile X Scout 2.0 and mini, Clearpath Jackal (Continuous Autonomous Radiometric Monitoring Assistant (CARMA)) <ref type="bibr" target="#b43">[45]</ref>, Franka robotic manipulator Arm and DJI Tello Drone. The demonstration of the SMuRF included an analogue environment scenario where UK regulation requires nuclear operators to access and complete characterisation of a site every 3-6 months to assess for radiation levels and asset health monitoring. In the inspection, a DT is utilised to oversee changes in the intermediate nuclear environment where the robotic team is also visualised. Within the inspection mission, aqueous contamination is detected and mapped via a Frequency Modulated Continuous Wave (FMCW) radar sensor paired with radiation dosage levels from a commercial-off-theshelf radiation sensor <ref type="bibr" target="#b44">[46]</ref>. This advances the state-of-the-art as more information can be attained by a robot on reporting to improve the situational awareness of a HITL during POCO. The key benefit of robot deployed sensing is to leverage the spatiotemporal data recorded by the system, that is, position in space and a time stamp for any collected data. For stakeholders to exploit this data, there exists a need to effectively process, interrogate and visualise data, which may be collected over the span of many years. DTs therefore offer a compelling solution to these nuclear sector needs. Within the CPS investigation, due to the wireless constraints in the facility, the data is fed back to the DT after the mission for visualisation and processing.</p><p>This work uses a system of systems approach extending beyond typical swarming <ref type="bibr" target="#b45">[47]</ref>, MR-fleet operations <ref type="bibr" target="#b46">[48,</ref><ref type="bibr" target="#b47">49]</ref> and is different to Defence Advanced Research Projects Agency (DARPA) Subterranean Challenge <ref type="bibr" target="#b48">[50]</ref>, which represents the current state-of-the-art. This work discovers a new extension beyond the state-of-the-art due to symbiosis that takes place across the SMuRF and is discussed within this paper <ref type="bibr" target="#b49">[51]</ref>. These findings have been presented in the literature review segment which highlights the current state-of-the-art in MRfleets and the competitors of the DARPA Sub-T challenge. This article creates opportunities and sets up an alternative methodology to a MR-fleet to establish resilience through information sharing and lifecycle learning across the HITL. The key contribution includes the addressment of safety compliance, reliability and resilience throughout the lifecycle of a robotic deployment, which includes query-based learning towards symbiotic autonomy as a service. The objectives from this article include a DT interface with the ability to access near to real-time data from the SMuRF, symbiotic interactions across a robot team where robots collaborate towards POCO and the novel deployment of millimetre-wave radar sensing to localise potential aqueous contamination across a nuclear facility. Symbiotic interactions are defined as situations where a robotic team is required to directly collaborate together to overcome mission challenges relating to inspection, wireless communication or robot failures.</p><p>For the Nuclear sector, learning needs to be completed incrementally as we must ensure we can decrease mission risk whilst improving robotic capability in a safe and secure pathway. This symbiotic approach is a vital and necessary step for the optimisation of MR-fleets where regulators encourage a pathway towards a design for symbiotic autonomy. However, we must ensure that the introduction of a MR-fleet to a facility does not create an operational hazard. Symbiotic interactions across robots allow for opportunities where robots can be recovered or the safety hazard can be more effectively assessed. A reliable and resilient MR-fleet ensures effective collection of data which can be translated for the HITL into information for decommissioning, asset lifecycle extension and safety.</p><p>The publication is structured as follows. Section 2 includes a literature review of the current state-of-the-art in MR fleets where subsection 2.1 includes a full review of the DARPA SubT challenge, subsection 2.2 includes digital twins for decommissioning nuclear facilities and subsection 2.3 presents sensing methods for aqueous contamination and finally a summary section is presented. The methodology of the SMuRF is presented within Section 3. Section 4 includes the implementation and results where the MR inspection mission is presented in detail. Section 5 includes the discussion section where many of the lessons learned from this project are discussed. Section 6 includes the conclusion and Section 7 includes the future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| RELATED WORK: MR FLEETS</head><p>Interests in the deployment of MR teams continue to grow across several fields <ref type="bibr" target="#b50">[52]</ref><ref type="bibr" target="#b51">[53]</ref><ref type="bibr" target="#b52">[54]</ref><ref type="bibr" target="#b53">[55]</ref>. One of the reasons for this growing interest in MR teams is the limitation in capabilities of available single robots. Since no single robot can perform all conceivable tasks due to design <ref type="bibr" target="#b54">[56,</ref><ref type="bibr" target="#b55">57]</ref>, size <ref type="bibr" target="#b56">[58]</ref> and power consumption limitations <ref type="bibr" target="#b57">[59,</ref><ref type="bibr" target="#b58">60]</ref>, it may be useful to combine the functionalities of several robots to accomplish a goal. The main reason for this is the need to accomplish tasks within a given timeframe where a diverse robotic fleet completing a collection of inspection tasks is more efficient and effective. Therefore, dividing the task amongst several robots is useful and presents efficiency for facility operators. A third reason is that different robots are designed for specific terrains of operation, which may also influence the duration of operation. This specific reason provides motivation for the need for marsupial robots, where the functionalities of aerial and ground robots are combined within a single robotic platform <ref type="bibr" target="#b59">[61]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">| Defence advances research projects Subterranean Challenge</head><p>The DARPA Subterranean Challenge (SubT) was designed to address challenges that first responders face in search and rescue. The primary objective of the competition is to establish run-time situational awareness for a small team of operators whose robots must enter an unknown dynamic subterranean environment, which is representative of collapsed mines, postearthquake or search and rescue in urban settings. The robotic team conduct searches to locate artefacts (survivor manikin, mobile phone, backpack, helmet and other signs of potential survivors) alongside their reported location accurate to 5 m <ref type="bibr" target="#b48">[50,</ref><ref type="bibr" target="#b60">62]</ref>. This has driven the robotics community to develop different methodologies to search underground environments within time constraints. The work demonstrated holistic topdown approaches featuring robot fleet coordination via communication streams to a HITL alongside ground-up capabilities such as detection of artefacts, mapping and navigation as displayed in Figure <ref type="figure" target="#fig_0">2</ref>.</p><p>This section includes a comprehensive review from the Special Issue on Advancements and Lessons Learned during phase I and II of the DARPA Subterranean Challenge highlighting shared areas of improvement and barriers across the articles with respect to the state-of-the-art in MR teams. The keywords used to conduct this review alongside their definitions are presented within Table <ref type="table">1</ref>, ahead of the critical analysis.</p><p>The CERBERUS team resulted as the winners of the DARPA SubT challenge, however the outcomes and observations from each of the teams at the DARPA SubT challenge are discussed in this article <ref type="bibr" target="#b67">[69,</ref><ref type="bibr" target="#b68">70]</ref>. Key themes and challenges pertaining to their MR-fleet and approach has been highlighted under common headings of operator overload, communications and robot failure as displayed in Table <ref type="table">2</ref>. Whilst operator overload is difficult to measure and has no universal definition, we consider it defined as the cognitive workload required by the user's perceived level of mental effort that is influenced by F I G U R E 2 Comparison: ground-up and top-down approach.</p><p>several factors including number of tasks, task design and the imperative of a task <ref type="bibr" target="#b77">[78]</ref> Operator overload typically negatively affects an inspection mission due to the user receiving too much information, too little information or information at the wrong time causing stress, therefore acting detrimentally to the mission <ref type="bibr" target="#b78">[79]</ref>. Wireless communications represent how effectively they were deployed, whether there were breaks in the chain of communications which inhibited the MR-fleet. Robotic failure was analysed as the negative performance of the robot whilst completing tasks. This included robotic failure in areas whilst navigating over stairs, in different environments or damage sustained on robots and the performance of recovery methods which were implemented.</p><p>This section provides critical analysis of the DARPA SubT challenge displayed within Table <ref type="table">2</ref>. The competition states that during the mission, a single human operator is only permitted to oversee and interact with the mission from a dashboard interface. Combining this operation requirement with the need for several robotic platform types to be deployed, this often resulted in operator overload when challenges in mission resilience were faced during artefact detection <ref type="bibr" target="#b70">[72]</ref>. In several cases, the robots often had to be teleoperated to overcome resilience challenges such as the unstructured environments presented in each segment of the course <ref type="bibr" target="#b63">[65,</ref><ref type="bibr" target="#b69">71,</ref><ref type="bibr" target="#b71">73,</ref><ref type="bibr" target="#b72">74]</ref>. This resulted in a HITL having to be extremely focussed during the mission <ref type="bibr" target="#b72">[74]</ref>. In some cases, artefacts were detected 13 times a minute. This overwhelmed the operator, especially when being required to teleoperate a robot in the scenario where a robot is stuck (such as within rubble or narrow corridors) and damage sustained on robots <ref type="bibr" target="#b71">[73,</ref><ref type="bibr" target="#b76">77]</ref>. However, some teams did try to overcome this issue by offloading some decisions to an automated co-pilot such as Team Nebula <ref type="bibr" target="#b74">[75]</ref>.</p><p>Many of the teams also focussed on communications that became a challenge due to sharing of data within the tunnels (which are wireless communications denied). Several teams utilised mesh networks where reliability issues were faced when dropping down wireless nodes in the tunnels. In addition, some robots damaged the mesh networks by autonomously traversing over them. A couple of teams relied on their robots travelling to the tunnel access area (mission start point next to base station) in some stages to enable wireless connectivity for the exchange of data.</p><p>Lastly, there were issues related to robotic failure within the mission profiles. These were related to any failures of the robots which left them stranded or unable to continue the mission. These were mainly due to the autonomy within navigation being unable to overcome obstacles due to the unstructured terrain. For example, a quadruped robot slipped when navigating over a railway track leaving it unrecoverable due to system failure <ref type="bibr" target="#b71">[73]</ref>. A tracked robot shut down on a stairway, when the tracks slipped, this caused a crash and the HITL was forced to shutdown the robot. The same team also faced a catastrophic failure post mission due to the condensation which had built up during the event leaving a Clearpath Husky with problems after the event <ref type="bibr" target="#b75">[76]</ref>. In advance of the DARPA SubT challenge, many teams knew they would face T A B L E 1 Keywords and definition.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Keyword Definition</head><p>Resilience <ref type="bibr" target="#b61">[63]</ref> The ability to recover from unforeseen circumstances such as environmental variables, unstructured environments where the robot can overcome adversity to maximise the current task success rate Reliability <ref type="bibr" target="#b62">[64]</ref> Reducing risk onboard a robot and maximising state of health via monitoring and ensuring the operational ability of the onboard systems maximising the mean time to failure</p><p>Operator overload <ref type="bibr" target="#b63">[65,</ref><ref type="bibr" target="#b64">66]</ref> Psychological stress and anxiety resulting in the human making mistakes, only focusing on urgent tasks, forgetting about the use of other robots in the fleet and forgetting the wider strategy of the challenge Communications <ref type="bibr" target="#b47">[49]</ref> Exchange of information across robots and to the HITL via different methods of communication including wired and wireless</p><p>Robotic failure <ref type="bibr" target="#b65">[67]</ref> The circumstances during design, manufacture or operation of a robot that lead to a failure mode during its operation</p><p>Robotic teamwork <ref type="bibr" target="#b66">[68]</ref> Working collaboratively as a team to achieve improved inspection capability or overcome adversity in dynamic environments</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Virtual interactions</head><p>Improving the situational awareness in a robotic fleet when two or more robots share data leading to improve information about a mission. For example, map sharing</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Physical interactions</head><p>On-site interactions between two robots.</p><p>-A robot utilises a second robot to improve the visibility of an area. (Room filled with smoke, robot A has visual camera and robot B uses its thermal camera to guide robot a to safety) -Robot A requests the manipulator from robot B to free a cable restricting robot A's operation</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Symbiotic interactions</head><p>Taking the form of either virtual or physical within a robotic team where several robots collaborate directly to overcome mission challenges relating to inspection, wireless communications or robotic failures. This reduces the requirement for humans to intervene and replaces it with robotic intervention via symbiotic interactions Abbreviation: HITL, human-in-the-loop.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>MITCHELL ET AL.</head><p>T A B L E 2 Outcomes and observations the competing teams at the DARPA SubT event. robotic failures and so had designed different approaches in advance. For example, Rouček et al. <ref type="bibr" target="#b75">[76]</ref>, utilised software which allowed for failures and tried to mitigate them when they occurred. Agha et al. with Team CoSTAR <ref type="bibr" target="#b74">[75]</ref> designed recovery failures which typically worked effectively, and however, planned to enable the system to predict failure and adapt to it when it occurs. Several of the other teams discuss the HITL, such as having to identify when failures have occurred and teleoperate the robot to overcome different challenges which occurred.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Publication and</head><p>Robotic teamwork across a MR-fleet allows for a wide range of capabilities to be captured to overcome challenges related to resilience, reliability and mission optimisation. For example, many of the robots faced robotic failures, such as Team CERBERUS when one of their tethered robots had a tangled optical cable which was vital to the mission ensuring optimum communications between HITL and robots in the nearby area <ref type="bibr" target="#b69">[71]</ref>. If the team had designed a contingency plan via robotic teamwork, then this failure could have been overcome by a robot with a manipulator arm for untangling of the optical cable. This would recover the tethered robot allowing entry further into the mine shaft. An unintentional teamwork via robots to overcome failure did occur in one of the teams. A husky robot was freed to overcome navigational challenges by a tracked robot. The tracked robot was rammed into the Husky to dislodge it, however this resulted in a negative interaction as although the Husky robot was now operational, the tracked robot now displayed a failure as it had lost its location in the map it had constructed <ref type="bibr" target="#b75">[76]</ref>.</p><p>In summary, this article identified that many of the teams faced common issues and challenges related to operator overload, communications, robotic failure and robotic teamwork. Therefore, we propose that a new approach via symbiosis is required which can further improve the state-of-the-art in MR team missions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">| Digital twins for decommissioning nuclear facilities</head><p>Decommissioning of nuclear power plants is a complex procedure with many issues and potential hazards. Such a process should be considered and planned at the stage of design of the plant according to the International Atomic Energy Agency recommendations <ref type="bibr" target="#b79">[80]</ref>.</p><p>With advancements in technology, use of remotely controlled robotic manipulators has become popular in decommissioning processes within a wide range of applications, such as extraction and disposal of radioactive materials, decontamination and demolition of buildings, dismantling and lifting equipment <ref type="bibr" target="#b80">[81]</ref>. Furthermore, digitalisation of industrial processes with principles of Industry 4.0 enables a myriad of flexible solutions to nuclear power plant decommissioning. For example, DT of the power plant and robotic manipulators can decrease the cost and eases the planning and implementation of decommissioning. A DT provides comprehensive testing, simulating and analysing capabilities by enabling scrolling over time and repeating or forecasting previous and future events which was not possible before <ref type="bibr" target="#b81">[82]</ref>. Patterson et al. proposed a conceptual framework for an integrated nuclear digital environment. The proposed framework considers construction, decommissioning, waste packaging and emplacement. The study shows that the implementation of a digital environment of nuclear power plants comes with a plethora of advantages, such as shorter development times, reduced costs, higher reliability, increased operability and safety <ref type="bibr" target="#b82">[83]</ref>. With a similar approach, in future, robotic manipulators can also be digitalised and integrated to the existing digital worlds of nuclear power plants which would create fully functioning metaverses for such applications <ref type="bibr" target="#b83">[84]</ref>. As the work admits, there are technology gaps to be closed in terms of software, model validation and Building Information Models (BIM) for nuclear environments before such a framework can be fully implemented.</p><p>On the other hand, digitalisation also comes with its very own problems such as communication requirements for realtime data exchange between physical asset and cyber assets such as the DT, as well as cybersecurity aspects of the system <ref type="bibr" target="#b81">[82]</ref>.</p><p>In order to make DTs, both data driven and model driven approaches can be incorporated. Using numerical analysis tools and deep knowledge of physical phenomena and the design components, it is possible to use the model driven approach. The data driven approach, on the other hand, benefits from high quality data, better data analytics algorithms and a significant improvement in computing facilities <ref type="bibr" target="#b84">[85]</ref>.  Indicates analysis or conclusions made by the authors in this publication in our critical analysis of the DARPA Subterranean Challenge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">of 24</head><p>-</p><formula xml:id="formula_0">MITCHELL ET AL.</formula><p>Incorporating machine learning features into nuclear plant DTs requires massive amounts of data to increase the performance and accuracy of these features. However, although the nuclear industry does not suffer from diversity in the variety of data, it does lack the quantity of data required to produce an accurate model. A major concern in the development of such DTs is the cost and benefit related to data and information governance. The cost required to procure and store data is almost entirely on the operator while the value of the information obtained from this data is shared between multiple organisations including but not limited to the operator, suppliers, consultancy firms selling data analytics services, amongst others <ref type="bibr" target="#b84">[85]</ref>.</p><p>The nuclear sector requires meticulous levels of defence to situations where autonomy alleviates risks applied in the sector. Whilst robotics is developing to become more reliable and resilient, they can fail to complete tasks. The nuclear sector currently favours teleoperation over full autonomy for low level robotic inspection, as in the event of a failure, a human can immediately teleoperate to rectify the mission. Teleoperation of a MR-fleet via a single person is more difficult when considering coordination of robots to complete a wide range of tasks. Robotic teamwork will be crucial at ensuring that robots can overcome problems if something goes wrong. For example, in the case where something is dropped, a secondary robot can be sent to oversee the area and locate the dropped object ahead of the primary robot moving. This would ensure no other radioactive materials are dropped resulting in a chain of incidents. This increases levels of safety and leads to a more efficient approach to recovery from failure.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">| Sensing aqueous contamination</head><p>Throughout the full lifecycle of a nuclear facility, it is of operational imperative to understand the state of health of radioactive materials and containment <ref type="bibr" target="#b85">[86]</ref><ref type="bibr" target="#b86">[87]</ref><ref type="bibr" target="#b87">[88]</ref>. Levels of contaminated water, or "liquor", within a containment vessel require regular inspection to ensure that the fluid level does not fall below a certain threshold due to natural evaporation; the refilling and draining of which utilise pipework that may be prone to malfunction and leakage over time <ref type="bibr" target="#b74">[75,</ref><ref type="bibr" target="#b75">76]</ref>. An evaluation of incidents, reported by Sellafield Ltd. over the period 2017-2022, has shown that of 35 events reported to safety authorities, 19 involved contaminants suspended within fluid and/or radioactive liquor leakage <ref type="bibr" target="#b79">[80,</ref><ref type="bibr" target="#b80">81]</ref>. To maintain the safety of radioactive facilities, and the surrounding environment, the detection and characterisation of contamination is a regulatory requirement <ref type="bibr" target="#b87">[88]</ref><ref type="bibr" target="#b88">[89]</ref><ref type="bibr" target="#b89">[90]</ref><ref type="bibr" target="#b90">[91]</ref><ref type="bibr" target="#b91">[92]</ref>.</p><p>To maintain the safety of radioactive facilities, and the surrounding environment, the detection and characterisation of contamination is essential. There is a growing uptake in the use of ground-based vehicles for these inspection challenges, to monitor and map radiation characteristics of dry environments <ref type="bibr" target="#b92">[93]</ref><ref type="bibr" target="#b93">[94]</ref><ref type="bibr" target="#b94">[95]</ref>. Furthermore, there is deployment of surface and underwater vehicles for the monitoring of wet storage facilities equipped with radiation sensing capabilities <ref type="bibr" target="#b95">[96,</ref><ref type="bibr" target="#b96">97]</ref>.</p><p>As highlighted previously, there is a considerable risk associated with liquid leaks which may be chemically or radiologically harmful, but there is a lack of robotic solutions to detect and discriminate liquid contamination and its radioactive signature. With these risks, this could also lead to further spreading of radioactive materials due to the tyres of robots when autonomously navigating.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">| Summary</head><p>Critical analysis of subsection 2.1 and 2.2 has resulted in several key points and gaps in literature requiring further research. Figure <ref type="figure">3</ref> provides an overlook of the challenges for MR-fleets and DTs highlighted in this review where key points are as follows:</p><p>1. The creation of an architecture which reduces the cognitive load and overwhelms the HITL. This would allow for a single human operator to focus on critical tasks surrounding mission safety or productivity. For example, further advancement upon team CERBERUS' autonomous co-pilot feature to ensure that timely information is fed to the HITL to reduce the burden created overwhelming the operator <ref type="bibr" target="#b69">[71]</ref>. 2. A method allowing for robots to safely enter communication denied environments and return to available communication areas to ensure secure data collection, storage and transfer to the HITL. An example includes where a robot has failed (in a WIFI denied area) that a second robot should be able to assist in locating the failed robot, collecting its data and transferring its data once WIFI has been restored. 3. Robotic failures are common in missions which are long durations, requiring endurance and beyond visual line of sight capabilities. Therefore, approaches must be considered to mitigate failures and allow some failures to occur in other instances. For example, if a robot is stranded, unrecoverable or not completed its job, another robot could be used to overcome the issue <ref type="bibr" target="#b97">[98]</ref>, for example, assistance via a manipulator arm to gain more force and torque to unstuck a quadruped leg in an unstructured environment.</p><p>In other examples, it may be effective to reboot systems when some systems fail onboard the robot.</p><p>4. Finally, the development and deployment of symbiotic interactions to take place a across a fleet to reduce the requirement for human intervention with a shift towards robotic intervention to rectify mission parameters. There is not a single robot which exists that solves all of the solutions in the world yet. Robots can carry different payloads and have different capabilities due to their design. This can be leveraged in a robotic fleet where robots can identify when they may face issues, and request different robots to do different tasks such as inspection at height or in confined spaces. For example, Ribeiro et al. presents a fleet of aerial vehicles and autonomous ground vehicles where the aerial vehicles complete the overhead inspection of a field to influence and optimise the autonomous ground vehicles to perform agricultural tasks. This results in a mutualistic interaction between the robotic teams as the aerial robot can identify and allocate tasks for the ground vehicles whilst maintaining an optimal flight path <ref type="bibr" target="#b98">[99]</ref>. In addition, a robot may require a different tool for inspection where it may be more efficient for another robot to collect a tool and transport it to the robot that requires it. Lastly, robots can also fail in the field, meaning that vital equipment and data cannot be recovered in some scenarios. This can be due to erratic behaviours, blown fuses, stiffness in the mechanics of the robot, fault in enclosures, hydraulic issues, etc. <ref type="bibr" target="#b62">[64]</ref>. Therefore, this article considers a symbiotic robotic approach where different robotic platforms can be used to ensure the recovery of other robots, such as a robot with a manipulator untangling the tether of another robotic platform or transfer of data from a stranded robot to an operational robot to ensure successful collection of all field data. This article recognises that reconfigurable teams and reinforcement learning, task allocation and cooperative sensing in a multi-agent team are important in driving accelerated development in the state-of-the-art in robotics. However, open research questions are present which requires robots directly helping each other to overcome challenges in resilience, reliability and safety as discussed in bullet points 1-4.</p><p>To address the aforementioned challenges and gaps in the state-of-the-art we deployed a SMuRF to improve the overall inspection during POCO. This utilised several robotic platforms with sensors which fed data to a single DT interface (Unity 3D). Whilst robotic failure was identified in our literature review, we identify that symbiotic interactions may be a method to overcome these challenges in the future and is discussed in more detail in this work. In addition, the DT interface is a method which enables for visualisation of results without overwhelming the user, albeit we did not have as much data to report on when compared to the DARPA Sub-T.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| METHODOLOGY</head><p>In this work, we propose a SMuRF utilising a Symbiotic System of Systems Approach (SSoSA) to enable a HITL to coordinate a MR-fleet and a variety of sensors within an analogue nuclear environment <ref type="bibr" target="#b19">[20]</ref>. A SSoSA is inspired by nature where mutualistic, commensalistic and parasitic interactions take place between the symbiont and host. The host is defined as an element with a resource which is required by the symbiont <ref type="bibr" target="#b99">[100]</ref>. Where the symbiont and host interact, this results in positive and/or negative outcomes. A mutualistic interaction would leave both parties with positive outcomes. An example includes interactions between sharks and remora fish. The remora fish painlessly attach to sharks and detach to feed on scraps once a shark has been hunted. With respect to engineering, we utilise a system of systems approach which can be described as a set of systems of system elements that interact to provide a unique capability that none of the constituent elements can accomplish on its own. This can be applied to an SSoSA where a fleet of heterogeneous robots work together to provide mutualistic interactions resulting in an advanced capability via shared use of hardware and software capabilities.</p><p>An SSoSA, when applied to a MR-fleet, advances beyond typical HITL collaborations and robot-to-robot collaborations. Firstly, there are limitations from vendors of commercial-offthe-shelf platforms which do not have the ability to share information across the robots or collaborate with each other. Secondly, robots face challenges in sharing information to a unified DT environment for a HITL to oversee information from inspections. Finally, there are challenges in reducing the requirement for human intervention. To address this, robots could be used to overcome challenges where human intervention would have previously been used. This is represented as symbiotic interactions where a robot could overturn a fallen robot or provide additional sensing within an inspection mission to corroborate results.</p><p>This article utilises open-access commercial-off-the-shelfplatforms, sensors, digitalisation tools and software to provide a solution to coordinating a SMuRF within a nuclear IMR mission. The methodology and implementation of this article provide solutions, however, also identify several challenges which exist within the state-of-the-art and must be addressed in the future for persistent and scalable autonomy sector-wide. This work was carried out within an in-person 'Research Sprint Event' at the RAICo1 facility with academic partners with an overall aim to create and optimise how a mixed MR-fleet can utilise a CPS architecture for a dynamic inspection mission such as within POCO of a nuclear facility.</p><p>Figure <ref type="figure">4</ref> presents the methodology which was taken when addressing the challenges presented to MR-fleets and scalable autonomy. Scalable autonomy includes CPSs that have the ability to be rapidly and regularly deployed in different facilities with different requirements where the fleet can increase in size depending on the inspection requirements of the facility. This includes ensuring regulation, safety and autonomy meets required industry standards. The first step includes creating an operational MR-fleet. This requires the use of robots and an environment to validate that the autonomous missions are purposeful and robot behaviour acts as designed to the requirements of the inspection mission. This can include navigation, manipulation, scanning and other ground up capabilities. Secondly, to enable operation of a MR-fleet, a user interface is required for coordination. This includes symbiotic interactions and robotic teamwork where robots can assist each other in missions to improve inspection and adapt to different challenges.</p><p>Human collaboration allows for run-time mission reporting, data collection and status updates during the mission. Human collaboration also creates trust across a MR-fleet in ensuring the robots complete tasks as directed and intended to where query-based learning emphasises this in the operation of a MR-fleet. Query-based learning includes suggestions which prompts to solicit HITL advice and support. This can enable to confirm or deny threats within a mission and is the fundamental core of cyber physical HITL systems resulting in an energy efficient and resilient model. This also leads to increased trust in the operation of a system and information of the environment for the HITL.</p><p>Safety governance includes both the robot and HITL. The human must have the ability to oversee the mission and intervene in the presence of an expected failure and rectify the mission when an unexpected failure occurs. The robots must also have the ability to operate safely in different mission scenarios which may be required for different regulations. For example, some robots may not be ATEX compliant (ensuring safe operation in explosive environments) therefore unable to access different environments or some robots may require different navigation restrictions in confined spaces or areas which humans may also access.</p><p>Robot-aware resilience includes the mitigation of risks due to environment, personnel or other robots, throughout a mission and being able to overcome them onboard the robot. These can relate to: � Reliability issues in hardware and software where robots can take actions on maintaining each other. � Resilience issues where robotic teamwork can enable a robot to overcome challenges in the unstructured environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| IMPLEMENTATION AND RESULTS</head><p>In this section, we describe the implementation and results of the semi-autonomous inspection mission utilising the CPS developed for a heterogeneous MR-fleet. The symbiotic digital architecture of the technologies applied is displayed within Figure <ref type="figure">5</ref>. Some considerations made during the implementation phase included how the human operator would decide on which robotic platform to send in the mission first. This was summarised as a series of decisions made regarding locomotion, sensing and perception as displayed in Figure <ref type="figure" target="#fig_2">6</ref>. Where locomotion is described as a method of navigation for robots regardless of if they have legs, wheels, propellers or other methods of mobility, referring to the ability for the robot to move from one waypoint to another whilst overcoming terrain restraints. An example includes a wheeled robot being unable to overcome rubble in most cases whereas a legged robot could. Sense refers to the collection of sensors or devices integrated onto the robotic structure to gather information about its environment when performing inspection. A noted conclusion includes that it would be undesirable for a single robot to have all the sensors onboard the robot as if the robot was to fail in a nuclear area (due to radiation permanently damaging its electronics), then that aspect of sensing would be lost in the field until the robot was recovered and further prolonged if it was unsafe to recover the robot <ref type="bibr" target="#b100">[101]</ref><ref type="bibr" target="#b101">[102]</ref><ref type="bibr" target="#b102">[103]</ref>.</p><p>Perceive enables both the robot and more importantly, the human to understand and interpret the outcomes of the inspection. This understanding facilitates the implementation of maintenance procedures and, with respect to MR-fleets, the decision of which robot to deploy next in the mission. Figure <ref type="figure" target="#fig_3">7</ref> presents a flow chart of the run-time mission objectives during the robotic inspection mission envelope. Figure <ref type="figure">8</ref> presents an overview of the mission as viewed from the DT. The figure, overlaid with arrows, visualises waypoints of the robots and describes the different mission steps where the colour coding of both figures are linked to aid in the understanding of the diagrams.</p><p>Divided into four steps, this mission involves (A) 3D mapping using a Scout 2.0 UGV and a Scout Mini UGV equipped with LiDAR sensors, (B) aerial inspection using a Tello UAV and taking images of the area of interest, (C) hazard mapping with radiation and FMCW sensors using the CARMA2 robot and (D) a demonstration of symbiotic interaction via a Spot quadruped robot, Franka Panda manipulator and CARMA robot. Appendix Tables <ref type="table">A1</ref> and<ref type="table">A2</ref>, respectively, highlight the development PC specifications used for operating the multi robot fleet and the robots deployed with their respective data collected.</p><p>In Step A, a 3D mapping scenario using a Scout 2.0 UGV and Scout Mini equipped with LiDAR (Velodyne VLP-16)</p><formula xml:id="formula_1">F I G U R E 4</formula><p>Overarching methodology of SMuRF which leads to scalable autonomy. entered the designated inspection areas. The layout of these areas was previously known to the operators based on original building plans and BIM. These sources were used in the creation of the DT. The goal of the 3D mapping task is to account for dynamic changes in the environment (i.e., objects moved, hazards found or structural changes) that can be detected using point cloud data. As these changes provided a degree of uncertainty to the operators and robots, this step was prioritised in the mission so the subsequent tasks could be carried out with increased safety. Both the Scout and Scout Mini robots utilised the odometry data from wheel encoders to accurately populate the 3D map data which consisted of an occupancy gird that allowed for global localisation and navigation through the environment. The octomap algorithm was used where it clusters points into vertices and then converts these points into voxels. Octomap is also configured to work with multiple robots by incrementally matching the 3D scans for each robot <ref type="bibr" target="#b103">[104]</ref>. The live map, formed by stitching together the sensor data from each robot, was operated and updated centrally in the DT of the facility, where point cloud messages transmitted by multiple robots were processed sequentially using a queue, and voxels were updated accordingly. Figure <ref type="figure">9</ref> presents the results of the 3D mapping task overlaid with the DT of the inspection areas.</p><p>Step B involved the deployment of a Tello UAV to perform an aerial survey. This was achieved by relaying a live camera feed to the operator reflecting the results of the inspection to the DT interface. In the mission, we introduced a physical simulation of a low to intermediate radioactive waste storage drum, leaking with an unknown substance (liquor as the analyte). Figure <ref type="figure" target="#fig_8">10</ref> illustrates how we identified and tagged the area as a hazard by positioning a Unity game object resembling a liquid and providing a general caution hazard tag around the area. The hazard tag allows users of the DT model to tag areas of concern such as the one identified.</p><p>In Step C, the CARMA robot was deployed to the inspection area to further investigate the spill that was identified in the UAV camera feed using FMCW radar <ref type="bibr" target="#b104">[105]</ref><ref type="bibr" target="#b105">[106]</ref><ref type="bibr" target="#b106">[107]</ref><ref type="bibr" target="#b107">[108]</ref><ref type="bibr" target="#b108">[109]</ref><ref type="bibr" target="#b109">[110]</ref>, an α, β detector and a γ sensor. The CARMA robot provided information about whether the identified hazard was aqueous (from FMCW data) and whether any radioactivity was detected (radiation sensors) <ref type="bibr" target="#b108">[109,</ref><ref type="bibr" target="#b110">111,</ref><ref type="bibr">112]</ref>. Figure <ref type="figure" target="#fig_8">11</ref> displays the key tasks which CARMA completed where A indicates the identified area of inspection via the DT, B illustrates the CARMA robot in the environment and C displays the planned path and data generated by CARMA.</p><p>Metallic intermediate level waste is often encapsulated in stainless steel drums where a dense material (grout) is utilised to fill the gaps within the material under storage. Inspections at Sellafield Ltd identified several containers exhibited considerable distortion resulting in safety concerns. This was caused by the production of gases, which can be detrimental to the structural integrity of the barrel and potentially flammable. It is also thought that corrosion of these containers could release metallic contamination, which can be particularly problematic when aqueous. To ensure the containment of radioactive metallic intermediate level waste, inspection procedures should be in place to reduce this risk <ref type="bibr" target="#b111">[113]</ref>. The aim of deployment of the FMCW radar sensor onboard the CARMA robot was to classify the type of a potential leakage around the drum where the scenario presented to the robot includes (A) a dry concrete flooring represented as a safely contained radioactive material, (B) water located on the drum indicating a safely contained material (i.e. the liquid does not originate from the drum thereby is not a contaminated leak situation) and finally, (C) liquor located on the floor which is a recognised hazard and could promote the corrosion of contacting drums. For the investigation we utilised an aqueous contamination solution consisting of Epsom bath salts (Magnesium Sulphate), to represent radioactive liquor. This was selected as the salts in the water would increase the conductivity; thereby increasing the contrast in the solution when compared to water, where realworld radioactive liquor would be expected to have metallic radioactive elements, also increasing the conductivity similarly. This allowed for a safe liquid which had similar characteristics to that of liquor in a nuclear facility. In addition, the Epsom bath salt also created a colour change of dark brown, allowing for a ground truth of where the solution was positioned, with much greater accuracy than water alone, enabling for the assessment of the localisation of the spill to be interrogated with higher confidence. The results and successful classification of each scenario (A-C) are presented in Figure <ref type="figure" target="#fig_8">12</ref>. The results display that the liquor solution returns higher return signal amplitudes than the water and dry concrete flooring as expected. This is reflected throughout the overview of the intermediate frequency and at the interface (zoomed in segment of Figure <ref type="figure" target="#fig_8">12</ref>). This work enables for improved procedures during POCO if this hazard was identified as aqueous contamination would require different cleaning methodologies than dry contamination. Furthermore, if undetected, this could lead to a robot spreading the contamination in the liquor example presented in this article when compared to a dry case.</p><p>Once the identified area of concern had been examined, the operator entered the waypoints to CARMA's autonomous path planner. The CARMA robot then performed an autonomous inspection of the surrounding area, recording data from all its sensor modalities in the area surrounding the barrel.</p><p>As a significant γ activity was identified at the spill location, the mission progressed into Step D where the symbiotic interaction between a Spot quadruped robot and a Franka Panda manipulator was demonstrated (Figure <ref type="figure" target="#fig_8">13</ref>).</p><p>The deployment of Spot to the inspection area was triggered by the operator from the DT interface. In this scenario, Spot autonomously left its home location and proceeded to the mobile garage (Figure <ref type="figure" target="#fig_8">13a-b</ref>) where a Franka Panda manipulator is installed. The Franka Panda manipulator then provided the appropriate tool for the hazards identified in the form of an extra γ sensor (Thermo Fisher Radeye G10, Waltham, WA, USA). The interaction commenced with the sensor being acquired by Spot through grasping with its manipulator. Upon acquiring the gamma sensor, Spot was then teleoperated to the spill location where it completed a vertical radiation scan at the centre of the radiation source. The scan ranged from the ground level to approximately 1.2 m high (Figure <ref type="figure" target="#fig_8">13c</ref> displaying Spot holding the γ sensor) with discrete interval scans of every 0.055 m. These heights were corroborated using a Vicon unit, however in future would be calculated by Spot itself. Upon completion of the vertical scan, Spot was then teleoperated to return the gamma sensor back to the mobile garage and then to its home position. The resulting vertical scan provided an array of gamma dosage values (arbitrary units) and height (metres), which can then be visualised in the DT interface. Figure <ref type="figure" target="#fig_8">14</ref> shows a conceptual image of this visualisation through the spawning of 3D disc objects where size and colour can be mapped based on dosage readings alongside a radiation hazard tag. To implement this concept in Unity3D, we mapped a range of simulated recorded gamma dosages into 10 levels (1-lowest and 10-highest) and allocated size and colour parameters for each scan. The lowest dosage level '1' was assigned to have a size value of 1.0 in the Unity3D xz scale and a light blue colour material corresponding to the beginning of the jet colour scheme. For the highest dosage level '10', the size value was assigned to be 6.0 while the colour value was assigned to be dark red. The discs were then stacked vertically from the lowest height at ground level to its maximum height (i.e., the height at which spot was able to scan with the gamma sensor). The sensor readings were simulated (hence arbitrary units) due to safety restrictions if working with real γ radiation to ensure the safety of the personnel working in the RAICO1 facility. The robotic arm moved upwards in stepped increments, hence the simulation results in Figure <ref type="figure" target="#fig_8">14</ref> are presented similarly to reflect this. However, information on detecting γ radiation can be found in refs. <ref type="bibr" target="#b112">[114,</ref><ref type="bibr" target="#b113">115]</ref>.</p><p>In this section, we presented the implementation of a semiautonomous mission using a heterogeneous MR-fleet in a CPS. The robot fleet enabled the construction and fusion of several sensors (i.e., camera, LiDAR, FMCW, alpha radiation and gamma radiation) into a single DT environment which allowed the robot operators and future inspectors to view and tag potential areas of concern. The information provided and analysed using this system can be used to inform decisions for future missions within this dynamic environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">| DISCUSSION</head><p>This article reports on the first implementation of a cyberphysical SMuRF within the RAICo1 mock-up nuclear facility. The physical environment was setup to simulate a decommissioning scenario for POCO and presented to Sellafield Ltd.</p><p>A SMuRF was deployed with the intention to inspect the area for radiation levels and asset health monitoring.</p><p>Valuable lessons have been learned in the preparation required when deploying a MR-fleet and the decisions which should be made in the coordination of robots within a POCO mission. Currently there is no procedure or regulation which exists to advise on MR-fleet deployment, therefore this research will assist in structuring a pathway to the effective use of robots in Nuclear facilities. We considered what information an engineer would already have about the inspected facility such as a blueprint of a floorplan of the facility and what information they would require following the inspection. For example, an overview of significant changes in the environment would be evaluated first. This would allow for a list of tasks to be created for further IMR. The key points and learnings are discussed in the following subsections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">| Symbiotic interactions</head><p>An advantage of the deployment of the heterogeneous SMuRF working as a team resulted in an improved inspection volume when compared to a single robot. The CARMA robot is well suited for mapping and measuring levels of α, β and γ radiation present on the floor. However, the CARMA robot faces a limitation when measuring levels of radiation at heights such as within the example of measuring radiation on a storage tank. This example demonstrated an effective symbiotic interaction between SPOT and CARMA where SPOT's manipulator was used to take measurements at different heights using a radiation detector initially deployed on CARMA. This interaction would be useful in a dosimetry context, where the dose at multiple heights is useful to determine the risks associated with an environment.</p><p>A key barrier in having a single robot with a wide range of sensors onboard includes the scenario where the robot becomes stranded or unrecoverable. A key benefit of having a SMuRF enables for several robots to utilise their diverse capabilities positively with a distributed sensing capability across the fleet. As the mission environment and objectives adapt, so too can the SMuRF to ensure the overall mission profile is achieved. This is the reason why a symbiotic approach is required and the reason for not installing the γ sensor onboard SPOT at the start of the mission to demonstrate this capability. As identified in Section 2, the DARPA teams faced challenges when their robots became stranded. Hence, we demonstrate extended capability of a mission via symbiotic interactions which allow a group of robots to complement each other by adapting rapidly to changing inspection or environmental requirements.</p><p>The FMCW radar for ground integrity analysis provided a useful sensor modality during this inspection. During the inspection, a leak representing a puddle of unidentified liquid, was identified visually by the DJI Tello drone. The identified area was displayed in the DT interface to enable an operator to deploy a robot with appropriate sensing modalities. A symbiotic interaction across the robots and DT enabled for further validation via the CARMA robot. The sensors onboard CARMA indicated both the presence of aqueous waste and that this waste was radioactive, therefore hazardous. This information could enable an operator to take action to reduce risks and take appropriate intervention to maintain the integrity of infrastructure/assets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">| Digital twinning</head><p>The DT interface enabled improved visualisation and situational awareness throughout the facility, circumventing the need for  human exposure. This DT enables improved mission planning and provides an interface which can allow operators to make critical interventions through improved perception and exploration of 3D data. In addition to minimising operator overload as discussed by several teams in the DARPA SubT challenge and listed in Table <ref type="table">2</ref> as the operator overload column. Operator cognitive overload was minimised via the inclusion of hazard tags relative to the environment meaning that the HITL can oversee the mission and drag/drop themselves into the cyber version of the facility to identify the hazard tag. This reduces the time pressures for the HITL monitoring the operation of the fleet which is created via a list of tasks for the human. The DT also facilitates trust by providing a holistic overview of the environment and the inspection mission state. An interface for direct robot teleoperation was also provided to the operator through the DT interface, and this is a particularly important functionality in the nuclear industry, where autonomous operation is not desirable for certain critical tasks.</p><p>The cyber physical SMuRF was designed to preserve the continuous exchange of data, whether it may be with the commands for the teleoperation of the robots or the recording and visualisation of the data in near real-time. However, another useful feature of this system is the replaying of recorded scenarios in the DT interface. The capability to review completed missions offline provides an excellent use case for the provision of accurate and reliable information during report generation of exploration and routine inspection missions from the nuclear facility. We also introduced the ability of the user to tag hazards, issues, and other incidents for later use. In this way, stakeholders will be able to review and keep themselves updated with the current activities of the team.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">| Sensing aqueous contamination</head><p>Gaining the information for wet versus dry contamination is of high importance for nuclear sector stakeholders. For example, a Boston Dynamics SPOT was deployed within Chernobyl's reactor 4, where the quadruped platform was preferred over a wheeled platform to minimise the contact surface area when navigating around the facility. This would minimise the dispersion and escape of radioactive dust <ref type="bibr" target="#b114">[116]</ref>.</p><p>In the example with a wheeled robot such as CARMA, the robot driving over the contaminated liquids could result in further spread and contamination of radioactivity around a facility. In addition, determining the surface composition of the ground is of vital importance not only for monitoring radiation levels around a facility but also for the efficacy of the robotic platform for self-certification purposes. This is due to radiation having the capability to damage electronics onboard the robotic platform.</p><p>The FMCW radar sensor could have been used to further research the physical properties of an active solution, however this was beyond the scope of this work. This could have involved oils as an alternative, however, the work conducted was a reasonable and justified comparison for a nuclear specific scenario.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">| Lessons learned</head><p>There were also challenges faced in the deployment of the SMuRF resulting in lessons learned for future iterations of the robotic inspection mission. RAICO1 has several static wireless routers stationed around the facility with access to Internet. On occasion, communication imperfections limited the initiation of the robotic missions on the robotic teams. To overcome these challenges, advanced methods will be introduced such as edge computing to offload computation to the edge resources which will improve communication reliability and delay <ref type="bibr" target="#b115">[117]</ref><ref type="bibr" target="#b116">[118]</ref><ref type="bibr" target="#b117">[119]</ref>. Another solution would be using onboard autonomy where necessary by introducing a hierarchy of autonomy. For example, some local processing can be established and fed back to the HITL at events of interest. Furthermore, the establishment of a 5G pop up network could have improved the network limitations. Due to the thick lead shielding walls present in nuclear environments, it can be assumed that wireless communications are restricted in several rooms (similar to DARPA SubT challenge), therefore it may have been beneficial to tether a 5G pop up network via a Clearpath Husky robot, which enables for wireless communication across the fleet of robots within a room. This would improve the reliability of communication between robot teams and HITL where a mesh network topology can branch off from the main 5G hub. Utilisation of 5G also would significantly improve the data rate for applications that require large data rates such as virtual reality for immersive telepresence, which involves the HITL. Additionally, ultra-low latency and ultra-high reliability would be achieved with 5G for critical tasks which is not possible with pre-5G cellular communications or WIFI. In sectors such as the nuclear industry, where a MR-fleet could be often used, communication infrastructure may be non-existent or insufficient to handle the minimum requirements of RAS. Therefore, methods must be in place to overcome these resilience challenges. In our scenario, we encountered challenges with an established operational WIFI network at the RAICO1 facility, highlighting the importance of ensuring coverage and capacity through mesh networking or other advanced methods to ensure functionality of autonomous MR systems.</p><p>Albeit, cybersecurity was not a key performance indicator of this article, for any robotic deployments in operational nuclear sites cybersecurity will be of high importance to ensure that all potential avenues are neutralised. These can include issues, vulnerabilities, threats, nature and risks throughout a system as robotics provides different opportunities for malicious materials to cause a significant detrimental effect. These threats can range from secure networking, management vulnerability, malicious spies, service disruptors and system flaws <ref type="bibr" target="#b118">[120,</ref><ref type="bibr" target="#b119">121]</ref>. This work will aid in informing new best practices where we can create operational decision support maps to capture the full data and information requirements of individual robots, fleet, inspection mission and infrastructure environment. This would include speed, accuracy and verification which analyses both robot health status, mission performance and safety governance. This would then inform when we require online data, and whether the analysis should be conducted in federated and/or a centralised approach.</p><p>Resilience is a challenge which requires continuous advancement as robots become more complex and are deployed in more dynamic environments. Fail-safe systems include a system which becomes safe, preventing the occurrence of more serious problems <ref type="bibr" target="#b120">[122]</ref>. Challenges include identifying areas in the environment or limitations in robotic capability to address scenarios where a robot fails. For the nuclear sector, this also presents challenges as the failure onboard a robot can lead to a failure within infrastructure if it cannot be mitigated. This could be prevented via selfcertification of the robot, HITL intervention or intervention via another robot in the SMuRF.</p><p>Within our SMuRF we utilised five commercial-off-theshelf robots (one of which had several bespoke adaptations). Using heterogeneous robots from different companies, typically results in a deployment scenario where the robots work in their own silos as there is no centralised interoperable graphical user interface for fleet management or a data sharing stream. We have overcome this via the implementation of our DT for fleet management; however, this did come with challenges in minimising complexity and restrictive time duration due to the research sprint event. This article addresses these key points where a SMuRF was utilised to represent intelligent infrastructure to manage the assets and buildings via an inspection. Humans were positioned further from dangerous areas allowing the robots to access potentially dangerous areas hereby reducing risks. Finally, information was delivered digitally via the DT dashboard and used to improve planning and decision making during POCO.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">| CONCLUSION</head><p>This research article reports on lessons learned and the utilisation of a symbiotic cyber physical architecture for a MRfleet deployment within an environment representative of a nuclear facility. The drivers for robotics and Artificial Intelligence (AI) were identified for the nuclear sector alongside constraints in single system deployments within well-defined use cases. We identify capability challenges which a symbiotic multi robot fleet methodology addresses and overcomes. Within the robotic aspects of this project, our results demonstrate increased operational awareness of an environment and the inclusion of symbiotic interactions which leverage the capability across the mission due to the unique characteristics of each robot in the SMuRF. Within sensing, our results enable for a new sensing mechanism to allow for improved understanding of potential hazards within a facility such as aqueous contamination or liquor.</p><p>The key contributions of this article include the addressment of reliability, safety compliance and resilience throughout a MR mission envelope via symbiotic interactions and the inclusion of query-based learning for a HITL with the aim towards symbiotic autonomy as a service. The objectives from this article include the creation of a DT interface with the ability to access near to real-time data from the SMuRF, symbiotic interactions across a robot team and the novel deployment of microwave radar sensing for ground integrity inspection to localise potential aqueous contamination across a nuclear facility.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">| FUTURE WORK</head><p>In future, for the nuclear sector, robotic platforms will be deployed ahead of human deployments to gain more information about a site and increase safety for humans by working at a distance and in safe areas <ref type="bibr" target="#b119">[121]</ref>. Several types of different robots will be deployed autonomously and semi autonomously for different jobs tailored to their robotic capability as shown Figure <ref type="figure" target="#fig_8">15</ref>. This will require humans to designate different jobs for robots to complete. Fleet management will be essential in the coordination of the robotic platforms where robots must translate data into actionable information for a HITL to absorb and action replanning. This will require several sensors to be accessible via a dashboard which can be accessed remotely. This dashboard and DT can also include results and historic data about a facility. In summary, this work will increase safety, improve rates of inspection to increase the rate of decommissioning of the nuclear sector and encourage information sharing across engineers accessing a site.</p><p>However, as levels of autonomy and responsibility increase in robotics for nuclear, cybersecurity measures must also increase to ensure the safe deployment. Cyberattacks including issues, vulnerabilities, threats, risk and nature of cybersecurity threats are areas that cyber attackers can exploit when gaining access to systems <ref type="bibr" target="#b121">[123]</ref><ref type="bibr" target="#b122">[124]</ref><ref type="bibr" target="#b123">[125]</ref>. Therefore, there is a requirement for watchdog agents to monitor security measures where either the robot or human operator may become compromised, hereby ensuring the run-time integrity of SMuRF assets. For example, in the scenario where a robot is hacked maliciously or where an employee becomes corrupt and overrides the safety compliance constraints. This is where we would implement a design of experiment that features statistical analysis in the premission planning alongside contingencies which align with key performance indicators of nuclear operators such as defence in depth requirements, increases in productivity and reduction in workforce in radioactive areas <ref type="bibr" target="#b22">[23]</ref>.</p><p>The future development of this project will seek to improve the functionality of the DT to enable for further coordination of the SMuRF. A HITL can coordinate the robotic fleet and oversee data at near to real-time or at the right time to minimise communication and data constrictions across a wireless network. The DT will also include opportunities to simulate symbiotic interactions ahead of them taking place in the physical world to ensure that these autonomous interactions which take place are optimised for the mission envelope.</p><p>Green and Red AI is a new concept which is being identified to improve the energy usage of processing within machine learning and AI models that consume high amounts of energy to complete tasks. How efficient these programs is under scrutiny as perhaps power consumption could have been minimised and utilised elsewhere to become more sustainable. This approach can lead to improved battery durations of robotic platforms and reduce power consumption across wireless communications and computer interfaces controlling the SMuRF in the future.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>2 )</head><label>2</label><figDesc>Abbreviations: DARPA, defence advanced research projects agency; HITL, human-in-the-loop; MR, multi-robot; SLAM, simultaneous location and mapping; UAV, unmanned aerial vehicle; UDP, user datagram protocol; UGV, unmanned ground vehicle. a Indicates analysis or conclusions made by the authors in their respective articles for their own work. b</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>10 of 24 -</head><label>1024</label><figDesc>MITCHELL ET AL.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>F I G U R E 6</head><label>6</label><figDesc>Decision making and considerations when deploying a MR-fleet. MR, multi-robot. F I G U R E 5 Symbiotic digital architecture of the Cyber-Physical System (CPS).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>F I G U R E 7</head><label>7</label><figDesc>Flowchart of the robotic mission envelope alongside improvements in the mission when utilising a CPS and SMuRF. HITL, human-in-the-loop. F I G U R E 8 An overview of the semi-autonomous inspection mission as viewed from the DT interface. Robot paths are displayed with coloured arrows matched with coloured text through steps A-B and specific waypoints displayed via circles. F I G U R E 9 Results of the 3D mapping scenario for the inspection mission of the RAICo1 Facility: (a) the physical environment and (b) the generated voxels overlaid with the existing Building Information Models (BIM) in the DT interface. The 3D mapping data was compared to existing building plans and BIM data to detect dynamic changes to the environment.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>F I G U R E 1 0</head><label>1</label><figDesc>Results of the aerial inspection using a Tello UAV: (a) the physical environment as surveyed from the UAV camera feed, (b) the DT interface reflects the hazards identified displayed for the human operator for analysis and reporting via a hazard tag presenting general caution.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>F I G U R E 1 1</head><label>1</label><figDesc>Continuous Autonomous Radiometric Monitoring Assistant (CARMA) UGV provides a map of the hazards in the areas of interest. (a) CARMA localisation within the DT interface, (b) a photo of CARMA in the physical environment, and (c) Data generated by CARMA using its Frequency Modulated Continuous Wave (FMCW), Alpha, and Gamma sensors.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>F I G U R E 1 2</head><label>1</label><figDesc>Results from the Frequency Modulated Continuous Wave (FMCW) radar sensor for detection of liquor solution, water and dry flooring. F I G U R E 1 4 Digital twin interface highlighting resulting readings from the z-axis scan for gamma radiation via radiation hazard tag. F I G U R E 1 3 Symbiotic interaction between Spot quadruped and Franks Panda Manipulator (a) Spot moving through environment, (b) Spot collecting the tool from the mobile garage at the Franka manipulator, (c) Spot performing a vertical scan of the surrounding area with the γ sensor.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>16 of 24 -</head><label>1624</label><figDesc>MITCHELL ET AL.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>F I G U R E 1 5</head><label>1</label><figDesc>Composite image of a SMuRF in an industrial environment highlighting infrastructural sensors, ground and aerial vehicles positioned together.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="3,48.98,45.98,497.25,243.84" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="4,309.20,421.57,238.05,285.34" type="bitmap" /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_0"><p>of 24 -</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_1"><p>of 24 -MITCHELL ET AL. 26316315, 2023, 4, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/csy2.12103 by Nes, Edinburgh Central Office, Wiley Online Library on [03/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_2"><p>26316315, 2023, 4, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/csy2.12103 by Nes, Edinburgh Central Office, Wiley Online Library on [03/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_3"><p>of 24 -MITCHELL ET AL. 26316315, 2023, 4, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/csy2.12103 by Nes, Edinburgh Central Office, Wiley Online Library on [03/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="12" xml:id="foot_4"><p>of 24 -</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="14" xml:id="foot_5"><p>of 24 -</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="18" xml:id="foot_6"><p>of 24 -</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="20" xml:id="foot_7"><p>of 24 -MITCHELL ET AL. 26316315, 2023, 4, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/csy2.12103 by Nes, Edinburgh Central Office, Wiley Online Library on [03/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p>The authors would like to thank <rs type="institution">RAICo</rs> for the use of their RAICo 1 facility and <rs type="person">Sellafield Ltd</rs> for the feedback throughout the demonstrations which took place. We would also like to thank the following funders who enabled this work to take place. EPSRC Grants <rs type="grantNumber">EP/P01366X/1</rs> (RNE), <rs type="grantNumber">EP/W001128/ 1</rs> (RAINþ), <rs type="funder">EPSRC</rs> <rs type="programName">Impact Acceleration Account Secondment Scheme</rs>, "Heterogeneous multi-agent robotic inspection missions" which was jointly funded by <rs type="funder">Sellafield Ltd., The University of Manchester</rs> and <rs type="funder">EPSRC, Chinese Scholarship Council-University of Manchester</rs> joint programme, <rs type="funder">EPSRC</rs> Grant <rs type="grantNumber">EP/V026941/1</rs> (<rs type="projectName">ALACANDRA</rs>) and <rs type="projectName">SBRI-Digital Technologies for Robotic Nuclear Decommissioning: Teleoperation with digital twins-C/2064382</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_SawkFZ8">
+					<idno type="grant-number">EP/P01366X/1</idno>
+				</org>
+				<org type="funding" xml:id="_JsSe2P9">
+					<idno type="grant-number">EP/W001128/ 1</idno>
+					<orgName type="program" subtype="full">Impact Acceleration Account Secondment Scheme</orgName>
+				</org>
+				<org type="funded-project" xml:id="_faNX5Ph">
+					<idno type="grant-number">EP/V026941/1</idno>
+					<orgName type="project" subtype="full">ALACANDRA</orgName>
+				</org>
+				<org type="funded-project" xml:id="_zkuZbT9">
+					<orgName type="project" subtype="full">SBRI-Digital Technologies for Robotic Nuclear Decommissioning: Teleoperation with digital twins-C/2064382</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are available from the corresponding author upon reasonable request.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONFLICT OF INTEREST STATEMENT</head><p>The authors declare no conflict of interest. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendixes A</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Nuclear decommissioning risk management adopting a comprehensive artificial intelligence framework: an applied case in an Italian site</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mancini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Mariani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Manfredi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.pnucene.2023.104589</idno>
+		<ptr target="https://doi.org/10.1016/j.pnucene.2023.104589" />
+	</analytic>
+	<monogr>
+		<title level="j">Prog. Nucl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">158</biblScope>
+			<biblScope unit="page">104589</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Vitrification of high level waste in the UK</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Harrison</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.mspro.2014.10.003</idno>
+		<ptr target="https://doi.org/10.1016/j.mspro.2014.10.003" />
+	</analytic>
+	<monogr>
+		<title level="j">Procedia Materials Science</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="10" to="15" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Development of a systematic approach to post-operation clean out at Sellafield</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Macpherson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dunlop</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PREDEC</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">605cb82fd3bf7f2f112f0f84/NDA_ Strategy_2021_A</title>
+		<ptr target="https://assets.publishing.service.gov.uk/media/" />
+	</analytic>
+	<monogr>
+		<title level="j">Nuclear Decommissioning Authority Strategy</title>
+		<imprint>
+			<date type="published" when="2021-11-01">2021. 1 Nov 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">K</forename><surname>Searles</surname></persName>
+		</author>
+		<ptr target="https://www.roboticsandinnovation.co.uk/news/nuclear/robot-trialled-underground-at-scottish-nuclear-site.html" />
+		<title level="m">Scottish Nuclear Site | Robotics and Innovation</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note>Robot Trialled</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Robotic development for the nuclear environment: challenges and strategy</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cucco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fairbairn</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/robotics9040094</idno>
+		<ptr target="https://doi.org/10.3390/robotics9040094" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">94</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Self-certification and safety compliance for robotics platforms</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">F</forename><surname>Zaki</surname></persName>
+		</author>
+		<ptr target="https://onepetro.org/OTCONF/proceedings-abstract/20OTC/1-20OTC/D011S006R006/107498.OTC-30840-MS" />
+	</analytic>
+	<monogr>
+		<title level="j">Society of Petroleum Engineers</title>
+		<imprint>
+			<biblScope unit="issue">SPE</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Automated UAV to survey and monitor ionising radiation levels in a closed environment</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Anand</surname></persName>
+		</author>
+		<idno type="DOI">10.2478/pead-2022-0010</idno>
+		<ptr target="https://doi.org/10.2478/pead-2022-0010" />
+	</analytic>
+	<monogr>
+		<title level="j">Power Electronics and Drives</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="134" to="145" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Digital twin development through auto-linking to manage legacy assets in nuclear power plants</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Edwards</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.autcon.2023.104774</idno>
+		<ptr target="https://doi.org/10.1016/j.autcon.2023.104774" />
+	</analytic>
+	<monogr>
+		<title level="j">Autom. ConStruct</title>
+		<imprint>
+			<biblScope unit="volume">148</biblScope>
+			<biblScope unit="page">104774</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">An overview of verification and validation challenges for inspection robots</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Fisher</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/robotics10020067</idno>
+		<ptr target="https://doi.org/10.3390/robotics10020067" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">67</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Microwave foresight sensing for safety compliance in autonomous operations</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Omni Layer Intelligent Systems</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Cooperative multirobot systems for military applications</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">R</forename><surname>Gans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Rogers</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s43154-020-00039-w</idno>
+		<ptr target="https://doi.org/10.1007/s43154-020-00039-w" />
+	</analytic>
+	<monogr>
+		<title level="j">Current Robotics Reports</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="105" to="111" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Task Allocation Strategy for Heterogeneous Robot Teams in Offshore Missions</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Carreno</surname></persName>
+		</author>
+		<ptr target="https://www.ifaamas.org" />
+	</analytic>
+	<monogr>
+		<title level="j">IFAAMAS</title>
+		<imprint>
+			<date type="published" when="2020-11-01">2020. 1 Nov 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A review: challenges and opportunities for artificial intelligence and robotics in the offshore wind sector</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.egyai.2022.100146</idno>
+		<ptr target="https://doi.org/10.1016/j.egyai.2022.100146" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy and AI</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">100146</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Scheduling multi-robot missions with joint tasks and heterogeneous robot teams</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Gricel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Calinescu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Towards Autonomous Robotic Systems</title>
+		<editor>
+			<persName><forename type="first">C</forename><surname>Fox</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Cham</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer International Publishing</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="354" to="359" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Task scheduling for transport and pick robots in logistics: a comparative study on constructive heuristics</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s43684-021-00017-9</idno>
+		<idno>43684- 021-00017-9</idno>
+		<ptr target="https://doi.org/10.1007/s" />
+	</analytic>
+	<monogr>
+		<title level="j">Autonomous Intelligent Systems</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">17</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Cooperative heterogeneous robots for autonomous insects trap monitoring system in a precision agriculture scenario</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Berger</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/agriculture13020239</idno>
+		<ptr target="https://doi.org/10.3390/agriculture13020239" />
+	</analytic>
+	<monogr>
+		<title level="j">Agriculture</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">239</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Optimization techniques for multi-robot task allocation problems: review on the state-of-the-art</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chakraa</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.robot.2023.104492</idno>
+		<ptr target="https://doi.org/10.1016/j.robot.2023.104492" />
+	</analytic>
+	<monogr>
+		<title level="j">Robot. Autonom. Syst</title>
+		<imprint>
+			<biblScope unit="volume">168</biblScope>
+			<biblScope unit="page">104492</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A multirobot system for autonomous deployment and recovery of a blade crawler for operations and maintenance of offshore wind turbine blades</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jiang</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/rob.22117</idno>
+		<ptr target="https://onlinelibrary.wiley.com/doi/full/10.1002/rob.22117" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Field Robot</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="73" to="93" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Symbiotic System of Systems Design for Safe and Resilient Autonomous Robotics in Offshore Wind Farms</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+		<ptr target="https://ieeexplore.ieee.org/document/9558777" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Collaborative multi-robot search and rescue: planning, coordination, perception, and active vision</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Queralta</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/access.2020.3030190</idno>
+		<ptr target="https://doi.org/10.1109/access.2020.3030190" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="191617" to="191643" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Investigating the implementation of the safetydiagnosability principle to support defence-in-depth in the nuclear industry: a Fukushima Daiichi accident case study</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bansal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">T</forename><surname>Selvik</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.engfailanal.2021.105315</idno>
+		<ptr target="https://doi.org/10.1016/j.engfailanal.2021.105315" />
+	</analytic>
+	<monogr>
+		<title level="j">Eng. Fail. Anal</title>
+		<imprint>
+			<biblScope unit="volume">123</biblScope>
+			<biblScope unit="page">105315</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Fukushima nuclear power plant accident and thereafter</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Narabayashi</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-4-431-55951-1_5</idno>
+		<ptr target="https://doi.org/10.1007/978-4-431-55951-1_5" />
+	</analytic>
+	<monogr>
+		<title level="m">Energy Technology Roadmaps of Japan: Future Energy Systems Based on Feasible Technologies beyond 2030</title>
+		<editor>
+			<persName><forename type="first">Y</forename><surname>Kato</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">M</forename><surname>Koyama</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">N</forename><forename type="middle">T</forename></persName>
+		</editor>
+		<meeting><address><addrLine>Japan; Tokyo</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="57" to="106" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Resource allocation and service provisioning in multiagent cloud robotics: a comprehensive survey</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Afrin</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/comst.2021.3061435</idno>
+		<ptr target="https://doi.org/10.1109/comst.2021.3061435" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Communications Surveys and Tutorials</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="842" to="870" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Multi-robot path planning in wireless sensor networks based on jump mechanism PSO and safety gap obstacle avoidance</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Tian</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.future.2020.12.012</idno>
+		<ptr target="https://doi.org/10.1016/j.future.2020.12.012" />
+	</analytic>
+	<monogr>
+		<title level="j">Future Generat. Comput. Syst</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="page" from="37" to="47" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Self-organising swarms of firefighting drones: harnessing the power of collective intelligence in decentralised multi-robot systems</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Innocente</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Grasso</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jocs.2019.04.009</idno>
+		<ptr target="https://doi.org/10.1016/j.jocs.2019.04.009" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Comput. Sci</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page" from="80" to="101" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">The Challenge of Nuclear</title>
+		<ptr target="https://race.ukaea.uk/about-race/challenge" />
+		<imprint>
+			<date type="published" when="2023-07-01">2023. 1 July 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Robotic development for the nuclear environment: challenges and strategy</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cucco</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Fairbairn</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/robotics9040094</idno>
+		<ptr target="https://doi.org/10.3390/robotics9040094" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">94</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">CHALLENGE: Post Operational Clean Out</title>
+		<author>
+			<persName><forename type="first">Sellafield</forename><surname>Ltd</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">To ask for help or not to ask: a predictive approach to human-in-the-loop motion planning for robot manipulation tasks</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Papallas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Dogar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Intelligent Robots and Systems</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="649" to="656" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">AR-assisted digital twin-enabled robot collaborative manufacturing system with human-in-the-loop</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rcim.2022.102321</idno>
+		<ptr target="https://doi.org/10.1016/j.rcim.2022.102321" />
+	</analytic>
+	<monogr>
+		<title level="j">Robot. Comput. Integrated Manuf</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="page">102321</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Resilient task allocation in heterogeneous multi-robot systems</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mayya</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/lra.2021.3057559</idno>
+		<ptr target="https://doi.org/10.1109/lra.2021.3057559" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Rob. Autom. Lett</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1327" to="1334" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Differential privacy techniques for cyber physical systems: a survey</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">U</forename><surname>Hassan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Rehmani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/comst.2019.2944748</idno>
+		<ptr target="https://doi.org/10.1109/comst.2019.2944748" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Communications Surveys &amp; Tutorials</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="746" to="789" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mcconnell</surname></persName>
+		</author>
+		<idno type="DOI">10.1201/9781003186380</idno>
+		<ptr target="https://doi.org/10.1201/9781003186380" />
+		<title level="m">The Future Workplace: A Symbiotic System of Systems Environment</title>
+		<meeting><address><addrLine>Boca Raton</addrLine></address></meeting>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="259" to="329" />
+		</imprint>
+	</monogr>
+	<note>Cyber-Physical Systems</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Digital twin in industry 4.0: technologies, applications and challenges</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Pires</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE 17th International Conference on Industrial Informatics (INDIN)</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="721" to="726" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Unmanned Aerial Vehicles (UAVs) in Nuclear Decommissioning-Current Use and Future Opportunities</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Henderson</surname></persName>
+		</author>
+		<ptr target="https://www.gov.uk/government/publications/unmanned-aerial-vehicles-uavs-in-nuclear-decommissioning-current-use-and-future-opportunities" />
+	</analytic>
+	<monogr>
+		<title level="m">Nuclear Decommissioning Authority (NDA)</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Underwater robots: from remotely operated vehicles to intervention-autonomous underwater vehicles</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">R</forename><surname>Petillot</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/mra.2019.2908063</idno>
+		<ptr target="https://doi.org/10.1109/mra" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Robot. Autom. Mag</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="94" to="101" />
+			<date type="published" when="2019">2019. 2019.2908063</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Digital twins: a maturity model for their classification and evaluation</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">F</forename><surname>Uhlenkamp</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/access.2022.3186353</idno>
+		<ptr target="https://doi.org/10.1109/access.2022.3186353" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="69605" to="69635" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">The digital twin concept in industry -a review and systematization</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sjarov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2020 25th IEEE International Conference on Emerging Technologies and Factory Automation (ETFA)</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1789" to="1796" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Digital twin concepts with uncertainty for nuclear power applications</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kochunas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Huan</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en14144235</idno>
+		<ptr target="https://doi.org/10.3390/en14144235" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page">4235</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">The future of industrial communication: automation networks in the era of the internet of things and industry 4.0</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wollschlaeger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sauter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jasperneite</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/mie.2017.2649104</idno>
+		<ptr target="https://doi.org/10.1109/mie.2017.2649104" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Industrial Electronics Magazine</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="17" to="27" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Blockchain technology in the energy sector: a systematic review of challenges and opportunities</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Andoni</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rser.2018.10.014</idno>
+		<ptr target="https://doi.org/10.1016/j.rser" />
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page">14</biblScope>
+			<date type="published" when="2018">2019. 2018</date>
+			<publisher>Elsevier Ltd</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title level="m" type="main">Lessons Learned: Symbiotic Autonomous Robot Ecosystem for Nuclear Environments -Summary Video</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+		<ptr target="https://www.youtube.com/watch?v=Tz_PNtG5CGE" />
+		<imprint>
+			<date type="published" when="2023-07-14">2023. 14 Jul 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">CARMA II: a ground vehicle for autonomous surveying of alpha, beta and gamma radiation</title>
+		<author>
+			<persName><forename type="first">Nouri</forename><surname>Rahmat Abadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename></persName>
+		</author>
+		<idno type="DOI">10.3389/frobt.2023.1137750</idno>
+		<ptr target="https://doi.org/10.3389/frobt.2023.1137750" />
+	</analytic>
+	<monogr>
+		<title level="j">Front Robot AI</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">47</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Microwave sensing for avoidance of high-risk ground conditions for mobile robots</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blanche</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2023 IEEE International Conference on Omni-Layer Intelligent Systems (COINS)</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+			<biblScope unit="page" from="1" to="7" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Swarm of micro flying robots in the wild</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/scirobotics.abm5954</idno>
+		<ptr target="https://www.science.org/doi/10.1126/scirobotics.abm5954" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Robot</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">66</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Copilot MIKE: an autonomous assistant for multi-robot operations in cave exploration</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kaufmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Aerospace Conference Proceedings</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">A critical review of communications in multi-robot systems</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gielis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shankar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Prorok</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s43154-022-00090-9</idno>
+		<ptr target="https://doi.org/10.1007/s43154-022-00090-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Current Robotics Reports</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="213" to="225" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Special Issue: DARPA Subterranean (SubT) Challenge. Editorial: Special Issue on Advancements and Lessons Learned during Phases I and II of the DARPA Subterranean Challenge</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kottege</surname></persName>
+		</author>
+		<idno>DARPA.pdf</idno>
+		<ptr target="http://fieldrobotics.net/Field_Robotics/SI_DARPA_SubT_files/" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">2</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Addressing non-intervention challenges via resilient robotics utilizing a digital twin</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">T</forename><surname>Harper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Omni-Layer Intelligent Systems</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Service robots, customers and service employees: what can we learn from the academic literature and where are the gaps</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">N</forename><surname>Lu</surname></persName>
+		</author>
+		<idno type="DOI">10.1108/jstp-04-2019-0088</idno>
+		<ptr target="https://doi.org/10.1108/jstp-04-2019-0088" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Service Theory and Practice</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="361" to="391" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Special issue on multi-robot systems: challenges, trends, and applications</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Roldán-Gómez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Barrientos</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app112411861</idno>
+		<ptr target="https://doi.org/10.3390/app112411861" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page">11861</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Controlling fleets of autonomous mobile robots with reinforcement learning: a brief survey</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wesselhöft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hinckeldeyn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kreutzfeldt</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/robotics11050085</idno>
+		<ptr target="https://doi.org/10.3390/robotics11050085" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">85</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">An overview of cooperative robotics in agriculture</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lytridis</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/agronomy11091818</idno>
+		<ptr target="https://doi.org/10.3390/agronomy11091818" />
+	</analytic>
+	<monogr>
+		<title level="j">Agronomy [Internet]</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">1818</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">A survey on mechanical solutions for hybrid mobile robots</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Russo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ceccarelli</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/robotics9020032</idno>
+		<ptr target="https://doi.org/10.3390/robotics9020032" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">32</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">A review on challenges of autonomous mobile robot and sensor fusion methods</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Alatise</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Hancke</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/access.2020.2975643</idno>
+		<ptr target="https://doi.org/10.1109/access.2020.2975643" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="39830" to="39846" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Mobile-robotic machining for large complex components: a review study</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">W</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ding</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11431-019-9510-1</idno>
+		<ptr target="https://doi.org/10.1007/s11431-019-9510-1" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. China Technol. Sci</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1388" to="1400" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Energy efficient navigation for running legged robots</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Y</forename><surname>Harper</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc IEEE Int Conf Robot Autom</title>
+		<imprint>
+			<biblScope unit="page" from="6770" to="6776" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Towards integrating formal verification of autonomous robots with battery prognostics and health management</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-030-30446-1_6</idno>
+		<ptr target="https://link.springer.com/chapter" />
+	</analytic>
+	<monogr>
+		<title level="j">Lect. Notes Comput. Sci. 11724 LNCS</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="105" to="124" />
+			<date type="published" when="2019-05">2019. May 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Petris</surname></persName>
+		</author>
+		<author>
+			<persName><surname>De</surname></persName>
+		</author>
+		<title level="m">Marsupial Walking-And-Flying Robotic Deployment for Collaborative Exploration of Unknown Environments</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Into the robotic depths: analysis and insights from the DARPA subterranean challenge</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">H</forename><surname>Chung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Orekhov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Maio</surname></persName>
+		</author>
+		<idno type="DOI">10.1146/annurev-control-062722-100728</idno>
+		<ptr target="https://doi.org/10.1146/annurev-control-062722-100728" />
+	</analytic>
+	<monogr>
+		<title level="j">Annu Rev Control Robot Auton Syst</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="477" to="502" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Resilient robots: concept, review, and future directions</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Gupta</surname></persName>
+		</author>
+		<ptr target="https://www.mdpi.com/2218-6581/6/4/22" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Robot systems reliability and safety: a review</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">S</forename><surname>Dhillon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R M</forename><surname>Fashandi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">L</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Qual. Mainten. Eng</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="170" to="212" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<monogr>
+		<title level="m" type="main">Resilient and Modular Subterranean Exploration with a Team of Roving and Flying Robots</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Scherer</surname></persName>
+		</author>
+		<ptr target="https://fieldrobotics.net/Field_Robotics/Volume_2_files" />
+		<imprint>
+			<date type="published" when="2022-02-22">2022. 22 Feb 2023</date>
+			<biblScope unit="volume">23</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Human factors considerations and metrics in shared space human-robot collaboration: a systematic review</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hopko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mehta</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/frobt.2022.799522</idno>
+		<ptr target="https://www.frontiersin.org/articles/10.3389/frobt.2022.799522" />
+	</analytic>
+	<monogr>
+		<title level="j">Front Robot AI</title>
+		<imprint>
+			<biblScope unit="page">9</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Kapour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pecht</surname></persName>
+		</author>
+		<ptr target="https://www.wiley.com/en-us/ReliabilityþEngineering-p-9781118140673.487" />
+		<imprint>
+			<date type="published" when="2014">2014. 2023 Jun 14. 1 Nov 2023</date>
+			<publisher>Reliablity Engineeing. Wiley. Wileyinterscience</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Engineering challenges ahead for robot teamwork in dynamic environments</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Geihs</surname></persName>
+		</author>
+		<ptr target="https://www.mdpi.com/2076-3417/10/4/1368" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">CERBERUS in the DARPA subterranean challenge</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tranzatto</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/scirobotics.abp9742</idno>
+		<ptr target="https://www.science.org/doi/abs/10.1126/scirobotics.abp9742" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Robot</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">66</biblScope>
+			<biblScope unit="page">9742</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<monogr>
+		<title level="m" type="main">Team CERBERUS Wins the DARPA Subterranean Challenge: Technical Overview and Lessons Learned</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tranzatto</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">CERBERUS: autonomous legged and aerial robotic exploration in the tunnel and urban circuits of the DARPA subterranean challenge</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tranzatto</surname></persName>
+		</author>
+		<idno type="DOI">10.55417/fr.2022011</idno>
+		<ptr target="https://doi.org/10.55417/fr.2022011" />
+	</analytic>
+	<monogr>
+		<title level="j">Field Robotics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="274" to="324" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">A heterogeneous unmanned ground vehicle and blimp robot team for search and rescue using data-driven autonomy and communication-aware navigation</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">L</forename><surname>Lu</surname></persName>
+		</author>
+		<ptr target="https://fieldrobotics.net/Field_Robotics/Volume_2_files/Vol2_20.pdf" />
+	</analytic>
+	<monogr>
+		<title level="j">Field Robotics</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Heterogeneous ground and air platforms, homogeneous sensing: team CSIRO Data61&apos;s approach to the DARPA subterranean challenge</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Hudson</surname></persName>
+		</author>
+		<ptr target="https://fieldrobotics.net/Field_Robotics/Volume_2_files/Vol2_21.pdf" />
+	</analytic>
+	<monogr>
+		<title level="m">Field Robotics</title>
+		<imprint>
+			<date type="published" when="2022">2022. 2023 Feb 22</date>
+		</imprint>
+	</monogr>
+	<note>cited</note>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<monogr>
+		<title level="m" type="main">Multi-agent autonomy: advancements and challenges in subterranean exploration</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">T</forename><surname>Ohradzansky</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022. 2023 Feb 22</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<monogr>
+		<title/>
+		<idno type="DOI">10.55417/fr.2022035</idno>
+		<ptr target="https://doi.org/10.55417/fr.2022035" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">NeBula: TEAM CoSTAR&apos;s robotic autonomy solution that won phase II of DARPA subterranean challengenet NeBula: TEAM CoSTAR&apos;s robotic autonomy solution that won phase II of DARPA subterranean challenge</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Agha</surname></persName>
+		</author>
+		<ptr target="https://fieldrobotics.net/Field_Robotics/Volume_2_files" />
+	</analytic>
+	<monogr>
+		<title level="j">Field Robotics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1432" to="1506" />
+			<date type="published" when="1433">1433. 2022. 2023 Feb 22</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">System for multi-robotic exploration of underground environments CTU-CRAS-NORLAB in the</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rouček</surname></persName>
+		</author>
+		<idno type="DOI">10.55417/fr.2022055</idno>
+		<ptr target="https://doi.org/10.55417/fr.2022055" />
+	</analytic>
+	<monogr>
+		<title level="j">DARPA Subterranean Challenge. Field Robotics</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1779" to="1818" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">T</forename><surname>Isaacs</surname></persName>
+		</author>
+		<idno type="DOI">10.55417/fr.2022039</idno>
+		<ptr target="https://doi.org/10.55417/fr.2022039" />
+		<title level="m">Teleoperation for urban search and rescue applications</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="1177" to="1190" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<monogr>
+		<title level="m" type="main">NASA-STD-3001 Technical Brief</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Workload</surname></persName>
+		</author>
+		<ptr target="https://standards.nasa.gov/standard/NASA/NASA-STD-3001" />
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">Mental workload and performance measurements in driving task: a review literature</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Butmee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">C</forename><surname>Lansdown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">H</forename><surname>Walker</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-319-96074-6_31</idno>
+		<ptr target="https://link.springer.com/chapter/10.1007/978-3-319-96074-6_31" />
+	</analytic>
+	<monogr>
+		<title level="j">Adv. Intell. Syst. Comput</title>
+		<imprint>
+			<biblScope unit="volume">823</biblScope>
+			<biblScope unit="page" from="286" to="294" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">Decommissioning of Nuclear Power Plants</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">A E</forename><surname>Agency</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Research Reactors and Other Nuclear Fuel Cycle Facilities</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">Aspects of nuclear power plant digital decommissioning</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Jharko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Meshcheryakov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Promyslov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 International Siberian Conference on Control and Communications</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Actual problems of the fullscale digital twins technology for the complex engineering object life cycle management</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhabitskii</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Melnikov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Boyko</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/1755-1315/808/1/012020</idno>
+		<ptr target="https://iopscience.iop.org/article/10.1088/1755-1315/808/1/012020" />
+	</analytic>
+	<monogr>
+		<title level="j">IOP Conf. Ser. Earth Environ. Sci</title>
+		<imprint>
+			<biblScope unit="volume">808</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">12020</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<analytic>
+		<title level="a" type="main">A framework for an integrated nuclear digital environment</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Patterson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Bankhead</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Prog. Nucl. Energy</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page" from="97" to="103" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<analytic>
+		<title level="a" type="main">Industrial robotic intelligence simulation in metaverse scenes</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2022 China Automation Congress (CAC)</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="1196" to="1201" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Digital Twins, a New Step for Long Term Operation of Nuclear Power Plants</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Varé</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Morilhat</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-030-48021-9_11</idno>
+		<ptr target="https://link.springer.com/chapter/10.1007/978-3-030-48021-9_11" />
+	</analytic>
+	<monogr>
+		<title level="s">Lecture Notes in Mechanical Engineering</title>
+		<imprint>
+			<biblScope unit="page" from="96" to="103" />
+			<date type="published" when="2020">2020. 2023 Feb 26</date>
+		</imprint>
+	</monogr>
+	<note>Internet</note>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<monogr>
+		<title level="m" type="main">Environmental Permits -GOV.UK [Internet]</title>
+		<author>
+			<persName><forename type="first">Nuclear</forename><surname>Sites</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rsr</forename></persName>
+		</author>
+		<ptr target="https://www.gov.uk/guidance/nuclear-sites-rsr-environmental-permits" />
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">UK Government: Sellafield. Sellafield-Defence in Depth</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">Radioanalysis of ultra-low level radionuclides for environmental tracer studies and decommissioning of nuclear facilities</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Hou</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10967-019-06908-9</idno>
+		<idno>10967-019-06908-9</idno>
+		<ptr target="https://link.springer.com/article/10.1007/s" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Radioanal. Nucl. Chem</title>
+		<imprint>
+			<biblScope unit="volume">322</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1217" to="1245" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<analytic>
+		<title level="a" type="main">Radioactive waste: a review</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Deng</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/wer.1442</idno>
+		<ptr target="https://onlinelibrary.wiley.com/doi/full/10.1002/wer.1442" />
+	</analytic>
+	<monogr>
+		<title level="j">Water Environ. Res</title>
+		<imprint>
+			<biblScope unit="volume">92</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="1818" to="1825" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<analytic>
+		<title level="a" type="main">A suite of robotic solutions for nuclear waste decommissioning</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Vitanov</surname></persName>
+		</author>
+		<ptr target="https://www.mdpi.com/2218-6581/10/4/112/htm" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">112</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<analytic>
+		<title level="a" type="main">Radiation tolerance testing methodology of robotic manipulator prior to nuclear waste handling</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Robot AI</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">6</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<analytic>
+		<title level="a" type="main">Landside tritium leakage over through years from Fukushima Dai-ichi nuclear plant and relationship between countermeasures and contaminated water</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Shozugawa</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41598-020-76964-9</idno>
+		<ptr target="https://doi.org/10.1038/s41598-020-76964-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">19925</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<analytic>
+		<title level="a" type="main">Use of Gaussian process regression for radiation mapping of a nuclear reactor with a mobile robot</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>West</surname></persName>
+		</author>
+		<ptr target="https://www.nature.com/articles/s41598-021-93474-4" />
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2021-07-07">2021. 2021 Jul 7. 2022 Jul 19</date>
+		</imprint>
+	</monogr>
+	<note>Internet</note>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<analytic>
+		<title level="a" type="main">A robot to monitor nuclear facilities: using autonomous radiation-monitoring assistance to reduce risk and cost</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Bird</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Robot. Autom. Mag</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="35" to="43" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<analytic>
+		<title level="a" type="main">Robotic survey of a legacy radioactive duct on the dounreay site</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nancekievill</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nucl. Future</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+			<publisher>In Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<analytic>
+		<title level="a" type="main">MallARD: an autonomous aquatic surface vehicle for inspection and monitoring of wet nuclear storage facilities</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Groves</surname></persName>
+		</author>
+		<ptr target="https://www.mdpi.com/2218-6581/8/2/47/htm" />
+	</analytic>
+	<monogr>
+		<title level="j">Robotics</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">47</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<analytic>
+		<title level="a" type="main">Development of a radiological characterization submersible ROV for use at fukushima daiichi</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nancekievill</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Nucl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="2565" to="2572" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<analytic>
+		<title level="a" type="main">On the role and opportunities in teamwork design for advanced multi-robot search systems</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Francos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Bruckstein</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/frobt.2023.1089062</idno>
+		<ptr target="https://www.frontiersin.org/articles/10.3389/frobt.2023.1089062" />
+	</analytic>
+	<monogr>
+		<title level="j">Front Robot AI</title>
+		<imprint>
+			<biblScope unit="page">10</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<monogr>
+		<title level="m" type="main">Multi-robot Systems for Precision Agriculture</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ribeiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Conesa-Muñoz</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-030-77036-5_7</idno>
+		<ptr target="https://link.springer.com/chapter" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="151" to="175" />
+			<pubPlace>Cham</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<analytic>
+		<title level="a" type="main">Host-symbiont relationships: understanding the change from guest to pest</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Overstreet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Lotz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Rasputin Effect: When Commensals and Symbionts Become Parasitic</title>
+		<imprint>
+			<publisher>Nature Publishing Group</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="27" to="64" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b100">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Cornford</surname></persName>
+		</author>
+		<title level="m">Photography, radiation and robotics beyond the visible: fukushima. continent</title>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="113" to="121" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b101">
+	<monogr>
+		<title level="m" type="main">Soft Robotics in Radiation Environments for Safeguard Applications</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Oshiro</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<publisher>Institute of Nuclear Materials Management</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b102">
+	<analytic>
+		<title level="a" type="main">Fukushima&apos;s ground zero: No place for man or robot</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sheldrick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Funakoshi</surname></persName>
+		</author>
+		<ptr target="https://www.reuters.com/article/us-japan-disaster-decommissioning-idUSKCN0WB2X5" />
+	</analytic>
+	<monogr>
+		<title level="j">Reuters</title>
+		<imprint>
+			<date type="published" when="2016">2016. 2023 Sep 11</date>
+		</imprint>
+	</monogr>
+	<note>cited</note>
+</biblStruct>
+
+<biblStruct xml:id="b103">
+	<analytic>
+		<title level="a" type="main">OctoMap: an efficient probabilistic 3D mapping framework based on octrees</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hornung</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10514-012-9321-0</idno>
+		<ptr target="https://doi.org/10.1007/s10514-012-9321-0" />
+	</analytic>
+	<monogr>
+		<title level="j">Aut. Robots</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="189" to="206" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b104">
+	<analytic>
+		<title level="a" type="main">Run-time analysis of road surface conditions using non-contact microwave sensing</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blanche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Flynn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE Global Conference on Artificial Intelligence and Internet of Things 2020</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b105">
+	<analytic>
+		<title level="a" type="main">An evaluation of millimeter-wave radar sensing for civil infrastructure</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blanche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Flynn</surname></persName>
+		</author>
+		<ptr target="https://ieeexplore.ieee.org/abstract/document/9284883" />
+	</analytic>
+	<monogr>
+		<title level="m">2020 11th IEEE Annual Information Technology, Electronics and Mobile Communication Conference (IEMCON)</title>
+		<imprint>
+			<date type="published" when="2020-11-04">2020. 4 Nov 2020</date>
+			<biblScope unit="page" from="216" to="222" />
+		</imprint>
+	</monogr>
+	<note>Internet. casa_token=414xjfsG0rQAAAA A:QalZ636-tOf5Ddo8rh1KbfxWHWlyGojlzOntwSj9W1XjTx78pgl8U DtnN13os6VNcWb3z6ot</note>
+</biblStruct>
+
+<biblStruct xml:id="b106">
+	<analytic>
+		<title level="a" type="main">Machine learning analysis of non-destructive evaluation data from radar inspection of wind turbine blades</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2021 IEEE International Conference on Sensing, Diagnostics, Prognostics, and Control (SDPC)</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="122" to="128" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b107">
+	<analytic>
+		<title level="a" type="main">A review of sensing technologies for non-destructive evaluation of structural composite materials</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Gupta</surname></persName>
+		</author>
+		<ptr target="https://www.mdpi.com/2504-477X/5/12/319" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Composites Science</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b108">
+	<analytic>
+		<title level="a" type="main">Asset integrity monitoring of wind turbine blades with non-destructive radar sensing</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blanche</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2020 11th IEEE Annual Information Technology, Electronics and Mobile Communication Conference (IEMCON)</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="498" to="504" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b109">
+	<analytic>
+		<title level="a" type="main">Frequency modulated continuous wave analysis of dynamic load deformation in geomaterials</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blanche</surname></persName>
+		</author>
+		<idno type="DOI">10.4043/30479-MS</idno>
+		<ptr target="https://doi.org/10.4043/30479-MS" />
+	</analytic>
+	<monogr>
+		<title level="j">Offshore Technology Conference. Society of Petroleum Engineers (SPE)</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<pubPlace>Houston</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b110">
+	<monogr>
+		<ptr target="https://www.fishersci.co.uk/shop/products/radeye-g-series-personal-dose-rate-meters/10016389" />
+		<title level="m">Thermo Scientific TM RadEye TM G series personal dose rate meters RadEye G-10 with red label</title>
+		<imprint>
+			<publisher>Fisher Scientific</publisher>
+			<date type="published" when="2022">2023. April 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b111">
+	<monogr>
+		<title level="m" type="main">Degradation of ILW Drums Due to Internal Metallic Corrosion</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Paraskevoulakos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Scott</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page">18036</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b112">
+	<analytic>
+		<title level="a" type="main">Robotic arm material characterisation using LIBS and Raman in a nuclear hot cell decommissioning environment</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Coffey</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Hazard Mater</title>
+		<imprint>
+			<biblScope unit="volume">412</biblScope>
+			<biblScope unit="page">125193</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b113">
+	<monogr>
+		<title level="m" type="main">Characterising Nuclear Decommissioning Projects: An Investigation of the Project Characteristics that Affect the Project Performance</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Invernizzi</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Locatelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Brookes</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01446193.2020.1775859</idno>
+		<ptr target="https://doi.org/10.1080/01446193.2020.1775859" />
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b114">
+	<analytic>
+		<title level="a" type="main">Boston Dynamics&apos; Spot Is Helping Chernobyl Move towards Safe Decommissioning</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Ackerman</surname></persName>
+		</author>
+		<ptr target="https://spectrum.ieee.org/boston-dynamics-spot-chernobyl" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Spectrum</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b115">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cox</surname></persName>
+		</author>
+		<ptr target="https://www.ittsystems.com/wifi-heat-maps-software-and-tools/" />
+		<title level="m">WiFI Heat Maps</title>
+		<imprint>
+			<date type="published" when="2009">2022. 2023 Mar 9</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b116">
+	<analytic>
+		<title level="a" type="main">Extending a UGV teleoperation FLC interface with wireless network connectivity information</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Caccamo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE International Conference on Intelligent Robots and Systems</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="4305" to="4312" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b117">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zvanovec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Pechac</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Klepal</surname></persName>
+		</author>
+		<title level="m">Wireless LAN networks design: site survey or propagation modeling? Radioengineering</title>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="42" to="49" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b118">
+	<analytic>
+		<title level="a" type="main">Cybersecurity in unmanned aerial vehicles (UAVs)</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ly</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/23742917.2020.1846307</idno>
+		<ptr target="https://doi.org/10.1080/23742917.2020.1846307" />
+	</analytic>
+	<monogr>
+		<title level="j">J. cyber secur. technol</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="120" to="137" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b119">
+	<monogr>
+		<title level="m" type="main">Cybersecurity Issues and Challenges in Industry</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kour</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="84" to="101" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b120">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Tokody</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.promfg.2020.03.068</idno>
+		<ptr target="https://doi.org/10.1016/j.promfg.2020.03.068" />
+		<title level="m">Collaborative robotics research: subiko project. Procedia Manuf</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="467" to="474" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b121">
+	<analytic>
+		<title level="a" type="main">Cyber security of robots: a comprehensive survey</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Botta</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.iswa.2023.200237</idno>
+		<ptr target="https://doi.org/10.1016/j.iswa.2023.200237" />
+	</analytic>
+	<monogr>
+		<title level="j">ISWA</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">200237</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b122">
+	<analytic>
+		<title level="a" type="main">Engineering challenges ahead for robot teamwork in dynamic environments</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Geihs</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/app10041368</idno>
+		<ptr target="https://doi.org/10.3390/app" />
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Sci</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">10041368</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b123">
+	<analytic>
+		<title level="a" type="main">Human factors considerations and metrics in shared space human-robot collaboration: a systematic review</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hopko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mehta</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/frobt.2022.799522</idno>
+		<ptr target="https://doi.org/10.3389/frobt.2022.799522" />
+	</analytic>
+	<monogr>
+		<title level="j">Front Robot AI</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">9</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

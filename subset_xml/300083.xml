@@ -1,0 +1,1406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Effective properties of fractional viscoelastic composites via two-scale asymptotic homogenization</title>
+				<funder ref="#_VFEnZ2S #_PasmRrX">
+					<orgName type="full">EPSRC</orgName>
+				</funder>
+				<funder ref="#_pcw7xPc #_tQU8TWt #_P5qnsJA #_xgNmkhH #_p6C4Z9Q #_ZdKtnNa">
+					<orgName type="full">unknown</orgName>
+				</funder>
+				<funder ref="#_8bmTyZG">
+					<orgName type="full">Politecnico di Torino</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Ariel</forename><surname>Ramírez-Torres</surname></persName>
+							<email>ariel.ramireztorres@glasgow.ac.uk</email>
+							<idno type="ORCID">0000-0002-5775-8985</idno>
+							<affiliation key="aff0">
+								<orgName type="department">School of Mathematics &amp; Statistics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Raimondo</forename><surname>Penta</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Mathematics &amp; Statistics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Alfio</forename><surname>Grillo</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Dipartimento di Scienze Matematiche</orgName>
+								<orgName type="institution" key="instit1">DISMA) &quot;G. L. Lagrange&quot;</orgName>
+								<orgName type="institution" key="instit2">Politecnico di Torino</orgName>
+								<address>
+									<settlement>Turin</settlement>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">School of Mathematics &amp; Statistics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<address>
+									<settlement>Ariel Ramírez-Torres</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Effective properties of fractional viscoelastic composites via two-scale asymptotic homogenization</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">460930CD4D3FFAF769301475F7F5881B</idno>
+					<idno type="DOI">10.1002/mma.9457</idno>
+					<note type="submission">Received: 17 April 2023 Accepted: 24 May 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:02+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>asymptotic homogenization</term>
+					<term>effective coefficients</term>
+					<term>fractional calculus</term>
+					<term>linear viscoelasticity MSC CLASSIFICATION 74Q05</term>
+					<term>74Q15</term>
+					<term>74D05</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Driven by the growing interest in fractional constitutive modeling, we adopt a two-scale asymptotic homogenization approach to study the effective properties of fractional viscoelastic composites. We focus on a purely mechanical setting and derive the cell and homogenized problems corresponding to the balance of linear momentum equation in the absence of body forces and inertial terms. In doing this, we reformulate the original framework in the Laplace-Carson domain and discuss how to obtain the effective coefficients in the time domain.</p><p>We particularize the general setting of our work by considering memory functions that describe special types of fractional linear viscoelastic behaviors, and after presenting the limit cases of our selections, we framed the homogenization results to account for benchmark problems with different combinations of constitutive models. Specifically, these latter involve elastic, fractional Kelvin-Voigt, fractional Zener and fractional Maxwell constituents. Our results permit us to reinforce the interpretation of the theoretical findings and to elucidate the role of the fractional constitutive models on the effective properties of the composites under investigation.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Recent advances in the investigation of materials possessing a complex micro-structure have shown that their time-dependent constitutive behavior can be described in terms of power laws (see, e.g., <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref>). Within the context of linear viscoelasticity, spring-dashpot networks <ref type="bibr" target="#b2">[3]</ref> have been used to mimic power-law models. However, the definitions provided by the theory of fractional calculus <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b4">5]</ref> have permitted to capture power-law behaviors by introducing a number of fractional parameters.</p><p>Fractional viscoelasticity has arisen as a promising tool to describe and analyze experimental data related to the rheological behavior of various heterogeneous systems found in biology <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b6">7]</ref>, and materials science <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b8">9]</ref>, among others. Together with successful experimental data fitting, there have been significant efforts to answer theoretical questions on the foundations of linear fractional viscoelastic models. For instance, Bologna et al. <ref type="bibr" target="#b9">[10]</ref> provide thermodynamic restrictions for the orders of the power laws used to characterize the fractional-order hereditary behavior of hydroxyapatite-based composites. On the other hand, the thermodynamical restrictions for a linear constitutive equation containing fractional derivatives of stress and strain of different orders are discussed in Atanackovi ć et al. <ref type="bibr" target="#b10">[11]</ref> by using the entropy inequality for isothermal processes.</p><p>In spite of the examples reported above, and the several studies concentrating on the effective properties of linear viscoelastic composites (see, for instance, <ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref>) using different homogenization approaches, to the best of our knowledge, fractional viscoelasticity is considerably underused in the investigation of the overall behavior of composite materials. For example, Gallican and Brenner <ref type="bibr" target="#b17">[18]</ref> propose estimates for the effective response of viscoelastic composites with fractional Zener constituents via micro-mechanical modeling. On the other hand, in Ostoja-Starzewski and Zhang <ref type="bibr" target="#b18">[19]</ref>, the Hill-Mandel condition is used to determine the overall response of a random viscoelastic micro-structure. In the context of asymptotic homogenization, we mention, for instance, the works <ref type="bibr" target="#b19">[20]</ref> and <ref type="bibr" target="#b20">[21]</ref> where closed formulas for the effective coefficients of fiber-reinforced viscoelastic and visco-piezoelastic composites are obtained based on the Rabotnov's fractional exponential kernel. Finally, we mention the paper by Wang and Pindera <ref type="bibr" target="#b14">[15]</ref>, in which, even though the notion of fractional viscoelasticity is not considered, the authors employ the locally exact homogenization theory to investigate the effective properties of a unidirectional composite with the viscoelastic matrix exhibiting a power-law constitutive behavior.</p><p>We further remark that it is still lacking a well-established theoretical study connecting the role of the micro-structure in the origins of fractional behavior. In this respect, we mention the paper by Brenner <ref type="bibr" target="#b21">[22]</ref> where the author studies the emergence of a fractional viscoelastic behavior resulting from micro-structural information considering Hashin-Shtrikman and self-consistent estimates. We also mention that, in recent investigations, there have been attempts to propose variable-order fractional parameters depending on specific fields or micro-structural information. For instance, to study the effect of temperature on the mechanical behavior of a linear fractional viscoelastic material, Colinas-Armijo et al. <ref type="bibr" target="#b22">[23]</ref> propose fractional orders explicitly depending on the temperature. On the other hand, in Ramirez and Coimbra <ref type="bibr" target="#b23">[24]</ref>, the time-dependent order of the fractional derivative is assumed to be a measure of the rate of change of disorder within a composite material. In particular, the results derived from the statistical mechanical model proposed in Ramirez and Coimbra <ref type="bibr" target="#b23">[24]</ref> where in agreement with experimental studies conducted in an epoxy resin and a carbon/epoxy composite.</p><p>Here, motivated by previous works (see, e.g., <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b20">21,</ref><ref type="bibr" target="#b24">[25]</ref><ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref>), we use the asymptotic homogenization method <ref type="bibr" target="#b27">[28]</ref><ref type="bibr" target="#b28">[29]</ref><ref type="bibr" target="#b29">[30]</ref> to compute the effective properties of a composite with viscoelastic constitutive response. In particular, we conduct our calculations in the general setting of linear viscoelastic materials and specialize them for the case in which the local constitutive response of each constituent is described by a fractional viscoelastic model. Although the approach has common points with that followed in Rodríguez-Ramos et al. <ref type="bibr" target="#b19">[20]</ref> and Otero et al. <ref type="bibr" target="#b20">[21]</ref>, we set the problem differently such that it is possible to explicitly split the elastic and the memory contributions of the composite. This is one of the novelties of this work. Furthermore, we analyze the consequences of limit cases by using a unified memory law which includes the fractional Kelvin-Voigt, Maxwell, and Zener models and that can be generalized to include Prony series and Rabotnov's kernels. In addition, we find analytical expressions for the effective coefficients for special cases of composite media. Within this context, we find that for a layered composite with elastic and fractional Kelvin-Voigt constituents the effective coefficients can be written in terms of a two-parameter Mitta-Leffler function. This constitutes another novelty of this work.</p><p>The present work is organized as follows. In Section 2, we introduce the main equations governing our model. In Section 3, we reformulate the original problem in a two-scale fashion and introduce the topology of the composite micro-structure. Afterwards, in Section 4, we derive the cell and homogenized problems and the general form of the effective coefficients for a two-phase viscoelastic composite via the asymptotic homogenization technique. In doing this, we transform the two-scale problem to the Laplace domain using the elastic-viscoelastic correspondence principle and take advantage of the Laplace-Carson transform in the inversion of the effective coefficients to the time domain. Furthermore, we use these theoretical results to derive the analytical expressions for the effective elasticity and relaxation tensors in the case of a composite medium with a three-dimensional layered structure. In Section 5, we present specific constitutive models for linear viscoelastic and fractional viscoelastic materials and discuss some limit cases of the latter. Moreover, we specialize the general theory by presenting different benchmark problems and discussing the results produced by analytical and numerical simulations. Finally, in Section 6, we highlight the main results and outline some future developments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">PROBLEM FORMULATION</head><p>Let us denote by B an open and bounded set of the three-dimensional Euclidean space, S, representing a continuum body with periodic micro-structure and constituted by two different solid sub-phases denoted by B 1 and B 2 . The two open subsets B 1 and</p><formula xml:id="formula_0">B 2 partition B such that B = B 1 ∪ B 2 , B 1 ∩ B 2 = ∅ and B 1 ∩ B 2 = ∅.</formula><p>The bar notation indicates that we consider the topological closure of the subset. Furthermore, we denote by I the interface between B 1 and B 2 and by N I the unit vector normal to I, where the positive orientation is taken from B 1 to B 2 . Additionally, for each point X ∈ B, we associate a triple of real numbers represented by (X 1 , X 2 , X 3 ) so that they represent, with abuse of notation, the coordinates of X in a Cartesian reference system.</p><p>In the absence of body forces, the point-wise balance of linear momentum for the composite B reads div</p><formula xml:id="formula_1">S 𝜂 (X, t) = 𝟎,<label>(1)</label></formula><p>where S 𝜂 (X, t), with 𝜂 = 1, 2, denotes the Cauchy stress tensor related to the constituent B 𝜂 and (X, t) ∈ B 𝜂 × [0, t f [, with t f representing a positive time. In addition, we prescribe continuity of displacements and tractions on the constituents' interface, namely, for all t ∈ [0, t f [,</p><formula xml:id="formula_2">U 1 (X -, t) = U 2 ( X + , t ) , (<label>2a</label></formula><formula xml:id="formula_3">)</formula><formula xml:id="formula_4">S 1 (X -, t)N I (X) = S 2 ( X + , t ) N I (X),<label>(2b)</label></formula><p>where we have used the notation</p><formula xml:id="formula_5">Φ 1 (X -, t) ∶= lim X→X -Φ 1 (X, t), (3a) Φ 2 ( X + , t ) ∶= lim X→X + Φ 2 (X, t),<label>(3b)</label></formula><p>with X -∈ I -(X + ∈ I + ) and I -(I + ) being the set of points of I interpreted as the points of I which are in contact with the sub-phase B 1 (B 2 ). The problem defined by Equations ( <ref type="formula" target="#formula_1">1</ref>), (2a), and (2b) needs to complemented with appropriate boundary and initial conditions. However, since here we are focused on computing the effective material properties, they do not need to be specified. We also notice that the notation used so far is not general to all possible topological configurations and, thus, may need to be adapted, for example, to include the case of disconnected subsets <ref type="bibr" target="#b30">[31]</ref>. By adhering to the infinitesimal theory of viscoelasticity <ref type="bibr" target="#b31">[32,</ref><ref type="bibr" target="#b32">33]</ref>, the stress tensors, S 𝜂 (X, t), for non-aging viscoelastic media in the absence of residual stresses can be written as</p><formula xml:id="formula_6">S 𝜂 (X, t) = C 𝜂 (X) ∶ E 𝜂 (X, t) + t ∫ -∞ L 𝜂 (X, t -𝜏) ∶ . E 𝜂 (X, 𝜏)d𝜏,<label>(4)</label></formula><p>where E 𝜂 (X, t) ∶= sym(grad U 𝜂 (X, t)) represents the infinitesimal strain tensor, U 𝜂 is the displacement field, grad U 𝜂 = 𝜕[U 𝜂 ] a ∕𝜕X b i a ⊗i b denotes the displacement gradient, and {i a } 3 a=1 is the orthonormal vector basis in Cartesian coordinates. The fourth-order tensors C 𝜂 (X) and L 𝜂 (X, t) are referred to as the elasticity tensor and the stress-relaxation tensor <ref type="bibr" target="#b32">[33,</ref><ref type="bibr" target="#b33">34]</ref>, respectively, which we consider to enjoy of both left and right minor symmetries, and major symmetry, that is,</p><formula xml:id="formula_7">[ C 𝜂 (X) ] abcd = [ C 𝜂 (X) ] bacd = [ C 𝜂 (X) ] abdc = [ C 𝜂 (X) ] cdab , (5a) [ L 𝜂 (X, t) ] abcd = [ L 𝜂 (X, t) ] bacd = [ L 𝜂 (X, t) ] abdc = [ L 𝜂 (X, t) ] cdab , (<label>5b</label></formula><formula xml:id="formula_8">)</formula><p>with a, b, c, d = 1, 2, 3. In particular, under the hypothesis of causal histories, that is, by requiring the infinitesimal strain to be zero for t &lt; 0 and non-zero in the interval [0, t[, we can write Ē𝜂 (X, t) = H(t) Ē𝜂 (X, t), where H(t) denotes the Heaviside step function and Ē𝜂 (X, t) is the infinitesimal strain which can have non-zero values for t &lt; 0. Therefore, Equation (4) can be rewritten as</p><formula xml:id="formula_9">S 𝜂 (X, t) = C 𝜂 (X) ∶ Ē𝜂 (X, t) + L 𝜂 (X, t) ∶ Ē𝜂 (X, 0) + t ∫ 0 L 𝜂 (X, t -𝜏) ∶ Ē𝜂 (X, 𝜏)d𝜏. (<label>6</label></formula><formula xml:id="formula_10">)</formula><p>For simplicity of notation, in the remainder of this work, we will write E 𝜂 instead of Ē𝜂 . In particular, the constitutive expression in Equation ( <ref type="formula" target="#formula_9">6</ref>) can be equivalently rewritten in the form</p><formula xml:id="formula_11">S 𝜂 (X, t) = G 𝜂 (X, t) ∶ E 𝜂 (X, 0) + t ∫ 0 G 𝜂 (X, t -𝜏) ∶ . E 𝜂 (X, 𝜏)d𝜏. (<label>7</label></formula><formula xml:id="formula_12">)</formula><p>where G 𝜂 (X, t) ∶= C 𝜂 (X) + L 𝜂 (X, t). We remark that we follow the approach outlined by Eringen <ref type="bibr" target="#b32">[33]</ref> for the presentation of the general form of the viscoelastic constitutive law. Therefore, we adopt the notation and terminology used in Eringen <ref type="bibr" target="#b32">[33]</ref>. In doing this, instead of referring to G 𝜂 as the relaxation tensor (as it is usually done), we prefer to call L 𝜂 the relaxation tensor, since it is the one that encodes the memory properties of the constituents.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">MULTI-SCALE FORMULATION</head><p>Here, we reformulate the equations specified in the previous section in a multi-scale fashion and describe the topology of the micro-structure for the problem under consideration.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Separation of scales</head><p>We start by denoting with L c and 𝓁 the characteristic length scales of the composite medium and of its internal structure so that</p><formula xml:id="formula_13">0 &lt; 𝜀 ∶= 𝓁 L c ≪ 1,<label>(8)</label></formula><p>where 𝜀 is referred to as the smallness parameter. Moreover, following Ramírez-Torres et al. <ref type="bibr" target="#b25">[26]</ref> and Di Stefano <ref type="bibr" target="#b30">[31]</ref>, we formally rewrite a given physical quantity Φ ∶ B × [0, t f [→ R in a two-scale fashion, so that the dependence on the characteristic length scales is explicitly taken into account. Specifically, the multi-scale version of a quantity Φ(X, t) is written as <ref type="bibr" target="#b25">[26,</ref><ref type="bibr" target="#b30">31]</ref> Φ(X, t) = 𝜑(x, 𝑦, t), <ref type="bibr" target="#b8">(9)</ref> where the dimensionless variables x ∶= X∕L c and 𝑦 ∶= X∕𝜀 are referred to as the macroscopic variable and the microscopic variable, respectively. We notice that, in this framework, the partial derivatives of Φ with respect to the spatial coordinates X i , i = 1, 2, 3, of X can be expressed as</p><formula xml:id="formula_14">𝜕Φ 𝜕X i (X, t) = 1 L c [ 𝜕𝜑 𝜕x i (x, 𝑦, t) + 1 𝜀 𝜕𝜑 𝜕𝑦 i (x, 𝑦, t) ] . (<label>10</label></formula><formula xml:id="formula_15">)</formula><p>For the problem under study, we introduce the notations</p><formula xml:id="formula_16">U 𝜂 (X, t) = u 𝜂 (x, 𝑦, t) and S 𝜂 (X, t) = 𝝈 𝜂 (x, 𝑦, t), (<label>11</label></formula><formula xml:id="formula_17">)</formula><p>for the displacement and stress fields, and</p><formula xml:id="formula_18">C 𝜂 (X, t) = 𝕔 𝜂 (x, 𝑦, t) and L 𝜂 (X, t) = 𝕝 𝜂 (x, 𝑦, t), (<label>12</label></formula><formula xml:id="formula_19">)</formula><p>for the elasticity and the relaxation tensors. Furthermore, we set G 𝜂 (X, t) = 𝕘 𝜂 (x, 𝑦, t).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Topology of the micro-structure</head><p>As usually done in the context of the asymptotic homogenization technique <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref>, we assume that all the fields of interest are periodic with respect to the micro-scale variable 𝑦 and introduce an elementary cell, which we denote Y in a non-dimensional formalism. Specifically, we consider that For the sake of simplicity, we adopt the assumption of macroscopic uniformity (see, for instance, Burridge and Keller <ref type="bibr" target="#b34">[35]</ref> and Penta et al. <ref type="bibr" target="#b35">[36]</ref>), which permits to choose the elementary cell independently of the position in the domain B. This consideration implies that the elementary cell, Y, and, thus, the sub-phases Y 1 and Y 2 as well as the interface I are representative of the micro-structure of B. Consequently, the normal vector n Y results to be independent of the macroscopic variable x.</p><formula xml:id="formula_20">Y is partitioned such that Y = Y 1 ∪ Y 2 , Y 1 ∩ Y 2 = ∅,</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Two-scale governing equations</head><p>In view of the above discussions, we can reformulate the original problem given by Equations ( <ref type="formula" target="#formula_1">1</ref>)-(2b) as </p><formula xml:id="formula_21">L -1 c [ div x 𝝈 𝜂 (x, 𝑦, t) + 𝜀 -1 div 𝑦 𝝈 𝜂 (x, 𝑦, t) ] = 𝟎,<label>(13a)</label></formula><formula xml:id="formula_22">u 1 (x, 𝑦 -, t) = u 2 ( x, 𝑦 + , t ) , (<label>13b</label></formula><formula xml:id="formula_23">)</formula><formula xml:id="formula_24">𝝈 1 (x, 𝑦 -, t) n Y (𝑦) = 𝝈 2 ( x, 𝑦 + , t ) n Y (𝑦),<label>(13c)</label></formula><p>Before going further, we transform the problem specified in (13a)-(15c) from the time domain to the Laplace transform domain by considering the elastic-viscoelastic correspondence principle (see, e.g., <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b36">37]</ref> in the context of asymptotic homogenization). Specifically, by introducing the Laplace transform of the generic field 𝜑(x, 𝑦, t), namely,</p><formula xml:id="formula_26">{𝜑}(x, 𝑦, s) ≡ φ(x, 𝑦, s) ∶= +∞ ∫ 0 exp(-st)𝜑(x, 𝑦, t)dt, (<label>16</label></formula><formula xml:id="formula_27">)</formula><p>the system of Equations (13a)-(13c) can be rewritten as</p><formula xml:id="formula_28">L -1 c [ div x σ𝜂 (x, 𝑦, s) + 𝜀 -1 div 𝑦 σ𝜂 (x, 𝑦, s) ] = 𝟎, (17a) ũ1 (x, 𝑦 -, s) = ũ2 ( x, 𝑦 + , s ) , (<label>17b</label></formula><formula xml:id="formula_29">) σ1 (x, 𝑦 -, s)n Y (𝑦) = σ2 ( x, 𝑦 + , s ) n Y (𝑦),<label>(17c)</label></formula><p>where, by considering the expressions in formulae (15a)-(15c), the Laplace transform of the two-scale, infinitesimal stress tensor can be written as</p><formula xml:id="formula_30">σ𝜂 (x, 𝑦, s) = s g𝜂 (x, 𝑦, s) ∶ ẽ𝜂 (x, 𝑦, s) = ĝ𝜂 (x, 𝑦, s) ∶ ẽ𝜂 (x, 𝑦, s), (<label>18</label></formula><formula xml:id="formula_31">)</formula><p>where ĝ𝜂 denotes the Laplace-Carson transform of 𝕘, which is defined as <ref type="bibr" target="#b37">[38]</ref> </p><formula xml:id="formula_32">c {𝜑}(x, 𝑦, s) ≡ φ(x, 𝑦, s) ∶= s +∞ ∫ 0 exp(-st)𝜑(x, 𝑦, t)dt = s{𝜑}(x, 𝑦, s), (<label>19</label></formula><formula xml:id="formula_33">)</formula><p>for the generic field 𝜑. In particular, since the elasticity tensor is time independent, ĉ𝜂 (x, 𝑦, s) = 𝕔 𝜂 (x, 𝑦), and thus, we can write ĝ𝜂 (x, 𝑦, s) = ĉ𝜂 (x, 𝑦, s)</p><formula xml:id="formula_34">+ ̂𝕝𝜂 (x, 𝑦, s) = 𝕔 𝜂 (x, 𝑦) + s ̃𝕝𝜂 (x, 𝑦, s). (<label>20</label></formula><formula xml:id="formula_35">)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">THE ASYMPTOTIC HOMOGENIZATION TECHNIQUE</head><p>Following the standard procedure in the asymptotic homogenization technique <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref>, we prescribe a formal two-scale expansion for the displacement ũ𝜂 in power series of the smallness parameter 𝜀 as follows:</p><formula xml:id="formula_36">ũ𝜂 (x, 𝑦, s) = +∞ ∑ i=0 u (i) 𝜂 (x, 𝑦, s)𝜀 i ,<label>(21)</label></formula><p>where u (i)  𝜂 represent smooth, Y-periodic fields. The substitution of the expansion ( <ref type="formula" target="#formula_36">21</ref>) into (17a) leads, after multiplication by 𝜀 2 and equating in powers of the smallness parameter 𝜀, to a set of differential equations holding in the periodic cell, Y, and parametrized by the macro-scale variable x. These equations, in particular, are supplemented with interface conditions resulting from the substitution of the formal expansion ( <ref type="formula" target="#formula_36">21</ref>) into (17b)-(17c). In the following, we report the set of problems associated with the asymptotic homogenization procedure. Although the description of the homogenization technique presented in this section is classical, we report its main steps since the presentation of the problem at hand differs from those typically encountered in the existing literature.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">The first cell problem</head><p>The first cell problem reads</p><formula xml:id="formula_37">L -1 c div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ e (0) 𝜂𝑦 (x, 𝑦, s) ] = 𝟎,<label>(22a)</label></formula><formula xml:id="formula_38">u (0) 1 (x, 𝑦 -, s) = u (0) 2 ( x, 𝑦 + , s ) , (<label>22b</label></formula><formula xml:id="formula_39">) [ ĝ1 (x, 𝑦 -, s) ∶ e (0) 1𝑦 (x, 𝑦 -, s) ] n Y (𝑦) = [ ĝ2 ( x, 𝑦 + , s ) ∶ e (0) 2𝑦 ( x, 𝑦 + , s ) ] n Y (𝑦),<label>(22c)</label></formula><p>where, for i = 0, 1, 2, … , we have introduced the notation</p><formula xml:id="formula_40">e (i) 𝜂𝑦 (x, 𝑦, s) ∶= L -1 c sym(grad 𝑦 u (i) 𝜂 (x, 𝑦, s)). (<label>23</label></formula><formula xml:id="formula_41">)</formula><p>The system (22a)-(22c) represents a linear elastic-type boundary problem with zero source term, for which the only periodic solutions are of the form <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref> </p><formula xml:id="formula_42">u (0) (x, s) ∶= u (0) 1 (x, s) = u (0) 2 (x, s). (<label>24</label></formula><formula xml:id="formula_43">)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">The second cell problem</head><p>The second cell problem can be written as</p><formula xml:id="formula_44">L -1 c div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ e (1) 𝜂𝑦 (x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s) ∶ e (0) x (x, s) ] = 𝟎,<label>(25a)</label></formula><formula xml:id="formula_45">u (1) 1 (x, 𝑦 -, s) = u (1) 2 ( x, 𝑦 + , s ) , (<label>25b</label></formula><formula xml:id="formula_46">) [ ĝ1 (x, 𝑦 -, s) ∶ e (1) 1𝑦 (x, 𝑦 -, s) + ĝ1 (x, 𝑦 -, s) ∶ e (0) x (x, 𝑦 -, s) ] n Y (𝑦) = [ ĝ2 ( x, 𝑦 + , s ) ∶ e (1) 2𝑦 ( x, 𝑦 + , s ) + ĝ2 ( x, 𝑦 + , s ) ∶ e (0) x ( x, 𝑦 + , s ) ] n Y (𝑦),<label>(25c)</label></formula><p>where e (0)  x (x, s) ∶= L -1 c sym(grad x u (0) (x, s)). The system (25a)-(25c), which can be also regarded as a linear elastic-type boundary problem in the unknown field u (1)  𝜂 , admits a unique solution up to an additive 𝑦-constant field <ref type="bibr" target="#b29">[30]</ref>. Consequently, we can express u (1)  𝜂 through the ansatz</p><formula xml:id="formula_47">u (1) 𝜂 (x, 𝑦, s) = 𝝃 𝜂 (x, 𝑦, s) ∶ e (0) x (x, s) + w 𝜂 (x, s), (<label>26</label></formula><formula xml:id="formula_48">)</formula><p>where 𝝃 𝜂 denotes a 𝑦-periodic third-order tensor field and w 𝜂 is a vector field. We notice that using the expression introduced in Equation ( <ref type="formula" target="#formula_47">26</ref>), we can write e (1)  𝜂𝑦 (x, 𝑦, s) ∶= sym(grad 𝑦 u (1)  </p><formula xml:id="formula_49">𝜂 (x, 𝑦, s)) = 𝕖 𝜂𝑦 (x, 𝑦, s) ∶ e (0) x (x, s), (<label>27</label></formula><formula xml:id="formula_50">)</formula><p>where the components of the fourth-order tensor field 𝕖 𝜂𝑦 are</p><formula xml:id="formula_51">[𝕖 𝜂𝑦 (x, 𝑦, s)] abcd ∶= 1 2 ( 𝜕 [ 𝝃 𝜂 ] acd 𝜕𝑦 b (x, 𝑦, s) + 𝜕 [ 𝝃 𝜂 ] bcd 𝜕𝑦 a (x, 𝑦, s) ) . (<label>28</label></formula><formula xml:id="formula_52">)</formula><p>From the above expression, we can verify that 𝕖 𝜂𝑦 enjoys of the left-minor symmetry, that is, [𝕖 𝜂𝑦 ] abcd = [𝕖 𝜂𝑦 ] bacd . Now, by substituting the ansatz <ref type="bibr" target="#b25">(26)</ref> in Equations (25a)-(25c) and taking into account the expression in <ref type="bibr" target="#b26">(27)</ref>, the second cell problem, usually referred to as the local problem, reads</p><formula xml:id="formula_53">L -1 c div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ 𝕖 𝜂𝑦 (x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s)] = 𝟎,<label>(29a</label></formula><p>)</p><formula xml:id="formula_54">𝝃 1 (x, 𝑦 -, s) = 𝝃 2 ( x, 𝑦 + , s ) , (<label>29b</label></formula><formula xml:id="formula_55">) [ ĝ1 (x, 𝑦 -, s) ∶ 𝕖 1𝑦 (x, 𝑦 -, s) + ĝ1 (x, 𝑦 -, s) ] n Y (𝑦) = [ ĝ2 ( x, 𝑦 + , s ) ∶ 𝕖 2𝑦 ( x, 𝑦 + , s ) + ĝ2 ( x, 𝑦 + , s )] n Y (𝑦).<label>(29c)</label></formula><p>We remark that, to solve the cell problem (29a)-(29c), we take advantage of the symmetry of the tensor fields in these equations to reduce the number of unknowns. Looking at Equation ( <ref type="formula" target="#formula_51">28</ref>), we need to find the 81 components of the fourth-order tensor 𝕖 𝜂𝑦 . However, by definition, the tensor 𝕖 𝜂𝑦 enjoys the left-minor symmetry. On the other hand, the symmetry of e (0)  x implies that 𝝃 is symmetric in its last two indices and, consequently, 𝕖 𝜂𝑦 also enjoys right minor symmetry. Therefore, the number of unknown components of the tensor 𝕖 𝜂𝑦 reduces to 36. We refer the reader to Di Stefano et al. <ref type="bibr" target="#b30">[31]</ref> and Penta and Gerisch <ref type="bibr" target="#b38">[39]</ref> for further details.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">The homogenized problem</head><p>By considering the third cell problem, we can write</p><formula xml:id="formula_56">L -1 c div x [ ĝ𝜂 (x, 𝑦, s) ∶ e (0)</formula><p>x (x, s) + ĝ𝜂 (x, 𝑦, s) ∶ e (1)  𝜂𝑦 (x, 𝑦, s) (1)  𝜂x (x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s) ∶ e (2)  𝜂𝑦 (x, 𝑦, s)</p><formula xml:id="formula_57">] + L -1 c div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ e</formula><formula xml:id="formula_58">] = 𝟎,<label>(30a)</label></formula><formula xml:id="formula_59">u (2) 1 (x, 𝑦 -, s) = u (2) 2 ( x, 𝑦 + , s ) ,<label>(30b)</label></formula><p>[ ĝ1 (x, 𝑦 -, s) ∶ e (1)  1x (x, 𝑦 -, s) + ĝ1 (x, 𝑦 -, s) ∶ e (2)  1𝑦 (x, 𝑦 -, s)</p><formula xml:id="formula_60">] n Y (𝑦) = [ ĝ2 ( x, 𝑦 + , s ) ∶ e (1) 2x ( x, 𝑦 + , s ) + ĝ2 ( x, 𝑦 + , s ) ∶ e (2) 2𝑦 ( x, 𝑦 + , s ) ] n Y (𝑦),<label>(30c)</label></formula><p>where, for i = 0, 1, 2, … ,</p><formula xml:id="formula_61">e (i) 𝜂x (x, 𝑦, s) ∶= L -1 c sym(grad x u (i) 𝜂 (x, 𝑦, s)). (<label>31</label></formula><formula xml:id="formula_62">)</formula><p>Before going further in our analysis, let us introduce, for a generic field 𝜑 𝜂 (x, 𝑦, s), with 𝜂 = 1, 2, the operator</p><formula xml:id="formula_63">⟨ 𝜑 𝜂 ⟩ Y 𝜂 (x, s) ∶= 1 |Y | ∫ Y 𝜂 𝜑 𝜂 (x, 𝑦, s)d𝑦, (<label>32</label></formula><formula xml:id="formula_64">)</formula><p>where |Y | represents the measure of Y 𝜂 . In particular, we notice that the average of 𝜑 over the cell Y is</p><formula xml:id="formula_65">⟨𝜑⟩ Y (x, s) ∶= ⟨𝜑 1 ⟩ Y 1 (x, s) + ⟨𝜑 2 ⟩ Y 2 (x, s) = 1 |Y | ∑ 𝜂=1,2 ∫ Y 𝜂 𝜑 𝜂 (x, 𝑦, s)d𝑦, (<label>33</label></formula><formula xml:id="formula_66">)</formula><p>where 𝜑 ∶= 𝜑 1 𝟙 Y 1 + 𝜑 2 𝟙 Y 2 and 𝟙 Y 𝜂 denotes the indicator function of Y 𝜂 . Consequently, by applying the operator introduced in <ref type="bibr" target="#b31">(32)</ref> to (30a) and considering the assumption of macroscopic uniformity, which permits to commute the integral operator over the periodic cell and the divergence with respect to x, we can deduce that</p><formula xml:id="formula_67">𝟎 = L -1 c div x [ ⟨ ĝ𝜂 (x, 𝑦, s) ⟩ Y 𝜂 ∶ e (0)</formula><p>x (x, s) + ⟨ ĝ𝜂 (x, 𝑦, s) ∶ e (1)  𝜂𝑦 (x, 𝑦, s)</p><formula xml:id="formula_68">⟩ Y 𝜂 ] + L -1 c ⟨ div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ e (1) 𝜂x (x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s) ∶ e (2) 𝜂𝑦 (x, 𝑦, s) ]⟩ Y 𝜂 . (<label>34</label></formula><formula xml:id="formula_69">)</formula><p>Thus, summing up over 𝜂 = 1, 2 the second addend in <ref type="bibr" target="#b33">(34)</ref> and considering the periodicity properties of u (1)  𝜂 and u (2)  𝜂 , we have that (1)  𝜂x + ĝ𝜂 ∶ e (2)   𝜂𝑦 ]⟩</p><formula xml:id="formula_70">𝟎 = ∑ 𝜂=1,2 ⟨ div 𝑦 [ ĝ𝜂 ∶ e</formula><formula xml:id="formula_71">Y 𝜂 = 1 |Y | ∫ I Y ∑ 𝜂=1,2 [</formula><p>ĝ𝜂 ∶ e (1)  𝜂x + ĝ𝜂 ∶ e (2)   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝜂𝑦</head><p>] n 𝜂 d𝑦, <ref type="bibr" target="#b34">(35)</ref> where we have also invoked the interface condition (30c) and used the notation n 1 ∶= n Y and n 2 ∶= -n Y . We remark that the result <ref type="bibr" target="#b34">(35)</ref> holds true for a certain class of periodic cells with specific topological characteristics; see, for example, Di Stefano et al. <ref type="bibr" target="#b30">[31]</ref> for further discussion on this issue. Therefore, by summing Equation ( <ref type="formula" target="#formula_68">34</ref>) over 𝜂 = 1, 2, and taking into account <ref type="bibr" target="#b34">(35)</ref> and <ref type="bibr" target="#b26">(27)</ref>, we obtain that Equation ( <ref type="formula" target="#formula_68">34</ref>) can be equivalently rewritten as</p><formula xml:id="formula_72">L -1 c div x [ 𝕘 eff (x, s) ∶ e (0) x (x, s) ] = 𝟎,<label>(36)</label></formula><p>where we have introduced the auxiliary notation</p><formula xml:id="formula_73">𝕘 eff (x, s) ∶= ∑ 𝜂=1,2 ⟨ ĝ𝜂 (x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s) ∶ 𝕖 𝜂𝑦 (x, 𝑦, s) ⟩ Y 𝜂 . (<label>37</label></formula><formula xml:id="formula_74">)</formula><p>We notice that Equation (36) constitutes the homogenized equation for the unknown u (0) (x, s) and holds true in the spatial domain B h , namely, in the homogenized version of B.</p><p>Remark 1. We remark that the fourth-order tensor 𝕘 eff can be written as</p><formula xml:id="formula_75">𝕘 eff (x, s) ∶= 𝕔 eff (x, s) + 𝕝 eff (x, s), (<label>38</label></formula><formula xml:id="formula_76">)</formula><p>where 𝕔 eff and 𝕝 eff are defined through the expressions</p><formula xml:id="formula_77">𝕔 eff (x, s) ∶= ∑ 𝜂=1,2 ⟨ ĉ𝜂 (x, 𝑦, s) + ĉ𝜂 (x, 𝑦, s) ∶ 𝕖 𝜂𝑦 (x, 𝑦, s) ⟩ Y 𝜂 , (<label>39a</label></formula><formula xml:id="formula_78">)</formula><formula xml:id="formula_79">𝕝 eff (x, s) ∶= ∑ 𝜂=1,2 ⟨ ̂𝕝𝜂 (x, 𝑦, s) + ̂𝕝𝜂 (x, 𝑦, s) ∶ 𝕖 𝜂𝑦 (x, 𝑦, s) ⟩ Y 𝜂 , (<label>39b</label></formula><formula xml:id="formula_80">)</formula><p>and represent, respectively, the effective elasticity and the effective relaxation tensors. It is worth noticing that, in general, the fields u (i) may not represent the result of the application of the Laplace transform to a certain vector field and, thus, the transformation of the effective coefficient to the time domain should be carefully done by selecting an appropriate operator. This, however, is not an easy task as we would want to select a transformation operator which permits us to obtain the equivalent homogenized properties corresponding to the original problem. Here, to avoid this uncertainty, we assume that u (i) represents the result of a Laplace transformation, such that</p><formula xml:id="formula_81">u (i) (x, 𝑦, s) ≡ ũ(i) (x, 𝑦, s).</formula><p>Therefore, working with the second addends in (39a) and (39b), we can deduce that</p><formula xml:id="formula_82">ĉ𝜂 ∶ ẽ𝜂𝑦 = s c𝜂 ∶ ẽ𝜂𝑦 = s{𝕔 𝜂 * 𝕖 𝜂𝑦 } =  c {𝕔 𝜂 * 𝕖 𝜂𝑦 }, (<label>40a</label></formula><formula xml:id="formula_83">)</formula><formula xml:id="formula_84">̂𝕝𝜂 ∶ ẽ𝜂𝑦 = s ̃𝕝𝜂 ∶ ẽ𝜂𝑦 = s{𝕝 𝜂 * 𝕖 𝜂𝑦 } =  c {𝕝 𝜂 * 𝕖 𝜂𝑦 },<label>(40b)</label></formula><p>where the time convolution is understood between the components of the fourth-order tensor. Then, we can conclude that both 𝕔 eff and 𝕝 eff represent the result of Laplace-Carson transforms and we can write</p><formula xml:id="formula_85">𝕘 eff ∶= 𝕔 eff + 𝕝 eff = ĉeff + ̂𝕝eff ≡ ĝeff . (<label>41</label></formula><formula xml:id="formula_86">)</formula><p>Consequently, to obtain the value of 𝕘 eff in the time domain, we need to consider the inverse Laplace-Carson transform. In the remainder of this work, we will consider the assumptions leading to Equation (41).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Effective coefficients for viscoelastic layered composites</head><p>Our main scope is to show how fractional constitutive laws influence the effective properties of a composite. Thus, although we could consider geometric settings more complex than the one factually employed in the sequel (see, e.g., Cruz-González et al. <ref type="bibr" target="#b16">[17]</ref>), here, we specialize our theory to the case of a layered composite medium in order to give prominence to the role of the use of a fractional constitutive law with respect to geometric complexity. We notice that the effective coefficients that we obtain for our problem by using the Laplace-Carson transform for the case of strain and stress fields uniform in each layer were previously determined in Backus <ref type="bibr" target="#b39">[40]</ref>.</p><p>The right minor symmetry of the tensor ĝ𝜂 allows to rewrite the cell problem (29a)-(29c) in the form</p><formula xml:id="formula_87">L -1 c div 𝑦 [ ĝ𝜂 (x, 𝑦, s) ∶ grad 𝑦 (𝝃 T 𝜂 )(x, 𝑦, s) + ĝ𝜂 (x, 𝑦, s) ] = 𝟎,<label>(42a</label></formula><p>)</p><formula xml:id="formula_88">𝝃 1 (x, 𝑦 -, s) = 𝝃 2 ( x, 𝑦 + , s ) , (<label>42b</label></formula><formula xml:id="formula_89">) [ ĝ1 (x, 𝑦 -, s) ∶ grad 𝑦 ( 𝝃 T 1 ) (x, 𝑦 -, s) + ĝ1 (x, 𝑦 -, s) ] n Y (𝑦) = [ ĝ2 ( x, 𝑦 + , s ) ∶ grad 𝑦 ( 𝝃 T 2 ) ( x, 𝑦 + , s ) + ĝ2 ( x, 𝑦 + , s )] n Y (𝑦),<label>(42c)</label></formula><p>where <ref type="bibr" target="#b40">[41]</ref>. In particular, the symmetry of the third-order tensor 𝝃 𝜂 in its last two indices reduces the number of unknowns of the cell problem from 27 to 18. Then, for a three-dimensional layered composite medium with layers orthogonal to the i 3 direction and with each layer assumed to be homogeneous in 𝑦 1 and 𝑦 2 , and, thus, in each plane orthogonal to i 3 , the material properties of the composite change solely along the i 3 direction, and thus, the first equation in the cell problem (42a)-(42c) reduces to</p><formula xml:id="formula_90">[grad 𝑦 (𝝃 T 𝜂 )] abcd ∶= 𝜕[𝝃 T 𝜂 ] cda ∕𝜕𝑦 b = 𝜕 [ 𝝃 𝜂 ] acd ∕𝜕𝑦 b</formula><formula xml:id="formula_91">L -1 c 𝜕 𝜕𝑦 { [ ĝ𝜂 (x, 𝑦, s) ] a3cd + [ ĝ𝜂 (x, 𝑦, s) ] a3p3 𝜕 [ 𝝃 𝜂 ] pcd 𝜕𝑦 (x, 𝑦, s) } = 0,<label>(43)</label></formula><p>where, for simplicity of notation, we have replaced 𝑦 3 with 𝑦. Within this framework, the original problem, which is three-dimensional, can be reconceived as one-dimensional and, accordingly, the unit cell can be associated with the interval Y =]0, 1[ and the homogenized domain with B h =]0, L∕L c [, with L &gt; 0. Due to the simplified structure of Equation ( <ref type="formula" target="#formula_91">43</ref>), a direct integration with respect to 𝑦 yields that the term inside the braces is independent of 𝑦, that is,</p><formula xml:id="formula_92">L -1 c { [ ĝ𝜂 (x, 𝑦, s) ] a3cd + [ ĝ𝜂 (x, 𝑦, s) ] a3p3 𝜕 [ 𝝃 𝜂 ] pcd 𝜕𝑦 (x, 𝑦, s) } = 𝕒 𝜂 (x, s), (<label>44</label></formula><formula xml:id="formula_93">)</formula><p>where 𝕒 𝜂 is the "integration constant." This, in turn, leads to</p><formula xml:id="formula_94">𝜕 [ 𝝃 𝜂 ] acd 𝜕𝑦 (x, 𝑦, s) = L c [ h -1 𝜂 (x, 𝑦, s) ] ap { [𝕒 𝜂 (x, s)] p3cd -L -1 c [ ĝ𝜂 (x, 𝑦, s) ] p3cd } , (<label>45</label></formula><formula xml:id="formula_95">)</formula><p>where the auxiliary notation h -1 𝜂 is used to represent the inverse of the second-order tensor with components</p><formula xml:id="formula_96">[h 𝜂 (x, 𝑦, s)] ab = [ ĝ𝜂 (x, 𝑦, s) ]</formula><p>a3b3 . We notice that, to solve the cell problem, one should determine 𝝃 𝜂 . However, since we are interested only in the determination of the effective coefficients, this is not necessary. Indeed, looking at Equations (39a) and (39b), one can just determine 𝕖 𝜂 , which reduces to the partial derivative of the third-order tensor 𝝃 𝜂 , given by Equation <ref type="bibr" target="#b44">(45)</ref>. Consequently, from Equation (45), we only need to find the "integration constants" supplied by the components [𝕒 𝜂 ] p3cd . In particular, the substitution of (45) into the interface condition (42c) leads to</p><formula xml:id="formula_97">[𝕒(x, s)] a3cd ≡ [𝕒 1 (x, s)] a3cd = [𝕒 2 (x, s)] a3cd . (<label>46</label></formula><formula xml:id="formula_98">)</formula><p>Thus, by applying the integral operator defined in <ref type="bibr" target="#b31">(32)</ref> to <ref type="bibr" target="#b44">(45)</ref>, summing up over 𝜂 = 1, 2, and taking into account the local periodicity of 𝝃 𝜂 , as well as its continuity at the interface, we deduce that</p><formula xml:id="formula_99">[𝕒(x, s)] r3cd = L -1 c { ∑ 𝜂=1,2 ⟨[ 𝝌 𝜂 (x, 𝑦, s) ] rn [ ĝ𝜂 (x, 𝑦, s) ] n3cd ⟩ Y 𝜂 } , (<label>47</label></formula><formula xml:id="formula_100">)</formula><p>with</p><formula xml:id="formula_101">[ 𝝌 𝜂 (x, 𝑦, s) ] rn ∶= [H(x, s)] rm [ h -1 𝜂 (x, 𝑦, s) ] mn , (<label>48a</label></formula><formula xml:id="formula_102">) [H(x, s)] rm ∶= ( ∑ 𝜂=1,2 ⟨ [h -1 𝜂 (x, 𝑦, s)] rm ⟩ Y 𝜂 ) -1 . (<label>48b</label></formula><formula xml:id="formula_103">)</formula><p>We notice that the tensorial coefficients of 𝝌 𝜂 represent partition coefficients, so that Equation ( <ref type="formula" target="#formula_99">47</ref>) defines [𝕒] r3cd as the weighted average of [ ĝ𝜂 ] n3cd . Now, by substituting ( <ref type="formula" target="#formula_99">47</ref>) into <ref type="bibr" target="#b44">(45)</ref>, the effective elastic and relaxation tensors for the three-dimensional layered composite medium are given by the expressions</p><formula xml:id="formula_104">[ ĉeff (x, s)] abcd = ∑ 𝜂=1,2 ⟨ [𝕔 𝜂 (x, 𝑦)] abcd ⟩ Y 𝜂 - ∑ 𝜂=1,2 ⟨ [𝕔 𝜂 (x, 𝑦)] abp3 [ h -1 𝜂 (x, 𝑦, s) ] pq [ ĝ𝜂 (x, 𝑦, s) ] q3cd ⟩ Y 𝜂 + { ∑ 𝜂=1,2 ⟨ [𝕔 𝜂 (x, 𝑦)] abp3 [ h -1 𝜂 (x, 𝑦, s) ] pq ⟩ Y 𝜂 } { ∑ 𝜂=1,2 ⟨ [ 𝝌 𝜂 (x, 𝑦, s) ] qn [ ĝ𝜂 (x, 𝑦, s) ] n3cd ⟩ Y 𝜂 } ,<label>(49)</label></formula><p>and</p><formula xml:id="formula_105">[ ̂𝕝eff (x, s) ] abcd = ∑ 𝜂=1,2 ⟨[ ̂𝕝𝜂 (x, 𝑦, s) ] abcd ⟩ Y 𝜂 - ∑ 𝜂=1,2 ⟨ [ ̂𝕝𝜂 (x, 𝑦, s) ] abp3 [ h -1 𝜂 (x, 𝑦, s) ] pq [ ĝ𝜂 (x, 𝑦, s) ] q3cd ⟩ Y 𝜂 + { ∑ 𝜂=1,2 ⟨ [ ̂𝕝𝜂 (x, 𝑦, s) ] abp3 [ h -1 𝜂 (x, 𝑦, s) ] pq ⟩ Y 𝜂 } { ∑ 𝜂=1,2 ⟨ [ 𝝌 𝜂 (x, 𝑦, s) ] qn [ ĝ𝜂 (x, 𝑦, s) ] n3cd ⟩ Y 𝜂 } . (<label>50</label></formula><formula xml:id="formula_106">)</formula><p>In particular, by considering Equations ( <ref type="formula" target="#formula_104">49</ref>) and ( <ref type="formula" target="#formula_105">50</ref>), we can obtain an expression for ĝeff by means of Equation ( <ref type="formula" target="#formula_85">41</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">BENCHMARK PROBLEMS</head><p>Let us assume to be in the presence of a layered composite with isotropic viscoelastic laminates such that, for 𝜂 = 1, 2, 𝕔 𝜂 (x, 𝑦) = 3𝜅 e 𝜂 (x, 𝑦)𝕜 + 2𝜇 e 𝜂 (x, 𝑦)𝕞, (51a)</p><formula xml:id="formula_107">𝕝 𝜂 (x, 𝑦, t) = 3𝜅 v 𝜂 (x, 𝑦, t)𝕜 + 2𝜇 v 𝜂 (x, 𝑦, t)𝕞, (<label>51b</label></formula><formula xml:id="formula_108">)</formula><p>where 𝜅 e 𝜂 and 𝜇 e 𝜂 represent, respectively, the elastic bulk modulus and the second Lamé's parameter. Furthermore, 𝜅 v 𝜂 and 𝜇 v 𝜂 denote memory functions, which need to be expressed constitutively. The fourth-order tensors 𝕜 ∶= 1 3 I ⊗ I and 𝕞 ∶= 𝕤 -𝕜, with 𝕤 ∶= 1 2</p><formula xml:id="formula_109">[ I⊗I + I⊗I ]</formula><p>, extract, respectively, the spherical and the deviatoric part of a symmetric second-order tensor. Specifically,</p><formula xml:id="formula_110">𝕜 ∶ A = 1 3 tr(A)I and 𝕞 ∶ A = dev(A) ∶= A - 1 3 tr(A)I, (<label>52</label></formula><formula xml:id="formula_111">)</formula><p>where A is a generic second-order symmetric tensor. Moreover, the component expressions corresponding to the tensor products I⊗I and I⊗I are (see, for instance, Federico <ref type="bibr" target="#b41">[42]</ref>)</p><formula xml:id="formula_112">[ I⊗I ] abcd = 𝛿 ac 𝛿 bd and [ I⊗I ] abcd = 𝛿 ad 𝛿 bc , (<label>53</label></formula><formula xml:id="formula_113">)</formula><p>where 𝛿 ab denotes the Kronecker delta symbol.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Linear viscoelastic and fractional viscoelatic constitutive laws</head><p>Here, following Mainardi <ref type="bibr" target="#b3">[4]</ref>, we specify the constitutive expressions for some types of viscoelastic and fractional viscoelastic materials. = Σ, that is, they denote elastic parameters. The constitutive representations in (54a) and (54b) admit the possibility that for some materials the viscoelastic spherical and deviatoric contributions can be represented by different viscoelastic models <ref type="bibr" target="#b42">[43]</ref>. In Table <ref type="table" target="#tab_2">1</ref>, we summarize the types of viscoelastic models that can be specified from (54a) and (54b). We remark that the expressions specified above can be generalized to include other linear viscoleastic constitutive laws (see, for instance, Mainardi <ref type="bibr" target="#b3">[4]</ref>). The symbols 𝜈 𝜅 𝜂 and 𝜈 𝜇 𝜂 have been used to represent the dynamic viscosities, and 𝜅 M 𝜂 , 𝜅 Z 𝜂 , 𝜇 M 𝜂 , and 𝜇 Z 𝜂 are elastic parameters associated with the Maxwell and Zener models.</p><p>Remark 2. We notice that the elastic parameters 𝜅 M 𝜂 and 𝜇 M 𝜂 and 𝜅 Z 𝜂 and 𝜇 Z 𝜂 are, in general, different from 𝜅 e 𝜂 and 𝜇 e 𝜂 . Specifically, in the case of the Zener model, we need to comply with the condition at t = 0, <ref type="bibr" target="#b3">[4]</ref> 0 &lt; 𝜅 e 𝜂 &lt; 𝜅 Z 𝜂 and 0 &lt; 𝜇 e 𝜂 &lt; 𝜇 Z 𝜂 .</p><p>(55) Furthermore, we remark that using the coefficients specified in Table <ref type="table" target="#tab_2">1</ref> associated with the Maxwell model, the tensor 𝕘 𝜂 can be written in the more standard form</p><formula xml:id="formula_114">𝕘 𝜂 (x, 𝑦, t) = 3𝜅 M 𝜂 (x, 𝑦) exp ( -t∕𝜏 𝜅 𝜂 ) 𝕜 + 2𝜇 M 𝜂 (x, 𝑦) exp ( -t∕𝜏 𝜅 𝜂 ) 𝕞. (<label>56</label></formula><formula xml:id="formula_115">)</formula><p>That is, to obtain the expression in (56) from (54a) and (54b), we included the elastic term with elastic parameters 𝜅 e</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝜂</head><p>and 𝜇 e 𝜂 . In particular, we assume, at t = 0, 0 &lt; 𝜅 e 𝜂 ≤ 𝜅 M 𝜂 and 0 &lt; 𝜇 e 𝜂 ≤ 𝜇 M 𝜂 .</p><p>(57)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.2">Linear fractional viscoelastic models</head><p>Let us assume that the elasticity tensor, 𝕔 𝜂 , and the relaxation tensor, 𝕝 𝜂 , have the same form as in (51a) and (51b). However, in this case, we consider that the constitutive expression for the memory functions 𝜅 v 𝜂 and 𝜇 v 𝜂 are of fractional type. Taking inspiration from <ref type="bibr" target="#b3">[4]</ref>, we write </p><formula xml:id="formula_116">𝜅 v 𝜂 (•, t) = a 𝜅 𝜂 (•) t -𝛼 𝜅 𝜂 Γ ( 1 -𝛼 𝜅 𝜂 ) + b 𝜅 𝜂 (•, t) 𝛼 𝜅 𝜂 ( - ( t 𝜏 𝜅 𝜂 ) 𝛼 𝜅 𝜂 ) , (<label>58a</label></formula><formula xml:id="formula_117">)</formula><formula xml:id="formula_118">𝜈 𝜇 𝜂 𝜇 M 𝜂 0 𝜇 Z 𝜂 𝜈 𝜇 𝜂 𝜇 Z 𝜂 𝜇 v 𝜂 (•, t) = a 𝜇 𝜂 (•) t -𝛼 𝜇 𝜂 Γ ( 1 -𝛼 𝜇 𝜂 ) + b 𝜇 𝜂 (•, t) 𝛼 𝜇 𝜂 ( - ( t 𝜏 𝜇 𝜂 ) 𝛼 𝜇 𝜂 ) , (<label>58b</label></formula><formula xml:id="formula_119">)</formula><p>where 𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 ∈]0, 1[, Γ(•) is the Gamma function and  𝛼 𝜅 𝜂 and  𝛼 𝜇 𝜂 denote one-parameter Mittag-Leffler functions of t∕𝜏 𝜅 𝜂 and t∕𝜏 𝜇 𝜂 . We notice that in Equations ( <ref type="formula" target="#formula_116">58a</ref>) and (58b), the dependence of a 𝜅 𝜂 , a 𝜇 𝜂 , b 𝜅 𝜂 , and b 𝜇 𝜂 on 𝛼 𝜅 𝜂 and 𝛼 𝜇 𝜂 is understood but omitted for reducing the notational burden and the dot "•" indicates that these functions must be evaluated in (x, 𝑦). Considering the discussions in the previous section, some types of fractional viscoelastic models can be obtained by appropriately fixing the values of the coefficients in (58a) and (58b). In Table <ref type="table" target="#tab_4">2</ref>, we summarize such models.</p><p>Before going further, we remark that the fractional parameters, in general, can also depend on x and 𝑦. However, in the writing of the memory functions 𝜅 v 𝜂 and 𝜇 v 𝜂 , we have preferred not to specify this dependence for the sake of simplicity. We also mention that we are tacitly assuming that the fractional parameters are time independent so that we can compute the Laplace transform of the memory functions by using classical results.</p><p>Remark 3 (Physical units). By referring to Table <ref type="table" target="#tab_4">2</ref>, we notice that both a 𝜅 𝜂 and a 𝜇 𝜂 have physical units</p><formula xml:id="formula_120">[ a 𝜅 𝜂 ] = Σ • T 𝛼 𝜅 𝜂 and [ a 𝜇 𝜂 ] = Σ • T 𝛼 𝜇 𝜂 . (<label>59</label></formula><formula xml:id="formula_121">)</formula><p>Consequently, in the limit,</p><formula xml:id="formula_122">lim 𝛼 𝜅 𝜂 →1 - [ a 𝜅 𝜂 ] = lim 𝛼 𝜇 𝜂 →1 - [ a 𝜇 𝜂 ] = Σ • T, (<label>60a</label></formula><formula xml:id="formula_123">)</formula><formula xml:id="formula_124">lim 𝛼 𝜅 𝜂 →0 + [ a 𝜅 𝜂 ] = lim 𝛼 𝜇 𝜂 →0 + [ a 𝜇 𝜂 ] = Σ. (60b)</formula><p>Thus, in the first case, the coefficients a 𝜅 𝜂 and a 𝜇 𝜂 become dynamic viscosities, while in the second case, they reduce to elastic parameters. We remark that it is possible to design experiments that measure anomalous dynamic viscosities (see, e.g., Bonfanti et al. <ref type="bibr" target="#b2">[3]</ref>) represented by the coefficients a 𝜅 𝜂 and a 𝜇 𝜂 . Here, however, to overcome the use of an anomalous dynamic viscosity, whose physical meaning may be unclear, we consider the expressions introduced in Remark 4 (Limit cases). In the limit, in which the fractional parameters 𝛼 𝜅 𝜂 and 𝛼 𝜇 𝜂 tend to one from below, the fractional viscoelastic models accounted for in this work and specified in Table <ref type="table" target="#tab_4">2</ref> reduce to the standard linear viscoelastic models examined in Table <ref type="table" target="#tab_2">1</ref> (see <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b3">4,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b43">44]</ref> for further details). On the other hand, if we take the limit {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 } → 0 + , both the fractional Maxwell and Zener models reduce to constitutive expressions of linear elastic type. Specifically, we have that, in the limit {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 } → 0 + , the Laplace transform of the infinitesimal stress tensors corresponding to fractional constitutive laws of Maxwell and Zener types take on the form (see Equations ( <ref type="formula" target="#formula_153">78</ref>) and (80) below)</p><formula xml:id="formula_125">lim {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 }→0 + σ𝜂 = 𝕙 M 𝜂 ∶ ẽ𝜂 and lim {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 }→0 + σ𝜂 = 𝕙 Z 𝜂 ∶ ẽ𝜂 , (<label>62</label></formula><formula xml:id="formula_126">)</formula><p>respectively, where</p><formula xml:id="formula_127">𝕙 M 𝜂 (x, 𝑦) = 3 2 𝜅 M 𝜂 (x, 𝑦)𝕜 + 𝜇 M 𝜂 (x, 𝑦)𝕞, (63a) 𝕙 Z 𝜂 (x, 𝑦) = 3 [ 𝜅 e 𝜂 (x, 𝑦) + 1 2 𝜅 Z 𝜂 (x, 𝑦) ] 𝕜 + 2 [ 𝜇 e 𝜂 (x, 𝑦) + 1 2 𝜇 Z 𝜂 (x, 𝑦) ] 𝕞.<label>(63b)</label></formula><p>On the other hand considering the coefficients in Table <ref type="table" target="#tab_4">2</ref> corresponding to a fractional Kelvin-Voigt material, the limit {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 } → 0 + of the Laplace transform of the infinitesimal stress tensor yields</p><formula xml:id="formula_128">lim {𝛼 𝜅 𝜂 , 𝛼 𝜇 𝜂 }→0 + σ𝜂 = [𝕔 𝜂 + s 2 𝕙 KV 𝜂 ] ∶ ẽ𝜂 ,<label>(64)</label></formula><p>with</p><formula xml:id="formula_129">𝕙 KV 𝜂 = 3𝜅 e 𝜂 𝕜 + 2𝜇 e 𝜂 𝕞.<label>(65)</label></formula><p>The expression for the limit of σ𝜂 specified in (64) suggests the existence of a second-order partial time derivative in the constitutive expression of the infinitesimal stress tensor and, thus, a damping effect (see, e.g., Atanackovic et al. <ref type="bibr" target="#b44">[45]</ref> and Vaz and de Oliveira <ref type="bibr" target="#b45">[46]</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Numerical results</head><p>For the sake of convenience, let us consider that the elastic parameters 𝜅 e 𝜂 and 𝜇 e 𝜂 , as well as the memory functions 𝜅 v 𝜂 and 𝜇 v 𝜂 are uniform in the macro-scale variable and piecewise constant in the micro-scale variable, that is,</p><formula xml:id="formula_130">𝜅 e 𝜂 (x, 𝑦) = { 𝜅 e 1 , 𝑦 ∈ Y 1 , 𝜅 e 2 , 𝑦 ∈ Y 2 ,</formula><p>and</p><formula xml:id="formula_131">𝜇 e 𝜂 (x, 𝑦) = { 𝜇 e 1 , 𝑦 ∈ Y 1 , 𝜇 e 2 , 𝑦 ∈ Y 2 ,<label>(66)</label></formula><p>and</p><formula xml:id="formula_132">𝜅 v 𝜂 (x, 𝑦, t) = { 𝜅 v 1 (t), 𝑦 ∈ Y 1 , 𝜅 v 2 (t), 𝑦 ∈ Y 2 ,</formula><p>and</p><formula xml:id="formula_133">𝜇 v 𝜂 (x, 𝑦, t) = { 𝜇 v 1 (t), 𝑦 ∈ Y 1 , 𝜇 v 2 (t), 𝑦 ∈ Y 2 .</formula><p>(67)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1">Benchmark problem I: Fractional viscoelastic-elastic composite</head><p>In this first benchmark problem, let us assume that one constituent is constitutively determined by a fractional viscoelastic law, for example, B 1 , while the other constituent, B 2 , is linear elastic. Specifically, we assume that B 1 is characterized by a fractional Kelvin-Voigt viscoelastic law. Examples of the use of the fractional Kelvin-Voigt model in practical cases are summarized in Bonfanti et al. <ref type="bibr" target="#b2">[3]</ref> and include, but are not limited to, the modeling of human prostate <ref type="bibr" target="#b46">[47]</ref> and of breast cells <ref type="bibr" target="#b47">[48]</ref>.</p><p>Using the coefficients defined in Table <ref type="table" target="#tab_4">2</ref> for the fractional Kelvin-Voigt model, the Laplace transforms of the memory functions are</p><formula xml:id="formula_134">κv 1 (•, s) = 𝜅 e 1 (•)(𝜏 𝜅 1 (•)) 𝛼 𝜅 1 s 1-𝛼 𝜅 1 , (<label>68a</label></formula><formula xml:id="formula_135">)</formula><formula xml:id="formula_136">μv 1 (•, s) = 𝜇 e 1 (•)(𝜏 𝜇 1 (•)) 𝛼 𝜇 1 s 1-𝛼 𝜇 1 ,<label>(68b)</label></formula><p>which, by considering Equation (51b), leads to the following expression for the Laplace transform of the relaxation tensor</p><formula xml:id="formula_137">̃𝕝1 (•, s) = 3𝜅 e 1 (•)(𝜏 𝜅 1 (•)) 𝛼 𝜅 1 s 1-𝛼 𝜅 1 𝕜 + 2𝜇 e 1 (•)(𝜏 𝜇 1 (•)) 𝛼 𝜇 1 s 1-𝛼 𝜇 1 𝕞,<label>(69)</label></formula><p>where we notice that because of (66) and (67), the Laplace transform of the relaxation tensor, 𝕝 1 , is uniform in the macro-scale variable x.</p><p>In particular, we notice that, by using formula <ref type="bibr" target="#b36">(37)</ref> and the representations (51a) and (51b), the effective coefficient [ ĝeff ] 3333 can be written in the form where</p><formula xml:id="formula_138">[ ĝeff ] 3333 = ( [ ĝ1 ] 3333 + [ ĝ1 ] 3333 𝜕[𝝃 1 ] 333 𝜕𝑦 ) |Y 1 | + ( [ ĝ2 ] 3333 + [ ĝ2 ] 3333 𝜕[𝝃 2 ] 333 𝜕𝑦 ) |Y 2 |,<label>(70)</label></formula><formula xml:id="formula_139">𝜕[𝝃 1 ] 333 𝜕𝑦 = [ ĝ2 ] 3333 [ ĝ2 ] 3333 |Y 1 | + [ ĝ1 ] 3333 |Y 2 | -1, (71a) 𝜕[𝝃 2 ] 333 𝜕𝑦 = [ ĝ1 ] 3333 [ ĝ2 ] 3333 |Y 1 | + [ ĝ1 ] 3333 |Y 2 | -1.<label>(71b)</label></formula><p>Thus, by substituting (71a) and (71b) in (70), the effective coefficient [ ĝeff ] 3333 can be written in the simplified form</p><formula xml:id="formula_140">[ ĝeff ] 3333 = [ ĝ1 ] 3333 [ ĝ2 ] 3333 [ ĝ2 ] 3333 |Y 1 | + [ ĝ1 ] 3333 |Y 2 | . (<label>72</label></formula><formula xml:id="formula_141">)</formula><p>In the specific case of the present benchmark problem, since Y 1 represents a fractional Kelvin-Voigt material and Y 2 is of elastic type, we have that</p><formula xml:id="formula_142">[ ĝ1 ] 3333 = 𝜅 e 1 + 4 3 𝜇 e 1 + 𝜅 e 1 (𝜏 𝜅 1 ) 𝛼 𝜅 1 s 2-𝛼 𝜅 1 + 4 3 𝜇 e 1 (𝜏 𝜇 1 ) 𝛼 𝜇 1 s 2-𝛼 𝜇 1 , (<label>73a</label></formula><formula xml:id="formula_143">) [ ĝ2 ] 3333 = [ĉ 2 ] 3333 = 𝜅 e 2 + 4 3 𝜇 e 2 .<label>(73b)</label></formula><p>Consequently, by considering that 𝛼 ∶= 𝛼 𝜅 1 = 𝛼 𝜇 1 and applying the inverse Laplace-Carson transform, we can find an analytical expression for the effective coefficient [𝕘 eff ] 3333 , which reads</p><formula xml:id="formula_144">[𝕘 eff (t)] 3333 = [𝕔] 3333 + ( [𝕔 2 ] 3333 |Y 2 | -[𝕔] 3333 )  2-𝛼,1 ⎛ ⎜ ⎜ ⎜ ⎝ - [𝕔 2 ] 3333 |Y 1 | + [𝕔 1 ] 3333 |Y 2 | ( 𝜅 e 1 (𝜏 𝜅 1 ) 𝛼 + 4 3 𝜇 e 1 (𝜏 e 𝜇 1 ) 𝛼 ) |Y 2 | t 2-𝛼 ⎞ ⎟ ⎟ ⎟ ⎠ , (<label>74</label></formula><formula xml:id="formula_145">)</formula><p>where  2-𝛼,1 (•) ≡  2-𝛼 (•) denotes the two-parameter Mittag-Leffler function in the case in which the second parameter is 1, and [𝕔] 3333 constitutes the effective coefficient of an equivalent layered composite made of two different elastic constituents, that is,</p><formula xml:id="formula_146">[𝕔] 3333 = [𝕔 1 ] 3333 [𝕔 2 ] 3333 [𝕔 2 ] 3333 |Y 1 | + [𝕔 1 ] 3333 |Y 2 | . (<label>75</label></formula><formula xml:id="formula_147">)</formula><p>In Figure <ref type="figure">1</ref>, we plot the effective coefficient [𝕘 eff ] 3333 for different values of the fractional parameter, namely, 𝛼 ∶= 𝛼 𝜅 1 = 𝛼 𝜇 1 ∈ {0.01, 0.2, 0.4, 0.6, 0.8, 0.99}, in the time interval [0s, 10 s], where, to highlight the role of the fractional constitutive properties, we assumed that both constituents have the same volumetric fraction, namely, |Y 𝜂 | = 0.5, 𝜂 = 1, 2. For our analysis, we used the parameter values reported in Table <ref type="table" target="#tab_7">3</ref>, which have been taken from Alotta et al. <ref type="bibr" target="#b42">[43]</ref>. In particular, for 𝛼 near 1, we recover the standard Kelvin-Voigt exponential decay, so that the effective coefficient converges exponentially towards the value [𝕔] 3333 , which is the equivalent coefficient that the homogenized medium would have if both of its constituents were elastic materials with the same elastic properties as the materials employed in our model. As 𝛼 decreases towards zero, the decay is characterized by the Mittag-Leffler function of Equation (74), which implies that the decay is accompanied by an oscillatory behavior. In fact, for 𝛼 → 0 + , the oscillatory trend tends to increase, so that the convergence towards [𝕔] 3333 slows down considerably. Indeed, for 𝛼 = 0, no decay is observed, and [𝕘 eff ] 3333 oscillates indefinitely around [𝕔] 3333 , so that the viscous effect is lost. We recall that, as discussed in Remark 4, the oscillatory trend is related to the fact that in the limit 𝛼 → 0 + , the material property lim 𝛼→0 + ĝ1 features a damping effect due to the presence of the factor s 2 in (64), which is equivalent to a second-order time derivative. Although it is not shown here, an oscillatory decay for the effective coefficient 𝕘 eff is predicted by our results also if a fractional Kelvin-Voigt constituent is combined with a fractional Maxwell or fractional Zener one. Furthermore, from Equation (74), we notice that, at time t = 0s, the value  of the effective coefficient of our model is independent of 𝛼 and coincides with the elastic coefficient of the material B 2 , divided by |Y 2 |. This behavior is due to the fact that, in our model, we have assumed that the composite is made of an elastic medium, that is, B 2 , and a viscoelastic one, that is, B 1 . Indeed, if we had considered the case of two viscoelastic materials, Equation (74) would have been different, and consequently, the effective coefficient at t = 0 s would have been a combination of the elastic coefficients of both materials. We finally notice that the oscillatory decay seems to be a property of the geometrical setting since, in a previous work <ref type="bibr" target="#b16">[17]</ref>, we did not observe this trend when considering a fiber-reinforced composite featuring power-law constitutive properties. We continue our analysis by plotting the effective coefficient [𝕘 eff ] 3333 for different values of the volumetric fraction of the fractional Kelvin-Voigt constituent. In the case reported in Figure <ref type="figure">2</ref>, we fix 𝛼 = 0.1 and notice that, for decreasing values of the fractional Kelvin-Voigt constituent's volumetric fraction, the oscillatory behavior of the effective coefficient decreases and tends, as expected, to the effective coefficient of the equivalent elastic composite, that is, a composite made of two elastic constituents with the same material parameters reported in Table <ref type="table" target="#tab_7">3</ref>.</p><p>Before going further, we notice that, because of the simplicity of the setting considered so far, i.e. a composite made of a fractional Kelvin-Voigt constituent with a single fractional parameter 𝛼 and an elastic one, it was possible to find an analytical solution for the effective coefficient [𝕘 eff ] 3333 . Nevertheless, for more complex cases, finding such a solution is not a simple task. For this reason, in what follows, we adopt the methodology described in previous works (see, for instance, Cruz-González et al. <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b24">25]</ref>), in which the MATLAB function INVLAP <ref type="bibr" target="#b48">[49,</ref><ref type="bibr" target="#b49">50]</ref> was adapted to numerically find the inverse Laplace-Carson transform of ĝeff . We emphasize that we choose this function because of its capability of inverting laws of the type s 𝛼 , where 𝛼 is a real number. In to test accuracy of this numerical tool, we compare, in Figure <ref type="figure">3</ref>, the numerically obtained eff ] 3333 with the analytical expression given in (74). As it can be observed, both the numerical and the analytical agree for each of the fractional parameter.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2">Benchmark problem II: Fractional viscoelastic composite</head><p>In this section, we consider that the constituents of the composite medium are characterized by different fractional viscoelastic models. In particular, we examine the case in which B 1 is assumed to be of fractional Maxwell type, whereas B 2 is characterized by a fractional Zener law. Examples of the use of these models in biologically relevant scenarios include the modeling of atrial tissue <ref type="bibr" target="#b5">[6]</ref> and brain tissue <ref type="bibr" target="#b50">[51]</ref>. Here, we numerically compute the effective properties of the composite described above by considering the expressions obtained in ( <ref type="formula" target="#formula_104">49</ref>) and ( <ref type="formula" target="#formula_105">50</ref>) for different situations. In particular, the memory functions for the constituent B 1 (see Equations (58a) and (58b), and Table <ref type="table" target="#tab_4">2</ref>) are</p><formula xml:id="formula_148">𝜅 v 1 (x, 𝑦, t) = 𝜅 M 1 (𝑦) 𝛼 𝜅 1 ( - ( t 𝜏 𝜅 1 ) 𝛼 𝜅 1 ) -𝜅 e 1 (𝑦),<label>(76a)</label></formula><formula xml:id="formula_149">𝜇 v 1 (x, 𝑦, t) = 𝜇 M 1 (𝑦) 𝛼 𝜇 1 ( - ( t 𝜏 𝜇 1 ) 𝛼 𝜇 1 ) -𝜇 e 1 (𝑦),<label>(76b)</label></formula><p>which, by means of the Laplace transform, can be written as</p><formula xml:id="formula_150">κv 1 (x, 𝑦, s) = 𝜅 M 1 (𝑦) s 𝛼 𝜅 1 -1 s 𝛼 𝜅 1 + 1∕(𝜏 𝜅 1 ) 𝛼 𝜅 1 - 𝜅 e 1 (𝑦) s , (<label>77a</label></formula><formula xml:id="formula_151">) μv 1 (x, 𝑦, s) = 𝜇 M 1 (𝑦) s 𝛼 𝜇 1 -1 s 𝛼 𝜇 1 + 1∕(𝜏 𝜇 1 ) 𝛼 𝜇 1 - 𝜇 e 1 (𝑦) s . (<label>77b</label></formula><formula xml:id="formula_152">)</formula><p>Therefore, the Laplace transform of the relaxation tensor is  On the other hand, the memory functions 𝜅 v 2 and 𝜇 v 2 for B 2 are specified through the expressions (see Equations (58a) and (58b), and Table <ref type="table" target="#tab_4">2</ref>)</p><formula xml:id="formula_153">̃𝕝1 (x, 𝑦, s) = 3𝜅 M 1 (𝑦) s 𝛼 𝜅 1 -1 s 𝛼 𝜅 1 + 1∕(𝜏 𝜅 1 ) 𝛼 𝜅 1 𝕜 + 2𝜇 M 1 (𝑦) s 𝛼 𝜇 1 -1 s 𝛼 𝜇 1 + 1∕(𝜏 𝜇 1 ) 𝛼 𝜇 1 𝕞 -3𝜅 e 1 (𝑦) 1 s 𝕜 -2𝜇 e 1 (𝑦) 1 s 𝕞.<label>(78)</label></formula><formula xml:id="formula_154">𝜅 v 2 (x, 𝑦, t) = 𝜅 Z 2 (𝑦) 𝛼 𝜅 2 ( - ( t 𝜏 𝜅 2 ) 𝛼 𝜅 2 ) , (<label>79a</label></formula><formula xml:id="formula_155">) 𝜇 v 2 (x, 𝑦, t) = 𝜇 Z 2 (𝑦) 𝛼 𝜇 2 ( - ( t 𝜏 𝜇 2 ) 𝛼 𝜇 2 ) ,<label>(79b)</label></formula><p>so that the Laplace transform of the relaxation tensor can be written as</p><formula xml:id="formula_156">̃𝕝2 (x, 𝑦, s) = 3𝜅 Z 2 (𝑦) s 𝛼 𝜅 2 -1 s 𝛼 𝜅 2 + 1∕(𝜏 𝜅 2 ) 𝛼 𝜅 2 𝕜 + 2𝜇 Z 2 (𝑦) s 𝛼 𝜇 2 -1 s 𝛼 𝜇 2 + 1∕(𝜏 𝜇 2 ) 𝛼 𝜇 2 𝕞. (<label>80</label></formula><formula xml:id="formula_157">)</formula><p>For the sake of exemplifying, we use the parameter values reported in Table <ref type="table" target="#tab_7">3</ref>, and for our purposes, we define</p><formula xml:id="formula_158">𝜅 M 1 = 2𝜅 e 1 , 𝜅 Z 2 = 2𝜅 e 2 , 𝜇 M 1 = 2𝜇 e 1 ,<label>and</label></formula><formula xml:id="formula_159">𝜇 Z 2 = 2𝜇 e 2 .</formula><p>In Figure <ref type="figure">4</ref>, we report the effective coefficients [𝕘 eff ] 3333 and [𝕘 eff ] 1133 for different values of the fractional parameters. Specifically, we set 𝛼 𝜅 1 = 𝛼 𝜇 1 = {0.01, 0.5, 0.99} and 𝛼 𝜅 2 = 𝛼 𝜇 2 = {0.99, 0.5, 0.01}. For the specific combinations examined in Figure <ref type="figure">4</ref>, we notice that when 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.99, which approximately corresponds to a standard viscoelastic Maxwell model, 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.01. Thus, in this case, we are in the presence of a composite essentially comprising a viscoelastic Maxwell constituent and an elastic one. On the other hand, if 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.01, we will have that 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.99. That is, in this situation, the composite will be constituted by a quasi-elastic component and a quasi-standard viscoelastic Zener one. Thus, the fractional constitutive expression permits to examine two different composite structures by just selecting appropriate values for the fractional parameters. In particular, we notice that all the curves in Figure <ref type="figure">4</ref> show a monotonically decreasing trend of the reported effective properties, which is characteristic of composite materials composed of an elastic constituent and a Maxwell/Zener one (see, for instance, Cruz-González et al. <ref type="bibr" target="#b16">[17]</ref>). Furthermore, in Figure <ref type="figure" target="#fig_3">5</ref>, we show the influence of different volumetric fractions of the fractional Maxwell constituent on the effective coefficient [𝕘 eff ] 3333 . For this purpose, we set 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.99 and 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.01 (panel on the left) and 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.01 and 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.99 (panel on the right). This means that the results on the left panel of Figure <ref type="figure" target="#fig_3">5</ref> correspond to a composite constituted by a quasi-standard viscoelastic Maxwell material and a quasi-elastic one, while on the right panel of Figure <ref type="figure" target="#fig_3">5</ref>, the same effective coefficient is evaluated for the case of a quasi-standard elastic-viscoelastic Zener composite. Particularly, we notice that the instant of time at which the effective properties of the composite become stationary depends not only on the fractional parameter but also on the constituents' volumetric fractions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">CONCLUSIONS</head><p>In this work, we employ the asymptotic homogenization to compute the effective properties of a hypothetical linear viscoelastic composite medium. Specifically, after laying out the main theoretical results, we specialize them to the case of a laminated composite medium, each constituent of which is isotropic and constitutively described through a linear viscoelastic model. This particular geometrical setting permits to reduce the computational complexity of the problem, since it allows to obtain the analytical expressions of the effective elasticity and relaxation tensors (refer to Equations ( <ref type="formula" target="#formula_104">49</ref>) and ( <ref type="formula" target="#formula_105">50</ref>)).</p><p>Motivated by the interest that fractional constitutive modeling has drawn in the investigation of heterogeneous, complex materials, we considered memory functions describing special types of fractional linear viscoelastic behaviors. Following the discussions of the limit cases in Remarks 3 and 4, we accounted for benchmark problems with different combinations of linear viscoelastic laws. In particular, in a first benchmark problem, we assumed a composite medium made of an elastic and a fractional Kelvin-Voigt viscoelastic medium, while in the second benchmark problem, we studied the case of a composite with fractional Maxwell and fractional Zener viscoelastic constituents. We point out that the number of benchmark cases investigated in this work can be extended to include other combinations.</p><p>We emphasize that, in our study, we gave prominence to the influence that the fractional parameters 𝛼 𝜅 𝜂 and 𝛼 𝜇 𝜂 , and the constituents' volumetric fractions |Y 𝜂 | exert on the time-dependent behavior of the effective properties of the homogenized medium. In particular, with reference to the first benchmark problem, for 𝛼 𝜅 𝜂 = 𝛼 𝜇 𝜂 , we found an analytical expression for the effective coefficient [𝕘 eff ] 3333 in terms of a two-parameter Mittag-Leffler function that entails, as observed in Figure <ref type="figure">1</ref>, a transition from an exponential decay trend to an oscillatory one, as the limit 𝛼 → 0 + is approached. Furthermore, we analyzed the influence of the constituents' volumetric fraction on the effective properties. For this purpose, we fixed the fractional parameter to be near zero, so that the fractional Kelvin-Voigt material included damping effects (refer to Remark 4). In particular, in Figure <ref type="figure">2</ref>, we showed that the increase of the elastic constituent's volumetric fraction diminishes the damping effect created by the existence of the fractional Kelvin-Voigt material. We also showed that for decreasing values of the fractional Kelvin-Voigt constituent's volumetric fraction, the oscillatory behavior of the effective coefficient decreases and tends, as expected, to the effective coefficient of an equivalent elastic composite. In the second benchmark problem, we examined the case of a composite made of a fractional Maxwell constituent and a fractional Zener one. In this case, following previous works of some of the authors, we numerically computed the effective coefficients and illustrated the influence of different combinations of 𝛼 𝜅 𝜂 and 𝛼 𝜇 𝜂 . As it was for the first benchmark problem, we noticed that the instant of time at which the effective properties remain constant depends not only on the values of the fractional parameters but also on the constituents' volumetric fractions.</p><p>As we mentioned in Section 1, there is still lack of theoretical and experimental studies connecting the role of the micro-structure in the origins and description of the fractional behavior of some kinds of materials. Thus, part of our current investigations focuses on modeling the underlying mechanisms that give rise to fractional behavior starting from the micro-structure. On the other hand, we will explore the consideration of micro-structural information in the fractional parameters and study specific scenarios where this information could be valuable. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>2 FIGURE 3</head><label>23</label><figDesc>FIGURE 3 Comparison of the numerical and analytical values of [𝕘 eff ] 3333 for different values of 𝛼. [Colour figure can be viewed at wileyonlinelibrary.com].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>5 FIGURE 4</head><label>54</label><figDesc>FIGURE 4 Effective coefficients [𝕘 eff ] 3333 (panel on the left) and [𝕘 eff ] 1133 (panel on the right) for different values of 𝛼 𝜅 1 = 𝛼 𝜇 1 and 𝛼 𝜅 2 = 𝛼 𝜇 2 and same volumetric fraction |Y 𝜂 | = 0.5. The composite features a fractional Maxwell constituent and a fractional Zener one. [Colour figure can be viewed at wileyonlinelibrary.com].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>FIGURE 5</head><label>5</label><figDesc>FIGURE 5 Effective coefficient [𝕘 eff ] 3333 for different volumetric fractions of the fractional Maxwell constituent. We set 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.99 and 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.01 (panel on the left) and 𝛼 𝜅 1 = 𝛼 𝜇 1 = 0.01 and 𝛼 𝜅 2 = 𝛼 𝜇 2 = 0.99 (panel on the right). The composite virtually features a fractional Maxwell constituent and a fractional Zener one. [Colour figure can be viewed at wileyonlinelibrary.com].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>try 4.0 (Math4I4)" (MUR, Italy) (2020F3NCPX) and "Mathematics of active materials: From mechanobiology to smart devices." (MUR, Italy) (2017KL4EF3). The authors conducted the research according to the inspiring scientific principles of the national Italian mathematics association INdAM ("Istituto Nazionale di Alta Matematica"), GNFM ("Gruppo Nazionale per la Fisica Matematica").</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>and Y 1 ∩ Y 2 = ∅, where Y 1 and Y 2 are open subsets. Furthermore, we denote by I Y the interface between Y 1 and Y 2 and with n Y the normal vector to I Y where the positive orientation is taken from Y 1 to Y 2 , that is, n Y is directed outwards the interior of Y 1 .</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>) being the set of points of I Y interpreted as the points of I Y which are in contact with the sub-phase Y 1 (Y 2 ). Furthermore, for 𝜂 = 1, 2, we have that 𝝈 𝜂 (x, 𝑦, t) = 𝕘 𝜂 (x, 𝑦, t) ∶ e 𝜂 (x, 𝑦, 0) +</figDesc><table><row><cell cols="7">where x ∈ B, 𝑦 ∈ Y, and t ∈ [0, t f [, with B being the dimensionless version of B. Particularly, in (13b) and (13c), we</cell></row><row><cell>have introduced the notation</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="6">𝜑 1 (x, 𝑦 -, t) ∶= lim 𝑦→𝑦 -𝜑 1 (x, 𝑦, t),</cell><cell>(14a)</cell></row><row><cell>𝜑 2</cell><cell>(</cell><cell>x, 𝑦 + , t</cell><cell>)</cell><cell cols="2">∶= lim 𝑦→𝑦 + 𝜑 2 (x, 𝑦, t),</cell><cell>(14b)</cell></row><row><cell cols="6">for the generic field 𝜑(x, 𝑦, t), with 𝑦 -∈ I -Y (𝑦 + ∈ I + Y ) and I -Y (I + Y t</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>∫</cell><cell>𝕘 𝜂 (x, 𝑦, t -𝜏) ∶</cell><cell>. e 𝜂 (x, 𝑦, 𝜏)d𝜏,</cell><cell>(15a)</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>0</cell><cell></cell></row><row><cell cols="5">e 𝜂 (x, 𝑦, t) = e 𝜂x (x, 𝑦, t) + 𝜀 -1 e 𝜂𝑦 (x, 𝑦, t),</cell><cell></cell><cell>(15b)</cell></row><row><cell cols="6">e 𝜂𝛾 (x, 𝑦, t) ∶= L -1 c sym(grad 𝛾 u 𝜂 (x, 𝑦, t)), with 𝛾 = x, 𝑦.</cell><cell>(</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>TABLE 1</head><label>1</label><figDesc>Three types of viscoelastic models.</figDesc><table><row><cell>Kelvin-</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Voigt Maxwell Zener a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼 a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼 a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼</head><label></label><figDesc>is the Dirac delta distribution (with units of inverse of time) and 𝜏 𝜅 𝜂 and 𝜏 𝜇 𝜂 are referred to as relaxation times. We remark that both a 𝜅 𝜂 and a 𝜇 𝜂 have physical units[ T, where Σ denotes a characteristic stress unit and T is a characteristic time unit. That is, they represent dynamic viscosities. On the other hand, b 𝜅 𝜂 and b 𝜇 𝜂 have physical</figDesc><table><row><cell>𝛽 = 𝜅 𝜈 𝜅 𝜂 0 𝛽 = 𝜇 𝜈 𝜇 𝜂 0</cell><cell>--</cell><cell>0 0</cell><cell>𝜅 M 𝜂 -𝜅 e 𝜂 exp 𝜇 M 𝜂 -𝜇 e 𝜂 exp</cell><cell>( (</cell><cell>t 𝜏 𝜅 𝜂 t 𝜏 𝜇 𝜂</cell><cell>) )</cell><cell>𝜈 𝜅 𝜂 𝜅 M 𝜂 𝜈 𝜇 𝜂 𝜇 M 𝜂</cell><cell>0 0</cell><cell>𝜅 Z 𝜂 𝜇 Z 𝜂</cell><cell>𝜈 𝜅 𝜂 𝜅 Z 𝜂 𝜈 𝜇 𝜂 𝜇 Z 𝜂</cell></row><row><cell>5.1.1 Linear viscoelastic models</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="11">Some classical types of linear viscoelastic models can be obtained by specifying the functional form of the memory</cell></row><row><cell>functions, e.g.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>(</cell><cell>)</cell><cell></cell><cell></cell></row><row><cell cols="7">𝜅 v 𝜂 (x, 𝑦, t) = a 𝜅 𝜂 (x, 𝑦)𝛿(t) + b 𝜅 𝜂 (x, 𝑦, t) exp</cell><cell>-</cell><cell>t 𝜏 𝜅 𝜂</cell><cell>,</cell><cell>(54a)</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>(</cell><cell>)</cell><cell></cell><cell></cell></row><row><cell cols="7">𝜇 v 𝜂 (x, 𝑦, t) = a 𝜇 𝜂 (x, 𝑦)𝛿(t) + b 𝜇 𝜂 (x, 𝑦, t) exp</cell><cell>-</cell><cell>t 𝜏 𝜇 𝜂</cell><cell>,</cell><cell>(54b)</cell></row><row><cell cols="6">where 𝛿(t) a 𝜅 𝜂 = Σ • units ] = [ a 𝜇 𝜂 ] [ b 𝜅 𝜂 ] = [ b 𝜇 𝜂 ]</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>TABLE 2</head><label>2</label><figDesc>Three types of fractional viscoelastic models.</figDesc><table><row><cell>Fractional Kelvin-</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Voigt Fractional Maxwell Fractional Zener a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼 a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼 a 𝜷 𝜼 b 𝜷 𝜼 𝝉 𝜷 𝜼 𝛽</head><label></label><figDesc>= 𝜅 𝜅 e 𝜂 (𝜏 𝜅 𝜂 ) 𝜅 e 𝜂 ∕ 𝛼 𝜅 𝜂 (-(t∕𝜏 𝜅 𝜂 ) 𝛼 𝜅 𝜂 ) 𝜇 e 𝜂 ∕ 𝛼 𝜇 𝜂 (-(t∕𝜏 𝜇 𝜂 ) 𝛼 𝜇 𝜂 )</figDesc><table><row><cell>𝛼 𝜅 𝜂</cell><cell>0</cell><cell>𝜈 𝜅 𝜂 𝜅 e 𝜂</cell><cell>0</cell><cell>𝜅 M 𝜂 -𝜈 𝜅 𝜂 𝜅 M 𝜂</cell><cell>0</cell><cell>𝜅 Z 𝜂</cell><cell>𝜈 𝜅 𝜂 𝜅 Z 𝜂</cell></row><row><cell>𝛽 = 𝜇 𝜇 e 𝜂 (𝜏 𝜇 𝜂 ) 𝛼 𝜇 𝜂</cell><cell>0</cell><cell>𝜈 𝜇 𝜂 𝜇 e 𝜂</cell><cell>0</cell><cell>𝜇 M 𝜂 -</cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 2 .</head><label>2</label><figDesc>That is, we write, for the fractional Kelvin-Voigt model a 𝜅 𝜂 = 𝜅 e 𝜂 (𝜏 𝜅 𝜂 ) 𝜏 𝜅 𝜂 and 𝜏 𝜇 𝜂 are defined as in Table 2, namely, 𝜏 𝜅 𝜂 = 𝜈 𝜅 𝜂 ∕𝜅 e 𝜂 and 𝜏 𝜇 𝜂 = 𝜈 𝜇 𝜂 ∕𝜇 e 𝜂 . Finally, we remark that both b 𝜅 𝜂 and b 𝜇 𝜂 represent elastic parameters.</figDesc><table><row><cell>𝛼 𝜅 𝜂</cell><cell>and a 𝜇 𝜂 = 𝜇 e 𝜂 (𝜏 𝜇 𝜂 )</cell><cell>𝛼 𝜇 𝜂 ,</cell><cell>(61)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>TABLE 3</head><label>3</label><figDesc>Material properties.</figDesc><table><row><cell>Elastic parameters (GPa)</cell><cell>Dynamic viscosities (GPa•s)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>𝜿 e 1 𝝁 e 1 𝜿 e 2 𝝁 e 2 𝝂 𝜿 1 𝝂 𝝁 1 𝝂 𝜿 2 𝝂 𝝁 2</head><label></label><figDesc></figDesc><table><row><cell>10</cell><cell>0.75</cell><cell>0.5</cell><cell>0.375</cell><cell>0.5</cell><cell>0.375</cell><cell>0.5</cell><cell>0.375</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head></head><label></label><figDesc>Effective coefficient [𝕘 eff ] 3333 for different values of 𝛼 ∶= 𝛼 𝜅 1 = 𝛼 𝜇 1 and same volumetric fraction |Y 𝜂 | = 0.5. The value of [𝕔] 3333 is also reported. [Colour figure can be viewed at wileyonlinelibrary.com]. Effective coefficient [𝕘 eff ] 3333 for 𝛼 = 0.1 and different values of |Y 1 |. The value of [𝕔] 3333 is also shown. [Colour figure can be viewed at wileyonlinelibrary.com].</figDesc><table><row><cell>1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell><cell></cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell></row><row><cell>1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.8</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.7</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.6</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>1.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">1.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>1.5</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell><cell></cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell><cell></cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell></row><row><cell>2 4 6 FIGURE 1 0 8</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell><cell>2 4 6 8</cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell><cell>2 4 6 8</cell><cell>0</cell><cell>2</cell><cell>4</cell><cell>6</cell><cell>8</cell><cell>1 0</cell></row><row><cell>FIGURE 2</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>10991476, 2023, 16, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/mma.9457 by University Of Glasgow, Wiley Online Library on [27/10/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>ACKNOWLEDGEMENTS R.P. is partially funded by <rs type="funder">EPSRC</rs> Grants <rs type="grantNumber">EP/S030875/1</rs> and <rs type="grantNumber">EP/T017899/1</rs>. A.G. acknowledges the <rs type="institution">Dipartimento di Scienze Matematiche (DISMA) "G.L. Lagrange</rs>" of the <rs type="funder">Politecnico di Torino</rs>, "<rs type="programName">Dipartimento di Eccellenza 2018-2022" ("Department of Excellence 2018-2022</rs>"), Project No. <rs type="grantNumber">E11G18000350001</rs>, and the <rs type="programName">PRIN projects</rs> "<rs type="projectName">Mathematics</rs> for indus-</p></div>
+			</div>
+			<div type="funding">
+<div><head>Rodriguez</head><p>Funding information <rs type="grantName">EPSRC, Grant/Award Numbers</rs>: <rs type="grantNumber">EP/S030875/1</rs> and <rs type="grantNumber">EP/T017899/1</rs>; <rs type="projectName">PRIN</rs> project "<rs type="projectName">Mathematics for industry 4.0 (Math4I4)" (MUR, Italy</rs>), Grant/Award Number: <rs type="grantNumber">2020F3NCPX</rs>; <rs type="projectName">PRIN</rs> project "<rs type="projectName">Mathematics of active materials: From mechanobiology to smart devices</rs>.", Grant/Award Number: 2017KL4EF3</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_VFEnZ2S">
+					<idno type="grant-number">EP/S030875/1</idno>
+				</org>
+				<org type="funding" xml:id="_PasmRrX">
+					<idno type="grant-number">EP/T017899/1</idno>
+				</org>
+				<org type="funding" xml:id="_8bmTyZG">
+					<idno type="grant-number">E11G18000350001</idno>
+					<orgName type="program" subtype="full">Dipartimento di Eccellenza 2018-2022&quot; (&quot;Department of Excellence 2018-2022</orgName>
+				</org>
+				<org type="funded-project" xml:id="_pcw7xPc">
+					<orgName type="project" subtype="full">Mathematics</orgName>
+					<orgName type="program" subtype="full">PRIN projects</orgName>
+				</org>
+				<org type="funding" xml:id="_tQU8TWt">
+					<idno type="grant-number">EP/S030875/1</idno>
+					<orgName type="grant-name">EPSRC, Grant/Award Numbers</orgName>
+				</org>
+				<org type="funded-project" xml:id="_P5qnsJA">
+					<idno type="grant-number">EP/T017899/1</idno>
+					<orgName type="project" subtype="full">PRIN</orgName>
+				</org>
+				<org type="funded-project" xml:id="_xgNmkhH">
+					<idno type="grant-number">2020F3NCPX</idno>
+					<orgName type="project" subtype="full">Mathematics for industry 4.0 (Math4I4)&quot; (MUR, Italy</orgName>
+				</org>
+				<org type="funded-project" xml:id="_p6C4Z9Q">
+					<orgName type="project" subtype="full">PRIN</orgName>
+				</org>
+				<org type="funded-project" xml:id="_ZdKtnNa">
+					<orgName type="project" subtype="full">Mathematics of active materials: From mechanobiology to smart devices</orgName>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONFLICT OF INTEREST STATEMENT</head><p>The authors declare no potential conflict of interest.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Micromechanical analysis of the creep response of unidirectional composites</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">N</forename><surname>Yancey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-J</forename><surname>Pindera</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Eng. Mater. Technol</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="157" to="163" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Advanced materials modelling via fractional calculus: challenges and perspectives</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Failla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zingales</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phil. Trans. Royal Soc. A: Math., Phys. Eng. Sci</title>
+		<imprint>
+			<biblScope unit="volume">378</biblScope>
+			<biblScope unit="issue">2172</biblScope>
+			<date type="published" when="2020">2020. 20200050</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Fractional viscoelastic models for power-law materials</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bonfanti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Kaplan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Charras</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kabla</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Soft Matter</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">26</biblScope>
+			<biblScope unit="page" from="6002" to="6020" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mainardi</surname></persName>
+		</author>
+		<title level="m">Fractional calculus and waves in linear viscoelasticity</title>
+		<meeting><address><addrLine>Europe), London</addrLine></address></meeting>
+		<imprint>
+			<publisher>World Scientific</publisher>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Atanackovi Ć</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pilipovi Ć</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Stankovi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zorica</surname></persName>
+		</author>
+		<title level="m">Fractional calculus with applications in mechanics</title>
+		<meeting><address><addrLine>Hoboken</addrLine></address></meeting>
+		<imprint>
+			<publisher>John Wiley &amp; Sons, Inc</publisher>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Fractional order viscoelasticity in characterization for atrial tissue</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Shen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">T</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kalantari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Korea-Australia Rheol. J</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="87" to="93" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The fractional viscoelastic response of human breast tissue cells</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Carmichael</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Babahosseini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">N</forename><surname>Mahmoodi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Agah</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Biol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">46001</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Visco-elastic behavior through fractional calculus: an easier method for best fitting experimental results</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Paola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pirrotta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Valenza</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mech. Mater</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="799" to="806" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Power law viscoelasticity of a fractal colloidal gel</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Aime</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cipelletti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ramos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Rheol</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1429" to="1441" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Power-laws hereditariness of biomimetic ceramics for cranioplasty neurosurgery</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Bologna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Graziano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Deseri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zingales</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Non-Linear Mech</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="61" to="67" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Thermodynamical restrictions and wave propagation for a class of fractional order viscoelastic rods</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Atanackovi Ć</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Konjik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Oparnica</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zorica</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Abstract Appl. Anal</title>
+		<imprint>
+			<biblScope unit="volume">2011</biblScope>
+			<biblScope unit="page" from="1" to="32" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Effective properties of linear viscoelastic heterogeneous media: internal variables formulation and extension to ageing behaviours</title>
+		<author>
+			<persName><forename type="first">J.-M</forename><surname>Ricaud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Masson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Solids Struct</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="issue">7-8</biblScope>
+			<biblScope unit="page" from="1599" to="1606" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Four exact relations for the effective relaxation function of linear viscoelastic composites</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Suquet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comptes Rendus Mécanique</title>
+		<imprint>
+			<biblScope unit="volume">340</biblScope>
+			<biblScope unit="issue">4-5</biblScope>
+			<biblScope unit="page" from="387" to="399" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Effective viscoelastic properties of short-fiber reinforced composites</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sevostianov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Levin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Radi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Eng. Sci</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page" from="61" to="73" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Locally-exact homogenization of viscoelastic unidirectional composites</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-J</forename><surname>Pindera</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mech. Mater</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="page" from="95" to="109" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Model reduction by mean-field homogenization in viscoelastic composites. II. Application to rigidly reinforced solids</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Idiart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Lahellec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Suquet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Royal Soc. A: Math., Phys. Eng. Sci</title>
+		<imprint>
+			<biblScope unit="volume">476</biblScope>
+			<biblScope unit="page">2242</biblScope>
+			<date type="published" when="2020">2020. 20200408</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">On the effective behavior of viscoelastic composites in three dimensions</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">L</forename><surname>Cruz-González</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Otero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramírez-Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lebon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Eng. Sci</title>
+		<imprint>
+			<biblScope unit="volume">157</biblScope>
+			<biblScope unit="page">103377</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Homogenization estimates for the effective response of fractional viscoelastic particulate composites</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Gallican</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Brenner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Continuum Mech. Thermodyn</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="823" to="840" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Does a fractal microstructure require a fractional viscoelastic model?</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ostoja-Starzewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fractal and Fract</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">12</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Computation of the relaxation effective moduli for fibrous viscoelastic composites using the asymptotic homogenization method</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Otero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">L</forename><surname>Cruz-González</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Guinovart-Díaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bravo-Castillero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Sabina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Padilla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lebon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Sevostianov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Solids Struct</title>
+		<imprint>
+			<biblScope unit="volume">190</biblScope>
+			<biblScope unit="page" from="281" to="290" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Homogenization approaches for the effective characteristics of fractional visco-piezoelastic fibrous composites</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Otero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Espinosa-Almeyda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Sabina</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Levin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Mech</title>
+		<imprint>
+			<biblScope unit="volume">234</biblScope>
+			<biblScope unit="page" from="2087" to="2101" />
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Realizable effective fractional viscoelasticity in heterogeneous materials</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Brenner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mech. Res. Commun</title>
+		<imprint>
+			<biblScope unit="page" from="22" to="25" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Fractional viscoelastic behaviour under stochastic temperature process</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Colinas-Armijo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Paola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Matteo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Probabilistic Eng. Mech</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="37" to="43" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">E S</forename><surname>Ramirez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F M</forename><surname>Coimbra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">A variable order constitutive relation for viscoelasticity</title>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">519</biblScope>
+			<biblScope unit="page" from="543" to="552" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">heterogeneous one-dimensional problem in linear viscoelastic media</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">L</forename><surname>Cruz-González</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramírez-Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Lebon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European J. Mech. -A/Solids</title>
+		<imprint>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="page">104617</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Two-scale, non-local diffusion in homogenised heterogeneous media</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramírez-Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grillo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arch. Appl. Mech</title>
+		<imprint>
+			<biblScope unit="volume">92</biblScope>
+			<biblScope unit="page" from="559" to="595" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Homogenized out-of-plane shear response of three-scale fiber-reinforced composites</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramírez-Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Preziosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Merodio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Guinovart-Díaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bravo-Castillero</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Visual. Sci</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">3-6</biblScope>
+			<biblScope unit="page" from="85" to="93" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<title level="m" type="main">Homogenisation: averaging processes in periodic media</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Bakhvalov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Panasenko</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1989">1989</date>
+			<publisher>Springer</publisher>
+			<pubPlace>Netherlands</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">An introduction to homogenization</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Cioranescu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Donato</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+			<publisher>Oxford University Press</publisher>
+			<pubPlace>Oxford</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<author>
+			<persName><forename type="first">E</forename><surname>Sanchez-Palencia</surname></persName>
+		</author>
+		<title level="m">Non-homogeneous media and vibration theory</title>
+		<meeting><address><addrLine>Berlin Heidelberg, Berlin</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1980">1980</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Effective balance equations for electrostrictive composites</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Di Stefano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Z. Angew. Math. Phys</title>
+		<imprint>
+			<biblScope unit="volume">71</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">166</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Foundations of linear viscoelasticity, The foundations of mechanics and thermodynamics</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">D</forename><surname>Coleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Noll</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1974">1974</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="113" to="123" />
+			<pubPlace>Berlin Heidelberg; Berlin</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">Mechanics of continua</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Eringen</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1980">1980</date>
+			<publisher>Krieger Publishing Company</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+	<note>R. E.</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<author>
+			<persName><forename type="first">C</forename><surname>Truesdell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Noll</surname></persName>
+		</author>
+		<title level="m">The non-linear field theories of mechanics</title>
+		<editor>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Antman</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Berlin Heidelberg, Berlin</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>rd ed</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Poroelasticity equations derived from microstructure</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Burridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Keller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Acoust. Soc. Am</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1140" to="1146" />
+			<date type="published" when="1981">1981</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Effective governing equations for poroelastic growing media</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ambrosi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Shipley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quart. J. Mech. Appl. Math</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="69" to="91" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Asymptotic homogenization of viscoelastic composites with periodic microstructures</title>
+		<author>
+			<persName><forename type="first">Y.-M</forename><surname>Yi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S.-H</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S.-K</forename><surname>Youn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Solids Struct</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="2039" to="2055" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Analytical and numerical inversion of the Laplace-Carson transform by a differential method</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Donolato</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Phys. Commun</title>
+		<imprint>
+			<biblScope unit="volume">145</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="298" to="309" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Investigation of the potential of asymptotic homogenization for elastic composites via a three-dimensional computational study</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gerisch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Visual. Sci</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="185" to="201" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Long-wave elastic anisotropy produced by horizontal layering</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">E</forename><surname>Backus</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Geophys. Res</title>
+		<imprint>
+			<biblScope unit="volume">67</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="4427" to="4440" />
+			<date type="published" when="1962">1962</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">An asymptotic homogenization approach to the microstructural evolution of heterogeneous media</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ramírez-Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Stefano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grillo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rodríguez-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Merodio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Penta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Non-Linear Mech</title>
+		<imprint>
+			<biblScope unit="volume">106</biblScope>
+			<biblScope unit="page" from="245" to="257" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Covariant formulation of the tensor algebra of non-linear elasticity</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Federico</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Non-Linear Mech</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="273" to="284" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">The finite element implementation of 3D fractional viscoelastic constitutive models</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Alotta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Barrera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cocks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">D</forename><surname>Paola</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Finite Elements Anal. Design</title>
+		<imprint>
+			<biblScope unit="volume">146</biblScope>
+			<biblScope unit="page" from="28" to="41" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Exact mechanical models of fractional hereditary materials</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Di Paola</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zingales</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Rheol</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="983" to="1004" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Vibrations of an elastic rod on a viscoelastic foundation of complex fractional Kelvin-Voigt type</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Atanackovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Janev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Konjik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pilipovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zorica</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Meccanica</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1679" to="1692" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">On the fractional kelvin-voigt oscillator</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vaz</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">C</forename><surname>De Oliveira</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Math. Eng</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="23" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Quantitative characterization of viscoelastic properties of human prostate correlated with histology</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Nigwekar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Castaneda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Hoyt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">V</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Di Sant'agnese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">M</forename><surname>Messing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Strang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Rubens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">J</forename><surname>Parker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ultrasound Med. Biol</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1033" to="1042" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">Zhe</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ruan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Duan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Insana</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Modeling ramp-hold indentation measurements based on Kelvin-Voigt fractional derivative model</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page">35701</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Numerical inversion of laplace transforms in MATLAB</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Juraj</surname></persName>
+		</author>
+		<ptr target="https://www.mathworks.com/matlabcentral/fileexchange/32824-numerical-inversion-of-laplace-transforms-in-matlab" />
+	</analytic>
+	<monogr>
+		<title level="m">MATLAB Central File Exchange</title>
+		<imprint>
+			<date type="published" when="2022-08-02">2022. August 2, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Approximate formulae for numerical inversion of Laplace transforms</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Valsa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Brančik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Numer. Model.: Electron. Netw., Devices Fields</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="153" to="166" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Frequency dependence of complex moduli of brain tissue using a fractional zener model</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kohandel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sivaloganathan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tenti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Darvish</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Med. Biol</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="2799" to="2805" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

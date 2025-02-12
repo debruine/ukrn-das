@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Fast algorithm for 3D volume reconstruction from light field microscopy datasets</title>
+				<funder ref="#_jZJud7W">
+					<orgName type="full">Royal Society of Edinburgh</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-08-02">2 August 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Jonathan</forename><forename type="middle">M</forename><surname>Taylor</surname></persName>
+							<email>jonathan.taylor@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Physics and Astronomy</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Fast algorithm for 3D volume reconstruction from light field microscopy datasets</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-08-02">2 August 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">98F0C603D443DEEB2C39C077AEA376DB</idno>
+					<idno type="DOI">10.1364/OL.490061</idno>
+					<note type="submission">Received 20 March 2023; revised 5 July 2023; accepted 5 July 2023; posted 6 July 2023;</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:05+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Light field microscopy can capture 3D volume datasets in a snapshot, making it a valuable tool for high-speed 3D imaging of dynamic biological events. However, subsequent computational reconstruction of the raw data into a humaninterpretable 3D+time image is very time-consuming, limiting the technique's utility as a routine imaging tool. Here we derive improved equations for 3D volume reconstruction from light field microscopy datasets, leading to dramatic speedups. We characterize our open-source Python implementation of these algorithms and demonstrate real-world reconstruction speedups of more than an order of magnitude compared with established approaches. The scale of this performance improvement opens up new possibilities for studying large timelapse datasets in light field microscopy.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Light field microscopy provides snapshot 3D imaging of dynamic scenes via a lenslet array placed in the image plane of the microscope, which casts a multi-apertured intensity pattern onto a camera sensor. The mix of spatial and angular information about the target sample emission in this single raw 2D snapshot image allows 3D image reconstruction across an extended depth-of-field [Fig. <ref type="figure" target="#fig_0">1(a)</ref>], but only after intensive computational processing <ref type="bibr" target="#b0">[1]</ref>. Solving this inverse problem is extremely computationally demanding, traditionally requiring the computation of thousands of Fourier transforms (FTs) per iteration. This requirement for high levels of computational resource is particularly problematic given the attractiveness of light field imaging for 3D time series <ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref>, where a large number of different timepoints must all be reconstructed.</p><p>Here we will demonstrate how to mathematically simplify the light field reconstruction process, speeding up real-world computation times by more than an order of magnitude, while delivering identical output volume results.</p><p>The image reconstruction process is an inverse problem that can be cast as a deconvolution. The spatially variant point spread function (PSF) of the light field microscope is typically computed theoretically from wave-optics calculations <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>, and Richardson-Lucy deconvolution is then used to estimate the 3D volume that gives rise to the measured 2D intensity pattern observed on the camera sensor. The standard Richardson-Lucy algorithm is described by the following iterative formula:</p><formula xml:id="formula_0">O (i+1) est = O (i) est × H T (︃ I H(O (i) est ) )︃ ,<label>(1)</label></formula><p>although the widely used light field implementation in <ref type="bibr" target="#b1">[2]</ref> uses an alternative variation (see <ref type="bibr" target="#b5">[6]</ref> for further discussion), where the error term is computed in object space:</p><formula xml:id="formula_1">O (i+1) est = O (i) est × H T I H T H(O (i) est ) .<label>(2)</label></formula><p>In either form, × denotes elementwise multiplication and the fraction implies elementwise division; O (i) est is the estimation of the 3D object to be reconstructed, at iteration i; I is the 2D light field image recorded on the camera; H is the "forward projection" operator mapping from the object O to the resultant camera image I; and H T is the matrix transpose of the operator H. The optical interpretation of H T leads to it being termed the backward-projection operator. A typical starting condition would be O (0)  est = H T I, and O est converges to an estimate of the true object O over N iter ∼ 10 iterations.</p><p>The basic building blocks of the deconvolution problem are therefore the forward-and backward-projection operators, H and H T , which model the image formation process. In light field microscopy, these projection operators are expressed as the sum of many separate convolution operations. Given a threedimensional object O consisting of voxels indexed O xyz , each pixel value I mn of a forward-projected image I can be computed as</p><formula xml:id="formula_2">I mn = ∑︂ xyz O xyz × H mnxyz ,<label>(3)</label></formula><p>where H mnxyz are the matrix elements of the PSF applicable to voxel x, y, z. To render the reconstruction problem tractable, raw images are resampled such that the footprint of each lenslet in the lenslet array spans an exact odd integer number of camera pixels, A. Thus, any subpixel a, b at the same relative position within any lenslet footprint will have the same the point spread function [Fig. <ref type="bibr">1(b)</ref>]. This simplifies the problem, enabling Eq. ( <ref type="formula" target="#formula_2">3</ref>) to be rewritten as</p><formula xml:id="formula_3">I = ∑︂ abz M ab {O z } ⊗ H abz ,<label>(4)</label></formula><p>where M ab is a masking operator which zeroes all pixels except those in the image pixel group satisfying x mod A = a and y mod A = b, and ⊗ is the convolution operator. Here, H abz represents the complete PSF for a voxel at coordinate a, b, z. Thus, the forward-projected image from an object consisting of Z individual z-planes can be computed using a total of A 2 Z convolution operations.</p><p>According to the convolution theorem, each convolution consists of two FTs and one inverse, each computed using the fast Fourier transform (FFT) algorithm:</p><formula xml:id="formula_4">M ab {O z } ⊗ H abz = F -1 (F (M ab {O z }) × F (H abz )) .<label>(5)</label></formula><p>Any strategy aiming for more than merely incremental performance speedup of the overall calculation must speed up all three of the FFT operations in this equation. Speeding up any one of these on its own would be insufficient: even if the run time for one of them on its own could be reduced to zero, the overall run time would still only be improved by a factor of ∼ 30%.</p><p>In what follows, we will demonstrate how to improve the run time of each of these three operations in turn to achieve an order of magnitude speedup in computation time. Our strategy is illustrated schematically in Figs. <ref type="figure" target="#fig_0">1(c</ref>) and 1(d).</p><p>The discrete FT of the masked object M ab {O z } involves a high degree of redundancy, since most elements of this masked object array are zero. We observe that this problem can be simplified by generalizing the Danielson-Lanczos lemma <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b7">8]</ref> to an A-way result. In one dimension, the kth element F k of the discrete FT of a function f can be expressed in terms of A smaller FTs:</p><formula xml:id="formula_5">F k = F(0) k + (W) k F(1) k + (W) 2k F(2) k + • • • + (W) (A-1)k F(A-1) k ,<label>(6)</label></formula><p>where W = exp(-2πi/X) and F(a) k is the (reduced-size) discrete FT of f , where f is a vector consisting of only the nonzero elements of M a {f }. Note that, in the notation of Eq. ( <ref type="formula" target="#formula_5">6</ref>), k indexes the reduced-size discrete FT F (a) k beyond its normal domain of k ∈ [0, X/A), exploiting the periodic boundary conditions implicit in the FT.</p><p>In our case, the M operator ensures that only one of the A distinct terms on the right-hand size of Eq. ( <ref type="formula" target="#formula_5">6</ref>) is nonzero. Therefore, eliminating all the zero terms, generalizing to two dimensions, and summing over all image pixel groups a, b:</p><formula xml:id="formula_6">F mnz = ∑︂ ab (W) abmn F(a,b) mnz .<label>(7)</label></formula><p>Consequently, instead of requiring A 2 FFTs that each operate over the full image size XY, we have reduced these to operating on arrays of size XY/A 2 (compressed arrays representing image pixel groups each containing only those pixels retained by the M ab {O z } operator). We have therefore reduced the computational requirements of these FFTs by a factor of A 2 . After computation of the FFTs, the weighting multiplications in Eq. ( <ref type="formula" target="#formula_6">7</ref>) must still be applied, albeit in an operation of reduced computational complexity O(XY), but overall, the computational demands of computing F nm are dramatically reduced. We now move on to consider the FT of the point spread function H abz . Here, H and its FTs are invariant properties of the imaging system. If sufficient memory storage is available, the FTs can be precomputed once and the computation of F (H abz ) eliminated completely from Eq. ( <ref type="formula" target="#formula_3">4</ref>). However, given typical values of A ≥ 15, Z ∼ 50, and megapixel images, tens or hundreds of gigabytes of memory would be required to cache all the precomputed values. That may be feasible on some highend CPU-based platforms, but exceeds the capacity of most GPU platforms. Nevertheless, even when precalculation is not possible, our algorithm amortizes the computation of each FT across batches of multiple timepoints in a time series dataset, reconstructing each batch concurrently. We also exploit symmetry relationships in the PSFs (as also used in <ref type="bibr" target="#b8">[9]</ref>), to permit rapid computation of e.g., F (H (A-a)bz ) once F (H abz ) has been computed on-the-fly.</p><p>Finally, by explicitly substituting Eq. ( <ref type="formula" target="#formula_4">5</ref>) into Eq. ( <ref type="formula" target="#formula_3">4</ref>) and exploiting the distributive property of the FT to promote the inverse FT outside the summation over a and b, we can dramatically reduce the number of inverse FTs required:</p><formula xml:id="formula_7">I mn = ∑︂ z F -1 ∑︂ ab F (M ab {O z }) × F (H abz ).<label>(8)</label></formula><p>We note that in a practical implementation using a non-circulant FT, it is not feasible to further promote the inverse FFT outside the summation over z, because the size of the intermediate arrays will vary according to the lateral extent of H abz , and hence vary with z.</p><p>The backward-projection operator required for Richardson-Lucy deconvolution is traditionally denoted H T in recognition that it is the transpose of the matrix operator H. However, in practice, H and H T are both implemented as convolutions [as per Eqs. ( <ref type="formula" target="#formula_2">3</ref>) and ( <ref type="formula" target="#formula_3">4</ref>)]. Hence, we follow an almost identical approach for the backward projection, starting from the following equation in place of Eq. ( <ref type="formula" target="#formula_3">4</ref>):</p><formula xml:id="formula_8">O mnz = ∑︂ ab M ab {I} ⊗ H T abz .<label>(9)</label></formula><p>We note that during the one-time computation of H and H T during initial optical modeling of the microscope PSF, computing H T does not require additional convolution operations as used in <ref type="bibr" target="#b1">[2]</ref>, and can instead be populated near-instantaneously by pixelwise reshuffling of elements of H.</p><p>To achieve our anticipated order-of-magnitude speedup by using Eq. ( <ref type="formula" target="#formula_6">7</ref>) to compute F (M ab {O z }) in Eq. ( <ref type="formula" target="#formula_4">5</ref>), it was necessary to write carefully optimized custom computer code, since the specific multiplication and tiling process underpinning a practical implementation of Eq. ( <ref type="formula" target="#formula_6">7</ref>) is a performance bottleneck, and it is a highly bespoke operation that is not available in standard numerical libraries. We have made available a high-performance open-source reference implementation of our complete light field reconstruction algorithm <ref type="bibr" target="#b9">[10]</ref>. It is written primarily in the Python programming language, with performance-critical code written in C++, Cython <ref type="bibr" target="#b10">[11]</ref>, and CUDA, drawing on the FFTW library <ref type="bibr" target="#b11">[12]</ref> to compute FTs in our C++ code. To ensure maximum performance, our code incorporates elements of dynamic load-balancing between CPU cores, and machine-adaptive runtime optimizations.</p><p>Figure <ref type="figure" target="#fig_1">2</ref> presents performance benchmarks for our light field reconstruction code. Optimal performance is achieved for large batch sizes, in which scenario our new approach delivers a performance gain of 14× (CPU) and 34× (GPU) compared with the widely used MATLAB implementation <ref type="bibr" target="#b1">[2]</ref> based on Eqs. ( <ref type="formula" target="#formula_1">2</ref>), (4), and <ref type="bibr" target="#b8">(9)</ref>. We also compare with <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b12">13]</ref> (GPU-only) since this is faster than <ref type="bibr" target="#b1">[2]</ref>: our code still achieves a 10× performance gain relative to <ref type="bibr" target="#b12">[13]</ref>. All performance measurements were performed on a representative light field imaging scenario: 1463 × 1273 pixel frames from a dataset in <ref type="bibr" target="#b3">[4]</ref> (full test parameters specified in <ref type="bibr" target="#b9">[10]</ref>). CPU: 8 core Intel Xeon, 3 GHz, 32-GB RAM. GPU: PNY Quadro RTX A4000, 1.56 GHz, 16-GB RAM, 224 GB/s.</p><p>As explained above, our implementation performs optimally when batch-reconstructing multiple timepoints in a time series dataset simultaneously-although even for a single timepoint, our implementation already outperforms existing implementations. Figure <ref type="figure" target="#fig_1">2</ref> reveals the clear linear-plus-baseline relationship between overall run time and batch size for our code. Regardless of batch size, a fixed amount of computational work must be performed to compute F (H). This baseline work can only be eliminated completely if sufficient RAM is available to cache pre-calculated values for all F (H), which can extend to hundreds of gigabytes. The total additional work [computing the other elements of Eq. ( <ref type="formula" target="#formula_3">4</ref>) via Eqs. ( <ref type="formula" target="#formula_6">7</ref>) and ( <ref type="formula" target="#formula_7">8</ref>)] scales linearly with the batch size. This vindicates our strategy of amortizing the constant work across simultaneous deconvolutions of multiple timepoints.</p><p>In our GPU implementation, we measure that the linearscaling work is more substantial compared with the baseline  work of computing F (H), probably due to the challenges of developing optimized CUDA kernels to implement the highly specific custom operations embodied in Eq. ( <ref type="formula" target="#formula_6">7</ref>). This means that there are diminishing additional benefits to increasing the batch size beyond 8 on a GPU, which happily in turn means the RAM requirements are lower on a GPU, where RAM is typically scarcer.</p><p>Figure <ref type="figure" target="#fig_2">3</ref> confirms that our implementation scales well when the work is parallelized across multiple CPU cores: the benchmark run time with 16 parallel threads was over 12× faster than the single-threaded run time. The small decrease in efficiency (i.e., speedup being slightly less than n times when using n threads) can be explained by the increased pressure that multithreaded code imposes on the system's memory bandwidth. The Letter slight anomaly in efficiency for 2 threads is likely related to the dual-CPU architecture of the testbed system.</p><p>We emphasize that our approach is a faster method to generate reconstructed volumes that are mathematically identical to the output of <ref type="bibr" target="#b1">[2]</ref>, which is widely accepted as a reference MAT-LAB implementation for light field volume reconstruction. Our benchmarking code includes verification that the structural similarity index (SSIM) between our reconstructions and those of <ref type="bibr" target="#b1">[2]</ref> is 1.000000. A number of other light field reconstruction codes exist, many of which build on <ref type="bibr" target="#b1">[2]</ref> by introducing additional features such as filtering to alleviate native focal plane artifacts. Our methodology should be directly transferable to most iterative codes for reconstructing light field datasets. It is beyond the scope of this paper to rewrite all these codebases, but in <ref type="bibr" target="#b13">[14]</ref> we demonstrate how to interface our implementation with the existing MATLAB codebase of <ref type="bibr" target="#b1">[2]</ref>. For other codes, the main computational work remains the forward and backprojection operations, so the scope for speed-up can be estimated by comparing their run-times to our benchmark results in Fig. <ref type="figure" target="#fig_1">2</ref>. For example, Ref. <ref type="bibr" target="#b8">[9]</ref> takes 39× longer (CPU) than our implementation. The increased speed of our approach also makes it realistic to consider the benefits of direct deconvolution of multi-view light field datasets, in contrast to the two-stage "reconstruct then fuse" approach taken in <ref type="bibr" target="#b3">[4]</ref>.</p><p>It is not practical to compare our code performance directly with phase-space deconvolution <ref type="bibr" target="#b14">[15]</ref> due to the significant differences in reconstruction strategy (the respective merits of which are outside the scope of our work presented here). Their code does not scale well to the size of our test case (it would require 130 GB of RAM), but extrapolation from smaller test cases suggests our new code outperforms it significantly in terms of run time. It may well be possible to transfer elements of our approach to benefit the run time of <ref type="bibr" target="#b14">[15]</ref>, but further study would be required.</p><p>While many researchers continue to prefer the mathematically precise reconstruction afforded by the classical approach of Eq. ( <ref type="formula" target="#formula_1">2</ref>), others are researching the use of machine-learning to estimate the object from the raw camera image <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref>. The aim of such research is to compute an object estimate that is as faithful as possible to the true object, while using less computational time than required to explicitly compute Eq. ( <ref type="formula" target="#formula_1">2</ref>). Some approaches commence with a limited number of Richardson-Lucy iterations <ref type="bibr" target="#b16">[17]</ref> or use direct optical modeling during the training phase <ref type="bibr" target="#b4">[5]</ref>; computational performance in both these scenarios will benefit directly from our new results. Pure machine-learning based approaches also stand to benefit from our results: machine-learning architectures in imaging are commonly based around convolutional neural networks, and it is increasingly recognized that networks perform better and can be trained faster when the network structure encapsulates physical insights into the image formation process <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b18">19]</ref>. Thus, the mathematical insights behind our results also hold promise for improving performance and effectiveness of future machine-learning architectures for light field microscopy reconstruction.</p><p>In summary, we have presented mathematical results enabling a dramatic reduction in computational work for 3D image reconstruction in light field microscopy, without any detriment at all to the quality of the reconstruction. The results and approach we have presented here are potentially applicable to any multiaperture computational imaging system with a space-variant PSF endowed with translational symmetry properties. We have made available an open-source implementation of our algorithms <ref type="bibr" target="#b9">[10]</ref>, with performance measured to be more than an order of magnitude faster than previously available codes. We anticipate that our algorithms and open-source implementation will lead to an expansion in the uptake of light field microscopy as a tool for 3D+time imaging of rapid biological processes, now that the excessive computational demands of the reconstruction process have been brought under control.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. (a) Optical schematic of light field microscopy. (b) Pixel indexing relative to lenslet footprints. (c) Conventional projection operation for deconvolution (⊗ represents convolution). (d) New fast projection strategy (⊛ represents a new custom operation-see main text).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Performance scaling with batch size. Blue plots (total elapsed time) show constant baseline work [computing F (H)] plus linear scaling of additional work per batch item. Yellow plots (time per image) compare performance against previously published codes. As explained in the main text, our algorithms are designed to perform optimally with large batch sizes. Datapoints are measured run times, and trendlines are a fit to a linear scaling model.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Performance scaling with number of parallel CPU threadsshowing run-time improvement with increasing number of parallel threads. Multithreading efficiency is defined as 1.0 for a case where the measured time for an n-thread scenario is n times as fast as the 1-thread time.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="2,71.24,53.80,456.00,202.20" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><p>Funding. <rs type="funder">Royal Society of Edinburgh</rs> (<rs type="grantName">Sabbatical Grant</rs>).</p><p>Disclosures. The author declares no conflicts of interest.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_jZJud7W">
+					<orgName type="grant-name">Sabbatical Grant</orgName>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data availability. The computer code and test datasets underlying the results presented in this paper are available in Refs. <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b13">14]</ref>.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Broxton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Grosenick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cohen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Andalman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Deisseroth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Levoy</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.21.025418</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page">25418</biblScope>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><surname>Prevedel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">G</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hoffmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Pak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wetzstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kato</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Schrödel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Raskar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zimmer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">S</forename><surname>Boyden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vaziri</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/nmeth.2964</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">727</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">O</forename><surname>Skocek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nöbauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Weilguny</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Martínez Traub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">N</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Molodtsov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yamagata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Aharoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">D</forename><surname>Cox</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Golshani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vaziri</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41592-018-0008-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">429</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">N</forename><surname>Wagner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Norlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gierten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>Medeiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Balázs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wittbrodt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hufnagel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Prevedel</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41592-019-0393-z</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">497</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">K</forename><surname>Hsiai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Fei</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41592-021-01058-x</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">551</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">In light field microscopy, native focal plane artifacts arise from missing structural information in the captured raw image. However, these are further exacerbated by the presence of background or scattered light outside the footprint of circular lenslets. Empirically, the performance of the alternative form [Eq. (2)] degrades less severely in this scenario</title>
+		<imprint/>
+	</monogr>
+	<note>although we are not aware of any explicit mention or derivation of this property in the literature</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">C</forename><surname>Danielson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lanczos</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0016-0032(42)90767-1</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Franklin Inst</title>
+		<imprint>
+			<biblScope unit="volume">233</biblScope>
+			<biblScope unit="page">365</biblScope>
+			<date type="published" when="1942">1942</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">H</forename><surname>Press</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Teukolsky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">T</forename><surname>Vetterling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Flannery</surname></persName>
+		</author>
+		<title level="m">Numerical Recipes in C</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="1992">1992</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stefanoiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Page</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Symvoulidis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">G</forename><surname>Westmeyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Lasser</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.27.031644</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page">31644</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Python code for fast light field reconstruction</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Taylor</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.7981141</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.7981141" />
+	</analytic>
+	<monogr>
+		<title level="j">Zenodo</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Behnel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bradshaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Citro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Dalcin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">S</forename><surname>Seljebotn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Smith</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MCSE.2010.118</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Sci. Eng</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">31</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Frigo</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Not</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/301631.301661</idno>
+		<imprint>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page">169</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Light field imaging plugin for napari</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Schlafly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Verma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Harris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Vizcaino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">L</forename><surname>Riviere</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Oldenbourg</surname></persName>
+		</author>
+		<ptr target="https://github.com/polarizedlightfieldmicroscopy/napari-lf" />
+	</analytic>
+	<monogr>
+		<title level="j">GitHub</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Matlab/Python integration for fast light field reconstruction</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Taylor</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.7736536</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.7736536" />
+	</analytic>
+	<monogr>
+		<title level="j">Zenodo</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Qiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Dai</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.27.018131</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page">18131</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">N</forename><surname>Wagner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Beuttenmueller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Norlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Gierten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Boffi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wittbrodt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weigert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hufnagel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Prevedel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kreshuk</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41592-021-01136-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">557</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Dai</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41377-021-00587-6</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Light: Sci. Appl</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">152</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">FourierNets enable the design of highly non-local optical 376 encoders for computational imaging</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Deb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Jiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Broxton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Ahrens</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Podgorski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Turaga</surname></persName>
+		</author>
+		<idno type="DOI">10.48550/arXiv.2104.10611</idno>
+		<idno type="arXiv">arXiv:2104.10611</idno>
+	</analytic>
+	<monogr>
+		<title level="j">arXiv</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">D</forename><surname>Vishwasrao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Christensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sengupta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">W</forename><surname>Moyle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Rey-Suarez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Upadhyaya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Usdin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Colón-Ramos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shroff</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41592-022-01652-7</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Methods</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">1427</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

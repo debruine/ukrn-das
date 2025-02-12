@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Smart fault detection of HTS coils using artificial intelligence techniques for large-scale superconducting electric transport applications</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-07-14">14 July 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Mohammad</forename><surname>Yazdani-Asrami</surname></persName>
+							<email>mohammad.yazdani-asrami@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Propulsion, Electrification &amp; Superconductivity Group</orgName>
+								<orgName type="department" key="dep2">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Lurui</forename><surname>Fang</surname></persName>
+							<email>lurui.fang@xjtlu.edu.cn</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">Xi&apos;an Jiaotong-Liverpool University</orgName>
+								<address>
+									<settlement>Suzhou</settlement>
+									<country>People&apos;s Republic of China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Xiaoze</forename><surname>Pei</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Electrical and Electronic Engineering</orgName>
+								<orgName type="institution">The University of Bath</orgName>
+								<address>
+									<settlement>Bath</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Wenjuan</forename><surname>Song</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Propulsion, Electrification &amp; Superconductivity Group</orgName>
+								<orgName type="department" key="dep2">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Smart fault detection of HTS coils using artificial intelligence techniques for large-scale superconducting electric transport applications</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-07-14">14 July 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">3BA8A36B4D2BF4E75CEDDB51EF4A01B9</idno>
+					<idno type="DOI">10.1088/1361-6668/ace3fb</idno>
+					<note type="submission">Received 5 May 2023, revised 26 June 2023 Accepted for publication 4 July 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:05+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>artificial intelligence</term>
+					<term>discrete Fourier transform</term>
+					<term>fault</term>
+					<term>fault diagnostic</term>
+					<term>superconducting coil</term>
+					<term>Intelligent fault detection technique</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Superconducting coil is an essential and critical component in any superconducting apparatus used in large-scale power applications such as in superconducting machines of propulsion systems, in fault current limiters of the distribution system for future cryo-electric aircraft, or in windings of superconducting transformers for power grid applications. The superconducting coils in winding of large-scale power devices operate in kind of harsh environments from both temperature-considering liquid hydrogen or gaseous helium as coolant-(thermal stress) and electro-magneto-mechanical stress, point of views. Reliable operation of the coils in winding is of vital importance for the reliability of the superconducting device and the safety of the application that the device is used for. If the superconducting coil confronts a fault or an abnormal condition in the laboratory-level operation, it is straightforward to test the coil by measuring its critical current, AC loss, etc, to find whether it is damaged or not. However, there would be an urgent need to have faster and more intelligent fault detection and condition monitoring approaches with the possibility to become fully autonomous and real-time, in large-scale power applications, especially in sensitive applications such as in future cryo-electric aircraft, or in the fusion industry. To reach such intelligent fault-finding approaches, artificial intelligence-based techniques have been foreseen to be a promising solution. In this paper, we have developed an intelligent fault detection technique for finding a faulty superconducting coil, named the frequency-temporal classification method. This method has two main steps: first, this paper utilizes the discrete Fourier transform and independent component analysis to convert measurement signals of the healthy and faulty coils from (1) the time-series domain to the frequency domain; and (2) into time-series source signals.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Large-scale superconducting power devices are usually consisted of many coils in the form of winding in order to be supplied with higher voltage and carry higher currents to increase transmitted power. Some examples of using these superconducting coils are in superconducting machines, fault current limiters, transformers and magnets for cryo-electric aircraft, power networks, or fusion industry applications <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref>. The superconducting coil as a critical component of a device operates under very low cryogenic temperatures, such as the temperature of the liquid or gaseous helium, liquid hydrogen, or liquid nitrogen, i.e. in a range of 4 K-77 K. Thermal stresses can sometimes lead to establishing hotspots in coils <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b5">6]</ref>. On the other hand, since large-scale power devices in steady-state conditions usually transmit/transfer high power, superconducting coils are working under electro-magneto-mechanical stresses. These stresses can be significantly higher during transient and short circuit conditions which can lead to mechanical damages such as kink, bending, weak point establishments or even winding deformation <ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref>. Reliable and safe operation of the superconducting coils and the superconducting device itself is of vital importance for many critical applications such as cryo-electric aircraft with passengers onboard and also for power network applications to guarantee a continuous supply of power. If a superconducting coil face with a fault or malfunction in a laboratory-scale device, it would be fairly easy to test the coil by measuring critical current, and AC loss to find out if it is damaged; but in the real world, when a coil is wound with other coils in a winding of a superconducting device, there would be a need to have fast and smart fault detection method with a possibility to become fully autonomous and real-time to ensure online fault detection. For reaching to such fault-finding approaches, artificial intelligence (AI) based techniques can be considered as a promising solution <ref type="bibr" target="#b10">[11]</ref><ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref><ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref>.</p><p>AI-based methods are recently implemented in many different engineering problems. But the application of AI techniques for applied superconductivity problems is certainly overlooked <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b12">13]</ref>, especially for fault detection purposes within the superconductivity community. There is a great potential to involve AI methods in the detection of faults in superconducting windings. This paper makes the following original contributions:</p><p>(1) This paper, for the first time, develops a frequencytemporal classification method to detect faulty superconductor coils.</p><p>(2) This frequency-temporal classification method only requires the voltage measurement of one fundamental frequency cycle, thus offering advantages in terms of being data-efficient, cost-efficient, and practical in industrial applications.</p><p>The developed frequency-temporal classification method contains two steps. First, this paper utilizes the discrete Fourier transform (DFT) and independent component analysis (ICA) to convert measurement signals of the healthy and faulty coils from (1) the time-series domain to the frequency domain; and (2) into time-series source signals <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b16">17]</ref>. Therefore, it decomposes the time-series voltage signals into the combination of a set of different frequency components and inherent time-series components. Second, this paper trains the support-vector machine (SVM) using the derived frequencecomponents <ref type="bibr" target="#b17">[18]</ref>. This trained model is then used for detecting fault for other superconducting coils with voltage signal data only.</p><p>Case studies reveal that the combination of DFT and SVM indeed improves the detection accuracy to a satisfying value: no less than 99.2%. Furthermore, case studies also: (1) discuss and demonstrate the importance of applying DFT in improving fault detection accuracy; and (2) compare the detection accuracy by a number of different classification methods and justifies the selection of SVM in this paper.</p><p>The rest of the paper is organized as follows: section 2 presents the experimental setup for measuring the voltage signals of the healthy and faulty coils. The modeling methodology and procedure are explained in section 3. Section 4 presents the case studies. Section 5 concludes the findings of this paper.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Experimental setup</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Specifications of the healthy coil and faulty coil</head><p>Both the healthy coil and faulty coil were wound with 4 mmwide SuperPower tape. The parameters of the conductor are listed in table 1.   Figure <ref type="figure" target="#fig_0">1</ref> shows the assembly of the healthy coil and faulty coil, wound around one G10 tube, 89 mm in diameter. Both coils had five turns with a pitch length of 5 mm, and they were electrically insulated by Kapton tapes. The two coils were connected in series, through the copper bars, indicated as '1, 2, 3, and 4' in figure <ref type="figure" target="#fig_0">1</ref>. Voltage taps on the healthy coil were soldered 20 mm away from the copper bar, and so did the voltage taps on the faulty coil. The specifications of these two coils are listed in table 2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Experimental testing system</head><p>Establishing and training the AI models requires 'representative' groups of data from faulty and healthy coils. Hence, Figure <ref type="figure" target="#fig_1">2</ref> depicts the testing system for the healthy and faulty coils. A signal generator was used for generating a sinusoidal wave, which was sent to and amplified by a power amplifier.</p><p>The output of the power amplifier was further connected into a step-down transformer, to increase the current amplitude to the desired value. The healthy coil and faulty coil were connected in series in the circuit excited by the secondary output of the transformer. A shunt resistor (500 A/50 mV) was used in the testing system to read the current in both coils, and the currents in the two coils are identical due to the series connection. All experimental tests were conducted in liquid nitrogen (LN2) bath, at 77 K and saturated vapor pressure. The signals from both coils and the shunt resistor were logged by a NI DAQ module, which was controlled directly by the LabVIEW program in a personal computer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Sample signals</head><p>An example of sampled voltage signal for the faulty coil is shown in figure <ref type="figure" target="#fig_2">3</ref>. By observing this signal, one can easily understand that it very much looks like normal signal that we usually log during any normal and steady state operation of a typical coil. It is interesting that while it is impossible to find any disorder or abnormality in the time-based signal (shown in figure <ref type="figure" target="#fig_2">3</ref>(a)), frequency-time analysis presents distinctive features that can help to discriminate healthy coils from the damaged one as shown in figure <ref type="figure" target="#fig_2">3(b)</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Modeling methodology</head><p>This section develops a statistical method, named the frequency-temporal classification, to detect the HTS coil's fault by using measured voltage signals only. This method could deliver promising fault detection accuracy with minimal implementation complexity. Case studies in section 4 justify that this method delivers satisfactory fault detection accuracy of over 99% by utilizing data from only one fundamental frequency cycle of measured voltage. This method, therefore, presents advantages in terms of data-efficiency, costefficiency, and practicality in industrial applications. Figure <ref type="figure" target="#fig_3">4</ref> flowcharts the developed frequency-temporal classification method.</p><p>The flowchart contains three stages. First, before applying the developed method, the raw dataset is divided into two groups, coil voltage data with known states (known healthy or faulty states) and without known states, respectively. Stage 1 is the data preprocessing stage. This stage will align time-series voltage signals at the beginning of each alternative period and scale all data to a range of 0-1. The scaling process removes the effect of different magnitudes of data collected from different applications. Stage 2 involves feature extraction processes on both frequency and time-series domains. This stage will extract discriminative features from processed data with known states. A more discriminative of extracted features implies a higher prediction accuracy could be obtained from the trained model. Further, DFT and reversed-ICA are applied to data without known states for obtaining the same feature bundle on both the frequency and the time-series domain. Stage 3 involves classification model training and fault prediction for data without known states. This stage will utilize the extracted features of data with known states to train a classification model. A well-trained model will be generated and will predict the condition for coils of unknown states. To obtain the prediction, the extracted features for coils of unknown states are the input for the well-trained model.</p><p>The rest of this section is organized as follows: section 3.1 describes the background of the classification technique; section 3.2 defines the input data; section 3.3 describes the voltage signal decomposition on both frequency domain and time-series domain; section 3.4 trains the classification model; section 3.5 presents the validation process.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Background of classification using AI</head><p>Classification is an AI task that can separate a set of observations into two or multiple groups according to their feature data. A good well-known example for it is in email systems where the operator uses classification models to identify spam and non-spam emails according to the feature data (keywords, e.g. advertisement, money-making, cash) of received emails. Classification has been widely applied in computer vision, recognition, pattern recognition, power systems, etc <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b19">20]</ref>.</p><p>The classification process is briefed as follows:</p><p>(1) Given a set of training samples with certain categories as the input data, e.g. in email classification, the two categories are spam and non-spam. (2) Taking appropriate mathematic approaches (such as principal component analysis <ref type="bibr" target="#b20">[21]</ref>, ICA <ref type="bibr" target="#b15">[16]</ref>) or empirical approach to select the features from the raw data of the given observations. It should be stressed that the selected feature data should apply to all categories. (3) Training the classification method using the selected feature data and their known categories for the given training samples. (4) For any samples without a given category, repeat step <ref type="bibr" target="#b1">(2)</ref> to select their feature data; utilizing these features and the trained classifier to identify these samples' categories.</p><p>Typically, classification methods have two categories: (1) probabilistic classification method, e.g. logistic classification, neural networks, etc.; and (2) non-probabilistic classification method, e.g. linear classification, Adaboost, SVM, k-nearest neighbor (KNN). Two examples of probabilistic and nonprobabilistic classification methods are briefed below.</p><p>Artificial neural network (ANN) is a classic probabilistic machine learning method <ref type="bibr" target="#b21">[22]</ref>. It intends to develop a probabilistic relationship between the features and the categories.</p><p>Figure <ref type="figure" target="#fig_4">5</ref> shows a simplified ANN with l (l = 1 in this illustrated figure for the example) hidden layers. The relationship between the input data (x) and output data (y) is given by:</p><formula xml:id="formula_0">y n = σ   m ∑ j =1 w (2) nj f (1) ( n ∑ i =1 w (1) ji x i + b (1) ) + b (2)  <label>(1)</label></formula><p>where σ ()denotes the output activation function; f (1) () denotes the activation function for layer 1; w <ref type="bibr" target="#b1">(2)</ref> nj is the weight between the n th neuron in layer 2 (the output layer) and j th in layer 1 (the hidden layer); w <ref type="bibr" target="#b0">(1)</ref> ji is the weight between the j th neuron in layer 1 (the hidden layer) and i th in layer 0 (the input layer); b (1) and b (2) are the bias to layer 2 and layer 1, respectively. The ANN concept and performance are detailed in <ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref><ref type="bibr" target="#b24">[25]</ref>. In training the ANN model, the weight in each layer is probabilistically derived <ref type="bibr" target="#b23">[24]</ref>.</p><p>Non-probabilistic classification methods would fit a linear or non-linear plane or hyperplane to separate the feature data with maximum margin according to the feature data and the input data's categories <ref type="bibr" target="#b17">[18]</ref>. If the feature data have n dimension, the non-linear plane or hyperplane would have n-1 dimension <ref type="bibr" target="#b17">[18]</ref>. For example, the hyperplane for SVM is fitted by <ref type="bibr" target="#b17">[18]</ref>:</p><formula xml:id="formula_1">min ω,b 1 2 ∥ω∥ 2 + C Nt ∑ i =1 e i subject to y i ( ω T • φ (x i ) + b ) ⩾ 1 -e i e i ⩾ 0 (2)</formula><p>where ω and b are the coefficient vector and the interception term, respectively; y i is the i th training sample's category label (y i ∈ {-1, 1}); φ (x i ) is the feature vector for the i th training sample; C ∑ Nt i =1 e i denotes the regularization index for reducing the generalization error, where C denotes the penalty coefficient; N t gives the total number of training samples; e i is the outlier-induced infringement. The SVM is described comprehensively in <ref type="bibr" target="#b17">[18]</ref>.</p><p>Supposing there are two categories of input data and the feature data also have two dimensions, the example of SVM classification is presented in figure <ref type="figure" target="#fig_5">6</ref>.</p><p>In figure <ref type="figure" target="#fig_5">6</ref>, the blue and red points represent two classes. The results show that the two classes are successfully separated by the grey solid line, i.e. the hyperplane derived by SVM with the largest separating margin, as compared with other separating hyperplanes (dash lines of different colors).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Processing the input time-series voltage data</head><p>Taken the measured time-series voltage data throughout a given from the experiment, detailed in section 2, the input voltage data for any coil is given and scaled by:</p><formula xml:id="formula_2">V ms,c, i = [V ms,c,i,1 , V ms,c,i,2 , • • • V ms,c,i,t ]<label>(3)</label></formula><formula xml:id="formula_3">V input,c,i = {V input,c,i,t } = [V input,c,i,1 , V input,c,i,2 , • • • V input,c,i,t ]<label>(4)</label></formula><formula xml:id="formula_4">V input,c,i,t = V ms,c,i,t max t V ms,c,i<label>(5)</label></formula><p>where V ms,c,i is the measured time-series voltage data throughout the time from 0 to t for the i th coil in condition c; c ∈ {faulty, healthy}; V input,c,i denotes the scaled input voltage data throughout the time from 0 to t for the i th coil in condition c.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Performing the voltage signal decomposition on the frequency domain and time-series domain data</head><p>This section utilizes DFT and ICA to decompose the input time-series voltage signal on the frequency domain and timeseries domain, respectively. The reason for using DFT is that (1) in this study, the measured voltage signal is on stationary condition; and (2) DFT is a typical and widely-used method for frequency analysis where the input signal is on stationary status <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b25">26]</ref>; (3) taking the extracted frequency information/data as the input feature to train the classification increase the prediction accuracy by 100%.</p><p>The reason for using ICA is that (1) ICA is a classic and widely used method in time-series data decomposition, so make it easier to be implemented in any industrial application in future; (2) utilizing ICA to derive the time-series feature improves the final fault detection accuracy by 30% compared to using DFT only; (3) utilizing ICA achieves the greatest fault detection accuracy, compared to other classic time-series decomposition methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.1.">Utilizing DFT to derive the features on the frequency domain</head><p>The derived frequency domain signals are, therefore, given by <ref type="bibr" target="#b16">[17]</ref>:</p><formula xml:id="formula_5">FC c,i = [FC 0,c,i , FC 1,c,i , • • • FC t-1,c,i ]<label>(6)</label></formula><p>where</p><formula xml:id="formula_6">FC k,c,i = t-1 ∑ t=0 V input,c,i,t [ cos ( 2π n t kt ) -i sin ( 2π n t kt )]<label>(7)</label></formula><p>FC c,i denotes the DFT functions for the i th coil in condition c; c ∈ {faulty, healthy}; FC k,c,i denotes the derived k th elements on the frequency domain for the i th coil in condition c; k ∈ {1, 2, • • • t -1}; t is defined in (1); n t is the total number of sampling voltage data from time 0 to t.</p><p>Given that: (1) the measured voltage signals of superconducting coils are a combination of sinusoidal signals and unknown harmonics: and (2) 'the DFT of a real sinusoidal signal (odd signal) only has imaginary part' <ref type="bibr" target="#b16">[17]</ref>. This indicates that excluding the unknown harmonics, the DFT of the measured voltage signals from healthy and faulty coils should be the same. To separate healthy and faulty coils by analyzing the voltage signals, the harmonic or the cosinusoidal part of the DFT is the linchpin. Therefore, this paper only extracts the real part, the cosinusoidal part, of the DFT function, for training the classification models. The real part of the DFT function is given by:</p><formula xml:id="formula_7">F c,i = {F k,c,i } = { t-1 ∑ t=0 V input,c,i,t [ cos ( 2π n t kt )] }<label>(8)</label></formula><p>where F c,i contains only the real part of of FC c,i (given by ( <ref type="formula" target="#formula_3">4</ref>)) for the i th coil in condition c; c ∈ {faulty, healthy}.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.2.">Utilizing ICA to derive the features on the time-series domain</head><p>Given the feature vectors in equation ( <ref type="formula" target="#formula_5">6</ref>), this section utilizes the ICA to extract source signals and their weights in the original signal <ref type="bibr" target="#b15">[16]</ref>. ICA belongs to the category of blind source separation, which aims to extract source signals from mixed signals. Blind source separation is widely applied in a number of engineering fields <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b26">27]</ref>.</p><p>To derive the components signals within the voltage signals obtained, the model is given by:</p><formula xml:id="formula_8">V input,c = n ∑ j =1</formula><p>a c,i,j s c,i,j <ref type="bibr" target="#b8">(9)</ref> where V input,c denotes the scaled input voltage data in condition c, V input,c is a matrix with i th column and t th rows; i is the number of coils; t is the number of time slots for the collected voltage data; s c,i,j gives the independent components for the i th coil under the condition c, c ∈ {faulty, healthy}; a c,j is the weight fors c,i,j .</p><p>To find out the weight and components signals, minimization of mutual information is commonly adopted. The solution for using minimization of mutual information is detailed in <ref type="bibr" target="#b15">[16]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.">Training the SVM classifier</head><p>After deriving the frequency domain signals, the input feature vector f v and response vector r input for both measured healthy and faulty coils are given by:</p><formula xml:id="formula_9">f v = [ (F faulty,1 , a faulty,1) , • • • (F faulty,i , a faulty,i ), (F health,1 , a healthy,1 ) • • • (F healthy,i , a healthy,i)</formula><p>] T <ref type="bibr" target="#b9">(10)</ref> r input = ["faulty", • • • "faulty", "healthy", • • • "healthy"] T <ref type="bibr" target="#b10">(11)</ref> where F c,i is defined in (6); c ∈ {faulty, healthy}; "faulty" is a string feature, indicating this coil has a fault; "healthy" is a string feature, indicating this measured coil is healthy. It should be stressed that (1) the element within the same location of f input and r input refers to the same coil; (2) f input and r input are in the same size. Given the derived feature vector and response vector, this paper trains a binary SVM model with the radial basis function (RBF) kernel for the classification. The reason for using the SVM model and RBF kernel is that (1) SVM is a classic classification method, which prevails over the other model for the majority of scenarios <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b27">28]</ref>; (2) the combination of RBF kernel and SVM delivers the highest classification accuracy, compared to other traditional classification methods. Section 4 presents a comprehensive comparison study of classification accuracy delivered by different traditional classification methods for this paper.</p><p>Before training SVM, the linear kernel has been applied to map the original feature to a higher dimensional Hilbert space. Having a higher dimensional feature space implies the SVM could find a more distinct hyperplane to the two categories. The linear kernel is given by:</p><formula xml:id="formula_10">φ (x i ) = [k (f v,i,1 , f v,i,1 ) , k (f v,i,1 , f v,i,2 ) • • • k (f v,i,p , f v,i,q )] where k (f v,i,p , f v,i,q ) = f v,i,p • f v,i,q<label>(12)</label></formula><p>where f v,i,p and f v,i,q are the p th and q th elements in the i th row of the feature vector f v (as defined in (9)), respectively; σ is a free parameter. The details of the RBF kernel are described in <ref type="bibr" target="#b17">[18]</ref>. Then, equation ( <ref type="formula">2</ref>) takes the derived feature matrix φ (x i ) and the response vector r input to train the SVM classifier.</p><p>To perform fault detection for any superconducting coils under unknown conditions, the two steps are given as follows:</p><p>(1) Taking equations ( <ref type="formula" target="#formula_2">3</ref>)- <ref type="bibr" target="#b9">(10)</ref> to derive these coils' feature data; (2) Utilizing the trained SVM classifier to determine whether these coils are under healthy or faulty conditions according to their features.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.">Validation</head><p>This paper selects the k-fold (k = 10 in this paper) crossvalidation method <ref type="bibr" target="#b28">[29]</ref> to validate the results. The k-fold cross-validation method is well-recognized and widely applied in AI research and applications to validate the classification method <ref type="bibr" target="#b28">[29]</ref>. This method delivers more credible validation results than standard hold-out validation. The k-fold crossvalidation method validates every sample from the training dataset, while the hold-out validation only validates a given number of samples. The k-fold cross-validation method is briefed in figure <ref type="figure" target="#fig_6">7</ref> as follows: (1) It divides the collected data into ten equal-sized groups.</p><p>In this paper, the collected data are the collected voltage signals from healthy and faulty coils. (2) The validation process repeats ten times, where each time one of the groups is held out as the validation samples, and the other nine groups remain the training samples.</p><p>For each time:</p><p>• SVM fits a hyperplane according to data from the training samples. • Given the derived hyperplane and the validation samples, the trained SVM allocates a category for each of the validation samples. • It, therefore, produces a classification error, as given by:</p><formula xml:id="formula_11">e n k = n mc n vs • 100%<label>(13)</label></formula><p>where n k denotes the n k th repeat the time of the validation process, n k ∈ {1, 2, 3, • • • , 10}; n mc denotes the number of misclassified samples; n vs is the total number of validation samples.</p><p>(3) After repeating 10 times, it derives an overall classification error for the validation, as given by:</p><formula xml:id="formula_12">e v = ∑ k n k =1 e n k k<label>(14)</label></formula><p>where k = 10 in this paper.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Case studies</head><p>This section presents the results: (1) section 4.1 justifies the utilization of DFT and ICA decomposition; (2) section 4.2 makes discussions on insights into industrial implementation.</p><p>The measured voltage signals are described in section 2. In this section, 27 Hz and 54 Hz voltage signals are studied for fault detection.</p><p>This paper uses Spyder with Python 3.10 compounded. Classification models are selected from Scikit-learn packages. The simulation is applied on a computer with a CPU of i9-13900HX. The training time lasted no more than 3 s for the selected linear SVM model.</p><p>In sections 4.1 and 4.2, the measured voltage signals cover one fundamental frequency cycle. For the 27 Hz scenario, we  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Justification of using DFT and ICA decomposition</head><p>Through experiment, the time-domain voltage signals from healthy and faulty coils do not perform apparent differences for 27 Hz, and 54 Hz. Using the measured time-domain voltage signals to train the classification model incurs drastically high prediction errors. Therefore, decomposite the raw voltage signal by considering both the frequency and time-series domain could extract distinguishable features for both faulty and healthy coils.</p><p>In this study, only the first 5 frequency information from DFT is used. The component by ICA is set to 6. The reasons for these selections are presented in section 4.2.</p><p>Figure <ref type="figure" target="#fig_7">8</ref> presents the fault detection accuracy by applying DFT only.</p><p>Figure <ref type="figure" target="#fig_8">9</ref> presents the fault detection accuracy by applying ICA only.</p><p>Results shown in figures 8 and 9 justify that adopting DFT and ICA finds distinguishable features from voltage signals of faulty and healthy coils. Therefore, we can claim that promising fault detection accuracies are achieved.</p><p>By combining the extracted features from DFT and ICA, figure <ref type="figure" target="#fig_9">10</ref> presents the comparison results between the In figure <ref type="figure" target="#fig_9">10</ref>, F-SVM and Adaboost <ref type="bibr" target="#b29">[30]</ref> deliver almost the same prediction accuracy, which prevails over the other typical method, such as ANN, linear-SVM, Logistic <ref type="bibr" target="#b30">[31]</ref> and KNN. It should be stressed that although ANN delivers slightly higher accuracy than Linear-SVM, we still recommend Linear-SVM in industry applications. This is because:</p><p>1. It does not require complicated progress for tuning the parameters of SVM when training it. 2. Boosting algorithm is very sensitive to data qualities <ref type="bibr" target="#b29">[30]</ref>.</p><p>If data quality is poor in real applications, such as in electric aircraft or other electric transportation applications, the fault detection accuracy would be compromised. 3. Further, training and deploying SVM do not require vast computation capacity. A lower computation capability chip can operate SVM. Comparatively, training Adaboost would be time-consuming. To achieve the same training speed as SVM, applying boosting requires a better computation platform which performs lower stability and relatively higher power consumption. If the superconducting coils are deployed on an electric aircraft, the stability of the prediction system should be considered.</p><p>Therefore, SVM prevails over ANN in this study because of its application simplicity and platform stability.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Discussions on insights for practical industrial implementation 4.2.1. Discussions on raw data analysis for voltage signals</head><p>from uncategorized coils. This section discusses the implication of feature selection to fault detection accuracy, i.e. the optimal combination of set ICA components information and extracted DFT information would achieve the greatest fault detection accuracy.</p><p>In figure <ref type="figure" target="#fig_10">11</ref>, the greatest fault detection accuracy is 99.2%. This is achieved when (1) setting the ICA components to 6-10 and selecting 1st-5th DFT information as the features, or  (2) setting the ICA components to 5-10 and selecting 1st-6th DFT information as the features.</p><p>In the industry application, it suggests two combinations for simplifying the implementation: (1) setting the ICA components to 6 and selecting 1st-5th DFT information as the features; (2) setting the ICA components to 5 and selecting 1st-6th DFT information as the features. Both combinations would generate a feature vector of 11 dimensions, the minimal number of dimensions in the feature combinations to achieve 99.2% accuracy.</p><p>Table <ref type="table" target="#tab_2">3</ref> presents the fault prediction results if directly using the time-series voltage signals as the input data to train the Classification model.</p><p>Figure <ref type="figure" target="#fig_10">11</ref> and table <ref type="table" target="#tab_2">3</ref> present that having the DFT and ICA methods could improve the fault prediction accuracy by more than 4%.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.2.">Discussions on DFT results and their impacts to fault</head><p>detection accuracy. This paper only extracts the DFT function's real part (the cosinusoidal part) as the input data for training the classification model. This is because (1) excluding the unknown combination of harmonics, the measured voltage signals of superconducting coils are sinusoidal and (2) 'the DFT of a real sinusoidal signal (odd signal) only has the imaginary part (the sinusoidal part)'. Therefore, in this study, the harmonics, i.e. the real part of the DFT function, is the linchpin to separate healthy and faulty coils.</p><p>Figure <ref type="figure" target="#fig_11">12</ref> presents the prediction accuracy if the amplitude of the DFT function is considered, i.e. both the cosinusoidal part and the sinusoidal part of the DFT function are considered.</p><p>Comparing figures 10 and 12, it proves that considering the imaginary part of the DFT functions reduces the classification accuracy. This, in turn, justifies this paper's selection, only taking the real part of the DFT function as the feature data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.3.">Discussions on raw data collection.</head><p>In the case studies, the input data for detecting the superconductor's operating condition only covers one fundamental frequency cycle. The developed frequency-temporal classification model delivers This implies that the developed method is absolutely dataefficient and can locate the fault scenarios quickly. This advantage is significant in industry applications. For example, if one of the superconducting coils goes faulty in propulsion machine of an electric aircraft, every millisecond counts.</p><p>Increasing the covered period of input data does increase the classification accuracy. For example, extending the input data to two fundamental frequency cycles increase the prediction accuracy from 99.2% to 99.4%. When implementing this fault detection technique, the industrial operators and manufacturers should consider and make a trade-off whether it is worth doubling the measurement time for a 0.2% accuracy increase.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.4.">Discussions on future extensions and applications.</head><p>The fundamental methodology of frequency-temporal classification could be applied to another application field for superconductors. However, based on the no-free-lunch theory in machine learning, there is no one-size fits all solution. This means the structure could be kept as it is but the techniques used could be different from data to data. In future applications on other superconducting systems, it should be noted that the feature extraction techniques should be re-selected in both frequency and time-series domains, alongside re-selecting the classification methods. For the feature extraction techniques, there are alternative techniques that could be used. In selecting feature extraction techniques, one principle should be followed. If the technique could extract the most discriminative feature, that is utilizing the extracted feature could generate the highest prediction accuracy, that feature extraction method will be selected. This principle also applies in selecting the classification techniques.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion</head><p>It is very critical to achieve faster and more intelligent fault detection approaches with the possibility to become fully autonomous and real-time for superconducting coils and windings, especially for those operating in large-scale power devices in sensitive applications such as in future cryo-electric aircraft, or in the fusion industry, as the first and most important step for protection systems to act. Up to now, there are limited reports or studies in this area.</p><p>In this work, we have developed an intelligent fault detection technique for finding a faulty superconducting coil, named the frequency-temporal classification method. The new technique was developed based on fully experimental testing results from two superconducting coils, one faulty and one healthy. This method firstly utilizes the DFT and ICA to convert measurement signals of the healthy and faulty coils from (1) the time-series domain to the frequency domain; and (2) into time-series source signals; Then trains the SVM using the derived frequency-components. This trained model is used for making fault detection for other superconducting coils with voltage signal data.</p><p>An intelligent fault detection technique for superconducting coils and windings has been introduced in this paper based on signal processing and machine learning. This new technique is capable of discriminating faulty coils from healthy ones with an accuracy of above 99.2%. The results of the proposed method in this paper have been compared with some other techniques to prove the effectiveness.</p><p>This paper, for the first time, develops a frequencytemporal classification method to detect faulty superconductor coils. This frequency-temporal classification method only requires the measurement for one fundamental frequency cycle, thus offering advantages in terms of being dataefficient, cost-efficient, and practical in any future industrial applications, especially for cryo-electric aircraft applications.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Healthy coil and faulty coil assembly.</figDesc><graphic coords="3,47.82,225.84,245.93,192.05" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. Schematic of the testing rig set up.</figDesc><graphic coords="3,305.61,82.57,245.93,180.41" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. Sampled voltage signal of the faulty coil measured at 54 Hz (a) with frequency domain feature signals for faulty and healthy coils (b).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. The flowchart to explain the developed frequencytemporal classification method.</figDesc><graphic coords="4,43.85,66.61,261.14,357.62" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 .</head><label>5</label><figDesc>Figure 5. Simplified ANN configuration with a single hidden layer.</figDesc><graphic coords="5,305.61,82.57,245.93,210.98" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 6 .</head><label>6</label><figDesc>Figure 6. A simple example of SVM classification for a problem with two categories of input data and the feature data also have two dimensions.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 7 .</head><label>7</label><figDesc>Figure 7. illustration of the K-fold cross-validation method.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 8 .</head><label>8</label><figDesc>Figure 8. Fault detection accuracy comparison if only DFT is applied to voltage signals.</figDesc><graphic coords="8,47.82,82.57,245.93,110.51" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 9 .</head><label>9</label><figDesc>Figure 9. Fault detection accuracy comparison if only ICA is to voltage signals.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 10 .</head><label>10</label><figDesc>Figure 10. Accuracy results in comparison among the frequency-temporal-based SVM and other typical classification methods.</figDesc><graphic coords="8,47.82,241.77,246.09,121.51" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Figure 11 .</head><label>11</label><figDesc>Figure 11. Prediction accuracy matrix for different numbers of ICA components and DFT information features.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Figure 12 .</head><label>12</label><figDesc>Figure 12. Accuracy results in comparison when using the amplitude data of DFT as the features.</figDesc><graphic coords="9,305.61,295.14,245.93,121.51" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Parameters of superconducting tape.</figDesc><table><row><cell>Items</cell><cell>Values</cell></row><row><cell>Manufacturer</cell><cell>SuperPower</cell></row><row><cell>Tape type</cell><cell>SCS4050-AP</cell></row><row><cell>Width, (mm)</cell><cell>4</cell></row><row><cell>Thickness of tape, (mm)</cell><cell>0.1</cell></row><row><cell>Thickness of HTS layer, (µm)</cell><cell>1</cell></row><row><cell>Minimum Ic (A)</cell><cell>127</cell></row><row><cell>Stabilizer material</cell><cell>Copper</cell></row><row><cell>Thickness of stabilizer, (µm)</cell><cell>20 on both sides</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 .</head><label>2</label><figDesc>Specifications of the healthy and faulty coils.</figDesc><table><row><cell>Items</cell><cell>Healthy coil</cell><cell>Faulty coil</cell></row><row><cell>Coil type</cell><cell>Helical</cell><cell>Helical</cell></row><row><cell>Inner diameter, (mm)</cell><cell>87</cell><cell>87.4</cell></row><row><cell>Layer number</cell><cell>1</cell><cell>1</cell></row><row><cell>Turn number</cell><cell>5</cell><cell>5</cell></row><row><cell>Pitch length, (mm)</cell><cell>5</cell><cell>5</cell></row><row><cell>Insulation</cell><cell>Kapton tape</cell><cell>Kapton tape</cell></row><row><cell>Valid distance of voltage taps, (cm)</cell><cell>129.6</cell><cell>131.2</cell></row><row><cell>Self-inductance, (µH)</cell><cell>3.30 (L1)</cell><cell>3.22 (L2)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3 .</head><label>3</label><figDesc>Fault prediction comparisons by directly using time-series voltage signals of 27 Hz.</figDesc><table><row><cell>Method</cell><cell>KNN</cell><cell>Logistic</cell><cell>Adaboost</cell><cell>ANN</cell><cell>Linear-SVM</cell></row><row><cell>Accuracy</cell><cell>87.10%</cell><cell>94.70%</cell><cell>96.30%</cell><cell>65.40%</cell><cell>95.2%</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability statement</head><p>All data that support the findings of this study are included within the article (and any supplementary files).</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">High power density superconducting rotating machines-development status and technology roadmap</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Haran</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page">123002</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">A novel helical superconducting fault current limiter for electric propulsion aircraft</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Pei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zeng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Transp. Electrif</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">20468472</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Fault current limiting HTS transformer with extended fault withstand time</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Staines</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sidorov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bailey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Allpress</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Glasson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S A</forename><surname>Gholamian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">35006</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mitchell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Superconductors for fusion: a roadmap Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page">103001</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Evaluation of continuous fiber Bragg grating and signal processing method for hotspot detection at cryogenic temperatures</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fisser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Moseley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bumby</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R A</forename><surname>Badcock</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">54005</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Sensitive fiber optic sensor for rapid hot-spot detection at cryogenic temperatures IEEE Sens</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Moseley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J T</forename><surname>Gonzales</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Weijers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R A</forename><surname>Badcock</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page">21842413</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Delamination and current-carrying degradation behavior of epoxy-impregnated superconducting coil winding with 2G HTS tape caused by thermal stress</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Duan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Gao</surname></persName>
+		</author>
+		<idno>AIP Adv. 10 025320</idno>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Delamination model of an epoxy-impregnated REBCO superconducting pancake winding</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Pan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">65009</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Insulation materials and systems for superconducting powertrain devices in future cryo-electrified aircraft: part I-material challenges and specifications, and device-level application IEEE Electr</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Seyyedbarzegar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yuan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page">21591067</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Investigation of the over current characteristics of HTS tapes considering the application for HTS power devices</title>
+		<author>
+			<persName><forename type="first">J-H</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Appl. Supercond</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">10075227</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Roadmap on artificial intelligence and big data techniques for superconductivity</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page">43501</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Intelligent probability estimation of quenches caused by weak points in high-temperature superconducting tapes</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sadeghi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">19</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Artificial intelligence methods for applied superconductivity: material, design, manufacturing, testing, operation, and condition monitoring Supercond</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">123001</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cepeda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Orozco-Henao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Percybrooks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pulgarín-Rivera J D</forename><surname>Montoya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O D</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gil-González W</forename><surname>Vélez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Intelligent fault detection system for microgrids Energies</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">1223</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Artificial intelligence-based fault detection and diagnosis methods for building energy systems: advantages, challenges and the future Renew</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sustain. Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">109</biblScope>
+			<biblScope unit="page" from="85" to="101" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Independent component analysis: algorithms and applications Neural Netw</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hyvärinen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Oja</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="411" to="430" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Winograd</surname></persName>
+		</author>
+		<title level="m">On computing the discrete Fourier transform Proc. Natl Acad. Sci</title>
+		<imprint>
+			<date type="published" when="1976">1976</date>
+			<biblScope unit="volume">73</biblScope>
+			<biblScope unit="page" from="1005" to="1006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<author>
+			<persName><forename type="first">S</forename><surname>Suthaharan</surname></persName>
+		</author>
+		<title level="m">Support vector machine Machine Learning Models and Algorithms for Big Data Classification Book: Thinking with Examples for Effective Learning</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Classification of fruits using computer vision and a multiclass support vector machine</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="12489" to="12505" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Support vector machines for transient stability analysis of large-scale power systems</title>
+		<author>
+			<persName><forename type="first">L S</forename><surname>Moulin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Dasilva A P A</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>El-Sharkawi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R J</forename><surname>Marksii</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page">7975399</biblScope>
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Principal component analysis Wiley Interdiscip</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Abdi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L J</forename><surname>Williams</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Rev. Comput. Stat</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="433" to="459" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">DC electro-magneto-mechanical characterization of 2G HTS tapes for superconducting cable in magnet system using artificial neural networks</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Appl. Supercond</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">21973714</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Artificial Neural Networks (PHI Learning Pvt</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yegnanarayana</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+	<note>Ltd.</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mao</forename><forename type="middle">J</forename><surname>Mohiuddin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial neural networks: a tutorial Computer</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="31" to="44" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Artificial intelligence-based models for reconstructing the critical current and index-value surfaces of HTS tapes</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Russo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yazdani-Asrami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Scheda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Morandi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Diciotti</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Supercond. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">124002</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Fast algorithms for the discrete W transform and for the discrete Fourier transform</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Acoust. Speech Signal Process</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="803" to="816" />
+			<date type="published" when="1984">1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">statistical approach to guide phase swapping for data-scarce low voltage networks</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">19262472</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Problem formulations and solvers in linear SVM: a review Artif</title>
+		<author>
+			<persName><forename type="first">V K</forename><surname>Chauhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Dahiya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sharma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Intell. Rev</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="803" to="855" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Reliable accuracy estimates from k-fold cross validation</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P Y</forename><surname>Yeh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Knowl. Data Eng</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<date type="published" when="2019">2019. 19765494</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Schapire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Explaining adaboost Empirical Inference</title>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Robust logistic regression and classification</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Feng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv. Neural Inf. Process. Syst</title>
+		<imprint>
+			<biblScope unit="page">27</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

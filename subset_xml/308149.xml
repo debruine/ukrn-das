@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A hybrid static economic dispatch optimization model with wind energy: Improved pathfinder optimization model</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-10-18">18 October 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Li-Nan</forename><surname>Qu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="laboratory">State Key Laboratory of Reliability and Intelligence of Electrical Equipment</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="laboratory">Key Laboratory of Electromagnetic Field and Electrical Apparatus Reliability of Hebei Province</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="institution">China Electric Power Research Institute (Nanjing)</orgName>
+								<address>
+									<postCode>210003</postCode>
+									<settlement>Nanjing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Bing-Xiang</forename><surname>Ji</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="laboratory">State Key Laboratory of Reliability and Intelligence of Electrical Equipment</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="laboratory">Key Laboratory of Electromagnetic Field and Electrical Apparatus Reliability of Hebei Province</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ming</forename><forename type="middle">K</forename><surname>Lim</surname></persName>
+							<affiliation key="aff3">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff4">
+								<orgName type="institution" key="instit1">UKM-Graduate School of Business</orgName>
+								<orgName type="institution" key="instit2">Universiti Kebangsaan Malaysia</orgName>
+								<address>
+									<postCode>43000</postCode>
+									<settlement>Bangi</settlement>
+									<region>Selangor</region>
+									<country key="MY">Malaysia</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Qiang</forename><surname>Shen</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="laboratory">State Key Laboratory of Reliability and Intelligence of Electrical Equipment</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ling-Ling</forename><surname>Li</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="laboratory">State Key Laboratory of Reliability and Intelligence of Electrical Equipment</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="laboratory">Key Laboratory of Electromagnetic Field and Electrical Apparatus Reliability of Hebei Province</orgName>
+								<orgName type="institution">Hebei University of Technology</orgName>
+								<address>
+									<postCode>300401</postCode>
+									<settlement>Tianjin</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Ming- Lang</forename><surname>Tseng</surname></persName>
+							<email>tsengminglang@gmail.com</email>
+							<affiliation key="aff4">
+								<orgName type="institution" key="instit1">UKM-Graduate School of Business</orgName>
+								<orgName type="institution" key="instit2">Universiti Kebangsaan Malaysia</orgName>
+								<address>
+									<postCode>43000</postCode>
+									<settlement>Bangi</settlement>
+									<region>Selangor</region>
+									<country key="MY">Malaysia</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff5">
+								<orgName type="department">Institute of Innovation and Circular Economy</orgName>
+								<orgName type="institution">Asia University</orgName>
+								<address>
+									<settlement>Taichung</settlement>
+									<country key="TW">Taiwan</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff6">
+								<orgName type="department">Department of Medical Research</orgName>
+								<orgName type="institution" key="instit1">China Medical University Hospital</orgName>
+								<orgName type="institution" key="instit2">China Medical University</orgName>
+								<address>
+									<settlement>Taichung</settlement>
+									<country key="TW">Taiwan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff7">
+								<orgName type="department">Institute of Innovation and Circular Economy</orgName>
+								<orgName type="institution">Asia University</orgName>
+								<address>
+									<settlement>Taichung</settlement>
+									<country key="TW">Taiwan</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A hybrid static economic dispatch optimization model with wind energy: Improved pathfinder optimization model</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-10-18">18 October 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9335A172D931FD90A8CD1436B2BA81ED</idno>
+					<idno type="DOI">10.1016/j.egyr.2023.10.033</idno>
+					<note type="submission">Received 8 October 2022; Received in revised form 7 September 2023; Accepted 7 October 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:36+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Hybrid static economic dispatch Wind energy Improved pathfinder algorithm Permeability limit</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>This study proposes a hybrid static economic dispatch (HSED) model that incorporates multiple constraints specific to power systems to enhance the economic efficiency of power dispatch following the integration of wind energy. Wind energy integration in power systems can effectively reduce operational costs and energy consumption. However, the significant influx of renewable energy sources can introduce system instability and complicate power dispatch procedures. An improved pathfinder algorithm (IPFA) is proposed to address the cost minimization problem associated with power dispatch involving wind energy. The HSED model contains constraints related to wind energy penetration rate, operating area limitations, and slope rate, thereby ensuring its applicability in real-world power dispatch scenarios. The IPFA incorporates three measures such as Kent mapping initialization, nonlinear adaptation factor, and following correction strategy. The result indicates that the IPFA achieves a reduction of up to 95.86($/h) and 606.24($/h) in operating costs compared to alternative methods when wind energy is not considered. The IPFA reduces operating costs by up to 9.3% and 7.5% compared to scenarios without wind energy when wind energy is integrated. The proposed model and method contribute to enhance renewable energy utilization while simultaneously ensuring the power system economic feasibility and stability.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The complex calculations and high computational costs associated with solving static economic dispatch (SED) models pose challenge for enhancing the effective utilization of fossil fuels and other nonrenewable energy with the depletion of these resources <ref type="bibr" target="#b31">(Liang et al., 2021;</ref><ref type="bibr" target="#b44">Sun et al., 2022;</ref><ref type="bibr" target="#b17">Jadhav and Roy, 2013;</ref><ref type="bibr" target="#b4">Basu, 2016)</ref>. The power supply of power plants primarily relies on thermal power generation, utilizing fossil fuels and other non-renewable energy sources. This study is important to study the SED models' optimization to minimize operational costs while complying with various constraints. Additionally, the rapid development of clean energy, such as wind energy, offers advantages such as pollution-free generation, low cost, easy accessibility, and recyclability. The integration of renewable energy, including wind energy, introduces additional considerations and impacts on the traditional economic dispatch problem <ref type="bibr" target="#b46">(Van Hoorebeeck et al., 2022;</ref><ref type="bibr" target="#b33">Liu et al., 2023)</ref>. Moreover, the hybrid static economic dispatch problem (HSED) arises to require the optimization efforts to minimize operational costs for the integration of wind energy. In light of these factors, this study focuses on addressing the HSED problem, which involves wind energy and aims to optimize the power system's operational costs.</p><p>In establishing the HSED model, it is essential to consider various constraints, including the power balance equality constraint, output power boundary constraint, ramp rate constraint between different periods, prohibited operation area constraint, and valve point effect <ref type="bibr" target="#b36">(Nahas et al., 2020;</ref><ref type="bibr" target="#b12">El-Sayed et al., 2020;</ref><ref type="bibr" target="#b0">Al-Betar et al., 2018;</ref><ref type="bibr" target="#b32">Liu et al., 2021)</ref>. In addition, L.L. <ref type="bibr">Li et al. (2020)</ref>; X. <ref type="bibr">Li et al. (2020)</ref> and <ref type="bibr" target="#b50">Zhao et al. (2020)</ref> have explored HSED to optimize power system operational costs and improve grid benefits. <ref type="bibr" target="#b39">Oryani et al. (2021)</ref> and <ref type="bibr" target="#b47">Xu et al. (2019)</ref> argued that the penetration rate of renewable energy also needs to be considered in the model. Traditional mathematical methods such as quadratic programming and gradient-based methods are commonly employed to solve SED models <ref type="bibr">(Kumar and</ref><ref type="bibr">Pant, 2014a, 2014b;</ref><ref type="bibr" target="#b43">Shafie-khah et al., 2011)</ref>. However, these methods have limitations in terms of optimization capability and convergence speed. This study is crucial to find an optimized function that effectively satisfies all relevant constraints in practical scenarios when dealing with the traditional power system HSED model incorporating wind energy.</p><p>The computational complexity of HSED problems increases significantly with the problem dimension. However, metaheuristic algorithms are not limited by the optimization objective's dimension and can solve nonlinear and non-differentiable optimization problems, compensating for the shortcomings of traditional mathematical methods <ref type="bibr" target="#b30">(Li et al., 2019)</ref>. Many studies have successfully applied metaheuristic algorithms to economic dispatch problems, such as genetic algorithm (), particle swarm algorithm (PSO), gray wolf algorithm, and firefly algorithm <ref type="bibr" target="#b1">(Al-Betar et al., 2019;</ref><ref type="bibr" target="#b3">Basu, 2015;</ref><ref type="bibr" target="#b8">Chen and Ding, 2014;</ref><ref type="bibr" target="#b15">Griffiths et al., 2022)</ref>. Wind energy does not consume fuel during power generation, requiring only minimal maintenance costs, thereby reducing the overall operation cost of the system <ref type="bibr">(Li et al., 2021a</ref><ref type="bibr">(Li et al., ,2021b</ref><ref type="bibr">(Li et al., ,2021c;;</ref><ref type="bibr" target="#b20">Jin et al., 2021)</ref>. This study introduces wind power into the HSED model to explore the impact of new energy power generation on the system. Additionally, this study ensures the stability of system operation through the incorporation of wind energy permeability limits.</p><p>The pathfinder algorithm (PFA) was proposed in 2019, drawing inspiration from group movements in nature to identify the best food area. PFA consists of a leader and multiple followers, with each follower updating its position based on the positions of other followers and the movement of the leader. This diversifies the solution search space within PFA. A significant feature of PFA is the separate update and optimization of the leader and followers. This distinctive update method gives PFA certain advantages when applied to design and engineering problems <ref type="bibr" target="#b49">(Yapici and Cetinkaya, 2019)</ref>. Building upon the original PFA, the improved pathfinder algorithm (IPFA) improves the accuracy and convergence speed of the algorithm. It incorporates three measures: Kent mapping initialization, nonlinear adaptation factor, and following correction strategy. These measures enhance the initialization and update processes of the algorithm, resulting in improved convergence speed and solution accuracy.</p><p>To improve the economy of power dispatch after the incorporation of wind energy, this paper proposes an HSED model and the IPFA for power systems, considering wind energy and various constraints such as wind energy permeability constraints, prohibited operation area constraints, and slope constraints. The proposed model and improved algorithm are utilized to minimize the operational costs of power dispatch, taking into account wind energy. The contributions of this study are as follows.</p><p>• The proposal of a novel HSED model that incorporates wind-fire cogeneration and considers various constraints such as the power balance equation, output power boundaries, ramp rate limitations across different time periods, prohibited operation areas, and wind energy penetration rate constraints. This model ensures the stable operation of the system in the presence of wind energy variability. • The introduction of the IPFA for addressing the complexities arising from the constraints in the HSED model. The IPFA incorporates three enhancements: Kent mapping initialization, nonlinear adaptation factor, and following correction strategy. These improvements lead to enhanced convergence speed, solution accuracy, and stability. This study provides valuable insights into enhancing the economic dispatch of power systems by introducing the HSED model, incorporating wind-fire co-generation and considering multiple constraints, along with the introduction of the IPFA for efficient optimization. The proposed approach facilitates the effective integration of wind energy and contributes to the stability and economy of power system operations. The findings have practical implications for various stakeholders, including grid management centers, energy storage system operators, and power generation companies.</p><p>The remaining sections of the paper are outlined as follows: Section 2 provides an overview of this study status on economic dispatch, discussing the research findings and limitations highlighted in related literature. In Section 3, the proposed decision analytical HSED model, considering wind energy, is comprehensively described. The specific process of the IPFA is presented in Section 4. Section 5 presents the analysis results derived from two case studies conducted to evaluate the proposed model and method. Section 6 summarizes the research findings and conclusions drawn from the study. Finally, Section 7 outlines Nomenclature F i g (P gi ) the generation cost of the i th thermal unit F j w (P wj ) the generation cost of the j th wind farm F obj the objective function HSED hybrid static economic dispatch IPFA improved pathfinder algorithm L ij , L i0 , L 00 the transmission loss coefficients P gi,j l the lower boundaries of the j th no operation area of the i th generating unit P gi,j u the upper boundaries of the j th no operation area of the i th generating unit P gi the output power of the i th thermal power unit P gi 0 the output power of the i th generating unit at the last time P Load the power system load P gi DR the minimum boundaries of the output power fluctuation P Loss the transmission loss P gi max the upper limits of the output power of the i th thermal power unit P gi min the lower limits of the output power of P gi UR the maximum boundaries of the output power P W max the maximum available power of the wind farm SED static economic dispatch T max the maximum number of iterations X Fi t the position of the i-th follower in the t-th iteration X Fj t the position of the j th follower in the t-th iteration X i,j the value of the j th dimension in the i-th individual X j L the lower boundaries of the j th dimension in each individual X j U the upper boundaries of the j th dimension in each individual X P t the position of the pathfinder in the t iteration X P t+1 the position of pathfinder in the t + 1 iteration X P t-1 the position of pathfinder in the t-1 iteration future research directions and areas for further investigation.</p><formula xml:id="formula_0">γ i , φ i , η i the</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Literature review</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Hybrid static economic dispatch problem</head><p>HSED is an optimization problem and aims at minimizing the operation cost, while considering a series of constraints in the solving process <ref type="bibr">(Kumar and</ref><ref type="bibr">Pant, 2014a, 2014b;</ref><ref type="bibr" target="#b26">Liu and Li, 2020;</ref><ref type="bibr" target="#b44">Sun et al., 2022)</ref>. Different methods have been devised to address these complex constraints <ref type="bibr" target="#b5">(Berahmandpour et al., 2022)</ref>. For example, <ref type="bibr" target="#b7">Bulbul et al. (2018)</ref> developed a heuristic algorithm that combines the krill swarm algorithm with the opposition learning method. The forbidden operation constraint, transmission loss, and slope rate constraint are analyzed during the process of solving economic load distribution. The effectiveness of the method is verified by experiments, but <ref type="bibr" target="#b7">Bulbul et al. (2018)</ref> ignored to analyze solution accuracy. In addition, <ref type="bibr" target="#b18">Jayakumar et al. (2016)</ref> devised a gray wolf optimizer to solve the cogeneration dispatch problem, which considered the ramp rate constraint, valve point effect, and rotation reserve constraint. The performance of the proposed method was tested by the standard test system, but <ref type="bibr" target="#b18">Jayakumar et al. (2016)</ref> lacked to consider the forbidden operation area constraint when solving the problem. <ref type="bibr" target="#b11">Chen et al. (2019)</ref> presented a two-stage strategy using the artificial bee colony algorithm to address equality constraints in economic dispatch problems. In this solving method, two groups of bees were used for searching feasible solutions meeting the constraints, and a novel searching strategy was introduced to make the feasible solutions have dynamic boundaries. However, <ref type="bibr" target="#b11">Chen et al. (2019)</ref> lacked to deal with inequality constraints. <ref type="bibr">Li et al. (2021)</ref> devised a new constraint mechanism for the SED model with the valve point effect, and used differential evolution algorithm to verify the improved SED model.</p><p>The integration of renewable energy into economic dispatch holds significant economic benefits for the power system <ref type="bibr">(Esen et al., 2016)</ref>. For instance, <ref type="bibr" target="#b21">Khan et al. (2015)</ref> developed a joint economic dispatch model that incorporates multiple photovoltaic power stations. Two case studies were conducted to demonstrate the feasibility of the model. The model considered constraints such as output power limits, ramp rates, and power balance. However, it is worth noting that <ref type="bibr" target="#b21">Khan et al. (2015)</ref> did not analyze the forbidden operation area constraint. In another study, <ref type="bibr" target="#b20">Jin et al. (2021)</ref> proposed a stochastic model for wind power reliability, which transformed the uncertain performance of wind power into a deterministic form. Building upon this, a stochastic model based on similarity ranking of ideal solutions, and made notable contributions to energy conservation, emission reduction, and improvement of power generation efficiency. In sum, these studies exemplify the potential benefits and advancements achieved through the integration of renewable energy sources in economic dispatch models by considering various constraints and introducing innovative approaches.</p><p>Additionally, various metaheuristic algorithms have been presented to reduce the computational complexity of complex constraints in the HSED model <ref type="bibr" target="#b19">(Jebaraj et al., 2017;</ref><ref type="bibr" target="#b50">Zhao et al., 2020)</ref>. For example, <ref type="bibr" target="#b42">Selvakumar and Thanushkodi (2007)</ref> devised a new classical PSO algorithm, which combines the splitting method of cognitive behavior and local random search method. Three experimental systems with non-convex solution space are employed to prove the feasibility of the presented method. However, <ref type="bibr" target="#b42">Selvakumar and Thanushkodi (2007)</ref> ignored the accuracy and convergence rate. To improve the solution effect of SED model, <ref type="bibr" target="#b40">Pothiya et al. (2008)</ref> adopted an enhanced emergency search algorithm, which introduced initialization, adaptive search, multiple searches, crossover, and restart technologies, but the stability and convergence accuracy of the method are not ideal. <ref type="bibr" target="#b45">Suresh et al. (2018)</ref> used probabilistic technology and dragonfly algorithm to solve the static economic scheduling problem of renewable energy resources and FACTS equipment, effectively reducing the operating costs and power losses of the system. Chen (2020) proposed a new dual-population adaptive differential evolution algorithm, considering multi-fuel selection and valve point effects; moreover, the experimental verification shows that algorithm has advantages in solution accuracy and convergence speed using the maintenance method to deal with optimization constraints. <ref type="bibr" target="#b14">Fu and Liu (2021)</ref> proposed a unique distributed cross optimization to fully involve most of the constraints in a completely decentralized optimization way to solve the economic scheduling problem. <ref type="bibr" target="#b10">Chen and Tang (2022)</ref> proposed an improved competitive swarm optimization algorithm to solve the SED problems. The accuracy and speed of solving the SED problems were further improved compared with other algorithms. The efficiency of the algorithm was improved by using a cross operation strategy and parameter automation strategy and to improve the dependence of the original algorithm on the bacterial count.</p><p>The presented approach has demonstrated remarkable efficacy through extensive testing across a range of complex scenarios, yielding exceptional results. Notably, <ref type="bibr" target="#b38">Niu et al. (2014)</ref> proposed an innovative hybrid harmony search algorithm that accelerates convergence speed by incorporating arithmetic crossover operations and enhances solution diversity through the use of an opposition learning strategy. However, it is important to acknowledge that <ref type="bibr" target="#b38">Niu et al. (2014)</ref> did not comprehensively consider the impact of transmission losses in their solution of the SED problem. In the pursuit of optimizing the SED problem, <ref type="bibr" target="#b37">Nawaz et al. (2017)</ref> developed a groundbreaking global constrained Nelder-Mead algorithm that incorporates variable probability distributions to enable both local and global search capabilities. Similarly, <ref type="bibr" target="#b47">Xu et al. (2019)</ref> devised a novel gray wolf optimization algorithm to address the constraints associated with ramp rates and forbidden operation areas in economic load distribution problems. Nonetheless, it is worth noting that <ref type="bibr" target="#b47">Xu et al. (2019)</ref> did not fully account for the stability and accuracy limitations inherent in their method. To further enhance the solving speed of the SED model, <ref type="bibr" target="#b16">Guo et al. (2021)</ref> proposed an accelerated distributed gradient algorithm that introduces a momentum term. It is important to emphasize that different metaheuristic approaches exhibit varying levels of effectiveness when applied to economic dispatch problems with complex constraints, each showcasing unique advantages in solving SED problems and offering valuable insights to the field.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Improved pathfinder optimization algorithm</head><p>PFA is a novel metaheuristic algorithm, which has certain advantages in dealing with constraint problems and engineering design <ref type="bibr" target="#b49">(Yapici and Cetinkaya, 2019)</ref>. For the high-dimensional and non-linear optimal power dispatching problem, scholars have improved the PFA. For example, <ref type="bibr">Miyombo et al. (2022)</ref> proposed a PFA based on an adaptive policy that allows the PFA to optimize according to their own state and achieve the minimum path. At an earlier time, <ref type="bibr" target="#b48">Yapici (2020)</ref> presented an IPFA to address the reactive power optimization problem of the power system. In this method, the researchers modified the update parameters of the PFA to update the algorithm in a small step. At the same time, numerical analysis was carried out in two system examples to illustrate the performance of this method in solving the reactive power optimization dispatch problem. To address the premature convergence of the original PFA, <ref type="bibr" target="#b2">Bai and Jermsittiparsert (2020)</ref> introduced Levy flight strategy and chaos theory, and proved its the feasibility of using different cases. However, <ref type="bibr" target="#b2">Bai and Jermsittiparsert (2020)</ref> ignored to analyze the complexity of the IPFA. <ref type="bibr" target="#b41">Qi et al. (2020)</ref> proposed a hybrid PFA, which introduced the mutation operator of differential mutation algorithm into PFA, improved the searchability of the algorithm, and proved that the method has certain competitiveness by dividing clustering, constraint problem, and engineering design problem. Those studies shows that the optimized PFA has certain advantages in dealing with the optimal dispatching problem.</p><p>The basic PFA has been widely employed to address nonlinear and non-differentiable mixed static economic dispatch problems due to its simplicity and flexibility. However, the original PFA encounters certain L.-N. <ref type="bibr">Qu et al.</ref> limitations in data processing as the complexity of the problem and data dimension increase, such as low accuracy and slow convergence speed. It becomes necessary to enhance the original PFA when addressing mixed static economic dispatch problems. In this study, an IPFA is proposed, aiming to overcome the aforementioned limitations. The IPFA introduces several improvements to enhance the algorithm's performance. Firstly, the initialization stage is improved by incorporating Kent map initialization, which leads to better initial solutions. Additionally, the search ability and diversity of the algorithm are enhanced through the utilization of a nonlinear adaptation factor and a follow-up correction strategy. Consequently, the IPFA exhibits competitive advantages in solving complex mixed static economic dispatch problems. By improving the initialization process, enhancing search capabilities, and increasing search diversity, the IPFA addresses the limitations of the original PFA, making it a promising approach for solving complex mixed static economic dispatch problems.</p><p>A HSED model combining wind farms with thermal power units is proposed, meanwhile considering output power boundary constraint, power balance equality constraint, ramp rate constraint, forbidden operation area constraint, and wind energy permeability constraint. An IPFA is proposed. Kent map initialization, nonlinear adaptation factor, and following correction strategy are introduced, which improves the speed and accuracy of the algorithm and increases the stability. Two examples are employed to prove the constructed model and solving method, while comparing with the existing research and methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Hybrid static economic dispatch problem model</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">HSED model's objective function</head><p>Solving HSED model aims to minimize the operation cost on the premise of meeting the power system demand and generator operation constraints. In this study, F obj indicates the objective function of HSED model, containing the generation cost of thermal power units and the generation cost of wind farms, as follows:</p><formula xml:id="formula_1">F obj = ∑ NG i=1 F g i ( P gi ) + ∑ NW j=1 F w j ( P wj )<label>(1)</label></formula><p>where P gi and P wj indicate the output of the i th thermal unit and the j th wind unit respectively. N G and N W indicate the numbers of thermal units and wind farms. F i g (P gi ) and F j w (P wj ) indicate the generation cost of the i th thermal power unit and the j th wind farm respectively.The system operation cost is calculated as follows:</p><formula xml:id="formula_2">F g i ( P gi ) = γ i ( P gi ) 2 + ϕ i ( P gi ) + η i (2)</formula><p>where γ i , φ i and η i represent the generation cost coefficients. The generation cost of wind farm is expressed as follows:</p><formula xml:id="formula_3">F w j ( P wj ) = μ j × P wj (3)</formula><p>where μ j indicates the generation cost coefficient of wind farm, which is linearly related to the power output of the wind farm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Constraints of hybrid static economic dispatch model</head><p>In the development of a HSED model for power systems incorporating wind energy, it is imperative to give due consideration to various constraints pertaining to the system's generation units. These constraints serve as crucial factors that cannot be disregarded, as they contribute to aligning the static economic dispatch model with the actual operational characteristics of the generation units within the system. Noteworthy constraints encompass the power balance equation, output power boundaries, ramp rate limitations across different time periods, and prohibited operation areas, among others. Moreover, when incorporating renewable wind energy into the HSED model, it becomes essential to account for the wind power penetration rate. This consideration is vital for mitigating the potential adverse effects stemming from the inherent randomness associated with renewable energy sources. By appropriately addressing the wind power penetration rate within the HSED model, unnecessary impacts on system operation stability can be minimized, ensuring more reliable and efficient power system management.</p><p>(1) Equality constraints</p><p>The power balance equation constraint that is closely related to the reliability of power system operation is expressed as the sum of the total output of wind farms and thermal units equals the sum of transmission loss and system load, as follows:</p><formula xml:id="formula_4">⎧ ⎪ ⎪ ⎪ ⎨ ⎪ ⎪ ⎪ ⎩ ∑ NG i=1 P gi + ∑ NW j=1 P wj = P Load + P Loss P Loss = ∑ NG i=1 ∑ NG j=1 P gi L ij P gj + ∑ NG i=1 L i0 P gi + L 00 (4)</formula><p>where P gi is the output power of the i th thermal power unit and P wj is the output power of the j th wind turbine; N G is the number of thermal power units in the microgrid system; N W is the number of wind farms in the microgrid system; P Load represents the power system load, P Loss is the transmission loss, L ij , L i0 and L 00 are called transmission loss coefficients.</p><p>(2) Output power boundary constraints</p><p>The necessary condition for the safe operation of the system is that the units' output must be limited to a certain working range. The boundary function expression of generator output power is as follows:</p><formula xml:id="formula_5">⎧ ⎪ ⎪ ⎪ ⎪ ⎪ ⎨ ⎪ ⎪ ⎪ ⎪ ⎪ ⎩ P min gi ≤ P gi ≤ P max gi 0 ≤ ∑ NW j=1 P wj ≤ P max W P max W = χP Load (5)</formula><p>where m is the number of prohibited operating areas for the i th generator set, j = 2,3,.,m, P gi max and P gi min indicate the lower limit and upper limit of the output of the i th thermal unit, P W max is the maximum output of the wind farm, and χ represents the permeability of wind energy. (3) Slope rate constraint</p><p>The variation of the generator set output is limite in a period d, that is, the increase of the generator set output cannot exceed the upper limit of the threshold, and the decrease of the output power cannot exceed the lower limit of the threshold. The specific functional expression is as follows:</p><formula xml:id="formula_6">⎧ ⎨ ⎩ P gi -P 0 gi ≤ P UR gi P 0 gi -P gi ≤ P DR gi (<label>6</label></formula><formula xml:id="formula_7">)</formula><p>where P gi is the output of the i th generator set, P gi 0 indicates the output power at the last time, P gi DR and P gi UR represent the maximum and minimum boundaries of the output fluctuation. (4) Forbidden operation area constraint</p><p>The forbidden operation area is caused by the vibration of unit bearing or related auxiliary equipment, such as feedwater pump, boiler, etc., which should be avoided when the power system is running. The forbidden operation area function expression is as follows:</p><formula xml:id="formula_8">L.-N. Qu et al. ⎧ ⎪ ⎪ ⎪ ⎨ ⎪ ⎪ ⎪ ⎩ P min gi ≤ P gi ≤ P l gi,1 P u gi,j-1 ≤ P gi ≤ P l gi,j P u gi,m ≤ P gi ≤ P max gi (7)</formula><p>where, m indicates the number of prohibited operation areas, j = 2, 3,., m. P gi,j u and P gi,j l represent the upper and lower boundaries.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Pathfinder algorithm and its improvement</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Pathfinder algorithm</head><p>PFA divides the individuals into two parts: pathfinder and follower <ref type="bibr" target="#b49">(Yapici and Cetinkaya, 2019)</ref>. The pathfinder is called the leader of the team, which guides the global search direction of the algorithm, while the follower who moves along the pathfinder's direction is called the follower. The optimization is realized through the communication between the pathfinder and the follower.</p><p>(1) Population initialization</p><p>The population initialization equation of PFA is as follows.</p><formula xml:id="formula_9">X i,j = X L j + R ( X U j -X L j ) (8)</formula><p>where, X i,j is the value of the j th dimension in the i th individual, and X j U and X j L are the upper and lower limits. </p><formula xml:id="formula_10">X t+1 P = X t P + 2rand 1 ( X t P -X t-1 P ) + Q Q = v 1 exp( -2t/T max ) (<label>9</label></formula><formula xml:id="formula_11">)</formula><p>where t is the current iterations, T max is the max-epoch, X P t represents the position of pathfinder in the t iteration, rand 1 and v 1 are randomly generated in [0,1].</p><p>(3) Following stage</p><p>The follower updates according to the pathfinder's position after the pathfinder is updated. The update equation of the follower is as follows:</p><formula xml:id="formula_12">⎧ ⎪ ⎪ ⎪ ⎪ ⎪ ⎪ ⎨ ⎪ ⎪ ⎪ ⎪ ⎪ ⎪ ⎩ X t+1 Fi = X t Fi + R 1 ( X t Fj -X t Fi ) + R 2 ( X t P -X t Fi ) + δ R 1 = θr 2 , R 2 = λr 3 δ = ( 1 -t/T max ) v 2 D ij D ij = ⃦ ⃦ ⃦X t Fi -X t Fj ⃦ ⃦ ⃦ (10)</formula><p>where X Fi t is the position of the i th follower and X Fj t is the position of the j th follower. θ represents the interaction coefficient between the followers, and λ represents the attraction coefficient of the Pathfinder to the followers, which are uniformly distributed in <ref type="bibr">[1,</ref><ref type="bibr">2]</ref>. v 2 , r 2 and r 3 are all random values in [0,1]. (4) Optimization stage</p><p>The fitness is recalculated after the Pathfinder and the follower are updated. When the fitness of the follower is lower than that of the pathfinder, the follower becomes a novel pathfinder and make the next exploration. The function is as follows:</p><formula xml:id="formula_13">X t P = X t Fi ⋯if ⋯F obj ( X t Fi ) &lt; F obj ( X t P )<label>(11)</label></formula><p>where X P t indicate pathfinder's position.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Improved Pathfinder algorithm</head><p>The unimproved PFA has the advantages of simple process, easy operation and fast computation, and can solve most optimization problems in engineering in lower dimensions. However, if the PFA is further used to analyze and solve high-dimensional and complex engineering problems, it is inevitable that the PFA has problems such as decreasing accuracy, increasing convergence time, and falling into local optimum solutions during the iterative solution process. To address these problems, this study chooses to improve the PFA in terms of initialization, search capability and search diversity, using the Kent map initialization, nonlinear adaptation factor and follow correction strategy methods.</p><p>(1) Kent map initialization</p><p>In the metaheuristic algorithm, researchers use chaotic map to generate the initial position of the population during population initialization in order to improve the population diversity of the algorithm. Compared with the randomly generated population in the original algorithm, the population generated by chaotic map has better ergodicity and randomness, and can better achieve the statistical equilibrium state. The Kent map, which has better uniformity and randomness than the chaotic map, is chosen to initialize the algorithm population. The Kent mapping expression is as follows:</p><formula xml:id="formula_14">a n+1 = { a n /τ a n ∈ [0, τ) (1 -a n )/(1/τ) a n ∈ [τ, 1]<label>(12)</label></formula><p>where, 0 &lt; τ &lt; 1, and the initial value of the initialization process cannot be equal to τ. Also, for a longer period of chaotic iterations, τ ‡ 0.5.</p><p>(2) Nonlinear adaptive factor The introduction of the nonlinear adaptive factor in the IPFA enhances the global and local search abilities by incorporating it into the update positions of pathfinders and followers. This enhancement results in improved convergence speed of the algorithm. The equations for the pathfinder and follower with the nonlinear convergence factor are as follows:</p><p>The iterative process of the PFA in addressing multidimensional problems often leads to an imbalance between global and local search performance. This imbalance adversely affects the search speed and overall algorithm performance. To address this issue, our study introduces a nonlinear adaptation factor (σ) into the update equations for pathfinders and followers within the PFA. This factor adjusts the impact of pathfinder and follower positions on updated positions before each update. The nonlinear adaptation factor (σ) decreases in a nonlinear manner as the number of evolutionary iterations increases. At the beginning of each algorithm iteration, when the span of pathfinder and follower position updates is large, the decay of σ is low. This effectively improves the global search speed of the algorithm.</p><p>Conversely, towards the end of each iteration, σ has a higher value, increasing the search accuracy of the algorithm. By introducing the nonlinear adaptation factor, our approach achieves a balance between global and local search performance, thereby shortening the overall search time of the algorithm. The improved update equations for pathfinders and followers are as follows:</p><p>L.-N. Qu et al.</p><formula xml:id="formula_15">⎧ ⎪ ⎪ ⎪ ⎨ ⎪ ⎪ ⎪ ⎩ X t+1 P = σX t P + 2rand 1 ( X t P -X t-1 P ) + Q X t+1 Fi = σX t Fi + R 1 ( X t Fj -X t Fi ) + R 2 ( X t P -X t Fi ) + δ σ = σ max -(t/T max ) 3 × ( σ max -σ min ) (13)</formula><p>where, σ is a nonlinear adaptive factor, σ max and σ min is the upper and lower limit of nonlinear adaptation factor, σ max = 0.9, σ min = 0.4. A higher value of σ max allows for more exploration, enabling the algorithm to search a larger solution space.</p><p>Conversely, a lower value of σ min encourages exploitation, focusing on promising solutions. Through experimentation and analysis, it was found that the selected range of σ max = 0.9 and σ min = 0.4 produced satisfactory convergence speed and solution quality in the specific problem domain of the study. These values were determined after conducting a series of preliminary experiments and considering the trade-off between exploration and exploitation. (3) Follow correction strategy</p><p>The PFA in the middle and later stages of the local search for superiority, if the pathfinder and follower position distance is far away to reduce the local search ability of the algorithm, for which the distance between the pathfinder and the follower should be dynamically adjusted. The study optimized the follower position update equation by using the follow correction strategy, and the follower update equation was selected by random number comparison, where the probability of selecting Eq. ( <ref type="formula">13</ref>) and selecting Eq. ( <ref type="formula" target="#formula_16">14</ref>) were both 50%, and the follower position update equation using the follow correction strategy was  as follows:</p><formula xml:id="formula_16">X t+1 Fi = σX t Fi + ( X t P -X t Fi ) × exp ( ( F obj ( X t P ) -F obj ( X t Fi )) × rand )<label>(14)</label></formula><p>The specific process of the IPFA is as follows.</p><p>(1) Parameter setting, such as the number of PFA population, population dimension, the maximum number of iterations, and other related parameters.</p><p>(2) Initialization. The initialization equation after Kent mapping is used to initialize the PFA. The initial fitness values of the population are calculated by the objective function. The pathfinder and follower in the PFA are divided, meanwhile the global optimal fitness and position are selected. (3) Pathfinding stage. The pathfinder updating Eq. ( <ref type="formula">13</ref>) with a nonlinear adaptive factor is used to update the pathfinder. (4) Following stage, update Eq. ( <ref type="formula">13</ref>) is used to update the follower, when Rand &lt; 0.5, and the follower is updated with a follow correction strategy, while Rand ≥ 0.5. (5) The updated solutions of Pathfinder and follower are checked by constraints to prevent the solutions of the two populations from exceeding the limit. ( <ref type="formula" target="#formula_6">6</ref>) Calculate the fitness of the pathfinder and follower after the update, the novel pathfinder and follower are selected according to the fitness, and the global optimal individual is updated. (7) Determine whether to terminate the program, return to step (3) if current iteration does not reach the max-epoch, otherwise terminate the program and output the optimal solution.</p><p>Fig. <ref type="figure" target="#fig_2">1</ref> presents the optimization process of the IPFA.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Performance Test of IPFA</head><p>Three unimodal and two multimodal test functions are applied to prove the performance of the IPFA. There is only one optimal solution of the unimodal test function, which aims to verify the global optimization performance. The unimodal test functions are F 1 , F 2 , and F 3 respectively. The multimodal test functions F 4 and F 5 with plenty of locally optimal solutions are used to test whether the algorithm can avoid the local optimal solution. The test function information is listed in Table <ref type="table" target="#tab_1">1</ref>.</p><p>The results obtained by squirrel optimization algorithm (SSA), PSO algorithm, original PFA, and IPFA are compared. To ensure the objectivity of the test results, the population size, maximum iteration and test dimension of each algorithm are set to 50, 1000 and 30 respectively. In the squirrel algorithm, the probability of occurrence of natural enemies P dp is set to 0.1, and the flight altitude reduction h g is set to 8. The learning factor and weight in PSO are set as follows: C I =C 2 = 2, w= 0.729. The algorithms are tested on the same platform, meanwhile Intel (R) Celeron (R) CPU 1005 m @ 1.90 GHz, Windows10 operating system and MATLAB R2018a are employed. The test results of the four algorithms under the conditions of five test functions are revealed in Table <ref type="table" target="#tab_2">2</ref>.</p><p>Table <ref type="table" target="#tab_2">2</ref> shows the results obtained by running the algorithm 50 times independently. For the unimodal test function, the optimal value of the SSA algorithm was better than PFA and PSO algorithms, but standard deviation and average values obtained by the SSA algorithm were higher, indicating that the stability of the SSA algorithm was worse than PSO and PFA. The three indexes of the IPFA were smaller than the other three algorithms, showing that optimization ability of the IPFA was strong. In addition, the minimum standard deviation reached 8.68e-69, reflecting that the stability of the IPFA was better. For multimodal testing functions F 4 and F 5 , the convergence results of the SSA algorithm were better compared to the PSO and PFA, especially for F 4 , SSA converged to 0. However, the standard deviation of the SSA was larger than that of the PSO for multimodal test function F 5 , indicating that the optimization stability of the SSA was slightly worse. The IPFA converged to the optimum value for F 4 , and the standard deviation was the smallest for F 5 , showing that the convergence stability and accuracy of the IPFA were more competitive than existing algorithms.</p><p>Although the IPFA algorithm does not exhibit significant competitiveness in terms of average running time, its performance in terms of mean and standard deviation is noticeably superior to other algorithms. This represents a trade-off between computational speed and better optimization results, as achieving improved optimization results without significantly reducing computation speed is acceptable for the model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Application of IPFA and example test</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Static economic dispatch problem solving for power systems containing wind energy</head><p>Since the static economic dispatch problem of a power system containing wind energy is a high-latitude, highly nonlinear and nonminimizable optimal dispatch problem, the IPFA proposed in Section 4 is used to solve this dispatch problem in this subsection. The process of solving the static economic dispatch problem for power systems containing wind energy is as follows.</p><p>(1) Establish a static economic dispatch model of the power system containing wind energy, which includes establishing the objective function and constraints for static economic dispatch of the power system containing wind energy. (2) Establish the fitness function F of the IPFA, which is the objective function F obj of the static economic dispatch of the power system with wind energy, and the expression of the fitness function of the IPFA is</p><formula xml:id="formula_17">F = F obj ( P gi , P wj )<label>(15)</label></formula><p>(3) Perform algorithm parameter setting, determine the number of populations, population dimension, maximum number of iterations and other related parameters, and then initialize the algorithm by adding the initialization formula of Kent mapping; enter the exploration phase, update the pathfinder by using the pathfinder update formula (13) after adding the nonlinear adaptation factor; enter the following phase, judge the size of the random value Rand, and update the strategy according to the size of Rand After that, we calculate the adaptation degree of the updated pathfinder and follower, select the new pathfinder and follower according to the adaptation degree, record and save the global optimal solution; finally, we judge whether the PFA reaches the maximum number of iterations, and if the maximum number of iterations is not reached, we continue to enter the exploration phase. However, if the maximum iteration count is reached, we calculate the average and standard deviation of the last 100 iterations. If both the average and standard deviation are within an  <ref type="bibr">-5.12,5</ref>.12] 0</p><formula xml:id="formula_18">F1(z) = ∑ m i=1 z 2 i 30 [-100,100] 0 F2(z) = ∑ m i=1 |zi| + ∏ m i=1 |zi| 30 [-10,10] 0 F3(z) = maxi{|zi|, 1 ≤ i ≤ m} 30 [-100,100] 0 F4(z) = ∑ m i=1 (z 2 i -10 × cos(2π × zi) + 10) 30 [</formula><formula xml:id="formula_19">F5(z) = -20 × exp ( -0.2 × ̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅ ̅ 1 30 ∑ m i=1 z 2 i √ ) - exp( 1 30 cos(2π × z 2 i )) + 20 + e 30 [-32,32] 0 L.-N. Qu et al.</formula><p>acceptable range (less than 1.0e-40), we output the optimal solution of the PFA. If the results of the average and standard deviation are not acceptable, we restart the iteration process. (4) Using the constraints of the static economic dispatch model of the power system with wind energy to perform an out-of-bounds check on the output allocation values of the updated generating units to ensure that all solutions satisfy the constraints of the generating units. ( <ref type="formula">5</ref>) Calculate the fitness values of pathfinders and followers according to the fitness function of the IPFA, rank and select the solution with the lowest fitness value, record it and update the global optimal solution of the IPFA, which is the solution with the best value of the objective function among all solutions of the power output allocation of generating units obtained by this iteration of the algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Case Test</head><p>Constructed HSED model and proposed IPFA were proved through two test cases. Test Case 1 contains 6 thermal power units, test Case 2 contains 15 thermal power units, and wind energy is added to the two cases. Each case considers slope, output power boundary, transmission loss and power balance constraints. At the same time, the SSA algorithm, PFA, IPFA, and previous research results were compared in two cases. The setting parameters of each algorithm are the same as those in Section 4.3. The permeability of wind energy was set to 10% when introducing wind energy, and the value of wind farm power generation cost factor is 2 ($/MW). It should be pointed out that in practical applications, appropriate power generation cost coefficients need to be determined based on specific locations and circumstances. Operation cost, convergence speed, and convergence stability is used as three indicators to prove the performance of the IPFA.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.">Case 1-Thermal power units with a quadratic cost curve, and the power demand</head><p>Case 1 uses the traditional IEEE-6 units thermal power system for testing, including 6 thermal power units with a quadratic cost curve. The power demand for test Case 1 is 1263 MW. Table <ref type="table" target="#tab_3">3</ref> listed the thermal unit parameters for Case 1, and Table <ref type="table" target="#tab_4">4</ref> revealed the transmission loss coefficients. In order to ensure comparability and provide meaningful reference among the data obtained from the 50 rounds of testing, the cost coefficients for each thermal power unit and wind farm remain constant throughout the cyclic testing.</p><p>Fig. <ref type="figure" target="#fig_5">2</ref> presented the comparison of 50 operation costs of HSED problems solved by SSA, PFA, and IPFA with or without wind power. The average, maximum and minimum values of 50 running costs were revealed in Table <ref type="table" target="#tab_5">5</ref>. Table <ref type="table">6</ref> listed the allocation scheme of each algorithm for the HSED model.</p><p>To highlight the superior performance of the IPFA algorithm compared to other algorithms in terms of details, the results of the underperforming PSO algorithm were not included in Fig. <ref type="figure" target="#fig_5">2</ref>. Fig. <ref type="figure" target="#fig_5">2(a</ref>    the comparison of operating costs of the SSA, PFA, and IPFA for solving HSED model considering wind energy. The results revealed that SSA had great volatility when solving HSED model, the volatility of PFA was smaller than SSA, but IPFA has the least volatility when, which showed that IPFA had good stability when solving HSED model. In addition, the comparison results in Fig. <ref type="figure" target="#fig_5">2</ref> revealed that the operation cost of the power system was reduced due to the addition of wind energy. Table <ref type="table" target="#tab_5">5</ref> presents the maximum (Cmax), minimum (Cmin), and average (Caver) operation costs obtained from different algorithms in solving HSED problems. The compared algorithms include the GA algorithm <ref type="bibr">(Gaing et al., 2003)</ref>, <ref type="bibr">PSO algorithm (Gaing et al., 2003)</ref>, GWO algorithm <ref type="bibr" target="#b47">(Xu et al., 2019)</ref>, SA algorithm <ref type="bibr" target="#b47">(Xu et al., 2019)</ref>, NPSO algorithm <ref type="bibr" target="#b42">(Selvakumar and Thanushkodi, 2007)</ref>, SSA algorithm, PFA, and IPFA without considering wind energy. The results indicate that the IPFA consistently outperformed the other methods in terms of operation costs, demonstrating its high accuracy in solving the HSED model. Notably, the IPFA achieved a significantly lower average value, differing by 40.42 ($/h), which highlights its stability in addressing HSED problems to a considerable extent.</p><p>Furthermore, when wind energy was considered, a comparison was made between the SSA algorithm, PFA, and IPFA. The results revealed that the IPFA consistently yielded lower minimum, maximum, and average operating costs compared to the other methods. The maximum differences observed were 18.97($/h),63.66 ($/h), and 31.4 ($/h), further emphasizing the optimization capability of the IPFA. Additionally, the inclusion of wind energy resulted in reduced minimum, maximum, and average operation costs by 9.3%, 9.2%, and 9.2% respectively, when compared to the operation costs obtained by the IPFA without considering wind energy. This finding highlights the effectiveness of incorporating wind energy in achieving cost savings within the power system.</p><p>The convergence curves of different algorithms for Case 1 are presented in Fig. <ref type="figure" target="#fig_6">3</ref>. Fig. <ref type="figure" target="#fig_6">3</ref> presented the convergence curves of different algorithms with or without wind energy. The dotted lines are the convergence curves of different algorithms without considering wind energy, and the solid lines are the convergence curves of different algorithms considering wind energy. Without considering wind energy, the SSA algorithm converged at 282 th iteration, the PFA converged at 130 th iteration, and the IPFA converged at 73 th iteration. When considering wind energy, the SSA algorithm converged gradually with the PFA at 238 th , 184 th iteration, and the PFA was still searching for optimization after 900 th , while the IPFA converged at 100 th iteration. The data above indicates that   regardless of considering the involvement of wind energy, the IPFA algorithm can converge to the optimal solution with fewer iterations. This demonstrates the superiority of the IPFA algorithm in both exploration and exploitation within the solution space, as well as its ability to escape local optima. However, it should be noted that the fastest convergence speed does not necessarily mean the least amount of time required to obtain the optimal solution. Tables <ref type="table">6</ref> and<ref type="table" target="#tab_7">7</ref> listed the allocation schemes for Case 1. Tables <ref type="table">6</ref> and<ref type="table" target="#tab_7">7</ref> showed the output power distribution thermal units for Case 1, and gives the total output power Pall, line transmission loss (P Loss ), wind farm generation cost (C wind ) wind power (P wind ) and power system total cost (C all ). In addition, Table <ref type="table" target="#tab_7">7</ref> presented that the total power of thermal power units was less than that of thermal power units without wind energy. The transmission loss of the line was also reduced accordingly when considering wind power. The obtained results illustrated the optimization ability of the IPFA and the economy brought by wind energy resources to the power system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4.">Case 2-Thermal power units considering slope, power output, power balance constraints</head><p>Case 2 uses the traditional IEEE-15 units thermal power system for testing, which includes 15 thermal power units and considers limiting factors such as slope, power output, and power balance. The power demand for Test Case 2 is 2630 MW. Table <ref type="table" target="#tab_8">8</ref> lists the relevant parameters and transmission loss coefficients of the thermal power unit in Condition 2. In order to ensure comparability and provide meaningful reference among the data obtained from the 50 rounds of testing, the cost coefficients for each thermal power unit and wind farm remain constant throughout the cyclic testing.</p><p>Fig. <ref type="figure" target="#fig_7">4</ref> showed the comparison of 50 operation costs of SSA algorithm, PFA, and IPFA for solving HSED problems with or without wind power.</p><p>Fig. <ref type="figure" target="#fig_7">4</ref> presented the comparison of 50 operation costs of the SSA algorithm, PFA, and IPFA for solving HSED problems with or without wind energy. T results in Fig. <ref type="figure" target="#fig_7">4</ref> indicated that the volatility of IPFA was the smallest when solving HSED problems, and the volatility of the PFA was smaller than that of IPFA, while that of the SSA algorithm was the worst, which revealed that IPFA had a higher stability. Comparing the results in Fig. <ref type="figure" target="#fig_7">4</ref>, the operating cost was reduced by introducing wind energy. The minimum, maximum, and average values of 50 operation costs were listed in Table <ref type="table" target="#tab_9">9</ref>.</p><p>Table <ref type="table" target="#tab_9">9</ref> revealed the maximum, minimum, and average of 50 power system operation costs when different algorithms were used to solve the HSED model with or without wind energy for Case 2. When wind energy was not considered, studies compared GA algorithm <ref type="bibr">(Gaing et al., 2003)</ref>, <ref type="bibr">PSO algorithm (Gaing et al., 2003)</ref>, SA algorithm <ref type="bibr" target="#b40">(Pothiya et al., 2008)</ref>, TS algorithm <ref type="bibr" target="#b40">(Pothiya et al., 2008)</ref>, NGWO algorithm <ref type="bibr" target="#b47">(Xu et al., 2019)</ref>, SSA algorithm, PFA, IPFA. The data presented in Table <ref type="table" target="#tab_9">9</ref> illustrated that the IPFA had the smallest value among the three indexes: minimum, maximum, and average, and the highest values compared with the other algorithms were 415 ($/h), 606.24 ($/h), 515.11 ($/h), which demonstrated the high optimization ability of IPFA in solving the HSED problem, and the stability of IPFA was reflected by a lower average value. In addition, the SSA algorithm, PFA, and IPFA were compared in the study when considering the wind energy, and Table <ref type="table" target="#tab_9">9</ref> showed that the minimum, maximum, and average values of the IPFA required operation cost were the lowest, and the highest were 237.63 ($/ h), 496.57 ($/ h), 379.09 ($/ h) compared with the SSA algorithm, PFA, which verified the high solution accuracy of IPFA. The IPFA after considering wind energy reduced the operating cost minimum, maximum, and average by 7.4%, 7.4%, 7.5%, compared with those solved when wind energy was not considered.</p><p>The convergence curves of the SSA algorithm, PFA, and IPFA with or without wind power were presented in Fig. <ref type="figure" target="#fig_8">5</ref>.</p><p>The solid lines in the Fig. <ref type="figure" target="#fig_8">5</ref> were the convergence curves of the SSA, PFA, and IPFA after adding wind energy, and the dotted lines were the convergence curves when wind energy was considered in HSED model. With the addition of wind energy, the SSA and PFA converged gradually at 522 th , 314 th iteration. When the wind energy was not taken into account, the IPFA converged when the number of iterations was 197 th , while SSA and PFA converged gradually when the number of iterations was at 102 th , 674 th . Although the SSA algorithm exhibits a faster convergence speed compared to the IPFA algorithm, the optimal solution obtained by SSA is not competitive with that of IPFA. This indicates that the SSA algorithm has poorer optimization capability. Furthermore, regardless of considering the inclusion of wind energy, the IPFA algorithm can achieve the optimal solution with fewer iterations, and the numerical value of the optimal solution is superior to the other two algorithms. This demonstrates that the IPFA algorithm possesses stronger optimization capability and convergence speed. However, it should be noted that a faster convergence speed does not necessarily imply shorter computation time.</p><p>The allocation schemes of each algorithm for HSED problems with or without wind power were listed in Tables <ref type="table" target="#tab_1">10</ref> and<ref type="table" target="#tab_1">11</ref>.</p><p>Tables <ref type="table" target="#tab_1">10</ref> and<ref type="table" target="#tab_1">11</ref> presented the output power distribution of each unit in two situations. The total output power, line transmission loss, wind farm generation cost, wind power, and power system total cost of each unit are given in Tables <ref type="table" target="#tab_1">10</ref> and<ref type="table" target="#tab_1">11</ref>. The total power of thermal power units without wind power was higher than that of thermal power units with wind power. In addition, the transmission loss of the line reduced with the decrease of the total power of thermal power units, and the maximum difference was 16.75 MW. Table <ref type="table" target="#tab_9">9</ref> showed that the addition of wind energy and the proposal of the IPFA reduced the operating cost and line loss of the power system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Discussion</head><p>This study involves various constraints of generator operation when optimizing HSED model and new energy are added <ref type="bibr" target="#b34">(Lu et al., 2021)</ref>. A meta heuristic algorithm is employed to solve the HSED model, and the resulting optimal distribution scheme of output power of each generator can make the operating cost of the power system effectively reduced. The proposed model and methodology improve the utilization of clean energy provide a reference for economic dispatch of power systems from both theoretical and industrial aspects.</p><p>Theoretically, numerous optimization methods are used to solve SED problems for power systems, but the considerations for the constraints on the generator unit are quite different, and not much is considered for the constraints on new energy sources in SED after the addition of new energy <ref type="bibr" target="#b12">(El-Sayed et al., 2020)</ref>. The various constraints of the generator set are essential factors to ensure that the model can simulate the actual operation condition of the system generator set more accurately. Constraints such as power boundary restraints, ramp rate restraints, power balance equation restraints, forbidden operation zone restraints on the generator unit are considered in the research proposed HSED model, and permeability restraints from further wind energy are incorporated. In this paper, an PFA is proposed, and the algorithm is optimized by Kent mapping initialization, nonlinear adaptation factor and following correction strategy. The convergence accuracy and stability of the PFA are significantly improved, so that a better static economic dispatch scheme is given accurately and quickly, and the economic cost of power system economic dispatch is effectively reduced. The proposed models and methods provide ideas for the sustainable development of energy.</p><p>Industrially, the addition of clean energy has resulted in improved economics and sustainability of traditional electrical system economic dispatch <ref type="bibr" target="#b13">(Esen et al., 2007;</ref><ref type="bibr" target="#b6">Bhattacharya and Chattopadhyay, 2011;</ref><ref type="bibr">Li et al., 2020)</ref>. The HSED model proposed in this study is based on traditional power system economic dispatch and considers the effect of wind energy while employing permeability constraints to reduce the instability problem of power system operation <ref type="bibr" target="#b22">(Khani et al., 2021;</ref><ref type="bibr">Li et al., 2021a</ref><ref type="bibr">Li et al., ,2021b</ref><ref type="bibr">Li et al., ,2021c))</ref>. The model is solved and a satisfactory scheduling scheme is given by the proposed IPFA. By comparing with other similar studies, this research method has reduced operation cost solved in both test cases, which can bring good economic benefits to the power system operation, and at the same time, the method achieves good results in solving speed and stability. For geothermal energy, biogas energy, solar energy and other clean energy, the utilization rate of power system is not high <ref type="bibr">(Esen et al., 2015)</ref>. Research on solving the HSED problem of power system provides concepts for system operators in dealing with operation stability and clean energy allocation and management, which is beneficial to wind power consumption in actual operation of power system and enhance the utilization rate of renewable energy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Concluding remarks</head><p>The study addresses the HSED problem with the objective of minimizing the operation cost of power systems while considering the constraints of clean energy and operational constraints of generator sets. In response to this problem, a novel HSED model is proposed, and the IPFA is employed to solve the constructed model. Two cases are applied to     validate the proposed solving method and constructed model. The findings obtained from this study can be summarized as follows:</p><p>• Enhancements to the original PFA: Kent mapping initialization is introduced to expand the search space, and a nonlinear adaptation factor is added to improve convergence speed. The combination of the following correction strategy and follower update equation enhances the optimization ability of the algorithm. • Consideration of wind energy permeability and various constraints:</p><p>The HSED model incorporates the permeability constraint of wind energy to ensure the stability of the power system. Additional constraints considered in the model include power balance equality constraints, output power boundary constraints, ramp rate constraints between different periods, and prohibited operation area constraints. • Evaluation through case studies: Two cases involving 6 units and 15 units are employed to evaluate the proposed model and method. Convergence speed, operation cost, and stability are used as indicators to assess the results. The test results demonstrate that the proposed method exhibits advantages in terms of solution speed and stability. Without considering wind energy, the IPFA solution reduces operating costs by 95.86 ($/h), 606.24 ($/h) on average compared to other algorithms. When wind energy is further considered, the IPFA reduces operation costs by up to 9.3% compared to 7.5% for the no wind energy scenario.</p><p>The study makes several contributions. Firstly, it proposes a novel HSED model that accurately represents real-world power systems by incorporating multiple constraints. Secondly, it introduces the IPFA as an advanced optimization approach for solving complex HSED problems, improving solution accuracy, convergence speed, and stability. Lastly, the proposed method and model contribute to ensuring the economy and stability of power systems while enhancing the utilization of renewable energy sources.</p><p>Despite competitive dispatch results, the study has limitations. For instance, the model does not consider the valve point effect of the actual generator sets, which may lead to abnormal operation. Future research should address this limitation by incorporating valve point effects to improve model accuracy. Additionally, the HSED model can be expanded to other hybrid microgrids, such as photovoltaic-thermal and wind-photovoltaic-thermal systems. Moreover, future studies should consider instability in new energy sources and explore the inclusion of other renewable energy types. It is also important to consider energy losses in wind power generation when constructing the HSED model to enhance its accuracy and practical relevance. These limitations and considerations provide opportunities for further research and improvements to the proposed model and method.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>generation cost coefficient of the generating unit θ the interaction coefficient between the followers λ the attraction coefficient of the pathfinder to the followers μ j the generation cost coefficient of wind farm σ a nonlinear adaptive factor L.-N. Qu et al.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>R indicates a random value in [0,1]. The objective function of the HSED problem is taken as the fitness function F obj of the PFA to solve the individual fitness. The individuals are divided into Pathfinders and followers according to the fitness values. The individual with the minimum fitness is taken as Pathfinder and the rest as a follower. (2) Pathfinding stage Pathfinder plays a leading role in the optimization of the IPFA. Compared with followers, pathfinder's position is updated first as follows: {</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. Flow chart of IPFA.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>L.-N. Qu et al.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>) presented the comparison of operating costs of the SSA, PFA, and IPFA for solving HSED without considering wind energy. Fig. 2(b) revealed</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Comparison of operation costs of the algorithm for solving 50 HSED problems with or without wind energy in test Case 1.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Convergence curves of different algorithms for Case 1.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Comparison of operation costs of the algorithm for Case 2.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Convergence curves obtained by different algorithms for Case 2.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>L</head><label></label><figDesc>.-N. Qu et al.   </figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1</head><label>1</label><figDesc>Information of test functions.</figDesc><table><row><cell>Function</cell><cell>D im</cell><cell>Bounds</cell><cell>F min</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 2</head><label>2</label><figDesc>results of algorithm tests.</figDesc><table><row><cell>Function</cell><cell>Algorithm</cell><cell>Best</cell><cell>Worst</cell><cell>Average</cell><cell>Std</cell><cell>Time (s)</cell></row><row><cell>F 1</cell><cell>SSA</cell><cell>1.04e-15</cell><cell>0.101201641</cell><cell>0.002852</cell><cell>0.014252</cell><cell>0.0712</cell></row><row><cell></cell><cell>PSO</cell><cell>4.19e-14</cell><cell>2.14e-09</cell><cell>7.96e-11</cell><cell>3.16e-10</cell><cell>0.0624</cell></row><row><cell></cell><cell>PFA</cell><cell>6.70e-05</cell><cell>1.38e-03</cell><cell>4.43e-04</cell><cell>3.24e-04</cell><cell>0.0214</cell></row><row><cell></cell><cell>IPFA</cell><cell>8.60e-85</cell><cell>4.87e-68</cell><cell>1.77e-69</cell><cell>8.68e-69</cell><cell>0.1535</cell></row><row><cell>F 2</cell><cell>SSA</cell><cell>1.63e-09</cell><cell>0.075277</cell><cell>0.010132</cell><cell>0.016464</cell><cell>0.0720</cell></row><row><cell></cell><cell>PSO</cell><cell>1.34e-07</cell><cell>2.12e-04</cell><cell>1.58e-05</cell><cell>3.64e-05</cell><cell>0.0642</cell></row><row><cell></cell><cell>PFA</cell><cell>0.029719</cell><cell>2.835688</cell><cell>0.214838</cell><cell>0.412831</cell><cell>0.0224</cell></row><row><cell></cell><cell>IPFA</cell><cell>4.93e-43</cell><cell>7.01e-34</cell><cell>1.41e-35</cell><cell>9.81e-35</cell><cell>0.1537</cell></row><row><cell>F 3</cell><cell>SSA</cell><cell>1.06e-10</cell><cell>0.0694</cell><cell>0.006681</cell><cell>0.012073</cell><cell>0.1218</cell></row><row><cell></cell><cell>PSO</cell><cell>0.203</cell><cell>0.672</cell><cell>0.422074</cell><cell>0.102279</cell><cell>0.3145</cell></row><row><cell></cell><cell>PFA</cell><cell>0.189189</cell><cell>4.347275</cell><cell>1.720656</cell><cell>0.881263</cell><cell>0.0724</cell></row><row><cell></cell><cell>IPFA</cell><cell>3.10e-45</cell><cell>7.09e-37</cell><cell>2.58e-38</cell><cell>1.01e-37</cell><cell>0.5155</cell></row><row><cell>F 4</cell><cell>SSA</cell><cell>0</cell><cell>0.023045</cell><cell>0.001301</cell><cell>0.003808</cell><cell>0.0743</cell></row><row><cell></cell><cell>PSO</cell><cell>17.6055</cell><cell>65.66733</cell><cell>38.99839</cell><cell>10.68038</cell><cell>0.0745</cell></row><row><cell></cell><cell>PFA</cell><cell>8.22e-05</cell><cell>54.90277</cell><cell>5.625225</cell><cell>11.54377</cell><cell>0.0272</cell></row><row><cell></cell><cell>IPFA</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0</cell><cell>0.1607</cell></row><row><cell>F 5</cell><cell>SSA</cell><cell>2.19e-09</cell><cell>0.051674</cell><cell>0.00396</cell><cell>0.009032</cell><cell>0.0752</cell></row><row><cell></cell><cell>PSO</cell><cell>5.84e-08</cell><cell>1.79e-05</cell><cell>2.13e-06</cell><cell>3.74e-06</cell><cell>0.0761</cell></row><row><cell></cell><cell>PFA</cell><cell>0.003333</cell><cell>4.584975</cell><cell>2.475472</cell><cell>1.013678</cell><cell>0.0322</cell></row><row><cell></cell><cell>IPFA</cell><cell>8.88e-16</cell><cell>4.44e-15</cell><cell>2.95e-15</cell><cell>1.75e-15</cell><cell>0.1624</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 3</head><label>3</label><figDesc>Thermal unit parameters for Case 1.</figDesc><table><row><cell>Unit</cell><cell>γ i ($/MW 2 h)</cell><cell>φ i ($/MWh)</cell><cell>η i ($/h)</cell><cell>P gi 0 (MW)</cell><cell>P gi UR (MW)</cell><cell>P gi DR (MW)</cell><cell>P gi min (MW)</cell><cell>P gi max (MW)</cell><cell>Zones</cell></row><row><cell>U 1</cell><cell>240</cell><cell>7.0</cell><cell>0.0070</cell><cell>440</cell><cell>80</cell><cell>120</cell><cell>100</cell><cell>500</cell><cell>[210,240], [350,380]</cell></row><row><cell>U 2</cell><cell>200</cell><cell>10.0</cell><cell>0.0095</cell><cell>170</cell><cell>50</cell><cell>90</cell><cell>50</cell><cell>200</cell><cell>[90.110], [140.160]</cell></row><row><cell>U 3</cell><cell>220</cell><cell>8.5</cell><cell>0.0090</cell><cell>200</cell><cell>65</cell><cell>100</cell><cell>80</cell><cell>300</cell><cell>[150,170], [210,240]</cell></row><row><cell>U 4</cell><cell>200</cell><cell>11.0</cell><cell>0.0090</cell><cell>150</cell><cell>50</cell><cell>90</cell><cell>50</cell><cell>150</cell><cell>[80,90], [110,120]</cell></row><row><cell>U 5</cell><cell>220</cell><cell>10.5</cell><cell>0.0080</cell><cell>190</cell><cell>50</cell><cell>90</cell><cell>50</cell><cell>200</cell><cell>[90,110], [140,150]</cell></row><row><cell>U 6</cell><cell>190</cell><cell>12.0</cell><cell>0.0075</cell><cell>110</cell><cell>50</cell><cell>90</cell><cell>50</cell><cell>120</cell><cell>[75,85], [100,105]</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 4</head><label>4</label><figDesc>Transmission loss coefficients of thermal units for Case 1.</figDesc><table><row><cell>L 00</cell><cell>0.0056</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>L i0</cell><cell>-0.3908</cell><cell>-0.1297</cell><cell>0.7047</cell><cell>0.0591</cell><cell>0.2161</cell><cell>-0.6635</cell></row><row><cell>L ij</cell><cell>0.0017</cell><cell>0.0012</cell><cell>0.0007</cell><cell>-0.0001</cell><cell>-0.0005</cell><cell>-0.0002</cell></row><row><cell></cell><cell>0.0012</cell><cell>0.0014</cell><cell>0.0009</cell><cell>0.0001</cell><cell>-0.0006</cell><cell>-0.0001</cell></row><row><cell></cell><cell>0.0007</cell><cell>0.0009</cell><cell>0.0031</cell><cell>0</cell><cell>-0.001</cell><cell>-0.0006</cell></row><row><cell></cell><cell>-0.0001</cell><cell>0.0001</cell><cell>0</cell><cell>0.0024</cell><cell>-0.0006</cell><cell>-0.0008</cell></row><row><cell></cell><cell>-0.0005</cell><cell>-0.0006</cell><cell>-0.001</cell><cell>-0.0006</cell><cell>0.0129</cell><cell>-0.0002</cell></row><row><cell></cell><cell>-0.0002</cell><cell>-0.0001</cell><cell>-0.0006</cell><cell>-0.0008</cell><cell>-0.0002</cell><cell>0.015</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 5</head><label>5</label><figDesc>Comparison of power system operation costs when different algorithms solve HSED problems with or without wind energy.</figDesc><table><row><cell></cell><cell>Algorithm</cell><cell>C min ($/h)</cell><cell>C max ($/h)</cell><cell>C aver ($/h)</cell></row><row><cell>No wind</cell><cell>GA</cell><cell>15,524</cell><cell>15,459</cell><cell>15,469</cell></row><row><cell></cell><cell>PSO</cell><cell>15,450</cell><cell>15,492</cell><cell>15,454</cell></row><row><cell></cell><cell>SA</cell><cell>15,461</cell><cell>15,545.50</cell><cell>15,488.98</cell></row><row><cell></cell><cell>GWO</cell><cell>15,450.07</cell><cell>15,487.14</cell><cell>15,453.41</cell></row><row><cell></cell><cell>NPSO</cell><cell>15,450.00</cell><cell>15,454.00</cell><cell>15,452.00</cell></row><row><cell></cell><cell>SSA</cell><cell>15,451.27</cell><cell>15,478.45</cell><cell>15,462.32</cell></row><row><cell></cell><cell>PFA</cell><cell>15,449.49</cell><cell>15,453.12</cell><cell>15,450.34</cell></row><row><cell></cell><cell>IPFA</cell><cell>15,448.13</cell><cell>15,449.64</cell><cell>15,448.56</cell></row><row><cell>With wind</cell><cell>SSA</cell><cell>14,030.71</cell><cell>14,088.13</cell><cell>14,052.75</cell></row><row><cell></cell><cell>PFA</cell><cell>14,020.43</cell><cell>14,046.04</cell><cell>14,027.46</cell></row><row><cell></cell><cell>IPFA</cell><cell>14,</cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>011.74 14,024.47 14,021.35 Table 6</head><label></label><figDesc>Allocation schemes without wind power for Case 1.</figDesc><table><row><cell>Unit</cell><cell>GA</cell><cell>PSO</cell><cell>SA</cell><cell>GWO</cell><cell>NPSO</cell><cell>SSA</cell><cell>PFA</cell><cell>IPFA</cell></row><row><cell>U 1 (MW)</cell><cell>474.81</cell><cell>447.49</cell><cell>478.13</cell><cell>446.63</cell><cell>447.47</cell><cell>446.65</cell><cell>446.75</cell><cell>451.25</cell></row><row><cell>U 2 (MW)</cell><cell>178.64</cell><cell>173.32</cell><cell>163.02</cell><cell>171.77</cell><cell>173.10</cell><cell>174.76</cell><cell>177.08</cell><cell>171.98</cell></row><row><cell>U 3 (MW)</cell><cell>262.21</cell><cell>263.47</cell><cell>261.71</cell><cell>264.67</cell><cell>262.68</cell><cell>265.00</cell><cell>260.76</cell><cell>257.69</cell></row><row><cell>U 4 (MW)</cell><cell>134.28</cell><cell>139.06</cell><cell>125.77</cell><cell>141.34</cell><cell>139.42</cell><cell>150.00</cell><cell>141.32</cell><cell>130.83</cell></row><row><cell>U 5 (MW)</cell><cell>151.90</cell><cell>165.48</cell><cell>153.71</cell><cell>166.54</cell><cell>165.30</cell><cell>165.82</cell><cell>161.55</cell><cell>165.90</cell></row><row><cell>U 6 (MW)</cell><cell>74.18</cell><cell>87.13</cell><cell>93.79</cell><cell>85.00</cell><cell>87.98</cell><cell>73.49</cell><cell>88.34</cell><cell>98.16</cell></row><row><cell>P all (MW)</cell><cell>1276.03</cell><cell>1276.01</cell><cell>1276.13</cell><cell>1276.32</cell><cell>1275.96</cell><cell>1275.70</cell><cell>1275.80</cell><cell>1275.80</cell></row><row><cell>P Loss (MW)</cell><cell>13.02</cell><cell>12.95</cell><cell>13.13</cell><cell>13.31</cell><cell>12.95</cell><cell>12.84</cell><cell>12.87</cell><cell>13.07</cell></row><row><cell>C all ($/h)</cell><cell>15,459</cell><cell>15,450</cell><cell>15,461.10</cell><cell>15,450.07</cell><cell>15,450</cell><cell>15,451.27</cell><cell>15,449.44</cell><cell>15,448.35</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head>Table 7</head><label>7</label><figDesc>Allocation schemes with wind power for Case 1.</figDesc><table><row><cell>L.-N. Qu et al.</cell><cell></cell><cell></cell><cell></cell></row><row><cell>Unit</cell><cell>SSA</cell><cell>PFA</cell><cell>IPFA</cell></row><row><cell>U 1 (MW)</cell><cell>398.69</cell><cell>418.90</cell><cell>397.99</cell></row><row><cell>U 2 (MW)</cell><cell>177.85</cell><cell>165.72</cell><cell>165.71</cell></row><row><cell>U 3 (MW)</cell><cell>265.00</cell><cell>249.17</cell><cell>256.30</cell></row><row><cell>U 4 (MW)</cell><cell>101.40</cell><cell>121.60</cell><cell>126.55</cell></row><row><cell>U 5 (MW)</cell><cell>130.69</cell><cell>130.86</cell><cell>132.51</cell></row><row><cell>U 6 (MW)</cell><cell>73.64</cell><cell>61.05</cell><cell>67.07</cell></row><row><cell>P all (MW)</cell><cell>1147.30</cell><cell>1147.30</cell><cell>1146.10</cell></row><row><cell>P Loss (MW)</cell><cell>10.94</cell><cell>10.66</cell><cell>10.53</cell></row><row><cell>C wind ($/h)</cell><cell>252.6</cell><cell>252.6</cell><cell>252.6</cell></row><row><cell>P wind (MW)</cell><cell>126.3</cell><cell>126.3</cell><cell>126.3</cell></row><row><cell>C all ($/h)</cell><cell>14,030.71</cell><cell>14,020.43</cell><cell>14,011.74</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8"><head>Table 8</head><label>8</label><figDesc>Relevant parameters of thermal power unit in test Case 2.</figDesc><table><row><cell>Unit</cell><cell>γ i ($/MW 2 h)</cell><cell>φ i ($/MWh)</cell><cell>η i ($/h)</cell><cell>P gi 0 (MW)</cell><cell>P gi UR (MW)</cell><cell>P gi DR (MW)</cell><cell>P gi min (MW)</cell><cell>P gi max (MW)</cell><cell>Zones</cell></row><row><cell>U 1</cell><cell>671</cell><cell>10.1</cell><cell>0.000299</cell><cell>400</cell><cell>80</cell><cell>120</cell><cell>150</cell><cell>455</cell><cell></cell></row><row><cell>U 2</cell><cell>574</cell><cell>10.2</cell><cell>0.000183</cell><cell>300</cell><cell>80</cell><cell>120</cell><cell>150</cell><cell>455</cell><cell>[185,225], [305,335], [420,450]</cell></row><row><cell>U 3</cell><cell>374</cell><cell>8.8</cell><cell>0.001126</cell><cell>105</cell><cell>130</cell><cell>130</cell><cell>20</cell><cell>130</cell><cell></cell></row><row><cell>U 4</cell><cell>374</cell><cell>8.8</cell><cell>0.001126</cell><cell>100</cell><cell>130</cell><cell>130</cell><cell>20</cell><cell>130</cell><cell></cell></row><row><cell>U 5</cell><cell>461</cell><cell>10.4</cell><cell>0.000205</cell><cell>90</cell><cell>80</cell><cell>120</cell><cell>150</cell><cell>470</cell><cell>[180,200], [305,335], [390,420]</cell></row><row><cell>U 6</cell><cell>630</cell><cell>10.1</cell><cell>0.000301</cell><cell>400</cell><cell>80</cell><cell>120</cell><cell>135</cell><cell>460</cell><cell>[230,255], [365,395], [430,455]</cell></row><row><cell>U 7</cell><cell>548</cell><cell>9.8</cell><cell>0.000364</cell><cell>350</cell><cell>80</cell><cell>120</cell><cell>135</cell><cell>465</cell><cell></cell></row><row><cell>U 8</cell><cell>227</cell><cell>11.2</cell><cell>0.000338</cell><cell>95</cell><cell>65</cell><cell>100</cell><cell>60</cell><cell>300</cell><cell></cell></row><row><cell>U 9</cell><cell>173</cell><cell>11.2</cell><cell>0.000807</cell><cell>105</cell><cell>60</cell><cell>100</cell><cell>25</cell><cell>162</cell><cell></cell></row><row><cell>U 10</cell><cell>175</cell><cell>10.7</cell><cell>0.001203</cell><cell>110</cell><cell>60</cell><cell>100</cell><cell>25</cell><cell>160</cell><cell></cell></row><row><cell>U 11</cell><cell>186</cell><cell>10.2</cell><cell>0.003586</cell><cell>60</cell><cell>80</cell><cell>80</cell><cell>20</cell><cell>80</cell><cell></cell></row><row><cell>U 12</cell><cell>230</cell><cell>9.9</cell><cell>0.005513</cell><cell>40</cell><cell>80</cell><cell>80</cell><cell>20</cell><cell>80</cell><cell>[30,40], [55,65]</cell></row><row><cell>U 13</cell><cell>225</cell><cell>13.1</cell><cell>0.000371</cell><cell>30</cell><cell>80</cell><cell>80</cell><cell>25</cell><cell>85</cell><cell></cell></row><row><cell>U 14</cell><cell>309</cell><cell>12.1</cell><cell>0.001929</cell><cell>20</cell><cell>55</cell><cell>55</cell><cell>15</cell><cell>55</cell><cell></cell></row><row><cell>U 15</cell><cell>323</cell><cell>12.4</cell><cell>0.004447</cell><cell>20</cell><cell>55</cell><cell>55</cell><cell>15</cell><cell>55</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head>Table 9</head><label>9</label><figDesc>Comparison of power system operation costs when different algorithms solve HSED problems with or without wind energy.</figDesc><table><row><cell></cell><cell>Algorithm</cell><cell>C min ($/h)</cell><cell>C max ($/h)</cell><cell>C aver ($/h)</cell></row><row><cell>No wind</cell><cell>GA</cell><cell>33,113</cell><cell>33,337</cell><cell>33,228</cell></row><row><cell></cell><cell>PSO</cell><cell>32,858</cell><cell>33,331</cell><cell>33,039</cell></row><row><cell></cell><cell>SA</cell><cell>32,786</cell><cell>33,029</cell><cell>32,869</cell></row><row><cell></cell><cell>TS</cell><cell>32,762</cell><cell>32,942</cell><cell>32,822</cell></row><row><cell></cell><cell>NGWO</cell><cell>32,830</cell><cell>32,712</cell><cell>32,752</cell></row><row><cell></cell><cell>SSA</cell><cell>32,847.48</cell><cell>33,008.67</cell><cell>32,944.58</cell></row><row><cell></cell><cell>PFA</cell><cell>32,718.17</cell><cell>32,857.89</cell><cell>32,752.27</cell></row><row><cell></cell><cell>IPFA</cell><cell>32,698.00</cell><cell>32,730.76</cell><cell>32,712.89</cell></row><row><cell>With wind</cell><cell>SSA</cell><cell>30,507.32</cell><cell>30,792.65</cell><cell>30,656.52</cell></row><row><cell></cell><cell>PFA</cell><cell>30,275.65</cell><cell>30,420.98</cell><cell>30,323.94</cell></row><row><cell></cell><cell>IPFA</cell><cell>30,269.69</cell><cell>30,296.08</cell><cell>30,277.43</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability</head><p>Data will be made available on request.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Declaration of Competing Interest</head><p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.  </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A nonconvex economic dispatch problem with valve loading effect using a new modified β-hill climbing local search algorithm</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Al-Betar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Awadallah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">I</forename><surname>Abu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Alsukhni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Alkhraisat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arab J. Sci. Eng</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="7439" to="7456" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">A non-convex economic load dispatch problem with valve loading effect using a hybrid grey wolf optimizer</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Al-Betar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Awadallah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Krishan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Comput. Appl</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Optimal design of a micro combined CHP system applying PEM fuel cell as initial mover with utilization of developed pathfinder optimizer</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Jermsittiparsert</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Rep</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="3377" to="3389" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Modified particle swarm optimization for non-smooth non-convex combined heat and power economic dispatch</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Basu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Electr. Power Compon. Syst</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="2146" to="2155" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Kinetic gas molecule optimization for nonconvex economic dispatch problem</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Basu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="page" from="325" to="332" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">A new flexibility based probabilistic economic load dispatch solution incorporating wind power</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Berahmandpour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Kouhsari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Rastegar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">135</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Hybrid differential evolution with biogeography-based optimization algorithm for solution of economic emission load dispatch problems</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Bhattacharya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">K</forename><surname>Chattopadhyay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Sys. Appl</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="14001" to="14010" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Opposition-based krill herd algorithm applied to economic load dispatch problem</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M A</forename><surname>Bulbul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pradhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">K</forename><surname>Roy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Pal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ain Shams Eng. J</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="423" to="440" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Optimal economic dispatch with valve loading effect using selfadaptive firefly algorithm</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Intell</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="276" to="288" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Novel dual-population adaptive differential evolution algorithm for large-scale multi-fuel economic dispatch with valve-point effects</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">203</biblScope>
+			<biblScope unit="page">117874</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Solving static and dynamic multi-area economic dispatch problems using an improved competitive swarm optimization algorithm</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Tang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">238</biblScope>
+			<biblScope unit="page">122035</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A Two-Stage strategy to handle equality constraints in ABC-based power economic dispatch problems</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Dong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Soft Comput</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="6679" to="6696" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Deterministic-like solution to the non-convex economic dispatch problem</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">T</forename><surname>El-Sayed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">F</forename><surname>El-Saadany</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Zeineldin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Al-Durra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>El-Moursi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IET Gener. Transm. Distrib</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="420" to="435" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A techno-economic comparison of ground-coupled and air-coupled heat pump system for space cooling</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Esen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Inalli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Esen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Build. Environ</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="1955" to="1965" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A novel constraints handling mechanism based on virtual generator unit for economic dispatch problems with valve point effects</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">G</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">129</biblScope>
+			<biblScope unit="page">106825</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Comparison of a bat and genetic algorithm generated sequence against lead through programming when assembling a PCB using a six-axis robot with multiple motions and speeds</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>Griffiths</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Giannetti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">T</forename><surname>Andrzejewski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Morgan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Ind. Inform</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1102" to="1110" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">An accelerated distributed gradientbased algorithm for constrained optimization with application to economic dispatch in a large-scale power system</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Meng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Syst. Man, Cyber Syst</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="2041" to="2053" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Gbest guided artificial bee colony algorithm for environmental/economic dispatch considering wind power</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">T</forename><surname>Jadhav</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Roy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Sys. Appl</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="6385" to="6399" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Grey wolf optimization for combined heat and power dispatch with cogeneration systems</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Jayakumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Subramanian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ganesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">B</forename><surname>Elanchezhian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">74</biblScope>
+			<biblScope unit="page" from="252" to="264" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Application of differential evolution algorithm in static and dynamic economic or emission dispatch problem: a review</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Jebaraj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Venkatesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Soubache</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C A</forename><surname>Rajan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Sustain Energy Rev</title>
+		<imprint>
+			<biblScope unit="volume">77</biblScope>
+			<biblScope unit="page" from="1206" to="1220" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Economic emission dispatch for wind power integrated system with carbon trading mechanism</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Guo</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>Energies 14</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Combined emission economic dispatch of power system including solar photo voltaic generation</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Awan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mahmood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Razzaq</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zafar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A S</forename><surname>Sidhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">92</biblScope>
+			<biblScope unit="page" from="82" to="91" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">An estimation-Based optimal scheduling model for settable renewable penetration level in energy hubs</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Khani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sawas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">E Z</forename><surname>Farag</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Electr. Power Syst. Res</title>
+		<imprint>
+			<date type="published" when="0196">2021. 196</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Modified random localisation-based DE for static economic power dispatch with generator constraints</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pant</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Bio-Inspired Comput</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="250" to="261" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Modified random localisation-based DE for static economic power dispatch with generator constraints</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pant</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J. Bio-Inspired Comput</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="250" to="261" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">The flexibility test system for studies of variable renewable energy resources</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Qiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="1526" to="1536" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Reducing environmental pollution and fuel consumption using optimization algorithm to develop combined cooling heating and power system operation strategies</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">W</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Tseng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">Q</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Ali</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Clean. Prod</title>
+		<imprint>
+			<biblScope unit="volume">247</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Improved tunicate swarm algorithm: solving the dynamic economic emission dispatch problems</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">F</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Tseng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Lim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Soft Comput</title>
+		<imprint>
+			<biblScope unit="page">108</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">Dynamic environmental economic dispatch of hybrid renewable energy systems based on tradable green certificates</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Xu</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Energy 193</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">2021a. A novel constraints handling mechanism based on virtual generator unit for economic dispatch problems with valve point effects</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">129</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">A harmony search variant and a useful constraint handling method for the dynamic economic emission dispatch problems considering transmission loss</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Kong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Eng. Appl. Artif. Intell</title>
+		<imprint>
+			<biblScope unit="volume">84</biblScope>
+			<biblScope unit="page" from="18" to="40" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Optimum matching of photovoltaic-thermophotovoltaic cells efficiently utilizing full-spectrum solar energy</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">173</biblScope>
+			<biblScope unit="page" from="942" to="952" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Dynamic economic emission dispatch considering renewable energy generation: A novel multi-objective optimization approach</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">F</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">W</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Q</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Shen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">235</biblScope>
+			<biblScope unit="page">19</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Improving the economic and environmental benefits of the energy system: A novel hybrid economic emission dispatch considering clean energy power uncertainty</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">F</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">D</forename><surname>You</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">X</forename><surname>Hou</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2023.128668</idno>
+		<ptr target="https://doi.org/10.1016/j.energy.2023.128668" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">285</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Economic dispatch of integrated energy systems with robust thermal comfort management</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Gu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Dong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Sustain Energy</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page" from="222" to="233" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+		<title level="m" type="main">A state-aware adaptive pathfinder for dynamic minimum dose path planning during an emergency in a complex radioactive environment</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">E</forename><surname>Miyombo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">K</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ayodeji</surname></persName>
+		</author>
+		<imprint>
+			<publisher>Progress In Nuclear Energy</publisher>
+			<biblScope unit="volume">146</biblScope>
+			<biblScope unit="page">104154</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">A non-linear-threshold-accepting function based algorithm for the solution of economic dispatch problem</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Nahas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">N</forename><surname>Darghouth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Abouheaf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">RAIRO -Oper. Res</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="1269" to="1289" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">An efficient global technique for solving the network constrained static and dynamic economic dispatch problem</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nawaz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Saleem</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Mustafa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">A</forename><surname>Khan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Turk. J. Electr. Eng. Comput. Sci</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="73" to="82" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A hybrid harmony search with arithmetic crossover operation for economic dispatch</title>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">W</forename><surname>Irwin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Electr Power. Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="page" from="237" to="257" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Barriers to renewable energy technologies penetration: perspective in Iran</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Oryani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Koo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rezania</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shafiee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Renew. Energy</title>
+		<imprint>
+			<biblScope unit="volume">174</biblScope>
+			<biblScope unit="page" from="971" to="983" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Application of multiple tabu search algorithm to solve dynamic economic dispatch considering generator constraints</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Pothiya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Ngamroo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Kongprawechnon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="page" from="506" to="516" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">A hybrid pathfinder optimizer for unconstrained and constrained optimization problems</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Qi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Song</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput. Intell. Neurosci</title>
+		<imprint>
+			<biblScope unit="page">5787642</biblScope>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">A new particle swarm optimization solution to nonconvex economic dispatch problems</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">I</forename><surname>Selvakumar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Thanushkodi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="42" to="51" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Unified solution of a nonconvex SCUC problem using combination of modified Branch-and-Bound method with Quadratic Programming</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shafie-Khah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Parsa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Sheikh-El-Eslami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energy Convers. Manag</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="3425" to="3432" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Hierarchical energy optimization management of active distribution network with multi-microgrid system</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tseng</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ml</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Ind. Prod. Eng</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="210" to="229" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<author>
+			<persName><forename type="first">V</forename><surname>Suresh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sreejith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sudabattula</surname></persName>
+		</author>
+		<title level="m">Static economic dispatch incorporating renewable energy resources and FACTS devices. 2nd Int. Conf. Intell. Circuits Syst</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="388" to="392" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Solving non-convex economic dispatch with valve-point effects and losses with guaranteed accuracy</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Van Hoorebeeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Absil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Papavasiliou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Electr. Power Energy Syst</title>
+		<imprint>
+			<biblScope unit="volume">134</biblScope>
+			<biblScope unit="page">107143</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Noninferior solution grey wolf optimizer with an independent local search mechanism for solving economic load dispatch problems</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Guan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">2274</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Solution of optimal reactive power dispatch problem using pathfinder algorithm</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yapici</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Eng. Optim</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1946" to="1963" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">A new meta-heuristic optimizer: pathfinder algorithm</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yapici</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Cetinkaya</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Soft Comput</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="545" to="568" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">An improved quantum particle swarm optimization algorithm for environmental economic dispatch</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">A B</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Expert Sys. Appl</title>
+		<imprint>
+			<biblScope unit="volume">152</biblScope>
+			<biblScope unit="page">113370</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

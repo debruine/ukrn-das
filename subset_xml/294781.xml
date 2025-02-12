@@ -1,0 +1,1080 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Application of Synthetic Data in the Training of Artificial Intelligence for Automated Quality Assurance in Magnetic Resonance Imaging</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">John</forename><surname>Tracey</surname></persName>
+							<email>john.tracey@nhs.scot</email>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Medical Physics and Bioengineering</orgName>
+								<orgName type="institution">Raigmore Hospital</orgName>
+								<address>
+									<settlement>Inverness</settlement>
+									<country>NHS Highland</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">College of Medical, Veterinary and Life Sciences</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Laura</forename><surname>Moss</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Clinical Physics and Bioengineering</orgName>
+								<address>
+									<region>NHS</region>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">College of Medical, Veterinary and Life Sciences</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jonathan</forename><surname>Ashmore</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Medical Physics and Bioengineering</orgName>
+								<orgName type="institution">Raigmore Hospital</orgName>
+								<address>
+									<settlement>Inverness</settlement>
+									<country>NHS Highland</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Greater</forename><surname>Glasgow</surname></persName>
+						</author>
+						<title level="a" type="main">Application of Synthetic Data in the Training of Artificial Intelligence for Automated Quality Assurance in Magnetic Resonance Imaging</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">43A262BFC35ACAA0528DE655CF925353</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:58+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Automated Quality Assurance</term>
+					<term>Artificial Intelligence</term>
+					<term>Artificial Data</term>
+					<term>Convolutional Neural Network</term>
+					<term>Magnetic Resonance Imaging and Coil Element Failure</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Background: Magnetic resonance imaging scanner faults can be missed during routine quality assurance (QA) if they are subtle, intermittent, or the test being performed is insensitive to the type of fault. Coil element malfunction is a common fault within MRI scanners, which may go undetected for quite some time.</p><p>Consequently, this may lead to poor image quality and the potential for misdiagnoses.</p><p>Purpose: Daily QA typically consists of an automated signal to noise ratio test and in some instances this test is insensitive to coil element malfunction. Instead of relying on daily QA testing, it was proposed to utilise patient images in conjunction with a trained neural network to detect coil element malfunction, even when it presents as a very subtle defect. The advantage to using patient images over phantom testing is real-time monitoring can be achieved. This allows clinical staff to focus more so on patient throughput without being burdened by daily testing. Methods: A neural network was trained using simulated coil failure in 3958 abdominal or pelvic images from 497 patients. The accuracy of the trained network was then tested on an unseen dataset of 109 images from which 44 patients had coil element malfunction present. Five MRI radiographers were shown 249 images with and without real coil malfunction to assess their accuracy compared to the neural network in identifying the scanner fault.</p><p>Results: The neural network achieved an accuracy of 91.74% in identifying coil element malfunction in the unseen data. Radiographers tasked with identifying coil element malfunction had an average accuracy of 59.99%. In the same test case the neural network outperformed all radiographers with an accuracy of 91.56%.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion:</head><p>This work demonstrates that neural networks trained with artificial data can successfully identify MRI scanner coil element malfunction in clinical images. The method provided better accuracy than MRI radiographers (technologists) at identifying coil element malfunction and highlights the potential utility of AI methods as an alternative to support traditional QA. Further, our methodology of training neural networks with simulated data could potentially identify other faults, allowing centres to produce robust fault detection systems with minimal data.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>It is recommended that MRI scanners are quality assured on a daily basis through imaging a uniform phantom to determine system performance <ref type="bibr" target="#b1">1</ref> . The exact protocol will be centre specific but various metrics are generally calculated from the phantom image such as signal to noise ratio. Abnormalities in the measured values can help identify machine issues and hence, these tests may prompt corrective action to be undertaken. Daily Quality Assurance (QA) however, may not capture all aspects of a machine's functionality and may also fail to identify intermittent or subtle faults <ref type="bibr">2</ref> . One solution is to increase the complexity of the QA, increasing sensitivity to various issues, but with the associated need for dedicated scanner time, obtaining such time in an overburdened clinical MRI department is often difficult. Another, less prescribed method to identify machine malfunction is visual inspection of the images. The first line of defence for such identification lies with radiographers (known as technologists in the US) who obtain the images. Upon image acquisition a visual inspection is made for a variety of potential scanner and patient related degradation.</p><p>These staff are adept at identifying more common image quality issues such as patient motion but rarer machine malfunctions, which at times can be subtle, can easily be missed. The inadequacy of daily QA and difficulties with first line visual identification has been highlighted through the work of NessAiver et al, who showed that in over 534 operational MRI systems, 25% exhibited a coil element failure unknown to the users <ref type="bibr" target="#b3">3</ref> . Such a failure would typically lead to reduced signal to noise and substandard image quality <ref type="bibr" target="#b1">1</ref> .</p><p>Consequently, the diagnostic accuracy and sensitivity can be reduced, potentially leading to missed, delayed or incorrect diagnoses <ref type="bibr" target="#b4">4,</ref><ref type="bibr" target="#b5">5,</ref><ref type="bibr">6,</ref><ref type="bibr" target="#b7">7</ref> . Therefore, it is vital that machine faults are discovered early, allowing for corrective action to be taken.</p><p>Convolutional neural networks (CNN) offer high predictive power in image processing tasks and are well suited to such studies. These networks can remove the need for human expertise to extract image features as the algorithm itself can determine which features are most relevant. In complex systems there is often an interplay between such features which are inadequately modelled in simple threshold methods but can be correctly represented though a CNN. Several studies have successfully implemented such models in the detection of artefacts <ref type="bibr" target="#b8">8,</ref><ref type="bibr" target="#b9">9,</ref><ref type="bibr" target="#b10">10</ref> . The main drawback to using CNNs is the vast amount of data required to train such models to a high degree of accuracy. Although several freely available MRI databases exist, they may not contain the exact process which is being studied (e.g., for this work coil element malfunction) and will potentially differ from the MRI data to which the reader wishes to apply the model. One potential solution to a lack of data is to utilise artificial data. Within the literature there are several studies <ref type="bibr" target="#b11">11,</ref><ref type="bibr" target="#b12">12,</ref><ref type="bibr" target="#b13">13,</ref><ref type="bibr">14</ref> which utilise artificial data. These studies implemented simulated distortions such as noise or bulk movement into otherwise clean data. By utilising a variety of methods ranging from image statistics to CNNs on these artificial data sets, models were created to detect such distortions with an accuracy of between 97.8% and 98.64%.</p><p>Many published studies focus on patient artefacts such as motion <ref type="bibr" target="#b8">8,</ref><ref type="bibr" target="#b15">15,</ref><ref type="bibr" target="#b16">16,</ref><ref type="bibr" target="#b17">17,</ref><ref type="bibr" target="#b18">18,</ref><ref type="bibr" target="#b13">13</ref> , with limited studies considering machine faults. Here we report a proof-of-concept study to detect coil element malfunction within an anterior array body coil using a large clinical MRI data set. By using a large data set, we avoid issues associated with patient variability (such as pathology). Coil malfunction was simulated into the patient data to train a CNN. This was then validated using a data set containing real coil malfunction. The CNN was compared to the performance of MR radiographers asked to identify coil element failure in the same clinical MR data. Such radiographers undertake continual image quality review through visual inspection. The neural network applied to future clinical data will provide ongoing monitoring for coil element malfunction on the same clinical systems on which it was trained.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methods</head><p>All data used in this study was acquired from two clinical GE Artist 1.5T scanners. We included the axial localiser sequence from all pelvis and abdominal protocols (16 in total) which used the anterior array coil. Of these, 15 protocols utilised the single-shot fast spin echo (SSFSE) sequence and 1 protocol utilised the FIESTA sequence. The SSFSE sequence parameters had the following ranges; FOV: 45x45cm to 50x50cm, matrix: 320x160 to 352x192, TR: 380ms to 953ms, TE: 80ms. The FIESTA sequence parameters were; FOV: 32x32cm, matrix: 256x224, TR: 5.8ms, TE: 2.5ms. Our automated method for identifying coil element malfunction involved the following steps. Firstly, we identified that the malfunction on our clinical images was due to a complete coil element failure. To mimic this, the coil sensitivity profiles were used to simulate coil element failure across a database of real patient images which were subsequently used to train the CNN. Patient images were then used with real coil element failure to test the accuracy of the trained network. It is worth noting that if one has access to the individual coil element images then identifying failure is a simple task. However, accessing this data is not possible for MRI systems from the manufacturer investigated in this work. To obtain this data either the patient must be scanned in service or research mode (under a research agreement). Either of which is not feasible for a routine clinical site. The use of MRI data presented in this work was registered under a service evaluation undertaken in accordance with NHS Highland standard policies and procedures. All patient data was anonymised and analysed in a process approved by the Caldicott Guardian.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Coil Element Sensitivity Profile Estimation</head><p>A volunteer was scanned on a 1.5T GE Artist MRI using the liver localiser sequence and a single image was produced for each individual coil element. From these images the sensitivity profiles could be determined for each individual coil element. The profiles were smoothed with a low pass filter (using an in-house developed python script) to remove noise and the location of coil element centres were computed by considering the location of the maximum within the profile. Determining the profile centre was necessary to allow spatial manipulation of the sensitivity profiles as discussed in section 2.1.1. The sensitivity profile was multiplied by a normalised 2D Gaussian with a size computed using a blob tracking algorithm <ref type="bibr" target="#b19">19</ref> to match the size of the sensitivity profile. These resulting profiles had an intensity that decayed to zero at the edge while maintaining an intact maximum. This more localised response helped avoid discontinuities when the sensitivity profile's locations were manipulated. Since the profiles were asymmetrical (see Figure ) the directionality of the profile was also computed. The profiles were then re-scaled so the maximum in the estimated profile was identical to that taken from the volunteer's scan. This produced 10 sensitivity profiles per slice over 7 slices, an example of one of these sets is presented in Figure . Please note in the case of element 4 and 6 the scanner coil output shows a double lobe profile highlighting that these outputs are not always representative of individual coils within the multichannel array but instead, at times, logical coil element combinations. The sensitivity profiles were next used to reconstruct the image using the SENSE <ref type="bibr" target="#b20">20</ref> algorithm implemented within the PyGrappa package 21 . SENSE is an image reconstruction technique which utilises information on the coil sensitivity profiles. It allows for partial k-space acquisition whilst avoiding aliasing artefacts on the images. Ideally, we would have used the same reconstruction algorithm as implemented on the scanner, but this was not known due to it being proprietary. Hence the accuracy of the SENSE reconstruction was tested on the volunteers' images. This was done through multiplying the scanner's reconstructed images with the estimated sensitivity profiles. The resultant coil images were then reconstructed using SENSE. These reconstructed images (xSENSE) were then compared to reconstructed images produced by the scanner (xScanner) allowing us to determine the accuracy of the estimated profiles. This was computed by calculating the average pixel difference between xScanner and xSENSE and was found to be 4.32e-13%. This suggests that the estimated profiles and SENSE reconstruction are an accurate substitute for the scanner's proprietary algorithm. elements to be correctly positioned on the patient surface mimics the action of a radiographer placing the coil over a patient. As well as lateral placement, sensitivity profiles are rotated to ensure they are pointing the same direction as they were prior to alignment, this was conducted by considering the previously computed coil directionality (as shown in the arrows of Figure <ref type="figure" target="#fig_0">1</ref>). The result of this coil positioning and alignment process is presented in Figure <ref type="figure" target="#fig_2">2</ref>. The coil element images for a particular patient were generated by multiplying the patient image with the set of sensitivity profiles. In order to include the influence of coils that are not within the imaging slice, two additional sets of coil element images are computed, although the influence from these coils is reduced (mimicking the increased distance), simulating the influence of a set of coils both inferior and superior to the imaging slice. To simulate coil element failure a random number of coil element images were nullified (set to zero). By choosing random elements to fail we are producing a more generalised model instead of one tuned to the failure in the test set. Finally, the combined coil element images were combined using the SENSE algorithm, producing images with artificially induced coil element failure. An example of a simulated coil failure image is presented in Figure <ref type="figure" target="#fig_3">3a</ref>-c compared to a real coil element failure presented in Figure <ref type="figure" target="#fig_3">3d-e</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.1.">Simulation of Coil Element Failure</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Patient Database</head><p>The patient database contained the collection of patient images which were used to train the neural network. It is important to have as large a database as possible which exhibits a wide variability in patients.</p><p>The database can be split into two main components: The first contained patient scans with coil failure simulated; the second were normal patient scans without any coil malfunction. All were scanned on GE 1.5T Signa Artist MRI scanners using GE standard anterior and posterior array coils. In total, images from 541 patients were collected resulting in 4270 images. Patients were chosen if they undertook a study within the abdomen or pelvis region and the Anterior Array (AA) coil was used. Only localiser images were considered since these are obtained for all imaging protocols, hence maximising the number of images available for analysis. Localisers also have limited post processing applied which can mask the effect of coil element failure. All localisers were single shot fast spin echo (SSFSE) sequences except for the prostate protocol which utilised a FIESTA sequence.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1.">Dataset Containing Images with and without Coil Element Failure</head><p>For a period of 21 days, one of the MRI scanners operated with the complete coil element failure which was not identified leading to several patients being imaged with the malfunctioning coil (see Figure <ref type="figure" target="#fig_3">3</ref> for an example image of coil element failure). The coil element failure was eventually identified by both a radiologist and radiographer who independently recognized an ongoing reduction in image quality at approximately the same time. The failure was verified by the scanner manufacturer engineering logs. All patients scanned during the period had their localiser images inspected to determine if coil element failure could be identified. Some imaging slices show little contribution from the malfunctioning coil element and were not included in the analysis. All (44) patients scanned during the period with the malfunctioning coil had images where some lices showed noticeable coil element failure. This was defined as clear image shading or an asymmetry in the image brightness that couldn't be explained by the anatomy (see for example Figure <ref type="figure" target="#fig_3">3</ref>). The coil element failure was far more apparent in the inferior portion of the image volume suggesting that the failed element was located at the inferior portion of the anterior array coil.</p><p>Therefore, the bottom two slices from every patient which showed consistent coil element failure were kept giving a total of 94 images for the analysis. Additionally, a database was created consisting of 4176 images from 497 patients scanned over a period of 15 months where no coil failure was present.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Training, Validation and Blind Splits</head><p>As is typical of neural network based approaches all the patient images were split into four components: artificial training, artificial validation, real validation and blind splits <ref type="bibr" target="#b23">22,</ref><ref type="bibr" target="#b24">23,</ref><ref type="bibr" target="#b25">24,</ref><ref type="bibr" target="#b26">25</ref> . Each split contained images with both coil element failure and no coil element failure. 3958 artificial coil element failure images were created resulting in 7916 total images with and without coil element failure which were used for the artificial training split, this was used to train the neural network. The artificial validation split was generated by randomly extracting 20% of these images and is used to confirm the model can generalise to artificial data. Both the real validation and blind split contains 47 images with coil element failure and 62 images without, both these splits are totally absent of artificial data. The real validation split is used to test if the network is capable of generalising to real data. The blind split is utilised to evaluate any over-fitting of the network to the real validation split and provides independent data to determine the accuracy of the model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Neural Network Training</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.1.">Training and Testing Protocol</head><p>The EfficientNet B0 <ref type="bibr" target="#b27">26</ref> neural network architecture was implemented using the Keras 27 framework. A SoftMax output layer was used with categorical cross entropy loss. The Adam optimiser was applied, and the input image was re-scaled to 115 by 115 pixels. The network was trained for 200 epochs, where one epoch is one complete iteration of the training split. The iteration which exhibited the best performance on the artificial validation split was then retained. On conclusion of training, a Receiver Operator Curve (ROC) curve was generated on the real validation split and the area under the curve was calculated along with the optimal threshold (defined as the threshold which produced the highest accuracy), sensitivity and specificity for that threshold. The real validation split was therefore used to assist with hyper-parameter optimisation. Since this can potentially overfit the model, the final model is then re-tested on the blind split <ref type="bibr" target="#b29">28,</ref><ref type="bibr" target="#b30">29,</ref><ref type="bibr" target="#b31">30,</ref><ref type="bibr" target="#b32">31</ref> . If overfitting has not occurred, one would expect similar results on both the real validation and blind split.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5.">Radiographer Survey</head><p>The first line method to identify machine faults is through visual inspection of patient images by a radiographer. Hence, the ability for a radiographer to identify coil element failure provides an appropriate benchmark to compare computational algorithms. Given this, 5 radiographers with 2-, 7-, 11-, 15-and 16years' experience in clinical MRI were asked to identify real coil element failure within a set of MRI images.</p><p>The radiographers reviewed 3 image slices per patient for 83 patients and recorded which, if any, of these contained coil element failure. Identical test data was applied to the optimal neural network model. The statistical significance of a single radiographer's results against the neural network was computed using a McNemar test. A Bonferroni correction for multiple comparison was applied to the significance level reducing it from 0.05 to 0.01.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Results</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Neural Network Results</head><p>The model was tested on the real validation split (containing real coil element failure rather than simulated).</p><p>In these analyses the term "positive" is used to denote cases with no coil element failure and "negative" denotes cases with coil element failure. The trained network obtained an area under ROC of 0.9576 on the real validation split. To confirm that the network has not overfitted to the real validation split the model was retested on the blind split which contained a separate set of real data. A ROC curve was computed on the blind split and compared with the ROC for the real validation split, this is presented in Figure <ref type="figure" target="#fig_4">4</ref>. Values obtained at the optimal threshold (defined as the threshold with highest accuracy) for the validation and blind split are provided in Table 1 </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Radiographer Survey Results</head><p>The results of the radiographers' survey are presented in Table <ref type="table" target="#tab_1">2</ref>. The results show that the neural network was more specific and accurate than the radiographers in all cases and in 3 of 5 cases it was more sensitive.</p><p>The difference in accuracy between the neural network and the radiographers was statistically significant in all but one case (radiographer 4) even after correction for multiple comparisons. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Discussion</head><p>In this work we present a proof of principle study, highlighting how MRI coil quality assurance can be undertaken with a convolutional neural network (CNN) trained on clinical images containing simulated coil element malfunction.</p><p>CNN's require significant data for training, applying these networks to identify an MRI malfunction can be difficult. This is because a malfunctioning MRI will typically be repaired quickly or taken out of service. To circumvent this, we simulated coil failure onto clinical MRI data generated using known coil sensitivity profiles. Although we were unable to replicate the scanner's on-board reconstruction, our method using the SENSE algorithm matched the scanner reconstruction to a high level of accuracy (4.32e-13%). We chose to train the CNN specifically to identify the case of coil element failure as this is known to be a common undetected fault <ref type="bibr" target="#b3">3</ref> . However, other scanner issues such as improper coil positioning, poor shim and metal foreign bodies can have a similar presentation, manifesting as shading across the image <ref type="bibr" target="#b33">32</ref> . Potentially our algorithm may therefore also detect other ongoing issues, such as poor shimming. In doing so this could provide a useful trigger to investigate these issues. To avoid the CNN identifying "one off" artefacts such as from foreign bodies or coil mis-positioning, we developed a process where the CNN had to flag a potential coil element failure in multiple subsequent patients (although results of this have not been reported here). This helps to avoid a single patient with, for example, a metallic foreign body triggering an investigation.</p><p>The results on the real validation split presented in section 3.1, highlighted that the model performed well with an area under the ROC curve greater than 0.5 (random classifier). Although the model does appear to be more sensitive than specific, potentially because the sensitivity is driven by the non-artificial data (no coil element failure). Overfitting is a well-known problem when training networks <ref type="bibr" target="#b34">33</ref> . In our data we mitigated this issue through optimising our model to the real validation split and then comparing this to results obtained from the blind split (Figure <ref type="figure" target="#fig_4">4</ref>). As discussed in Shan et al. <ref type="bibr" target="#b35">34</ref> comparison of the area under the ROC curve can give a statistical measure of overfitting. An online tool <ref type="bibr" target="#b36">35</ref> was used within Wang et al. <ref type="bibr" target="#b37">36</ref> and Long et al. <ref type="bibr" target="#b38">37</ref> to make such a comparison by implementing the method proposed by Hanley et al. <ref type="bibr" target="#b39">38</ref> . Within Hanley et al. <ref type="bibr" target="#b39">38</ref> , a non-parametric method for comparing the area under ROC for two independent curves was demonstrated. The standard error for the area under the ROC curve was computed and related to the Zscore. By utilising this method, a p-value of 0.200193 was computed between the area under the ROC curves shown in Figure <ref type="figure" target="#fig_4">4</ref>. Given the p-value is greater than 0.05, the difference between the curves is not statistically significant. In Table <ref type="table" target="#tab_0">1</ref>, the sensitivity, specificity and accuracy on the blind split is presented.</p><p>Once again, we obtain high degree of accuracy (91.74%) as well as good performance when considering the sensitivity and specificity of the model.</p><p>When comparing the performance of the CNN to each radiographer, we found that the CNN always produced a higher accuracy. A statistically significant difference was found in all cases but one (Table <ref type="table" target="#tab_1">2</ref>). We believe this is due to the fact that Radiographer 4 was more experienced than the others. This highlights that the neural network was extremely successful in solving the specific problem from which it was trained on.</p><p>Radiographers in comparison, are trained to recognize many image features. Such as patient motion or unexpected pathology, these features are more prevalent than coil element failure. Although the coil element failure shown in Figure <ref type="figure" target="#fig_3">3</ref> is clearly apparent, the artefact in other image slices and patients were not so conspicuous, at times presenting as a very subtle shadow which is easily missed (see Figure <ref type="figure" target="#fig_3">3e</ref>). The results in Table <ref type="table" target="#tab_1">2</ref> suggest that the experience level of the radiographer appears to improve their ability to correctly identify coil element failure, an effect which would seem entirely understandable since the increased experience would lead to exposure to less common issues. Unfortunately, these experienced radiographers are often not available to review images. Hence why in our case the coil malfunction remained unnoticed for approximately 1 month.</p><p>During the period where the coil element failure was present, the manufacturer daily phantom QA was undertaken. This QA, which measures the signal to noise (SNR) of the scanner using a proprietary method, failed to identify any scanner fault. Adjeiwaah et. al <ref type="bibr" target="#b40">39</ref> . have highlighted similar difficulties in identifying coil element failure from phantom QA. They used an ACR phantom to assess image uniformity and SNR for anterior array coil malfunctions. They correctly classified coil element failure images in 66.7% of samples with 4 faulty elements. Given our ability to detect a single element coil failure was 87.2%, it highlights the potential for neural networks to have improved detection efficiency compared to phantom QA. Additionally, to undertake phantom QA, personnel and scan time is required, compared to our automated method based on clinical images. It should be noted however, that in our study the CNN was trained to identify the specific type of coil element malfunction which we observed on our system. In reality, phantom QA measurements are less specific and potentially can identify other types of malfunctions, such as varying reduction in SNR within coil elements. In future work, we wish to expand training the CNN to consider other faults, but this requires real data sets which contain these malfunctions. The results we present here, we believe to be promising as proof of principle for the technique.</p><p>Another method to identify scanner faults, is via engineering logs generated by the MRI system. In our case, when the coil malfunction was highlighted to the MRI manufacturer, a scrape of the MRI logs did indicate a coil issue was present. Unfortunately, scraping of log data is not accessible to customers and as such does not provide a viable method to determine machine malfunction to the average clinical end user.</p><p>Potential limitations of our study include the use of a reconstruction algorithm that doesn't match the scanners. Although not ideal, we do show results highlighting minimal difference between the SENSE algorithm and the on-board scanner reconstruction. Another limitation is a lack of data directly comparing our neural network results to specialist phantom QA. Image uniformity would be the ideal test to identify coil element failure in a phantom. However, this was not possible since we were unaware of the failure when it was present. Once aware, it was rectified quickly before dedicated phantom imaging could be undertaken. Finally, it would have been of interest for radiologists to undertake the survey as given to radiographers. A radiologist would perhaps be better placed to identify subtle image irregularities and ultimately should decide if the image quality is adequate for diagnostic purposes. For the real coil element failure, a radiologist did identify an image quality issue, but this was highlighted sometime after the images were obtained, partly due to the lag between image acquisition and radiologist reporting. Therefore, we considered the first line image review from a radiographer to be an appropriate comparison for the neural network.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusions</head><p>The results presented in this work highlight that neural networks trained to identify coil element malfunction on clinical images could provide a useful adjunct to both first level radiographer image review and phantom based QA. The work provides an interesting proof of principle which could easily be expanded to monitor the performance of other coils simply by training the model with simulated data from these coils. Furthermore, using our approach the network could be trained to identify more subtle reductions in coil SNR as well as other machine faults, resulting in a series of optimised networks for fault identification. These networks applied to routine clinical data, could lessen the burden on radiography staff and ensure the MRI scanner is operating to its full diagnostic capability. Furthermore, given the method allows QA to be performed on standard patient images there is potential for reducing the time required for dedicated specialist phantom based QA. Thanks to Andrew Welch for comments during the preparation of this manuscript. Thanks to Martin Shaw for his advice regarding the statistical analysis within.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Acknowledgments</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.">Conflict of Interest</head><p>The authors declare no conflict of interest.       </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Coil sensitivity profiles located at slice 1.</figDesc><graphic coords="4,54.00,464.86,487.30,243.65" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>The next step was to use the previous computed sensitivity profiles to produce artificially induced coil element failure on an array of patient images. Since the anterior array coil is partly deformable and positioned on patients of various sizes, the coil sensitivity profiles centres must be aligned to the patient contour within the image. The patient contour was calculated by applying a threshold to the image to remove the background. The centre of each anterior array coil element (coils 7, 8, 9 and 10 in Figure)were positioned along this contour. The posterior array elements (coils 1 to 6 in Figure ) are rigidly fixed in the scanner bed and hence do not change position between patients. The modelling of the anterior array coil</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 2 :</head><label>2</label><figDesc>Figure 2: Final coil element positions.</figDesc><graphic coords="5,67.25,385.72,460.80,345.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: (a-c) Artificial coil element failure reconstructed with SENSE. (d) Example of real coil element failure where coil is positioned over anatomy of interest (obvious failure) and (e) where element is positioned further from anatomy of interest (less obvious failure)</figDesc><graphic coords="6,54.00,207.50,487.30,105.50" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: ROC curve computed with the best model on the real validation split and the blind split.</figDesc><graphic coords="8,54.00,86.65,487.30,379.00" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head></head><label></label><figDesc>This work was funded by NES (NHS Education for Scotland) and included survey participation from NHS Highland radiographers Adam Scotson, Lisa Cattanach, Regina Cremin, Breda Collins and Stewart Murdoch.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure and tables Legend</head><label></label><figDesc>Figure and tables Legend</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Figure1.pdf</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Figure 2 :Figure 3 :</head><label>23</label><figDesc>Figure 2: Figure2.pdf Figure 3: Figure3.pdf</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Figure4.pdf</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 :</head><label>1</label><figDesc>Comparison of real validation and blind split.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 :</head><label>2</label><figDesc>Radiographer vs Neural Network</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 1 :</head><label>1</label><figDesc>Tables.docx Table1</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 2 :</head><label>2</label><figDesc>Tables.docx </figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 2 Table 1 :</head><label>21</label><figDesc>Comparison of real validation and blind split.</figDesc><table><row><cell>Metric</cell><cell>Real Validation Split</cell><cell>Blind Split</cell></row><row><cell>Area Under ROC</cell><cell>0.9576</cell><cell>0.9366</cell></row><row><cell>Threshold</cell><cell>0.9261</cell><cell>0.91507</cell></row><row><cell>Sensitivity</cell><cell>0.9838</cell><cell>0.9516</cell></row><row><cell>Specificity</cell><cell>0.8723</cell><cell>0.8723</cell></row><row><cell>Accuracy</cell><cell>93.5779%</cell><cell>91.7431%</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 2 :</head><label>2</label><figDesc>Radiographer vs Neural Network</figDesc><table><row><cell>Tester</cell><cell>Sensitivity</cell><cell>Specificity</cell><cell>Accuracy</cell><cell>p-value</cell></row><row><cell>Radiographer 1</cell><cell>0.9722</cell><cell>0.5531</cell><cell>73.4939%</cell><cell>0.004077</cell></row><row><cell>Radiographer 2</cell><cell>0.8055</cell><cell>0.2127</cell><cell>46.9879%</cell><cell>4.02-08</cell></row><row><cell>Radiographer 3</cell><cell>0.25</cell><cell>0.74</cell><cell>53.0120%</cell><cell>4.93e-07</cell></row><row><cell>Radiographer 4</cell><cell>0.8333</cell><cell>0.7872</cell><cell>80.7228%</cell><cell>0.0490</cell></row><row><cell>Radiographer 5</cell><cell>0.9166</cell><cell>0.1063</cell><cell>45.7831%</cell><cell>4.88e-08</cell></row><row><cell>Neural Network</cell><cell>0.8611</cell><cell>0.9574</cell><cell>91.5662%</cell><cell></cell></row></table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title/>
+		<author>
+			<persName><surname>References</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Quality Control and Artefacts in Magnetic Resonance Imaging</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mcrobbie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Semple</forename><surname>Scott</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<publisher>Institute of Physics and Engineering in Medicine</publisher>
+		</imprint>
+	</monogr>
+	<note type="report_type">IPEM Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">MRI quality assurance based on 3D FLAIR brain images. Magn Reson Mater Physics</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">I</forename><surname>Peltonen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mäkelä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Salli</forename><forename type="middle">E</forename></persName>
+		</author>
+		<idno type="DOI">10.1007/s10334-018-0699-3</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biol Med</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="689" to="699" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Range of Results from over 534 ACR-mandated Annual MRI Performance Evaluations on over 204 Magnets from 8 Vendors Spanning a 10-year Period</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Moriel</surname></persName>
+		</author>
+		<ptr target="www.simplyphysics.com" />
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<pubPlace>Balt Maryland, US</pubPlace>
+		</imprint>
+	</monogr>
+	<note type="report_type">Tech Rep</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Influence of Signal to Noise Ratio on the Pharmacokinetic Analysis in DCE-MRI Studies</title>
+		<author>
+			<persName><forename type="first">Anv</forename><surname>Dehkordi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Koohestani</surname></persName>
+		</author>
+		<idno type="DOI">10.18502/FBT.V6I4.2212</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front Biomed Technol</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="187" to="196" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Impact of Signal-to-Noise on Functional MRI</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Parrish</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Gitelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">S</forename><surname>Labar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M-M</forename><surname>Mesulam</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/1522-2594</idno>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+	<note>Published online</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">3D-MRI combined with signal-to-noise ratio measurement can improve the diagnostic accuracy and sensitivity in evaluating meniscal healing status after meniscal repair</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Song</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Xu</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/S00167-018-5018-Z/FIGURES/7</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Knee Surgery, Sport Traumatol Arthrosc</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="177" to="188" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Image resolution and signal-to-noise ratio requirements for MR imaging of degenerative cartilage</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Rübenstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Majumdar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Markhsnkelman</surname></persName>
+		</author>
+		<idno type="DOI">10.2214/AJR.169.4.9308470</idno>
+		<ptr target="http://dx.doi.org/102214/ajr16949308470" />
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">169</biblScope>
+			<biblScope unit="page" from="1089" to="1096" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Automatic detection of motion artifacts on MRI using Deep CNN</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Fantini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Rittner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yasuda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lotufo</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PRNI.2018.8423948</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Int Work Pattern Recognit Neuroimaging, PRNI 2018</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">2018</biblScope>
+			<biblScope unit="page" from="3" to="6" />
+		</imprint>
+	</monogr>
+	<note>Published online</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">QC-Automator: Deep Learning-Based Automated Quality Control for Diffusion MR Images</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">R</forename><surname>Samani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Alappatt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Parker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aao</forename><surname>Ismail</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Verma</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fnins.2019.01456</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front Neurosci</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2020-01">2020. January</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Automated image quality evaluation of structural brain MRI using an ensemble of deep learning networks</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Sujit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Coronado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kamali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Narayana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Gabr</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/jmri.26693</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Magn Reson Imaging</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1260" to="1267" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Quality evaluation of no-reference MR images using multidirectional filters and image statistics</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Bang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hwang</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/mrm.27084</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Magn Reson Med</title>
+		<imprint>
+			<biblScope unit="volume">80</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="914" to="924" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A supervised learning approach for diffusion MRI quality control with minimal training data</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Graham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Drobnjak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.neuroimage.2018.05.077</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neuroimage</title>
+		<imprint>
+			<biblScope unit="volume">178</biblScope>
+			<biblScope unit="page" from="668" to="676" />
+			<date type="published" when="2018-01">2018. January</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Brain MRI artefact detection and correction using convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Oksuz</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cmpb.2020.10590914</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Methods Programs Biomed</title>
+		<imprint>
+			<biblScope unit="volume">199</biblScope>
+			<biblScope unit="page">105909</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">No-Reference Image Quality Metrics for Structural MRI</title>
+		<author>
+			<persName><forename type="first">Kennedy</forename><surname>Ga</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Dn</surname></persName>
+		</author>
+		<idno type="DOI">10.1385/NI</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neuroinformatics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="2" to="4" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Automated reference-free detection of motion artifacts in magnetic resonance images. Magn Reson Mater Physics</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Küstner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Liebgott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mauch</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10334-017-0650-z</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biol Med</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="243" to="256" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Automated Detection of Motion Artefacts in MR Imaging Using Decision Forests</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Lorch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Vaillant</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Baumgartner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rueckert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Maier</surname></persName>
+		</author>
+		<idno type="DOI">10.1155/2017/4501647</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J Med Eng</title>
+		<imprint>
+			<biblScope unit="volume">2017</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Transfer learning and convolutional neural net fusion for motion artefact detection</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Kelly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pietsch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Counsell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tournier</surname></persName>
+		</author>
+		<ptr target="http://dev.ismrm.org/2017/3523.html" />
+	</analytic>
+	<monogr>
+		<title level="j">ISMRM</title>
+		<imprint>
+			<date type="published" when="2017-04">2017. 2017. April</date>
+			<pubPlace>Honolulu, Hawaii</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Deep Learning-Based Detection and Correction of Cardiac MR Motion Artefacts during Reconstruction for High-Quality Segmentation</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Oksuz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Clough</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Ruijsink</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TMI.2020.3008930</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Med Imaging</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="4001" to="4010" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A generalized laplacian of gaussian filter for blob detection and its applications</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Kong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Akakin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Sarma</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TSMCB.2012.2228639</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Cybern</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1719" to="1733" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">SENSE: Sensitivity encoding for fast MRI</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">P</forename><surname>Pruessmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weiger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">B</forename><surname>Scheidegger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Boesiger</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title/>
+		<idno type="DOI">10.1002/(SICI)1522-2594(199911)42:5&lt;952::AID-MRM16&gt;3.0.CO</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Magn Reson Med</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="952" to="962" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<ptr target="https://github.com/mckib2/pygrappa" />
+		<title level="m">S 21</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Deep learning in medical imaging survey</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Cheikh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">B</forename><surname>Mbacke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ndiaye</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">CEUR Workshop Proc</title>
+		<imprint>
+			<biblScope unit="volume">2647</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="111" to="127" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">2017-Lee-Deep Learning in Medical Imaging_ Gen</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Jun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Cho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Korean J Radiol</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="570" to="584" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Automatic generation of medical imaging diagnostic report with hierarchical recurrent neural network</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Qian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wei</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ICDM.2019.00083</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proc -IEEE Int Conf Data Mining, ICDM</title>
+		<meeting>-IEEE Int Conf Data Mining, ICDM</meeting>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="728" to="737" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Fish species identification using a convolutional neural network trained on synthetic data</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Allken</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">O</forename><surname>Handegard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Rosen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Schreyeck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mahiout</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Malde</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/icesjms/fsy147</idno>
+	</analytic>
+	<monogr>
+		<title level="j">ICES J Mar Sci</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="342" to="349" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Rethinking model scaling for convolutional neural networks</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">V</forename><surname>Le</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Efficientnet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">36th Int Conf Mach Learn ICML</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019. 2019</date>
+			<biblScope unit="page" from="10691" to="10700" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">F</forename><surname>Chollet</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Keras</surname></persName>
+		</author>
+		<ptr target="https://github.com/fchollet/keras" />
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>Published</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Reproduction study using public data of: Development and validation of a deep learning algorithm for detection of diabetic retinopathy in retinal fundus photographs</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Voets</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Møllersen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Bongo</surname></persName>
+		</author>
+		<idno type="DOI">10.1371/journal.pone.0217541</idno>
+	</analytic>
+	<monogr>
+		<title level="j">PLoS One</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Intra-and inter-epoch temporal context network (IITNet) using sub-epoch features for automatic sleep scoring on raw single-channel EEG</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Seo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Back</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Lee</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.bspc.2020.102037</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed Signal Process Control</title>
+		<imprint>
+			<biblScope unit="page">61</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Automatic early stopping using cross validation: Quantifying the criteria</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Prechelt</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0893-6080(98)00010-0</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Networks</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="761" to="767" />
+			<date type="published" when="1998">1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">LSTM-based Deep Learning Models for Non-factoid Answer Selection</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Santos C Dos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Xiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Zhou</surname></persName>
+		</author>
+		<ptr target="http://cs.jhu.edu/" />
+		<imprint>
+			<date type="published" when="2015-07-28">2015. July 28, 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Signal intensity artifacts in clinical MR imaging</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Witte</surname></persName>
+		</author>
+		<idno type="DOI">10.1148/radiographics.20.3.g00ma19893</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Radiographics</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="893" to="901" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Machine learning for medical imaging</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Erickson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Korfiatis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Akkus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">L</forename><surname>Kline</surname></persName>
+		</author>
+		<idno type="DOI">10.1148/rg.2017160130</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Radiographics</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="505" to="515" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">CT-based peritumoral radiomics signatures to predict early recurrence in hepatocellular carcinoma after curative tumor resection or ablation</title>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">Y</forename><surname>Shan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">T</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">T</forename><surname>Feng</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s40644-019-0197-5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Imaging</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<ptr target="http://vassarstats.net/roc_comp.html" />
+		<title level="m">VasStats</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Single-Cell Classification Using Graph Convolutional Networks</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nabavi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics. Published online</title>
+		<imprint>
+			<biblScope unit="volume">2021</biblScope>
+			<biblScope unit="page" from="1" to="29" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">A hybrid deep learning model for predicting protein hydroxylation sites</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Long</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/ijms19092817</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Mol Sci</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">A method of comparing the areas under receiver operating characteristic curves derived from the same cases</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Hanley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Mcneil</surname></persName>
+		</author>
+		<idno type="DOI">10.1148/radiology.148.3.6878708</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Radiology</title>
+		<imprint>
+			<biblScope unit="volume">148</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="839" to="843" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Sensitivity analysis of different quality assurance methods for magnetic resonance imaging in radiotherapy</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Adjeiwaah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Garpebring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nyholm</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/J.PHRO.2020.03.001</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Imaging Radiat Oncol</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="21" to="27" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

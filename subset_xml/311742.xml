@@ -1,0 +1,2556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit</title>
+				<funder ref="#_SKqQjNh">
+					<orgName type="full">European Research Council</orgName>
+					<orgName type="abbreviated">ERC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2024-01-15">15 January 2024</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Laura</forename><surname>Bajorunaite</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Julie</forename><forename type="middle">R</forename><surname>Williamson</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2024-01-15">15 January 2024</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">59A48128CBB8578C194E8B2281D984B4</idno>
+					<idno type="DOI">10.1145/3604266</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:11+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>CCS Concepts:</term>
+					<term>Human-centered computing → Mixed / augmented reality;</term>
+					<term>Human-centered computing → User studies Immersive Technologies, Mixed Reality, Virtual Reality, Augmented Reality, Reality Awareness, Public Transport, Public Context, Passengers</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Immersive technologies allow us to control and customise how we experience reality, but are not widely used in transit due to safety, social acceptability, and comfort barriers. We propose that cues from reality can create reference points in virtuality, which we call Reality Anchors, will reduce these barriers. We used simulated public transportation journeys in a lab setting to explore Reality Anchors using speculative methods in two studies. Our first study (N=20) explored how elements of reality like objects, furniture, and people could be used as anchors, demonstrating that visibility of other passengers and personal belongings could reduce barriers. Our second study (N=19) focused on journey types that emerged from the first study -self-managed vs. externally managed journeys -revealing that self-managed journeys increased the need for anchors. We conclude that Reality Anchors can reduce concerns associated with immersive technology use in transit, especially for self-managed journeys.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Immersive technologies create a unique opportunity to reclaim the time we spend commuting and travelling, but there are challenges with social interaction and maintaining awareness that prevent acceptance. Pre-pandemic, the average number of local bus journeys in England reached 4.07 billion <ref type="bibr" target="#b7">[8]</ref>, with an average commute to work taking nearly an hour <ref type="bibr" target="#b81">[82]</ref>. A common practice for passengers is to use this travel time for entertainment or productivity with the help of small electronic devices, such as phones or laptops <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b55">56]</ref>, which can act as a defence <ref type="bibr" target="#b69">[70]</ref> against awkward social situations or a distraction from uncomfortable confined spaces <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b42">43]</ref>.</p><p>The ability to control and customise our environment can also occlude reality and create barriers to the outside world. Immersive technologies have advantages over traditional mobile devices because they can simulate unlimited screen sizes and render virtual content anywhere around the user. While immersive technology could enable us to reclaim our time while travelling, occluding personal belongings and other passengers brings physical safety <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b36">37]</ref>, comfort <ref type="bibr" target="#b62">[63]</ref> and social acceptability <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b58">59,</ref><ref type="bibr" target="#b74">75]</ref> concerns. These are potentially serious obstacles to the acceptance of immersive technology use in transit.</p><p>There is an open challenge on how to restore elements from reality that people lose when wearing an immersive device <ref type="bibr" target="#b4">[5]</ref> in mobile environments. Immersive technologies range from Augmented Reality (AR) to Virtual Reality (VR), but we speculate that future devices will move more dynamically across this spectrum by selectively including/occluding content to suit user needs. Current solutions have focused on controlled private spaces, such as living rooms <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b24">25,</ref><ref type="bibr" target="#b75">76]</ref> For example, the Oculus 'Guardian' <ref type="bibr" target="#b82">[83]</ref> or 'Space Sense' <ref type="bibr" target="#b83">[84]</ref>, show outlines of boundaries, these are not suitable for the dynamic nature of mobile environments like public transportation as they do not work in an environment that is moving and would provide the user with an overwhelming amount of detail. Devices like the Oculus Quest offer a "passthrough" video feed of the surrounding environment from the onboard tracking cameras, but showing this breaks immersion in the VR content <ref type="bibr" target="#b28">[29]</ref>. Recent work on bystander awareness indicates that visualising other nearby people in VR could help maintain immersion while conveying information <ref type="bibr" target="#b53">[54]</ref>. It is not known if these design interventions are suitable for in-transit contexts due to the dynamic nature of the internal environment (where passengers are moving around), the external environment (driving through unfamiliar neighbourhoods) and the unpredictability of these social spaces (where another passenger might invade your personal space). There are unique needs for awareness in transit, including physical safety (e.g. avoiding collisions, personal space invasion) and personal security concerns (e.g. theft, harassment). We propose that by using cues from reality and positioning them in virtuality as reference points, we can create experiences that retain immersion and reduce concerns associated with immersive technology use in transit.</p><p>To achieve this, we introduce the concept of Reality Anchors, which are cues from reality that reference other passengers, belongings, furniture and travel information in virtuality.</p><p>To begin exploring Reality Anchors, we need to understand what reality cues are meaningful and how they might support better experiences while travelling. We used virtual transportation journeys, simulated in VR, to explore the design and impact of different anchors using speculative methods. Speculative methods, for example, design fiction, enactments, and simulation <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b65">66]</ref>, facilitate participants to imagine or experience interaction contexts that do not yet exist. This approach was taken to explore a possible future where immersive technology is common in real transit environments and overcome technical limitations and safety concerns of deploying immersive technologies in this uncontrolled setting. It should be noted that our studies were conducted during the pandemic, which limited the methods available for this work. With our first study, we gathered participants' initial responses to Reality Anchors and evaluated how the visibility of reality cues (people, furniture, and personal belongings) affected six different factors that have been shown as important barriers to immersive technology adoption. We used a simulation of a ride on a public bus, a mode of transport often associated with increased safety concerns and the need to maintain awareness <ref type="bibr" target="#b4">[5]</ref>. The results suggested that the journey typewhether it is self-managed, e.g., a short trip on a local bus with high passenger turnover and a need to track when to get off, or externally managed, e.g., a long-distance train trip with a clear endpoint at the destination and less passenger turnover -strongly impacts feelings of safety and social acceptability. A second study then expands on the issue of journey type by simulating two rides on a subway train, one representing a self-managed journey with multiple stops, whilst the other was an externally managed journey with a clear end and no stops in between. Our work shows that the visibility of other passengers and one's belongings can reduce concerns associated with immersive technology use in transit. Furthermore, we found that self-managed journeys require more anchors than externally managed ones and that the need for the Anchors changes as the journey progresses. Our findings are a crucial first step in improving passenger experiences with immersive technologies in transit and make the following contributions:</p><p>1. We introduce the concept of Reality Anchors to reduce concerns associated with immersive technology use in transit contexts, which we explore through two user studies; 2. We show that perceived safety, usefulness, distraction, journey type, and the degree to which Reality Anchors match the virtual environment, are the key factors influencing the choices of Reality Anchors, in particular showing that passengers and personal belongings satisfy these criteria; 3. We show that self-managed journeys increase the need for anchor use, compared to externally managed journeys.</p><p>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:3</p><p>2 RELATED WORK</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Passenger Activities on Public Transport</head><p>A vast amount of literature has investigated passenger behaviours on public transport <ref type="bibr" target="#b19">[20,</ref><ref type="bibr">21,</ref><ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b38">39,</ref><ref type="bibr" target="#b55">56,</ref><ref type="bibr" target="#b56">57,</ref><ref type="bibr" target="#b59">60,</ref><ref type="bibr" target="#b69">70,</ref><ref type="bibr" target="#b70">71,</ref><ref type="bibr" target="#b80">81]</ref>, which demonstrated a range of activities, that varied between cultural contexts, but included: looking ahead or out the window, reading, talking, resting or using technology such as headphones, mobiles, or laptops. Work by Thomas <ref type="bibr" target="#b69">[70]</ref> and Zurcher et al. <ref type="bibr" target="#b80">[81]</ref> showed that occupying oneself with other activities when travelling can often act as a defence against awkward social situations, created by close proximity to other travellers. Besides, such action can serve as a signal to other passengers to show disinterest in interaction <ref type="bibr" target="#b56">[57]</ref>.</p><p>Another reason why passengers try to detach from the public transport environment comes from work by <ref type="bibr">Groening [21]</ref> who investigated the use of in-flight entertainment. The author concluded that the use of screens during flight creates a private entertainment space that not only helps each passenger separate from others but also shapes the passenger's perception of time and place. Moreover, in their work, Patel and D'Cruz <ref type="bibr" target="#b56">[57]</ref> argue that by being immersed in activity passengers are less likely to feel the discomfort they are experiencing, which is induced by the physical constraints of the cabin. However, more challenges arise if one is unable to protect personal space because of their seating situation. In their work, Evans &amp; Wener <ref type="bibr" target="#b12">[13]</ref> claimed that middle seats are found to be particularly unpleasant and are the least favourable seating option due to increased chances of spatial intrusion from the other passengers.</p><p>Equally important to shielding from other passengers is the efficient use of time during a trip. Some authors found that portable e-devices can help increase productivity and efficiency. In their study, Gripsrud et al. <ref type="bibr" target="#b19">[20]</ref> argued that the development of new ICT (Information Communication Technologies) increased the possibility to make travel time productive. As seen in their observations, most of the observed commuters used some sort of device for work-related activities. The choice to work during the commute is also not accidental -Timmermans and Van der Waerden <ref type="bibr" target="#b70">[71]</ref> found that the choice to travel on public transport (versus private) was influenced by the opportunity to use the time for other activities. However, these activities also vary for work and non-work-related trips. In their study, Ohmori and Harata <ref type="bibr" target="#b55">[56]</ref> found that passengers travelling for work used laptops more often than passengers travelling for leisure, who tend to choose mobile phones. The idea of empowering passengers with technology for a more productive time was also brought up by Lyons and Urry <ref type="bibr" target="#b35">[36]</ref>, who argued that by making the passengers more "equipped" with technology we are blurring the idea that travel time is separate from the activity time, therefore reducing the wasted time. More recent work by Malokin et al. <ref type="bibr" target="#b38">[39]</ref> also showed that younger commuters especially value the ability to spend travel time productively, suggesting that multi-tasking whilst travelling is only going to increase in the future.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Key Challenges of Using Immersive Technologies in Public Spaces</head><p>Previous work on immersive technology use in public spaces revealed key challenges that need to be overcome for wider adoption, which include concerns about social acceptability, safety and comfort. It is important to note that multiple factors can influence immersive technology adoption, including motion-sickness <ref type="bibr" target="#b43">[44]</ref>, privacy issues <ref type="bibr" target="#b14">[15]</ref> and the bulky form of current immersive devices. These topics are outside of the focus of our work on in-transit use and will not be covered in this literature review.</p><p>According to Koelle et al. <ref type="bibr" target="#b32">[33]</ref>, social acceptability can be defined as a product's design or interface quality that describes its appropriateness concerning culture, societal norms and values, which, if successful, results in wider societal rather than individual adoption of the product. Social acceptability is especially important for immersive technologies, that can range anywhere on the Mixed Reality spectrum (Figure <ref type="figure" target="#fig_1">1</ref>), due to the interaction methods that they need (gestures, voice commands) and the isolation from reality that they create. Failure to address this challenge can put the technology at risk of rejection, as happened to Google Glass <ref type="bibr" target="#b48">[49]</ref>. Google Glass was a wearable device dismissed by the public due to its unclear purpose, unnatural-looking design and privacy concerns <ref type="bibr" target="#b8">[9]</ref>. The investigation of the social acceptability of immersive technologies in public spaces is a relatively new topic but there are some initial insights. The current body of work can be divided into research that had a broad look at the social acceptability of new wearable technologies <ref type="bibr" target="#b26">[27,</ref><ref type="bibr" target="#b27">28]</ref>, or the use of headsets in public <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b21">22,</ref><ref type="bibr" target="#b29">30,</ref><ref type="bibr" target="#b45">46,</ref><ref type="bibr" target="#b71">72]</ref>, including more focused work on gaze <ref type="bibr" target="#b2">[3]</ref> and gestures <ref type="bibr" target="#b25">[26,</ref><ref type="bibr" target="#b31">32]</ref>, or discussion of the user and observer roles <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b68">69,</ref><ref type="bibr" target="#b71">72]</ref>. Some authors specifically looked at travelling contexts <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b64">65,</ref><ref type="bibr" target="#b73">74,</ref><ref type="bibr" target="#b74">75]</ref>, but focused on limited application areas, such as entertainment <ref type="bibr" target="#b73">[74]</ref>, or had a more theoretical approach to the work, lacking in situ studies <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b64">65]</ref> and showed a need for further research in real-world environments <ref type="bibr" target="#b74">[75]</ref>. Finally, the researchers that deployed their experiments in situ <ref type="bibr" target="#b10">[11]</ref> were limited to public spaces, such as a university café, which are not representative of passenger experiences whilst travelling. This collection of research revealed that it is important that the action of using the headset is seen as appropriate by the passengers themselves and observers, preventing concerns for privacy <ref type="bibr" target="#b14">[15]</ref> or feeling like you look "stupid" <ref type="bibr" target="#b74">[75]</ref>, affecting the image of the headset wearer <ref type="bibr" target="#b4">[5]</ref>, but needs to be further explored in travelling contexts. Aside from social acceptability, safety and comfort are the other key concerns influencing the wider adoption of immersive technologies in transit. Engaging with immersive experiences in public evokes worries and creates risks for safety, including physically colliding with objects or accidentally bumping into other people <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b36">37,</ref><ref type="bibr" target="#b62">63,</ref><ref type="bibr" target="#b74">75]</ref>, as well as the fear of being touched by other passersby <ref type="bibr" target="#b36">[37]</ref>. In-transit contexts also bring environment-specific safety concerns. The lack of awareness of one's belongings <ref type="bibr" target="#b4">[5]</ref> and surrounding furniture <ref type="bibr" target="#b62">[63]</ref>, missing a destination stop, or an important travel announcement <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b74">75]</ref> were among the key concerns for passengers. As for comfort, previous work has shown that confined spaces limit the possible interaction methods with immersive devices, such as gestures. McGill et al. <ref type="bibr" target="#b45">[46]</ref> noted that regardless of if the action is seen as socially acceptable, the physical space, seatbelts and other passengers sitting nearby would require more discreet interactions with immersive devices. Recent work on the topic <ref type="bibr" target="#b44">[45,</ref><ref type="bibr" target="#b62">63]</ref> has already started exploring how confined spaces can be adapted to immersive technology use, suggesting that by using the available furniture, such as seats and backrests we can create new input methods that are more comfortable for a public transport environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Current Solutions to Increase Reality Awareness</head><p>The previous section discussed the concerns associated with immersive technology use in public spaces, which showed that losing awareness of reality leads to social acceptability, safety, and comfort concerns, worsening with the increasing occlusion of reality. To address the issue, both, commercial headset brands and the HCI community have developed methods to increase reality awareness. For commercial headsets, such as a Meta Quest 2 <ref type="bibr" target="#b84">[85]</ref>, reality awareness is achieved through 'passthrough video', Space Sense and Guardian features. The passthrough video takes the user out of the immersive world by showing them a real-time feed of their real environment but disturbing the immersive experience <ref type="bibr" target="#b28">[29]</ref>. The Space Sense and Guardian show visible boundaries of the VR space, only designed for static indoor environments to avoid bumping into furniture, etc., rather than a constantly changing public setting. Some researchers have investigated the potential ways that real-world information could be communicated in a manner that maintains immersion. The majority of solutions focused on the awareness of other passersby <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b22">23,</ref><ref type="bibr" target="#b33">34,</ref><ref type="bibr" target="#b54">55,</ref><ref type="bibr" target="#b75">76]</ref>, and included augmenting VR with an overlay of the real-world <ref type="bibr" target="#b41">[42,</ref><ref type="bibr" target="#b75">76]</ref>, a virtual representation of the physical world <ref type="bibr" target="#b34">[35]</ref>, or blending virtual and real worlds by integrating real-world objects <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b52">53]</ref>, augmented notifications <ref type="bibr" target="#b79">[80]</ref>, "windows" or a "gates" to other realities <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b74">75]</ref>, with some approaches aimed at matching real objects with the virtual experience <ref type="bibr" target="#b67">[68]</ref> for maximum immersion. Although a majority of solutions were focused on visual information, some also explored audio or haptic feedback to inform the VR user <ref type="bibr" target="#b17">[18]</ref>. The choice to bring the information could be based on the proximity of the other passers-by <ref type="bibr" target="#b47">[48]</ref>, the urgency of the information <ref type="bibr" target="#b24">[25]</ref>, updated in real-time events <ref type="bibr" target="#b67">[68]</ref>, or based on the VR user's preference <ref type="bibr" target="#b13">[14]</ref>. Interestingly, previous work also showed that participants felt most comfortable when objects from reality closely matched the virtual scene <ref type="bibr" target="#b41">[42]</ref>, yet at the same time, immersive technology users can grow accustomed to the unexpected mix of virtual and real objects <ref type="bibr" target="#b66">[67]</ref>. However, it is not known if these solutions are also applicable to travelling contexts, which introduce additional concerns related to strangers, personal safety, property vulnerability, and time-sensitive journey management. It is also unclear whether seeing a mix of virtual and real objects would evoke uncomfortable feelings or help the passenger feel grounded in the travel environment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Exploring Future Scenarios with Speculative Approaches and VR Simulations in HCI</head><p>Speculative approaches in HCI are frequently employed to envision possible futures and explore alternative scenarios for informing the design of emerging technologies. These approaches include methods such as design fiction, enactments, and simulation <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b65">66]</ref>. Traditional evaluation methods may not fully capture the range of possible futures <ref type="bibr" target="#b60">[61]</ref>. Using speculative designs can help understand future passenger needs <ref type="bibr" target="#b78">[79]</ref> and reimagine use cases for immersive technology <ref type="bibr" target="#b18">[19]</ref>. In particular, speculative scenarios are useful for exploring complex transport scenarios where current technologies fall short or are not yet available. For instance, several authors have envisioned potential passengers of the future using immersive technologies in cars <ref type="bibr" target="#b46">[47]</ref>, including autonomous car scenarios <ref type="bibr" target="#b1">[2]</ref>, and adapting VR to be used within public transport seating constraints <ref type="bibr" target="#b76">[77]</ref>. Furthermore, such speculative scenarios are not limited to academic research, as commercial entities, such as Holoride <ref type="bibr" target="#b85">[86]</ref>, have also explored possible futures of immersive technologies in transportation contexts. Rapid advancements in immersive technologies such as VR, provide an opportunity to simulate and test these future scenarios that are not yet possible due to technological limitations. Although not without its limitations, some recent work comparing VR simulations to real-world studies has shown to evoke participant behaviour that is similar to that of the real-world <ref type="bibr" target="#b37">[38,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b61">62]</ref>. Using simulation in HCI is a common strategy when studying potentially dangerous or explorative designs <ref type="bibr" target="#b50">[51,</ref><ref type="bibr" target="#b63">64]</ref> or dealing with scenarios that are otherwise challenging due to ethical or legal constraints <ref type="bibr" target="#b51">[52]</ref>. VR provides a unique opportunity to simulate these scenarios in a controlled and safe environment. This is particularly relevant for transport scenarios where potential users may face complex or potentially dangerous situations, such as navigating unfamiliar public spaces or dealing with unexpected events. Overall, the combination of speculative methods in HCI and VR simulations provides a powerful tool for exploring and designing future scenarios. By simulating complex or potentially dangerous situations in a controlled and safe environment, researchers can gain valuable insights into user experiences and needs, and use this information to inform the design of emerging technologies fit for transit contexts. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">EXPLORING REALITY ANCHORS ON PUBLIC TRANSPORT</head><p>As demonstrated by the literature review, lack of reality awareness is potentially a key barrier preventing wider adoption of immersive technologies in transit. Moreover, preserving the user's sense of presence is another key requirement <ref type="bibr" target="#b41">[42,</ref><ref type="bibr" target="#b64">65,</ref><ref type="bibr" target="#b79">80]</ref> of an engaging immersive experience, and taking off the headset to have a look around can break the illusion and engagement in the virtual world. To maintain the ability to feel present, the experience requires a balanced inclusion of the real world <ref type="bibr" target="#b16">[17]</ref>. Too much of it can lead to an increase in distraction <ref type="bibr" target="#b41">[42]</ref> and reduce immersion <ref type="bibr" target="#b79">[80]</ref> in the virtual content. To understand what cues from reality are needed and when to increase reality awareness with the least effect on immersion, we introduce and explore the concept of Reality Anchors. The concept uses cues that serve as a reference point to the objects from the real world around the user, which also aims to maintain a maximum level of immersion. The Anchors are presented consistently regardless of the virtual content, similar to "Spatial Anchors" introduced by Oculus, which are used for adding persistent virtual objects to your physical world <ref type="bibr" target="#b86">[87]</ref>. It is worth noting that the proposed concept is speculative as current technology is not able to solve the issues associated with immersive technology acceptance in transit. Nevertheless, speculative design methods, as discussed in the literature review section, can help us understand future passenger needs and reimagine the use cases for immersive technology in transit. To gain early, formative insights, we must first conduct controlled experiments that replicate the transit experience before proceeding to costly and safety-critical deployments in reality.</p><p>An experiment was designed to test initial user reactions to the concept of Reality Anchors. More specifically, we investigated how seeing the Anchors affected the attitudes toward using headsets in travel contexts. To achieve this, we assessed how participants' perceptions of safety, social acceptability, usefulness, distraction, escapism and immersion change when exposed to various cues from their physical surroundings on a public bus. To explore our research aims, we chose to use a virtual reality headset to simulate an augmented virtuality experience (Figure <ref type="figure" target="#fig_1">1</ref>) that uses mostly virtual content with the elements of real-world objects. Participants were tasked with watching 360º videos and framed 2D videos within a cinema environment during the experiment, as the type of virtual content could influence which Anchors are preferred by the users <ref type="bibr" target="#b33">[34]</ref> and can affect the sense of escapism from reality <ref type="bibr" target="#b0">[1]</ref>.</p><p>Understanding how we can reduce the key concerns associated with immersive technology use in transit is an essential first step toward designing more acceptable immersive experiences in the future. We formalized the goals of the first experiment with the following two research questions:</p><p>RQ1: Can we improve the safety, usefulness, social acceptability, distraction, escapism and immersion of immersive experiences by adding cues from reality while in transit?</p><p>RQ2: Does the format of the virtual content (360-degree video or 2D-fixed video in a room) affect users' attitudes towards cues from reality while in transit?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Experimental Design</head><p>The study was conducted in a lab environment where a VR headset was used to simulate a ride on a public bus. Simulation is a useful tool for studying immersive designs <ref type="bibr" target="#b50">[51,</ref><ref type="bibr" target="#b63">64]</ref> as it allows for greater control of variables and ensures the safety of participants. Moreover, images and video scenarios are commonly used to research topics related to various social contexts <ref type="bibr" target="#b30">[31]</ref>. Our work builds on this and expands this further by making those scenarios feel more immersive in VR.</p><p>To simulate the trip, a high-fidelity model of a London bus [88] was used in Unity <ref type="bibr" target="#b87">[89]</ref> with a combination of 360-degree video, showing a real drive through London streets <ref type="bibr" target="#b57">[58]</ref> visible through the bus windows (Figure <ref type="figure" target="#fig_4">2a</ref>). Several virtual avatars from the Adobe Mixamo library <ref type="bibr" target="#b88">[90]</ref> were placed around the VR user's position to simulate a realistic social setting, expected in a public space. The simulated avatars were kept static, in fixed positions throughout the experiment to avoid introducing additional bias. The street sounds were kept at a consistent level throughout the whole experiment, including when the participant was watching the video content. The conditions that included bus furniture (which included a backpack that represented the passenger's belongings) or people were based on the object's proximity to the passenger. The objects covered a radius (measured as 2.5 m in Blender) within the social zone, a distance that is appropriate for public and casual social interactions <ref type="bibr" target="#b23">[24]</ref>. The radius was kept consistent throughout the experiment.  The study employed two different simulated environments: a streamed 360 video of a nature documentary <ref type="bibr" target="#b72">[73]</ref> and a cinema room, created using freely available assets <ref type="bibr" target="#b89">[91,</ref><ref type="bibr" target="#b90">92]</ref> with a 2D-fixed video of the same documentary. Both environments incorporated a variety of reality cues from the bus throughout the eight conditions, as shown in Figure <ref type="figure" target="#fig_5">3</ref>. After each condition, participants were given a questionnaire to complete and then taken back to the main menu for a break.</p><p>The study used a two-way repeated-measures design with the two factors (Figure <ref type="figure" target="#fig_5">3</ref>) being: a) the Visible Reality Anchors (no cues, people visible, furniture visible or people and furniture 28:8 Laura Bajorunaite, Stephen Brewster, &amp; Julie R. Williamson visible), b) the Virtual Environment (360-degree video or 2D-fixed video in a room). The Visible Reality Anchors factor was presented in a way where the amount of treatment (visual cues) either increased (from no reality anchors to all anchors) or decreased (from all reality anchors to no anchors). We did this as a key aspect of the study was to identify at what point there are a sufficient number of anchors visible. The direction of the anchor visibility (from no anchors visible to all anchors visible) was counterbalanced. The anchors were consistently present throughout each condition, without any fading effects applied to prevent the introduction of confounding variables. The virtual environment factor was counterbalanced across all participants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Participants</head><p>20 participants (10 females, 10 males, mean age = 28 years, SD = 5) took part in the experiment. The majority were students, 17 have used a VR headset at least once, 3 have never used one before; all participants had previous experience using a bus and 8 were frequent bus travellers. The experiment took approximately 90 minutes to complete, and participants were compensated for their time with £10 Amazon vouchers. We ensured the participants took a rest between conditions to minimise any possible VR-induced sickness. The experiment was approved by the university ethics committee.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Procedure</head><p>The experiment ran on a Meta Quest 2 headset connected to a desktop PC via Oculus Link to guarantee that the bus journey and human avatars were in maximum resolution and ran at maximum frame rate to reduce motion lag. The experiment was conducted in a large room where each participant sat on a non-swivel chair in front of a desk, with the experimenter sitting at a desk across from them. The participant was greeted, presented with an information sheet and then filled in a short questionnaire to collect demographic information and previous experience of using a VR headset and travelling on a bus.</p><p>During the experiment, participants were asked to imagine that they were travelling on a public bus whilst using the VR headset to watch a documentary video. Each condition started on a public bus ride through London, which participants were to consider as 'reality', and which then faded out through a black screen into different conditions. All the study's conditions started in the bus environment which lasted 45 seconds each time before transitioning into a condition. Participants were asked to imagine they were putting a headset on when the fade-out appeared. They were then presented with a condition, lasting for 1 minute, with a total of 8 conditions, four in a 360-degree video and four in a 2D-fixed video in a room. Once all conditions were over, a semi-structured interview was conducted to capture additional thoughts on the presented Anchors and virtual environments.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.1">Quantitative Data Collection.</head><p>Participants responded to 5-point Likert-type questions after each condition, collecting their responses to feelings of safety, usefulness, social acceptability, distraction, escapism and immersion (RQ1). Participants completed the questionnaire in VR (see Figure <ref type="figure" target="#fig_4">2b</ref>) and were asked to rate the following six statements (answers ranging from Strongly Disagree to Strongly Agree): "I felt safe wearing a headset in this scenario" (Safety), "I felt that this mix of bus and virtual content was socially acceptable" (Social Acceptability), "It was useful to have this mix of bus and virtual content in this scenario" (Usefulness), "It was distracting to have this mix of bus and virtual content in this scenario" (Distraction), "I felt I could escape from the bus environment in this scenario" (Escapism) and "I felt immersed in the documentary in this scenario" (Immersion). The Distraction metric was used as a way to measure Presence in VR as an overload of cues could disrupt the VR experience, thus breaking the feeling of Presence. The question for measuring Immersion was focused on the documentary to measure if participants were able to focus on their main goal for using the headset -to watch a documentary -instead Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:9</p><p>of commenting on the overall experience of using VR. The collected data were logged in a file on the PC and later used for quantitative analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.2">Qualitative Data Collection.</head><p>Following the completion of all eight conditions, a semistructured interview was conducted with all participants. The interview followed the questionnaire themes, asking participants to comment on all six metrics (Safety, Usefulness, Social Acceptability, Distraction, Escapism and Immersion). The interview guide is available in Appendix A. In addition, printouts of all conditions were provided in the order they were experienced by each participant, to serve as a reminder. Participants were asked to discuss the six metrics in relation to both the 360-video and 2D-fixed video in a room environments. Each participant took an average of 20 minutes to complete the interview. All interviews were recorded, ensuring the anonymity of the participant, and then later transcribed for thematic analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Quantitative Results</head><p>To conduct quantitative analysis, the answers "Strongly Disagree" to "Strongly Agree" were converted to scores 1 to 5 respectively. To further prepare the data for analysis, the data were transformed using an Aligned Rank Transform (ART) approach <ref type="bibr" target="#b77">[78]</ref> and then a two-factor repeated-measures ANOVA was performed with the Anchors (for RQ1) and virtual environments (for RQ2) as factors. Post hoc contrast analysis was conducted to compare different conditions for the factors that showed significant main effects. Figure <ref type="figure" target="#fig_6">4</ref> presents the median values for participant answers to six questionnaire statements.  Furniture (Mdn=3, IQR=2-3.75), but seeing People and Furniture was seen as safer (t(57)=-4.81, p&lt;0.01) than just seeing Furniture. The remaining pairs did not show significant differences.</p><p>3.4.2 Usefulness. The analysis showed that Usefulness was significantly affected by the Reality Anchors (F(3,57)=14.15, p&lt;0.01). Virtual Environments did not show a significant main effect and there were no interaction effects between the factors. Further post hoc contrast analysis (t(57)=-4.29, p&lt;0.01) showed that seeing People (Mdn=4, IQR=3-4) was more useful than having No Cues (Mdn=2, IQR=2-3) from reality. Comparison between People and Furniture and No Cues (t(57)=-5.97, p&lt;0.01) showed that seeing People and Furniture (Mdn=4, IQR=3.25-5) was more useful than not seeing any cues from the bus. The People anchor was a crucial element for usefulness, as seeing People and Furniture (t(57)=-4.29, p&lt;0.01) was perceived as more useful than just seeing the Furniture (Mdn=2.5, IQR=2-4) on its own. The remaining pairs did not show significant differences.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.3">Social Acceptability.</head><p>Reality Anchors showed a significant main effect on Social Acceptability (F(3,57)=19.10, p&lt;0.01). Virtual Environments did not show a significant main effect and there were no interaction effects between the factors. Post hoc contrast comparisons (t(57)=-5.46, p&lt;0.01) showed that users felt that it was more socially acceptable to see People (Mdn=4, IQR=4-4) than have No Cues (Mdn=2, IQR=2-4) from reality. People and Furniture (Mdn=4, IQR=4-4) were also seen as more socially acceptable (t(57)=-6.27, p&lt;0.01) than having no information from the bus. Seeing People (t(57)=4.24, p&lt;0.01) or People and Furniture (t(57)=-5.05, p&lt;0.01) also returned higher scores than just seeing Furniture (Mdn=3, IQR=2-4) in terms of social acceptability. The remaining pairs did not show significant differences.</p><p>3.4.4 Distraction. We found that Reality Anchors showed a significant main effect for Distraction (F(3,57)=2.93, p=0.041). Virtual Environments did not show a significant main effect and there were no interaction effects between the factors. Post hoc contrast comparisons revealed that seeing just the Furniture (Mdn=4, IQR=3.25-4) was found to be more distracting (t(57)=-2.66, p=0.049) than having No Cues (Mdn=3, IQR=2-4) brought into the environment. The remaining pairs did not show significant differences. The participants felt that they could escape the bus environment more (t(57)=3.33, p&lt;0.01) when No Cues (Mdn=4.5, IQR=4-5) were present, compared to seeing People (Mdn=4, IQR=2.25-4). Comparisons (t(57)=3.14, p=0.014) also showed that People and Furniture (Mdn=4, IQR=3-4) reduced escapism more than No Cues. The final significant comparison (t(57)=4.80, p&lt;0.01) of Furniture (Mdn=3, IQR=2-4) versus No Cues revealed that Furniture reduced escapism the most. The remaining pairs did not show significant differences.</p><p>For Virtual Environments, the 360-degree video (Mdn=4, IQR=3-4) condition performed better in making users feel like they escaped the bus environment than the 2D-fixed video in a room (Mdn=3.5, IQR=2-4).</p><p>3.4.6. Immersion. Immersion was also significantly affected by Reality Anchors (F(3,57)=8.43, p&lt;0.01) and Virtual Environments (F(1,19)=21.30, p&lt;0.01). Interaction effects between Reality Anchors and VR Environments were also significant (F(3,57)=3.49, p=0.021). Immersion was strongest when No Cues (Mdn=5. IQR=4-5) were visible and showed a significant difference in comparison (t(57)=3.01, p=0.020) to seeing People (Mdn=4, IQR=3-4). Seeing People and Furniture (Mdn=4, IQR=3-4) was also less immersive (t(57)=4.30, p&lt;0.01) than seeing No Cues. However, seeing just the Furniture (Mdn=3.5, IQR=2-4) was the least immersive of the three, compared to No Cues (t(57)=4.41, p&lt;0.01). The remaining pairs did not show significant differences. For Virtual Environments, 360-degree video (Mdn=4, IQR=4-5) also led to greater immersion than a 2D-fixed video in a room (Mdn=4, IQR=2-4).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Qualitative Results</head><p>Upon transcription, all interviews were coded using an open coding process <ref type="bibr" target="#b6">[7]</ref> where each statement was assigned an emergent code that was iterated over several cycles and used to recode the transcripts until no new codes were needed. Following that, all codes were arranged into meaningful groups. A single coder performed the coding, discussing, and amending of the codes after the first and the final iteration with another researcher.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.1">VR Acceptance on Public</head><p>Transport. Four themes emerged as key factors influencing the acceptance of VR on public transport: 1) ability to maintain awareness, 2) social acceptability, 3) how much physical movement is required and 4) concerns about motion sickness. The ability to maintain awareness was dependent on remembering that you are on a bus, not getting P2: "carried away by the VR content", as that would be perceived as a negative, P7: "I don't want to forget where I am because I have to be alert", or would cause constant worry, P17: "you're too concerned about the world outside, you don't feel very comfortable because you can't see what's going on". Participants worried that losing awareness whilst in VR could result in missing the required stop, not noticing that other passengers require attention or are up to malicious actions, losing personal belongings or not realizing there was an accident on the road. Several participants also noted that it would be preferred P6: "if you were able to not have to take the headset off and you could still make safety checks", yet a few participants felt that if they were worried about someone, or felt that they are receiving too much attention, they would prefer to take the headset off to check their surroundings.</p><p>Social acceptability was another factor influencing VR acceptance on public transport. Participants mostly linked social acceptability to other passengers. VR was seen as acceptable if it is P6: "discreet and not intrusive", making sure that the VR user avoids actions that can be interpreted as P21: "irritating", P11: "weird", or P19: "rude" by other passengers, which could be a result of the VR user P15: "moving their head really vigorously" or P8: "staring at people" whilst immersed in VR, thus limiting the acceptable interactions and motions whilst on public transport. Overall, participants felt that social acceptability would increase with the visibility of people because P3: "when you are around people you cannot be oblivious to their presence", and you can P8: "adjust the behaviour based on other passengers". Only two participants mentioned that other passengers may object to having their image represented in VR, making it unacceptable in that case, and only one participant felt that they stopped worrying about other passengers once they were not visible anymore.</p><p>Linking back to the earlier finding, how much physical movement is required was also a factor influencing VR acceptance. Too much physical movement was not only seen as socially unacceptable but also physically demanding, increasing the risk of injuries, or physically tiring. Concerns about motion sickness were the final influencing factor, only mentioned by two participants. Although it is not the focus of this work, this concern is still important to consider as it affects a group of potential VR users that would not attempt to try a headset in transit due to their previous negative experiences with motion sickness.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.2">Factors Influencing the Choice of Reality Anchors. Participants' reflections on Reality</head><p>Anchors also revealed five key considerations influencing their choice of Anchors: 1) the ability to increase the sense of safety 2) if seeing the Anchor(s) added value 3) the ability to maintain immersion/focus on the task 4) if the Anchor(s) felt natural in the virtual environment 5) if the Anchor(s) matched the requirements of their journey type.</p><p>The first consideration, the ability to increase the sense of safety, was linked to how the sense of safety was affected by the different Anchors. Those Anchors that increased the feeling of safety were preferred and were mostly represented by the People Anchor. The majority of participants agreed that they felt safer when they could see people as that helped maintain awareness, P15: "seeing the people -that was good because I could be aware of my surroundings". Following that, seeing the belongings was another preferred anchor that increased a sense of safety, P7: "won't feel 100% safe if I don't know where my bag is", yet seeing the bag was not enough for some, who noted that in addition to the visual, they would still want to touch their belongings, P9: "would use the visual representation but also touch to make sure my item is still there". Contrary to this, one participant felt that they would not need to see their belongings if they could at least see the people, P16: "if I could see the people all the time then I don't need to see my luggage". Seeing no anchors had a strong negative effect, and the majority of participants felt that it was unsafe and uncomfortable, and they would worry about their surroundings all the time, thus disturbing their VR experience. Overall, anchors that increased the sense of safety were those that reminded them of the bus environment, especially other passengers, allowing for a quick response if their attention was needed.</p><p>Another consideration when choosing the anchors was their added value. As adding more anchors increased objects in the visual field, participants were selective and preferred only those anchors that were perceived as useful. As discussed earlier, people and personal belongings were the two most useful anchors, however, most participants considered furniture to be the most redundant visual cue. Participants thought that it P1: "does not move on its own" and P8: "doesn't really change" and that you know you are P9: "in a chair". However, a few participants felt that the furniture anchor added value when in combination with people as that provided a reference point to where the people were sitting, P20: "when I could see them with chairs, I had a bit more information about them, I knew, Oh, they're kind of over here". Despite this, most participants thought that furniture or furniture and people together resulted in a busy environment, that distracted them from their main task of watching the documentary.</p><p>Being able to maintain immersion and focus on the task also was a key consideration when choosing the anchors. Participants thought that Furniture and Furniture and People anchors were especially distracting, P8: "people and furniture together is too much, distracts from the task", P1: "furniture on its own -really distracting", whilst P22: "just [seeing] people still allow for better immersion in VR". Interestingly, a couple of participants noted that although at the start they were distracted from the anchors, eventually they got used to them, P13: "the anchors, at first it was jarring, but then I got used to it.", or learnt to ignore them, P3: "cues are easy to ignore when you get used to them". Participants also discussed the visualization of the anchors, which revealed that those anchors that were taking up most of the visual space were found to be the most distracting, specifically the furniture anchor, P8: "furniture is disruptive because it blocks the screen and contains a lot of information.", P4: "furniture is everywhere and can't be easily ignored". Surprisingly, distraction was not just a consequence of how much space the anchors were taking, but also how natural they fit into the virtual scene.</p><p>The mismatch between the anchors and the virtual environment was also significant when choosing the anchors. Here, the VR scene affected how "natural" anchors seemed within the environment. Some participants thought that it was weird to see people clashing with other objects, P8: "people look weird because they clash with virtual objects", or floating in the air, P14: "it doesn't make sense. There are people sitting on nothing". The clash of bus furniture and virtual objects was more profound in the 2D-fixed video in a room, P11: "suddenly you have like a seat with a lamp on it and it looks a bit weird" and it even affected participants' perception of reality, P19: "[it] mixed with my perception of reality. Because sometimes maybe I'm not sure is this real or not?". Surprisingly, some participants looked for a sense of familiarity, comparing the 2D-fixed in a room scenario to a familiar setting, P21: "in the cinema room it felt like I was actually at home watching it", and many of the participants felt that seeing people in the room environment felt Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:13 very natural, P2: "seeing other passengers in the room with a screen felt like a cinema". However, that only applied to seeing the people, not the furniture, P20: "with people, it's just like you're in your living room and sitting with other people, the furniture is like something that don't belong there". Although less so in the 2D fixed-video condition, people clashing with virtual objects was still unacceptable to some participants, P7: "the passengers' anchor clashing with the virtual furniture was distracting". However, one participant also noted that if people also matched the virtual objects, then the uncanny mismatch would not be a problem anymore, P17: "it felt unnatural, the mismatch. But for example, if I was like in a cinema, and these people were in like seats like in the cinema, then it would be alright". Contrary to this, in the 360 environments, none of the anchors felt natural and were easier to ignore due to the full-scale mismatch they had to the scene, which lead to higher immersion and a likelihood of completely forgetting the bus that participants disliked P19: "in 360 I completely forgot about the bus, but I don't think it's safe". Some participants still thought it was uncomfortable to see people in the 360-video environment, P13: "the intention is to make you feel that you're underwater, but there's people in it, so it's kind of unrealistic", yet was less commonly discussed than the clash of people and virtual objects in the 2D-fixed video in a room set-up, suggesting that the mismatch here was more obvious and less uncomfortable. Finally, participants also considered how specific anchors might match their journey requirements, making this the final factor influencing their choice. The analysis revealed that shorter journeys required more awareness than longer journeys, specifically when the journey does not end at the final stop: P11: "would need to know If you are getting closer unless it is the end stop", as that would require the user to self-manage their journey. Not having any anchors was seen as unsuitable for shorter journeys, whilst longer journeys were a more appropriate environment for getting immersed in VR. Participants felt that longer journeys are different from shorter journeys by a lower passenger turnover, P11: "on a longer trip most people just get in and then they sit there, then I might not need to know a lot going on", no need to manage the journey, P16: "If it's like overnight, you want to be completely immersed. You don't need to go anywhere. You don't need to look for the stops", and a journey length that implied entertainment is needed, P1: "long journeys are boring, not much happening outside, need less information -more suitable for VR". The answers also showed that longer trips are more suitable for VR with a clear final stop, P8: "long ride with clear final stop can be more occluded. People don't tend to move about". 3.5.3 Requirements for Future Reality Anchors. Participants also discussed the potential improvements and requirements for the Anchors. The key reoccurring themes were: 1) depicting a change in other passengers' movements, 2) including journey information as an anchor, and 3) being able to select the anchor based on the needs of the journey.</p><p>The experiment included static representations of other passengers, that remained in fixed positions throughout the experiment, but most participants also discussed scenarios where the passengers might be moving. The change in direction or position was seen as more important than a constant feed of other passengers, P15: "knowing where people are at that time. If they did move, I want to see where they moved to. Minimal movements on the seat wouldn't make a difference", or can even be perceived as distracting, P16: "people, If they're moving all the time, it's more distraction than usefulness". The change in position was especially important if the other passengers required the VR user's attention or were getting closer, P12: "if they're [people] not walking toward you then I don't care if they're moving", suggesting that Anchors based on proxemics might be a useful feature in the future. Participants also missed having journey information in the provided scenarios, including knowing when they are approaching/or at their destination as well as an overall map for journey tracking. Finally, being able to select the anchors based on journey needs was among the most common suggestions. Participants agreed that they wanted to tailor the anchors based on their journey type, or sense of safety to regain control of their journey, P5: "I would like to select what I want to see to be in control of the situation".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6">Key Takeaways From the First Experiment</head><p>The first study demonstrated an initial attempt to explore Reality Anchors for in-transit situations. The overall findings showed positive indications that Reality Anchors can increase the overall acceptance of immersive technologies on public transport, particularly the visibility of other passengers and one's belongings. However, that is not without an effect on immersion as with an increased number of anchors, participants' ability to focus on the video content also decreased. The study also revealed that VR users are selective when choosing which anchors suit their journey needs.</p><p>Based on the findings, we identified that journey type is a new key issue in anchor choice and usage that has not been previously researched. Further investigation is needed to understand VR users' use of the Anchors for journeys that are self-managed or externally managed, inspiring our next study.</p><p>For our next study, we also picked the following requirements for future anchors:</p><p>1. including journey information and 2. giving VR users an option to choose the Anchors freely throughout the journey.</p><p>Both features were implemented in the second experiment and are discussed further in the next section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">REALITY ANCHORS FOR DIFFERENT JOURNEY TYPES</head><p>The analysis of the first study revealed that participants may have different information needs and concerns depending on if their journey was self-managed or externally managed. Selfmanaged journeys were associated with short trips that do not have a clear stop and have constant passenger turnover, resulting in increased worries about safety and journey awareness. Externally managed journeys have a clear endpoint that a passenger does not need to track, were less likely to have much passenger turnover, were longer in duration, and were often perceived as boring, making entertainment an acceptable way to pass time. The findings from the first study indicate that based on the journey type, passengers' needs for the anchors might increase or decrease. However, it is unknown what anchors would be prioritised for the different journey types and if the priorities would change as the journey progresses.</p><p>The ability to generalise anchor use for self-managed and externally managed journeys would be useful for the design of future immersive technologies. In addition, the second experiment was designed to give participants a choice of picking the anchors to understand how the anchor needs change throughout two journey scenarios, representing a self-managed or an externally managed journey. We aimed to answer the following research questions:</p><p>RQ3: How does the need to manage one's journey increase the demand for Reality Anchors in VR?</p><p>RQ4: How does the progress of the journey influence the choice of visible Reality Anchors? RQ5: What are they key characteristics that differentiate journey types?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Experimental Design</head><p>This study used a VR headset to simulate two rides on a subway train and was conducted in a lab environment. The first scenario was a multi-stop ride on the London underground, which was designed based on the real route of the train and represented a self-managed journey. The ride included all 16 stops of the Victoria line and was designed to last for a maximum of 12 minutes, but the participants' target stop was the tenth stop, bringing the journey duration to approximately 8 minutes. The second scenario was a modified journey that represented an express train, where the destination is the final stop and there are no stops throughout the journey with an approximate ride time of 8 minutes to maintain consistency in both conditions. To simulate the rides, a high-fidelity subway model was used in Unity where the realistic movement of the train was depicted using Unity's physics engine. Several virtual avatars from the Adobe Mixamo library <ref type="bibr" target="#b88">[90]</ref> were placed around the VR user to simulate a realistic social setting, positioned in the user's personal zone (~1.2 m) and user's social zone (~3.6 m), based on Proxemics theory <ref type="bibr" target="#b23">[24]</ref>. The simulated avatars were animated with realistic body movements (such as slight movements of hands and head) to increase the fidelity of the scenarios. The human avatars stayed in fixed positions throughout the experiment to avoid introducing additional bias caused by passenger turnover, which is to be explored as a separate factor in future work. The sound of the subway moving was kept at a consistent level throughout both experimental conditions (a selfmanaged and an externally managed journey) and included the sound of doors opening and closing. No audio announcements were played throughout the journeys to maintain the focus on the use of the visual cues that are represented by the Anchors.</p><p>All participants experienced both rides in a counterbalanced order. For the task, participants were told to treat the virtual train environment as a real-life journey, during which they were wearing a VR headset and watching a nature documentary video <ref type="bibr" target="#b91">[93]</ref> in an immersive 3D cinema created using freely available assets <ref type="bibr" target="#b89">[91,</ref><ref type="bibr" target="#b90">92]</ref>. Once immersed in the cinema room, participants were able to use a pop-up menu to activate or deactivate the following Reality Anchors (as shown in Figure <ref type="figure" target="#fig_8">5</ref>): Passenger, Possession, Furniture and Signage. Participants were also able to increase the visibility radius (shown in Figure <ref type="figure" target="#fig_8">5c</ref>) to cover their social zone, measured as 3.5 m in Blender, to investigate if there is a preference for the radius that the anchors should be displayed within. After each ride, participants were given a short task asking them to mark which anchors they selected throughout the journey and to rank seven Likert-scale statements. To maintain a controlled experimental environment and minimize potential distractions, the in-VR scenes were kept constant across all conditions, except for the manipulation of journey type, which was our primary focus.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Participants</head><p>In total, 19 new participants (8 females, 10 males, 1 non-binary, mean age = 27 years, SD = 6) were recruited for the experiment. The majority were students, 17 have used a VR headset at least once, 2 have never used one before; all participants had previous experience travelling on a subway and 2 travelled on a subway in London in the last month. The experiment took approximately 60 minutes to complete, and participants were compensated for their time with £10 Amazon vouchers. We ensured the participants took a rest between the two journey simulations to minimise any possible VR-induced sickness. The study was approved by the university ethics committee.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Procedure</head><p>As for study 1, each participant sat on a non-swivel chair in front of a desk, with the experimenter sitting at a desk across from them. The participant was greeted, presented with an information sheet and filled in a short questionnaire to collect demographic information and previous experience of using a VR headset and travelling on a subway. During the experiment, participants were asked to imagine that they were travelling on a London underground train whilst using the VR headset. For the self-managed condition participants were instructed to 'get off' at the tenth stop, "Oxford Circus", which they could do by selecting a button on the pop-up menu. For the externally managed journey, participants were told they are travelling to the end of the route, where the train will stop. Each ride started with a virtual scene on the subway, which participants were to consider as 'reality', and which then faded out through a black screen into the cinema room. Participants were asked to imagine they were putting a headset on when the fade-out appeared. Once in a cinema room, participants were unable to return to the subway train environment but could use the pop-up menu with the anchors throughout the journey (Figure <ref type="figure" target="#fig_8">5c</ref>). Once both of the rides were completed, a semi-structured interview was conducted to capture participants' thoughts on the two different journeys and their use of Reality Anchors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.1">Quantitative Data Collection.</head><p>The second study leaned on qualitative methods for the majority of its data collection, however, participants were asked to rank seven Likert-type statements to ensure that our simulated self-managed journey and an externally managed journey are perceived differently by the participants, to ensure that our approach was suitable for the study. The results of the first experiment indicated that a self-managed journey might require an increase in awareness and safety concerns, whilst an externally managed journey should allow for a more immersive VR experience. Based on this, we formulated the following seven statements (answers ranging from Strongly Disagree to Strongly Agree): "The anchors assured me that my belongings are safe", "The anchors increased my sense of personal safety", "Being able to see the anchors was useful", "The anchors were distracting", "I had to focus on my journey progress", "I felt I could escape from the subway environment during this journey" and "I felt immersed in the documentary during my journey".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.2">Qualitative Data Collection.</head><p>The final semi-structured interview included 10 questions focused on the experience and the use of the anchors, social acceptability, and the use of anchors in different journeys (please refer to Appendix B for the full interview guide). During the interview, participants were encouraged to discuss the differences and similarities between the two journeys in relation to each interview question. If needed, participants were probed to further explain or clarify their ideas. Each participant took an average of 25 minutes to complete the interview. All interviews were recorded, ensuring the anonymity of the participant, and then later transcribed for thematic analysis.</p><p>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:17</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Quantitative Data Results</head><p>To conduct quantitative analysis, the answers "Strongly Disagree" to "Strongly Agree" were converted to scores 1 to 5 respectively. The Wilcoxon signed-rank test was used to analyse the results and showed a significant difference between the two journeys for the following three statements: "Being able to see the anchors was useful." (p=0.33, z=-2.126, moderate effect size, d=0.60), where the usefulness of the anchors was higher for a self-managed journey; "I had to focus on my journey progress." (p&lt;.001, z=-3.436, large effect size, d=2. <ref type="bibr" target="#b23">24)</ref>, where participants had to focus on their journey progress more in a self-managed journey; "I felt immersed in the documentary during my journey." (p=.006, z=2.749, large effect size, d=0.85), where participants felt more immersed in the documentary in the externally managed journey. There were no differences between the journeys for the remaining statements. These results were in line with our definitions for self-managed and externally managed journeys.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Qualitative Data Results</head><p>Once transcribed, all interviews were coded as in the first experiment. In the following sections, we present a subset of the themes most relevant to our research questions.</p><p>4.5.1 Prioritising Reality Anchors for Self-Managed Versus Externally Managed Journeys. Interview analysis showed that participants prioritised the use of anchors differently for self-managed and externally managed journeys. Participants considered the following: a) if they need to track the route, b) if passengers are expected to change throughout the journey and c) if they are approaching their destination.</p><p>Tracking the route was especially important for self-managed journeys. All participants used the signage anchor in the self-managed journey, and most participants turned the anchor on as soon as the journey started, P2: "there was a need for the signage from the get-go". Keeping track of the route was important as missing a stop would be difficult to rectify, P10: "if you pass the station you want to go to, you probably will take more time to get back". Interestingly, a few participants also noted that the time in VR felt distorted, potentially contributing to the loss of awareness if no anchors were present, P5: "time moves differently in VR somehow. It moves a bit faster", further increasing the need to see the stop information. For externally managed journeys, tracking of the route was not as important, P14: "on the express journey, because I wasn't worried about my stops, I don't need the signage". All the participants used the signage anchor, but almost half of the participants turned it on halfway through the journey. Participants' answers revealed that this was because the sign was used to check on the journey, but not to keep constant track of the progress, P17: "I knew that I did not have to get off at a certain stop, so I put the stop on just over halfway, whilst in the other one I would have put it on ages ago".</p><p>The expectation of passengers to change was another factor influencing anchor choices for self-managed and externally managed journeys. Self-managed journeys were associated with a high passenger turnover, reinforcing the findings of the first experiment. Most participants had the passenger anchor on at least at some point throughout the self-managed journey. However, contrary to the use of the signage, the passenger anchor was used sporadically rather than kept constant throughout the journey. Participants used the anchor to "check-in" on the passengers in between the stops, P2: "the passengers were only useful in that period between its stopping and starting again because that's the only time I actually really care about passengers, who's coming on who's getting off". Participants also found the passengers to be more distracting from the documentary than other anchors, which also resulted in periodical checking instead of constant use of the anchor, P3: "I realized that I didn't really look at the people. They were just annoying because I could see them and not watch the film so much". For externally managed journeys passenger turnover was not seen as a big concern. Participants did not display a consistent use of the passenger anchor and some did not turn it on at all. Lack of passenger turnover, however, did not affect the need to see the belongings which was the most consistently used anchor in both journeys. The majority of participants used the anchor at least at some point in both experiences and noted that upon occluding the reality it is important to check on possessions, P7: "first I need to ensure my bag is safe", P16: "so at the beginning, I just selected my possession, because that's the important thing". Participants' reflections revealed that the need to use the furniture anchor was not influenced by tracking the journey, passenger turnover or approaching the destination. Furniture only served the purpose at the start of the journey, to paint a mental picture of the environment: P17: "the furniture was useful at the start because I could see the pole and it is a hazard, but after I got used to, I turned it off.", or as a reminder of the subway environment, P2: "when I wanted to remind myself that it was a subway, that's when I enabled the furniture", but was not prioritized differently in a self-managed or externally managed journeys. Maintaining awareness of the subway environment also helped to focus on the task, as participants were less worried about their surroundings, P1: "my possessions and the fact that I knew where I was, it increased my immersion". Interestingly, the option to increase the visibility was not commonly used by passengers as they thought it was P1: "distracting", due to the visual space it takes in the scene. However, the option was still used by those participants who were most worried about other passengers.</p><p>The findings also showed that as the journeys progressed, the need for the anchors changed. Participants employed several methods to determine if a change in the anchor selection was needed. This was especially prominent in self-managed journeys. Participants re-evaluated the safety of their environment, P9: "in the middle, I just wanted to see what's happening around me, just for a second, so I just looked around and then I closed it", and if other passengers might be a cause of worry, P10: "there's one next to me, but she looks fine and the other two, they talked to each other, so I think my things are safe, so unselected the passengers in the middle of the journey". Lastly, as participants were getting closer to their destination, the need for the anchors increased, P5: "I turned on the passengers and possessions and stuff to kind of prepare so I can grab my bag and if the passengers stood up, I could stand up as well". For externally managed journeys, participants felt that they could immerse themselves more, P1: "in the express, it was much easier to focus on the documentary because I didn't have to pay attention to the stuff", whilst, throughout the middle of the journey, the need to maintain awareness increased for some, P17: "at first I turned off the signage but then I got a bit more nervous halfway through". Journey length was not a contributing factor if the trip was considered "long enough" for an immersive experience. The following will discuss the seat arrangement and familiarity with the route.</p><p>As part of the discussion, participants were asked to think about VR use on different journeys. The analysis of the answers revealed that the seating configuration could contribute to how comfortable the participants would be using the headset, and which anchors they would choose. Seating that blocked other people, P17: "in a bus, you can have people sat next to you, so if someone wants to get up it is a lot more difficult", or opposite to other passengers, P5: "because on the subway the person is directly opposite you, so he can actually stare at you", was linked to more uncomfortable experience where the participant would need to endure an awkward social situation. Contrary to this, spaces that allow for easy get around, P7: "the space is huge [on a train]. The most important is the passengers next to you don't need my help if they want to access the train", or where people were not expected to move, P6: "on a plane, once you sit in your seats, you know who is sitting next to you and that's it", were seen as more appropriate for an immersive experience. Seating arrangement also defined if a passenger anchor might be needed, P17: "on a plane, I think Participants also reflected on the familiarity of the journey, with the answers showing that despite the journey length, they felt that an unfamiliar journey would not be acceptable for an immersive experience, P10: "in an unfamiliar journey I will prefer not to use it because everything is unfamiliar. I need to take care, but on a familiar journey I will probably use it.", whilst a familiar route is less unpredictable, P3: "I would feel more relaxed to use it because I know what to expect every day". Finally, one participant also noted that the perception of the environment would be an important factor as well for the overall choice to use a headset, P10: "if the place is too noisy, then I will not use it because I feel that is a little bit dangerous", suggesting that a sense of safety might override environment expectations based on familiarity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">DISCUSSION</head><p>Through our first study, we explored how Reality Anchors could reduce concerns associated with immersive technology use on public transport. The first experiment was an initial look at the Anchors to understand which Anchors and why would be useful for travelling contexts. Our second experiment explored the Anchors for two different journey types to understand what defines different journey types and how different journey types influence the use of the Anchors. Overall, our work shows that Reality Anchors have the potential to increase immersive technology acceptance, yet there are further challenges to overcome. Our key findings and challenges for the future are discussed below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Maintaining Awareness on Public Transport</head><p>Previous work that looked at immersive technology use in travelling contexts <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b64">65,</ref><ref type="bibr" target="#b73">74,</ref><ref type="bibr" target="#b74">75]</ref>, highlighted the importance of maintaining awareness of the surrounding environment to increase immersive technology acceptance. Our work uncovered that not all objects from the environment are seen as equally important and are prioritised on their ability to increase the sense of safety, added value, distraction, a natural fit for the virtual environment, and journey type. Our most important anchor was found to be other passengers, which increased the feelings of safety, social acceptability and awareness (RQ1). Passengers were seen as the most dangerous element in the travel environment due to their dynamic nature, compared to furniture that remained static and added the least value to maintaining awareness. However, our work also showed that increasing awareness of reality leads to reduced immersion, especially when the anchors block the view of the virtual content. Our second experiment extended this further, showing that not all anchors are used continuously throughout the journey to preserve immersion. The second experiment made available the following anchors: passengers, personal belongings, signage and furniture. Participants demonstrated that the anchors were either used continuously or to "check-in". For those anchors that were more distracting, which included people or furniture, participants would periodically turn them on and off to maintain awareness. Contrary to that, the anchors that were less distracting or required continuous observation, such as the signage and the belongings were kept on constantly or for longer durations.</p><p>Self-managed and externally managed journeys showed the need for different anchors (RQ3). The need was determined by the necessity to track the trip, passenger turnover, and getting close to the destination. For self-managed journeys participants found it to be important to maintain continuous awareness of the subway environment and their journey. They used the signage anchor continuously and wanted to be reminded of the subway environment. For externally managed journeys, continuous awareness was not necessary, and most did not turn the sign on until at least halfway through the journey. Regardless of journey type, participants also expressed the necessity to keep constant awareness of their belongings and used the anchor the most. Passenger turnover was another key factor defining anchor use. For self-managed journeys, the expectation for turnover was high, therefore the participants used the anchor more consistently throughout the journey compared to an externally managed journey where other passengers are not expected to move or change as much. Finally, as the journey progressed participants reevaluated the safety of the environment and the need for the anchors (RQ4). If the environment was deemed to be safe, then some anchors could be removed. In addition, if the journey was coming to an end, the need for the anchors increased for both journey types. Participants used the anchors as a way to prepare to leave the train.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Reality Anchors That Match Journey Needs</head><p>Our work shows that the need and the choice of the anchors are influenced by the type of journey. Previously work tends to classify the journeys by the mode of transport <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b15">16,</ref><ref type="bibr" target="#b64">65,</ref><ref type="bibr" target="#b74">75]</ref> but our work argues that these are the following classifiers that define a journey: if it is a self-managed or an externally managed journey, likelihood for passenger turnover, seat arrangement, and familiarity with the route (RQ5). Our work introduces the idea of self-managed and externally managed journeys as a new way to describe a travelling experience. A self-managed journey is often associated with a short duration, does not have a clear end and has constant passenger turnover, resulting in increased worries about safety and journey awareness. An externally managed journey is described as one that has a clear endpoint to the trip that a passenger does not need to track, is less likely to have much passenger turnover, can be longer in duration, and is often perceived as boring, making entertainment an acceptable way to pass time.</p><p>The likelihood of changing passengers can result in increased worries about safety influencing the use of an immersive headset. Seat arrangement was another way that our participants described different journeys. Although the idea of exploring how different seating arrangements can influence the use of an immersive experience has received initial interest <ref type="bibr" target="#b62">[63]</ref>, it requires further exploration. Our work showed that being able to avoid uncomfortable social interactions is key to an acceptable experience. Further work will need to investigate what can be done in scenarios where an awkward interaction is unavoidable to alleviate this concern. Finally, our last uncovered descriptor was the familiarity with the route. Unfamiliar routes were perceived as more dangerous and unpredictable, making them less acceptable for immersive experiences. Contrary to that, familiar routes were perceived as more predictable or boring, whereas an immersive experience could be welcomed. Further work in this area needs to investigate how an immersive experience can support a passenger on an unfamiliar route, to increase the acceptance of immersive technologies.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">The Mismatch Between Virtuality and Reality</head><p>Although our study did not initially set up to investigate how the Anchors should be visualised, we found that the mismatch between virtual and real objects was an influential factor in anchor choice. The virtual scene affected how "natural" anchors seemed within the environment. Some participants thought that it was weird to see people clashing with other objects, or floating in space, resonating with previous research in the area <ref type="bibr" target="#b41">[42]</ref>. However, for travelling contexts, distorting the references to the objects was seen as unacceptable, as that would lead to loss of awareness, which was found to be essential. The clash of furniture and virtual objects was more profound in the 2D-fixed video in a room versus a 360-video virtual environment. Overall, the 360 virtual environment was found to be more immersive, and more disconnected from the bus environment. This influenced the perception of the anchors (RQ2). The closer the virtual environment was to the real environment (such as seeing a cinema room couch clashing with seats from the bus), the more uncomfortable participants felt, resulting in a reluctance to use the anchors that made them feel awkward. Contrary to that, the 360-environment felt far disconnected from the bus, and even though that made the anchors seem more random, the discomfort was not as strong. It would require further exploration to understand how the Reality Anchors could be made to feel more natural, yet at the same time ensuring that the awareness of reality is maintained.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">A Future Vision of Reality Anchors</head><p>Our studies investigated possible applications of immersive technologies for passengers in the future, where users can control and customise how they are able to experience reality. Current technology is not yet able to achieve this, particularly in terms of visualizing and tracking obstructed real-world cues with immersive technology headsets. However, we believe it is likely that recent developments in the area will continue and overcome these limitations. Consumer headsets can already identify and convey the presence of objects and people visible within a user's 'playspace' (e.g. Oculus Space Sense). Additionally, developer tools like ARCore <ref type="bibr" target="#b92">[94]</ref>, ARKit <ref type="bibr" target="#b93">[95]</ref>, and Snaplens Studio <ref type="bibr" target="#b94">[96]</ref> already offer object segmentation. Minor advances in this area could allow for the inclusion of signs and avatars within immersive headsets. However, being able to fully sense an entire cabin, which may be necessary for full awareness, could need new sensing or shared data infrastructure. Public transit already uses occupancy sensors (e.g., <ref type="bibr" target="#b95">[97,</ref><ref type="bibr" target="#b96">98]</ref>) and CCTV cameras <ref type="bibr" target="#b97">[99]</ref> to ensure passenger safety and comfort. These approaches could be extended to include sensors such as depth cameras or RADAR to detect passengers and furniture in the environment. This information could then be broadcasted anonymously to headsets in the area, which could use it to represent Reality Anchors, similar to the approach of broadcasted vehicle telemetry discussed by McGill et. al <ref type="bibr" target="#b46">[47]</ref>. In addition, privacy-preserving sensor data collected by each headset could also be shared with other immersive technology users in the local environment to avoid occlusion problems. Leveraging distributed sensing in a shared environment has already been proposed by Meta in their plans for 'Live Maps', which are based on distributed AR headsets <ref type="bibr" target="#b98">[100]</ref>. Finally, users' own devices can be used to provide additional information about the immediate environment. The wide-angle cameras on the headsets could collect visual information about the surroundings which can be used to infer things about the movements of other passengers and objects. In addition, the non-visual cues about users' personal items could also be incorporated and obtained using tags with IMU (Inertial Measurement Unit) sensors, considering the growing popularity of similar devices, such as the Apple air tags <ref type="bibr" target="#b99">[101]</ref>, allowing the headset to alert the users of the movement of their belongings.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">LIMITATIONS AND FUTURE WORK</head><p>It is important to consider the following experimental design and technological limitations when interpreting our findings. First, our studies employed speculative design methods and VR simulations to explore the concept of Reality Anchors. The feasibility of the proposed approach will depend on advancements in sensor and camera technology and the adoption of privacypreserving sensor data-sharing mechanisms. Second, both studies employed VR to mimic transit scenarios. While previous research has shown that VR is a powerful alternative to in-field studies, as it saves time, ensures safety and control in the experimental set-up <ref type="bibr" target="#b37">[38,</ref><ref type="bibr" target="#b39">40]</ref>, and can yield comparable behaviours to those in the wild <ref type="bibr" target="#b37">[38,</ref><ref type="bibr" target="#b61">62]</ref>, there is no previous work that compares the validity of findings from in transit studies conducted in the wild versus in VR. Thus, running a study in the wild could result in different findings, and should be conducted as a follow-up to this work in the future. Our studies also used a fixed task -watching a documentary -for all conditions to prevent introducing confounding variables, however, using different types of tasks, e.g. games or a collaborative assignment should be further explored to explore the effect of the task on Reality Anchors. Finally, our built VR scenes used digital avatars to represent other passengers, as previous research has shown that increased fidelity is not necessary to convey presence <ref type="bibr" target="#b40">[41]</ref>,</p><p>yet further work is needed to explore impromptu interactions between passengers as they typically naturally occur when in transit situations and could not be effectively simulated by digital avatars.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">CONCLUSIONS</head><p>We presented two experiments that investigated the use of Reality Anchors, cues from reality that help anchor a user in immersive applications in travelling contexts and showed that they could significantly improve user acceptance of immersive technologies on public transport. Our first study captured the initial reactions to the concept and demonstrated that the visibility of other passengers and one's belongings can significantly increase the acceptance of immersive technologies. Our second study extended this by looking at how different journey types influence the need and the use of the anchors. Our findings showed that different journey types have an impact on anchor requirements. We also saw that self-managed journeys require more awareness than externally managed journeys and that the need for the anchors increases as the journey progresses. Finally, we presented a new way to define journeys based on the following factors: if it is a self-managed or externally managed journey, the likelihood of passenger turnover, seat arrangement, and familiarity with the route. Our work shows that Reality Anchors is a successful first step towards increasing the acceptance of immersive technology use on public transport.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>28 : 4 Laura</head><label>284</label><figDesc>Bajorunaite, Stephen Brewster, &amp; Julie R. Williamson</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. Reality-Virtuality (RV) Continuum proposed by Milgram and Colquhoun [50].</figDesc><graphic coords="5,125.23,282.51,234.89,83.05" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>28 : 6 Laura</head><label>286</label><figDesc>Bajorunaite, Stephen Brewster, &amp; Julie R. Williamson</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:7</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Study 1 set-up in Unity. a) the bus scene, shown at the start of each condition; b) the questionnaire screen.</figDesc><graphic coords="8,109.50,168.27,266.54,159.15" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Study 1 conditions. a) 'No Cues' condition in the 2D-fixed video in a room; b) 'People visible' in the 2D-fixed video in a room; c) 'Furniture (incl. belongings) visible' in the 2D-fixed video in a room; d) 'People and Furniture (incl. belongings) visible' in the 2D-fixed video in a room; e) 'No Cues' condition in the 360degree video; f) 'People visible' in the 360-degree video; g) 'Furniture (incl. belongings) visible' in the 360degree video; h) 'People and Furniture (incl. belongings) visible' in the 360-degree video.</figDesc><graphic coords="8,49.18,369.02,387.62,130.65" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Median scores of participants' ratings to the six questionnaire statements, split by the virtual environment.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>3. 4 . 5</head><label>45</label><figDesc>Escapism. Both the Reality Anchors (F(3,57)=8.15, p&lt;0.01) and Virtual Environments (F(1,19)=12.42, p&lt;0.01) factors showed significant main effects for Escapism. Interaction effects between Reality Anchors and Virtual Environments were also significant (F(3,57)=3.45, p=0.022).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Study 2 set-up in Unity. a), b) other passengers in the subway scene, d), e), f) Reality Anchors showing 'Other Passengers', 'Next station signage', and 'Furniture' visible in the increased radius mode, and c) a pop-up menu for Anchor selection.</figDesc><graphic coords="16,64.28,373.49,357.45,220.79" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>28 : 16 Laura</head><label>2816</label><figDesc>Bajorunaite, Stephen Brewster, &amp; Julie R. Williamson</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>4. 5 . 2</head><label>52</label><figDesc>Key Characteristics of Different Journey Types. Our first study indicated that different journey types affected Reality Anchor use. Our second study uncovered what other factors determine a journey type, including a) if it is a self-managed or externally managed journey, b) the likelihood for passenger turnover, c) seat arrangement, and d) familiarity with the route.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head></head><label></label><figDesc>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:21</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:11</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head></head><label></label><figDesc>Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:19 maybe the passengers' anchor is less necessary, you sit in one seat for a long time", or one's possessions might need to be moved for other passengers, P5: "on the bus, you're more likely to keep your possessions right next to you. If someone wants to sit there and you have to move your possessions, I'm more likely to use anchors there".</figDesc><table /></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>This research was funded by the <rs type="funder">European Research Council (ERC)</rs> under the European Union's <rs type="programName">Horizon 2020 research and innovation programme</rs> (#<rs type="grantNumber">835197</rs>, ViAjeRo).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_SKqQjNh">
+					<idno type="grant-number">835197</idno>
+					<orgName type="program" subtype="full">Horizon 2020 research and innovation programme</orgName>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" />			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Assessing the Impact of Mixed Reality Immersion on Presence and Embodiment</title>
+		<author>
+			<persName><forename type="first">Alexandre</forename><surname>Abbey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thibault</forename><surname>Porssut</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruno</forename><surname>Herbelin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ronan</forename><surname>Boulic</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3487983.3488304</idno>
+		<ptr target="https://doi.org/10.1145/3487983.3488304" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -MIG 2021: 14th ACM SIGGRAPH Conference on Motion, Interaction, and Games</title>
+		<meeting>-MIG 2021: 14th ACM SIGGRAPH Conference on Motion, Interaction, and Games</meeting>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Hype Dlive: XR Live Performance System for Improving Passenger Comfort in Autonomous Driving</title>
+		<author>
+			<persName><forename type="first">Takuto</forename><surname>Akiyoshi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Masashi</forename><surname>Abe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuki</forename><surname>Shimizu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yusaku</forename><surname>Takahama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Koki</forename><surname>Nagata</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yosuke</forename><surname>Okami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Taishi</forename><surname>Sawabe</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3527188.3563916</idno>
+		<ptr target="https://doi.org/10.1145/3527188.3563916" />
+	</analytic>
+	<monogr>
+		<title level="m">HAI 2022 -Proceedings of the 10th Conference on Human-Agent Interaction</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="296" to="298" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">User expectations of everyday gaze interaction on smartglasses</title>
+		<author>
+			<persName><forename type="first">Deepak</forename><surname>Akkil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrés</forename><surname>Lucero</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jari</forename><surname>Kangas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tero</forename><surname>Jokela</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marja</forename><surname>Salmimaa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roope</forename><surname>Raisamo</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2971485.2971496</idno>
+		<ptr target="https://doi.org/10.1145/2971485.2971496" />
+	</analytic>
+	<monogr>
+		<title level="m">ACM International Conference Proceeding Series</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Performer vs. observer: Whose comfort level should we consider when examining the social acceptability of input modalities for head-worn display?</title>
+		<author>
+			<persName><forename type="first">Fouad</forename><surname>Alallah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Khalad</forename><surname>Hasan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ali</forename><surname>Neshati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><surname>Lank</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pourang</forename><surname>Irani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yumiko</forename><surname>Sakamoto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrea</forename><surname>Bunt</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3281505.3281541</idno>
+		<ptr target="https://doi.org/10.1145/3281505.3281541" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM Symposium on Virtual Reality Software and Technology</title>
+		<meeting>the ACM Symposium on Virtual Reality Software and Technology</meeting>
+		<imprint>
+			<publisher>VRST, Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Virtual Reality in transit: how acceptable is VR use on public transport?</title>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Bajorunaite</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><forename type="middle">R</forename><surname>Williamson</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VRW52623.2021.00098</idno>
+		<ptr target="https://doi.org/10.1109/VRW52623.2021.00098" />
+	</analytic>
+	<monogr>
+		<title level="m">2021 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="432" to="433" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Evaluating design fiction: The right tool for the job</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Eric</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Baumer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theresa</forename><forename type="middle">Jean</forename><surname>Blythe</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tanenbaum</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3357236.3395464</idno>
+		<ptr target="https://doi.org/10.1145/3357236.3395464" />
+	</analytic>
+	<monogr>
+		<title level="m">DIS 2020 -Proceedings of the 2020 ACM Designing Interactive Systems Conference</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1901" to="1913" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Techniques and Procedures for Developing Grounded Theory</title>
+		<author>
+			<persName><forename type="first">Juliet</forename><surname>Corbin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anselm</forename><surname>Strauss</surname></persName>
+		</author>
+		<idno type="DOI">10.4135/9781452230153</idno>
+		<ptr target="https://doi.org/10.4135/9781452230153" />
+	</analytic>
+	<monogr>
+		<title level="m">Techniques and Procedures for Developing Grounded Theory</title>
+		<imprint>
+			<date type="published" when="2012">2012. 2012</date>
+			<biblScope unit="page" from="2021" to="2022" />
+		</imprint>
+	</monogr>
+	<note>Basics of Qualitative Research</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<ptr target="https://www.gov.uk/government/collections/bus-statistics" />
+		<title level="m">Annual Bus Statistics</title>
+		<imprint>
+			<publisher>Department for Transport</publisher>
+			<date type="published" when="2019-09-20">2020. 2019/20. September 5, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<ptr target="https://www.business2community.com/tech-gadgets/5-reasons-google-glass-miserable-failure-01462398" />
+		<title level="m">Reasons Why Google Glass was a Miserable Failure -Business 2 Community</title>
+		<meeting><address><addrLine>Bob Doyle</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2016-06-04">2016. June 4, 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<author>
+			<persName><forename type="first">Anthony</forename><surname>Dunne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fiona</forename><surname>Raby</surname></persName>
+		</author>
+		<title level="m">Speculative Everything: Design, Fiction, and Social Dreaming</title>
+		<imprint>
+			<publisher>The MIT Press</publisher>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Social acceptability of virtual reality in public spaces: Experiential factors and design recommendations. PervasiveHealth: Pervasive Computing Technologies for Healthcare</title>
+		<author>
+			<persName><forename type="first">Pouya</forename><surname>Eghbali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kaisa</forename><surname>Väänänen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tero</forename><surname>Jokela</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3365610.3365647</idno>
+		<ptr target="https://doi.org/10.1145/3365610.3365647" />
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A Reconfigurable Mobile Head-Mounted Display Supporting Real World Interactions</title>
+		<author>
+			<persName><forename type="first">Isamu</forename><surname>Endo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kazuki</forename><surname>Takashima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maakito</forename><surname>Inoue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kazuyuki</forename><surname>Fujita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kiyoshi</forename><surname>Kiyokawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshifumi</forename><surname>Kitamura</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3411763.3451765</idno>
+		<ptr target="https://doi.org/10.1145/3411763.3451765" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Crowding and personal space invasion on the train: Please don&apos;t make me sit in the middle</title>
+		<author>
+			<persName><forename type="first">Gary</forename><forename type="middle">W</forename><surname>Evans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><forename type="middle">E</forename><surname>Wener</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jenvp.2006.10.002</idno>
+		<ptr target="https://doi.org/10.1016/j.jenvp.2006.10.002" />
+	</analytic>
+	<monogr>
+		<title level="j">J Environ Psychol</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="90" to="94" />
+			<date type="published" when="2007-03">2007. March 2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Causality-preserving Asynchronous Reality</title>
+		<author>
+			<persName><forename type="first">Andreas</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rene</forename><surname>Fender</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christian</forename><surname>Holz</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3491102.3501836</idno>
+		<ptr target="https://doi.org/10.1145/3491102.3501836" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<author>
+			<persName><forename type="first">Nikos</forename><surname>Frangakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giannis</forename><surname>Karaseitanidis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D'</forename><surname>Mirabelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Harshada</forename><surname>Cruz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Betty</forename><surname>Patel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthias</forename><surname>Mohler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kaj</forename><surname>Bues</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Helin</surname></persName>
+		</author>
+		<idno type="DOI">10.13140/RG.2.2.14183.88481</idno>
+		<ptr target="https://doi.org/10.13140/RG.2.2.14183.88481" />
+		<title level="m">VR-HYPERSPACE Research Roadmap</title>
+		<imprint>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Making time count: Traveler activity engagement on urban transit</title>
+		<author>
+			<persName><forename type="first">Charlotte</forename><surname>Frei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Mahmassani</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Frei</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.tra.2014.12.007</idno>
+		<ptr target="https://doi.org/10.1016/j.tra.2014.12.007" />
+	</analytic>
+	<monogr>
+		<title level="j">Transp Res Part A Policy Pract</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="page" from="58" to="70" />
+			<date type="published" when="2015-06">2015. June 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Seamless, Bi-directional Transitions along the Reality-Virtuality Continuum: A Conceptualization and Prototype Exploration</title>
+		<author>
+			<persName><forename type="first">Ceenu</forename><surname>George</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">An</forename><surname>Ngo Tien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Heinrich</forename><surname>Hussmann</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ISMAR50242.2020.00067</idno>
+		<ptr target="https://doi.org/10.1109/ISMAR50242.2020.00067" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -2020 IEEE International Symposium on Mixed and Augmented Reality</title>
+		<meeting>-2020 IEEE International Symposium on Mixed and Augmented Reality</meeting>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+			<biblScope unit="volume">2020</biblScope>
+			<biblScope unit="page" from="412" to="424" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">NotifiVR: Exploring Interruptions and Notifications in Virtual Reality</title>
+		<author>
+			<persName><forename type="first">Sarthak</forename><surname>Ghosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lauren</forename><surname>Winston</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nishant</forename><surname>Panchal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philippe</forename><surname>Kimura-Thollander</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeff</forename><surname>Hotnog</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Douglas</forename><surname>Cheong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gabriel</forename><surname>Reyes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">D</forename><surname>Abowd</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVCG.2018.2793698</idno>
+		<ptr target="https://doi.org/10.1109/TVCG.2018.2793698" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Vis Comput Graph</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1447" to="1456" />
+			<date type="published" when="2018-04">2018. April 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Design and Assessment of a Collaborative 3D Interaction Technique for Handheld Augmented Reality</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Jeronimo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Henrique</forename><forename type="middle">G</forename><surname>Grandi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iago</forename><surname>Debarba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luciana</forename><surname>Bemdt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anderson</forename><surname>Nedel</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Maciel</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VR.2018.8446295</idno>
+		<ptr target="https://doi.org/10.1109/VR.2018.8446295" />
+	</analytic>
+	<monogr>
+		<title level="m">25th IEEE Conference on Virtual Reality and 3D User Interfaces</title>
+		<imprint>
+			<publisher>Institute of Electrical and Electronics Engineers Inc</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="49" to="56" />
+		</imprint>
+	</monogr>
+	<note>VR 2018 -Proceedings</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Working on the train: from &apos;dead time&apos; to productive and vital time</title>
+		<author>
+			<persName><forename type="first">Mattias</forename><surname>Gripsrud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Randi</forename><surname>Hjorthol</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11116-012-9396-7</idno>
+		<ptr target="https://doi.org/10.1007/s11116-012-9396-7" />
+	</analytic>
+	<monogr>
+		<title level="j">Transportation (Amst)</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="941" to="956" />
+			<date type="published" when="2012-09">2012. September 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Aerial screens</title>
+		<author>
+			<persName><surname>Groening</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/07341512.2013.858523</idno>
+		<ptr target="https://doi.org/10.1080/07341512.2013.858523" />
+	</analytic>
+	<monogr>
+		<title level="j">Hist Technol</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="284" to="303" />
+			<date type="published" when="2013">2013. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Challenges Using Head-Mounted Displays in Shared and Social Spaces</title>
+		<author>
+			<persName><forename type="first">Jan</forename><surname>Gugenheimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christian</forename><surname>Mai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Frank</forename><surname>Steinicke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ken</forename><surname>Perlin</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3290607.3299028</idno>
+		<ptr target="https://doi.org/10.1145/3290607.3299028" />
+	</analytic>
+	<monogr>
+		<title level="m">Extended Abstracts of the 2019 CHI Conference on Human Factors in Computing Systems</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1" to="8" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">ShareVR: Enabling co-located experiences for virtual reality between HMD and Non-HMD users</title>
+		<author>
+			<persName><forename type="first">Jan</forename><surname>Gugenheimer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Evgeny</forename><surname>Stemasov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julian</forename><surname>Frommel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Enrico</forename><surname>Rukzio</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3025453.3025683</idno>
+		<ptr target="https://doi.org/10.1145/3025453.3025683" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="4021" to="4033" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<title level="m" type="main">The Hidden Dimension</title>
+		<author>
+			<persName><forename type="first">Edward</forename><forename type="middle">T</forename><surname>Hall</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1966">1966</date>
+			<publisher>The Bodley Head</publisher>
+			<pubPlace>London</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">RealityCheck: Blending virtual environments with situated physical reality</title>
+		<author>
+			<persName><forename type="first">Jeremy</forename><surname>Hartmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christian</forename><surname>Holz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eyal</forename><surname>Ofek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">D</forename><surname>Wilson</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3290605.3300577</idno>
+		<ptr target="https://doi.org/10.1145/3290605.3300577" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="1" to="12" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Designing a willing-to-use-in-public hand gestural interaction technique for smart glasses</title>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Ta Hsieh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antti</forename><surname>Jylhä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Valeria</forename><surname>Orso</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luciano</forename><surname>Gamberini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giulio</forename><surname>Jacucci</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2858036.2858436</idno>
+		<ptr target="https://doi.org/10.1145/2858036.2858436" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="4203" to="4215" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">All The World&apos;s a Stage</title>
+		<author>
+			<persName><forename type="first">Norene</forename><surname>Kelly</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3137093</idno>
+		<ptr target="https://doi.org/10.1145/3137093" />
+		<imprint>
+			<date type="published" when="2017">2017. 2017</date>
+			<publisher>What Makes a Wearable Socially Acceptable. Interactions</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">The WEAR Scale : Developing a Measure of the Social Acceptability of a Wearable Device</title>
+		<author>
+			<persName><forename type="first">Norene</forename><surname>Kelly</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">B</forename><surname>Gilbert</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2851581.2892331</idno>
+		<ptr target="https://doi.org/10.1145/2851581.2892331" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2016 CHI Conference Extended Abstracts on Human Factors in Computing Systems (CHI EA &apos;16)</title>
+		<meeting>the 2016 CHI Conference Extended Abstracts on Human Factors in Computing Systems (CHI EA &apos;16)</meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="2864" to="2871" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">The dream is collapsing: The experience of exiting VR</title>
+		<author>
+			<persName><forename type="first">Jarrod</forename><surname>Knibbe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonas</forename><surname>Schjerlund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mathias</forename><surname>Petraeus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kasper</forename><surname>Hornbaek</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3173574.3174057</idno>
+		<ptr target="https://doi.org/10.1145/3173574.3174057" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">All about acceptability? Identifying factors for the adoption of data glasses</title>
+		<author>
+			<persName><forename type="first">Marion</forename><surname>Koelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Abdallah</forename><surname>El Ali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vanessa</forename><surname>Cobus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wilko</forename><surname>Heuten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susanne</forename><forename type="middle">C J</forename><surname>Boll</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3025453.3025749</idno>
+		<ptr target="https://doi.org/10.1145/3025453.3025749" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="295" to="300" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Social Acceptability in HCI: A Survey of Methods, Measures, and Design Strategies</title>
+		<author>
+			<persName><forename type="first">Marion</forename><surname>Koelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Swamy</forename><surname>Ananthanarayan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susanne</forename><surname>Boll</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3313831.3376162</idno>
+		<ptr target="https://doi.org/10.1145/3313831.3376162" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems (CHI &apos;20)</title>
+		<meeting>the 2020 CHI Conference on Human Factors in Computing Systems (CHI &apos;20)</meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1" to="19" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Your Smart Glasses&apos; Camera bothers me! -Exploring Opt-in and Opt-out Gestures for Privacy Mediation</title>
+		<author>
+			<persName><forename type="first">Marion</forename><surname>Koelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Swamy</forename><surname>Ananthanarayan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Simon</forename><surname>Czupalla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wilko</forename><surname>Heuten</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3240167.3240174</idno>
+		<ptr target="https://doi.org/10.1145/3240167.3240174" />
+	</analytic>
+	<monogr>
+		<title level="m">ACM International Conference Proceeding Series</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="473" to="481" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">What is (un)acceptable?</title>
+		<author>
+			<persName><forename type="first">Marion</forename><surname>Koelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Olsson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robb</forename><surname>Mitchell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susanne</forename><surname>Boll</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3319073</idno>
+		<ptr target="https://doi.org/10.1145/3319073" />
+	</analytic>
+	<monogr>
+		<title level="j">Interactions</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="36" to="40" />
+			<date type="published" when="2019-04">2019. April 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Towards Balancing VR Immersion and Bystander Awareness</title>
+		<author>
+			<persName><forename type="first">Yoshiki</forename><surname>Kudo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anthony</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kazuyuki</forename><surname>Fujita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Isamu</forename><surname>Endo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kazuki</forename><surname>Takashima</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoshifumi</forename><surname>Kitamura</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3486950</idno>
+		<ptr target="https://doi.org/10.1145/3486950" />
+	</analytic>
+	<monogr>
+		<title level="j">Proc ACM Hum Comput Interact</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+	<note>ISS</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Remixed reality: Manipulating space and time in augmented Reality</title>
+		<author>
+			<persName><forename type="first">David</forename><surname>Lindlbauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><forename type="middle">D</forename><surname>Wilson</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3173574.3173703</idno>
+		<ptr target="https://doi.org/10.1145/3173574.3173703" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Travel time use in the information age</title>
+		<author>
+			<persName><forename type="first">Glenn</forename><surname>Lyons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Urry</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.tra.2004.09.004</idno>
+		<ptr target="https://doi.org/10.1016/j.tra.2004.09.004" />
+	</analytic>
+	<monogr>
+		<title level="j">Transp Res Part A Policy Pract</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="page" from="257" to="276" />
+			<date type="published" when="2005-02">2005. February 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Feeling alone in public: investigating the influence of spatial layout on users&apos; VR experience</title>
+		<author>
+			<persName><forename type="first">Christian</forename><surname>Mai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tim</forename><surname>Wiltzius</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Alt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Heinrich</forename><surname>Hußmann</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3240167.3240200</idno>
+		<ptr target="https://doi.org/10.1145/3240167.3240200" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 10th Nordic Conference on Human-Computer Interaction</title>
+		<meeting>the 10th Nordic Conference on Human-Computer Interaction<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="286" to="298" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Virtual Field Studies: Conducting Studies on Public Displays in Virtual Reality</title>
+		<author>
+			<persName><forename type="first">Ville</forename><surname>Mäkelä</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rivu</forename><surname>Radiah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saleh</forename><surname>Alsherif</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohamed</forename><surname>Khamis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chong</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lisa</forename><surname>Borchert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Albrecht</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Alt</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3313831.3376796</idno>
+		<ptr target="https://doi.org/10.1145/3313831.3376796" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Do millennials value travel time differently because of productive multitasking? A revealed-preference study of Northern California commuters</title>
+		<author>
+			<persName><forename type="first">Aliaksandr</forename><surname>Malokin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giovanni</forename><surname>Circella</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Patricia</forename><forename type="middle">L</forename><surname>Mokhtarian</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s11116-020-10148-2</idno>
+		<ptr target="https://doi.org/10.1007/s11116-020-10148-2" />
+	</analytic>
+	<monogr>
+		<title level="j">Transportation (Amst)</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="2787" to="2823" />
+			<date type="published" when="2021-10">2021. October 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Replicueauth: Validating the use of a lab-based virtual reality setup for evaluating authentication systems</title>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Mathis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kami</forename><surname>Vaniea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohamed</forename><surname>Khamis</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3411764.3445478</idno>
+		<ptr target="https://doi.org/10.1145/3411764.3445478" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Observing Virtual Avatars: The Impact of Avatars&apos; Fidelity on Identifying Interactions</title>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Mathis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kami</forename><surname>Vaniea</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohamed</forename><surname>Khamis</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3464327.3464329</idno>
+		<ptr target="https://doi.org/10.1145/3464327.3464329" />
+	</analytic>
+	<monogr>
+		<title level="m">ACM International Conference Proceeding Series</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="154" to="164" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">A dose of reality: Overcoming usability challenges in VR head-mounted displays</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Boland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roderick</forename><surname>Murray-Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2702123.2702382</idno>
+		<ptr target="https://doi.org/10.1145/2702123.2702382" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<date type="published" when="2015-04">2015. 2015-April, (2015</date>
+			<biblScope unit="page" from="2143" to="2152" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Virtual reality passenger experiences</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3349263.3351330</idno>
+		<ptr target="https://doi.org/10.1145/3349263.3351330" />
+	</analytic>
+	<monogr>
+		<title level="m">Adjunct Proceedings -11th International ACM Conference on Automotive User Interfaces and Interactive Vehicular Applications</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="434" to="441" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">2017. I am the passenger: Challenges in supporting AR/VR HMDs in-motion</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><forename type="middle">A</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3131726.3131876</idno>
+		<ptr target="https://doi.org/10.1145/3131726.3131876" />
+	</analytic>
+	<monogr>
+		<title level="m">AutomotiveUI 2017 -9th International ACM Conference on Automotive User Interfaces and Interactive Vehicular Applications, Adjunct Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<biblScope unit="page">251</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Augmented, Virtual and Mixed Reality Passenger Experiences</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Laura</forename><surname>Bajorunaite</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Frank</forename><surname>Pollick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-030-77726-5_17</idno>
+		<ptr target="https://doi.org/10.1007/978-3-030-77726-5_17" />
+	</analytic>
+	<monogr>
+		<title level="m">Studies in Computational Intelligence. Springer Science and Business Media Deutschland GmbH</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="445" to="475" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Challenges in passenger use of mixed reality headsets in cars and other transportation</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Frank</forename><surname>Pollick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10055-019-00420-x</idno>
+		<ptr target="https://doi.org/10.1007/s10055-019-00420-x" />
+	</analytic>
+	<monogr>
+		<title level="j">Virtual Reality</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">PassengXR: A Low Cost Platform for Any-Car, Multi-User, Motion-Based Passenger XR Experiences</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Graham</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Medeiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3526113.3545657</idno>
+		<ptr target="https://doi.org/10.1145/3526113.3545657" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 35th Annual ACM Symposium on User Interface Software and Technology (UIST &apos;22)</title>
+		<meeting>the 35th Annual ACM Symposium on User Interface Software and Technology (UIST &apos;22)</meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Promoting reality awareness in virtual reality through proxemics</title>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Medeiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nadia</forename><surname>Rafael Dos Anjos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kun</forename><surname>Pantidi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mauricio</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Sousa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joaquim</forename><surname>Anslow</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Jorge</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VR50410.2021.00022</idno>
+		<ptr target="https://doi.org/10.1109/VR50410.2021.00022" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -2021 IEEE Conference on Virtual Reality and 3D User Interfaces</title>
+		<meeting>-2021 IEEE Conference on Virtual Reality and 3D User Interfaces</meeting>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+			<biblScope unit="volume">2021</biblScope>
+			<biblScope unit="page" from="21" to="30" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Google Glass Is Dead; Long Live Smart Glasses | MIT Technology Review</title>
+		<author>
+			<persName><forename type="first">Rachel</forename><surname>Metz</surname></persName>
+		</author>
+		<ptr target="https://www.technologyreview.com/2014/11/26/169918/google-glass-is-dead-long-live-smart-glasses/" />
+		<imprint>
+			<date type="published" when="2014-10-19">2014. October 19. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<monogr>
+		<title level="m" type="main">A taxonomy of real and virtual world display integration. Mixed Reality: Merging real and virtual worlds</title>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Milgram</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Herman</forename><surname>Colquhoun</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999">1999. 1999</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="1" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Crowd behaviour during high-stress evacuations in an immersive virtual environment</title>
+		<author>
+			<persName><forename type="first">Mehdi</forename><surname>Moussaïd</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mubbasir</forename><surname>Kapadia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tyler</forename><surname>Thrash</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">W</forename><surname>Sumner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dirk</forename><surname>Helbing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christoph</forename><surname>Hölscher</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rsif.2016.0414</idno>
+		<ptr target="https://doi.org/10.1098/rsif.2016.0414" />
+	</analytic>
+	<monogr>
+		<title level="j">J R Soc Interface</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">122</biblScope>
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Would you do it?: Enacting Moral Dilemmas in Virtual Reality for Understanding Ethical Decision-Making</title>
+		<author>
+			<persName><forename type="first">Evangelos</forename><surname>Niforatos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Palma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Roman</forename><surname>Gluszny</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3313831.3376788</idno>
+		<ptr target="https://doi.org/10.1145/3313831.3376788" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Athanasios Vourvopoulos, and Fotis Liarokapis</note>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<monogr>
+		<author>
+			<persName><forename type="first">Anton</forename><surname>Nijholt</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3460418.3480157</idno>
+		<ptr target="https://doi.org/10.1145/3460418.3480157" />
+		<title level="m">Experiencing Social Augmented Reality in Public Spaces. UbiComp/ISWC 2021 -Adjunct Proceedings of the 2021 ACM International Joint Conference on Pervasive and Ubiquitous Computing and Proceedings of the 2021 ACM International Symposium on Wearable Computers</title>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+			<biblScope unit="page" from="570" to="574" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Exploring Attitudes Towards Increasing User Awareness of Reality From Within Virtual Reality</title>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mohamed</forename><surname>Hagan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Khamis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><forename type="middle">R</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Williamson</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3505284.3529971</idno>
+		<ptr target="https://doi.org/10.1145/3505284.3529971" />
+	</analytic>
+	<monogr>
+		<title level="m">IMX 2022 -Proceedings of the 2022 ACM International Conference Reality Anchors: Bringing Cues from Reality to Increase Acceptance of Immersive Technologies in Transit 28:25 on Interactive Media Experiences</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="151" to="159" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Reality aware VR headsets</title>
+		<author>
+			<persName><forename type="first">O'</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julie</forename><forename type="middle">R</forename><surname>Hagan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Williamson</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3393712.3395334</idno>
+		<ptr target="https://doi.org/10.1145/3393712.3395334" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 9TH ACM International Symposium on Pervasive Displays</title>
+		<meeting>the 9TH ACM International Symposium on Pervasive Displays<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="9" to="17" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">How different are activities while commuting by train? A case in Tokyo</title>
+		<author>
+			<persName><forename type="first">Nobuaki</forename><surname>Ohmori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noboru</forename><surname>Harata</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/j.1467-9663.2008.00491.x</idno>
+		<ptr target="https://doi.org/10.1111/j.1467-9663.2008.00491.x" />
+	</analytic>
+	<monogr>
+		<title level="j">Tijdschrift voor Economische en Sociale Geografie</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="page" from="547" to="561" />
+			<date type="published" when="2008">2008. 2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Passenger-centric factors influencing the experience of aircraft comfort</title>
+		<author>
+			<persName><forename type="first">Harshada</forename><surname>Patel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mirabelle D'</forename><surname>Cruz</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01441647.2017.1307877</idno>
+		<ptr target="https://doi.org/10.1080/01441647.2017.1307877" />
+	</analytic>
+	<monogr>
+		<title level="j">Transp Rev</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="252" to="269" />
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<title level="m" type="main">360 Trip through London December 2018 -YouTube</title>
+		<author>
+			<persName><forename type="first">Martin</forename><surname>Perrett</surname></persName>
+		</author>
+		<ptr target="https://www.youtube.com/watch?v=yLLyEpe" />
+		<imprint>
+			<date type="published" when="2018-03-10">2018. March 10, 2022</date>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">2</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">See what I see: Concepts to improve the social acceptance of HMDs</title>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Pohl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carlos</forename><surname>Fernandez De Tejada Quemada</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VR.2016.7504756</idno>
+		<ptr target="https://doi.org/10.1109/VR.2016.7504756" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -IEEE Virtual Reality</title>
+		<meeting>-IEEE Virtual Reality</meeting>
+		<imprint>
+			<date type="published" when="2016-07">2016. 2016-July, (2016</date>
+			<biblScope unit="page" from="267" to="268" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">What do passengers do during travel time? Structured observations on buses and trains</title>
+		<author>
+			<persName><forename type="first">Marie</forename><surname>Russell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rachel</forename><surname>Price</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Louise</forename><surname>Signal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Stanley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zachery</forename><surname>Gerring</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jacqueline</forename><surname>Cumming</surname></persName>
+		</author>
+		<idno type="DOI">10.5038/2375-0901.14.3.7</idno>
+		<ptr target="https://doi.org/10.5038/2375-0901.14.3.7" />
+	</analytic>
+	<monogr>
+		<title level="j">J Public Trans</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="123" to="146" />
+			<date type="published" when="2011">2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Evaluation of prototypes and the problem of possible futures</title>
+		<author>
+			<persName><forename type="first">Antti</forename><surname>Salovaara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antti</forename><surname>Oulasvirta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Giulio</forename><surname>Jacucci</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3025453.3025658</idno>
+		<ptr target="https://doi.org/10.1145/3025453.3025658" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="2064" to="2077" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Comparing pedestrian navigation methods in virtual reality and real life</title>
+		<author>
+			<persName><forename type="first">Gian Luca</forename><surname>Savino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Niklas</forename><surname>Emanuel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steven</forename><surname>Kowalzik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Felix</forename><forename type="middle">A</forename><surname>Kroll</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marvin</forename><forename type="middle">C</forename><surname>Lange</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthis</forename><surname>Laudan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rieke</forename><surname>Leder</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhanhua</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dayana</forename><surname>Markhabayeva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Martin</forename><surname>Schmeißer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nicolai</forename><surname>Schütz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carolin</forename><surname>Stellmacher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zihe</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kerstin</forename><surname>Bub</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thorsten</forename><surname>Kluss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaime</forename><surname>Maldonado</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ernst</forename><surname>Kruijff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Johannes</forename><surname>Schöning</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3340555.3353741</idno>
+		<ptr target="https://doi.org/10.1145/3340555.3353741" />
+	</analytic>
+	<monogr>
+		<title level="m">ICMI 2019 -Proceedings of the 2019 International Conference on Multimodal Interaction</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="16" to="25" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Analysis of Interaction Spaces for VR in Public Transport Systems</title>
+		<author>
+			<persName><forename type="first">Thereza</forename><surname>Schmelter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristian</forename><surname>Hildebrand</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VRW50115.2020.00058</idno>
+		<ptr target="https://doi.org/10.1109/VRW50115.2020.00058" />
+	</analytic>
+	<monogr>
+		<title level="m">2020 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)</title>
+		<meeting><address><addrLine>Atlanta, GA</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="279" to="280" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Evaluation of guidance systems in public infrastructures using eye tracking in an immersive virtual environment</title>
+		<author>
+			<persName><forename type="first">Helmut</forename><surname>Schrom-Feiertag</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christoph</forename><surname>Schinko</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Settgast</forename><surname>Volker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stefan</forename><surname>Seer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">CEUR Workshop Proc</title>
+		<imprint>
+			<biblScope unit="volume">1241</biblScope>
+			<biblScope unit="page" from="62" to="66" />
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Virtual reality on the go? A study on social acceptance of VR glasses</title>
+		<author>
+			<persName><forename type="first">Valentin</forename><surname>Schwind</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jens</forename><surname>Reinhardt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rufat</forename><surname>Rzayev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Niels</forename><surname>Henze</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Katrin</forename><surname>Wolf</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3236112.3236127</idno>
+		<ptr target="https://doi.org/10.1145/3236112.3236127" />
+	</analytic>
+	<monogr>
+		<title level="m">MobileHCI 2018 -Beyond Mobile: The Next 20 Years -20th International Conference on Human-Computer Interaction with Mobile Devices and Services, Conference Proceedings Adjunct September (2018)</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="111" to="118" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Immersive Speculative Enactments: Bringing Future Scenarios and Technology to Life Using Virtual Reality</title>
+		<author>
+			<persName><forename type="first">Adalberto</forename><forename type="middle">L</forename><surname>Simeone</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robbe</forename><surname>Cools</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stan</forename><surname>Depuydt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maria</forename><surname>João</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Piet</forename><surname>Gomes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><surname>Goris</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Augusto</forename><surname>Grocott</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kathrin</forename><surname>Esteves</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Gerling</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3491102.3517492</idno>
+		<ptr target="https://doi.org/10.1145/3491102.3517492" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">Situated VR: Toward a Congruent Hybrid Reality Without Experiential Artifacts</title>
+		<author>
+			<persName><forename type="first">Misha</forename><surname>Sra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Valdemar</forename><surname>Danry</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pattie</forename><surname>Maes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kyle</forename><surname>Johnsen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Billinghurst</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MCG.2022.3154358</idno>
+		<ptr target="https://doi.org/10.1109/MCG.2022.3154358" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Comput Graph Appl</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="page" from="7" to="18" />
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Integrating Real-World Distractions into Virtual Reality</title>
+		<author>
+			<persName><forename type="first">Yujie</forename><surname>Tao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pedro</forename><surname>Lopes</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3526113.3545682</idno>
+		<ptr target="https://doi.org/10.1145/3526113.3545682" />
+	</analytic>
+	<monogr>
+		<title level="m">UIST 2022 -Proceedings of the 35th Annual ACM Symposium on User Interface Software and Technology</title>
+		<imprint>
+			<publisher>Association for Computing Machinery, Inc</publisher>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Technology-Mediated Experiences and Social Context: Relevant Needs in Private Vs. Public Interaction and the Importance of Others for Positive Affect</title>
+		<author>
+			<persName><forename type="first">Stefan</forename><surname>Pia Von Terzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alarith</forename><surname>Tretter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marc</forename><surname>Uhde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sarah</forename><surname>Hassenzahl</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Diefenbach</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fpsyg.2021.718315</idno>
+		<ptr target="https://doi.org/10.3389/fpsyg.2021.718315" />
+	</analytic>
+	<monogr>
+		<title level="j">Front Psychol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2021-09">2021. September 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<monogr>
+		<title level="m" type="main">THE SOCIAL ENVIRONMENT OF PUBLIC TRANSPORT</title>
+		<author>
+			<persName><forename type="first">Jared</forename><surname>Austin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Kay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Thomas</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<pubPlace>Victoria University of Wellington</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<author>
+			<persName><forename type="first">Harry</forename><surname>Timmermans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Van Der Waerden</surname></persName>
+		</author>
+		<idno type="DOI">10.3141/2054-01</idno>
+		<ptr target="https://doi.org/10.3141/2054-01" />
+	</analytic>
+	<monogr>
+		<title level="m">Synchronicity of Activity Engagement and Travel in Time and Space</title>
+		<imprint>
+			<date type="published" when="2008-01">2008. January 2008</date>
+			<biblScope unit="volume">2054</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Influence of interactivity and social environments on user experience and social acceptability in virtual reality</title>
+		<author>
+			<persName><forename type="first">Maurizio</forename><surname>Vergari</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tanja</forename><surname>Kojic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Vona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Franca</forename><surname>Garzotto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastian</forename><surname>Moller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jan</forename><forename type="middle">Niklas</forename><surname>Voigt-Antons</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/VR50410.2021.00096</idno>
+		<ptr target="https://doi.org/10.1109/VR50410.2021.00096" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings -2021 IEEE Conference on Virtual Reality and 3D User Interfaces, VR 2021</title>
+		<meeting>-2021 IEEE Conference on Virtual Reality and 3D User Interfaces, VR 2021</meeting>
+		<imprint>
+			<publisher>Institute of Electrical and Electronics Engineers Inc</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="695" to="704" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<monogr>
+		<title level="m" type="main">Diving with turtle, stingray and jellyfish. 4K underwater video -YouTube</title>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">R</forename><surname>Airpano</surname></persName>
+		</author>
+		<ptr target="https://www.youtube.com/watch?v=NYpFW4InfN0" />
+		<imprint>
+			<date type="published" when="2018-03-10">2018. March 10, 2022</date>
+			<biblScope unit="volume">360</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<monogr>
+		<title level="m" type="main">Challenges and requirements of immersive media in autonomous car: Exploring the feasibility of virtual entertainment applications</title>
+		<author>
+			<persName><forename type="first">Carolin</forename><surname>Wienrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Schindler</surname></persName>
+		</author>
+		<idno type="DOI">10.1515/icom-2018-0030</idno>
+		<ptr target="https://doi.org/10.1515/icom-2018-0030" />
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">PlaneVR: Social acceptability of virtual reality for aeroplane passengers</title>
+		<author>
+			<persName><forename type="first">Julie</forename><forename type="middle">R</forename><surname>Williamson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Khari</forename><surname>Outram</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">;</forename><surname>Julie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Williamson</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3290605.330031028:26LauraBajorunaite</idno>
+		<ptr target="https://doi.org/10.1145/3290605.330031028:26LauraBajorunaite" />
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Human Factors in Computing Systems -Proceedings, Association for Computing Machinery</title>
+		<meeting><address><addrLine>Stephen Brewster</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">You invaded my tracking space! Using augmented virtuality for spotting passersby in room-scale virtual reality</title>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Julius Von Willich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Funk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Karola</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jan</forename><surname>Marky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Max</forename><surname>Riemann</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Mühlhäuser</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3322276.3322334</idno>
+		<ptr target="https://doi.org/10.1145/3322276.3322334" />
+	</analytic>
+	<monogr>
+		<title level="m">DIS 2019 -Proceedings of the 2019 ACM Designing Interactive Systems Conference</title>
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="487" to="496" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<analytic>
+		<title level="a" type="main">A Lack of Restraint: Comparing Virtual Reality Interaction Techniques for Constrained Transport Seating</title>
+		<author>
+			<persName><forename type="first">Graham</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Mcgill</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Medeiros</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stephen</forename><surname>Brewster</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/TVCG.2023.3247084</idno>
+		<ptr target="https://doi.org/10.1109/TVCG.2023.3247084" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Vis Comput Graph</title>
+		<imprint>
+			<date type="published" when="2023-05">2023. May 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">The aligned rank transform for nonparametric factorial analyses using only anova procedures</title>
+		<author>
+			<persName><forename type="first">Jacob</forename><forename type="middle">O</forename><surname>Wobbrock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leah</forename><surname>Findlater</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Darren</forename><surname>Gergle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><forename type="middle">J</forename><surname>Higgins</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/1978942.1978963</idno>
+		<ptr target="https://doi.org/10.1145/1978942.1978963" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the SIGCHI Conference on Human Factors in Computing Systems</title>
+		<meeting>the SIGCHI Conference on Human Factors in Computing Systems<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="143" to="146" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<author>
+			<persName><forename type="first">Susan</forename><surname>Wyche</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3555648</idno>
+		<ptr target="https://doi.org/10.1145/3555648" />
+	</analytic>
+	<monogr>
+		<title level="m">Reimagining the Mobile Phone: Investigating Speculative Approaches to Design in Human-Computer Interaction for Development (HCI4D)</title>
+		<imprint>
+			<date type="published" when="2573">2573. 2573</date>
+			<biblScope unit="volume">6</biblScope>
+		</imprint>
+	</monogr>
+	<note>CSCW</note>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<monogr>
+		<author>
+			<persName><forename type="first">André</forename><surname>Zenner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marco</forename><surname>Speicher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sören</forename><surname>Klingner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donald</forename><surname>Degraen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Florian</forename><surname>Daiber</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Antonio</forename><surname>Krüger</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3170427.3188505</idno>
+		<ptr target="https://doi.org/10.1145/3170427.3188505" />
+		<title level="m">Immersive notification framework: Adaptive &amp; plausible notifications in virtual Conference on Human Factors in Computing Systems -Proceedings</title>
+		<imprint>
+			<date type="published" when="2018-04">2018. 2018-April, (2018</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">The Airplane Passenger: Protection of Self in an Encapsulated Group</title>
+		<author>
+			<persName><forename type="first">Ralph</forename><surname>Louis A Zurcher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Turner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Lofland</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Erving</forename><surname>Irwin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Garry</forename><surname>Goffman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Shirts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">James</forename><surname>Bonjean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Irwin</forename><surname>Mckie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Susan</forename><surname>Lieb</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marianne</forename><surname>Zurcher</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Hopper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mary</forename><forename type="middle">Elizabeth</forename><surname>Wood</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Carolyn</forename><surname>Bender</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lindsey</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BF02429895</idno>
+		<ptr target="https://doi.org/10.1007/BF02429895" />
+	</analytic>
+	<monogr>
+		<title level="j">Qualitative Sociology</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<monogr>
+		<title level="m" type="main">Annual commuting time is up 21 hours compared to a decade ago, finds TUC | TUC</title>
+		<ptr target="https://www.tuc.org.uk/news/annual-commuting-time-21-hours-compared-decade-ago-finds-tuc" />
+		<imprint>
+			<date type="published" when="2022-01-24">January 24. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<monogr>
+		<title level="m" type="main">New Oculus Quest feature lets you mark your actual couch in VR -The Verge</title>
+		<ptr target="https://www.theverge.com/2021/2/24/22298629/oculus-quest-couch-mode-feature-guardian-experimental-rollout" />
+		<imprint>
+			<date>September 15</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<monogr>
+		<title level="m" type="main">Oculus Space Sense Tool Will Keep People (or Pets) From Surprising You in VR | PCMag</title>
+		<ptr target="https://www.pcmag.com/news/oculus-space-sense-tool-will-keep-people-or-pets-from-surprising-you-in" />
+		<imprint>
+			<date>September 15</date>
+			<biblScope unit="page">2022</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<monogr>
+		<title level="m" type="main">Meta Quest 2 | Advanced All-In-One VR Headset | Meta Quest | Meta Store</title>
+		<ptr target="https://store.facebook.com/gb/quest/products/quest-2/" />
+		<imprint>
+			<date>September 15</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<monogr>
+		<title level="m" type="main">Holoride launches and brings virtual reality to cars</title>
+		<ptr target="https://mixed-news.com/en/holoride-launches-and-brings-virtual-reality-to-cars/" />
+		<imprint>
+			<date type="published" when="2023-05-06">May 6, 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<monogr>
+		<title level="m" type="main">Spatial Anchors Overview | Oculus Developers</title>
+		<ptr target="https://developer.oculus.com/experimental/spatial-anchors-overview/" />
+		<imprint>
+			<date>January 14</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<monogr>
+		<ptr target="https://unity.com/" />
+		<title level="m">Unity Real-Time Development Platform | 3D, 2D VR &amp; AR Engine</title>
+		<imprint>
+			<date>September 15</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<monogr>
+		<title/>
+		<author>
+			<persName><surname>Mixamo</surname></persName>
+		</author>
+		<ptr target="https://www.mixamo.com/#/" />
+		<imprint>
+			<date type="published" when="2022-03-10">March 10. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<monogr>
+		<ptr target="https://www.cgtrader.com/free-3d-models/interior/living-room/low-poly-isometric-room-1" />
+		<title level="m">Low Poly Isometric -Room free VR / AR / low-poly 3D model | CGTrader</title>
+		<imprint>
+			<date type="published" when="2022-03-10">March 10, 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<monogr>
+		<title level="m" type="main">lamp lamp free 3D model | CGTrader</title>
+		<ptr target="https://www.cgtrader.com/free-3d-models/furniture/lamp/lamp-lamp--13" />
+		<imprint>
+			<date type="published" when="2022-03-17">March 17. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<monogr>
+		<title level="m" type="main">Our Planet | One Planet | FULL EPISODE | Netflix -YouTube</title>
+		<ptr target="https://www.youtube.com/watch?v=GfO-3Oir-qM&amp;t=1s" />
+		<imprint>
+			<date type="published" when="1220-09-15">1220. September 15</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<monogr>
+		<title level="m" type="main">Build new augmented reality experiences that seamlessly blend the digital and physical worlds | ARCore | Google Developers</title>
+		<ptr target="https://developers.google.com/ar" />
+		<imprint>
+			<date type="published" when="2023-05-06">May 6, 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<monogr>
+		<title level="m" type="main">ARKit 6 -Augmented Reality -Apple Developer</title>
+		<ptr target="https://developer.apple.com/augmented-reality/arkit/" />
+		<imprint>
+			<date type="published" when="2023-05-06">May 6, 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Lens</forename><surname>Studio</surname></persName>
+		</author>
+		<ptr target="https://ar.snap.com/lens-studio" />
+		<imprint>
+			<date type="published" when="2023-05-06">May 6, 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<monogr>
+		<title/>
+		<author>
+			<orgName type="collaboration">Smart Bus Seat Occupancy Detection System | HIOTRON</orgName>
+		</author>
+		<ptr target="https://www.hiotron.com/smart-bus-seat-occupancy-detection-system/" />
+		<imprint>
+			<date>January 28</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<monogr>
+		<title level="m" type="main">Control passenger occupancy in real time</title>
+		<ptr target="https://www.initse.com/ende/news-resources/knowledge-database/articles/2020/control-passenger-occupancy-in-real-time/" />
+		<imprint>
+			<date type="published" when="2023-01-28">January 28. 2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<monogr>
+		<title level="m" type="main">CCTV &amp; surveillance cameras -Transport for London</title>
+		<ptr target="https://tfl.gov.uk/corporate/privacy-and-cookies/cctv" />
+		<imprint>
+			<date>January 28</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<monogr>
+		<title level="m" type="main">Inside Facebook Reality Labs: Research updates and the future of social connection -Tech at Meta</title>
+		<ptr target="https://tech.facebook.com/reality-labs/2019/9/inside-facebook-reality-labs-research-updates-and-the-future-of-social-connection/" />
+		<imprint>
+			<date>January 28</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<monogr>
+		<title level="m" type="main">AirTag popularity growing, Apple expected to ship 35 million units by the end of 2022 | The Apple Post</title>
+		<ptr target="https://www.theapplepost.com/2022/06/19/airtag-popularity-growing-apple-expected-to-ship-35-million-units-by-the-end-of-2022/" />
+		<imprint>
+			<date>January 28</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

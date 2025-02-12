@@ -1,0 +1,1811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">RSS: Effective and Efficient Training for Sequential Recommendation using Recency Sampling *</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+							<email>craig.macdonald@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Aleksandr</forename><surname>Petrov</surname></persName>
+							<email>a.petrov.1@research.gla.ac.uk</email>
+							<idno type="ORCID">0000-0002-0911-3605</idno>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">ALEKSANDR PETROV</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">RSS: Effective and Efficient Training for Sequential Recommendation using Recency Sampling *</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">7481D36E56ECBA07C51F8F5FD906B8E0</idno>
+					<idno type="DOI">10.1145/3604436)</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:02+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Many modern sequential recommender systems use deep neural networks, which can effectively estimate the relevance of items, but require a lot of time to train. Slow training increases the costs of training, hinders product development timescales and prevents the model from being regularly updated to adapt to changing user preferences. The training of such sequential models involves appropriately sampling past user interactions to create a realistic training objective. The existing training objectives have limitations. For instance, next item prediction never uses the beginning of the sequence as a learning target, thereby potentially discarding valuable data. On the other hand, the item masking used by the state-of-the-art BERT4Rec recommender model is only weakly related to the goal of the sequential recommendation; therefore, it requires much more time to obtain an effective model. Hence, we propose a novel Recency-based Sampling of Sequences (RSS) training objective (which is parameterized by a choice of recency importance function) that addresses both limitations. We apply our method to various recent and state-of-the-art model architectures -such as GRU4Rec, Caser, and SASRec. We show that the models enhanced with our method can achieve performances exceeding or very close to the effective BERT4Rec, but with much less training time. For example, on the MovieLens-20M dataset, RSS applied to the SASRec model can result in a 60% improvement in NDCG over a vanilla SASRec, and a 16% improvement over a fully-trained BERT4Rec model, despite taking 93% less training time than BERT4Rec. We also experiment with two families of recency importance functions and show that they perform similarly. We further empirically demonstrate that RSS-enhanced SASRec successfully learns to distinguish differences between recent and older interactions -a property that the original SASRec model does not exhibit. Overall, we show that RSS is a viable (and frequently better) alternative to the existing training objectives, which is both effective and efficient for training sequential recommender model when the computational resources for training are limited.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Sequential recommender models, which are a class of recommender systems that consider the order of the user-item interactions, are increasingly popular <ref type="bibr" target="#b44">[45]</ref>. In contrast to non-sequential recommender systems, such as Matrix Factorization based methods, these models account for the changes of individual user preferences, as well as global changes of item popularity. Ultimately, this ability to utilize sequential information helps models to make better recommendations when the order of interactions is known.</p><p>Early sequential recommender systems used Markov Chains <ref type="bibr" target="#b48">[49,</ref><ref type="bibr" target="#b63">64]</ref>, however most modern ones use deep neural networks and have adapted ideas from other domains such as language modeling <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b49">50]</ref> or image processing <ref type="bibr" target="#b50">[51]</ref>. These deep neural models have been shown to outperform traditional non-neural methods by a significant margin <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b50">51,</ref><ref type="bibr" target="#b58">59]</ref>.</p><p>However, the most advanced sequential models, such as BERT4Rec, suffer from a slow training problem. Indeed, our experiments show that in order to reproduce the result reported in the original publication, BERT4Rec requires more than 10 hours training using modern hardware (see also our recent replicability paper on the issue <ref type="bibr" target="#b36">[37]</ref>). This is also illustrated in Figure <ref type="figure">1</ref>, which portrays the NDCG@10 of MF-BPR <ref type="bibr" target="#b47">[48]</ref>, SASRec <ref type="bibr" target="#b19">[20]</ref> and BERT4Rec <ref type="bibr" target="#b49">[50]</ref> models for different training durations on the MovieLens-20M dataset <ref type="bibr" target="#b14">[15]</ref>. Fig. <ref type="figure">1</ref>. The SASRec <ref type="bibr" target="#b19">[20]</ref> model trained with our proposed training method outperforms BERT4Rec <ref type="bibr" target="#b49">[50]</ref> on the MovieLens-20M dataset <ref type="bibr" target="#b14">[15]</ref> and requires much less training time. SASRec-vanilla corresponds to the original version of SASRec; BERT4Rec-1h and BERT4Rec-1h are versions of original BERT4Rec implementations that have been trained for 1 hour and 16 hours, respectively.</p><p>Slow training is a problem in both research and production environments. For research, slow training limits the number of experiments that can run using available computational resources. In production, it increases the costs of using recommender systems due to the high running costs of GPU or TPU accelerators. Furthermore, slow training hinders how quickly the model can be retrained to adapt to changing user interests. For example, when a new episode of a popular TV show is released, the recommender system might still be recommending the old episode because it has not finished retraining yet. Hence, in this paper, we focus on the time-limited training of models. The main question we address in this paper is can the training of existing sequential recommendation models be improved so that they attain state-of-the-art performance in limited training time?</p><p>The primary components of model training can be characterized as follows: (i) the model architecture that is being trained, (ii) the training objective that defines what the model is being trained to reconstruct, and (iii) the loss function used to measure its success. All three components have a marked impact on training efficiency. For example, Hidasi et al. <ref type="bibr" target="#b16">[17]</ref> showed that changing only the loss function can dramatically change the model performance. Raffel et al. <ref type="bibr" target="#b46">[47]</ref> made similar findings for the model architecture and training objective for related tasks in language modeling. However, in this work, we focus on the training objective, identifying two key limitations in existing approaches, as well as an appropriate loss function for the objective.</p><p>Among the training objectives in the literature, there are two popular objectives for training sequential recommenders: sequence continuation and item masking. In this paper, we show that both of these objectives have limitations.</p><p>First, sequence continuation <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b50">51]</ref> (including its popular form, next item prediction) is probably the most intuitive and popular. Sequence continuation splits the sequence into a prefix and a suffix and then a model is trained to recover the suffix given the prefix. This objective closely matches our goal (predict the next interaction of the user) and arguably should perform the best in the case when both training data and computational resources are unlimited. However, this objective never uses the beginning of the sequence as a training target, hence it discards potentially valuable knowledge and limits the number of training samples it can generate from a single sequence, which is specifically problematic when the datasets contains a relatively small number of sequences.</p><p>Second, in the item masking approach -which is used by BERT4Rec <ref type="bibr" target="#b49">[50]</ref> -the task of the model is to recover masked items at any position in the sequence, which is a much more general and complex task than the next item prediction. We argue that this training objective is only weakly related to the end goal of sequential recommendation. Indeed, we will show that, despite leading to better effectiveness, this more general training task requires considerable training time.</p><p>These limitations of the existing approaches motivate us to design a new Recency-based Sampling of Sequences (RSS) approach that probabilistically selects positives from the sequence to build training samples. In our method, more recent interactions have more chances of being sampled as positives; however, due to the sampling process' probabilistic nature, even the oldest interactions have a non-zero probability of being selected as positives. The sampling probability distribution in RSS is controlled by the recency importance function, which may have different shapes, for example exhibiting exponential or power distributions.</p><p>Our experiments are conducted on four large sequential recommender datasets, and demonstrate the application of the proposed RSS approach upon three recent sequential recommendation model architectures (GRU4Rec, Caser and SASRec), when combined with both pointwise and listwise loss functions. We find that RSS improves the effectiveness of all three model architectures. Moreover, on all four experimental datasets, versions of RSS-enhanced SASRec trained for one hour can markedly outperform state-of-the-art baselines. Indeed, RSS applied to the SASRec model can result in a 60% improvement in NDCG over a vanilla SASRec, and a 16% improvement over a fully-trained BERT4Rec model, despite taking 93% less training time than BERT4Rec (see also Figure <ref type="figure">1</ref>). We also find that both exponential and power importance functions result in similar optimal sampling probability distribution after fine-tuning their shape to best fit the MovieLens-20M dataset.</p><p>Moreover, we run experiments to better understand how RSS changes the resulting learned recommendation model. RSS is based on the idea that recent interactions are more important than the earlier ones. To check whether or not RSS helps models learn this difference in practice, we analyze how it changes the learned models with respect to interaction recency. Fortunately, some of the state-of-the-art models are based on the Transformer <ref type="bibr" target="#b52">[53]</ref> architecture, which encodes positional information explicitly, in the form of positional embeddings. To understand how RSS changes the model, we perform a novel analysis by comparing the positional embeddings learned by the original and RSS-enhanced versions of the SASRec model. We show that compared to the original SASRec, the RSS-enhanced version successfully learns to distinguish recent and earlier positions.</p><p>An earlier version of this paper that appeared in RecSys' 22 <ref type="bibr" target="#b35">[36]</ref>, made the following contributions:</p><p>(1) We identify limitations in the existing training objectives used by sequential recommendation models; <ref type="bibr" target="#b1">(2)</ref> We propose Recency-based Sampling of Sequences (RSS), which emphasizes the importance of more recent interactions during training; <ref type="bibr" target="#b2">(3)</ref> We perform extensive empirical evaluations on four sequential recommendation datasets, demonstrating significant improvements over existing state-of-the-art approaches.</p><p>In this extended version of the paper we make the following additional contributions:</p><p>(4) We propose a novel methodology for analyzing position embeddings and use this methodology to empirically show that an RSS-enhanced version of SASRec learns to treat recent and earlier positions differently, whereas original SASRec fails to find any differences;  <ref type="figure">2</ref>. Principal architecture of many sequential recommenders. This applies to GRU4rec <ref type="bibr" target="#b16">[17]</ref>, GRU4rec + <ref type="bibr" target="#b15">[16]</ref>, Caser <ref type="bibr" target="#b50">[51]</ref> and, with minor modifications to SASRec <ref type="bibr" target="#b19">[20]</ref>.</p><p>(5) We experiment with the power family of importance functions and show that despite differences with the exponential family, the optimal functions from both families are mostly indistinguishable; <ref type="bibr" target="#b5">(6)</ref> We describe details of our version of LambdaRank <ref type="bibr" target="#b3">[4]</ref> loss, including two modifications to the original version The structure of this paper is as follows: Section 2 provides a background in sequential recommendation; Section 3 covers existing approaches and identifies their limitations; In Section 4 we explain Recency-based Sampling of Sequences for efficient training. Section 5 describes research questions and experimental setup; In Sections 6 &amp; 7 we respectively provide analysis of the experiments and concluding remarks. In Appendix A we provide details of our version of LambdaRank, including the differences from the original version. Appendix B provides more details on the training of the models, such as the number of epochs and the number of training samples used for the training of each model.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">BACKGROUND</head><p>In this section, we cover the important background for our work. In particular, Section 2.1 provides an overview of neural models used for sequential recommendation. In Section 2.2, we provide a more detailed description of Transformer architecture used by state-of-the-art sequential recommendation models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Neural Sequential Models</head><p>In the following, we provide an overview of neural sequential recommendation models. Indeed, over the last several years, most of the next item prediction approaches have applied deep neural network models. Some of the first solutions based on deep neural networks were GRU4Rec <ref type="bibr" target="#b16">[17]</ref> and the improved GRU4Rec + <ref type="bibr" target="#b15">[16]</ref> (using an improved listwise loss function), which are models that use the Recurrent Neural Networks (RNN) architecture. On the other hand, Caser <ref type="bibr" target="#b50">[51]</ref> uses ideas from computer vision; it generates a 2D "image" of the sequence using item embeddings and then applies horizontal and vertical convolution operations to that image. Another model that is based on convolution operation is NextItNet <ref type="bibr" target="#b58">[59]</ref>, which applies several layers of 1D convolutions to generate rich semantic representations of each user sequence. These models all use variations of a sequence continuation task for training, details of which we provide in Section 3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Transformer Architecture and Positional Embeddings.</head><p>Figure <ref type="figure">2</ref> illustrates the principal architecture of many of the sequential recommendation models used in this work. These generate an embedding of the user's sequence and then multiply this embedding by the matrix of item embeddings to obtain item scores. GRU4Rec, Caser, and -with minor modifications (see Section 3) -SASRec use this architecture. Recent state-of-the-art sequential recommendation models use variations of the Transformer <ref type="bibr" target="#b52">[53]</ref> architecture. SASRec <ref type="bibr" target="#b19">[20]</ref> uses Transformer blocks to predict the next item in the sequence based on all previous elements. BERT-4Rec <ref type="bibr" target="#b49">[50]</ref> adapts the well-known BERT language model <ref type="bibr" target="#b9">[10]</ref> for the sequential recommendation task. Following the original BERT model, BERT4Rec is trained to reconstruct masked items that are hidden from the model during training. In particular, as both SASRec and BERT4Rec use the Transformer architecture, the only significant difference between these two models is the training scheme. Using item masking, BERT4Rec outperforms SASRec in terms of quality; however, it requires much more training time. In this work, we identify limitations in the existing training objectives, which we discuss further in Section 3. Indeed, the goal of this work is to close the gap between effectiveness and efficiency and design a new training scheme that allows matching the performance of state-of-the-art models within a limited training time.</p><p>Finally, recent advances have used graph neural networks (GNNs) for sequential recommendation <ref type="bibr" target="#b39">[40]</ref><ref type="bibr" target="#b40">[41]</ref><ref type="bibr" target="#b41">[42]</ref><ref type="bibr" target="#b43">44]</ref>. These models usually use additional information, such as cross-session connections or item attributes. In this work, we focus on a more general case of sequential recommendations without the assumption of availability of cross-session (user) information or cross-item connections; therefore, graph-based models, as well as those tailored for personalized shopping basket completion (e.g. <ref type="bibr" target="#b33">[34,</ref><ref type="bibr" target="#b53">54]</ref>), are out of the scope of this work. On the other hand, CL4SRec <ref type="bibr" target="#b56">[57]</ref> applies data augmentation by modifying the input sequences (e.g. cropping, masking, or reordering). These augmentations are orthogonal to changing the training task and could be used together with an improved training objective. Nevertheless, we focus on the training objective for sequential models operating without the use of GNNs or data augmentation. We provide details of these training objectives in Section 3.</p><p>State-of-the-art models for sequential recommendation <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b62">63]</ref> are based on the Transformer <ref type="bibr" target="#b52">[53]</ref> architecture, which we cover in this section. We specifically emphasize our attention on the Positional Embeddings-a component of the Transformer architecture, which encapsulates the positional information in the Transformer models-as we use it to analyze effects of the RSS training objective on learned models.</p><p>The key component of the Transformer architecture is the Transformer block, which is based on a Self-Attention mechanism <ref type="bibr" target="#b52">[53]</ref>, which allows to effectively encode item representations in the context of the other items in each sequence.</p><p>According to Vaswani et al. <ref type="bibr" target="#b52">[53]</ref>, Self-Attention is defined as:</p><formula xml:id="formula_0">𝐴𝑡𝑡𝑒𝑛𝑡𝑖𝑜𝑛(𝑄, 𝐾, 𝑉 ) = softmax( 𝑄𝐾 𝑇 √ 𝑑 𝑘 )𝑉<label>(1)</label></formula><p>where 𝐾, 𝑄 and 𝑉 are three independent linear projections of the original item representation matrix 𝐸:</p><formula xml:id="formula_1">𝑄 𝑖 = 𝑊 𝑞𝑖 𝐸 𝑖 𝐾 𝑖 = 𝑊 𝑘𝑖 𝐸 𝑖 𝑉 𝑖 = 𝑊 𝑣𝑖 𝐸 𝑖<label>(2)</label></formula><p>Here 𝑊 𝑞𝑖 , 𝑊 𝑘𝑖 and 𝑊 𝑣𝑖 represent three different learnable projection matrices and index 𝑖 corresponds to item representations after 𝑖 Transformer blocks. A Transformer block also includes a small pointwise feed-forward network, as well as residual connections and layer normalizationsstandard machine learning techniques to improve model training. For more details on Transformer architecture, we refer to the original paper <ref type="bibr" target="#b52">[53]</ref>.</p><p>As can be observed from Equations ( <ref type="formula" target="#formula_0">1</ref>) and ( <ref type="formula" target="#formula_1">2</ref>), Attention-encoded representations do not depend on item position in the sequence. On the other hand, information about positions of items in a sequence is crucial for sequential recommendation, as this information is the only difference between sequential and non-sequential recommendations. Therefore, information about item positions in the sequence has to be encoded in item representations themselves. To achieve this, following original the language models, recommendation models use positional embeddings:</p><formula xml:id="formula_2">𝐸 0 = 𝐼𝑡𝑒𝑚𝐸𝑚𝑏𝑒𝑑𝑑𝑖𝑛𝑔𝑠 (𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒) + 𝑃𝐸<label>(3)</label></formula><p>Here 𝑃𝐸 is a matrix of positional embeddings, which only depend on item positions, but do not depend on the items themselves. The original Transformer architecture <ref type="bibr" target="#b52">[53]</ref> uses an absolute (constant) 𝑃𝐸 matrix, whose elements 𝑝 𝑖 𝑗 are defined as:</p><formula xml:id="formula_3">𝑝 𝑖 𝑗 =            𝑠𝑖𝑛 𝑖 10000 𝑗 𝑑 ; 𝑗 = 2𝑘 𝑐𝑜𝑠 𝑖 10000 𝑗 -1 𝑑 ; 𝑗 = 2𝑘 + 1 (<label>4</label></formula><formula xml:id="formula_4">)</formula><p>where 𝑑 is the size of the embeddings. Another approach employed by later Transformer-based models <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b45">46]</ref> is to use a learnable 𝑃𝐸 matrix; in that case we learn the positional embeddings as just one of the model parameters. According to Tunstall et al. <ref type="bibr" target="#b51">[52,</ref><ref type="bibr">Chapter 3]</ref>, absolute positional embeddings are preferable when the dataset size is small, whereas learnable embeddings are a good choice with large datasets. Many sequential recommender systems based on transformers use learnable position embeddings <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50]</ref>.</p><p>In particular, SASRec -one of the architectures which we adapt in this work -also uses learnable position embeddings. This means that it is possible to analyse these learnable embeddings to determine the effect of RSS training objective on different positions in the sequence. In Section 4.4 we describe our methodology of using learned positional embeddings to analyze the effects of a training objective on positions in the sequence; the results of the experiments using this methodology are covered later in Section 6. <ref type="bibr" target="#b5">6</ref>.</p><p>With this, we conclude the background review, which is necessary to understand our work. In the next section, we dive deeper into the training of the sequential recommender systems and identify the limitations of the existing training objectives, which we then solve with RSS in Section 4.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">TRAINING SEQUENTIAL RECOMMENDATION MODELS</head><p>Consider a set of users 𝑈 and items 𝐼 . Each user 𝑢 ∈ 𝑈 has a sequence of interactions 𝑠 𝑢 = {𝑖 𝑢 1 , 𝑖 𝑢 2 , 𝑖 𝑢 3 ...𝑖 𝑢 𝑛 } where items 𝑖 𝑢 𝜏 ∈ 𝐼 are ordered by the interaction time. The next item prediction task is defined as follows: given a sequence 𝑠 𝑢 , rank the items from 𝐼 , according to their likelihood of being the sequence continuation 𝑖 𝑢 𝑛+1 . This task corresponds to Leave One Out evaluation -hold out the last element from each user's interactions sequence and then evaluate how well a model can predict each held-out element.</p><p>As mentioned in Section 2, the best models for the next item prediction task are based on deep neural networks. Generally speaking, their training procedure consists of iterations of the following steps: (1) Generate a batch of training samples, each with positive and negative items;</p><p>(2) Generate predictions, using the model; (3) Compute the value of the loss function; (4) Update model parameters using backpropagation.</p><p>We aim to improve the training of existing models, so step 2 is not within the scope of our work. Backpropagation (step 4) -e.g. through stochastic gradient descent -is a very general and well-studied procedure, and we follow the best practices used by the deep learning models, details of which we describe in Section 5. This leaves us with two essential parts of model optimizationgeneration of the training samples and the loss function. These two parts are not independent: a loss function designed for one training task does not always fit into another. For example, BPR-max loss (used by GRU4Rec + <ref type="bibr" target="#b15">[16]</ref>) has an assumption of only one positive item per training sample and therefore is not applicable to a sequence continuation with multiple positives task, as used by Caser. Hence, a new training task requires the selection of an appropriate loss function. We further discuss some possible choices of the loss functions for our proposed method later in Section 4.3. In the following, we describe existing approaches to generate training samples and identify their limitations, a summary of which we provide in Section 3.2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Generation of Training Samples</head><p>A training sample for a sequential model consists of three parts -the input sequence, positive items, and negative samples. Sequential recommender models <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b50">51]</ref> treat ground truth relevance as a binary function; by definition, every non-positive item is negative. In practice, to make the training more tractable, most models only consider samples of negative items, identified using techniques such as random sampling <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b47">48]</ref>, in-batch negatives <ref type="bibr" target="#b16">[17]</ref>, or the negatives with highest scores <ref type="bibr" target="#b57">[58]</ref>. This work focuses on constructing positive samples. Negatives sampling approaches are orthogonal to positive sampling and can be applied independently. We do not use negative sampling in our work and leave improvement of our method via negative sampling to future research. In the remainder of this section, we describe positive sampling strategies for sequential recommendations. Figure <ref type="figure" target="#fig_0">3</ref> illustrates sequence continuation and item masking, the most commonly used strategies, which we discuss in turn below.</p><p>Matrix factorization methods use a straightforward matrix reconstruction training objective: for each user 𝑢 and item 𝑖, the goal of the model is to estimate whether the user interacted with the item. This goal leads to a simple procedure for generating training samples -the training algorithm samples (user, item) pairs as inputs and assigns labels for the pairs based on interactions. A classic model that uses matrix reconstruction is Bayesian Personalized Rank (BPR) <ref type="bibr" target="#b47">[48]</ref>, which we use as one of our baselines. The main disadvantage of matrix reconstruction is that it does not consider the order of the interactions, and therefore sequential recommendation models can not use it. In Sequence Continuation, the sequence is split into two parts, with the aim of predicting whether or not an item belongs to the second part based on the sequence of elements in the first part. In Sequence Continuation with a sliding window, we first generate shorter sub-sequences from the original sequence and then apply the sequence continuation method. In item masking, some elements are removed and replaced with a special "[mask]" value, with the aim of correctly reconstructing these masked items.</p><p>In the sequence continuation training objective, training samples are generated by splitting the sequence of interactions into two consequent parts:</p><formula xml:id="formula_5">𝑠 = {𝑖 1 , 𝑖 2 , 𝑖 3 ..𝑖 𝑛 } ↦ → 𝑠 𝑖𝑛𝑝𝑢𝑡 = {𝑖 1 , 𝑖 2 , 𝑖 3 , ...𝑖 𝑛-𝑘 }; 𝑠 𝑡𝑎𝑟𝑔𝑒𝑡 = {𝑖 𝑛-𝑘+1 , 𝑖 𝑛-𝑘+2 , ..𝑖 𝑛 }</formula><p>where 𝑘 is a hyperparameter. The model uses 𝑠 𝑖𝑛𝑝𝑢𝑡 as the input sequence, and assigns label 1 to the positive items from 𝑖 + ∈ 𝑠 𝑡𝑎𝑟𝑔𝑒𝑡 and label 0 to the negative items 𝑖 -∉ 𝑠 𝑡𝑎𝑟𝑔𝑒𝑡 . If 𝑘 is equal to 1, the sequence continuation task turns into the next item prediction task, which matches the the end goal of sequential recommender systems.</p><p>Using sequence continuation in its basic form, we can produce precisely one training sample out of a single sequence of interactions. Some models (e.g. Caser <ref type="bibr" target="#b50">[51]</ref>) use the sliding window approach to generate more than one sequence -which generates shorter subsequences out of a whole sequence and then creates training samples out of these shorter subsequences. The sliding window approach allows the model to generate up to 𝑛-1 training samples from a sequence of 𝑛 interactions. However, shorter sequences only allow to model short-term user preferences, and researches have to find a balance between the number of generated samples and the maximum length of the sequence <ref type="bibr" target="#b50">[51]</ref>. GRU4rec, GRU4rec + , and Caser models use variations of the sequence continuation task for training. The sequence shifting training task used by SASRec and NextItNet <ref type="bibr" target="#b58">[59]</ref> is essentially a version of sequence continuation: it trains the model to predict the target sequence, which is shifted by one element compared to the input. they These models predict the second element of the input sequence by the first, third by the first two, etc.. When these models predict the 𝑗 𝑡ℎ item in the output, they only have access to the first ( 𝑗 -1) elements of the input so that this shifted sequence prediction task essentially is 𝑛 independent sequence continuation tasks. Figure <ref type="figure" target="#fig_1">4</ref> graphically illustrates shifted sequence task and equivalent sequence continuation training samples. Thus, the main limitation of sequence continuation is that it only generates a small number of training samples out of a single sequence, and the items in the first part of the user's sequence never have a chance to be selected as a target, which means that the recommender system is unlikely to learn how to recommend these items, even though they may be relevant for some users. We refer to this limitation as Limitation L1.</p><p>In contrast to earlier neural sequential models, BERT4Rec <ref type="bibr" target="#b49">[50]</ref> uses an item masking training objective, which it inherited from the original BERT model. In BERT, the idea is to hide some terms from the sentence and then ask the model to reconstruct these hidden elements. Similarly, in BERT4Rec, some items in the sequence are masked, and the model is retrained to recover these items. The target sequence, in this case, exactly matches the original sequence (without masking):</p><formula xml:id="formula_6">A B C D B C D E E (a) Shifted Sequence training sample A B A B C A B C D A B C D E<label>(</label></formula><formula xml:id="formula_7">𝑠 = {𝑖 1 , 𝑖 2 , 𝑖 3 , 𝑖 4 , ..𝑖 𝑛 } ↦ → 𝑠 𝑖𝑛𝑝𝑢𝑡 = {𝑖 1 , [𝑚𝑎𝑠𝑘], 𝑖 3 , [𝑚𝑎𝑠𝑘], ...𝑖 𝑛 }; 𝑠 𝑡𝑎𝑟𝑔𝑒𝑡 = {𝑖 1 , 𝑖 2 , 𝑖 3 , 𝑖 4 , ..𝑖 𝑛 }</formula><p>This approach generates up to 2 𝑛 training samples out of a single training sequence of length 𝑛. BERT4Rec does not mask more than 𝜏 percent of items in a sequence, where 𝜏 is a hyperparameter; however, it still generates many more training samples compared to the single training sample generated from a sequence under sequence continuation. As Sun et al. <ref type="bibr" target="#b49">[50]</ref> showed, more training ensures to avoid overfitting and achieves better performance compared to other models with similar architecture.</p><p>However, we argue that the main disadvantage of the item masking approach is that it is weakly related to the next item prediction task. To make a prediction, BERT4Rec adds the [mask] element to the end of the input sequence and tries to reconstruct it; so that training and evaluation samples have a different distribution. The model must learn how to solve the evaluation task (reconstruct the last item in the sequence) as part of a much more general and more complicated task (reconstruct any item in the sequence). BERT4Rec adds a small proportion of training samples with only the last element masked to address this mismatch, but the consequence is still a substantially more complicated training task and longer time to converge compared to the models that use sequence continuation. We refer to this problem of weak correspondence to the original task as Limitation L2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Summary of Limitations</head><p>We described the two main training objectives used by sequential recommendations approaches: sequence continuation (including its variations, shifted sequence prediction, and sliding window) and item masking. Indeed, as argued above, both of these training objectives have their limitations, which we summarize as follows L1 Sequence continuation can only generate a small number of training samples from a single training sequence. This allows training to be performed relatively quickly, but performance of these models is lower compared to a state-of-the-art model such as BERT4Rec. L2 Reconstruction of masked items is a very general task, which is loosely connected to the sequential recommendation task. Using this task, models can reach state-of-the-art performance, but model training can take markedly longer than other training objectives.</p><p>In the next section, we introduce Recency-based Sampling of Sequences, a novel training task that addresses these limitations and discuss possible choices of the loss function for this training task.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">RSS: RECENCY-BASED SAMPLING OF SEQUENCES</head><p>As shown in Section 3, to train a model we need to have a training task and choose a loss function that matches the task. Hence, the training task and the loss function are both essential parts of our solution. In this section, we introduce both training objective (Section 4.1), describe two families of recency importance functions (Section 4.2) and choice of loss function. (Section 4.3). Later, in Section 4.4, we introduce a concept of position similarity matrix and describe how it can be used to analyze effect of RSS on trained models. Section 4.5 provides a summary of the salient characteristics of RSS.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">The RSS Training Objective</head><p>Recency-based Sampling of Sequences (RSS) is a training objective that is closely related to the sequential recommendations and allows the model to generate many training samples out of a single user sequence simultaneously. To address the limitations of existing training objectives described in Section 3.2, we first outline the principles used to design our training task:</p><p>P1 Each element in a sequence can be selected as the target; multiple items can be selected as a target in each training sample. Using this principle, we match the main advantage of the item masking approach -generating up to 2 𝑛 training samples out of each user sequence. This principle addresses Limitation L1. P2 More recent training interactions in a sequence better indicate the user's interests, and hence these are more realistic targets. User interests change over time, and one of the main advantages of sequential recommender systems is taking these changes into account. Therefore, the methods that rely on this principle will retain a close connection to sequential recommendations. This principle addresses Limitation L2.</p><p>In our proposed training objective, to follow these two principles, we use a recency importance function, 𝑓 (𝑘), that is defined for each position 0 .. 𝑛 -1 in the sequence of the length 𝑛 and indicates chances of each position to be selected as a target: the probability of an item at position 𝑘 of being selected as a positive is proportional to the value of 𝑓 (𝑘). 𝑓 (𝑘) must exhibit the following properties:</p><p>(i) 𝑓 (𝑘) is positive:</p><formula xml:id="formula_8">𝑓 (𝑘) &gt; 0<label>(5)</label></formula><p>(ii) 𝑓 (𝑘) is monotonically growing:</p><formula xml:id="formula_9">𝑓 (𝑘) ≤ 𝑓 (𝑘 + 1)<label>(6)</label></formula><p>This first property corresponds to Principle P1 and defines that the likelihood of each item to be selected as a target are positive. The second property corresponds to Principle P2, and ensures that more recent items have higher or equal chances to be selected as a target.</p><p>To generate a training sample, we first calculate 𝑐 -how many target items we want to sample. Following BERT4Rec, we define a parameter 𝜏 that controls the maximum percentage of items that can be used as targets and then calculate 𝑐 via multiplying 𝜏 by the length of the sequence. We then randomly sample, with replacement, 𝑐 targets from the sequence, with the probability of being sampled, 𝑝 (𝑖), proportional to the value of a recency importance function, 𝑓 (𝑖):</p><formula xml:id="formula_10">𝑝 (𝑖) = 𝑓 (𝑖) 𝑛-1 𝑗=0 𝑓 ( 𝑗) (7)</formula><p>We generate the input sequence to the model by removing targets from the original sequence. The full procedure is described in Algorithm 1. We now describe two families of recency importance functions that have the required properties.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Recency Importance Functions</head><p>In this Section we describe properties of two families of recency importance functions, which can be used with RSS (i. e. they satisfy the requirements described by Equations ( <ref type="formula" target="#formula_8">5</ref>) and ( <ref type="formula" target="#formula_9">6</ref>)): exponential importance and power importance</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Algorithm 1 Recency-based Sampling of Sequences</head><p>Input: 𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 -a sequence of interactions; 𝜏 -maximum percent of target items; 𝑓 -recency importance function Output: 𝑖𝑛𝑝𝑢𝑡 is a generated input sequence for the model; 𝑡𝑎𝑟𝑔𝑒𝑡 is a set of sampled positive items function RecencySeqenceSampling(𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒, 𝜏, 𝑓 )</p><formula xml:id="formula_11">𝑠𝑎𝑚𝑝𝑙𝑒𝑑𝐼𝑑𝑥 ← 𝑠𝑒𝑡 () 𝑛 ← 𝑙𝑒𝑛𝑔𝑡ℎ(𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒) 𝑐 ← 𝑚𝑎𝑥 (1, 𝑖𝑛𝑡 (𝑛 * 𝜏))) 𝑝𝑟𝑜𝑏 ← 𝐴𝑟𝑟𝑎𝑦 [𝑛] 𝑝𝑟𝑜𝑏 [𝑖] ← 𝑓 (𝑖 ) 𝑛-1 𝑗 =0 𝑓 ( 𝑗 ) for i in [0,𝑛 -1] 𝑠𝑎𝑚𝑝𝑙𝑒𝑑𝐼𝑑𝑥 ← 𝑟𝑎𝑛𝑑𝑜𝑚.𝑐ℎ𝑜𝑖𝑐𝑒 (𝑟𝑎𝑛𝑔𝑒 (0..𝑛 -1), 𝑐, 𝑝𝑟𝑜𝑏) 𝑖𝑛𝑝𝑢𝑡 ← 𝑙𝑖𝑠𝑡 () 𝑡𝑎𝑟𝑔𝑒𝑡 ← 𝑠𝑒𝑡 () for 𝑖 ← 0, 𝑛 -1 do if 𝑖 ∈ 𝑠𝑎𝑚𝑝𝑙𝑒𝑑𝐼𝑑𝑥 then 𝑡𝑎𝑟𝑔𝑒𝑡 .𝑎𝑑𝑑 (𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [𝑖]) else 𝑖𝑛𝑝𝑢𝑡 .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝑎𝑝𝑝𝑒𝑛𝑑 (𝑠𝑒𝑞𝑢𝑒𝑛𝑐𝑒 [𝑖]) end for return 𝑖𝑛𝑝𝑢𝑡, 𝑡𝑎𝑟𝑔𝑒𝑡 end function</head><p>We assume that function 𝑟𝑎𝑛𝑑𝑜𝑚.𝑐ℎ𝑜𝑖𝑐𝑒 (𝑎, 𝑐, 𝑝 ) is an equivalent of the 𝑛𝑢𝑚𝑝𝑦.𝑟𝑎𝑛𝑑𝑜𝑚.𝑐ℎ𝑜𝑖𝑐𝑒 function from the numpy package. It iteratively samples 𝑐 samples from collection 𝑎, where the probability of each item 𝑖 of being sampled equals 𝑝 [𝑖 ] at each stage, with replacement.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.1">Exponential Importance.</head><p>Our first proposal for a recency importance function that has the required properties is the exponential function:</p><formula xml:id="formula_12">𝑓 𝑒𝑥𝑝 (𝑘) = 𝛼 𝑛-𝑘<label>(8)</label></formula><p>where 0 &lt; 𝛼 ≤ 1 is a parameter that controls importance of the recent items in the sequence and 𝑛 is the sequence length. If 𝛼 = 1, then each item has equal chances of being sampled as a target, and Recency-based Sampling of Sequences becomes similar to the item masking approach (but without providing the positions of masked items) or to the matrix reconstruction approach, where items are sampled uniformly from the sequence. If 𝛼 is close to zero, items from the end of the sequence have a much higher chance of being sampled, and therefore RSS becomes equivalent to the sequence continuation task. Figure <ref type="figure">5</ref> provides an example of the recency importance (for 𝛼 = 0.8) and the generated samples. Koren et al. <ref type="bibr" target="#b22">[23]</ref> recently used a similar exponential function for modeling temporal dynamics in neighborhood-based recommendation methods. Indeed, the authors successfully model a useritem interaction as a weighted sum of the other interactions of the same user, with the weight proportional to the exponential function:</p><formula xml:id="formula_13">𝑒 -𝛽 𝑢 Δ𝑡 (<label>9</label></formula><formula xml:id="formula_14">)</formula><p>where Δ𝑡 is the time interval between the modeled and a known interaction, and 𝛽 𝑢 is a user-specific learnable parameter. In contrast to Koren et al. <ref type="bibr" target="#b22">[23]</ref>, we use the recency importance function for the target items selection instead of the explicit interaction similarity modeling. Nevertheless, inspired by their work, we use the exponential importance as the main approach throughout the paper. Figure <ref type="figure">6a</ref> illustrates the sampling probability distributions generated by the exponential importance function for different values of the importance parameter 𝛼. As the figure shows, with the exception of the situation when 𝛼 ≊ 1 (which corresponds to uniform sampling), exponential importance produces probability distributions that are very strongly skewed towards the most recent items. For example, even with 𝛼 = 0.9, the probability of sampling the item at position 10 in a sequence of 50 interactions is less than 0.002. Overall, the exponential nature of the function means that the probability of sampling always decays faster than linearly (wrt. to position 𝑘) for nearly all values of 𝛼. On the other hand, Ludewig and Jannach <ref type="bibr" target="#b30">[31]</ref> successfully deployed a linear decay of position importance weights in the V-SKNN model. Similarity to the method proposed by Koren et al. <ref type="bibr" target="#b22">[23]</ref> (mentioned above), V-SKNN uses these weights for explicit item-item similarity modeling rather than for computing target item sampling probabilities; therefore, it differs from RSS. However, the fact that V-SKNN used a linear decay of position similarity motivates us to investigate broader set recency importance functions, which are capable of generating linear and sub-linear decay of recency importance. Hence, we also experiment with a power importance function, which we describe in the next section. 4.2.2 Power importance. Another family of importance functions we use for our experiments is the power importance function:</p><formula xml:id="formula_15">𝑓 𝑝𝑜𝑤 (𝑘) = 𝑘 + 1 𝑛 + 1 𝑒 𝛽 (10)</formula><p>where 𝑛 is the sequence length, 𝑘 is the position and 𝛽 is a hyperparameter. In this function, the position of the item in the sequence is raised to a constant power (controlled by the hyperparameter 𝛽). For example, when 𝛽 = 0, this results in a linear function, when 𝛽 = -∞ the importance becomes constant (meaning that there is an equal chance of sampling any item in the sequence).</p><p>Figure <ref type="figure">6b</ref> illustrates sampling probability distributions generated by the power importance functions with different values of the parameter 𝛽. Comparing the figure with Figure <ref type="figure">6a</ref>, we can see that in contrast with the exponential importance, power importance can generate linear (when 𝛽 = 0) and sub-linear (when 𝛽 &lt; 0) shapes of probability distributions.</p><p>Note that, because 𝑛 and 𝛽 are constants, the set of sampling probability distributions produced by this family is equal to the one produced by a simpler function:</p><formula xml:id="formula_16">f 𝑝𝑜𝑤 (𝑘) = (𝑘 + 1) 𝜏<label>(11)</label></formula><p>where 𝜏 = 𝑒 𝛽 . Note that this simpler form omits the normalization coefficient 1 𝑛+1 , because it is reduced anyway while computing probability distribution in Equation <ref type="bibr" target="#b6">(7)</ref>. However, this normalization is important in practice: without the normalization f 𝑝𝑜𝑤 (𝑘) becomes very large and numerically unstable even when 𝑘 and 𝜏 have modest values. For example, for 𝑘 = 50 and 𝜏 = 400 (realistic numbers we use in our experiments), f 𝑝𝑜𝑤 (𝑘) = 51 400 ≈ 10 683 . This number is larger than the maximum value that can be represented with a standard float32 data type and therefore causes errors during computations. By keeping the normalization, we bring the value of the function into the [0..1] interval and therefore help to avoid problems with infinities during computations.</p><p>The substitution of the parameter 𝜏 = 𝑒 𝛽 in Equation ( <ref type="formula" target="#formula_16">11</ref>) helps to squeeze the area of the interesting hyperparameter values to a more symmetric and smaller interval. In particular, as we mention in Section 4.2.1, we are specifically interested in the cases when recency importance decays sub-linearly because faster-than-linear cases are covered by the exponential importance function. Without the substitution, we have following cases for the behaviour of f 𝑝𝑜𝑤 (𝑘):</p><formula xml:id="formula_17">                  </formula><p>𝜏 &lt; 0 → out of the scope (violates the monotonic growth requirement (Equation <ref type="formula" target="#formula_9">6</ref>)) 𝜏 = 0 → uniform sampling probability 𝜏 ∈ (0, 1) → sub-linear decay of sampling probability 𝜏 = 1 → linear decay of sampling probability 𝜏 &gt; 1 → faster-than-linear decay of sampling probability <ref type="bibr" target="#b11">(12)</ref> From these cases we can see that uniformly sampling of 𝜏 from the allowed range 𝜏 ∈ [0.. + ∞] will almost certainly be sampled from the less interesting area of the faster-than-linear growth (with a probability of 1). Instead, by making the substitution 𝑒 𝛽 = 𝜏, we obtain a simpler and symmetric set of cases for the behavior of 𝑓 𝑝𝑜𝑤 (𝑘):</p><formula xml:id="formula_18">        </formula><p>𝛽 &lt; 0 → sub-linear decay of sampling probability 𝛽 = 0 → linear decay of sampling probability 𝛽 &gt; 0 → faster-than-linear decay of sampling probability <ref type="bibr" target="#b12">(13)</ref> Thus, a randomly sampled 𝛽 has equal chances of producing faster-than-linear and sub-linear probability decay. In practice we chose 𝛽 from the interval (-2..6): as Figure <ref type="figure">6b</ref> shows, for sequences of length 50, 𝛽 = -2 produces a sampling probability distribution close to uniform, whereas for 𝛽 = 6 the probability of sampling the last item becomes close to one and the probability of sampling earlier items is close to zero; RSS, therefore, becomes similar to sequence continuation.</p><p>In summary, we have proposed exponential importance and power importance families of importance functions, which can produce a broad set of shapes, including exponential, linear, and sub-linear shapes. Sections 6.3 and 6.4 cover our experiments with these two families of importance functions. In particular, in Section 6.4 we show that optimal shapes generated by both these families are very similar to each other.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Loss Functions for RSS</head><p>The second important component of the training procedure is the loss function. Loss functions for recommender systems can be generally divided into three categories -pointwise (optimize the relevance estimation of each item independently), pairwise (optimize a partial ordering between pairs of items) and listwise (optimize the recommendations list as a whole) losses <ref type="bibr" target="#b28">[29]</ref>. RSS works with all types of loss functions that support multiple positive samples within each training sample.</p><p>GRU4rec + <ref type="bibr" target="#b15">[16]</ref> showed the advantages of applying a listwise loss function above pointwise and pairwise methods, however the Top-1-max and BPR-max losses introduced in that paper have an assumption that there is only one positive item within each training sample. Instead, we use LambdaRank <ref type="bibr" target="#b3">[4]</ref> (denoted 𝜆Rank), another listwise optimization loss function. 𝜆Rank has been widely deployed in training learning-to-rank scenarios <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b38">39]</ref> for web search. Similarly, 𝜆Rank has been shown to be advantageous for recommender tasks <ref type="bibr" target="#b27">[28]</ref>, for example when applied to Factorization Machines <ref type="bibr" target="#b57">[58]</ref> or Transformer-based sequential models <ref type="bibr" target="#b37">[38]</ref>.</p><p>𝜆Rank <ref type="bibr" target="#b3">[4]</ref> uses 𝜆-gradients instead of objective function gradients in the gradient descent method. According to Burges <ref type="bibr" target="#b3">[4]</ref>, the 𝜆-gradient for an item 𝑖 ∈ 𝐼 is defined as follows:</p><formula xml:id="formula_19">𝜆 𝑖 = ∑︁ 𝑗 ∈𝐼 |Δ𝑁 𝐷𝐶𝐺 𝑖 𝑗 | -𝜎 1 + 𝑒 𝜎 (𝑠 𝑖 -𝑠 𝑗 )<label>(14)</label></formula><p>where 𝑠 𝑖 and 𝑠 𝑗 are predicted scores, Δ𝑁 𝐷𝐶𝐺 𝑖 𝑗 is the change that would be observed in an NDCG metric items 𝑖 &amp; 𝑗 were swapped, and 𝜎 is a hyperparameter, defining the shape of the sigmoid, typically set to 1. Burges <ref type="bibr" target="#b3">[4]</ref> used 𝜆Rank to build one of the most successful learning-to-rank algorithms LambdaMART, which is based on gradient boosting trees. Versions of LambdaMART still produce state-of-the-art results for the learning-to-rank task <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b38">39]</ref>.</p><p>There are multiple available implementations of LambdaMART. Qin et al. <ref type="bibr" target="#b38">[39]</ref> have shown that a version of LambdaMART implemented in a popular LightGBM library <ref type="bibr" target="#b20">[21]</ref> performs better than other available implementations, and therefore we matched our implementation of 𝜆Rank with LighghtGBM's implementation. On analysis of the LightGBM source code, we found that it uses a normalized version of the 𝜆-gradients (compared to Equation ( <ref type="formula" target="#formula_19">14</ref>)). To keep our version consistent with the best available implementation, we include these modifications into our version of 𝜆Rank. We provide more details on these modifications in Appendix A.</p><p>In addition to 𝜆Rank, we also experiment with the pointwise Binary Cross-Entropy (BCE), following <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b50">51]</ref>, to investigate the effect of the listwise loss and the necessity of both training objective and the loss function in our solution. In this section we describe the methodology of analyzing the effects of RSS on the learned model using positional embeddings.</p><p>The main idea of RSS is that recent interactions are more important to the model compared to the older ones and therefore the model should treat them differently. To analyze whether or not this happens in practice, we need a mechanism that allows us to understand the learned differences between different positions in a sequence. Fortunately, the Transformer architecture (as used by SASRec <ref type="bibr" target="#b19">[20]</ref>) provides this mechanism in the form of positional embeddings, details of which we describe in Section 2.2.</p><p>Our goal is to examine whether or not RSS helps the model distinguish between recent and earlier positions. To achieve this goal, we need to measure position similarity between different positions learned by the model. Intuitively, we would like the learned similarities to exhibit the following properties:</p><p>Pr.1 Similarities between high nearby positions, as the nearby interactions are likely to be related to each other. Pr.2 Similarities between distant positions are low; as distant interactions are unlikely to be related to each other. Pr.3 For recent positions, similarity decays faster with the distance between positions than for the earlier positions. This means that the relative order of recent interactions is more important than the relative order of earlier interactions. Property Pr.3 can be written as</p><formula xml:id="formula_20">𝑠𝑖𝑚𝑖𝑙𝑎𝑟𝑖𝑡𝑦 (𝑖 𝑟 , 𝑖 𝑟 + Δ 𝑖 ) &lt; 𝑠𝑖𝑚𝑖𝑙𝑎𝑟𝑖𝑡𝑦 (𝑖 𝑒 , 𝑖 𝑒 + Δ 𝑖 )<label>(15)</label></formula><p>where 𝑖 𝑟 corresponds to recent positions and 𝑖 𝑒 correspond to earlier positions. SASRec explicitly separates interaction representations into item embeddings and position embeddings (see Equation ( <ref type="formula" target="#formula_2">3</ref>)), allowing us to focus solely on the position representations -indeed, as the item embeddings are independent of the positions, we can therefore exclude them from our analysis of position similarities.</p><p>After summation with the item embeddings, SASRec uses the position embeddings as the input to linear projections. Therefore it makes sense to use cosine similarity of positional embeddings as a means to measure the learned similarity between two positions in the sequence.</p><p>Formally, we define the learned position similarity matrix 𝑆, which elements 𝑠 𝑖,𝑗 correspond to the learned similarity between positions 𝑖 and 𝑗 and are defined as:</p><formula xml:id="formula_21">𝑠 𝑖,𝑗 = 𝑒 𝑖 • 𝑒 𝑗 ∥𝑒 𝑖 ∥ ∥𝑒 𝑗 ∥<label>(16)</label></formula><p>where 𝑒 𝑖 and 𝑒 𝑗 are positional embeddings learned by SASRec for positions 𝑖 and 𝑗. Based on the definition, matrix 𝑆 is symmetric with respect to the main diagonal, i.e.:</p><formula xml:id="formula_22">𝑠 𝑖,𝑗 = 𝑠 𝑗,𝑖<label>(17)</label></formula><p>However, the symmetry with respect to the secondary diagonal is an undesirable property, as it violates Property Pr.3. Indeed, let's assume the symmetry with respect to the secondary diagonal:</p><formula xml:id="formula_23">𝑠 𝑖,𝑗 = 𝑠 𝑛-𝑗,𝑛-𝑖<label>(18)</label></formula><p>Let's denote Δ 𝑖 = 𝑗 -𝑖, so</p><formula xml:id="formula_24">𝑠 𝑖,𝑖+Δ 𝑖 = 𝑠 𝑛-𝑖 -Δ 𝑖 ,𝑛-𝑖<label>(19)</label></formula><p>Equation ( <ref type="formula" target="#formula_24">19</ref>) can be also written as</p><formula xml:id="formula_25">𝑠 𝑖,𝑖+Δ 𝑖 = 𝑠 𝑖 ′ ,𝑖 ′ +Δ𝑖 (<label>20</label></formula><formula xml:id="formula_26">)</formula><p>where</p><formula xml:id="formula_27">𝑖 ′ = 𝑛 -𝑖 -Δ 𝑖 .</formula><p>If 𝑖 is a recent position, (𝑖 ≈ 𝑛), then 𝑖 ′ corresponds to a early position (𝑖 ′ ≈ 0). In that case Equation <ref type="bibr" target="#b18">(19)</ref> contradicts Equation <ref type="bibr" target="#b14">(15)</ref>, which requires 𝑠 𝑖,𝑖+Δ 𝑖 &lt; 𝑠 𝑖 ′ ,𝑖 ′ +Δ𝑖 . This means that a symmetric similarity matrix with respect to the secondary diagonal violates our desirable Property Pr.3. Ideally, we would like to avoid this kind of symmetry.</p><p>Overall, the position similarity matrix 𝑆 allows us to analyze how the learned model treats interactions in different positions. For example, the original SASRec model is trained to predict original input shifted by one element. In this training task every position in the sequence has equal importance and therefore we expect that the similarity between positions only depends on the distance between positions, i.e.:</p><formula xml:id="formula_28">𝑠 𝑖,𝑗 ≈ 𝑔(|𝑖 -𝑗 |)<label>(21)</label></formula><p>which will lead to symmetry with respect to the secondary diagonal:</p><formula xml:id="formula_29">𝑠 𝑖,𝑗 ≈ 𝑔(|𝑖 -𝑗 |) = 𝑔(|(𝑛 -𝑗) -(𝑛 -𝑖)|) ≈ 𝑠 𝑛-𝑗,𝑛-𝑖<label>(22)</label></formula><p>hypothesize that RSS training objective helps the model to avoid this undesirable symmetry. Indeed, by the design of the training objective, recent positions and their relative order are more important earlier positions in the sequence and their order, and therefore we expect that the similarity 𝑠 𝑖,𝑗 between positions 𝑖 and 𝑗 depends on both absolute values of position and their relative distance between them:</p><formula xml:id="formula_30">𝑠 𝑖,𝑗 ≈ 𝑔(𝑖, |𝑖 -𝑗 |)<label>(23)</label></formula><p>In Section 6.6 we analyze position similarity matrices of SASRec-vanilla and SASRec-RSS to show in practice that similarity matrices of SASRec-RSS indeed exhibit all three desirable properties on 3 out of 4 experimental datasets, whereas the positional similarity matrices of the original SASRec model do not exhibit Property Pr.3 on all datasets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Summary</head><p>Overall, RSS is a novel training objective based on a probabilistic sampling of target items, with more probability assigned to recent items. Our motivation for the probabilistic target sampling objective encodes two principled intuitions for the sequential recommendation. RSS is model-and loss-agnostic: it can be used with various model architectures and loss functions. RSS is parametrized by the recency importance function, which defines the probability decay. Two examples of recency function families include exponential importance and power importance. RSS only affects model training and leaves other model characteristics, such as the number of parameters or model throughput, unchanged. Hence, in the next section, through detailed experimentation, we investigate the effects of RSS on model training.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">EXPERIMENT SETUP</head><p>In the following, we list our research questions (Section 5.1), our experimental datasets (Section 5.2), the recommender models on which we build, and our comparative baselines (Section 5.3), and finally, evaluation details (Section 5.4). RQ6 What is the effect of RSS on the positional learned by the SASRec model?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Datasets</head><p>Our experiments are performed on four large-scale datasets for sequential recommendation: MovieLens-20M <ref type="bibr" target="#b14">[15]</ref> is a movie recommendation dataset, and is popular for benchmarking sequential recommenders <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b26">27,</ref><ref type="bibr" target="#b31">32,</ref><ref type="bibr" target="#b32">33,</ref><ref type="bibr" target="#b41">42,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b55">56,</ref><ref type="bibr" target="#b61">62]</ref>. Note that MovieLens-20M is a rating dataset where users rate movies with stars, however following common practice <ref type="bibr" target="#b26">[27,</ref><ref type="bibr" target="#b32">33,</ref><ref type="bibr" target="#b49">50]</ref> we consider all ratings as positive interactions. However, MovieLens-20M timestamps correspond to the time when ratings were provided rather than when the items were consumed, so the task is best described as "next movie to rate" rather than "next movie to watch". Nevertheless, as versions of the MovieLens dataset are used in both well-cited <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b19">20,</ref><ref type="bibr" target="#b49">50]</ref> and recent <ref type="bibr" target="#b42">[43,</ref><ref type="bibr" target="#b59">60,</ref><ref type="bibr" target="#b60">61]</ref> sequential recommendation papers, we conclude that it is well suited for the the problem and it is important to include it as one of our benchmarks.</p><p>Yelp<ref type="foot" target="#foot_0">1</ref> is a business reviews dataset. It is another popular dataset for sequential recommendations <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b34">35,</ref><ref type="bibr" target="#b42">43,</ref><ref type="bibr" target="#b54">55,</ref><ref type="bibr" target="#b62">63]</ref>. As for MovieLens-20M, we consider all user reviews as positives.</p><p>Gowalla <ref type="bibr" target="#b6">[7]</ref> contains user check-ins to a location-based social network. This dataset contains a large number of items (more than 10 6 ) and is very sparse: it has only 0.0058% out of all possible user-item interactions.</p><p>Booking.com <ref type="bibr" target="#b12">[13]</ref> is a travel destination dataset. Each interaction sequence in this dataset represents a single multi-city trip of a user. In contrast to other types of recommendations, such as movies or books, multi-city trips have a strong sequential nature. Indeed, for example, if a user is making a road trip by car, there could be only one or two neighboring cities where the user can stop, and hence all other more distant items are non-relevant. This strong sequential nature could be problematic for RSS, as it contradicts Principle P1, which says that any item in the sequence can be selected as a relevant target for the preceding items. Following common practice <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b62">63]</ref>, we discard cold-start users with fewer than 5 interactions from each dataset. Table <ref type="table" target="#tab_1">1</ref> reports the salient statistics of the four datasets. As the table shows, the experimental datasets are quite distinct in terms of sequence length: median sequence length varies from 6 in the Booking.com dataset to 68 in the MovieLens-20M dataset. Indeed, our choice of datasets allows testing of RSS performance in settings with different sequence lengths.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Models</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.1">Experimental</head><p>Architectures. RSS is a training objective that can be used with a large variety of model architectures. We identify three large groups of model architectures that can be used with RSS: Recurrent Neural Network-based models, Convolutional Neural Network-based models, and Attention-based models. In each group, we select a well-cited representative architecture. Overall, we experiment using RSS with three recent model architectures for sequence recommendation:</p><p>( Transformer <ref type="bibr" target="#b52">[53]</ref>. The original implementation of SASRec is trained as a sequence-tosequence model, however only the final element from the target sequence is used at inference time. In order to match our common training framework and train the model with the RSS training objective, we ignore all outputs of the architecture except the final one. This is a notable change in the training process, because the original SASRec computes its loss over all outputs. To make sure that this change does not lead to significant quality degradation we include the original version of SASRec as a baseline (see Section 5.3.2). We implement these architectures using the TensorFlow version 2 <ref type="bibr" target="#b0">[1]</ref>. 2 Note that for our experiments we reuse only the architectures of these models and not the training methods or hyperparameters. Indeed, because our goal is to research the impact of the training task, the appropriate training parameters may differ from the original implementation.</p><p>We implement RSS and sequence continuation training objectives on each of the three experimental architectures. We do not apply an item masking training objective with these architectures: item masking assumes that a model produces a scores distribution per masked item, which is not compatible with those architectures; however, as discussed below, we include BERT4Rec as an item masking baseline.</p><p>For our experiments, we set common training parameters for all model architectures, following the settings in <ref type="bibr" target="#b19">[20]</ref>. In particular, we set the size of the item embeddings to be 64, we use the Adam optimizer, applying the default learning rate of 0.001 and following SASRec <ref type="bibr" target="#b19">[20]</ref> we set the 𝛽 2 parameter, which controls the second moment decay rate in Adam, to 0.98 3 .</p><p>We also fix the length of the user sequences to 50 items for all four following <ref type="bibr" target="#b19">[20]</ref>. If a user has less than 50 interactions, we add special "[pad]" interactions at the beginning of the sequence. If the user has more than 50 interactions, we take the last 50 interactions from the sequence. Figure <ref type="figure" target="#fig_4">7</ref> illustrates this padding/truncation scheme visually. The scheme ensures that the user's most recent interaction is always located in the rightmost position (position with index 49 in our case), and padding is added to the beginning of the sequence. We select target items for both RSS and Sequence Continuation before applying padding/truncation. 2 The code for this paper is publicly available in a joint repository with our BERT4Rec replicability paper <ref type="bibr" target="#b37">[38]</ref> and can be found at https://github.com/asash/bert4rec_repro 3 Note that the datasets used in the SASrec paper <ref type="bibr" target="#b19">[20]</ref> are different from the ones we use in our experiments. However, the datasets used in <ref type="bibr" target="#b19">[20]</ref> represent a wide range of data types, including e-commerce, games, and movie recommendations, and therefore we use these hyperparameters without changing them. Following BERT4Rec <ref type="bibr" target="#b49">[50]</ref>, we set the maximum percentage of a sequence to sample, 𝜏, to 0.2. Except where otherwise noted, we deploy the exponential recency function, and set the recency parameter 𝛼 to 0.8. Finally, in order to estimate the performance of the models under limited training time, we fix the training time of all models to 1 hour (we provide details on the amount of training data used for training of each model within the 1-hour limit in Appendix B). Experiments are conducted using 16-cores of an AMD Ryzen 3975WX CPU, 128GB of memory, and an NVIDIA A6000 GPU.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.2">Baselines.</head><p>In order to validate that using Recency-based Sampling of Sequences is possible to achieve performance comparable to state-of-the-art recommender models, we compare with a selection of popular and state-of-the-art recommenders. We use the following models non-neural models as baselines: (i) Popularity -the most popular items in the dataset; (ii) MF-BPR -Matrix factorization with BPR Loss <ref type="bibr" target="#b47">[48]</ref>. We use the implementation of this recommendation model from the popular LightFM library <ref type="bibr" target="#b24">[25]</ref>.</p><p>We also use two Transformer-based models as state-of-the-art baselines: (i) SASRec-vanillathe original version of SASRec recommender <ref type="bibr" target="#b19">[20]</ref>, a Transformer-based model that uses a shifted sequence task, described in Section 3.1. To make the comparison fair with the RSS-enhanced variant, we limit the training time of this model to 1 hour; (ii) BERT4Rec is another Transformer-based model <ref type="bibr" target="#b49">[50]</ref> based on the BERT <ref type="bibr" target="#b9">[10]</ref> architecture. BERT4Rec has been shown to outperform other traditional and neural architectures and has been used as a strong baseline in a number of recent works (e.g. <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b29">30,</ref><ref type="bibr" target="#b38">39]</ref>). In our recent replicability study <ref type="bibr" target="#b36">[37]</ref>, we have also shown that despite the existence of many later models, BERT4Rec still exhibits state-of-the-art performance.</p><p>We use two versions of this model: BERT4Rec-1h denotes where the training time of BERT4Rec is limited to 1 hour, to allow a fair comparison in a limited-time setting; BERT4Rec-16h, where training time is limited to 16 hours in order to compare the performance of our approach with the state-of-the-art model. The original BERT4Rec publication <ref type="bibr" target="#b49">[50]</ref> does not report the required amount of training, but we find empirically that reproducing the reported results takes around 16 hours on our hardware <ref type="bibr" target="#b36">[37]</ref>. We set the other parameters of BERT4Rec following the original paper <ref type="bibr" target="#b49">[50]</ref>. In particular, we use two transformer layers and masked 20% of each training input sequence.</p><p>In contrast with other baselines, BERT4Rec calculates a score distribution across all items in the catalog for each element in the sequence, whereas other baselines calculate a single distribution of scores per sequence. This means that BERT4Rec requires 𝑂 (𝑁 ) more memory per training sample for storing output scores and ground truth labels compared to other baseline models. This makes training the original implementation of BERT4Rec infeasible when a dataset has too many items. Indeed, the original BERT4Rec publication <ref type="bibr" target="#b49">[50]</ref> only reports results on relatively small datasets with no more than 55000 items and our own attempts to train BERT4Rec on a large Gowalla dataset with more than 1 Million items failed because of memory and storage issues (see also Section 6.5). Bold denotes the best model for a dataset by the metric in the main group, underlined the second best. Symbols * and † denote a statistically significant difference compared with SASRec-RSS-BCE and SASRec-RSS-𝜆Rank respectively, according to a paired t-test with Bonferroni multiple testing correction (𝑝𝑣𝑎𝑙𝑢𝑒 &lt; 0.05). 1 We do not report results for BERT4Rec models for the Gowalla dataset because due to the large number of items in this dataset, we were not able to train the model. 2 We report results for BERT4rec-16h separately due to its larger training time. Hence, we do not report BERT4Rec results for Gowalla and leave scaling BERT4Rec to datasets with a large number of items for future research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>MovieLens</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">Data Splitting and Evaluation Measures</head><p>Following many existing publications <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b50">51]</ref> we evaluate our method using a Leave-One-Out strategy. Specifically, for each user from we hold out the final interaction as the test set, which we use to report metrics. We also construct a validation set using the same Leave-One-Out strategy, using the second last interaction for a group of 1024 users as validation. We set the number of training epochs to maximize NDCG@10 on the validation sets. For training, we use all interactions except those included in the test and validation sets. We report two ranking evaluation measures: Recall <ref type="foot" target="#foot_1">4</ref> and Normalized Discounted Cumulative Gain (NDCG). For both metrics, we apply a rank cutoff of 10. To measure the significance of performance differences, we apply the paired t-test, and apply Bonferroni multiple testing correction, following recommended practices in IR <ref type="bibr" target="#b11">[12]</ref>. Following the recent guidance for the evaluation of recommender systems <ref type="bibr" target="#b13">[14]</ref>, our evaluation unit is a user (i.e. we measure statistical significance with respect to per-user results), and we use a significance level (or 𝑝𝑣𝑎𝑙𝑢𝑒) of 0.05.</p><p>Until recently, for efficiency reasons, most of the sequential recommendations papers reported sampled metrics -i.e. they sampled a small proportion of negative items and used only these items and the positive item when calculating evaluation measures. However, recent work by Krichene &amp; Rendle <ref type="bibr" target="#b23">[24]</ref> as well as Cañamares &amp; Castells <ref type="bibr" target="#b4">[5]</ref> both showed that using sampled metrics frequently leads to incorrect performance estimates and the relative order of evaluated models can change. Hence in our experiments, we use full unsampled metrics: we rank all possible items in the catalog and calculate metrics on this full ranking 5 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">RESULTS</head><p>We now analyse our experimental results for each of the four research questions stated in Section 5.1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">RQ1. The benefit of Recency Sampling</head><p>To address our first research question, we compare our experimental architectures (GRU4Rec, Caser, SASRec) trained with either sequence continuation or RSS objectives. Table <ref type="table" target="#tab_3">2</ref> reports the effectiveness results, in terms of Recall@10 and NDCG@10, of the three architectures, trained with both sequence continuation (denoted Cont) or RSS, and applying two different loss functions (Binary Cross-Entropy -BCE -and 𝜆Rank) on four datasets (MovieLens-20M, Yelp, Gowalla, Booking.com). Statistically significant differences -according to a paired t-test with Bonferroni multiple testing correction (𝑝𝑣𝑎𝑙𝑢𝑒 &lt; 0.05) -among the training objectives for a given architecture, model, and loss function are shown. On first inspection of Table <ref type="table" target="#tab_3">2</ref>, we note that the general magnitudes of the reported effectiveness results are smaller than those reported in <ref type="bibr" target="#b49">[50]</ref> -indeed, as stated in Section 5.4, in contrast to <ref type="bibr" target="#b49">[50]</ref>, we follow recent advice <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b23">24]</ref> to avoid sampled metrics, instead preferring the more accurate unsampled metrics. The magnitudes of effectiveness reported for MovieLens-20M are in line with those reported by <ref type="bibr" target="#b8">[9]</ref> (e.g. a Recall@10 of 0.137 for SASRec-vanilla is reported in <ref type="bibr" target="#b8">[9]</ref> when also using a Leave-One-Out evaluation scheme and unsampled metrics).</p><p>We now turn to the comparison of training objectives. In particular, we note from the table that, on the MovieLens-20M, Yelp, and Gowalla datasets, RSS results in improved NDCG@10 in 17 out of 18 cases -15 of which are by a statistically significant margin -and also improved Recall@10 in 16 out of 18 cases (15 statistically significant). For instance, on MovieLens-20M, SASRec is the strongest performing architecture (in line with previous findings <ref type="bibr" target="#b19">[20,</ref><ref type="bibr" target="#b49">50]</ref>); however, applying RSS significantly improves its Recall@10, both when using BCE (0.153→0.188) and when using 𝜆Rank (0.105→0.196). Similarly and interestingly, SASRec with the RSS objective and 𝜆Rank loss outperformed other models by a very large margin on the Gowalla dataset (e.g. Recall@10 0.102 vs. 0.071 when using sequence continuation). We postulate that the large number of items in the dataset makes the training task very hard, and only the combination of RSS with 𝜆Rank allows training the model with reasonable quality in the given time limit. The only instance when RSS is worse than Continuation on these three datasets is for the GRU4Rec architecture on Gowalla with BCE loss. This is also likely to be explained by the hardness of the task on this dataset due to a large number of items. This is also reinforced by the hardness of training GRU4Rec architecture in general (see also Section 6.3 and Figure <ref type="figure">8</ref>).</p><p>We also note the three datasets where RSS performs well (MovieLens-20M, Yelp, and Gowalla) are very different in terms of sequence length (see Table <ref type="table" target="#tab_1">1</ref>), varying from median length eight on Gowalla to median length 68 on MovieLens-20M. This means that RSS can be effective with both short and long sequences. On the other hand, for the Booking.com dataset, we observe that in 3 out of 6 cases, RSS is less effective. This is not an unexpected result: as we argued in Section 5.2, this dataset violates the underlying assumption encoded in Principle P1. Indeed, due to the geographical distance between items in this multi-city trip dataset, items cannot be considered out-of-order, and hence RSS does not improve the stronger models on this dataset.</p><p>Overall, in response to RQ1, we conclude that Recency-based Sampling of Sequences improves the training of models if the items earlier in the user sequence can be treated as positives (properties exhibited by the MovieLens-20M and Gowalla datasets).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">RQ2. Comparison of Different Loss Functions</head><p>Next, we address the choice of the loss function, as per RQ1. We again turn to Table <ref type="table" target="#tab_3">2</ref>, but make comparisons of the upper vs. lower performances in each group. For instance, for RSS, we observe that applying the listwise 𝜆Rank loss function on the GRU4Rec architecture on MovieLens-20M dataset results in a significant increase (0.035→0.154), as denoted by the † symbol. Indeed, across all of Table <ref type="table" target="#tab_3">2</ref>, we observe that when used with RSS training task, 𝜆Rank improves NDCG@10 in 8 cases out of 12 (all 8 significantly) as well as Recall@10 in 8 cases out of 12 (8 significantly). In contrast, 𝜆Rank only improves over BCE in 7 out of 24 cases for the sequence continuation training objective (all by a significant margin). Overall, and in answer to RQ2, we find that 𝜆Rank usually improves (except Yelp) the effectiveness of our proposed RSS training objective, while it does not offer the same level of improvement for sequence continuation. We explain this finding as follows: in sequence continuation, there is only one relevant item per sequence, and hence the benefit of a listwise loss function is limited. In contrast, RSS selects multiple relevant items for each sequence, and in this case, a listwise loss function can benefit in training the model to rank these items nearer the top of the ranking. However, as 𝜆Rank did not improve RSS results on Yelp, we can not say that the improvements are consistent, and the question of the loss function selection requires further research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3">RQ3. Impact of Position Recency Importance in the Exponential Importance Function</head><p>This research question is concerned with the importance of sampling recent items in training sequences. To address this question, we train every experimental architecture with the best-performing loss from Table <ref type="table" target="#tab_3">2</ref> on the MovieLens-20M dataset. We vary the recency importance parameter 𝛼 in the exponential recency importance function (Equation ( <ref type="formula" target="#formula_12">8</ref>)), to investigate its effect on effectiveness.</p><p>In particular, as 𝛼 → 0, the training task turns to sequence continuation, while with a large 𝛼 the training task loses its sequential nature and becomes similar to matrix factorization. Figure <ref type="figure">8</ref> summarizes the impact of 𝛼 on the model effectiveness. We also present the performance of the MF-BPR <ref type="bibr" target="#b47">[48]</ref> baseline. From the figures, we observe that when we set 𝛼 close to zero, the results match those we report in Table <ref type="table" target="#tab_3">2</ref> for the sequence continuation task, illustrating that under small 𝛼, RSS only samples the last element in each sequence. Similarly, for 𝛼 = 1 we observe that the effectiveness of all models drops almost to that of the matrix factorization baseline, as target items are simply sampled from sequences without any ordering preference. Note, that in this case, we sample target items uniformly, which is similar to BERT4Rec's item masking. However, BERT4Rec also has access to the positions of masked items (through the position embeddings), whereas in the case of 𝛼 = 1 the positional information is completely lost and the model can not learn to predict the next item and predicts some item instead. Overall, the general trends visible in Figure <ref type="figure">8</ref> suggest that RSS allows to train effective models across a wide range of the 𝛼 parameter values: ) recency importance functions. The plotted curves are mostly superimposed.</p><p>for Caser and SASRec, large improvements over sequence continuation training are achieved for 0.2 ≤ 𝛼 ≤ 0.9; for GRU4Rec, strong performance is obtained 0.6 ≤ 𝛼 ≤ 0.9. Indeed, for small 𝛼, the number of positive items is limited, and hence the lambda gradients in 𝜆Rank are also small. This provides little evidence to the GRUs in GRU4Rec, which therefore struggles with the vanishing gradient problem (a problem faced by many such recurrent architectures).</p><p>Overall, in response to RQ3, we find that the higher values of the recency importance parameter 𝛼 ≤ 0.9 results in effective performance for all three model architectures.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.4">RQ4. Recency Importance Function Shape</head><p>We now analyse the effects of replacing the exponential importance function (defined in Equation ( <ref type="formula" target="#formula_12">8</ref>)) with the power importance (defined in Equation ( <ref type="formula">10</ref>)).</p><p>To understand whether or not this different family of distributions may improve overall recommendations quality compared to exponential recency importance, we train a SASRec-RSS model on MovieLens-20M dataset with Binary Cross-Entropy loss and power importance while varying the power hyperparameter 𝛽 in the range from -2 to 6. Figure <ref type="figure">9</ref> shows the effect of this variation on the model performance in terms of NDCG and Recall metrics.</p><p>From the figure we note that the model achieves the best performance when 𝛽 = 2.25. Interestingly, the best achieved Recall@1 of 0.2008 and NDCG@10 of 0.1110 are similar to the best results achieved by the model with exponential importance: it obtains Recall@10 of 0.2070 and NDCG@10 of 0.1171. These similarities are not surprising when we look to Figure <ref type="figure" target="#fig_6">10</ref>, which plots the sampling probability distributions corresponding to the optimal power recency function (with 𝛽 = 2.25) and optimal exponential recency function (with 𝛼 = 0.8). As we can see from the figure, the shapes of the distributions are almost identical, which leads to similar model performance.</p><p>Overall, this analysis suggests that both power and exponential functions are viable alternatives, and if they are tuned properly they are likely to produce similar sampling probability distributions. However, we find that the exponential importance function is easier to tune, as it exhibits high performance in a wide range of hyperparameter values. Overall, we recommend using the exponential function as a default importance function in RSS.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.5">RQ5. Comparison with Baselines</head><p>To address our fifth research question concerning the comparison with baseline models, we compare the best-performing RSS-enhanced model, SASRec-RSS, using both 𝜆Rank and Binary Cross-Entropy losses, with the 5 baseline models described in Section 5.3. Table <ref type="table" target="#tab_4">3</ref> summarizes the results of this comparison, reporting effectiveness metrics as well as training time duration. In particular, recall that all models are trained for less than 1 hour, except for BERT4Rec-16h (a full training of BERT4Rec). Moreover, we did not train BERT4Rec on the Gowalla dataset, because the preprocessing code for BERT4Rec does not scale to its large number of items (indeed, Gowalla has more items than users, see Table <ref type="table" target="#tab_1">1</ref>). Indeed, the preprocessing code to generate masked training sequences requires 14GB of storage for MovieLens-20M, but 548GB for Gowalla.</p><p>On analyzing Table <ref type="table" target="#tab_4">3</ref>, we observe that SASRec-RSS (𝜆Rank or BCE) achieves the most effective performance on all four datasets among the time-limited recommendation models. For instance, on the MovieLens-20M dataset, compared to the original formulation of SASRec (denoted SASRecvanilla), the RSS adaptation significantly improves NDCG@10 (by the margin of 60%) for the same training duration. Moreover, compared to the 16 hour training of BERT4Rec, SASRec-RSS exhibits 16% higher NDCG@10 (a significant improvement), despite needing only 6% of the training time (16h→ 1h). For Booking.com, where RSS was less effective, SASRec-RSS with 𝜆Rank objective obtains the NDCG@10 12% less than that obtained by the expensive BERT4Rec-16h model, and the Recall that is 7% less. Interestingly, on the Yelp dataset, the 𝜆Rank version of SASRec is not effective (same performance as popularity baseline), but the BCE version of the model significantly outperforms all other models in the main group and achieves performance on par with BERT4Rec-16h. Furthermore, we see that in all cases where we able to train BERT4Rec, under limited training time, BERT4Rec underperforms compared to the SASRec-RSS (𝜆Rank or BCE version).</p><p>Overall, in answer to RQ5, we find that SASRec-RSS can achieve significantly higher effectiveness than the state-of-the-art SASRec and BERT4Rec approaches when trained for a comparable time. Furthermore, we can achieve performances exceeding or very close to a fully-trained BERT4Rec, but with much less training time. This highlights the importance of an appropriate training objective in general and the benefits of our proposed RSS training objective in particular.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.6">RQ6. Effect on Positional Embeddings</head><p>To better understand the impact of RSS on the resulting learned models, we analyse the similarities between the positional embeddings learned by SASRec when trained with both the shifted sequence training objective (SASRec-vanilla) and RSS. We compute the cosine similarity matrix 𝑆 as defined by Equation ( <ref type="formula" target="#formula_21">16</ref>) between the embeddings of each pair of positions and then use these matrices to validate desirable properties of positional embeddings, as described in Section 4.4.</p><p>The heatmaps shown in Figure <ref type="figure" target="#fig_7">11</ref> (left) graphically visualize these similarity matrices for all four experimental datasets. Darker color on the figure corresponds to the higher similarity between positions, whereas lighter color corresponds to lower similarity. Figure <ref type="figure" target="#fig_7">11</ref> (right) also shows the distributions of sequence lengths for these datasets, as these distributions help to explain some of the properties of the matrices: For example, in Figure <ref type="figure" target="#fig_7">11e</ref> we see that for the Gowalla dataset, there are artifact lines appearing at position 26. As we can see from the corresponding sequence length distribution (Figure <ref type="figure" target="#fig_7">11f</ref>), this corresponds to a sudden drop in the sequence length distribution in mostly contain noise for early positions, with little correspondence between nearby positions. This can be explained in that the Booking.com dataset has only a very small number of sequences longer than 15 items, as can be seen from the corresponding sequence distribution plot.</p><p>The overall general trends that can be observed in Figure <ref type="figure" target="#fig_7">11</ref> are as expected, in that all matrices are symmetric with respect to the main diagonal (because of the symmetry of cosine similarity). We also can see from the figures that, in all cases, the similarity is high close to the main diagonal and lower further away from the diagonal. This means, that both SASRec-Vanilla and SASRec-RSS successfully learned our desirable Properties Pr.1 and Pr.2 (close positions have similar positional embeddings; embeddings of distant positions are less similar) -as defined in Section 4.4.</p><p>We now look to the symmetry with respect to the secondary diagonal, which as we argue in Section 4.4 is an undesirable property, as it violates Property Pr.3 (earlier positions are more similar to each other than the recent ones). As we expect, for each dataset except Booking.com, in SASRec-vanilla the similarity between a pair of positional embeddings is mostly defined by the distance between their respective positions (see also Equation ( <ref type="formula" target="#formula_30">23</ref>)). As we showed in Section 4.4, this makes the matrix symmetric with respect to the secondary diagonal; therefore, SASRec-vanilla violates Property Pr.3.</p><p>In contrast, the similarity matrices for SASRec trained with the RSS training objective are not symmetric with respect to the secondary diagonal. Instead, for each dataset except Booking.com, we observe two groups of positions: a large group of earlier positions and a small group of recent positions. For example, on the MovieLens-20M dataset, we can say that positions 0..40 comprise the earlier group whereas positions 41..49 comprise the recent group. Positions within each group tend to be similar to each other and different compared to the positions from the other group. In practice this means that in contrast to SASRec-vanilla, the similarity matrices of SASRec-RSS do not violate Property Pr.3. This confirms that RSS helps models to make better distinction between recent and earlier positions, as we hypothesized in Section 4.4.</p><p>Furthermore, from Figure <ref type="figure" target="#fig_7">11g</ref> we can also see that position similarity matrices for the Booking.com dataset do not look like other similarity matrices. For example, similarity matrices for SASRec-vanilla trained on this dataset are not symmetric with respect to secondary diagonal. This can be explained by the shorter sequence lengths in the Booking.com dataset. As we can see from the figure, there are virtually no sequences with more than 20 interactions in this dataset, which differs from the other datasets in our experiments (even for the Yelp dataset, where the average sequence length is relatively short, approximately 4% of all sequences have at least 50 interactions). According to our applied padding scheme (see Section 5.3.1 and Figure <ref type="figure" target="#fig_4">7</ref>), this means that positions on the left side of the sequence will be padded and ignored by the model. As a result, the positional embeddings for earlier positions remain mostly unchanged after random initialization in the model, which explains the differences in similarity matrices with the other datasets.</p><p>In summary, we conclude that while both SASRec-vanilla and SASRec-RSS models successfully learn Properties Pr.1 and Pr.2, however, only an RSS-enhanced model successfully learned Property Pr.3 on three out of four datasets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">CONCLUSIONS</head><p>In this work, we identified two limitations in existing training objectives for sequential recommender models. To address these two limitations, we proposed a refined training objective, called Recencybased Sampling of Sequences (RSS). Through experimentation on four datasets, we found that this relatively simple change in the training objective can bring significant improvements in the overall effectiveness of state-of-the-art sequential recommendation models, such as SASRec and Caser. Furthermore, we showed that the 𝜆Rank loss function brought further effectiveness benefits to training under RSS not otherwise observed under a more traditional sequence continuation task. Indeed, on the large MovieLens-20M dataset, we observed that RSS applied to the SASRec model can result in an 60% improvement in NDCG over the vanilla SASRec model (Table <ref type="table" target="#tab_4">3</ref>), and a 16% improvement over a fully-trained BERT4Rec model, despite taking 93% less training time than BERT4Rec (see also Figure <ref type="figure">1</ref>). Moreover, on the Yelp and Gowalla datasets, which both have geographic and strong sequential characteristics, RSS applied to SASRec brought significant benefits in both NDCG and Recall metrics (Table <ref type="table" target="#tab_4">3</ref>). We further experimented with two families of recency importance functions (power importance and exponential importance) and found that when their parameters are tuned properly, these functions are likely to produce similar sampling probability distributions and consequently achieve similar performance (this is shown in Figures <ref type="figure">9</ref> and<ref type="figure" target="#fig_6">10</ref>). We also analyzed the effect of RSS on the learned positional embeddings of the SASRec model and have shown that in contrast to the original version of SASRec, the RSS-enhanced version successfully learns to distinguish recent and earlier positions (see also <ref type="bibr">Figure 11)</ref>. Finally, while we did not apply RSS to BERT4Rec due to its usage of the item masking training objective, which is harder to adapt to RSS however, we believe that BERT4Rec could be adapted in future work to benefit from RSS.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A DETAILS OF 𝜆RANK IMPLEMENTATION</head><p>There are several available implementations of 𝜆Rank. Qin et al. <ref type="bibr" target="#b38">[39]</ref> showed that the 𝜆Rank version from the LightGBM <ref type="bibr" target="#b20">[21]</ref> library significantly outperforms other available implementations in a learning to rank task. We could not use LightGBM directly, as it implements a CPU version of the gradient boosting trees method, and therefore is not compatible with neural tasks that are typically trained on GPUs. Therefore, in our work, we use LightGBM as the reference implementation of 𝜆Rank, and match its implementation, including modifications, not described in the original 𝜆Rank paper <ref type="bibr" target="#b3">[4]</ref>.</p><p>On analysis of the LightGBM <ref type="bibr" target="#b20">[21]</ref> source code, we find that compared to the original definition of the loss function (Equation ( <ref type="formula" target="#formula_19">14</ref>)), it includes two additional transformations that are not described in the original 𝜆Rank paper <ref type="bibr" target="#b3">[4]</ref>. These modifications are shown in Equations ( <ref type="formula" target="#formula_31">24</ref>) and (25), below:</p><p>(1) LightGBM uses normalized Δ𝑁 𝐷𝐶𝐺 based on the difference on item scores, as follows:</p><formula xml:id="formula_31">𝜆 𝑖 = ∑︁ 𝑗 ∈𝐼 Δ𝑁 𝐷𝐶𝐺 𝑖 𝑗 𝑠 𝑖 -𝑠 𝑗 -𝜎 1 + 𝑒 𝜎 (𝑠 𝑖 -𝑠 𝑗 )<label>(24)</label></formula><p>(2) LightGBM normalizes the 𝜆-gradients of the predicted item scores across all items 𝐼 :</p><formula xml:id="formula_32">𝜆 𝑖 = 𝜆 𝑖 * log 2 (1 + 𝑖 ∈𝐼 𝜆 𝑖 ) 𝑖 ∈𝐼 𝜆 𝑖<label>(25)</label></formula><p>The justifications <ref type="foot" target="#foot_3">6</ref> for these changes provided by the LightGBM contributors describes them as specific to tree-based models. The idea is that tree-based models are sensitive to the ranges of labels, as they average values in the leaves, so that in skewed distributions, the output of the tree-based models drifts towards larger values. These normalizations help to solve the skewed distribution problem. We keep these normalizations in our implementation of 𝜆Rank, because we want to match the best available reference implementation. We leave the question of whether or not these normalizations are helpful for optimization of deep neural networks for future research, however our initial experiments suggest that it may improve neural networks training as well.</p><p>As 𝜆Rank relies on 𝜆-gradients, instead of usual loss function gradients, we are not able to rely on automatic gradients computation provided by TensorFlow. Instead, we implement it as a function that returns a dummy value with custom gradients. We test that our implementation of 𝜆Rank returns exactly same 𝜆-gradients as the C++ implementation from LightGBM<ref type="foot" target="#foot_4">7</ref> . However, compared to the LightGBM version, our version uses vectorized computations, and therefore can effectively make use of GPUs. Our implementation is available in our repository. <ref type="foot" target="#foot_5">8</ref> This implementation is not specific to recommender systems and can be used with other applications, which require ranking metrics optimization (e.g. for search results ranking.).</p><p>As can be seen from Equation <ref type="bibr" target="#b24">(25)</ref>, to compute each 𝜆 𝑖 , 𝜆Rank requires access to the scores of all items in the catalog. Indeed, calculating 𝜆 𝑖 for a catalog of 𝑚 items, where each application of Equation ( <ref type="formula" target="#formula_32">25</ref>) requires 𝑚 operations, giving an overall time complexity of 𝜆Rank is, at least, 𝑂 (𝑚 2 ). Moreover, it also requires access to pre-computed NDCG scores (in order to compute Δ𝑁 𝐷𝐶𝐺). Calculating NDCG scores requires sorting the items, a procedure which costs 𝑚 log(𝑚) operations. Hence, the overall time complexity of 𝜆Rank for a single training sample is 𝑂 (𝑚 2 + 𝑚 log(𝑚)).</p><p>However, after a few training iterations, it is reasonable to expect that the model will be able to rank all relevant items close to the top of the ranking. Assuming that 𝑘 is the rank of the lowest-scored positive element, the contribution of the items ranked below 𝑘 into the 𝜆-gradients is 0. Hence, following the LightGBM implementation, we use a truncated version of 𝜆Rank, where we only use 𝑘 highest-scored items for computing 𝜆-gradients. This is an equivalent of applying ranking cutoff at position 𝑘 when computing NDCG. In doing so, the computational complexity of 𝜆Rank for a single training sample becomes 𝑂 (𝑘 2 + 𝑚 log(𝑘)).</p><p>Our initial experiments showed that setting truncation level 𝑘 at 4000 allowed us to train models with 𝜆Rank in a reasonable time without effectiveness degradation for the datasets with a catalog size of fewer than 2,000,000 items. Therefore, we use truncation level 4000 in all our experiments. We leave more detailed research on the effect of the truncation level on model effectiveness/efficiency trade-off to future research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B ADDITIONAL INFORMATION ON MODEL TRAINING</head><p>Table <ref type="table" target="#tab_6">4</ref> presents the number of training sequences and the number of full epochs for which we trained each model. These numbers are defined by the 1-hour training time limit. We check the time limit after every epoch and employ an early stopping mechanism -we always save the best model according to validation data and stop training if the model does not improve for 100 epochs. As can be seen from the table, model throughput is mostly defined by the model architecture. For example, compared to SASRec, GRU4Rec has a much lower training throughput on all datasets except Gowalla. On Gowalla, all models have relatively low training throughput, which is explained by a large number of items in this dataset. RSS usually has negative (18/24 cases) or no effect (6/24 cases) on the total number of trained epochs. The negative effect is explained by a more complex training sample construction procedure. 𝜆Rank has no effect in 10/24 cases, negative effect in 10/24 cases and small positive effect in 4/10 cases. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 3 .</head><label>3</label><figDesc>Fig.3. Training sample generation strategies used in existing models. White boxes represent model inputs, and filled boxes represent model outputs. In Sequence Continuation, the sequence is split into two parts, with the aim of predicting whether or not an item belongs to the second part based on the sequence of elements in the first part. In Sequence Continuation with a sliding window, we first generate shorter sub-sequences from the original sequence and then apply the sequence continuation method. In item masking, some elements are removed and replaced with a special "[mask]" value, with the aim of correctly reconstructing these masked items.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 4 .</head><label>4</label><figDesc>Fig.<ref type="bibr" target="#b3">4</ref>. Equivalence of Shifted Sequence and Sequence Continuation training tasks. In Shifted Sequence, the model is trained to predict its output shifted by one element to the left. The models that use this training task only use elements in positions 0..𝑖 to predict 𝑖 𝑡ℎ output. This is equivalent to 𝑛 sequence continuation tasks, where 𝑛 is the length of the sequence.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 5 .Fig. 6 .</head><label>56</label><figDesc>Fig. 5. Recency-based Sampling of Sequences. The beginnings of the sequences remain largely unchanged, whereas elements from the end of the sequence are chosen as positive samples more frequently.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>4. 4</head><label>4</label><figDesc>RSS and Positional Embeddings in Transformer-based models.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 7 .</head><label>7</label><figDesc>Fig.7. Padding/Truncation scheme. We use left padding in experiments, ensuring that the rightmost input to the model is always the most recent interaction. Note that we sample target items (using RSS or Sequence Continuation) before applying padding or truncation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 8 .Fig. 9 .</head><label>89</label><figDesc>Fig. 8. SASRec, GRU4rec and Caser performance on the MovieLens-20M dataset, when trained with Recencybased Sampling of Sequences with the exponential importance function 𝑓 𝑒𝑥𝑝 (𝑘) = 𝛼 (𝑛-𝑘 ) , where 𝑛 is the sequence length. Position recency importance parameter 𝛼 is plotted on the 𝑥-axis. When 𝛼 = 0, the training objective turns into sequence continuation, and when 𝛼 = 1, the task becomes similar to item masking or matrix reconstruction. The training time of all models is fixed at 1 hour.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 10 .</head><label>10</label><figDesc>Fig. 10. Optimal sampling probability distributions for SASRec-RSS model generated by exponential (𝑓 𝑒𝑥𝑝 (𝑘) = 0.8 𝑛-𝑘 ) and power (𝑓 𝑝𝑜𝑤 (𝑘) = 𝑘+1 𝑛+1</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 11 .</head><label>11</label><figDesc>Fig. 11. Similarity matrices of positional embeddings</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 1 .</head><label>1</label><figDesc>Datasets we use for experiments.</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>Average</cell><cell>Median</cell></row><row><cell>Name</cell><cell>Users</cell><cell cols="2">Items Interactions</cell><cell></cell><cell>sparsity</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell>length</cell><cell>length</cell></row><row><cell>Booking.com</cell><cell>140746</cell><cell>34742</cell><cell>917729</cell><cell>6.52</cell><cell>6 0.999812</cell></row><row><cell>Gowalla</cell><cell cols="2">86168 1271638</cell><cell>6397903</cell><cell>74.24</cell><cell>28 0.999942</cell></row><row><cell>Yelp</cell><cell cols="2">287116 148523</cell><cell>4392169</cell><cell>15.29</cell><cell>8 0.999897</cell></row><row><cell cols="2">MovieLens-20M 138493</cell><cell>26744</cell><cell>20000263</cell><cell>144.41</cell><cell>68 0.994600</cell></row><row><cell cols="2">5.1 Research Questions</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="5">Our experiments aim to address the following research questions:</cell><cell></cell></row><row><cell cols="6">RQ1 Does Recency-based Sampling of Sequences (RSS) help for training sequential recommenda-</cell></row><row><cell cols="4">tion models compared to sequence continuation?</cell><cell></cell><cell></cell></row></table><note><p><p><p>RQ2 Does a listwise 𝜆Rank loss function benefit RSS training? RQ3 What is the impact of the recency importance parameter 𝛼 in the exponential recency importance function (Equation (</p>8</p>)) of RSS? RQ4 What is the effect of the recency important function shape in RSS? RQ5 How do RSS-enhanced models compare with state-of-the-art baselines?</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>Attention network: SASRec [20] is a sequential recommendation architecture based on</figDesc><table><row><cell>1) Recurrent Neural Networks: GRU4Rec [17] is a sequential recommender architecture</cell></row><row><cell>based on recurrent networks;</cell></row><row><cell>(2) Convolutional Neural Network: Caser [51] applies a convolutional neural network</cell></row><row><cell>structure for sequential recommendation. For our experiments, we use the basic architecture</cell></row><row><cell>described in [59];</cell></row><row><cell>(3)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3"><head>Table 2 .</head><label>2</label><figDesc>Comparing sequence continuation with Recency-based Sampling of Sequences training objectives under limited training for various model architectures. Bold denotes a more effective training objective for an (Architecture, Loss, Dataset) triplet. We use * to denote statistically significant differences compared to the other training objective (left vs. right), and † to denote significant differences on the change of loss function (upper vs. lower). All tests apply a paired t-test with Bonferroni multiple testing correction (𝑝𝑣𝑎𝑙𝑢𝑒 &lt; 0.05).</figDesc><table><row><cell cols="5">Training time of all models is limited to 1 hour.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">(a) Recall@10</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">MovieLens-20M</cell><cell>Yelp</cell><cell></cell><cell>Gowalla</cell><cell></cell><cell cols="2">Booking.com</cell></row><row><cell cols="2">Architecture Loss</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell></row><row><cell>GRU4Rec</cell><cell cols="9">BCE 𝜆Rank 0.0082 0.0221 † 0.0354* 0.1544* † 0.0009 0.0075 † 0.0100* † 0.0026* 0.0005 0.0045* 0.0068 † 0.0119* † 0.4780 † 0.5084* † 0.4621 0.4962*</cell></row><row><cell>Caser</cell><cell cols="9">BCE 𝜆Rank 0.0330 0.1424 † 0.1866* 0.1496* † 0.0009 0.0046 † 0.0099* † 0.0076 0.0017* 0.0087 † 0.0157* † 0.4968 0.0081 0.5600* † 0.5454 † 0.5273*</cell></row><row><cell>SASRec</cell><cell cols="6">BCE 𝜆Rank 0.1050 0.1537 † 0.1888* 0.1968* † 0.0045 0.0146 † 0.0269* † 0.0089 0.0052* 0.0715</cell><cell cols="3">0.0089 0.1020* † 0.5662* 0.5845* † 0.5178 0.52464 †</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2">(b) NDCG@10</cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">MovieLens-20M</cell><cell>Yelp</cell><cell></cell><cell>Gowalla</cell><cell></cell><cell cols="2">Booking.com</cell></row><row><cell cols="2">Architecture Loss</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell></row><row><cell>GRU4Rec</cell><cell cols="9">BCE 𝜆Rank 0.0040 0.0115 † 0.0183* 0.0839* † 0.0004 0.0035 † 0.0049* † 0.0017* 0.0002 0.0014* 0.0033 † 0.0067* † 0.3132* † 0.3093 † 0.2829 0.2899*</cell></row><row><cell>Caser</cell><cell cols="9">BCE 𝜆Rank 0.0177 0.0784 † 0.0995* 0.0814* † 0.0003 0.0021 † 0.0049* † 0.0039 0.0007* 0.0055 † 0.0100* † 0.3181 0.0040 0.3665* † 0.3311 † 0.3226*</cell></row><row><cell>SASRec</cell><cell cols="9">BCE 𝜆Rank 0.0579 0.0850 † 0.1002* 0.1073* † 0.0021 0.0076 † 0.0136* † 0.0044 0.0025* 0.0478 † 0.0749* † 0.3623* 0.0044 0.3633* † 0.2966 0.3122 †</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head>Table 3 .</head><label>3</label><figDesc>Comparing RSS-enhanced SASRec with baseline models under limited training.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head>Table 4 .</head><label>4</label><figDesc>The number of training sequences and full data passes (epochs) used for training. Training time is limited by 1 hour. We check the time limit condition after a full epoch (this explains repeating numbers in Table 4a) (a) Number of training sequences ,888 3,984,856 12,345,988 11,197,524 1,292,520 1,464,856 6,755,808 5,911,332 𝜆Rank 4,947,640 3,449,976 12,345,988 11,197,524 1,464,856 1,464,856 5,911,332 5,348,348 SASRec BCE 6,873,208 5,161,592 12,345,988 11,197,524 1,292,520 1,464,856 14,356,092 11,118,934 𝜆Rank 6,926,696 4,305,784 12,345,988 11,197,524 1,464,856 1,464,856 10,978,188 9,007,744</figDesc><table><row><cell></cell><cell></cell><cell cols="2">MovieLens-20M</cell><cell>Yelp</cell><cell></cell><cell></cell><cell>Gowalla</cell><cell></cell><cell>Booking.com</cell></row><row><cell cols="2">Architecture Loss</cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell><cell></cell><cell>Cont</cell><cell>RSS</cell><cell>Cont</cell><cell>RSS</cell></row><row><cell></cell><cell>BCE</cell><cell cols="5">1,149,992 1,043,016 6,603,668 6,029,436</cell><cell cols="3">1,292,520 1,464,856 1,125,968 1,125,968</cell></row><row><cell>GRU4Rec</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell cols="6">𝜆Rank 1,096,504 1,043,016 6,029,436 6,029,436</cell><cell cols="3">1,464,856 1,464,856 1,125,968 1,125,968</cell></row><row><cell>Caser</cell><cell>BCE</cell><cell cols="5">6,070(b) Number of epochs</cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell cols="3">MovieLens-20M Yelp</cell><cell></cell><cell cols="2">Gowalla</cell><cell>Booking.com</cell></row><row><cell cols="3">Architecture Loss</cell><cell cols="2">Cont RSS</cell><cell cols="5">Cont RSS Cont RSS Cont RSS</cell></row><row><cell></cell><cell></cell><cell>BCE</cell><cell>43</cell><cell>39</cell><cell>23</cell><cell>21</cell><cell>15</cell><cell>17</cell><cell>8</cell><cell>8</cell></row><row><cell cols="2">GRU4Rec</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">𝜆Rank 41</cell><cell>39</cell><cell>21</cell><cell>21</cell><cell>17</cell><cell>17</cell><cell>8</cell><cell>8</cell></row><row><cell></cell><cell></cell><cell>BCE</cell><cell>227</cell><cell>149</cell><cell>43</cell><cell>39</cell><cell>15</cell><cell>17</cell><cell>48</cell><cell>42</cell></row><row><cell>Caser</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">𝜆Rank 185</cell><cell>129</cell><cell>43</cell><cell>39</cell><cell>17</cell><cell>17</cell><cell>42</cell><cell>38</cell></row><row><cell></cell><cell></cell><cell>BCE</cell><cell>257</cell><cell>193</cell><cell>43</cell><cell>39</cell><cell>15</cell><cell>17</cell><cell>102</cell><cell>79</cell></row><row><cell cols="2">SASRec</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell></cell><cell cols="2">𝜆Rank 259</cell><cell>161</cell><cell>43</cell><cell>39</cell><cell>17</cell><cell>17</cell><cell>78</cell><cell>64</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>https://www.yelp.com/dataset</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_1"><p>In the context of sequential recommender systems, Recall corresponds to chances of correctly retrieving a single relevant item, and therefore many publications[20,  </p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_2"><p><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b58">59]</ref>, call it Hit Ratio (HR). We prefer the more conventional Recall name for this metric.<ref type="bibr" target="#b4">5</ref> Indeed, we also found that conclusions could change using sampled metrics.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_3"><p>https://github.com/microsoft/LightGBM/pull/2331#issuecomment-523259298</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_4"><p>https://github.com/microsoft/LightGBM/blob/master/src/objective/rank_objective.hpp</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_5"><p>https://github.com/asash/bert4rec_repro/blob/main/losses/lambda_gamma_rank.py</p></note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">TensorFlow: A system for large-scale machine learning</title>
+		<author>
+			<persName><forename type="first">Martín</forename><surname>Abadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Barham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianmin</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhifeng</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andy</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Dean</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Matthieu</forename><surname>Devin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sanjay</forename><surname>Ghemawat</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><surname>Irving</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Isard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. USENIX</title>
+		<meeting>USENIX</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="265" to="283" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">KATRec: Knowledge aware attentive sequential recommendations</title>
+		<author>
+			<persName><forename type="first">Mehrnaz</forename><surname>Amjadi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Danial</forename><forename type="middle">Mohseni</forename><surname>Seyed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Theja</forename><surname>Taheri</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Tulabandhula</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICDS</title>
+		<meeting>ICDS</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="305" to="320" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Contrastive Curriculum Learning for Sequential User Behavior Modeling via Data Augmentation</title>
+		<author>
+			<persName><forename type="first">Shuqing</forename><surname>Bian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wayne</forename><forename type="middle">Xin</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jing</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yancheng</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cunxiang</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ji-Rong</forename><surname>Wen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="3737" to="3746" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">From RankNet to LambdaRank to LambdaMART: An overview</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Christopher</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Burges</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Learning</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">81</biblScope>
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">On target item sampling in offline recommender system evaluation</title>
+		<author>
+			<persName><forename type="first">Rocío</forename><surname>Cañamares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RecSys</title>
+		<meeting>RecSys</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="259" to="268" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Yahoo! learning to rank challenge overview</title>
+		<author>
+			<persName><forename type="first">Olivier</forename><surname>Chapelle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Chang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of Machine Learning Research</title>
+		<meeting>Machine Learning Research</meeting>
+		<imprint>
+			<date type="published" when="2011">2011. 2011</date>
+			<biblScope unit="page" from="1" to="24" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Friendship and mobility: user movement in location-based social networks</title>
+		<author>
+			<persName><forename type="first">Eunjoon</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seth</forename><forename type="middle">A</forename><surname>Myers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jure</forename><surname>Leskovec</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. KDD</title>
+		<meeting>KDD</meeting>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="1082" to="1090" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">MEANTIME: Mixture of attention mechanisms with multitemporal embeddings for sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Sung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eunhyeok</forename><surname>Cho</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungjoo</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Yoo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RecSys</title>
+		<meeting>RecSys</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="515" to="520" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">A Case Study on Sampling Strategies for Evaluating Neural Sequential Item Recommendation Models</title>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Dallmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Zoller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Hotho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RecSys</title>
+		<meeting>RecSys</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="505" to="514" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</title>
+		<author>
+			<persName><forename type="first">Jacob</forename><surname>Devlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ming-Wei</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kenton</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kristina</forename><surname>Toutanova</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. NAACL-HLT</title>
+		<meeting>NAACL-HLT</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="4171" to="4186" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Integrating keywords into BERT4Rec for sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Elisabeth</forename><surname>Fischer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Zoller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Dallmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Hotho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">German Conference on Artificial Intelligence</title>
+		<imprint>
+			<publisher>Künstliche Intelligenz</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="275" to="282" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Proof by experimentation? Towards better IR research</title>
+		<author>
+			<persName><forename type="first">Norbert</forename><surname>Fuhr</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ACM SIGIR Forum</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="1" to="4" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Booking.com Multi-Destination Trips Dataset</title>
+		<author>
+			<persName><forename type="first">Dmitri</forename><surname>Goldenberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pavel</forename><surname>Levin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="2457" to="2462" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Evaluating Recommender Systems</title>
+		<author>
+			<persName><forename type="first">Asela</forename><surname>Gunawardana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guy</forename><surname>Shani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sivan</forename><surname>Yogev</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender Systems Handbook</title>
+		<editor>
+			<persName><forename type="first">Francesco</forename><surname>Ricci</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Lior</forename><surname>Rokach</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Bracha</forename><surname>Shapira</surname></persName>
+		</editor>
+		<meeting><address><addrLine>New York, NY</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer US</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="547" to="601" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">The MovieLens datasets: History and context</title>
+		<author>
+			<persName><forename type="first">Maxwell</forename><surname>Harper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><forename type="middle">A</forename><surname>Konstan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Interactive Intelligent Systems (TIIS)</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="19" />
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Recurrent neural networks with top-k gains for session-based recommendations</title>
+		<author>
+			<persName><forename type="first">Balázs</forename><surname>Hidasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandros</forename><surname>Karatzoglou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="843" to="852" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Session-based Recommendations with Recurrent Neural Networks</title>
+		<author>
+			<persName><forename type="first">Balázs</forename><surname>Hidasi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandros</forename><surname>Karatzoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Linas</forename><surname>Baltrunas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Domonkos</forename><surname>Tikk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICLR</title>
+		<meeting>ICLR</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Unbiased LambdaMART: An Unbiased Pairwise Learning-to-Rank Algorithm</title>
+		<author>
+			<persName><forename type="first">Ziniu</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qu</forename><surname>Peng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hang</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WWWW</title>
+		<meeting>WWWW</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="2830" to="2836" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Improving sequential recommendation with knowledge-enhanced memory networks</title>
+		<author>
+			<persName><forename type="first">Jin</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wayne</forename><forename type="middle">Xin</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongjian</forename><surname>Dou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ji-Rong</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Edward</forename><forename type="middle">Y</forename><surname>Chang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="505" to="514" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Self-attentive sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Wang-Cheng</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julian</forename><surname>Mcauley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICDM</title>
+		<meeting>ICDM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="197" to="206" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">LightGBM: A highly efficient gradient boosting decision tree</title>
+		<author>
+			<persName><forename type="first">Guolin</forename><surname>Ke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qi</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Finley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Taifeng</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weidong</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qiwei</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tie-Yan</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. NeurIPS</title>
+		<meeting>NeurIPS</meeting>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="3146" to="3154" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">CoBERT: Scientific Collaboration Prediction via Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Tobias</forename><surname>Koopmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Konstantin</forename><surname>Kobs</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Konstantin</forename><surname>Herud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andreas</forename><surname>Hotho</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICDMW</title>
+		<meeting>ICDMW</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="45" to="54" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Advances in Collaborative Filtering</title>
+		<author>
+			<persName><forename type="first">Yehuda</forename><surname>Koren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Bell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender Systems Handbook</title>
+		<editor>
+			<persName><forename type="first">Francesco</forename><surname>Ricci</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Lior</forename><surname>Rokach</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">Bracha</forename><surname>Shapira</surname></persName>
+		</editor>
+		<meeting><address><addrLine>New York, NY</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="91" to="142" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">On sampled metrics for item recommendation</title>
+		<author>
+			<persName><forename type="first">Walid</forename><surname>Krichene</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. KDD</title>
+		<meeting>KDD</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1748" to="1757" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Metadata Embeddings for User and Item Cold-start Recommendations</title>
+		<author>
+			<persName><forename type="first">Maciej</forename><surname>Kula</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. Workshop on New Trends on Content-Based Recommender @ RecSys (CEUR Workshop Proc</title>
+		<meeting>Workshop on New Trends on Content-Based Recommender @ RecSys (CEUR Workshop</meeting>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="volume">1448</biblScope>
+			<biblScope unit="page" from="14" to="21" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">MOI-Mixer: Improving MLP-Mixer with Multi Order Interactions in Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Hojoon</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dongyoon</forename><surname>Hwang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sunghwan</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Changyeon</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Seungryong</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jaegul</forename><surname>Choo</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2108.07505</idno>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Intention-aware sequential recommendation with structured intent transition</title>
+		<author>
+			<persName><forename type="first">Haoyang</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ziwei</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianxin</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenwu</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Knowledge and Data Engineering</title>
+		<imprint>
+			<biblScope unit="issue">TKDE</biblScope>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">New Insights into Metric Optimization for Ranking-based Recommendation</title>
+		<author>
+			<persName><forename type="first">Li</forename><surname>Roger Zhe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julián</forename><surname>Urbano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alan</forename><surname>Hanjalic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="932" to="941" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Learning to Rank for Information Retrieval</title>
+		<author>
+			<persName><forename type="first">Tie-Yan</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Foundations and Trends in Information Retrieval</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="225" to="331" />
+			<date type="published" when="2009">2009. 2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Augmenting Sequential Recommendation with Pseudo-Prior Items via Reversely Pre-training Transformer</title>
+		<author>
+			<persName><forename type="first">Zhiwei</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ziwei</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yu</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Philip</forename><forename type="middle">S</forename><surname>Yu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1608" to="1612" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Evaluation of Session-Based Recommendation Algorithms</title>
+		<author>
+			<persName><forename type="first">Malte</forename><surname>Ludewig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dietmar</forename><surname>Jannach</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">User Modeling and User-Adapted Interaction</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="331" to="390" />
+			<date type="published" when="2018-12">2018. Dec. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Hierarchical gating networks for sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Chen</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xue</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. KDD</title>
+		<meeting>KDD</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="825" to="833" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Disentangled self-supervision in sequential recommenders</title>
+		<author>
+			<persName><forename type="first">Jianxin</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chang</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongxia</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenwu</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. KDD</title>
+		<meeting>KDD</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="483" to="491" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Variational Bayesian representation learning for grocery recommendation</title>
+		<author>
+			<persName><forename type="first">Zaiqiao</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Mccreadie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iadh</forename><surname>Ounis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Retrieval Journal</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="1" to="23" />
+			<date type="published" when="2021-10">2021. 10 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">ARERec: Attentive Local Interaction Model for Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Umaporn</forename><surname>Padungkiatwattana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thitiya</forename><surname>Sae-Diae</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Saranya</forename><surname>Maneeroj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Atsuhiro</forename><surname>Takasu</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<publisher>IEEE Access</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Effective and Efficient Training for Sequential Recommendation Using Recency Sampling</title>
+		<author>
+			<persName><forename type="first">Aleksandr</forename><surname>Petrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2207.02643</idno>
+	</analytic>
+	<monogr>
+		<title level="m">16th ACM Conference on Recommender Systems (RecSys 2022)</title>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">A Systematic Review and Replicability Study of BERT4Rec for Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Aleksandr</forename><surname>Petrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Craig</forename><surname>Macdonald</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RecSys</title>
+		<meeting>RecSys</meeting>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Attention-based neural re-ranking approach for next city in trip recommendations</title>
+		<author>
+			<persName><forename type="first">Aleksandr</forename><surname>Petrov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuriy</forename><surname>Makarov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WSDM WebTour</title>
+		<meeting>WSDM WebTour</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="41" to="45" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Are Neural Rankers still Outperformed by Gradient Boosted Decision Trees?</title>
+		<author>
+			<persName><forename type="first">Zhen</forename><surname>Qin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Le</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Honglei</forename><surname>Zhuang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi</forename><surname>Tay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rama</forename><surname>Kumar Pasumarthi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xuanhui</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Bendersky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Marc</forename><surname>Najork</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICLR</title>
+		<meeting>ICLR</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Exploiting Positional Information for Session-based Recommendation</title>
+		<author>
+			<persName><forename type="first">Ruihong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tong</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems (TOIS)</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="page" from="1" to="24" />
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Exploiting cross-session information for session-based recommendation with graph neural networks</title>
+		<author>
+			<persName><forename type="first">Ruihong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jingjing</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems (TOIS)</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="1" to="23" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<title level="m" type="main">Memory Augmented Multi-Instance Contrastive Predictive Coding for Sequential Recommendation</title>
+		<author>
+			<persName><forename type="first">Ruihong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<idno>CoRR abs/2109.00368</idno>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Contrastive learning for representation degeneration problem in sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Ruihong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zijian</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WSDM</title>
+		<meeting>WSDM</meeting>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="813" to="823" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">GAG: Global attributed graph neural network for streaming session-based recommendation</title>
+		<author>
+			<persName><forename type="first">Ruihong</forename><surname>Qiu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hongzhi</forename><surname>Yin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zi</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tong</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGIR</title>
+		<meeting>SIGIR</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="669" to="678" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Sequence-aware recommender systems</title>
+		<author>
+			<persName><forename type="first">Massimo</forename><surname>Quadrana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paolo</forename><surname>Cremonesi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dietmar</forename><surname>Jannach</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Computing Surveys (CSUR)</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="1" to="36" />
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">Language Models Are Unsupervised Multitask Learners</title>
+		<author>
+			<persName><forename type="first">Alec</forename><surname>Radford</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rewon</forename><surname>Child</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dario</forename><surname>Amodei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ilya</forename><surname>Sutskever</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</title>
+		<author>
+			<persName><forename type="first">Colin</forename><surname>Raffel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Shazeer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Katherine</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sharan</forename><surname>Narang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Matena</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yanqi</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><forename type="middle">J</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="1" to="67" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">BPR: Bayesian personalized ranking from implicit feedback</title>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christoph</forename><surname>Freudenthaler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zeno</forename><surname>Gantner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lars</forename><surname>Schmidt-Thieme</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CUAI</title>
+		<meeting>CUAI</meeting>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="452" to="461" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Factorizing personalized markov chains for next-basket recommendation</title>
+		<author>
+			<persName><forename type="first">Steffen</forename><surname>Rendle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christoph</forename><surname>Freudenthaler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lars</forename><surname>Schmidt-Thieme</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WWW</title>
+		<meeting>WWW</meeting>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="811" to="820" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Rec: Sequential recommendation with bidirectional encoder representations from transformer</title>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jun</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jian</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Changhua</forename><surname>Pei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiao</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenwu</forename><surname>Ou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peng</forename><surname>Jiang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="1441" to="1450" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Personalized top-n sequential recommendation via convolutional sequence embedding</title>
+		<author>
+			<persName><forename type="first">Jiaxi</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ke</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WSDM</title>
+		<meeting>WSDM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="565" to="573" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<monogr>
+		<author>
+			<persName><forename type="first">Lewis</forename><surname>Tunstall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Leandro</forename><surname>Von Werra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Wolf</surname></persName>
+		</author>
+		<title level="m">Natural Language Processing with Transformers</title>
+		<imprint>
+			<publisher>Reilly Media, Inc</publisher>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Attention is all you need</title>
+		<author>
+			<persName><forename type="first">Ashish</forename><surname>Vaswani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noam</forename><surname>Shazeer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Niki</forename><surname>Parmar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jakob</forename><surname>Uszkoreit</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Llion</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aidan</forename><forename type="middle">N</forename><surname>Gomez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Łukasz</forename><surname>Kaiser</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Illia</forename><surname>Polosukhin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. NeurIPS</title>
+		<meeting>NeurIPS</meeting>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="5998" to="6008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Representing and recommending shopping baskets with complementarity, compatibility and loyalty</title>
+		<author>
+			<persName><forename type="first">Mengting</forename><surname>Wan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Di</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><surname>Bennett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Julian</forename><surname>Mcauley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="1133" to="1142" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Sequential Recommendation with Multiple Contrast Signals</title>
+		<author>
+			<persName><forename type="first">Chenyang</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weizhi</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chong</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems (TOIS</title>
+		<imprint>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Seq2Bubbles: Region-Based Embedding Learning for User Behaviors in Sequential Recommenders</title>
+		<author>
+			<persName><forename type="first">Qitian</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chenxiao</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shuodian</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiaofeng</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guihai</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="2160" to="2169" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<monogr>
+		<author>
+			<persName><forename type="first">Xu</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fei</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhaoyang</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shiwen</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jinyang</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bolin</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bin</forename><surname>Cui</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2010.14395</idno>
+		<title level="m">Contrastive Learning for Sequential Recommendation</title>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">LambdaFM: learning optimal ranking with factorization machines using lambda surrogates</title>
+		<author>
+			<persName><forename type="first">Fajie</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guibing</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Joemon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Long</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Haitao</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Weinan</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="page" from="227" to="236" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">A simple convolutional generative network for next item recommendation</title>
+		<author>
+			<persName><forename type="first">Fajie</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexandros</forename><surname>Karatzoglou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ioannis</forename><surname>Arapakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joemon</forename><forename type="middle">M</forename><surname>Jose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiangnan</forename><surname>He</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WSDM</title>
+		<meeting>WSDM</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="582" to="590" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Transrec++: Translation-based sequential recommendation with heterogeneous feedback</title>
+		<author>
+			<persName><forename type="first">Ming-Kai</forename><surname>Zhuo-Xin Zhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei-Ke</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhong</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Ming</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Frontiers of Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="1" to="3" />
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Dynamic graph neural networks for sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Mengqi</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shu</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xueli</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qiang</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Liang</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Knowledge and Data Engineering</title>
+		<imprint>
+			<biblScope unit="issue">TKDE</biblScope>
+			<date type="published" when="2022">2022. 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Adversarial oracular seq2seq learning for sequential recommendation</title>
+		<author>
+			<persName><forename type="first">Pengyu</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tianxiao</forename><surname>Shui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuanxing</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kecheng</forename><surname>Xiao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kaigui</forename><surname>Bian</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICJAI</title>
+		<meeting>ICJAI</meeting>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">S3-rec: Self-supervised learning for sequential recommendation with mutual information maximization</title>
+		<author>
+			<persName><forename type="first">Kun</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hui</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wayne</forename><forename type="middle">Xin</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yutao</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sirui</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fuzheng</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhongyuan</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ji-Rong</forename><surname>Wen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. CIKM</title>
+		<meeting>CIKM</meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1893" to="1902" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Using temporal data for making recommendations</title>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Zimdars</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><surname>Maxwell Chickering</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Meek</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. UAI</title>
+		<meeting>UAI</meeting>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="page" from="580" to="588" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

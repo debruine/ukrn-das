@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Sensitivity Analysis Based New Numerical Approach with Green Function for Optimization</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Ismail</forename><surname>Topaloglu</surname></persName>
+							<email>ismail.topaloglu@glasgow.ac.uk</email>
+							<idno type="ORCID">0000-0002-9599-5228</idno>
+							<affiliation key="aff0">
+								<orgName type="department">Ismail Topaloglu</orgName>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Electronics and Nanoscale Engineering, Science and Engineering Faculty</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Sensitivity Analysis Based New Numerical Approach with Green Function for Optimization</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">55F49D06250BA2298EB66EDE16FF8445</idno>
+					<idno type="DOI">10.1007/s42835-023-01639-0</idno>
+					<note type="submission">Received: 19 August 2022 / Revised: 21 May 2023 / Accepted: 24 August 2023 © Crown 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:35+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Sensitivity analysis</term>
+					<term>Shape optimization</term>
+					<term>High voltage</term>
+					<term>Electrostatic</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>In this study, sensitivity analysis based on a new numerical approach is developed for the three-dimensional structural optimization of high voltage system devices. It has been developed using Green's theorem in a closed form to satisfy all boundary conditions and necessary conditions, including material and geometric dimensions. The developed sensitivity function and objective function are suitable for structural optimization of all electrostatic problems. The suitability and application of the developed function were made on the bushing. The changing geometry information was obtained from the developed sensitivity function as a result of the optimization. The analysis made with the classical design and the developed function were compared with each other. Optimization with the developed function has provided insulation and conductor size reduction. Experimental test devices before and after optimization process produced and tested. These results are presented in the study.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Bushing device used in electrical engineering for voltage isolation. Bushings are used in electrical panels, transformers, breakers, and high voltage areas. The bushings that isolate an energized conductor and the conductor against the tank, are used at the entrance of the transformer tank <ref type="bibr" target="#b0">[1]</ref>. Elements that insulate and carry bus bars in power transmission lines, switchyards and distribution centres are called insulators <ref type="bibr" target="#b1">[2]</ref>. Insulators have two main tasks used in energy transmission and distribution networks: Electrically separating the conductors from the earth and meeting the weight of the conductor and the additional loads on the conductors <ref type="bibr" target="#b2">[3]</ref>. Insulators are made of porcelain and glass, which are materials that show great resistance to electric current and are resistant to hot and cold weather conditions. In addition to these, silicone and epoxy resin insulators are also made, but they are not used much because of their high cost. Insulators must also have good mechanical strength in order to safely carry the loads that may come to the conductors <ref type="bibr" target="#b3">[4]</ref>.</p><p>High voltage systems are often described as electrostatic problems in electromagnetic analysis. In studies in this field, solutions are generally sought by calculating the electric field in the relevant electrostatic system <ref type="bibr" target="#b4">[5]</ref>. When the problems in high voltage are examined, it is obviously seen that the research is concentrated in systems such as boundary conditions, cables, electrode systems, circuit breakers and transformers <ref type="bibr" target="#b5">[6]</ref>. Boundary conditions are vital to obtaining accurate results for the design and analysis of such systems. In addition, they are taken into account in the breakdown voltage calculations and the electric field calculations in the conductor-insulator medium transitions. With the developing technology in all these areas, it is imperative to optimize these systems <ref type="bibr" target="#b6">[7]</ref>. For example, it is necessary to determine the optimal cable insulation thickness for high voltage cable or to improve efficiency in circuit breakers and transformers or to determine the optimum geometric shapes of electrode systems <ref type="bibr" target="#b7">[8]</ref>.</p><p>Different optimization algorithms are used for optimization in the literature <ref type="bibr" target="#b8">[9]</ref>. However, if the topology optimization is to be made, it is necessary to seek a solution from a different perspective by providing the change of all geometric parameters, all the desired boundary conditions, and other conditions. In the literature, this type of problem has been investigated by making the electric field change as the main parameter with different mathematical approaches <ref type="bibr" target="#b9">[10]</ref>. For system optimization, the well-known genetic algorithm, sequential variable replacement, and continuous analysis methods are preferred <ref type="bibr" target="#b10">[11]</ref>. Many size optimization studies in the literature are not directly related to the geometric shape in the high voltage systems <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b12">13]</ref>. However, in this study, the geometric shape is a direct parameter of the size.</p><p>In the literature, there is a wide range of integral-based formulations based on boundary element method, finite element method and charge simulation for solving electrostatic problems <ref type="bibr" target="#b13">[14]</ref>. Many studies have either ignored the force distribution calculations or considered its effect insignificant <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b15">16]</ref>. However, the force distribution on the insulation in the system directly affects the thickness of the conductor insulation. In this study, the force distributions on the bushing are analysed and the results are presented in the study. In addition, the obtained objective function is integral in closed form. The notation, derivative and integration used are compatible with the literature <ref type="bibr" target="#b16">[17]</ref>.</p><p>Sensitivity analysis has long been a critical topic in produced high voltage systems. Many times, the quality control process is dependent on measurements of components and assemblies to evaluate whether they meet current standards <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b18">19]</ref>. Recently, industry has grown increasingly interested in tolerance-related factors, even during the product design process. With this optimization, one may test the nominal design solution and run simulations to ensure that the design is sound in terms of permissible tolerances for specific parameters <ref type="bibr" target="#b19">[20]</ref>. These simulations can be used to find critical-to-quality features that are sensitive to changes in certain parameters.</p><p>In this study, a numerical approach based on sensitivity analysis was developed for the three-dimensional optimization of high voltage systems. The developed method is applied to the bushing, which is frequently used in circuit breakers, transformers, and electrical panels in high voltage systems. In the shape optimization, material effect, geometric dimension change effect, all boundary conditions and other necessary conditions were obtained. The developed sensitivity analysis function carries both material effect and geometrical change information. In addition, instead of electric field calculation, the function is developed using electric flux density based on electric charge. In this way, the displacement field, which is not directly included in the electric field calculations, is also included in the calculation.</p><p>Sensitivity analysis is a mathematical approach used to investigate how variations in a mathematical model's output can be attributed to variations in its input parameters. It is frequently used in optimisation issues to determine how changes in input variables affect the objective function <ref type="bibr" target="#b20">[21]</ref>. These methods are frequently used in optimisation to determine the ideal input variable values that maximise or minimise the objective function. Green functions, also referred to as impulse response functions, are mathematical functions that explain a system's response to an impulse input <ref type="bibr" target="#b21">[22]</ref>. They are commonly used in physics and engineering to solve differential equations and characterise linear system behaviour <ref type="bibr" target="#b22">[23]</ref>.</p><p>During the shape optimization, if the optimal result searching limits are not limited by local constraints, the points where the optimum result occurs may contain results that cannot be applied in reality. Therefore, it is necessary to consider the breakdown voltage, especially in high voltage systems. In this case, it will be possible not only by geometric dimension calculation and improvement, but also by including material properties in the process. Classical solution methods are far from including these two properties in the calculation at the same time. In the methods that take these two parameters into account at the same time, only sensitivity analyses are performed for geometric shapes, not structural-dimensional.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Sensitivity Analysis in High Voltage System</head><p>This The sensitivity analysis function carries two kinds of information. These are geometric dimension change information and material information. The sensitivity analysis function formulation in the high voltage electrostatic system is derived as follows. Figure <ref type="figure" target="#fig_0">1</ref> shows high voltage electrostatic system with boundary conditions. The boundary conditions of optimization solution area can be defined as Γ = (Γ 1 , Γ 0 ) homogeneous Neumann and Ω = Ω 1 ∪ Ω 2 ∪ Ω V Dirichlet conditions seriatim. a n , a t1 and a t2 are normal and tangential vectors seriatim. o and 1 are permittivity of vacuum and material, respectively. The objective functions can be defined as a regional integral of electric flux density D and r charge density ∇ ⋅ ∇V = -⇔ ∇ 2 V = -. wherein Eq. 1. k is integral function for electrostatic system, f is differentiable function, D is electric flux density, VE is auxiliary electric field and Γ is integral region of system.</p><p>If the vector identity in Eq. 2 is applied to Eq. 3 in the laplacian form, Eq. 4 is obtained. The Eq. 4 can be defined as the equation of differential states for charge density. Equation 5 is obtained by multiplying both sides of the Eq. 1 with K auxiliary function and applying Green's theo- rem in the omega field. where in Eq. 5. Θ is computable optimization and solution area for problem. Figure <ref type="figure" target="#fig_2">2</ref>, shows the optimization solution area, boundary conditions and material properties that described for the three-phase high voltage bushing system.</p><p>Γ o and Γ 1 are Neumann boundary conditions, Ω is Dir- ichlet boundary. Ω objective and Ω Limits sub-index objective and limit values depend on these boundary conditions. ε o is the permittivity of free space. ε 1 is different material permittivity.</p><p>(1)</p><formula xml:id="formula_0">F(Ω, u) = ∫ Γ f D, ∇ VE kd Γ (2) ∇ 2 ⃗ E = ∇(∇ ⋅ ⃗ E) -∇ × ∇ × ⃗ E (3) ∇ 2 ⃗ E = ∇ 2 ⃗ D 𝜀 r 𝜀 o = ∇ ∇ ⋅ ⃗ D 𝜀 r 𝜀 o -∇ × ∇ × ⃗ D 𝜀 r 𝜀 o (4) ∇ × ⃗ D 𝜀 r 𝜀 o = 0 ⇔ ∇ ⋅ ∇ ⃗ D r = -𝜌 r (5) F(Ω, u) = ∫ Γ f ∇ ⃗ D r ⋅ ∇ K -𝜌 r K d Γ = ∫ Ω 𝜕 ⃗ D r 𝜕n Kd Ω ∀ K ∈ Θ</formula><p>K auxiliary function is responsible for carrying chang- ing information in objective function. When K and Γ 1 boundary conditions are applied to K auxiliary function, it transforms Γ o = 0.</p><p>where u K is limitation of objective function in Eq. 6.</p><p>Objective function constraint integral form can be defined for optimization, it can be expressed by Eqs. 7 and 8 that when the g constraint is linear. This will only be true when</p><formula xml:id="formula_1">Γ o = 0 along the Γ boundary.</formula><p>if the optimization problem is arranged as a state function with the objective function constraints, Eq. 9 can be obtained. The new function with constraint variables focuses the objective function within the solution domain Γ . The sensitivity analysis function is defined by O. By taking the first-order derivative of the sensitivity analysis function given in Eq. 9, only bivariate sensitivity information is obtained as in Eq. 10.</p><p>Derivative explicit forms of sensitivity analysis function parameters are given in Eqs. 11, 12 and 13. Where v is velocity field. D is electric flux density and r is integral characteristic function. u P , u D and u r are constraints of sensitivity function which depends on material property and geometric changing.</p><formula xml:id="formula_2">(6) e ⃗ D, K = u K ∀ K ∈ Θ (7) e ⃗ D, K = ∫ Γ (∇ ⃗ D r ⋅ ∇ K)d Γ (8) u K = ∫ Γ (𝜌 r K)d Γ (9) O = 𝜒 + u K -e ⃗ D, K ∀ K ∈ Θ (10) Ȯ = χ + u K -̇e ⃗ D, K ∀ K ∈ Θ (11) χ = ∫ Γ 𝜕u P ⃗ D 𝜕t - 𝜕u D ⋅ ∇ ⃗ D 𝜕t rd Γ + ∫ Ω u r vd Ω (12) ̇g( K) = ∫ Γ 𝜕𝜌 r K 𝜕t d Γ + ∫ Ω 𝜌 r Kvd Ω (13) ̇e( ⃗ D, K) = ∫ Γ 𝜕∇ ⃗ D 𝜕t ⋅ ∇ K + ∇ ⃗ D ⋅ 𝜕∇ K 𝜕t d Γ + ∫ Ω ∇ ⃗ D ⋅ ∇ K vd Ω</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Fig. 2 Three phases high voltage bushing system with boundary conditions</head><p>The derived variable state for any material can be defined by Eq. 14.</p><p>If this material property is rearranged in its derivative form within the sensitivity analysis function, Eq. 15 can be obtained in integral closed form.</p><p>On the Γ domain of the sensitivity analysis function, where the problem is defined, the result of the first two terms of the integral is equal to zero, since it is known that the d integration function and the P r charge are equal to zero on the boundary. In addition, when the first derivative of the K auxiliary vector function is included in the sensitivity function, then the third integral term will also be equal to zero.</p><p>According to the new situation, we must remove the first derivative terms of ̇K with respect to time from the sensitivity analysis function along Γ o on the Γ boundary. Otherwise, in the first case, structural symmetry cannot be achieved with integral functions with applied boundary conditions equal to zero along Γ o on the Γ boundary. In this way, Eq. 16 can be obtained. Where Ψ is integrated variable of state equation. The derivative form of the integrated variable is shown in Eq. 17.</p><p>If boundary conditions are applied to the integral variable function along Γ o on the Γ boundary, boundary con- ditional integral terms of the sensitivity function disappear. The disappearing term is the first term of Eq. 17. Then Eq. 18, can be written. </p><formula xml:id="formula_3">Ȯ = ∫ Γ u P D -u D ⋅ ∇D -u P v ⋅ ∇D + u D ⋅ ∇(v ⋅ ∇D)d d Γ + ∫ Γ P r ̇K -P r v ⋅ ∇ K d Γ -∫ Γ ∇ Ḋ ⋅ ∇ K + ∇D ⋅ ∇ ̇K d Γ + ∫ Γ (∇(v ⋅ ∇D) ⋅ ∇ K) + (∇v ⋅ ∇ v ⋅ ∇ K )d Γ + ∫ Γ u r + P r K -∇D ⋅ ∇ K vd Γ ∀ K ∈ Θ (16) ∇ ⋅ ∇Ψ = -u D + ∇ ⋅ u P r (17) ∫ Γ ∇Ψ ⋅ ∇ Ψ -u P Ψ -u D ⋅ ∇ Ψ rd Γ = ∫ Ω r 𝜕Ψ 𝜕n Ψd Ω ∀ Ψ ∈ Θ</formula><p>The sensitivity analysis function in Eq. 19. The integrated variable Ψ is transformed from being a boundary integral to an area integral by the v ⋅ ∇D operation.</p><p>When the sensitivity analysis function is examined, it can be seen that only the normal part of the velocity field contributes to the function. Because along the boundary the tangent components are always equal to zero. This can be seen in Eq. 20.</p><p>If repetitive and mutually annihilating operations are excluded from the sensitivity analysis function, Eq. 21, can be obtained.</p><p>After all these processes, the sensitivity analysis function, which can be used in the solution of electrostatic problems, can be obtained as in Eq. 22. Meanwhile, Eq. 22 depends on the electric flux density and by providing all the necessary conditions.</p><p>As a result, after the sensitivity analysis function is defined, the final state of our objective function is as in Eq. 23.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">High Voltage Cable Test</head><p>After obtaining the objective function and sensitivity analysis function in Eqs. 22 and 23, respectively. These functions must be modified according to base on cable geometry in order to</p><formula xml:id="formula_4">(18) e Ψ, Ψ = ∫ Γ u P Ψ -u D ⋅ ∇ Ψ rd Γ ∀ Ψ ∈ Θ (19) Ȯ = ∫ Γ u D ⋅ ∇(v ⋅ ∇D) -u P v ⋅ ∇D d Γ -∫ Ω (∇D ⋅ ∇Ψ)vd Ω + ∫ Γ (∇(v ⋅ ∇D)) ⋅ ∇Ψ + ∇D ⋅ ∇(v ⋅ ∇Ψ) -P r v ⋅ ∇Ψ d Γ (20) Ȯ = ∫ Ω 𝜕D 𝜕n v ⋅ ∇Ψ + 𝜕Ψ 𝜕n v ⋅ ∇D -∇D ⋅ ∇Ψv d Ω ⇒ v = n * v n (21) Ȯ = ∫ Ω 𝜕D 𝜕n 𝜕Ψ 𝜕n - 𝜕D 𝜕𝜏 1 𝜕Ψ 𝜕𝜏 1 - 𝜕D 𝜕𝜏 2 𝜕Ψ 𝜕𝜏 2 vd Ω (22) Ȯ = ∫ Ω (D n (V)D n (Ψ))v n d Ω (23) F = ∫ Ω ⃗ D(V) -D o 2 rd Ω</formula><p>be used in high voltage cable optimization problems. Since the bushing chosen as an example application is three-phase, the case of only one phase will be the subject of the problem here. Because the situation in other phases will be caused by the phase difference, because the phase angles are different from each other. It can be seen obviously in Fig. <ref type="figure">3</ref>.</p><p>One phase high voltage cable to be used in the example application can be seen in Fig. <ref type="figure">4</ref>. Where a is the conductor radius, b is the insulation material thickness, r is the insulation material permittivity and is the projection vector value.</p><p>If we use two well-known fundamental equations ⃗ E = -∇V and ⃗ D = 𝜀 ⃗ E to modify the objective function and the sensitivity analysis function for this problem. Equation 24 can be obtained since geometric parameters; coordinate system and boundary conditions are known.</p><p>The value obtained by Eq. 24 can be applied to both the objective function and the sensitivity analysis functions. In this case, new forms of purpose and sensitivity analysis are obtained in closed integral forms. The closed integral form can be seen in Eq. 25 for the objective function.</p><p>If integrals are solved, Eqs. 26 and 27 are obtained as objective functions and precision functions, respectively. ( <ref type="formula">24</ref>) In this Eq. 27, the normal component of the velocity field in the relevant boundary condition includes the derivative with respect to time and this can be seen in Eq. 27.</p><formula xml:id="formula_5">⃗ E = -∇V = - 𝜕V 𝜕r ⃗ a 𝜌 = V 0 𝜌 ln (b∕a) ⃗ a 𝜌 ⃗ D = 𝜀 ⃗ E = 𝜀 r 𝜀 o V 0 𝜌 ln(b∕a) ⃗ a 𝜌 ⇒ D o | 𝜌=a = 𝜀 r 𝜀 o V 0 a ln(b∕a)<label>(25)</label></formula><formula xml:id="formula_6">F = ∫ Ω ⃗ D(V) -D o 2 rd Ω = ∫ Ω 𝜀 r 𝜀 o V 0 𝜌 ln(b∕a) ⃗ a 𝜌 - 𝜀 r 𝜀 o V 0 a ln(b∕a) 2 rd Ω (26) F = - V 2 0 2 o 2 r r(a 2 -b 2 -2ab ln(a) + 2ab ln(b)) a 2 b ln(b∕a) F = V 2 2</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Optimization of System</head><p>After obtaining the objective and sensitivity analysis functions and modifying them according to the geometry on the high voltage insulator and bushing where the optimization problem occurs, the optimization problem can now be defined. Figure <ref type="figure">4</ref> shows the optimization algorithm. Many electrical engineers currently deal with the issue of finding a better design for electromechanical devices. In many situations, competition makes this work a sine qua non need. In some situations, engineers are confronted with a variety of design restrictions. If the relationships between variables are linearly independent, the solution is unique and can be determined in a straightforward manner when there are as many equality requirements as design variables. The problem can then be solved using finite element analysis. However, the work is rarely this easy. Typically, the number of variables, the type, and the number of restrictions are such that a straight and simple solution is not possible. This is when numerical optimizers must be used to find the optimum design.</p><formula xml:id="formula_7">(27) Ȯ = - V 2 𝜀 2 o 𝜀 2 r (ln(a) -ln(b)) a ln(b∕a) Ȯ = V 2 𝜀 2 o 𝜀 2 r a v n ⇒ v n = d a d t Ȯ = - 2V 2 𝜀 2 r a 2 .</formula><p>Designer may fully parameterize the geometry and set a range of values to any dimension or location of any component inside an assembly. Furthermore, during analysis, material characteristics and source data may be parameterized and modified. Adjustments in performance criteria can be produced as a result of parameter changes. As a result, sensitivity analysis, defined as a relative change in performance because of a relative change in a parameter, can be investigated. Algorithms for optimization are mathematical in nature. As a result, the optimizer may search the stated design space for the best performance. The formulation of the optimization issue necessitates an explicit explanation of the objective function, and the goal value of the objective function must be a feasible one for the optimization to be relevant. There is no alternative for a well-posed issue in optimization problems, as there is in any other discipline of engineering. The optimizer's mathematical methods ensure that only a small number of solutions are computed in order to arrive at the best answer.</p><p>The method can be defined as Eqs. 28 and 29 to minimize or maximize the objective function Eq. 26 which uses quasinewton method in optimization problem. Where f x t objective function, g j and h i inequality and equality variables, x t vector of design variables, η is the second design</p><formula xml:id="formula_8">(28) f ⎛ ⎜ ⎜ ⎜ ⎝ x, y, z ⏟⏟⏟ x t ⎞ ⎟ ⎟ ⎟ ⎠ = f � � x t �� Min f � � x t �� or Max f � � x t �� h i � y � x t �� ≥ 0, i = 1, 2, 3, … i g j � y � x t �� = 0, j = 1, 2, 3, … j (29) x u D t ⩾ x t ⩾ x u P t t = 1, 2, 3 … t</formula><p>variable that depends on the value x t and u D , u P are upper limits constraint of optimization problem.</p><p>Although it is difficult to use, this optimization method has been preferred to find the global minimum in the problem in accordance with the purpose of optimization. Equation 30 shows the usage in this method for the objective function and Eq. 31 shows the total change of objective function parameters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">3D FEM (Finite Element Method) Analysis of System and Results</head><p>Since there is no axial symmetry in the created design, threedimensional modelling was preferred due to the design's boundary conditions and geometric details. The modelled bushing consists of ceramic parts, copper conductor, isolation oil tank and other additional parts. The purpose of three-dimensional finite element analysis is to show the effect of electrostatic parameters caused by high voltage on the insulator and to prepare the model for optimization. In this way, after the optimization process, the results obtained according to the initial situation can be compared. Operating voltage in the model is 380 kV for one phase. At the same time, by observing the high voltage distribution on the insulation material, the geometric places where the possible breakdown voltage may occur can be determined.</p><p>As the thickness of the bushing begins to decrease, both the voltage distribution and the electric field values increase. Figure <ref type="figure">5</ref> shows voltage and electric field distribution on bushing insulation material (a) and (b), respectively. It can be seen from Fig. <ref type="figure">5b</ref>, average electric field is 7.79*10 7 V/m. The critical in this design is the determination of the optimum rupture voltage withstand thickness of the insulation of the bushing. For this, it is a sensitivity analysis-based optimization process that needs to be done apart from the three-dimensional analysis.</p><p>The electric flux density distribution is shown in Fig. <ref type="figure">6</ref>. The electric flux density values calculated here are directly included in the process as the main optimization parameter. Parts of high voltage systems operate under the force of continuous breakdown stress. The high electrical flux density stress which is exposed to shortens the working life of high voltage system parts.</p><p>Figure <ref type="figure">7</ref> shows forces on bushing magnitude, x direction, y direction and z direction from top the bottom. (a) before</p><formula xml:id="formula_9">(30) F(x, y, z) = f (x) + 1 2 q ∑ i=1 x i (h i , g j ) -u r 2 (31) i+1 = i + ΔF(x) Δ 2 F(x)</formula><p>optimization (b) after optimization, respectively. When the Fig. <ref type="figure">8</ref> investigated, while the magnitude force on the bushing was 951 mN in total, it decreased to 220 mN after sensitivity analysis optimization. The remarkable reducing of the magnitude force on the bushing after the sensitivity analysis is another indicator of the longevity of the design. It also demonstrates the functionality of the developed sensitivity analysis function.</p><p>The design objective of this problem is to obtain minimum conductor and bushing volume. At the same time breakdown voltage must have maximum possible value. With the values obtained in the optimization process with the developed sensitivity analysis, not only the design for the optimum breakdown voltage is obtained, but also the insulation cost of the product is reduced by reducing the volume of the insulation material. Figure <ref type="figure">8</ref> shows bushing volume optimization results. When the results are investigated, it can be seen obviously from Fig. <ref type="figure">8</ref>, initial design bushing volume is 0.035 m 3 , classic quasi-newton optimization result is 0.034 m 3 and sensitivity analysis result is 0.026 m 3 . In this case, the optimization process with the developed sensitivity analysis reduced the insulation bushing total volume by 25% per cent.</p><p>The volume of conductor is also variant in the optimization problem. Figure <ref type="figure">9</ref> shows conductor volume optimization results. When the results are investigated, it can be seen obviously from Fig. <ref type="figure">9</ref>, initial design conductor volume is 0.0012 m 3 , classic quasi-newton optimization result is 0.00078 m 3 and sensitivity analysis result is 0.0005 m 3 . In this case, the optimization process with the developed sensitivity analysis reduced the insulation bushing total volume by %59 per cent. An experimental test of bushing before and after optimization was presented in Fig. <ref type="figure" target="#fig_7">10</ref>. Total insolation materials are reduced in experimental test devices.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Conclusion</head><p>A new sensitivity analysis-based optimization algorithm and its mathematical formulation are presented in the study. Electric flux density and vector identities are used together with the well-known green theorem, also satisfying all boundary conditions and other requirements. Developed sensitivity function and objective function applied high voltage bushing system. Also, quasi-newton optimization method is used to find global minimum values of volume of conductor and bushing. Finally, sensitivity analysis-based numerical techniques utilising the Green function have demonstrated significant potential for optimisation challenges. These methods can provide useful insights into the behaviour of the system and improve the optimisation process by taking the sensitivity of the objective function with regard to the parameters into account. The application of the Green function allows for the efficient computing of sensitivity derivatives, allowing complex problems with high-dimensional parameter spaces to be solved. The ability to optimise nonlinear and non-differentiable functions, which are ubiquitous in many real-world issues, is a significant advantage of this approach. It can also handle problems with restrictions and uncertainties, delivering a robust solution that takes into account the system's inherent unpredictability. The applicability and mathematical accuracy of the sensitivity analysis and developed objective function are shown in the study. As a result of the optimization, both the initial insulation volume and the total conductor volume were reduced. The developed functions are easily applicable to other examples for designers.   </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1</head><label>1</label><figDesc>Fig. 1 High voltage electrostatic system with boundary conditions</figDesc><graphic coords="2,308.98,554.25,232.44,137.16" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>o 2 r</head><label>2</label><figDesc>r(a 2b 2 -2ab ln(a) + 2ab ln(b)) a 2 b ln(a)ln(b)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 3 Fig. 4</head><label>34</label><figDesc>Fig. 3 High voltage cable test model</figDesc><graphic coords="5,53.86,57.76,232.44,100.56" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5 Fig. 6 Fig. 7</head><label>567</label><figDesc>Fig. 5 Voltage and electric field distribution on bushing insulation material (a) and (b), respectively</figDesc><graphic coords="7,53.86,57.76,232.44,367.92" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head></head><label></label><figDesc>Author contributions All authors contributed to the study conception and design. Material preparation, data collection and analysis were performed by Ismail Topaloglu. The first draft of the manuscript was written by Ismail Topaloglu and all authors commented on previous versions of the manuscript. All authors read and approved the final manuscript.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 8 Fig. 9</head><label>89</label><figDesc>Fig. 8 Bushing volume optimization results</figDesc><graphic coords="8,53.86,57.76,232.44,111.36" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 10</head><label>10</label><figDesc>Fig. 10 Experimental test example a before optimization b after optimization</figDesc><graphic coords="8,325.96,57.76,198.48,314.16" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="funding">
+<div><p>Funding All authors certify that they have no affiliations with or involvement in any organization or entity with any financial interest or non-financial interest in the subject matter or materials discussed in this manuscript.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>There is no data available with this study.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Declarations</head><p>Conflict of interest The authors did not receive support from any organization for the submitted work.</p><p>Ethical statement This article does not contain any studies involving human participants performed by any of the authors. Also This article does not contain any studies involving animals performed by any of the authors.</p><p>Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article's Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article's Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.</p><p>Publisher's Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">High-voltage pulse bushing with induced voltage distribution between sections</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Poloskov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Serebrennikov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Egorov</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.vacuum.2021.110593</idno>
+		<ptr target="https://doi.org/10.1016/j.vacuum.2021.110593" />
+	</analytic>
+	<monogr>
+		<title level="j">Vacuum</title>
+		<imprint>
+			<biblScope unit="volume">194</biblScope>
+			<biblScope unit="page">110593</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Novel double-layer boundary element method for electrostatic analysis</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Andjelic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ishibashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Di</forename><surname>Barba</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Dielectr Electr Insul</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="2198" to="2205" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Typical internal defects of gasinsulated switchgear and partial discharge characteristics</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. Simulation Modelling Elect</title>
+		<meeting>Simulation Modelling Elect</meeting>
+		<imprint>
+			<date type="published" when="2018">2018. 2018</date>
+			<biblScope unit="page">103</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Numerical calculation of floating potentials for large earthing system</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zildzo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Muharemovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Turkovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Matoruga</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of 22nd international symposium information, communication automation technology</title>
+		<meeting>22nd international symposium information, communication automation technology</meeting>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Numerical treatment of floating conductors based on the traditional finite element formulation</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Rincon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Aguilera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Chacón</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Electromagn</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="46" to="55" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Calculation of 3-D electric field intensity in presence of conductors with floating potentials</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of IEEE 12th international conference on the properties and applications of dielectric materials (ICPADM)</title>
+		<meeting>IEEE 12th international conference on the properties and applications of dielectric materials (ICPADM)</meeting>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="351" to="354" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Modeling floating potential conductors using discontinuous Galerkin method</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page" from="7531" to="7538" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Adaptive level set method for accurate boundary shape in optimization of electromagnetic systems</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Compel Int J Comput Math Elect Electron Eng</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="809" to="820" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Alleviation of electric field intensity in high-voltage system by topology and shape optimization of dielectric material using continuum design sensitivity and level set method</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">K</forename><surname>Baek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">S</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1" to="4" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Continuum sensitivity analysis and shape optimization of Dirichlet conductor boundary in electrostatic system</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page">3</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A second order sensitivity analysis based numerical approach developed for dimension optimization, in electric machine design by electromagnetic design software</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Topaloglu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Fac Eng Arch Gazi Univ</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="363" to="369" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Derivation of hole sensitivity formula for topology optimization in magnetostatic system using virtual hole concept and shape sensitivity</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page">3</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Design sensitivity analysis and optimization of electromagnetic systems</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>Springer</publisher>
+			<pubPlace>New York</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Automated design of magnetic devices by optimizing material distribution</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">N</forename><surname>Dyck</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Lowther</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="1188" to="1193" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Structural optimization in magnetic devices by the homogenization design method</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Kikuchi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Volakis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="page" from="574" to="580" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Topology optimization of electrical devices using mutual energy and sensitivity</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Byun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Y</forename><surname>Hahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">H</forename><surname>Park</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Magn</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="3718" to="3720" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Topology optimization of electromagnetic systems</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Park</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of KIEE spring annual conference</title>
+		<meeting>KIEE spring annual conference<address><addrLine>Korea</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2000">2000</date>
+			<biblScope unit="page" from="65" to="69" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Multidiscipline topology optimization</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Struct</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1205" to="1212" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Electrical insulation of high voltage inductor with co-axial electrode at floating voltage</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Aracil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lopez-Roldan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Coetzee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Dielectr Electr Insul</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1053" to="1060" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Conceptual design of a high-voltage compact bushing for application to future N-NBI systems of fusion reactors</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Simonin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>De Esch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Doceul</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christin</forename><forename type="middle">L</forename><surname>Faisse</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Villecroze</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Fusion Eng Des</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="7" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">MOSP: multi-objective sensitivity pruning of deep neural networks</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sabih</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mishra</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hannig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Teich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2022 IEEE 13th international green and sustainable computing conference (IGSC)</title>
+		<meeting><address><addrLine>Pittsburgh, PA, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="1" to="8" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Design of highly uniform field coils based on the magnetic field coupling model and improved PSO algorithm in atomic sensors</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Pang</surname></persName>
+		</author>
+		<idno>no. 1502611</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Instrum Meas</title>
+		<imprint>
+			<biblScope unit="volume">71</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+			<date type="published" when="2022">2022</date>
+			<pubPlace>Art</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Developed approach based on equilibrium optimizer for optimal design of hybrid PV/wind/diesel/battery microgrid in Dakhla</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kharrich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Morocco. IEEE Access</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="13655" to="13670" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

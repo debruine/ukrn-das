@@ -1,0 +1,1755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Designing for the Embedding of Employee Voice</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-04-27">27 April 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Dinislam</forename><surname>Abdulgalimov</surname></persName>
+							<affiliation key="aff0">
+								<address>
+									<addrLine>7(CSCW1), 45</addrLine>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="institution">Monash University</orgName>
+								<address>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="institution">Northumbria University</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution" key="instit1">PATRICK OLIVIER</orgName>
+								<orgName type="institution" key="instit2">Monash University</orgName>
+								<address>
+									<country key="AU">Australia</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Designing for the Embedding of Employee Voice</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-04-27">27 April 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">551F74884A9F500B2DFE9103C240FAF3</idno>
+					<idno type="DOI">10.1145/3579478.https://eprints.gla.ac.uk/281853/</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Human-centered Computing → Human-computer; Collaborative and Social Computing Employee Voice</term>
+					<term>Anonymous Online Communities</term>
+					<term>Workplace</term>
+					<term>Enterprise Social Networks</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Previous research on employee voice has sought to design technological solutions that address the challenges of speaking up in the workplace. However, effectively embedding employee voice systems in organisations requires designers to engage with the social processes, power relations and contextual factors of individual workplaces. We explore this process within a university workplace through a research project responding to a crisis in educational service delivery arising from the COVID-19 pandemic. Within a successful three-month staff-led engagement, we examined the intricacies of embedding employee voice, exploring how the interactions between existing actors impacted the effectiveness of the process. We sought to identify speciSic actions to promote employee voice and overcome barriers to its successful establishment in organisational decision-making. We highlight design considerations for an effective employee voice system that facilitates embedding employee voice, including assurance, bounded accountability and bias reSlexivity.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Employee voice addresses the power of ordinary workers to influence their working environment by describing and deliberating on their working conditions <ref type="bibr" target="#b16">[17]</ref>. When realised, employee voice benefits employees and employers, as it helps ensure appropriate working conditions and increases productivity <ref type="bibr" target="#b63">[64,</ref><ref type="bibr" target="#b64">65]</ref>. However, this rarely happens in practice, as a PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p><p>Previous work <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b28">29,</ref><ref type="bibr" target="#b87">87]</ref> has demonstrated the capacity of different digital systems and approaches to develop novel and honest conversations, facilitate employee voice or explore its pathways for impact <ref type="bibr" target="#b84">[84]</ref> but has not demonstrated its role in successfully instantiating organisational change. How could this be co-designed by management and casualised staff and embedded within an organisation to drive change successfully and promote the voice of casual workers? Our primary focus here was the role of different stakeholders in the codesign process and the EVP, the importance and character of trust, and perceptions of the validity of the emerging process.</p><p>This paper presents a case study of our successful end-to-end EVP that led to policy and practice improvements in the University workplace. This deployment took place over three months, was initiated by the management of the academic faculty in question and involved a total of 104 participants (sessional staff members employed as casual workers by the University) who engaged in safe and constructive discussions on OurVoice. Responding to these discussions and the subsequent meetings between the managers and sessional employees, a Task and Finish Group (TFG) comprising five sessional staff was formed. The role of the TFG was to make sense of the discussions that took place within the system, to drive the deliberations further and to make decisions about how the EVP output would drive changes. This group was responsible for implementing the community-generated proposals captured by the EVP, including topics of pedagogical stress, resource allocation, and inclusivity and accessibility for casual staff members. We evaluated the whole EVP by analysing the data produced during the multiple deployments of the OurVoice system and through a post-EVP qualitative investigation with 14 participants (managers, TFG members and sessional staff members) to help us understand whether and how our EVP successfully supported organisational change.</p><p>This work makes several important contributions to understanding how to approach the design and successful embedding of an EVP into an organisation. We demonstrate how the context in which the EVP operates, including the resources available to make changes pursuant to the EVP and the quality of communications between management and employees, impacts the employees' attitude to and engagement with the EVP as a force for change. We find that the EVP benefited from initially low expectations arising from the disempowerment of workers and the lack of any previous meaningful attempts to solicit employee voice. We also identify three key qualities that underpin a successful and sustainable EVP: assurance, bounded accountability, and bias reflexivity. Our findings advance the development of employee voice systems and embedding of the EVP, especially in the context of highly casualised workforces where peer-to-peer and employee-employer information flows are always obstructed or non-existent <ref type="bibr" target="#b17">[18,</ref><ref type="bibr" target="#b31">32,</ref><ref type="bibr" target="#b48">49]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">RELATED WORK</head><p>The concept of employee voice refers to the employee's ability to influence an organisation by participating in the decision-making process and 'speaking up' freely <ref type="bibr" target="#b77">[77]</ref>. Employee voice was initially defined as 'providing workers as a group with a means of communicating with management' <ref type="bibr" target="#b32">[33]</ref> but expanded to mean a platform that allowed them to 'express <ref type="bibr">[their]</ref> opinions freely' and to 'participate in decisions at the workplace without [any] fear of repercussions' <ref type="bibr" target="#b63">[64]</ref>. Employee voice improves decision-making by allowing staff to engage and coordinate their actions towards a common goal <ref type="bibr" target="#b58">[59]</ref>. Employers benefit from increased employee retention and more robust financial performance <ref type="bibr" target="#b25">[26,</ref><ref type="bibr" target="#b58">59]</ref>. This ideal is expansive PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p><p>in its compass, concerning both tangible aspects of the work environment-such as workplace policies and physical conditions-and subtle work-related practices that contribute to the wider organisational culture <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b28">29]</ref>.</p><p>Employee voice is a component of a critical CSCW and PD literature concerning ways that stakeholder participation can improve decision-making and design while being grounded in a commitment to democratising working life <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b27">28]</ref>. The PD notion of workplace democracy involves providing employees with the right to influence their work environment through participation in decision-making processes <ref type="bibr" target="#b7">[8]</ref>, which aligns with the idea behind employee voice from the organisational development point of view <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b66">67]</ref>. Although the involvement of employees typically happens in activities during the design and development of novel technologies <ref type="bibr" target="#b83">[83]</ref>, the degree of involvement and the form it takes can vary, including representative or direct involvement and collaboration or consultation. Therefore, employee voice emphasises the members' (employees') right to retain a different opinion from those in power (management), to support contrasting positions and build knowledge with the help of these differences. Maintaining a set of opposite views and tools in PD offer a concrete means to manage these disagreements <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b33">34]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Hierarchical Workplaces, Casualisation and Employee Voice</head><p>Organisational cultures can be characterised as hierarchical and systematic or flexible and interconnected. This categorisation affects employees' commitment, job satisfaction <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b29">30]</ref> and engagement in providing feedback and complaints <ref type="bibr" target="#b35">[36,</ref><ref type="bibr" target="#b60">61]</ref>. To this end, Denison and Gretchen categorised organisations on two axes, ranging from internally focused with controlling or strict procedures (rational and hierarchical) to externally focused, showing a growing or developing group culture (development and group) <ref type="bibr" target="#b24">[25]</ref>. Similarly, Schein <ref type="bibr" target="#b78">[78]</ref> identified four types of organisations based on their communication norms that information is processed and analysed under: clan-internally focused, flexible; adhocracy-externally focused, flexible; hierarchical-internally focused, stable; and market-externally focused, stable. These communication norms, in turn, influenced management style and decisionmaking within the organisation <ref type="bibr" target="#b78">[78]</ref>. From this, we identify two broader categories of organisations: transactional-the decision-making is usually undertaken in a top-down manner from managers to employees to meet perceived needs and expectations of employees, and relational-employees and managers together make decisions and commit to deliver them <ref type="bibr" target="#b61">[62,</ref><ref type="bibr" target="#b76">76]</ref>.</p><p>In higher education, casualised or sessional staff are the main contact point for students and provide the bulk of teaching and marking work, with the most face-to-face interaction with students. However, casualisation means those holding crucial roles in the clients' experience are discouraged from actively communicating their opinions and participating in decisionmaking. A body of research has explored different ways to better engage with casualised members of staff <ref type="bibr" target="#b22">[23,</ref><ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b43">44,</ref><ref type="bibr" target="#b46">47]</ref>, which spotlighted the shift from long-term employment and emphasised the importance of creating new socio-technological workplace spaces. These spaces highlighted CSCW design opportunities and the challenges of supporting managers and employees in establishing new communication strategies. Our study explores this through the lens of employee voice, reveals nuances around employee voice in a casualised, higher education workforce and explores ways to help co-design a meaningful and supportive process that fosters a workplace democracy and facilitates employee voice through advocacy for and by casualised members of staff.</p><p>Designing for the Embedding of Employee Voice XX:5 </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Employee Voice and Collaboration as a Digital Mechanism</head><p>Prior work has highlighted formal and informal mechanisms for employee voice <ref type="bibr" target="#b50">[51,</ref><ref type="bibr" target="#b55">56]</ref>. Formal approaches tend to be management directed, by way of official processes, for example, surveys, consultation forums and official grievance processes. These approaches are attractive to management as they are ingrained into the organisational fabric <ref type="bibr" target="#b69">[69]</ref> and align more closely with the organisation's existing processes <ref type="bibr" target="#b65">[66]</ref>, leveraging management receptivity to such channels <ref type="bibr" target="#b40">[41]</ref>. However, the controlled and transactional nature <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b58">59]</ref> of formal employee voice channels can lead to employees feeling like they are not genuine channels for free expression and that their engagement risks retaliation (from management) or that their concerns will be ignored <ref type="bibr" target="#b25">[26]</ref>. Conversely, informal approaches involve ideas and concerns expressed directly and outside the existing organisational structure <ref type="bibr" target="#b50">[51]</ref>, focusing on using horizontal channels and operating between peers at the same level in the organisation or without connection to the existing hierarchy <ref type="bibr" target="#b37">[38,</ref><ref type="bibr" target="#b55">56,</ref><ref type="bibr" target="#b65">66]</ref>. However, many workplace factors encourage 'employee silence' <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b54">55]</ref>, posing difficulties in creating a climate where employees are comfortable speaking up in a considerate and timely manner. The result of these difficulties is that most attempts at informal employee voice fail in practice <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b28">29]</ref>, leaving a gap between the formal channels, with potentially higher manager susceptibility, and informal channels' affordability <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b28">29,</ref><ref type="bibr" target="#b88">88]</ref>.</p><p>The CSCW research <ref type="bibr" target="#b82">[82]</ref> and development of digital communication tools, including Enterprise Networks (ESNs), have enabled a mixture of informal and formal mechanisms, not only as part of people's work but also as the means of 'speaking up' <ref type="bibr" target="#b41">[42,</ref><ref type="bibr" target="#b72">72]</ref>. The concept of the articulated work that requires people's collaboration adopted by CSCW <ref type="bibr" target="#b79">[79]</ref> focuses on ensuring that all resources and actors needed to accomplish a task (e.g., facilitating a specific process in the organisation) are there and functioning (accomplishing their part of the work) when required. What denotes the 'common field of work' is the representation of the collaboration's quality and the work's temporal nature (e.g., process or project). Thus, interaction through the common field of work can be considered a distinguishing characteristic of cooperative work, whereas employee voice (as means of participating in decision-making) can be regarded as a necessary basis for facilitating cooperation to deal with and resolve issues between employees and employers (upward), and address concerns within the organisation. Additionally, prior research has examined the use of ESNs to encourage innovation <ref type="bibr" target="#b74">[74]</ref> and to improve work-related collaboration <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b52">53,</ref><ref type="bibr" target="#b59">60]</ref>. It has been shown that ESNs can have a substantial effect on the workplace community through informal digital channels that have a particularly strong influence on 'information diffusion' <ref type="bibr" target="#b81">[81]</ref>. Some of the ESN systems (e.g., LinkedIn, Yammer, Secret, Facebook Workplace) focused on presenting users as individual contributors with specifications for their contribution goals, while others (Blind, Meetoo, Speakapp) acknowledge a cooperative nature or provide mixed instruments for a user to choose.</p><p>The benefits of employee voice through ESNs can only be realised when the employees perceive that their feedback influences (and impacts) decision-making processes <ref type="bibr" target="#b70">[70]</ref>. Poorly designed ESNs and employee voice exercises can be perceived as 'tick-box' exercises and create an additional burden for all involved parties rather than offering a sincere and valid mechanism for raising concerns and taking part in decision-making <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b59">60]</ref>. This can lead to a feeling of not being valued, a perceived lack of control over one's immediate work environment and cognitive dissonance arising from the discrepancy between one's behaviour and beliefs <ref type="bibr" target="#b56">[57]</ref>. Thus, for a successful EVP, there must be a visible impact of employee voice on operations on the ground; essentially, the voice must clearly lead to some change <ref type="bibr">[3,</ref><ref type="bibr" target="#b4">5,</ref><ref type="bibr" target="#b44">45</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>59]</head><p>. At the individual level, changes to the employee's perception of work and their control over it, changes in attitude and motivation, and potential behaviour changes that positively affect one's performance are all important <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b62">63]</ref>. At the wider unit, department or organisational level, the impact on innovation, learning, productivity and the quality of decision-making have to be evident to ensure ongoing management buy-in to the process <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b57">58,</ref><ref type="bibr" target="#b85">85]</ref>. This highlights the value of the effective design and facilitation of workplace collaboration and its implication for people engagement and the outcome of the supported process(es) <ref type="bibr" target="#b12">[13]</ref>. This, in turn, illustrates the importance of the correct application of the design principles for digital aided processes that aim to support cooperation by shrinking the gap between those doing work and those who participate in decision-making and benefit from the outcomes of the work. As shown in previous research, appropriate coordination can be beneficial for the quality <ref type="bibr" target="#b49">[50]</ref> and perception of collaborative work <ref type="bibr" target="#b36">[37]</ref>. If applied correctly, a digitally aided process can help to enable better coordination of work while giving the opportunity to influence the workplace environment and increase visibility and accountability of all parties involved <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b18">19]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Anonymity, Democratisation and Validity in Digital Mechanisms</head><p>Research in the Group Supporting Systems (GSS) domain <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b20">21]</ref> has investigated the capability of anonymity to provide psychological safety to individual employees. Anonymity can be beneficial and help foster workplace communication and collaboration <ref type="bibr" target="#b21">[22]</ref>, with some studies demonstrating that ideas are more freely and quickly generated in anonymous rather than named groups <ref type="bibr" target="#b51">[52]</ref>. Further, anonymity helps prevent any potential 'social cost' incurred to identified community members because of their posts or comments. The difficulty is that anonymity can also undermine both constructiveness and civility <ref type="bibr" target="#b28">[29]</ref>. For instance, it can erode self-censorship, as anonymous users are often willing to over-disclose <ref type="bibr">[114]</ref> or even engage in frank conversations to an extent that breaches professional norms <ref type="bibr" target="#b71">[71]</ref>. It can also lead to toxic behaviours, such as directly insulting other participants [202] and cyberbullying <ref type="bibr">[193]</ref>. Most anonymous digital platforms adapted for use within the workplace have encountered serious problems arising from anonymity, including defunct systems such as Whisper, Memo and Secret. Secret even had special 'rooms' that corresponded to a specific workplace; however, it was closed down by its founder, citing ethical issues <ref type="bibr" target="#b0">[1]</ref> after several failed efforts of making the users less 'cruel' [97]. In the case of these applications, what started as an attempt to facilitate speaking up or to support employees' collaboration and coordinated action, became a forum for rants, gossip and bullying where unprofessional behavior became the norm <ref type="bibr" target="#b45">[46]</ref>.</p><p>Looking beyond technical considerations, the challenge of soliciting engagement in workplaces with asymmetric power structures is also explored in PD projects. Particularly projects developed in Europe, where there has been a tradition of close collaboration with workers and trade unionists seeking means to improve workplace democracy <ref type="bibr" target="#b38">[39]</ref>. In PD work, facilitators strive to democratise the workplace by giving workers, managers and other stakeholders an equal say in creating new technologies and processes <ref type="bibr" target="#b47">[48]</ref>. The problems of deskilling work and reduced worker power were initially addressed through political advocacy and strong worker unions. However, PD has had to adopt other approaches to foster trust in shared discussion forums due to increasingly working outside its original contexts and being forced to confront environments where workplace equality is forfeited to commercial productivity. These include allowing workers' concerns to be explicit and foundational in any discussion and educating workers about the concerns their management faces and the processes that they use to make decisions. Realising long-term impact remains a challenge in this domain (sustainable participatory projects) but techniques such as forming working groups and organisational consultations do allow PD processes to make some longterm changes to workplaces.</p><p>ESNs, in principle, offer considerable potential. However, in practice, employee engagement with such systems is relatively poor <ref type="bibr" target="#b80">[80]</ref>, reflecting known challenges around establishing flexible, open and honest communication (and collaboration) within the workplace environment <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b8">9]</ref>. This raises the issue of how best to facilitate employee communication and collaboration outside traditional, often hierarchical, organisational channels while providing them with the ability to speak freely, without fear of reprisal <ref type="bibr" target="#b16">[17]</ref> and in the knowledge that their views will be heard and supported <ref type="bibr" target="#b68">[68]</ref>. Designers of ESNs must account for a known worker-employer power dynamic and tension, knowing that workers prefer anonymity, informality, and collectivism but that employers prefer formal consultation mechanisms that map specific challenges and concerns they believe are most pressing.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">METHODOLOGY</head><p>This paper presents a case study of the design and deployment of an end-to-end EVP involving sessional staff (employed as casual workers) in higher education. The EVP is comprised of an anonymous digital social network (OurVoice, see Section 3.2), accompanied by a supporting social infrastructure (see Section 3.3) that was designed to generate policy and practice improvements in a higher education workplace (see Figure <ref type="figure" target="#fig_0">1</ref> for a timeline of events). We evaluated the EVP by analysing the data produced during the multiple deployments of the OurVoice system and through a post-EVP qualitative investigation with 14 participants (managers, TFG members and sessional staff members). The emphasis was on understanding how our EVP supported organisational change (see Section 3.4). The overall aim of our study was to explore how an EVP can be sustainably embedded into an organisation, including how parties need to be involved, how this (EVP) process can be designed and how it can be effectively organised. We considered this in terms of our two research questions, one addressing the impact of prevailing organisational culture and the other addressing the actions we might need to take to ensure a successful and sustainable EVP. Many different factors influence the operation of employee voice on the ground <ref type="bibr" target="#b84">[84]</ref>, including the specific affordances of the organisational channels <ref type="bibr" target="#b28">[29,</ref><ref type="bibr" target="#b30">31]</ref>, the perceived safety of 'speaking up' <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b25">26]</ref>, the differing perceptions held by management and employees, and the specific implementation details such as the nature of communication tools used on the ground <ref type="bibr" target="#b26">[27,</ref><ref type="bibr" target="#b42">43,</ref><ref type="bibr" target="#b60">61]</ref>. Thus, from a practical perspective, understanding how to foster effective and meaningful discussion between casual workers and management is challenging-after all, employee voice is a longitudinal and subtle phenomenon.</p><p>These factors mean that an overly deterministic or pre-planned engagement is unlikely to be successful in engendering enduring change. Based on this, our work was conceived as an action research problem involving the iterative and practice-led process of exploration, analysis and evaluation <ref type="bibr" target="#b7">[8,</ref><ref type="bibr" target="#b16">17]</ref>. Our role (as facilitators) was to initiate the first step (i.e., deployment of OurVoice), leaving the remainder of the process to participants' collective decision-making. In this particular case study, our participants (two groups: (i) the casualised workers and (ii) management, see Section 3.2 for details) were the main driving force for the decision-making and direction of the EVP. The process unfolded iteratively: it was not directed by the research team but was led by managers or casual employees at different stages of the process. The details of this natural development are described in the corresponding section of the Findings (see Section 4.1).</p><p>The core research team was uniquely situated as simultaneously being researchers within the institution where we conducted this study (part of the team) and either (i) members of the casual employee group (one researcher) or (ii) members of the department's management team (one researcher). To ensure an appropriate research lens on this complex problem, we adopted an autobiographical design approach, a form of 'design research that is based on actual extensive usage by those creating or building a process or a system' <ref type="bibr" target="#b65">[66]</ref>. This approach supports rapid and flexible design responses based on the usage of the system, which was important here due to the dynamic and cyclical nature of employee voice. In addition, the complexity of workplace culture meant that only by being an employee could we use participant observation to provide effective, comprehensible insights into the organisation's practices <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b35">36]</ref>. Power dynamics of the workplace are a complicated matter to investigate, so the ability to combine the insider (as participants) and outsider (as researchers) vantage points helped to capture a comprehensive picture <ref type="bibr" target="#b29">[30,</ref><ref type="bibr" target="#b39">40]</ref>. Our position also allowed us to deploy the system within days to respond to the COVID-19 pandemic, which altered teaching practices during the deployment. Our position in this situation also allowed us to observe the proposals generated from the process being integrated into teaching strategy and realised on the ground.</p><p>Autobiographical design has been criticised for lack of transparency about the author's roles and perspectives <ref type="bibr" target="#b19">[20]</ref>. To address this, we disclose that one author was from the management team and was responsible for education support. Another was a part of the sessional staff cohort (but did not contribute to the discussions in the study) and exerted no influence over the process execution and sense-making stages of the EVP. The other authors were not part of any cohort involved in the study. The work responded to a genuine need for improvements in the working environments of sessional staff as perceived by both researchers with additional roles (management and sessional staff) on the team who had observed first-hand issues of what the literature has reported <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b31">32,</ref><ref type="bibr" target="#b50">51]</ref>. This case study was shared and developed with the wider team of authors as the process progressed. Within the design process, the research team members acted as facilitators and participants at different stages of this process when needed (see the stage-by-stage breakdown of researchers' involvement in Table <ref type="table" target="#tab_5">2</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Context of the Study</head><p>We initiated the EVP in collaboration with the department's management team within the University in question, intending to deploy the system for one week before working collectively to determine the subsequent period and nature of deployment and ways to ensure full engagement with sessional staff. Casualised staff in the University are referred to as sessional staff members-they often work across multiple universities, and many use tutoring as a side earning rather than their main income source. As with any casualised workforce, sessional cohorts have various issues regarding work, department status, and social and financial uncertainty. For instance, they do not have a presence on the University website and are not recognised as full academic staff members. They do not have the means to communicate with each other through university-backed channels (like the mailing list), meaning that they are isolated from one another. This creates an interesting context for deployment, as there are no competing communication channels that allow employee voice. Moreover, they are not represented by any union within the university. Thus, they are considered a non-unionised casual workforce.</p><p>The global COVID-19 pandemic forced everyone to shift to work-from-home arrangements and was a key part of our context. Globally, the pandemic negatively affected the higher education sector, severely limiting the intake of international students due to lockdowns and border closures, leading to declining revenue [100] (particularly undermining the job security of sessional staff members). This also simultaneously increased the workload placed on casualised staff due to rapid changes to curriculums and work-from-home arrangements.</p><p>An additional constraint was that this shift happened towards the end of the semester and increased tutors' workload due to marking and exam deadlines during the three-month process. This potentially resulted in less engagement from the casual staff members. However, industry-wide disturbance because of the global pandemic might have also driven casualised staff to engage with feedback mechanisms as their workloads dramatically increased.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Participants</head><p>The EVP took place over three months. It was initiated by the management of the academic faculty in question and included managers and sessional staff members who can be further divided into the groups presented in Table <ref type="table">1</ref>. Participants took part in as much or as little of the EVP as they wanted to-some using the OurVoice system, some coming to in-person meetings between casualised staff and management, and some doing both. We deployed OurVoice twice (Week 1 and Week 8-see Table <ref type="table" target="#tab_5">2</ref>) during the EVP, soliciting feedback from 104 casualised staff members out of the 397 casualised staff employed by the department. Management invited staff to participate in the EVP via a restricted electronic mailing list. The department also had 175 full-time employees working alongside the sessional staff members.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p><p>Table <ref type="table">1</ref>. A summary of the participant groups and their respective roles, including the access level to information afforded by each role or grouping.</p><p>Sessional staff members were split into two main groups: (i) professional tutors and (ii) transitional tutors who were simultaneously studying for a research degree (PhD or Masters Students). Due to the anonymous nature of the OurVoice system, we do not know the exact distribution between these groups. However, the overall number of sessional staff members who directly participated 2 was 104. Participation in wider EVP activities was not recorded or correlated with the OurVoice records (again, to preserve anonymity), so we do not have exact numbers available for meeting participation either. Instead, we estimate attendance through anonymised statistics and observation (where applicable) in Table <ref type="table" target="#tab_5">2</ref>. 2 Either they left a comment, started a thread or voted to up or down vote a comment or thread.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Position (or participant group)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Role and activities</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Managers (academic)</head><p>Description: Academics (professors) in a managerial position within the department who were responsible for education, graduate research and ensuring delivery of modules. OurVoice Access: They did not have access to the system as users, but they could observe discussions after the moderation and when the deployment finished.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Managers (professional staff members)</head><p>Description: Professional staff members who governed and managed operational aspects of department function, delivery of education and module allocation. OurVoice Access: They did not have access to the system as users, but they could observe discussions after the moderation and when the deployment finished.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Sessional members of staff (OurVoice users)</head><p>Description: Sessional staff members who conduct tutoring, consultation and marking within the department. Responded to participation calls in the EVP and provided their feedback or participated in discussions in the Our Voice system as anonymous users. OurVoice Access: They had access to the system as users and could observe postmoderated discussions. They could also observe if the comment or message was moderated. OurVoice moderators (Sessional members of staff) Description: Sessional staff members who responded to the call to act as a moderator and check threads and comments of users before publishing them in the system (through a dedicated interface). They had similar responsibilities within the department as the previous group. OurVoice Access: They had access to the system, like the users, but also could observe pre-moderated messages and user comments. As moderators, they could reject or edit a message.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>TFG members (Sessional members of staff)</head><p>Description: Sessional staff members who also participated in the EVP and responded to the invitation to become TFG members after the Town Hall meeting. They did not participate in moderating the system). They had similar responsibilities within the department as other sessional staff members. Several were more experienced than the average sessional staff member in leading a module (unit) and delivering it to students. OurVoice Access: They had access to the system and, as users, could not see premoderated messages or comments. After the deployment, they worked on formulating proposals and creating the managers' report based on discussions. Researchers (Sessional staff cohort and managers) Description: Members of the research team who facilitated the execution of the EVP. OurVoice Access: The researcher who also held a sessional position had access to the system as an administrator and could observe all the comments and messages: he was also invited to one of the TFG meetings. The researcher who also held a managerial position did not have access to the system, only to the outputs of discussions after the deployments were finished (like the other managers).</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021. Within the EVP, the OurVoice system (see Section 3.3 below) was accessible only to departmental sessional staff members (based on their emails and registration as sessional staff members for the semester), a subset of whom moderated the system to facilitate constructive discussion. At the beginning of the study, along with the enrollment (email) message to participate in the discussions in OurVoice, we invited all members to volunteer as daily moderators. Four volunteers were chosen based on their ability to moderate twice a day, every weekday. These volunteer moderators did not participate in the EVP in other roles.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Tools: OurVoice as a Digital Employee Voice System</head><p>The initial facilitation of employee voice within the study was achieved using a bespoke, anonymous digital platform (OurVoice) to support speaking up and sharing concerns within the organisation (see Figure <ref type="figure" target="#fig_1">2</ref>). The OurVoice platform was designed to support safe and constructive discussions using a deliberately slowed, carefully moderated process to eliminate the negative effects of anonymity (e.g., eroding self-censorship and making users willing to over-disclose <ref type="bibr" target="#b42">[43]</ref>, exceeding professional norms <ref type="bibr" target="#b22">[23]</ref> and leading to participants insulting or abusing each other <ref type="bibr" target="#b83">[83,</ref><ref type="bibr" target="#b82">82]</ref>).</p><p>Most anonymous workplace platforms are plagued by poor behaviour <ref type="bibr" target="#b38">[39,</ref><ref type="bibr" target="#b48">49]</ref>, cyberbullying <ref type="bibr" target="#b86">[86]</ref> or inflammatory posts <ref type="bibr" target="#b5">[6]</ref>. Anonymous systems have been unsuccessful in promoting employee voice or supporting coordinated action <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b53">54]</ref>. OurVoice ensures that all users are anonymous, with no record linking users' activity in the system to their real-world identity. At the same time, moderation and the slow pace of publishing prevent offensive behaviour and remove temporal clues to a poster's identity. The system does not require employees to login or create an account, instead offering authentication through temporary tokens sent to the user's email. Moderation is proactive (where all posts are reviewed before publication), with moderators focused on preventing potentially harmful behaviour <ref type="bibr" target="#b80">[80]</ref>. During our case study, the system was moderated by a small team (four people) of sessional staff members who volunteered and did not participate in the process other than through moderation. Previous work has shown that the more frequently employees switch attention during the day (e.g., between tasks, emails and discussions), the less productive they feel at the end of the day <ref type="bibr" target="#b54">[55]</ref>. Consequently, OurVoice was configured to release the messages only twice per day.</p><p>The system represents an open-source digital platform developed as a web-based solution composed of five bespoke technological components (specifically designed for the system) and supplementary default components configured to work as a part of the OurVoice. The advantage of having a system comprising separate components is dividing and isolating (logically or technically) access to sensitive information. Thus, the moderators' backend can be deployed as a separate virtual server or with the moderators' database but still isolated from the users' backend and database. Another advantage is that the system can be deployed partially or fully in the cloud environment if needed.</p><p>The OurVoice bespoke components are the following: (i) a web application that interacts as the front end module with users and moderators allowing interaction with the system and information display (including authentication, creating posts and messages, voting and reading other's messages); (ii) a moderators' backend that processes input from the authenticated moderators through the web application to edit/delete/alter information in the moderators' database and publish approved messages into the users' database; (iii) a users' backend that processes inputs from the authenticated users and moderators through the web application and displays published post and comments from the users' database, allowing users to vote for it; (iv) a RESTful Application Programming Interface (API) that allows tokenised access to the users' database and statistics of the system usage, and (v) a Backup Demon that is responsible for nightly backups of the users' database to the backup data storage (Amazon S3 buckets). The underlying infrastructure uses 'off-the-shelf' components, such as NGINX proxy server, PostgreSQL and MongoDB Databases, and thirdparty servers, like Mailgun, for sending out emails with tokens and AWS S3 storage for storing backups.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Observation and Analysis</head><p>We drew upon a wide range of information sources, including (i) discussion threads and posts that were captured through the OurVoice system (see stages 1, 4 and 7 in Table <ref type="table">3</ref>), (ii) a report created by a group of casual employees as a combination of proposals (see stages 6 and 9 in Table <ref type="table">3</ref>) and (iii) meta-documents that support meetings and discussions between managers and the sessional employees who volunteered to become a member of the TFG (see stages 3, 8, 9 and 10 in Table <ref type="table">3</ref>). During the deployments, OurVoice attracted 82 threads and 55 comments, with three anonymous polls initiated during the second deployment. In reporting these, any quotes pulled from the system are marked as 'OurVoice'. These seeded the discussion topics for the post-process interviews and the overall qualitative analysis. At the same time, we were also participant observers (of the EVP process) and drew upon our day-to-day observations and engagement (of deployments and meetings between managersmanagers, managers-employees, employees-employees), acting as reflective practitioners <ref type="bibr" target="#b39">[40]</ref> in the context of an 'inquiry from the inside', where we 'functioned' within the organisation along the EVP <ref type="bibr" target="#b29">[30]</ref>.</p><p>We conducted semi-structured post-study interviews with 14 respondents: five (three females, two males) casual staff members who participated in the process only as users of OurVoice (U1-5), five (three females, two males) casual staff members involved in the analysis and creation of the report as members of the TFG (T6-10) and four (two males, two females) managers that represented and drove the process from the faculty side (M11-14).</p><p>The initial call for interviews was distributed through email and an information post in OurVoice, with an invitation to participate in post-study interviews with users who took part in the EVP process and online discussions. The interviews were conducted through Zoom <ref type="bibr" target="#b86">[86]</ref> due to lockdown restrictions. The topic guide was developed from our direct observations and coverage of the 'how' and 'why' concerns, emphasising understanding how the EVP drove responses from the management team. Subsequently, we conducted a thematic analysis of the corpus (following Braun and Clarke's method <ref type="bibr" target="#b84">[84]</ref>) with the identification of a 'nuanced account of one particular theme, or group of themes, within the data', which offers sufficient flexibility to ensure that the key concerns are properly addressed.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">FINDINGS</head><p>Our findings are discussed in terms of (i) the nature of the emerging process, particularly the way that sessional staff were able to exert greater control over that process during the threemonth study period; and (ii) the outcomes of the process's ability to meaningfully allow sessional workers to voice concerns, make meaningful suggestions for change and gain some new control over voice. The former concern informs our first research question: How does an organisation's hierarchical internal structure and interactions between casualised workers and managers influence the realisation of employee voice? While the latter informs the second research question: How should we approach the co-design of an EVP to ensure safe, respectful discussion that can lead to changes and hold involved parties accountable so that it can become embedded within an organisational environment?</p><p>4.1 EVP Manifestation and Self-Organisation.</p><p>In our deployment, the overall EVP was emergent. Following the initial (researcher-led) oneweek deployment of OurVoice, we did not impose any preconceived structural restrictions on the process, design or steps that this study's EVP must follow. This allowed governance and control over the EVP to stay within the hands of a community (sessional staff members and managers). As a result, one important part of our findings concerns this emergent process: how did it unfold throughout the OurVoice deployment and did it succeed in engaging sessional workers who formerly had no opportunity to voice concerns or influence the process:</p><p>[T8]: But you don't have any control in that process; unfortunately, we are just considered as seasonal workers.</p><p>Casual seasoners so we don't have a lot of voice and say.</p><p>Although managers previously tried to engage with the sessionals and provided opportunities for feedback, they have observed various concerns expressed regarding the information collection methods, highlighting the aspect of validating outcomes:</p><p>[M11]: We've used just Google Forms that people can go in and fill in. And then there's issues sometimes with privacy that most times that we've done that people have expressed concern with it. How the information is going to be used. And so because often the reasons we've used it, it's attached their name, and the staff ID … this offers, the thing that this is offers that's unique is I think it's completely separate to the [University] platforms. So people tend to have more confidence in something that's designed specifically to enable you to give anonymous feedback.</p><p>This sense of the hierarchical exclusion of sessional workers is discussed more fully in Section 4.2. However, consideration is given here to how different involved parties (sessional workers and management) influenced the process, given that the only concrete intervention from the research team was the first deployment of OurVoice (see Table <ref type="table" target="#tab_5">2</ref>). This was carried out in collaboration with the department managers (who initialised it) and two sessional staff members (who helped to tailor preliminary categories). Researchers approached these sessional staff members due to their teaching experience and recognition among other sessional staff members and faculty management. Later, one of these sessional staff members joined the TFG organised by the community during the process to analyse and action the data collected by the deployment of the OurVoice (see Table <ref type="table">3</ref>).</p><p>It was the sessional staff members who took responsibility for ensuring the day-to-day operation of the process, including the daily moderation of contributions on OurVoice: [U3]: I did the moderation a couple of times. I think it was three times a day, something like that or twice a day. And yeah, so we basically had to remove any identifiable information. Any hurtful or racist or mean comments, any comments where people name each other.</p><p>This extended to making decisions of substance on analysing data generated within OurVoice, with T6 giving an example of a form of deliberation during the data analysis on how to best interpret the resulting information and appropriately contextualise it:</p><p>[T6] So although we initially thought, well, we were not HR, we can control how much you get paid. Later, we realised, oh, it's actually a problem with like, how the units are organised, that they feel that they need to be paid more for this kind of work. They're being overstressed, for example. So, we did this reclassification step.</p><p>The initial topic categories, created by both parties (management and involved sessionals), were Wellbeing, Training and Support, Teaching Online, and Technologies, and an Other category to address any other topic that came to mind. Everything that happened in the study after the Town Hall meeting (Week 2) was initiated by sessional staff members or managers, supporting the shift of control over EVP and assuring the response based on outcomes of the previous stage and impacting the subsequent ones (see Table <ref type="table">3</ref>).</p><p>Table <ref type="table">3</ref>. Stages of the EVP during the case study and the results of each stage.</p><p>As Table <ref type="table" target="#tab_5">2</ref> outlines, the managers led the analysis of the discussion after the first deployment of the anonymous system (see Error! Reference source not found.). They conducted their a nalysis by grouping all messages (based on a theme) from the system to match different categories based on whether they were actionable from the management side. Following their analysis, management prepared their responses to the questions raised on OurVoice and organised a Town Hall meeting with sessional staff members that lasted for an hour, which more than 300 sessional staff members attended. At this step, the preconceptions that influenced managers' interpretation regarding the issues and concerns manifested through the analysis and following discussion at the Town Hall meeting:</p><p>[M13]: We had our preconceived ideas of what we thought was where, the issues and what was important [for sessional staff members]. And obviously, the town hall allowed us to understand.</p><p>M12 put this point more subtly, noting that the practice of 'executive team … reviewing and interpreting and then making judgment around all those responses' might have limited the credibility of the process. The Town Hall meeting resulted in negative feedback from sessional staff members due to the 'very one way' [U1] nature of the managers' responses and their conclusions (see items 3 and 4 in Table <ref type="table">3</ref>) and served as a starting point for an extended EVP.</p><p>The collected feedback, posted in the system after the Town Hall meeting, highlighted that employees were not fully satisfied with how the meeting went. Comments included that discussions from the system 'seemed wasted in a Town Hall' [OurVoice] and that they perceived it to be 'staged' and 'formal' [OurVoice]. To address this, sessional staff members offered to use OurVoice to organise a separate space where a group of users can discuss raised issues:</p><p>[U2]:Okay, these are the top prioritised commands identified and asking group to contribute to more to it, or kind of brainstorming, what do people or the employees think, as a way of solving that issue? Or maybe get some information from them to brainstorm what are the idealistic solutions, or what do you think is the best solution?</p><p>However, the existing functionality of public and open discussion in the system didn't allow this separate group space. Additionally, some users raised concerns regarding the applicability [OurVoice] and validity [OurVoice] of these discussions in the anonymous system:</p><p>[U4]: Because it's anonymous so people can't anyway get organised around that. But maybe that can be a space provided within the platform where the separate discussions can be go on …</p><p>Responding to the criticism (of the initial OurVoice deployment and Town Hall meeting), management invited sessional staff members to step forward and form the TFG. Its main purpose was to analyse the data from a staff perspective since they were 'best placed to come up with ideas as to how to improve the online experience for our students and our staff' [M11] and communicate them clearly in a united voice. This also confirmed that criticism of the Town Hall meeting outcomes had been accepted as valid.</p><p>The TFG of five people was organised and supplied with all anonymous data from OurVoice.</p><p>The call for the formation of the TFG group was broadcasted by one of the managers through the organised mailing list of sessional staff members. The TFG held five meetings in the following two weeks (see item 5 in Table <ref type="table">3</ref>), where they analysed the data. The meetings resulted in 20 proposals, dividing all of the issues into groups based on 'six identified underlying root causes behind the issues raised' [T9] through the OurVoice deployment and aimed to 'come up with some practical and achievable solutions to target these root causes directly' [T7] (see item 6 in Table <ref type="table">3</ref>). There were no constraints on the TFG other than a time limitation (up to three weeks) and a cap per TFG member for the paid time spent on these activities (paid at an equivalent rate to teaching activities).</p><p>A key outcome from the analysis, which served as a form of validation in the eyes of sessionals and assurance for managers, was the decision to run another deployment of OurVoice in conjunction with the research team (item 7 in Table <ref type="table">3</ref>). This deployment put forward these proposals and collected their colleagues' feedback to help 'validate suggestions' [T6] and identify biases. This time, rather than asking sessional staff to contribute their ideas, the platform was pre-populated with the proposals that TFG had drafted. Users were invited to rate the proposals, make further comments or suggest their proposals for future discussion. At the end of the second deployment, the TFG produced a report ranking the proposals on their popularity and affordability (by faculty) based on feedback received through the second deployment of Our Voice (see item 8 in Table <ref type="table">3</ref>) and submitted this to management. Then, a series of discussions led by managers and TFG were held to identify proposals and solutions. This process resulted in more nuanced and detailed discussions around each proposal, considering their implementation, scale and timing (see item 10 in Table <ref type="table">3</ref>). That culminated in integrating some of the proposals in the strategic planning for the faculty by faculty management (see item 11 in Table <ref type="table">3</ref>). These initially consisted of short-term proposals, which needed to be addressed quickly or assigned fewer resources. Medium or long-term proposals were included in financial and teaching planning and assigned to a responsible person/team (see Section 4.2 for more details). The detailed summary in Table <ref type="table" target="#tab_5">2</ref> depicts the chronological order of the participant-driven process throughout the case study. This is supported by a visual representation of the process in Figure <ref type="figure" target="#fig_4">3</ref>. The progression of the process was guided by each of the involved parties (sessional staff members, managers and TFG members). This process was bounded by time and organisational environment constraints and the need to ensure the results' validity. This led to the key process feature-shift of control-on who assumed the leading role over the various stages of the process.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Perceived Impact of Employee Voice and Openness to Feedback</head><p>One of the biggest barriers to sessional staff speaking up was their perceived position in the workplace hierarchy, which underpinned most of their interactions in the workplace. As sessional staff without permanent contracts, they felt that the hierarchy was characterised as 'widely unstable' . The introduction of the OurVoice system helped to address this anxiety around speaking up and provoked people to share their ideas anonymously. Sessional staff reported that the anonymity feature helped balance against the existing tensions and internal and external inhibitors (perceived or real):</p><p>[U5]: Yeah, I think it's, it is really good that there is an anonymous platform because sometimes, you know, being a sessional staff, you don't feel like expressing all your opinions with others.</p><p>During the study, the anonymous element of OurVoice allowed sessional staff to address anxieties related to the workplace environment. However, some participants mentioned the potential for them 'to be public with who they are, what they post' [T6] and 'want [the] faculty to know who they are' [T8], especially when it comes to the closing feedback loop for issues:</p><p>[M12]: And maybe it's that, you know, a person when they post something ticks the box to say I'm okay to be contacted or you know, anonymised, you know, callback on it kind of thing. Or somebody wants, just wants to say their piece and never, you know, I don't want to be asked about it.</p><p>The system encouraged employees to speak up and contribute, giving them a safe and direct forum to express their views and a sense of belonging to a community of others who felt the same:</p><p>[U3]: Sometimes knowing what people are feeling the same can, you know, help … they wouldn't have seen that, that they weren't the only one feeling that way.</p><p>Another issue is that cultural or other factors can also combine with the wider hierarchical situation, thus making it harder in the existing workplace to comment. By contrast, the anonymity of the OurVoice system removes these barriers, as explained by U2:</p><p>[U2]: … because as sessional staff, you are dealing with people who are from different levels of your organisation. And sometimes you might not feel safe at work when you express your own opinions, maybe because of cultural factors, maybe because of your gender or maybe because you're in a way, not in a higher position as them [management], in the hierarchy …</p><p>At the beginning of the study, the absence of two-way communication channels (e.g., a 'direct line') and top-down (e.g., in guidelines on how to act in the changed context) became apparent to the extent that it provoked the deployment of OurVoice system:</p><p>[M11]: It seemed that there was very little visibility of the sessional staff … in terms of faculty communications, reaching them or even hearing their voices … there was no real significant representation.</p><p>The case study also highlighted the pressure placed upon sessional staff members due to their 'heavy [work]load' around tutoring and supporting students [U2], which was exacerbated by the need to introduce remote teaching. A common view among sessional staff members in our study is that, while they have large contact time with students, their input on teaching and consultation are not considered in management initiatives to organise the way teaching and student engagement are conducted. With the advent of these circumstances, sessional staff saw themselves as best placed to identify issues due to their vantage point of being on the front line of teaching where 'the actual learning is happening' along with the 'direct communication with the students' (T7):</p><p>[M12]: Firstly, that there was suddenly a big concern around teaching and teaching quality and, and that there was a risk to it caused by COVID and also around staff wellbeing, and they didn't have good understandings, good ways to really understand how sessional staff were coping with COVID-19, because those two-way communication channels didn't really exist. So I think that [OurVoice] was a recognition of that.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p><p>Prior to OurVoice, even where communication mechanisms existed, they were perceived by sessional staff to be framed by management's assumptions about the concerns of sessional staff members. Such as the perception that their concerns were primarily related to their terms of employment, whereas, in reality, they were concerned with teaching delivery and the student learning experience. Without a meaningful two-way dialogue, the assumptions made by management regarding sessional staff's priorities, created without consulting with them, served to marginalise concerns that were important to the sessional staff and contributed towards a vicious cycle of exclusion:</p><p>[M13]: … sessional staff, kind of unfortunately, they sit in limbo, kind of between academics … it gave us, I think, a more reliable way, insight into what the factors were that were important to them at that time.</p><p>Due to the lack of appropriate channels, management was unclear on how to organise the EVP in the existing transactional environment. Management did not see clear ways of communicating to staff 'what happens next' to prevent 'disappointment' and the feeling of 'going to a black hole' [U3]. This precarity is one of many contextual factors that affect how sessional staff saw the potential impact of their voice to drive change, with many expressing a concern that their feedback would not result in action. Sessional staff pointed out that one of the implications of the EVP and digital tool deployment was creating a 'sense of trust' [U2] between the parties. Staff need to trust that management will act on the feedback, which was identified as an 'important condition' [T9] for progressing forward and assuring them of the potential impact.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Influencing Contextual Factors, Sense-Making and Identifying Bounds</head><p>After the anonymous discussions between sessional staff members in the first OurVoice deployment, they went through the process of deliberation by TFG members with the subsequent sense-making and realisations taking place in a set of virtual meetings of the TFG. Sessional staff emphasised that the context awareness of employees was a factor that drives the sense-making during the different steps of voicing concerns. This produced six aggregated themes of the initial issues and concerns, accompanied by the identified root causes, potential solutions and the proposed financial cost and time frame required to address them. These themes formed the backbone of the discussions during the meeting between the TFG and management and revolved around the ineffective allocation of existing resources, pedagogical stress, teaching staff wellbeing, job security, information dissemination and technology/infrastructure. The detailed content of the topic discussions is not the main aim of this paper, as we are focused on the EVP itself. The findings have pointed to an interesting process of identifying different context-related topics, framed according to their perceived importance and plausibility, through the iterative process of deliberation and sense-making between all involved parties. Interestingly, without any prompting from management, the TFG prioritised low-cost and student-focused concerns, which indicated that they were aware of and self-imposed the bounds around realistic constraints that the organisation faces.</p><p>The TFG work process that led to the 20 proposals is exemplified in the proposal to Address Tutor Workspace Issues. While the issues raised by users started from the technical ones (e.g., 'struggles to deliver classes online' due to 'unstable internet connection' and 'home supply accidents'), these concerns moved onto a more nuanced one concerning the unsuitable work environment (e.g., 'shared environment', 'family members', absence of 'dedicated workspace' for teaching) and the necessity for better teaching arrangements due to the transition to online. During the Town Hall meeting in Week 2, these issues were acknowledged by management, but they did not communicate back a concrete plan of action or even suggestions for tackling them within the faculty. In response, the TFG further developed these solutions and turned them into a set of practical proposals for dealing with tutors' technological and workspace limitations. The suggestions ranged from immediate actions, including the provision of backup solutions to connect to online classes (e.g., 4G LTE connectivity equipment) and improved workspace facilities through university-aided packages (e.g., home office equipment) to more long-term suggestions beyond present COVID limitations for providing tutors with 'dedicated spaces for online teaching', meetings with students and breaks. These suggestions were validated through the voting during the second deployment in Week 8 and were linked to other proposals, such as a 'sessional TA shared workroom' for 'facilitating teaching and unit coordination-related duties'. During the meeting with management (Week 10-11), the TFG raised these concerns and discussed these proposals, which resulted in including the specified steps into the Education Strategy, allocation of necessary resources and the designation of a responsible manager to control the process.</p><p>Proposals were categorised based on the identified root causes and sub-causes through a 'brainstorming activity' [T7] that TFG members participated in. They were grouped according to the estimated timeframe of realisation of solutions as follows: (i) short-termimplementable 'within the semester or is relevant to a transient situation'; (ii) middle-termimplementable 'within the next semester and may be of long-term value beyond the current situation'; and (iii) long term-implementable 'within the next year and is of long-term value beyond the current situation'. Then, the TFG decided to distribute the proposals among its members for further work and continued identification of potential solutions based on their 'own strengths and diverse opinions'. Each member wrote down the 'broad outlines for three to five proposals a person' in their own time. This distribution resulted in a few cases where the TFG (as a collective) had to stop the developing issues to meet the time bounds of the process:</p><p>[T5]: It was necessary to cut out a lot of a team task[s] … people had been developing these proposals, they started to sort of get involved with the process too much.</p><p>Eventually, these proposals were validated by other sessional staff members in the second deployment of OurVoice. The reception of each proposal, along with further remarks and recommendations from TFG, was included in the resulting report submitted to management (see Figure <ref type="figure" target="#fig_5">4</ref> for an example of a short-term proposal). In the sense-making step, the metrics used by the TFG for rating and prioritising the proposals were based on the 'potential to have a strong positive impact' [T8] and/or being 'intuitively helpful toward the people that are being asked to give feedback' [T6]. One participant expressed their concern about the TFG prioritisation of the issues in the proposal based on these criteria:</p><p>[M11]: To be honest, I'm not actually sure how much the committee (TFG) is processing the OurVoice … or how much they're actually coming up with their own ideas.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021. Recognising that the criteria were broad and had the potential to result in subjective assessments, the TFG decided to validate the understanding of priorities with the other members of the sessional staff cohort through the second OurVoice deployment.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">DISCUSSION AND DESIGN IMPLICATIONS FOR EMBEDDING EMPLOYEE VOICE</head><p>Turning to our research questions, we now focus on what factors make it possible for an EVP to be successfully embedded into an organisation. Based on the insights uncovered in this work, we discuss the lessons we learned about the context we worked in and three design principles to be taken forward in this space: (1) Design for Assurance, (2) Design for Bounded Accountability, and (3) Design for Bias Reflexivity. We expect that these design considerations will guide future designers to assess important factors for embedding employee voice and open interesting directions for future research in the employee voice domain.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Reflections on Context</head><p>The context of our deployment presented pre-existing challenges concerning employee voice, as noted by participants in OurVoice, where sessional staff characterised higher education hierarchy as 'widely unstable' <ref type="bibr">[OurVoice]</ref>  As a result, many sessional staff members came into our study feeling marginalised due to a long history of working as casual staff members in Higher Education. Our findings are consistent with prior work on casualisation in this regard, where sessional staff are pushed to the periphery of decision-making within teams and organisations <ref type="bibr" target="#b1">[2]</ref> and find themselves voiceless in their workplace <ref type="bibr" target="#b10">[11]</ref>. Given this, we were aware that introducing an employee voice system was unlikely to be an effective action by itself without taking more steps. We assumed that OurVoice's qualities would, at best, do no more than support discussions between sessional staff and identify topics at the Town Hall meeting that would otherwise not have taken place <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b26">27]</ref>.</p><p>Despite our initial scepticism, the deployment did give rise to an effective process that included engagement with employees and managers, allowing them to overcome the status quo of workplace silence. This engagement was realised through the EVP stages as TFG formulation, the formulation of 20 different concrete proposals, and the subsequent validation of these proposals through OurVoice's second-round deployment. Despite the lack of previous successful attempts to engage staff views and the transactional nature of the organisation (see Section 4.1), casual staff did not show 'initiative fatigue' and were keen to find more effective ways to communicate with each other. We conclude that, under the right circumstances, employee voice can be initiated and realised without requiring a major shift in workplace culture.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Design for Assurance</head><p>In other attempts at implementing employee voice, workers have been cynical about the likelihood that their contributions would lead to meaningful change <ref type="bibr" target="#b0">[1,</ref><ref type="bibr">91]</ref>. The viability of an EVP in any given organisational context depends upon the employees' belief that it will make a difference. In our own study, we saw that cynicism expressed in the town hall meeting that followed our initial deployment. Such cynicism can undermine employee voice endeavours and their ability to progress towards an impact <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b20">21]</ref>. Therefore, it was encouraging to see sessional workers in the current study take control of this process (as described in Section 4.1), giving them greater assurance over the nature, duration and outcome of the process and helping them overcome feelings that attempts to make meaningful changes are futile (as described in Section 4.2). of 'going to a black hole' [T10]. The existing tensions, whether perceived or real, impacts management's understanding of the context as well as the ability of sessional staff members to speak up within the organisation. With a view towards building trust going into the deployment, management provided assurance (for instance, committing to holding Town Hall meetings based on identified issues and acting on the outcome of the meeting) and reiterated between the various stages. From the outset, calendar invites were sent to communicate planned agenda items, and the OurVoice platform allowed sessional staff to anonymously suggest and discuss questions and issues they wished to be addressed at the Town Hall. Over many months, sessional staff members' accounts of their experience showed a belief that the process was moving forward and would eventually lead to positive change. This was, in turn, realised through the continuous engagement with the process (e.g., the continued involvement of sessionals in the eight weeks between the first and second deployment, participation in TFG and proposal discussions).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The provision of</head><p>This belief that things will genuinely change is essential for meaningful work in this space; it is essential for creating a longer term impact, something of great concern to the CSCW community <ref type="bibr" target="#b75">[75]</ref>, and it avoids the problem of pseudo-participation. <ref type="bibr" target="#b71">[71]</ref> describe both pseudo-participation by design (where digital interfaces and tools are introduced that provide the illusion of participation to workers) and pseudo-participation in design (where those workers or participants affected by the design decisions are marginalised and not given any agency), claiming that both forms are prevalent in the PD literature, meaning that true accountability and powersharing are aims that are seldom met.</p><p>Consideration of how assurance occurs in an EVP should be discussed from the outset. A PD achieves this by articulating worker concern in forming working groups. Assurance should be progressive, building upon itself over the advancement of the EVP. At the same time, digital tools should provide space and facilitate articulation of the key elements of assurance, motivating involved parties to engage with the process. As exemplified by the OurVoice system, it could be implemented as a separate section for feedback provision, validation and progress information. Our experience with OurVoice highlighted the value of opportunities for feedback and validation at each stage with associated outcomes and follow-up actions. If this is not possible, it is important to provide a point in time when these plans will be revealed. Promises about concrete actions and further steps need to be made clear to participants: for the EVP to work effectively, participating staff need to understand the outcomes of previous stages, how they will be used, and the purpose of the upcoming stage.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Design for Bounded Accountability</head><p>Our study showed that employee voice through ESNs can be realised and sustained over 12 weeks, provided that employees and managers are both involved and accountable for the sense-making process that leads to the decisions and eventual impact. Accountability is an important concern in any EVP. The nature and mechanisms by which it is achieved are key issues for the CSCW community, where attention has often been given to the kinds of coordination and cooperation processes and roles that must be put in place for successful collaborative action <ref type="bibr" target="#b89">[89]</ref>. Traditionally, accountability can be difficult to achieve. This is partly because employees may go beyond their brief to provide 'blue sky' visions that unknowingly overlook crucial management constraints <ref type="bibr">[3,</ref><ref type="bibr" target="#b11">12]</ref>. Such unrealistic suggestions are often swiftly dismissed by management, and critical feedback can slow momentum, wear down employees' enthusiasm and delay the initiatives needed to progress change within the organisation.</p><p>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p><p>To address these concerns, we introduce the concept of bounded accountability, encouraging commitment to specific responsibilities within the scope of realistic known constraints, such as available resources. This can be promoted by having parties feed their interpretation of data back to the groups that generated them in a dialogic process. It takes the form of public statements and promises by management (e.g., the promise to deliver substantial changes based on the Town Hall discussion), clarification of expectations placed on sessional staff (e.g., feedback, TFG outcomes), and ensuring that required actions are objectively and subjectively realistic. In this regard, bounded accountability contributed to the sustained engagement of sessional staff in our deployment. It was not a notion explicitly discussed by management and the TFG members; however, it is an apt description of what happened in our study: that is, management made bounded statements about the scope of possible actions to demonstrate they were serious about committing to realistic change (as opposed to 'empty promises' not grounded in practicality). These statements were made after the initial deployment and subsequent Town Hall meetings. The scope of the discussion within OurVoice on teaching practices and staff wellbeing, rather than long-standing grievances about terms of employment, framed the employee voice activities as one that might lead to actionable outcomes. This is further supported by management's public expressions of deference towards the range of views expressed within the OurVoice system.</p><p>Bounded accountability extends beyond management to the employees themselves. We observed bounded accountability in the design and behaviour of the TFG group of sessional staff members. The self-organising collective of sessional staff members acted within their resource bounds without any prompted discussions of bounds. The self-imposed limits on the number of consultation meetings between its members (i.e., time bounds) demonstrated this, as did the delegation of the validation step back to the wider group of sessional staff in the second deployment of OurVoice when consulting on their proposals (i.e., power bounds). In the TFG's aggregated summary of root causes of issues and concerns, the group accompanied their potential solutions with the proposed time frame and monetary value for addressing them, showing an understanding of management's bounds for change.</p><p>Designing bounded accountability in an EVP means including explicit and transparent considerations of the resource limitations and boundaries of the parties involved. This inevitably involves a tension between remaining open to novel and (perhaps sometimes even radical) proposals and working within the scope of known constraints. Digital tools, if used, should support the identification of these tension points by providing a broader involvement of all parties (anonymous or not). This involves creating a shared understanding of the practicality of implementing the suggested change, which helps manage expectations from different parties. Resolving this tension can determine which initiatives to take forward and how, and can also identify those issues and opportunities that are not within the realistic scope of change. By enacting and communicating bounds on what is possible, without closing off opportunities for substantial and meaningful change, organisations add credibility to their commitment to employee voice and gain employee trust.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">Design for Bias Reflexivity</head><p>Anonymity in employee voice systems helps ensure that reflective discussions occur without fear of reprimand or punishment. The expectation behind our deployment was that OurVoice's qualities of anonymity (not apparent in traditional deliberation and communication frameworks <ref type="bibr" target="#b20">[21]</ref>) would support discussions between sessional staff and the identification of topics at the Town Hall that would otherwise not have taken place <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b26">27]</ref>. However, anonymity inevitably led to questions regarding the validity and representativeness of what was being said and the possibility of perceived bias. This is a particular problem if the system is part of a bigger, multi-stage EVP, where the validity of the results of one stage can influence engagement with subsequent stages.</p><p>In our study, an absence of countermeasures for dealing with the potential biases during the sense-making activities (e.g., managerial analysis of OurVoice deployment before the Town Hall meeting or TFG proposals) acted as the motivation for the introduction of the additional stages (e.g., the second deployment as a means of validating TFG proposals by way of further discussion). At the sense-making step, the interpretation of employee contributions will inevitably be influenced by the differing perspectives of those involved <ref type="bibr" target="#b18">[19,</ref><ref type="bibr" target="#b35">36,</ref><ref type="bibr" target="#b39">40]</ref>. Concerns around management's possible bias resulted in negative feedback during the Town Hall meeting and led to the creation of the TFG to deal with this disparity. However, as noted above, many participants were concerned about possible bias within the TFG and the extent to which the TFG weighed issues raised through OurVoice against their priorities.</p><p>Inevitably, interpreting the collected employee comments (in free-form text format) is made subjectively. However, this can be somewhat mitigated by including actions that promote bias reflexivity. One way of achieving this is through a cross-validation mechanism between process steps to ensure the quality of outcomes to satisfy the majority of participants. In our case, the TFG was formed to represent staff (in sense-making, prioritising and articulating proposals), but they were also initiators of a feedback loop with the sessional body. In line with previous studies in the wider context of collaborative or crowdsourcing work <ref type="bibr" target="#b30">[31,</ref><ref type="bibr" target="#b40">41,</ref><ref type="bibr" target="#b49">50,</ref><ref type="bibr" target="#b89">89]</ref>, it has been shown that the feedback loop initiation and reflection provision can help mitigate potential biases and act as quality control and ensure the necessary validity.</p><p>Problematic situations can arise where the interpretation and reformulation of a proposal (e.g., by the TFG) is non-trivial or where there is no clear or generally agreed-upon metric for the degree to which an issue has been considered (e.g., by the responsible TFG member(s)). This happened with a few proposals (e.g., Transparency Regarding Process for Hiring Sessional Staff, Inclusivity and Accessibility), where TFG members were affected by their personal views and experiences in determining the degree to which these issues should be addressed and considered. Differences in interpretation within the group in charge of the EVP step can be dealt with by several mechanisms, including discussing and cross-checking each other's proposals or validating the proposals with the other stakeholders. In this case, the TFG validated proposals with all sessional staff through the second deployment of OurVoice). These mechanisms can help with 'obtaining internal and external approvals' [T6] and achieve a higher degree of 'validity in the eyes of decision-makers' [T7]. Allowing communication in OurVoice between the sessional staff members to reach a saturation point, which we define as a sufficient number of stated positions, but an absence of consensus should be permitted to address the potential biases within the anonymous system.</p><p>Our study observed the limits of what anonymous feedback can achieve, especially where the adequacy of actions is questioned in response to an issue or the scrutiny of an issue. The potential biases of the involved parties should be anticipated and provided for in EVP designs, either by way of an internal mechanism to reflect and deal with the bias or an external one to validate it through interacting with the other involved parties. Both approaches should give an explicit saturation boundary (bounded accountability) to adhere to the idea of finite continuity of the EVP process. The point of saturation can be co-opted as the condition for progression. Bias reflexivity comes both from the processes of feedback, reflection and agreement but is also supported by the considerable weight of engagement and a pragmatic consensus that it is time to move on. In any EVP system, sense checking must be considered at each step of the process to overcome bias in anonymous systems.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">FUTURE WORK AND LIMITATIONS</head><p>Our deployment occurred in the context of COVID-19, where the patent changes in the educational process led to increased recognition of the timeliness of the need for an EVP and a facility to voice concerns. The sudden switch to online teaching, combined with existing presumptions and lack of pre-existing horizontal communication channels, supported managers' willingness to engage with issues and employees' uptake of the initiative. For management, the absence of any precedent circumstances positively affected the receptivity of managers towards sessionals' concerns. For sessional staff, the emergence of the pandemic provoked the rise of concerns and questions among sessional employees (concerning COVID-19) that motivated them to engage with the EVP since the initial focus of the OurVoice deployment included addressing pandemic-related issues. However, the uptake and engagement specific for this EVP might be greater influenced by the ad-hoc nature and contextual limitations of this one study (hierarchy and environment of organisation and presence of the universally overwhelming, for the whole sector, the factor of the global pandemic). In other words, the circumstances created by COVID-19 were potentially responsible for the success of the deployment (either in full or in part), meaning that our findings do not automatically translate to more usual circumstances. Thus, further research on facilitating employee voice through the introduction of the EVP in other contexts is required.</p><p>While we consider that the key factors of assurance, bounded accountability and bias reflexivity need to be designed for other contexts, the configuration of the EVP, the nature of its stages and complexity can depend on several ad-hoc and more industry/workplacespecific factors. Future research should explore how the EVP underpinned by systems like OurVoice may behave in other circumstances, especially post-pandemic, where the uptake of EVP may be decreased without the need to act quickly with lockdown restrictions. We would also like to see how OurVoice might operate in other contexts where power dynamics differ. For example, sessional staff might collaborate with academics for research projects where they are often encouraged to take the initiative and express thoughts and opinions, which might contribute to an increased willingness to share individual opinions rather than a collective voice.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">CONCLUSION</head><p>In this paper, we presented an end-to-end EVP that involved deployments of OurVoice with sessional staff that enabled sustained and successful interaction between parties (sessionals and managers of the department). Our study took place in a higher education setting with an inherent transactional and hierarchical workplace environment that poses significant challenges for sessional staff members to feel included and communicate directly with management in meaningful ways. Nevertheless, we demonstrated how, through configuring and introducing the EVP, the existing patterns of interaction in the organisation could help to support the employees' engagement with the process. Our study showed how existing communication channels within the organisation act as mechanisms to leverage the introduction of change. The introduction of OurVoice is best characterised as an insider attempt to constructively disrupt the unidirectional (top-down) character of prevailing management-employee communication and move towards embedding employee voice in organisations long-term to drive sustainable change. We identified essential elements for this process to succeed and be sustained over a period, namely the concepts of assurance, bounded accountability and bias reflexivity. Having provided a detailed understanding of how an end-to-end EVP was successfully achieved, we hope that this work will be a solid basis for the embedment of an EVP with digital tools (like OurVoice) in future, thereby enabling workplaces to be more supportive and responsive to employees' needs going forward.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. An end-to-end chronology of the study. This begins with the first deployment of OurVoice for general feedback regarding issues on Week 1, followed by the Town Hall meeting between sessionals and managers on Week 2, then the TFG formation and work on proposal formulation during Weeks 4 to 7, which led to the second deployment of OurVoice for feedback on proposals on Week 8 and a further proposals discussion between TFG members and management during Weeks 9 to 12. The actions derived from proposals and feedback to sessionals were finalised in Week 13.</figDesc><graphic coords="8,46.00,391.27,390.64,138.50" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2. An example of a discussion thread in the Our Voice system. On the left is the original post and the beginning of the comments thread under it, while a continuation of the comments thread is on the right.</figDesc><graphic coords="13,246.77,188.43,151.59,157.98" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>Designing for the Embedding of Employee Voice XX:15 PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Designing for the Embedding of Employee Voice XX:17 PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3. The process timeline and structure of the EVP, which shows each step as the Case Study unfolded.</figDesc><graphic coords="18,90.48,252.34,305.05,232.48" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 4 .</head><label>4</label><figDesc>Figure 4. TFG Report: 1a-a list of proposals categorised by root causes; 1b-the substantive content of the report; 1c-an example of the short-term proposals regarding non-teaching time and training for sessional staff members.</figDesc><graphic coords="22,66.95,96.41,352.48,274.15" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>assurance assists in highlighting the role of the feedback from managers to employees regarding 'what happens next' [U5] to prevent disappointment and the perception PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5"><head>Table 2 .</head><label>2</label><figDesc>Stages of the EVP during the case study and the researchers' role in it. We also summarise the key actions. In the below table, WX indicates Week X</figDesc><table><row><cell>Week #</cell><cell>Stage</cell><cell></cell><cell></cell><cell></cell><cell>Stage Actions</cell><cell>Participants #</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>(approximate)</cell></row><row><cell>W1</cell><cell cols="4">First deployment of the Our</cell><cell>• Organisation of the participants-driven</cell><cell>104(+/-5)</cell></row><row><cell></cell><cell>Voice</cell><cell></cell><cell></cell><cell></cell><cell>discussions and anonymous feedback collection</cell></row><row><cell></cell><cell cols="3">triggered by researchers;</cell><cell></cell><cell>on OurVoice</cell></row><row><cell>W1-W2</cell><cell cols="2">Sense-making</cell><cell></cell><cell>by</cell><cell>• Identification of the main topics &amp; themes</cell><cell>4</cell></row><row><cell></cell><cell cols="2">management</cell><cell></cell><cell></cell><cell>• The appointment of responsible people to</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell>respond to concerns during Town Hall</cell></row><row><cell></cell><cell>managers;</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>W2</cell><cell>Town</cell><cell>Hall</cell><cell cols="2">meeting.</cell><cell>• Broadcasting managerial point of view and</cell><cell>260(+/-20)</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell>identified themes back to employees</cell></row><row><cell></cell><cell>managers;</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>W3</cell><cell cols="4">Additional feedback through</cell><cell>• Prolongation of the system deployment for</cell><cell>104(+/-5)</cell></row><row><cell></cell><cell>Our</cell><cell></cell><cell cols="2">Voice</cell><cell>reflection on Town Hall meeting (four days).</cell></row><row><cell></cell><cell cols="4">triggered by managers, led by</cell><cell></cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell></cell></row><row><cell>W4-W6</cell><cell cols="4">Task Force Group (TFG)</cell><cell>• Collection of data analysis and topic</cell><cell>9</cell></row><row><cell></cell><cell cols="4">triggered by managers, led by</cell><cell>identification</cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell>• Topics grouping in themes and distributing</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>between members for further analysis</cell></row><row><cell>W7</cell><cell>Proposals</cell><cell cols="2">by</cell><cell>TFG</cell><cell>• Aggregation of themes, causes &amp; solutions</cell><cell>5</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell>• Prioritisation based on TFG discussion</cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell></cell></row><row><cell>W8</cell><cell cols="4">Second deployment of the Our</cell><cell>• Discussion of proposals by other casual staff</cell><cell>87(+/-5)</cell></row><row><cell></cell><cell>Voice</cell><cell></cell><cell></cell><cell></cell><cell>members</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell></cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell></cell></row><row><cell>W9</cell><cell cols="2">Sense-making</cell><cell>by</cell><cell>TFG</cell><cell>• Analysis of the collected data</cell><cell>5</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell>• Discussion &amp; amendment of proposals</cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell></cell></row><row><cell>W10-W11</cell><cell cols="4">Report with proposals by TFG</cell><cell>• Aggregation &amp; compiling of data</cell><cell>5</cell></row><row><cell></cell><cell>triggered</cell><cell>and</cell><cell>led</cell><cell>by</cell><cell></cell></row><row><cell></cell><cell cols="2">employees;</cell><cell></cell><cell></cell><cell></cell></row><row><cell>W11-W12</cell><cell cols="4">Discussion between TFG and</cell><cell>• Meetings and discussion of proposals and the</cell><cell>9</cell></row><row><cell></cell><cell cols="2">management</cell><cell></cell><cell></cell><cell>potential next steps</cell></row><row><cell></cell><cell cols="4">triggered by employees, led</cell><cell></cell></row><row><cell></cell><cell cols="4">by employees and managers;</cell><cell></cell></row><row><cell>W13</cell><cell>Integration</cell><cell>of</cell><cell cols="2">proposals</cell><cell>• Inclusion of short-term and medium-term</cell><cell>4</cell></row><row><cell></cell><cell cols="4">triggered by employees, led</cell><cell>proposals into a teaching strategy</cell></row><row><cell></cell><cell cols="2">by managers;</cell><cell></cell><cell></cell><cell>• Further investigation of the other proposals</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7"><head></head><label></label><figDesc>were considered 'second class' and likely to 'get a cold shoulder first' [U1]. During the interviews, this point of view was reinforced through observations of them 'not being in a position of power to speak' [T10] and 'considered not so important'[OurVoice]</figDesc><table /><note><p><p>[U3], and they felt 'disposable' [OurVoice]. Sessional staff members believed PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.</p>they</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9"><head></head><label></label><figDesc>and said that they felt 'disposable' [OurVoice] or PACM on Human-Computer Interaction, Vol. 5, No. CSCW1, Article XXX, Publication date: April 2021.'considered not so important' [OurVoice]. These views were reinforced by the teaching staff we interviewed, who observed that sessional staff were 'not … in a position of power to speak' [M12]. Previous research has shown how workplace structure and a lack of upward feedback channels can create an environment of 'organiational silence'<ref type="bibr" target="#b1">[2,</ref> 3]  that, coupled with existing practices and beliefs, can lead to constrained employee voice<ref type="bibr" target="#b0">[1]</ref>. While no explicit and direct policy prohibition on 'speaking up' existed, a combination of management structures, employment practices and organisational culture suppressed employee voice. This was particularly problematic in the context of the rapid changes and uncertainty caused by COVID-19, where staff members had to redesign programs on the fly, meaning there was a greater need for dialogue (and management information). However, what is not surprising in the hierarchical environment of the University, is that existing communication mechanisms were perceived by sessional staff as being driven by management's assumptions (see Sections 4.1 and 4.2).</figDesc><table /></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Designing for Employee Voice</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Abdulgalimov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems</title>
+		<meeting>the 2020 CHI Conference on Human Factors in Computing Systems<address><addrLine>Honolulu HI USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2020-04">2020. Apr. 2020</date>
+			<biblScope unit="page" from="1" to="13" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Group support systems: past, present, and future. Handbook of Group Decision and Negotiation</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ackermann</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+			<biblScope unit="page" from="627" to="654" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Determinants of employee engagement and their impact on employee performance. International journal of productivity and performance management</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Anitha</surname></persName>
+		</author>
+		<idno type="DOI">10.1108/IJPPM-01-2013-0008</idno>
+		<ptr target="http://dx.doi.org/10.1108/IJPPM-01-2013-0008" />
+		<imprint>
+			<date type="published" when="2014">2014. 2014</date>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="308" to="323" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Transforming society by transforming technology: the science and politics of participatory design. Accounting, Management and Information Technologies</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Asaro</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0959-8022(00)00004-7</idno>
+		<ptr target="https://doi.org/10.1016/S0959-8022(00)00004-7" />
+		<imprint>
+			<date type="published" when="2000-10">2000. Oct. 2000</date>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="257" to="290" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">When Voice Matters: A Multilevel Review of the Impact of Voice in Organizations</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">R</forename><surname>Bashshur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Oc</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/0149206314558302</idno>
+		<ptr target="https://doi.org/10.1177/0149206314558302" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Management</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="1530" to="1554" />
+			<date type="published" when="2015-07">2015. Jul. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Transformational leadership and organizational culture</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">M</forename><surname>Bass</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Avolio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Public Administration Quarterly</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="112" to="121" />
+			<date type="published" when="1993">1993. 1993</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Nursing casualization and communication: a critical ethnography</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Batch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Windsor</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/jan.12557</idno>
+		<ptr target="https://doi.org/10.1111/jan.12557" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Advanced Nursing</title>
+		<imprint>
+			<biblScope unit="volume">71</biblScope>
+			<biblScope unit="page" from="870" to="880" />
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">User Participation and Democracy: A Discussion of Scandinavian Research on System Development</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Bjerknes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Bratteteig</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1995">1995. 1995</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">27</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Tying Knots: Participatory Infrastructuring at Work. Computer Supported Cooperative Work (CSCW)</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bødker</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10606-017-9268-y</idno>
+		<ptr target="https://doi.org/10.1007/s10606-017-9268-y" />
+		<imprint>
+			<date type="published" when="2017-04">2017. Apr. 2017</date>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="245" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Participatory Design that Matters-Facing the Big Issues</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bødker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kyng</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3152421</idno>
+		<ptr target="https://doi.org/10.1145/3152421" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Computer-Human Interaction</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="1" to="4" />
+			<date type="published" when="2018-02">2018. Feb. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The Collaborative work of Hospital Porters: Accountability, Visibility and Configurations of Work</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bossen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Foss</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 19th ACM Conference on Computer-Supported Cooperative Work &amp; Social Computing</title>
+		<meeting>the 19th ACM Conference on Computer-Supported Cooperative Work &amp; Social Computing<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2016-02">2016. Feb. 2016</date>
+			<biblScope unit="page" from="965" to="979" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Anonymity as a Double-Edge Sword: Reflecting on the Implications of Online Qualitative Research in Studying Sensitive Topics</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Bouchard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The Qualitative Report</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="59" to="67" />
+			<date type="published" when="2016-01">2016. Jan. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Sounds of silence: Graduate trainees, hegemony and resistance. Organization Studies</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Coupland</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/0170840605053540</idno>
+		<ptr target="https://doi.org/10.1177/0170840605053540" />
+		<imprint>
+			<date type="published" when="2005">2005. 2005</date>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page" from="1049" to="1069" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Academic Casualization in Australia: Class Divisions in the University</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Brown</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/0022185609359443</idno>
+		<ptr target="https://doi.org/10.1177/0022185609359443" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Industrial Relations</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="169" to="182" />
+			<date type="published" when="2010-04">2010. Apr. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">New approaches to employee voice and participation in organizations</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Budd</surname></persName>
+		</author>
+		<idno type="DOI">10.1177/0018726709348938</idno>
+		<ptr target="https://doi.org/10.1177/0018726709348938" />
+	</analytic>
+	<monogr>
+		<title level="j">Human Relations</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="page" from="303" to="310" />
+			<date type="published" when="2010-03">2010. Mar. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Speaking Up vs. Being Heard: The Disagreement Around and Outcomes of Employee Voice. Organization Science</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Burris</surname></persName>
+		</author>
+		<idno type="DOI">10.1287/orsc.1110.0732</idno>
+		<ptr target="https://doi.org/10.1287/orsc.1110.0732" />
+		<imprint>
+			<date type="published" when="2013-02">2013. Feb. 2013</date>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="22" to="38" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The Risks and Rewards of Speaking Up: Managerial Responses to Employee Voice</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Burris</surname></persName>
+		</author>
+		<idno type="DOI">10.5465/amj.2010.0562</idno>
+		<ptr target="https://doi.org/10.5465/amj.2010.0562" />
+	</analytic>
+	<monogr>
+		<title level="j">Academy of Management Journal</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="page" from="851" to="875" />
+			<date type="published" when="2012-08">2012. Aug. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Calacci</surname></persName>
+		</author>
+		<title level="m">Organizing in the End of Employment: Information Sharing, Data Stewardship, and Digital Workerism. 2022 Symposium on Human-Computer Interaction for Work</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2022-06">2022. Jun. 2022</date>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Human-Machine Partnerships in the Future of Work: Exploring the Role of Emerging Technologies in Future Workplaces</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Cheon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Companion Publication of the 2021 Conference on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2021-10">2021. Oct. 2021</date>
+			<biblScope unit="page" from="323" to="326" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Australia&apos;s casual approach to its academic teaching workforce</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Coates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PACM on Human-Computer Interaction</title>
+		<imprint>
+			<date type="published" when="2009-04">2009. 2009. April 2021</date>
+			<biblScope unit="volume">5</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>Monash University</orgName>
+		</respStmt>
+	</monogr>
+	<note>Publication date</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Effects of Anonymity and Evaluative Tone on Idea Generation in Computer-Mediated Groups</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Connolly</surname></persName>
+		</author>
+		<idno type="DOI">10.1287/mnsc.36.6.689</idno>
+		<ptr target="https://doi.org/10.1287/mnsc.36.6.689" />
+	</analytic>
+	<monogr>
+		<title level="j">Management Science</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="689" to="703" />
+			<date type="published" when="1990-06">1990. Jun. 1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Constine</surname></persName>
+		</author>
+		<title level="m">Secret Shuts Down</title>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+	<note>TechCrunch</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Reconceptualizing the teaching team in universities: Working with sessional staff</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Coombe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Clancy</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/1360144032000071297</idno>
+		<ptr target="https://doi.org/10.1080/1360144032000071297" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal for Academic Development</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="159" to="166" />
+			<date type="published" when="2002-11">2002. Nov. 2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Confronting the Reality of Casualisation in Australia-Recognising Difference and Embracing Sessional Staff in Law Schools</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cowley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Queensland U. Tech. L. &amp; Just. J</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">27</biblScope>
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Organizational culture and organizational development: A competing values approach. Research in organizational change and development</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">R</forename><surname>Denison</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1991">1991. 1991</date>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="21" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Can your employees really speak freely</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Detert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Burris</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Harvard Business Review</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="page" from="80" to="87" />
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Detert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Burris</surname></persName>
+		</author>
+		<idno type="DOI">10.2307/20159894</idno>
+		<ptr target="https://doi.org/10.2307/20159894" />
+		<title level="m">Leadership Behavior and Employee Voice: Is the Door Really Open? The Academy of Management Journal</title>
+		<imprint>
+			<date type="published" when="2007">2007. 2007</date>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="page" from="869" to="884" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<title level="m" type="main">Work-Oriented Design of Computer Artifacts</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ehn</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1988-01">1988. Jan. 1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Mind the channel! An affordance perspective on how digital voice channels encourage or discourage employee voice</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ellmer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Reichel</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/1748-8583.12297</idno>
+		<ptr target="https://doi.org/10.1111/1748-8583.12297" />
+	</analytic>
+	<monogr>
+		<title level="j">Human Resource Management Journal</title>
+		<imprint>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">The Effect of Transactional and Transformational Leadership Styles on the Organizational Commitment and Job Satisfaction of Customer Contact Personnel</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">R</forename><surname>Emery</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">J</forename><surname>Barker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Organizational Culture</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="77" to="90" />
+			<date type="published" when="2007">2007. 2007</date>
+		</imprint>
+	</monogr>
+	<note>Communications and Conflict.</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Affording Employee Voice: How Enterprise Social Networking Sites (ESNS) Create New Pathways for Employee Expression</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Estell</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Worker-Centered Design: Expanding HCI Methods for Supporting Labor</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">E</forename><surname>Fox</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Extended Abstracts of the 2020 CHI Conference on Human Factors in Computing Systems</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2020-04">2020. Apr. 2020</date>
+			<biblScope unit="page" from="1" to="8" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">What do unions do</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Freeman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Medoff</surname></persName>
+		</author>
+		<idno type="DOI">10.2307/1955828</idno>
+		<ptr target="https://doi.org/10.2307/1955828" />
+	</analytic>
+	<monogr>
+		<title level="j">American Political Science Review</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="1098" to="1099" />
+			<date type="published" when="1984">1984. 1984</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Workplace democracy-The recent debate</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Frega</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/phc3.12574</idno>
+		<ptr target="https://doi.org/10.1111/phc3.12574" />
+	</analytic>
+	<monogr>
+		<title level="j">Philosophy Compass</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">12574</biblScope>
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Characteristics and use of casual employees in Australia</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Gilfillan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Statistics and Mapping, Parliamentary Services</title>
+		<imprint>
+			<date type="published" when="2018">2018. 2018</date>
+			<pubPlace>Canberra, Australia</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Organizational culture and effectiveness: A study of values, attitudes, and organizational outcomes</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">T</forename><surname>Gregory</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.jbusres.2008.05.021</idno>
+		<ptr target="https://doi.org/10.1016/j.jbusres.2008.05.021" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business Research</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="page" from="673" to="679" />
+			<date type="published" when="2009-07">2009. Jul. 2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Why CSCW applications fail: problems in the design and evaluationof organizational interfaces</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Grudin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 1988 ACM conference on Computer-supported cooperative work</title>
+		<meeting>the 1988 ACM conference on Computer-supported cooperative work<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1988-01">1988. Jan. 1988</date>
+			<biblScope unit="page" from="85" to="93" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">The impact of horizontal and vertical connections on relationships&apos; commitment and trust</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hadjikhani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Thilenius</surname></persName>
+		</author>
+		<idno type="DOI">10.1108/08858620510592759</idno>
+		<ptr target="https://doi.org/10.1108/08858620510592759" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business &amp; Industrial Marketing</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="136" to="147" />
+			<date type="published" when="2005-01">2005. Jan. 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<title level="m" type="main">Rating Working Conditions on Digital Labor Platforms. Computer Supported Cooperative Work (CSCW)</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Harmon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Silberman</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10606-018-9313-5</idno>
+		<ptr target="https://doi.org/10.1007/s10606-018-9313-5" />
+		<imprint>
+			<date type="published" when="2019-09">2019. Sep. 2019</date>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="911" to="960" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Professional development for sessional staff in higher education: a review of current evidence</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Hitch</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/07294360.2017.1360844</idno>
+		<ptr target="https://doi.org/10.1080/07294360.2017.1360844" />
+	</analytic>
+	<monogr>
+		<title level="m">Higher Education Research &amp; Development</title>
+		<imprint>
+			<date type="published" when="2018-02">2018. Feb. 2018</date>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="page" from="285" to="300" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Employee Voice, Supervisor Support, and Engagement: The Mediating Role of Trust</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Holland</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/hrm.21809</idno>
+		<ptr target="https://doi.org/10.1002/hrm.21809" />
+	</analytic>
+	<monogr>
+		<title level="j">Human Resource Management</title>
+		<imprint>
+			<biblScope unit="volume">56</biblScope>
+			<biblScope unit="page" from="915" to="929" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Use of social media at work: a new form of employee voice?</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Holland</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/09585192.2016.1227867</idno>
+		<ptr target="https://doi.org/10.1080/09585192.2016.1227867" />
+	</analytic>
+	<monogr>
+		<title level="j">The International Journal of Human Resource Management</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="2621" to="2634" />
+			<date type="published" when="2016-11">2016. Nov. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title level="m" type="main">How Juicy Campus&apos; Founder Became The Poster Boy For Internet Niceness</title>
+		<ptr target="https://www.buzzfeed.com/hillaryreinsberg/juicy-campus-founder-poster-boy-for-internet-kindness?utm_term=" />
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="2017" to="2019" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Computer-Supported Career Development in The Future of Work</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hui</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Companion of the 2018 ACM Conference on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2018-10">2018. Oct. 2018</date>
+			<biblScope unit="page" from="133" to="136" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Turkopticon: interrupting worker invisibility in amazon mechanical turk</title>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Irani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">S</forename><surname>Silberman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the SIGCHI Conference on Human Factors in Computing Systems</title>
+		<meeting>the SIGCHI Conference on Human Factors in Computing Systems<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>PACM on Human-Computer Interaction</publisher>
+			<date type="published" when="2013-04">2013. Apr. 2013. April 2021</date>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="611" to="620" />
+		</imprint>
+	</monogr>
+	<note>Publication date</note>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">Examining Part-Time Faculty Utilization and Its Impact on Student Retention at a</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">Y</forename><surname>Johnson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+		<respStmt>
+			<orgName>Public Research University</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">The Future of Care Work: Towards a Radical Politics of Care in CSCW Research and Practice</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Karusala</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Companion Publication of the 2021 Conference on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2021-10">2021. Oct. 2021</date>
+			<biblScope unit="page" from="338" to="342" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Participatory Design: Issues and Concerns</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Kensing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Blomberg</surname></persName>
+		</author>
+		<idno type="DOI">10.1023/A:1008689307411</idno>
+		<ptr target="https://doi.org/10.1023/A:1008689307411" />
+	</analytic>
+	<monogr>
+		<title level="m">Computer Supported Cooperative Work (CSCW)</title>
+		<imprint>
+			<date type="published" when="1998-09">1998. Sep. 1998</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="167" to="185" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">The Tools of Management: Adapting Historical Union Tactics to Platform-Mediated Labor</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Khovanskaya</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3359310</idno>
+		<ptr target="https://doi.org/10.1145/3359310" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM on Human-Computer Interaction. 3, CSCW</title>
+		<meeting>the ACM on Human-Computer Interaction. 3, CSCW</meeting>
+		<imprint>
+			<date type="published" when="2019-11">2019. Nov. 2019</date>
+			<biblScope unit="volume">208</biblScope>
+			<biblScope unit="page">22</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Harnessing the wisdom of crowds in wikipedia: quality through coordination</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kittur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Kraut</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2008 ACM conference on Computer supported cooperative work</title>
+		<meeting>the 2008 ACM conference on Computer supported cooperative work<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2008-11">2008. Nov. 2008</date>
+			<biblScope unit="page" from="37" to="46" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">The determinants of alternative forms of workplace voice: An integrative perspective</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">S</forename><surname>Klaas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Management</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="314" to="345" />
+			<date type="published" when="2012">2012. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">A Framework for Enterprise Social Media Guidelines</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Krüger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AMCIS 2013 Proceedings</title>
+		<imprint>
+			<date type="published" when="2013-05">2013. May 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">The Challenge of Enterprise Social Networking (Non-)Use at Work: A Case Study of How to Positively Influence Employees&apos; Enterprise Social Networking Acceptanc</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Laumer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting>the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2017">2017. 2017</date>
+			<biblScope unit="page" from="978" to="994" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Effects of Anonymity, Ephemerality, and System Routing on Cost in Social Question Asking</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ma</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3361119</idno>
+		<ptr target="https://doi.org/10.1145/3361119" />
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the ACM on Human-Computer Interaction</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="1" to="238" />
+			<date type="published" when="2019-12">2019. Dec. 2019</date>
+		</imprint>
+	</monogr>
+	<note>GROUP</note>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Cultures of silence and cultures of voice: the role of whistleblowing in healthcare organisations</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mannion</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">T</forename><surname>Davies</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International journal of health policy and management</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page">503</biblScope>
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Where Informality Really Matters: Patterns of Employee Involvement and Participation (EIP) in a Non-Union Firm</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marchington</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Suter</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/irel.12004</idno>
+		<ptr target="https://doi.org/10.1111/irel.12004" />
+	</analytic>
+	<monogr>
+		<title level="j">Industrial Relations: A Journal of Economy and Society</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="284" to="313" />
+			<date type="published" when="2013">2013. 2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Focused, Aroused, but So Distractible: Temporal Perspectives on Multitasking and Communications</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Mark</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 18th ACM Conference on Computer Supported Cooperative Work &amp; Social Computing</title>
+		<meeting>the 18th ACM Conference on Computer Supported Cooperative Work &amp; Social Computing<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2015">2015. 2015</date>
+			<biblScope unit="page" from="903" to="916" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Cognitive Dissonance in Groups: The Consequences of Disagreement</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Matz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wood</surname></persName>
+		</author>
+		<idno type="DOI">10.1037/0022-3514.88.1.22</idno>
+		<ptr target="https://doi.org/10.1037/0022-3514.88.1.22" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Personality and Social Psychology</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="page" from="22" to="37" />
+			<date type="published" when="2005">2005. 2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Speaking more broadly: An examination of the nature, antecedents, and consequences of an expanded set of employee voice behaviors</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Maynes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Podsakoff</surname></persName>
+		</author>
+		<idno type="DOI">10.1037/a0034284</idno>
+		<ptr target="https://doi.org/10.1037/a0034284" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Applied Psychology</title>
+		<imprint>
+			<biblScope unit="volume">99</biblScope>
+			<biblScope unit="page" from="87" to="112" />
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Merz</surname></persName>
+		</author>
+		<idno type="DOI">10.18151/7217430</idno>
+		<ptr target="https://doi.org/10.18151/7217430" />
+		<title level="m">Social Meets Structure: Revealing Team Collaboration Activities and Effects in Enterprise Social Networks. ECIS 2015 Completed Research Papers</title>
+		<imprint>
+			<date type="published" when="2015-05">2015. May 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Links between work experiences and organizational commitment during the first year of employment: A longitudinal analysis*</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Meyer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">J</forename><surname>Allen</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/j.2044-8325.1988.tb00284.x</idno>
+		<ptr target="https://doi.org/10.1111/j.2044-8325.1988.tb00284.x" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Occupational Psychology</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="page" from="195" to="209" />
+			<date type="published" when="1988">1988. 1988</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Employee Engagement and CSR: Transactional, Relational, and Developmental Approaches</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Mirvis</surname></persName>
+		</author>
+		<idno type="DOI">10.1525/cmr.2012.54.4.93</idno>
+		<ptr target="https://doi.org/10.1525/cmr.2012.54.4.93" />
+	</analytic>
+	<monogr>
+		<title level="j">California Management Review</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="93" to="117" />
+			<date type="published" when="2012-07">2012. Jul. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Relationship between organizational justice and organizational citizenship behaviors: Do fairness perceptions influence employee citizenship</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Moorman</surname></persName>
+		</author>
+		<idno type="DOI">10.1037/0021-9010.76.6.845</idno>
+		<ptr target="https://doi.org/10.1037/0021-9010.76.6.845" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Applied Psychology</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="page" from="845" to="855" />
+			<date type="published" when="1991">1991. 1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Employee Voice Behavior: Integration and Directions for Future Research</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Morrison</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/19416520.2011.574506</idno>
+		<ptr target="https://doi.org/10.1080/19416520.2011.574506" />
+	</analytic>
+	<monogr>
+		<title level="j">The Academy of Management Annals</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="373" to="412" />
+			<date type="published" when="2011-06">2011. Jun. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Organizational Silence: A Barrier to Change and Development in a Pluralistic World</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W</forename><surname>Morrison</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">J</forename><surname>Milliken</surname></persName>
+		</author>
+		<idno type="DOI">10.2307/259200</idno>
+		<ptr target="https://doi.org/10.2307/259200" />
+	</analytic>
+	<monogr>
+		<title level="j">The Academy of Management Review</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="706" to="725" />
+			<date type="published" when="2000">2000. 2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">An Integrative Review of Employee Voice: Identifying a Common Conceptualization and Research Agenda: Employee Voice: Review and Research Agenda</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">K</forename><surname>Mowbray</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/ijmr.12045</idno>
+		<ptr target="https://doi.org/10.1111/ijmr.12045" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Management Reviews</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="382" to="400" />
+			<date type="published" when="2015-07">2015. Jul. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<analytic>
+		<title level="a" type="main">A Review of Research on Participation in Democratic Decision-Making Presented at SIGCHI Conferences. Toward an Improved Trading Zone Between Political Science and HCI</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nelimarkka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM on Human-Computer Interaction</title>
+		<meeting>the ACM on Human-Computer Interaction</meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<monogr>
+		<title/>
+		<author>
+			<persName><surname>Cscw</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3359241</idno>
+		<ptr target="https://doi.org/10.1145/3359241" />
+		<imprint>
+			<date type="published" when="2019-11">Nov. 2019. April 2021</date>
+			<publisher>PACM on Human-Computer Interaction</publisher>
+			<biblScope unit="volume">139</biblScope>
+			<biblScope unit="page">29</biblScope>
+		</imprint>
+	</monogr>
+	<note>Publication date</note>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Fruitful Feedback: Positive Affective Language and Source Anonymity Improve Critique Reception and Work Outcomes</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">T D T</forename><surname>Nguyen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting>the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2017">2017. 2017</date>
+			<biblScope unit="page" from="1024" to="1034" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">The role of employee loyalty and formality in voicing discontent</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Olson-Buchanan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">R</forename><surname>Boswell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Applied Psychology</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="page">1167</biblScope>
+			<date type="published" when="2002">2002. 2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">Enterprise Social Media: Challenges and Opportunities for Organizational Communication and Collaboration</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Osch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of 2015 48th Hawaii International Conference on System Sciences (HICSS&apos;15)</title>
+		<meeting>2015 48th Hawaii International Conference on System Sciences (HICSS&apos;15)</meeting>
+		<imprint>
+			<date type="published" when="2015-01">2015. Jan. 2015</date>
+			<biblScope unit="page" from="763" to="772" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">The Design of Pseudo-Participation</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Palacin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 16th Participatory Design Conference 2020 -Participation(s) Otherwise -Volume</title>
+		<meeting>the 16th Participatory Design Conference 2020 -Participation(s) Otherwise -Volume<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2020-06">2020. Jun. 2020</date>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="40" to="44" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<monogr>
+		<title level="m" type="main">Scenarios and Strategies for Social Media in Engaging and Giving Voice to Employees. Employee Voice at Work</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Parry</surname></persName>
+		</author>
+		<editor>P. Holland et al.</editor>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="201" to="215" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">The casualisation of teaching and the subject at risk</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Percy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Beaumont</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/01580370802097736</idno>
+		<ptr target="https://doi.org/10.1080/01580370802097736" />
+	</analytic>
+	<monogr>
+		<title level="m">Studies in Continuing Education</title>
+		<imprint>
+			<date type="published" when="2008-07">2008. Jul. 2008</date>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="145" to="157" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<monogr>
+		<title level="m" type="main">Using Enterprise Social Networks as Innovation Platforms. IT Professional</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Recker</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/MITP.2016.23</idno>
+		<ptr target="https://doi.org/10.1109/MITP.2016.23" />
+		<imprint>
+			<date type="published" when="2016-03">2016. Mar. 2016</date>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="42" to="49" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<analytic>
+		<title level="a" type="main">Political Ecologies of Participation: Reflecting on the Long-term Impact of Civic Projects</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Rossitto</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3449286</idno>
+		<ptr target="https://doi.org/10.1145/3449286" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the ACM on Human-Computer Interaction. 5, CSCW1</title>
+		<meeting>the ACM on Human-Computer Interaction. 5, CSCW1</meeting>
+		<imprint>
+			<date type="published" when="2021-04">2021. Apr. 2021</date>
+			<biblScope unit="volume">187</biblScope>
+			<biblScope unit="page">27</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<analytic>
+		<title level="a" type="main">Psychological and implied contracts in organizations</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Rousseau</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BF01384942</idno>
+		<ptr target="https://doi.org/10.1007/BF01384942" />
+	</analytic>
+	<monogr>
+		<title level="j">Employee Responsibilities and Rights Journal</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="121" to="139" />
+			<date type="published" when="1989-06">1989. Jun. 1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<monogr>
+		<title level="m" type="main">Employee voice: An antecedent to organisational engagement? Public Relations Review</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ruck</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.pubrev.2017.04.008</idno>
+		<ptr target="https://doi.org/10.1016/j.pubrev.2017.04.008" />
+		<imprint>
+			<date type="published" when="2017-12">2017. Dec. 2017</date>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="page" from="904" to="914" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<monogr>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">H</forename><surname>Schein</surname></persName>
+		</author>
+		<title level="m">Organizational Culture and Leadership</title>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">Coordination mechanisms: Towards a conceptual foundation of CSCW systems design</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Simonee</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/BF00133655</idno>
+		<ptr target="https://doi.org/10.1007/BF00133655" />
+	</analytic>
+	<monogr>
+		<title level="m">Computer Supported Cooperative Work (CSCW)</title>
+		<imprint>
+			<date type="published" when="1996-06">1996. Jun. 1996</date>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="155" to="200" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">Understanding Employee Social Media Chatter with Enterprise Social Pulse</title>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">S</forename><surname>Shami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 17th ACM Conference on Computer Supported Cooperative Work &amp; Social Computing</title>
+		<meeting>the 17th ACM Conference on Computer Supported Cooperative Work &amp; Social Computing<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2014">2014. 2014</date>
+			<biblScope unit="page" from="379" to="392" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Hierarchy or activity? The role of formal and informal influence in eliciting responses from enterprise social networks</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Stieglitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECIS 2014 Proceedings</title>
+		<imprint>
+			<date type="published" when="2014-06">2014. Jun. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<monogr>
+		<title level="m" type="main">Supporting Articulation Work. Computerization and Controversy</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Suchman</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<publisher>Elsevier</publisher>
+			<biblScope unit="page" from="407" to="423" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<analytic>
+		<title level="a" type="main">Industrial Democracy in Norway</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Thorsrud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">E</forename><surname>Emery</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/j.1468-232X.1970.tb00505.x</idno>
+		<ptr target="https://doi.org/10.1111/j.1468-232X.1970.tb00505.x" />
+	</analytic>
+	<monogr>
+		<title level="j">Industrial Relations: A Journal of Economy and Society</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="187" to="196" />
+			<date type="published" when="1970-02">1970. Feb. 1970</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Tracking employee voice: developing the concept of voice pathways</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Townsend</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/1744-7941.12271</idno>
+		<ptr target="https://doi.org/10.1111/1744-7941.12271" />
+	</analytic>
+	<monogr>
+		<title level="j">Asia Pacific Journal of Human Resources</title>
+		<imprint>
+			<date type="published" when="2020-08">2020. Aug. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<analytic>
+		<title level="a" type="main">Enhancing employee voice: Are voluntary employer-employee partnerships enough</title>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Van Buren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Greenwood</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business Ethics</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="page" from="209" to="221" />
+			<date type="published" when="2008">2008. 2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<monogr>
+		<ptr target="https://zoom.us/" />
+		<title level="m">Cloud Phone, Webinars, Chat, Virtual Events | Zoom</title>
+		<imprint>
+			<biblScope unit="page" from="2022" to="2027" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">Changing patterns of employee voice: Case studies from the UK and Republic of Ireland</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wilkinson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Industrial Relations</title>
+		<imprint>
+			<biblScope unit="volume">46</biblScope>
+			<biblScope unit="page" from="298" to="322" />
+			<date type="published" when="2004">2004. 2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<analytic>
+		<title level="a" type="main">Toward an integration of research on employee voice</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Wilkinson</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.hrmr.2018.12.001</idno>
+		<ptr target="https://doi.org/10.1016/j.hrmr.2018.12.001" />
+	</analytic>
+	<monogr>
+		<title level="j">Human Resource Management Review</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page">100677</biblScope>
+			<date type="published" when="2020-03">2020. Mar. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<monogr>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Wolf</surname></persName>
+		</author>
+		<title level="m">Mapping the &quot;How&quot; of Collaborative Action: Research Methods for Studying Contemporary Sociotechnical Processes. Conference Companion Publication of the 2019 on Computer Supported Cooperative Work and Social Computing</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019-11">2019. Nov. 2019</date>
+			<biblScope unit="page" from="528" to="532" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

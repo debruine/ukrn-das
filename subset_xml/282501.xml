@@ -1,0 +1,1713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Forecasting and trading Bitcoin with machine learning techniques and a hybrid volatility/sentiment leverage</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Wei</forename><forename type="middle">|</forename><surname>Mingzhe</surname></persName>
+							<email>w.mingzhe@shu.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Sermpinis</forename><forename type="middle">|</forename><surname>Georgios</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Stasinakis</forename><surname>Charalampos</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Mingzhe</forename><surname>Wei</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Sheffield</forename><forename type="middle">Business</forename><surname>School</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Adam Smith Business School</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">Sheffield Hallam University</orgName>
+								<address>
+									<settlement>Sheffield</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Forecasting and trading Bitcoin with machine learning techniques and a hybrid volatility/sentiment leverage</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">9B6233F64E7189885D48AED014A08270</idno>
+					<idno type="DOI">10.1002/for.2922</idno>
+					<note type="submission">Received: 13 December 2021 Revised: 27 April 2022 Accepted: 9 October 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:35+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>cryptocurrencies</term>
+					<term>forecast combinations</term>
+					<term>narratives</term>
+					<term>trading strategies</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>This paper explores the use of machine learning algorithms and narrative sentiments when applied to the task of forecasting and trading Bitcoin. The forecasting framework starts from the selection among 295 individual prediction models. Three machine learning approaches, namely, neural networks, support vector machines, and gradient boosting approach, are used to further improve the forecasting performance of individual models. By taking datasnooping bias into account, three different metrics are applied to examine the forecasting ability of each model. Our results suggest that the machine learning techniques always outperform the best individual model whereas the gradient boosting framework has the best performance among all the models. Finally, a time-varying leverage trading strategy combined with narrative sentiments and volatility is proposed to enhance trading performance. This suggests that the hybrid leverage strategy provides the highest Bitcoin profits consistently among all trading exercises.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>Along with the explosive growth in machine learning (ML) algorithms and hardware development, prosperity in Fin-tech, Big-data, blockchain technology (BCH), and other high-tech fields is gradually changing the world. <ref type="bibr" target="#b7">Carbonell et al. (1983)</ref> stated that the three primary research needs of ML methods are task-oriented, cognitive-simulated, and theoretical-analyzed. Based on the required tasks, ML methods can be categorized into classification problems, regression problems, anomalydetection problems, clustering problems, and reinforcelearning problems <ref type="bibr" target="#b2">(Alzubi et al., 2018)</ref>. Compared with the classical ML algorithms, the modern-art neural networks (NNs), gradient boosting (GB), support vector regression (SVR), and other step-forward techniques enormously improve both computational efficiency and accuracy. The wide application of ML algorithms in stock, exchange-traded funds (ETF), and other conventional financial markets motivates our hypothetical success in the Bitcoin (BTC) market <ref type="bibr" target="#b47">(Sermpinis et al., 2017)</ref>.</p><p>Due to the highly volatile property of cryptocurrency and decentralization of <ref type="bibr">BCH, prediction in BTC thereby</ref> The data that support the findings of this study are available from the corresponding author upon reasonable request.</p><p>becomes the most challenging target. Prior studies focus on the traditional statistical models (e.g., GARCH), which are well documented <ref type="bibr" target="#b21">(Gourieroux et al., 2020;</ref><ref type="bibr" target="#b30">Katsiampa, 2017;</ref><ref type="bibr" target="#b63">Zhang et al., 2021)</ref>. However, only limited work has been done in cryptocurrency prediction using ML algorithms. In terms of NNs techniques, <ref type="bibr" target="#b38">McNally et al. (2018)</ref> perform empirical results that the benchmark model is less accurate than NNs in BTC prediction. <ref type="bibr" target="#b35">Ma et al. (2018)</ref> show GB styled methods are particularly efficient in P2P loan default prediction and the BTC market. <ref type="bibr" target="#b53">Sun et al. (2020)</ref> display that SVR is more precise than benchmark models in forecasting BTC prices. <ref type="bibr" target="#b1">Akyildirim et al. (2021)</ref> find ML classification algorithms have high accuracy in terms of cryptocurrency prediction. <ref type="bibr" target="#b11">Chen et al. (2021)</ref> provide empirical evidence that a combination of ML techniques and economic and technology factors can predict the BTC exchange rate. A clear gap lies between past studies and recent exploration of ML applications in cryptocurrency, especially the BTC market.</p><p>Prior studies provide empirical evidence that the leverage trading strategy is profitable in the stock market <ref type="bibr" target="#b46">(Sermpinis et al., 2014;</ref><ref type="bibr" target="#b51">Stasinakis et al., 2016)</ref>. A more recent work by <ref type="bibr" target="#b28">Kahraman and Tookes (2017)</ref> shows that leverage trading has a causal effect on market liquidity in the stock market. Inspired by these studies, the authors hence argue that a leverage trading strategy can be a solver on such occasions, allowing transactions when volatility is relatively low but avoiding trading when volatility is relatively high. <ref type="bibr" target="#b25">Härdle et al. (2020)</ref> proposed that price dispersion driven by sentiment in the cryptocurrency market could be more significant than conventional financial markets. Unlike the traditional leverage strategy, the authors adopt the sentiment index as our leverage because an analysis of the influence of sentiment indicates that narratives and online media, like Twitter, Wikipedia, and Google Trends, are associated with BTC prices <ref type="bibr" target="#b13">(Ciaian et al., 2016;</ref><ref type="bibr" target="#b57">Urquhart, 2018)</ref>. The recent literature shows that BTC prices can be affected or even predicted by social media sentiment. Online media play a significant role in influencing behavior impacting the market and cannot be neglected <ref type="bibr" target="#b36">(Mai et al., 2018;</ref><ref type="bibr" target="#b62">Zhang et al., 2018)</ref>. With the growth of BCH and cryptocurrency, other media sources, like narratives or publications, should influence the BTC market. <ref type="bibr" target="#b29">Karalevicius et al. (2018)</ref> find that intraday BTC prices follow the direction of sentiment extracted from expertise news while leaving a short time gap for traders to react. Online board discussion is associated with extremely high volatility and jumps in BTC prices <ref type="bibr" target="#b0">(Ahn &amp; Kim, 2019)</ref>. <ref type="bibr" target="#b8">Caviggioli et al. (2020)</ref> argue that adopting BTC technology improves corporate reputation by studying Twitter data. <ref type="bibr" target="#b61">Yao et al. (2019)</ref> find that news articles can influence BTC prices at a certain level. Azqueta-Gavald on (2020) further find bidirectional causal relationships between narrative sentiment and BTC prices by applying a dynamic system model, whereas <ref type="bibr" target="#b54">Süssmuth (2022)</ref> explains that mutual causality exists between web search dynamic and BTC prices before 2018. L opez-Cabarcos et al. ( <ref type="formula">2021</ref>) provide a similar finding that the BTC market is connected with the investor sentiment and this relationship will be more significant in the stable period. These studies encourage the authors to employ a sentiment index constructed by narratives or formal publications as our leverages. The current study's objective is to explore the forecasting of BTC returns using a leverage trading strategy combined with the sentiment.</p><p>We have set up a two-step framework. At first, a large pool of conventional models is applied, including simple moving averages (SMA), exponential moving averages (EMA), autoregressions (AR), autoregressive moving averages (ARMA), and log prices to moving averages (PMA). Unlike traditional financial assets, conventional fundamental indicators cannot be found in cryptocurrencies. Thus, technical indicators could be one of the possible answers to the BTC prediction puzzle. Another reason should be attributed to the generalization and simplification of prediction. Our study examines whether the preliminary models have any predictive power in BTC prediction. We apply two dimensionality-reduction techniques and extract a certain number of critical factors for succeeding experiments, which are principal component analysis (PCA) and recursive feature elimination random forest (RFE-RF) algorithm. Finally, we use ML techniques, including multi-layer perceptron (MLP), a long-short term memory (LSTM), Extreme Gradient Boost Decision (XGB), Light Gradient Boost Decision (LBM), and SVR sets as forecast combination models to improve the predictive ability of individual models. The most accurate predictive model from the pool of individual models has been set as the benchmark based on three statistical measures, namely, the mean-squared error (MSE), root of mean-squared error (RMSE), and mean absolutely error (MAE). To formally examine the influence of over-fitting issue and data-snooping bias, we jointly apply three measures, which are the superior predictive ability (SPA) test of <ref type="bibr" target="#b23">Hansen (2005)</ref>, the modified Diebold and Mariano (MDM) <ref type="bibr" target="#b26">(Harvey et al., 1997)</ref>, and the model confidence set (MCS) of <ref type="bibr" target="#b24">Hansen et al. (2011)</ref>.</p><p>Secondly, we examine the usage of leverage trading strategy combined with sentiment and volatility and the traditional strategy to explore the profitability of forecast models. Unlike other financial markets, it is rather tricky for investors to understand and analyze fundamental information without a certain level of knowledge. Thus, a trading strategy via technical analysis becomes a vitally important tool in the cryptocurrency market. Notably, we apply the time-varying leverage strategy in this study motivated by its robust performance in stock and exchange markets (see <ref type="bibr" target="#b46">Sermpinis et al., 2014)</ref>. Because of the subjectivity of sentiments, the polarity score is a popular proxy used in the natural language processing (NLP) field <ref type="bibr" target="#b33">(Liu, 2012;</ref><ref type="bibr" target="#b60">Wei et al., 2020)</ref>. Past studies have mainly used polarity or other sentiment scores to predict BTC prices <ref type="bibr" target="#b13">(Ciaian et al., 2016;</ref><ref type="bibr" target="#b22">Guégan &amp; Renault, 2021)</ref>. <ref type="bibr" target="#b58">Valencia et al. (2019)</ref> suggest that sentiment analysis using social media data can predict the direction of price movement for cryptocurrencies. L opez-Cabarcos et al. ( <ref type="formula">2021</ref>) also prove that sentiment affects BTC volatility. Caferra (2022) also provided empirical evidence that investment strategies can be influenced by sentiment in the BTC market. By benchmarking the buy-and-hold strategy, we start with two different leverage trading strategies: pure volatility and pure sentiment leverage strategies. Moreover, we further apply a hybrid strategy by combing sentiment and volatility leverage. Our results show that all leverage strategies significantly improve trading performance and that the hybrid strategy outperforms other strategies.</p><p>The motivations behind our framework are the characteristics of BTC prices along with the unique flaws and merits of each model. <ref type="bibr" target="#b55">Takaishi (2018)</ref> suggested that the distribution of daily BTC returns is multifractal with no volatility asymmetry. Like GARCH or ARIMA, traditional statistical models may not possess explanatory power on BTC prediction. Recent studies (e.g., <ref type="bibr" target="#b27">Ji et al., 2019;</ref><ref type="bibr" target="#b32">Lahmiri &amp; Bekiros, 2020;</ref><ref type="bibr" target="#b37">Mallqui &amp; Fernandes, 2019;</ref><ref type="bibr" target="#b38">McNally et al., 2018)</ref> show that ML approaches are efficient and accurate in terms of cryptocurrency predictions. <ref type="bibr" target="#b45">Schapire (2003)</ref> suggested that it is easier to obtain many rough rules of thumb than a highly accurate forecasting rule. Therefore, the forecast combination techniques lead to a more accurate result.</p><p>The results show that XGB is the best predictor among all the applied forecast combination models. Our investigation finds that all forecast combination models perform better than the benchmark in forecasting accuracy. By jointly applying three tests, our results control the data-snooping bias and over-fitting issue. We show that all forecasting combination models are more profitable than the benchmark model in terms of the overall trading performance. Among all models, we find that XGB has the best performance. The results are consistent with both the traditional trading strategy and the hybrid trading strategy. Our hybrid trading strategy generates much higher returns than the traditional trading strategy.</p><p>Unlike previous papers, we consider the semantic definition of sentiment indices and extract reliable information sources from narratives.</p><p>The rest of the paper is organized as follows: Section 2 describes BTC returns and sentiment index. Section 3 summarizes the proposed individual models and combination forecast techniques. Forecasting and trading performance are given in Sections 4 and 5, respectively. Finally, Section 6 presents the conclusion of our study.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| DATA</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">| BTC</head><p>We have collected a total number of 1749 daily prices of BTC from January 1, 2014 to January 1, 2019 in three rolling forecasting exercises (F1, F2, and F3). The original data source can be found in Bitstamp. The data structure of this study is presented in Table <ref type="table">1</ref>.</p><p>We then obtain the daily series of returns in the following way:</p><formula xml:id="formula_0">R t ¼ P t P tÀ1 À 1:<label>ð1Þ</label></formula><p>Table <ref type="table">2</ref> reflects the summary of descriptive statistics for BTC returns. The Jarque-Bera and augmented Dickey-Fuller (ADF) test also provide confirmative results and further justification for our statements. Meanwhile, the return series follows non-normal distribution and does not have a unit root at the 99% confidence level.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">| Sentiment index</head><p>To construct the sentiment index, we have collected publications and news articles describing BTC from Factiva, containing massive reports, news, and other kinds of narratives from the worldwide business press, such as The Financial Times, The Economist, and things in that regard. Our main aim was to extract daily sentiment scores from these documents to generate a time-series sentiment index as the measure of leverage. In the current study, we collect a total number of 31,436 articles from January 1, 2014 to January 1, 2019. We first ran an ML algorithm for every article; this method is called Latent Dirichlet Allocation (LDA), developed by <ref type="bibr" target="#b5">Blei et al. (2003)</ref>. We have provided a brief introduction to LDA and the implementation process in Appendix S1. LDA is a widely used topic modelling technique <ref type="bibr">(Chen et al., 2019;</ref><ref type="bibr" target="#b17">Feuerriegel &amp; Pröllochs, 2018)</ref> with the distributions of word and topic, respectively, where documents are generated accordingly to these two distributions.</p><p>We obtain the sentiment of each article and further augment the sentiments of articles belonging to the top 10 topics on a daily basis. To generate time series of sentiments, we use a public library in the natural language process called TextBlob. TextBlob takes negation and modified words into account, measuring words with adjectives. To illustrate as an example, very good will be given a higher weight when calibrating the sentiment score of bad and not before good or bad will be assessed rightly as to their original meaning. Moreover, we can measure the sentiment from polarity (positive vs. negative, ranging from 1 to À1) and subjectivity (ranging from 0 to 1). Polarity scores reflect the sentimental attitude towards studied topics. When polarity scores are above zero, we believe the sentiment is positive and negative polarity scores vice versa.</p><p>To fit the NN models properly, we normalize the sentiment series by centralizing its mean to zero and unit variance, which is used to keep the magnitude of input data at the same level.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| FORECASTING MODELS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">| Individual prediction models</head><p>As the first step, we apply a large number of single forecast models. As discussed in the earlier sections, quite a few cases focus on BTC prediction, and the majority of studies provide successful answers with high complexity models <ref type="bibr" target="#b1">(Akyildirim et al., 2021;</ref><ref type="bibr" target="#b35">Ma et al., 2018;</ref><ref type="bibr" target="#b38">McNally et al., 2018)</ref>. This study starts with a pool of linear models, including SMA, EMA, AR, ARMA, and PMA, in case of missing trials with easy models. Moreover, we take PMA ratios extended from the equilibrium model proposed by <ref type="bibr" target="#b15">Detzel et al. (2021)</ref> into our model pool as the nonlinear component. PMA ratio is the difference between log prices and moving averages. In an economy like the cryptocurrency market, fundaments and other sources of information are difficult to find or trust. Under such circumstances, technical indicators constructed by past prices may become a unique weapon for investors. A detailed description of the models is provided in Table <ref type="table">3</ref>.</p><p>The total number of individual models is 295. In order to reduce the influence of the over-fitting issue caused by dimensionality issues, we apply the PCA technique to extract the best set of predictors and discard high-correlated variables. PCA components account for 95% of the total variance, and only the selected components are used as inputs for all the remaining models. In total, we have 30 principal components selected from the linear pool of predictors. Previous studies, for instance, <ref type="bibr" target="#b11">Chen et al. (2021)</ref> and <ref type="bibr" target="#b14">Conn et al. (2019)</ref>, show that the RF algorithm performs good feature selectivity. We have provided a general description of the RFE-RF process in Appendix S1. In order to make factor comparison with PCA more explanatory, we have also selected the best 30 factors based on individual feature importance. By applying RFE-RF, we have ranked predictors based on the order of their importance and set the best-performing benchmark model as our benchmark model. Table <ref type="table">4</ref> summarizes the best predictor selected from the pool of individual models.</p><p>Table <ref type="table">4</ref> shows that short-term lags may have better predictive power than longer lags. So then, we use ML algorithms to further improve the predictive ability of individual models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">| Combination forecast techniques</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">| MLP model</head><p>MLP is a traditional NN in the forecasting literature. Prior studies show the predictive power of MLP in BTC as well as conventional financial areas <ref type="bibr" target="#b50">(Sin &amp; Wang, 2017)</ref>. The training process of MLP is relatively straightforward, that is, a perceptron with more than one set of layers. The input layer is generally considered the first step used to feed the training data into the model. The way from the input layer to the output layer is indirect, which shall go through an intermediary layer called the hidden layer. Finally, the output is the last step, producing the estimated value. For more details regarding the training process, the reader should refer to <ref type="bibr" target="#b49">Shapiro (2000)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">| LSTM</head><p>Similar to the recurrent NN (RNN), LSTM has a chain of repeating neural models with the above layers. However, to solve the long-term dependency issues, LSTM has added control gates, that is, the input gate, forget gate, and output gate. The main difference between RNN and LSTM is the cell state, which controls the information </p><formula xml:id="formula_1">SMA(q) E R t ð Þ¼ Rt þ…þRt ð Þ = q ,q ¼ 3…30 28 EMA(q ' ) E R t ð Þ¼ R tÀ1 þ 1 À α 0 À Á R tÀ2 þ … þ 1 À α 0 À Á q 0 À1 R tÀq 0 α 0 þ 1 À α 0 ð Þþ… þ 1 À α 0 ð Þ q 0 À1 , q 0 ¼ 3…30, α 0 ¼ 2= 1 þ N days À Á , N days is the number of trading days 28 AR(q " ) E R t ð Þ¼β 0 þ P q 00 i 0 ¼1 β i 0 R iÀi 0 ,q 00 ¼ 1,…,24,β 0 ,β i 0 are the regression coefficients 24 ARMA (m, n) E R t ð Þ¼φ 0 þ X m 0 j 0 ¼1 φ j 0 R tÀj 0 þ α 0 þ X n 0 k 0 ¼1 w k 0 α tÀk 0 m 0 ,n 0 ¼ 1…15, φ 0 , φ j 0 are the regression coefficients,</formula><p>α 0 , α tÀk 0 are the residual terms, w k 0 is the weights of the residual terms 210</p><formula xml:id="formula_2">PMA(L) PMA t L ð Þ ¼p t À ma t L ð Þ, where ma t L ð Þ ¼ 1 nL P nLÀ1 l¼0 p tÀl<label>5</label></formula><p>Note: The total number of individual inputs calculated is 290. In all the specifications above, R t is the factor return at time t. P t is the log price of the Bitcoin, and n is the number of days per week in L = 1, 2, 4, 10, and 20 weeks. Abbreviations: AR, autoregressions; ARMA, autoregressive moving averages; EMA, exponential moving averages; PMA, log prices to moving averages; SMA, simple moving averages.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>T A B L E 4 Summary of best individual predictor set</head><formula xml:id="formula_3">Forecasting exercise MAE MSE RMSE F1 EMA (3) EMA (3) EMA (3) F2 SMA (1) EMA (2) PMA (2) F3 PMA (1) PMA (2) PMA<label>(1)</label></formula><p>Note: The numbers in the parenthesis correspond to the lags in the individual model. Abbreviations: EMA, exponential moving averages; MAE, mean absolutely error; MSE, mean-squared error; PMA, log prices to moving averages; RMSE, root of mean-squared error; SMA, simple moving averages.</p><p>regulated by three gates. Intuitively, sigmoid layers are used to determine how much information is to be restored. The range of [0,1] represents the kept information from nothing to all. Prior studies have shown the success of LSTM in many fields, but in this paper, we focus on their success in time-series prediction <ref type="bibr" target="#b42">(Phaladisailoed &amp; Numnonda, 2018)</ref>. Compared with simple MLPs or other feed-forward NNs, LSTM has bidirectional neural connections. The latter implies that current data can be passed to the previous or the same layer. LSTM can thus keep the short-term memory as well as the long-term memory by control gates.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3">| SVR</head><p>SVR has been widely used in time-series prediction <ref type="bibr" target="#b56">(Tay &amp; Cao, 2001;</ref><ref type="bibr" target="#b64">Zhao et al., 2019)</ref>. SVR follows the same principle as support vector machine (SVM) but aims to solve regression problems. Using kernel functions, SVR can project data into high-dimension space and find a hyperplane to control the error within a certain threshold. Unlike linear regression, the objective function of SVR is to minimize the L2-norm of the coefficient vector. In contrast to SVM, SVR tries to obtain as many samples as possible within decision boundary lines using slack variables. In a nutshell, SVR allows users to define their tolerance rate of errors and find an acceptable tolerance range by tuning.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.4">| GBDT family: XGBoost (XGB) and LightGBM (LBM)</head><p>As one crucial branch of ensemble learning algorithms in the ML field, the gradient boost decision tree (GBDT) developed by Friedman ( <ref type="formula">2001</ref>) is a multiple-task solver used in a myriad of aspects. According to the statistics of Kaggle, GBDT-based algorithms win the championship for more than half of ML competitions and are widely used in computer visualization, medicine, biology, and finance <ref type="bibr" target="#b40">(Nobre &amp; Neves, 2019;</ref><ref type="bibr" target="#b44">Rao et al., 2019;</ref><ref type="bibr" target="#b59">Wang &amp; Gribskov, 2019)</ref>. Intuitively, GBDT combines gradient boost (GB) and decision tree (DT). The former algorithm focuses on finding a strong learner F x ð Þ by aggregating a bunch of weak learners T x ð Þ, whereas the latter is used to construct the judgement condition for learning power through iteration. Therefore, the training process of GBDT is additive. That is, the final prediction is based on the sum of previous predictions</p><formula xml:id="formula_4">(F x ð Þ ¼ F 1 x ð ÞþF 2 x ð Þþ… þ F m x ð Þ).</formula><p>Figure <ref type="figure">1</ref> provides a flowchart of GBDT structure, and the training process is described as follows <ref type="bibr" target="#b19">(Friedman, 2001;</ref><ref type="bibr" target="#b44">Rao et al., 2019)</ref>:</p><p>Input: Denote x i , y i f g n i¼1 as training instances, where</p><formula xml:id="formula_5">x i ¼ x 1i , x 2i , …, x ki ð</formula><p>Þdenotes the features, k denotes the number of features, and y i denotes the target value.</p><p>Step 1: Denote the initial constant value w and initialize the predictors as follows:</p><formula xml:id="formula_6">F 0 x ð Þ ¼ arg min c P n i¼1 L y i , w ð Þ, where L y i , w ð Þ denotes the loss function.</formula><p>Step 2: For data i ¼ 1,2,…,n, we have the negative gradient or the residual along the gradient direction,</p><formula xml:id="formula_7">r im ¼ À ∂L y i , F x i ð Þ ð Þ ∂F x i ð Þ h i f x ð Þ¼f mÀ1 x ð Þ</formula><p>where m denotes the number of iterations.</p><p>Step 3: We fit sample instances into the initial tree T x i ; a n ð Þ and obtain the parameter a n through the least square method as a m arg min a,w</p><formula xml:id="formula_8">P n i¼1 r im À wT x i ; a ð Þ ð Þ 2 .</formula><p>Step 4: To acquire the minimal loss function, the current weight of each base learner is described as Step 5: The current prediction based on strong learner is given as follows</p><formula xml:id="formula_9">w m ¼ arg min w X n i¼1 L y i , F mÀ1 x ð ÞþwT x i ; a m ð Þ ð Þ :<label>ð2Þ</label></formula><formula xml:id="formula_10">F I G U R E</formula><formula xml:id="formula_11">F m x ð Þ ¼ F mÀ1 x ð Þþw m T x i ; a n ð Þ:<label>ð3Þ</label></formula><p>The above steps will keep running until the convergence condition or the specified iteration times are met.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>XGBoost</head><p>Based on the structure of GBDT, <ref type="bibr" target="#b10">Chen and Guestrin (2016)</ref> propose a scalable end-to-end gradient tree boosting model, XGB system, standing for "Extremely Gradient Boosting." Like other ML algorithms, XGB is designed to find a predictive model that best fits the training set (x i ) and target values (y i ).</p><p>The following objective function needs to be minimized in order to measure how good the predictive model is:</p><formula xml:id="formula_12">OBJ θ ð Þ ¼ L θ ð ÞþΩ θ ð Þ, L θ ð Þ ¼ P I i¼1 y i Àb y i ð Þ 2 , Ω θ ð Þ ¼ P M m¼1 Ω f m ð Þ, 8 &gt; &gt; &gt; &lt; &gt; &gt; &gt; : 9 &gt; &gt; &gt; = &gt; &gt; &gt; ; ,<label>ð4Þ</label></formula><p>where L θ ð Þ denotes training loss function, 1 Ω θ ð Þ denotes regularization terms, b y i is the prediction value, and m denotes the number of trees. The upper function (L θ ð Þ) is used to measure the forecasting ability of the tested model, and the below function (Ω θ ð Þ) is used to control the model complexity. Particularly, the regularization term Ω is a function of the total number of leaves in the tree (N) and leaf weights (ω), which can be described as follows:</p><formula xml:id="formula_13">Ω ¼ αΝ þ 1 2 β ω k k 2 ,<label>ð5Þ</label></formula><p>where α denotes the complexity of leaves and β denotes the penalty parameter. The regularization term thus reduces the overfitting probability by leading to a predictive model with a simple structure. Intuitively, traditional optimization algorithms cannot be used for the objective function above.</p><p>For the tree ensemble model like XGB, the final prediction is the sum of the scores of each tree. Denote b y i as the prediction in ith instance (x i ), and f m denotes a tree structure to mainly improve our model in mth iteration. We therefore have the prediction score</p><formula xml:id="formula_14">b y i ¼ P M m¼1 f m x i ð Þ for x i .</formula><p>Then, second-order Taylor expanding is used to optimize the objective function as follows:</p><formula xml:id="formula_15">Obj ¼ X N j¼1 G j ω j þ 1 2 H j þ βω 2 j ! þ αN,<label>ð6Þ</label></formula><p>where I j denotes the instance set for jth leaf, G j ¼ P i I j g i is a constant, denoting the sum of the first-order partial derivation of all samples in jth leaf, and H j ¼ P i I j h i is a constant, denoting the sum of the second-order partial derivation of all samples in jth leaf. Therefore, the optimization of the objective function is transferred into a minimum determination problem of a quadratic function.</p><p>Based on the definition of the loss function, XGB is capable of solving both classification and regression tasks. In general, XGB is an improved version of GBDT, optimizing the objective function by adding the regularization terms and increasing the prediction accuracy using the second-order Taylor expansion. Moreover, two more techniques are applied to tackle the overfitting issue during tree growth, which is shrinkage and column subsampling (see <ref type="bibr">Chen and</ref><ref type="bibr" target="#b10">Guestrin, 2016, and</ref><ref type="bibr" target="#b18">Friedman et al., 2000</ref>, for a detailed discussion).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>LightGBM</head><p>Similar to XGB, LBM is an open-source framework developed by Microsoft Research Asia in 2016 <ref type="bibr" target="#b31">(Ke et al., 2017)</ref>. Generally, LBM is designed to solve the lack of computation efficiency in mass data without losing much accuracy. Compared with XGB, LBM mainly has two advantages in time complexity reduction: finding the optimal splitting node and trees growth strategy. Regarding the first side, LBM has three aspects of improvement: reducing the number of splitting nodes, the size of training data, and the number of features. At first, LBM applies a histogram-based DT algorithm instead of a presorted approach in splitting points to reduce the number of splitting nodes. The principle of the histogram algorithm is discretizing the continuous floating-point eigenvalues into k number of small bins and constructing k-width histograms. The discrete values index the accumulation of histograms in each bin. Then, the sum of gradients and the number of samples in each bin, as required statistics, are gradually stored in the histogram. With the necessary statistics in histograms after the first traverse of data, it is possible to find the optimal segment point based on the discrete value indices. Compared with the presorted method, the histogram algorithm reduces the memory cost by storing only the discrete values. Productive discussion of both the presorted and histogram-based methods is well documented already <ref type="bibr" target="#b48">(Shafer et al., 1996;</ref><ref type="bibr" target="#b31">Ke et al., 2017)</ref>. Secondly, LBM develops the gradient-based one side sampling (GOSS) technique to control the size of training instances. Unlike AdaBoost, no sample weights are given in GBDT, but the gradient of instances is also a good indicator for searching for the optimal split point. Intuitively, training instances with small gradients have relatively smaller training errors, indicating these parts of data are well-trained and should be abandoned. This is similar to GBDT in that large deviations from the target value will be penalized harder. In AdaBoost, the sample weight serves as a good indicator to determine the importance of samples. However, the data distribution may be distorted by the loss of instances and influence the accuracy of trained models. In order to keep the balance between reduction of data size and accuracy of learning decision trees, GOSS applies a constant multiplier to instances with low gradients when computing information gains. Exclusive Feature Bundling (EFB) is another critical technique in LBM, which is used to reduce the feature number. This method is inspired by the sparsity of high-dimension data and is designed to reduce the feature numbers by combining mutually exclusive features (values are simultaneously nonzero).</p><p>LBM applies a leaf-wise growth strategy with a depth controller, which searches for the maximum profit from leaf splitting, whereas a level-wise strategy splits every leaf. Unavoidably, the level-wise strategy used in XGB may generate redundant data and reduce computing efficiency. On the contrary, the leaf-wise growth strategy only focuses on the leaf with the most significant information gained on the same layer, enhancing algorithm speed. To control the possible overfitting issue, this method needs to manually set and tune the max depth of trees and minimum data in each leaf.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| STATISTICAL PERFORMANCE</head><p>In order to examine the statistical significance of each predictor, we employ three famous metrics, MSE, RMSE, The above results show that the models' statistical ranking is consistent across three forecasting exercise periods and two sets of factors. Unsurprisingly, the best-performing benchmark selected from the pool of individual models is beaten by all ML models. In terms of the forecasting performance of ML algorithms, XGB provides the best statistical accuracy among the forecasting combination models. Although SVR sets are inferior to XGB in terms of out-of-sample performance, their predictive power is better than other models. The result is in line with several studies that suggest SVR can be a robust prediction tool supporting individual predictors <ref type="bibr" target="#b46">(Sermpinis et al., 2014;</ref><ref type="bibr" target="#b64">Zhao et al., 2019)</ref>. Finally, although LSTM falls short of the GBDT family, it has more accurate results than the benchmark, in line with recent experiments in BTC prediction <ref type="bibr" target="#b27">(Ji et al., 2019;</ref><ref type="bibr" target="#b38">McNally et al., 2018)</ref>.</p><formula xml:id="formula_16">T A B L E 5</formula><p>One possible reason could be our study's relatively short sample period. 3  In order to formally validate the consistency of forecasting ability rank in the above results, we perform the MDM test suggested by <ref type="bibr" target="#b26">Harvey et al. (1997)</ref>. The MDM test statistic is calculated as follows:</p><formula xml:id="formula_17">MDM ¼ T À1= 2 Tþ1À2kþT À1 k kÀ1 ð Þ ½ 1 = 2 DM,<label>ð7Þ</label></formula><p>where T denotes the number of observations in the out-of-sample period and k denotes the number of step-ahead forecasts. ranking presented in Table <ref type="table">6</ref>. For both sets of factors (RFE-RF and PCA), we shed light on the predictive power of the GBDT family (XGB and LBM) because of all the negative statistics of the MDM test. <ref type="bibr" target="#b64">Zhao et al. (2019)</ref> suggested that when the superiority of forecasting models suffers from data-snooping bias, the predictive performance may be attributed to luck. In order to further validate the superiority of the XGB model, we then apply two statistical tools, namely, the SPA test and the MCS test. The results are given in Table <ref type="table">7</ref>. SPA test focuses on comparing the predictive abilities of multiple methods within a full set of models. High SPA p-values imply that at least one of the compared models may outperform the benchmark model. In our case, we examine the superior predictive power by benchmarking each model in turn and comparing it with the bundle of rest forecasting models. Based on the null hypothesis of SPA (no model is more accurate than the benchmark model), we declare that the predictive ability of XGB is superior to alternative models. All models from Table <ref type="table">8</ref> are also used as benchmarks in turn in our second test (MCS), starting from the bestperforming benchmark. MCS is a data-driven statistic that the more informative the data are, the fewer models are chosen <ref type="bibr" target="#b24">(Hansen et al., 2011)</ref>. By controlling the family-wise error, MCS determines the statistically insignificant set compared with the alternative model. High p-values indicate that the benchmark model should belong to the most accurate model set. The consistent results of both SPA and MCS across three forecasting exercises suggest the superior performance of XGB in terms of two sets of factors, which follows the logic of model forecasting performance. Moreover, the overall performance of predictive algorithms also suggests that encompassing robust forecasts can boost forecasting accuracy <ref type="bibr" target="#b16">(Diebold &amp; Pauly, 1990)</ref>. In a nutshell, the outperformance of the XGB in the out-ofsample is genuine.</p><p>Through a comprehensive investigation, we provide evidence that ML techniques improve the predictive power of individual models. This is in line with our proposed hypothesis. The GBDT family has the best performance among the forecasting model pool.  In order to examine the trading efficiency, we apply two approaches to our forecasting models. In Section 5.1, we apply the traditional trading strategy and a hybrid leverage trading strategy combining sentiment and volatility in Section 5.2. Formulas for both statistical and profitability measurements are given in Appendix S1. Intuitively, we choose to stay "long" when the forecast return at day t is above zero and stay "short" when the forecast return at day t is below zero. The "long" position is defined as buying BTC/USD at the current price, and the "short" position is defined as selling BTC/USD at the current price. Due to the lack of regulation in the cryptocurrency market, no unified trading cost is defined across different cryptocurrency exchanges. In particular, exchanges set variable standards of trading fees based on the payment area, payment type, and payment amount. For example, most cryptocurrency exchanges like Huobi or OKCoin used to charge no trading fees until the intense talk with Peoples Bank of China in 2017. Nonetheless, some exchanges preserve such rules and even set free costs for deposit and withdrawal fees, like SimpleFX and Coinfloor. Therefore, we do not consider the trading costs in our strategies. In Table <ref type="table">8</ref>, we present the out-of-sample trading performances of our models and NNs' techniques.</p><p>Forecasting models display positive trading performance for two sets of factors (see Table <ref type="table">8</ref>). Taking a look at the general ranking, the overall profitability performance of our models coincides with their forecasting performance. Forecasting combination techniques outperform the best-performing benchmark under all metrics in terms of model comparison. XGB is the superior model under most trading measures, which are annualized return (2.29%), Sharpe ratio (51.64%), Sortino ratio (2.2788), and information ratio (81.64%). Nonetheless, we can see maximum drawdown (MDD) of XGB (À45.05%) is also the highest because models with high returns come from high risk. We note that the MDD of all forecasting models ranges from 26% (the bestperforming benchmark) to 45% (XGB), indicating that investors may lose nearly half of their funding for extreme cases. Compared with the performance of ML algorithms in the exchange market (À15%), the average MDD in the BTC market (À35%) is much higher <ref type="bibr" target="#b46">(Sermpinis et al., 2014)</ref>. Nonetheless, the average Sortino ratio is higher than 2 for all ML techniques, implying that investment in BTC is operating efficiently by taking those high risks. Across three forecasting exercises, F2 has the best performance whereas the worst subperiod is F1. The profits in BTC can be high, although it is also undeniable that investment in BTC should be cautious with its intensive volatility.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">| Trading performance of volatility leverage, sentiment leverage, and hybrid leverage strategy</head><p>Because of the dramatic volatile property of BTC, we apply hybrid leverage based on two time-varying parameters, the first leverage based on daily volatility forecasts (L V ) and leverage based on sentiment (L P ). A detailed explanation of our strategy is given as follows.</p><p>The principle of the volatility forecasts (L V ) is to exploit transaction days when the return volatility is relatively low while reducing transaction days with extremely or relatively high volatility. In this way, we can quickly achieve the time-varying leverage by assigning inverse scale positions to recent risk measures while maintaining the information from market behavior.</p><p>At first, we employ a GJR (1,1) in the out-of-sample periods and forecast the 1 day ahead realized volatility of BTC returns. We further split the total test period into six subperiods, ranging from days with significantly low volatility to days with extremely high volatility. Based on the different volatility level of each day, we set up two parameters to classify our subperiods. The first parameter is the average (μ), which is the difference between the actual volatility in day t and the predicted for day (t + 1) and its corresponding standard deviation as the measure of volatility (σ). The parameters of our strategy are updated every 3 days by rolling forward the estimation period. That is, we classify periods when the difference is between μ and μ plus one σ as "Lower High Volatility." Similarly, we define periods with volatility larger than μ þ 2σ ð Þ as "Extremely High Volatility" and periods with volatility between μ þ σ ð Þ and μ þ 2σ as "Medium High Volatility." Following the same method, we denote periods with volatility ranging from μ À σ ð Þ to μ À 2σ as "Medium Low Volatility" and periods with volatility below μ À 2σ as "Extremely Low Volatility." As for the leverages (L V ) assigned for each period, we give 0 for periods with extremely high volatility and 2 for periods of extremely low volatility. Both parameters (μandσ) used in our method are updated every month by rolling forward the estimation period. This setup is consistent with the approach of <ref type="bibr" target="#b46">Sermpinis et al. (2014)</ref>.</p><p>Secondly, we construct sentiment leverage (L P ) based on the same approach of L V . We replace μ and σ with the mean of polarity index μ 0 ð Þ and its standard deviation σ 0 ð Þ, respectively. Following the same classifying method of L V , we split the test period into six subperiods and assign 0 for periods with extremely high volatility and 2 for periods of extremely low volatility. For robustness check, we then assign the leverages for each trading day based on the sign of the daily forecast. The goal is to boost profitability by exploiting more positive returns while shrinking losses incurred by negative returns.</p><p>1. If the forecast sign is positive (we are "long"), we apply leverage (L þ V ) of more than 1. 2. If the forecast sign is negative (we are "short"), we apply leverage (L À V ) of less than 1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1">| Volatility leverage (L V )</head><p>L V is available for each trading day. We apply L V to each model and examine their trading performance following previous metrics. The results are given in Table <ref type="table">9</ref>. 4  Table <ref type="table">9</ref> summarizes trading performance for volatility leveraged strategy. Firstly, the trading performance of L V is positive, and the ranking is consistent with its performance in L T . Across three forecasting exercises, F2 still takes the first place whereas F1 is the worst period. For model comparison, XGB still has the best performance under each measure, except for MDD (À78.77% in F1). For the RFE-RF factors, the overall risk grows higher because MDD of L V ranges from À39% to À78% for F1. Similar results can be found in F2 and F3. Compared with the traditional trading strategy (Table <ref type="table">8</ref>), volatility leverage strategy amplifies high returns although it fails to shorten the corresponding risk. One possible reason could be attributed to the daily volatility variations. Although the volatility leverage strategy decreases the extreme negative returns, the variations from lowest returns to highest returns still grow much larger because of the significant increase in positive returns. In terms of ratio comparison between L T and L V , annualized returns increase above 0.2 times, whereas the Sortino ratio and Sharpe ratio at least increase above 0.04 times. In conclusion, the general performance of L V is better than L T .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2">| Sentiment leverage (L P )</head><p>Sentiment has been widely used in financial areas, but recently, <ref type="bibr" target="#b9">Chen and Hafner (2019)</ref> showed that the cryptocurrency market has a certain level of relationship with the news-driven sentiment. In this study, we apply a hybrid leverage strategy (L H ) combined with sentiment (L P ) and volatility to further improve our strategy's profitability. We also demonstrate sentiments (polarity and subjectivity) in Figure <ref type="figure">2</ref>.</p><p>In order to generate L H , we introduce two sentiment indices, polarity and subjectivity indices. 5 Polarity index is a prevalent indicator in sentiment analysis, commonly treated as a classifier for the trend moving by labelling either "positive" or "negative." However, recent articles do not notice the reliability of their information sources <ref type="bibr" target="#b43">(Raju &amp; Tarif, 2020)</ref>. Nonetheless, it is vital to consider the subjectivity of comment or news when analyzing the sentiment <ref type="bibr" target="#b52">(Subirats et al., 2018)</ref>. In the present study, we employ two sentiment indices and use their literal definition as well as mathematical variations in our strategy. The first index can be interpreted as the different levels of attitude variation, whereas the second index is used to describe the subjectivity of collected documents. Naturally, we will only proceed to polarity measurement once the corresponding subjectivity score is above the threshold because measurement of the credibility of the information source into consideration is essential <ref type="bibr" target="#b3">(Archak et al., 2011)</ref>. Thus, the subjectivity index is regarded as the reliability measure of narratives, representing how much investors can trust <ref type="bibr" target="#b41">(Nunkoo &amp; Ramkissoon, 2012)</ref>. Polarity gauges the sentiment from two sides, one for negative sentiment and the other for positive sentiment. Investors are thereby aware of the attitude variations from public recognition in cryptocurrency market and catch possible leverage opportunities. Nonetheless, it is possible to have unreliable sentiment sources. That is, narratives are full of too subjective descriptions or meaningless hypotheses. Under such circumstances, volatility leverage becomes the best option instead of sentiment leverage. Considering the range of subjectivity, we use F I G U R E 2 Sentiments and Bitcoin (BTC) returns Note: The x-axis denotes the number of days in a year the moving average of 1 month as the threshold for subjectivity and employed volatility leverage when the subjectivity score is above the threshold.</p><p>The trading performance of L P is summarized in Table <ref type="table">10</ref>.</p><p>As evidenced in Table <ref type="table">10</ref>, we note that the trading performance of L P stays positive, and the general ranking is consistent with L V and L T . F2 has the best performance out of the three forecasting exercises, whereas F3 remains the worst period. As for model comparison, all ML models outperform the best-performing benchmark, and XGB is the superior model among all forecasting combination techniques. Similar to the performance of L V , L P improves the overall trading performance for most With both L P and L V , we describe the approach of hybrid strategy as follows:</p><formula xml:id="formula_18">L H ¼ 1 S sub Ã L H L H ¼ L P , whenS sub ≥ MA sub 30 ð Þ L H ¼ L V , otherwise &amp; ' ,<label>ð8Þ</label></formula><p>where MA sub 30 ð Þ denotes the 30-day moving average of subjectivity scores, S sub denotes the daily subjectivity, and L P denotes leverage based on polarity. Once S sub is lower than the threshold (a rejection of the usage of sentiment), we should depend on the volatility indicator. Similar to the volatility and sentiment leverage strategies, we then assign the leverages for each trading day based on the sign of the daily forecast.</p><p>We apply the hybrid trading strategy to each model and examine their trading performance by following previous metrics (see Table <ref type="table">11</ref>).</p><p>In conclusion, we argue that the hybrid trading strategy was successful based on the above findings. Compared with the traditional trading strategy, the annualized return of the hybrid strategy for each model is at least 1.4 times larger for both RFE-RF and PCA factors in all three forecasting exercises. For RFE-RF factors, XGB has the highest annualized return, Sharpe ratio, and information ratio, consistent with its performance in traditional strategy ranking for all three forecasting exercises. Similar results can be found in other ML techniques, which provides strong evidence that the application of sentiment leverage strategy significantly improves the profitability of forecasting techniques. Our findings align with the previous studies (Azqueta-Gavald on, 2020; <ref type="bibr" target="#b29">Karalevicius et al., 2018;</ref><ref type="bibr" target="#b61">Yao et al., 2019)</ref> that an interactive relationship exists between BTC and narratives, thus leading to the extraordinary profitability of the hybrid trading strategy.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">| CONCLUSION</head><p>This study has examined the predictive power of forecast combination techniques and individual models. In terms of profitability examination, we propose a hybrid leverage trading strategy combining sentiment and volatility. Our investigation finds that forecast combination techniques outperform individual models in prediction accuracy. These results are roughly consistent with our hypothesis that ML techniques can improve the accuracy of simple individual models. Particularly, XGB has the best performance among all ML techniques. Moreover, our results are free of data-snooping bias through examining SPA, MCS, and MDM.</p><p>As for our examination of profitability, we apply two kinds of trading strategies, namely, a traditional strategy and three different leverage trading strategies: volatility leverage strategy, sentiment leverage strategy based on LDA, and hybrid leverage strategy by combining sentiment and volatility. Unsurprisingly, the annualized returns of ML techniques, especially for XGB, perform much better than other models for traditional strategy. Furthermore, with the application of a hybrid trading strategy, we find that the trading performance of all our forecasting models increases. These findings are in line with our hypothesis that strategies combined with sentiment indices can exaggerate the profitability of BTC.</p><p>In conclusion, XGB is the optimal forecast model based on remarkable trading performance and significant predictive accuracy. Furthermore, the success of our hybrid trading strategy indicates the importance of volatility and narrative sentiment in the cryptocurrency market. Although former research has suggested the usage of sentiment in the cryptocurrency market, the impact of online sentiment sources is limited <ref type="bibr" target="#b57">(Urquhart, 2018)</ref>. Prior studies showing sentiment as either a significant predictor or related factor apply their empirical results from 2010 to 2017 <ref type="bibr" target="#b20">(Garcia &amp; Schweitzer, 2015)</ref>. Considering cryptocurrency's temporal influence and public recognition, exploring the sentiment indicator using a more recent period instead of a large scale or entirely early period data is essential. Due to limited information sources and uncertainty of new technology, preliminary indicators, such as Google Trends or post numbers on the website, may directly influence the early cryptocurrency market. We believe the development of BCH and consensus will strengthen the influence of the narrative sentiment index on the cryptocurrency sphere.</p><p>This study contributes to current literature in BTC forecasting and sheds light on trading strategies using sentiment and volatility leverage. Nonetheless, there is scope for further research on this topic. This paper adopts daily data rather than intraday data, which may not fully capture the price movements. <ref type="bibr" target="#b63">Zhang et al. (2021)</ref> suggest that BTC returns can be used to predict BTC volatility by using aggregation of intraday information. In addition, <ref type="bibr" target="#b54">Süssmuth (2022)</ref> provides evidence that Baidu-Google search statistics forecast BTC price dynamics at relatively high frequencies. <ref type="bibr" target="#b39">Milunovich and Lee (2022)</ref> show that advanced ML techniques have high accuracy in predicting cryptocurrency exchange activity. Future work should focus on social media's influence on the aggregation of intraday trading information. Then, more hybrid and advanced ML techniques should be explored in terms of their predictive performance and investment benefits. With the appropriate application of ML techniques, crypto-investment strategies could be more accurate and reliable and could be combined with mainstream trading approaches to capture the investment utilities and risk preferences of more investors.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>1</head><label></label><figDesc>Flowchart of gradient boost decision tree (GBDT) structure Note: The residuals obtained from previous base learner is fed into the following base learner as training data (instance)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>F1</head><label></label><figDesc>MCS and SPA are the statistics computed for the model confidence set (MCS) of<ref type="bibr" target="#b24">Hansen et al. (2011)</ref> and superior predictive ability test (SPA) of<ref type="bibr" target="#b23">Hansen (2005)</ref>, respectively. This table reports the p-value of aforementioned two statistics, high value of SPA indicates the benchmark model is superior to at least one of the other models and high value of MCS implies the benchmark model belongs to the set of top performing models. Numbers in bold style denote the top performing model set. Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MLP, multi-layer perceptron; RFE-RF, recursive feature elimination random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="14,98.50,480.80,398.44,233.32" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Summary of out-of-sample statistical performance MAE 2 Instinctively, lower statistics indicate a more accurate prediction of the examined model. Table5reports the summary of out-of-sample statistical performance.</figDesc><table><row><cell>Metrics</cell><cell>Forecasting exercise</cell><cell>Best</cell><cell>MLP</cell><cell>LSTM</cell><cell>ε-SVR</cell><cell>ν-SVR</cell><cell>XGB</cell><cell>LBM</cell></row><row><cell></cell><cell cols="3">Panel A: Set of selected factors based on RFE-RF</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MAE</cell><cell>F1</cell><cell>0.0334</cell><cell>0.0185</cell><cell>0.0089</cell><cell>0.0080</cell><cell>0.0059</cell><cell>0.0042</cell><cell>0.0050</cell></row><row><cell></cell><cell>F2</cell><cell>0.0416</cell><cell>0.0202</cell><cell>0.0083</cell><cell>0.0068</cell><cell>0.0057</cell><cell>0.0050</cell><cell>0.0347</cell></row><row><cell></cell><cell>F3</cell><cell>0.0369</cell><cell>0.0093</cell><cell>0.0043</cell><cell>0.0087</cell><cell>0.0084</cell><cell>0.0034</cell><cell>0.0042</cell></row><row><cell>MSE</cell><cell>F1</cell><cell>0.00185</cell><cell>0.0011</cell><cell>0.00014</cell><cell>0.00011</cell><cell>0.00006</cell><cell>0.00003</cell><cell>0.00006</cell></row><row><cell></cell><cell>F2</cell><cell>0.0025</cell><cell>0.0016</cell><cell>0.00037</cell><cell>0.00028</cell><cell>0.00027</cell><cell>0.00006</cell><cell>0.00092</cell></row><row><cell></cell><cell>F3</cell><cell>0.00235</cell><cell>0.0013</cell><cell>0.00007</cell><cell>0.00017</cell><cell>0.00009</cell><cell>0.00002</cell><cell>0.00008</cell></row><row><cell>RMSE</cell><cell>F1</cell><cell>0.0430</cell><cell>0.0333</cell><cell>0.0119</cell><cell>0.0105</cell><cell>0.0079</cell><cell>0.0056</cell><cell>0.0075</cell></row><row><cell></cell><cell>F2</cell><cell>0.0450</cell><cell>0.0403</cell><cell>0.0611</cell><cell>0.0167</cell><cell>0.0163</cell><cell>0.0075</cell><cell>0.0303</cell></row><row><cell></cell><cell>F3</cell><cell>0.0484</cell><cell>0.0362</cell><cell>0.0087</cell><cell>0.0132</cell><cell>0.0095</cell><cell>0.0042</cell><cell>0.0089</cell></row><row><cell></cell><cell cols="2">Panel B: Selected principal components</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MAE</cell><cell>F1</cell><cell>0.0334</cell><cell>0.0284</cell><cell>0.0173</cell><cell>0.0195</cell><cell>0.0179</cell><cell>0.0056</cell><cell>0.01925</cell></row><row><cell></cell><cell>F2</cell><cell>0.0416</cell><cell>0.0304</cell><cell>0.0198</cell><cell>0.02129</cell><cell>0.02134</cell><cell>0.01007</cell><cell>0.02234</cell></row><row><cell></cell><cell>F3</cell><cell>0.0369</cell><cell>0.0291</cell><cell>0.0256</cell><cell>0.03226</cell><cell>0.02809</cell><cell>0.00702</cell><cell>0.01735</cell></row><row><cell>MSE</cell><cell>F1</cell><cell>0.00185</cell><cell>0.00113</cell><cell>0.00050</cell><cell>0.00158</cell><cell>0.00064</cell><cell>0.00005</cell><cell>0.00028</cell></row><row><cell></cell><cell>F2</cell><cell>0.0025</cell><cell>0.00162</cell><cell>0.00063</cell><cell>0.00089</cell><cell>0.00085</cell><cell>0.00021</cell><cell>0.00079</cell></row><row><cell></cell><cell>F3</cell><cell>0.00235</cell><cell>0.00213</cell><cell>0.00062</cell><cell>0.00062</cell><cell>0.00072</cell><cell>0.00035</cell><cell>0.00072</cell></row><row><cell>RMSE</cell><cell>F1</cell><cell>0.0430</cell><cell>0.0334</cell><cell>0.02231</cell><cell>0.03978</cell><cell>0.02521</cell><cell>0.00564</cell><cell>0.0235</cell></row><row><cell></cell><cell>F2</cell><cell>0.0450</cell><cell>0.0392</cell><cell>0.02506</cell><cell>0.02978</cell><cell>0.02914</cell><cell>0.01457</cell><cell>0.02804</cell></row><row><cell></cell><cell>F3</cell><cell>0.0484</cell><cell>0.0462</cell><cell>0.02494</cell><cell>0.02495</cell><cell>0.02683</cell><cell>0.01875</cell><cell>0.02689</cell></row></table><note><p>Note: Numbers in bold style denote the lowest statistics under corresponding metric. Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MAE, mean absolutely error; MLP, multi-layer perceptron; MSE, meansquared error; RMSE, root of mean-squared error; RFE-RF, recursive feature elimination random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision. and</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head></head><label></label><figDesc>Based on the forecasting performance of XGB, we apply MDM by benchmarking XGB and comparing it with the rest models one by one. A negative realization of the MDM test statistic implies XGB performs better than the second forecast model in prediction accuracy. The results of MDM tests are summarized in Table6.Unsurprisingly, the statistical outcomes of MDM from Table7confirm the consistency of the statistical T A B L E 6 Summary results of modified Diebold-Mariano statistics for MSE and MAE loss functions</figDesc><table><row><cell>Metrics</cell><cell>Best</cell><cell>MLP</cell><cell>LSTM</cell><cell>ε-SVR</cell><cell>ν-SVR</cell><cell>LBM</cell><cell>XGB</cell></row><row><cell>F1</cell><cell cols="3">Panel A: Set of selected factors based on RFE-RF</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À16.513***</cell><cell>À11.028***</cell><cell>À10.865***</cell><cell>À9.632***</cell><cell>À3.675***</cell><cell>À2.750**</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À15.980***</cell><cell>À12.414***</cell><cell>À10.268***</cell><cell>À8.869***</cell><cell>À5.293***</cell><cell>À5.899***</cell><cell>-</cell></row><row><cell>F1</cell><cell cols="3">Panel B: Selected principal components</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À15.423***</cell><cell>À12.028***</cell><cell>À10.865***</cell><cell>À9.632***</cell><cell>À3.675***</cell><cell>À2.750**</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À15.165***</cell><cell>À12.414***</cell><cell>À10.268***</cell><cell>À8.869***</cell><cell>À8.293***</cell><cell>À8.899***</cell><cell>-</cell></row><row><cell>F2</cell><cell cols="3">Panel A: Set of selected factors based on RFE-RF</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À17.416***</cell><cell>À11.325***</cell><cell>À8.816***</cell><cell>À4.858***</cell><cell>À3.330***</cell><cell>À10.709***</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À19.413***</cell><cell>À11.144***</cell><cell>À7708***.</cell><cell>À4.329***</cell><cell>À3.223***</cell><cell>À9.291***</cell><cell>-</cell></row><row><cell>F2</cell><cell cols="3">Panel B: Selected principal components</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À20.471***</cell><cell>À11.437***</cell><cell>À13.620***</cell><cell>À14.725***</cell><cell>À14.808***</cell><cell>À13.651***</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À17.527***</cell><cell>À11.267***</cell><cell>À11.830***</cell><cell>À11.011***</cell><cell>À10.987***</cell><cell>À9.845***</cell><cell>-</cell></row><row><cell>F3</cell><cell cols="3">Panel A: Set of selected factors based on RFE-RF</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À17.970***</cell><cell>À11.489***</cell><cell>À3.304***</cell><cell>À7.097***</cell><cell>À9.171***</cell><cell>À2.982**</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À23.822***</cell><cell>À20.282***</cell><cell>À4.781***</cell><cell>À14.677***</cell><cell>À6.311***</cell><cell>À3.782***</cell><cell>-</cell></row><row><cell>F3</cell><cell cols="3">Panel B: Selected principal components</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>MDM 1</cell><cell>À22.417***</cell><cell>À20.604***</cell><cell>À11.780***</cell><cell>À18.627***</cell><cell>À15.524***</cell><cell>À10.834***</cell><cell>-</cell></row><row><cell>MDM 2</cell><cell>À22.527***</cell><cell>À18.255***</cell><cell>À6.493***</cell><cell>À6.505***</cell><cell>À6.618***</cell><cell>À6.632***</cell><cell>-</cell></row></table><note><p>Note: MDM 1 and MDM 2 are the statistics computed for MAE and MSE loss function, respectively. Missing sections represent the benchmark model. Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MLP, multi-layer perceptron; RFE-RF, recursive feature elimination random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision. *Significance level: 10%. **Significance level: 5%. ***Significance level: 1%.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4"><head></head><label></label><figDesc>Summary results of out-of-sample traditional trading performance SR stands for Sharp ratio, AR stands for annualized return, SOR stands for Sortino ratio, MDD stands for maximum drawdown, and IR stands for information ratio. Benchmark rates used in metrics are the annualized returns of buy-and-hold strategy in each forecasting exercise, which are 0.</figDesc><table><row><cell cols="4">5.1 | Trading performance of traditional</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="2">Forecasting exercise trading strategy (L T ) Metrics</cell><cell>Best</cell><cell>MLP</cell><cell>LSTM</cell><cell>ε-SVR</cell><cell>ν-SVR</cell><cell>LBM</cell><cell>XGB</cell></row><row><cell cols="3">Panel A: Set of selected factors based on RFE-RF</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>F1</cell><cell>SR</cell><cell>0.0945</cell><cell>0.3665</cell><cell>0.3756</cell><cell>0.3873</cell><cell>0.4053</cell><cell>0.4189</cell><cell>0.5164</cell></row><row><cell></cell><cell>AR</cell><cell>0.0111</cell><cell>0.021</cell><cell>0.0214</cell><cell>0.0221</cell><cell>0.0224</cell><cell>0.0228</cell><cell>0.0229</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1774</cell><cell>1.7485</cell><cell>1.9477</cell><cell>2.0374</cell><cell>2.099</cell><cell>2.1321</cell><cell>2.2788</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.2679</cell><cell>À0.3179</cell><cell>À0.3351</cell><cell>À0.349</cell><cell>À0.4063</cell><cell>À0.4087</cell><cell>À0.4505</cell></row><row><cell></cell><cell>IR</cell><cell>0.1571</cell><cell>0.5795</cell><cell>0.5939</cell><cell>0.6123</cell><cell>0.6409</cell><cell>0.6624</cell><cell>0.8164</cell></row><row><cell>F2</cell><cell>SR</cell><cell>0.1031</cell><cell>0.2395</cell><cell>0.2489</cell><cell>0.297</cell><cell>0.3632</cell><cell>0.4047</cell><cell>0.481</cell></row><row><cell></cell><cell>AR</cell><cell>0.0125</cell><cell>0.0219</cell><cell>0.0223</cell><cell>0.0241</cell><cell>0.031</cell><cell>0.0373</cell><cell>0.0378</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1998</cell><cell>1.7409</cell><cell>2.1774</cell><cell>2.4479</cell><cell>3.8398</cell><cell>4.9542</cell><cell>5.7908</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.4464</cell><cell>À0.526</cell><cell>À0.5454</cell><cell>À0.5493</cell><cell>À0.6349</cell><cell>À0.6938</cell><cell>À0.7633</cell></row><row><cell></cell><cell>IR</cell><cell>0.163</cell><cell>0.3786</cell><cell>0.3935</cell><cell>0.4696</cell><cell>0.5742</cell><cell>0.6399</cell><cell>0.7605</cell></row><row><cell>F3</cell><cell>SR</cell><cell>0.0865</cell><cell>0.3472</cell><cell>0.3473</cell><cell>0.3567</cell><cell>0.3596</cell><cell>0.363</cell><cell>0.4664</cell></row><row><cell></cell><cell>AR</cell><cell>0.0104</cell><cell>0.0216</cell><cell>0.0224</cell><cell>0.0228</cell><cell>0.0229</cell><cell>0.023</cell><cell>0.0231</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1741</cell><cell>1.8199</cell><cell>1.836</cell><cell>1.8549</cell><cell>1.8858</cell><cell>2.03</cell><cell>2.045</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.5377</cell><cell>À0.492</cell><cell>À0.5377</cell><cell>À0.5417</cell><cell>À0.5594</cell><cell>À0.5595</cell><cell>À0.5991</cell></row><row><cell></cell><cell>IR</cell><cell>0.131</cell><cell>0.549</cell><cell>0.5492</cell><cell>0.564</cell><cell>0.5686</cell><cell>0.574</cell><cell>0.7374</cell></row><row><cell cols="2">Panel B: Selected principal components</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>F1</cell><cell>SR</cell><cell>0.0945</cell><cell>0.3552</cell><cell>0.3691</cell><cell>0.3707</cell><cell>0.3821</cell><cell>0.4063</cell><cell>0.4945</cell></row><row><cell></cell><cell>AR</cell><cell>0.0111</cell><cell>0.0183</cell><cell>0.0192</cell><cell>0.0196</cell><cell>0.02</cell><cell>0.0219</cell><cell>0.0238</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1774</cell><cell>1.2744</cell><cell>1.54</cell><cell>1.6322</cell><cell>1.708</cell><cell>2.0238</cell><cell>2.7958</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.2679</cell><cell>À0.4064</cell><cell>À0.4124</cell><cell>À0.4319</cell><cell>À0.4363</cell><cell>À0.4367</cell><cell>À0.5317</cell></row><row><cell></cell><cell>IR</cell><cell>0.1571</cell><cell>0.5617</cell><cell>0.5836</cell><cell>0.5862</cell><cell>0.6041</cell><cell>0.6424</cell><cell>0.7819</cell></row><row><cell>F2</cell><cell>SR</cell><cell>0.1031</cell><cell>0.3808</cell><cell>0.3854</cell><cell>0.4098</cell><cell>0.4126</cell><cell>0.4143</cell><cell>0.4468</cell></row><row><cell></cell><cell>AR</cell><cell>0.0125</cell><cell>0.021</cell><cell>0.0212</cell><cell>0.0223</cell><cell>0.0225</cell><cell>0.0226</cell><cell>0.0241</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1998</cell><cell>1.6755</cell><cell>1.6796</cell><cell>1.7388</cell><cell>1.8399</cell><cell>1.8557</cell><cell>2.1192</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.4898</cell><cell>À0.5454</cell><cell>À0.5631</cell><cell>À0.6009</cell><cell>À0.6305</cell><cell>À0.6321</cell><cell>À0.7307</cell></row><row><cell></cell><cell>IR</cell><cell>0.163</cell><cell>0.6022</cell><cell>0.6093</cell><cell>0.6479</cell><cell>0.6524</cell><cell>0.6551</cell><cell>0.7064</cell></row><row><cell>F3</cell><cell>SR</cell><cell>0.0865</cell><cell>0.3208</cell><cell>0.3401</cell><cell>0.3461</cell><cell>0.3531</cell><cell>0.3648</cell><cell>0.4134</cell></row><row><cell></cell><cell>AR</cell><cell>0.0104</cell><cell>0.0189</cell><cell>0.0194</cell><cell>0.0194</cell><cell>0.0196</cell><cell>0.0201</cell><cell>0.0226</cell></row><row><cell></cell><cell>SOR</cell><cell>0.1741</cell><cell>1.189</cell><cell>1.2938</cell><cell>1.3033</cell><cell>1.3527</cell><cell>1.4823</cell><cell>2.0439</cell></row><row><cell></cell><cell>MDD</cell><cell>À0.5377</cell><cell>À0.5383</cell><cell>À0.6155</cell><cell>À0.6247</cell><cell>À0.641</cell><cell>À0.6519</cell><cell>À0.6745</cell></row><row><cell></cell><cell>IR</cell><cell>0.131</cell><cell>0.5072</cell><cell>0.5377</cell><cell>0.5472</cell><cell>0.5583</cell><cell>0.5767</cell><cell>0.6537</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>01826,</cell></row><row><cell>0.01185, and 0.01881.</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell cols="9">Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MLP, multi-layer perceptron; RFE-RF, recursive feature elimination</cell></row><row><cell cols="5">random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table><note><p><p>T A B L E 8</p>Note:</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head></head><label></label><figDesc>Summary results of out-of-sample sentiment (L P ) leveraged trading performance Summary results of out-of-sample hybrid leveraged trading performance SR stands for Sharp ratio, AR stands for annualized return, SOR stands for Sortino ratio, MDD stands for maximum drawdown, and IR stands for information ratio. Benchmark rates used in metrics are the annualized returns of buy-and-hold strategy in each forecasting exercise, which are 0.</figDesc><table><row><cell>5.2.3 | Hybrid leverage (L H )</cell></row><row><cell>T A B L E 1 0 Forecasting exercise Panel A: Set of selected factors based on RFE-RF Metrics Best F1 SR 0.4208 AR 0.0157 SOR 0.6425 MDD À0.4321 IR 0.6653 F2 SR 0.2765 AR 0.0181 SOR 1.0624 MDD À0.6511 IR 0.4371 F3 SR 0.4331 AR 0.0145 SOR 0.5234 MDD À0.631 IR 0.6848 Panel B: Selected principal components F1 SR 0.4208 AR 0.0157 SOR 0.6425 MDD À0.4769 IR 0.6653 F2 SR 0.4978 AR 0.0181 SOR 1.0624 MDD À0.6667 IR 0.7871 F3 SR 0.4331 AR 0.0145 SOR 0.5234 MDD À0.7263 IR 0.6848 profitability metrics. Taking F1 as example, annualized MLP 0.5321 0.0295 3.4612 À0.4769 0.8414 0.3441 0.0308 3.4922 À0.7275 0.544 0.4996 0.0302 3.69 À0.7174 0.7899 0.606 0.0261 2.8291 À0.5583 0.9581 0.5715 0.0295 3.451 À0.7275 0.9036 0.5505 0.0262 2.6373 À0.7493 0.8704 Metrics Best MLP Panel A: Set of selected factors based on RFE-RF F1 SR 0.428 0.526 AR 0.017 0.031 SOR 0.820 3.573 MDD À0.484 À0.511 IR 0.677 0.831 F2 SR 0.248 0.313 AR 0.019 0.033 SOR 1.172 4.163 MDD À0.802 À0.863 IR 0.392 0.495 F3 SR 0.443 0.471 AR 0.016 0.033 SOR 0.781 4.491 MDD À0.729 À0.784 IR 0.701 0.7458 Panel B: Selected principal components F1 SR 0.4286 0.5778 AR 0.0171 0.0288 SOR 0.8201 3.1777 MDD À0.5109 À0.6171 IR 0.6776 0.9135 F2 SR 0.4491 0.5536 AR 0.0193 0.0327 SOR 1.172 3.8486 MDD À0.8579 À0.8632 IR 0.71 0.8753 F3 SR 0.4433 0.5321 AR 0.0162 0.0295 SOR 0.7814 3.2532 MDD À0.7846 À0.8416 IR 0.7009 0.8414 0.01185, and 0.01881. Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MLP, multi-layer perceptron; RFE-RF, recursive feature elimination LSTM ε-SVR ν-SVR LBM XGB 0.5468 0.5473 0.5589 0.5949 0.7427 0.0298 0.0307 0.0312 0.0319 0.0323 3.6569 3.7646 3.9059 3.9153 4.457 À0.5184 À0.5186 À0.6058 À0.6096 À0.6608 0.8646 0.8654 0.8837 0.9406 1.1743 0.346 0.4978 0.502 0.5668 0.6974 0.0312 0.0342 0.0438 0.052 0.0525 4.2986 5.0811 6.815 8.4348 9.9046 À0.76 À0.789 À0.8197 À0.9525 À0.968 0.5471 0.7871 0.7937 0.8962 1.1027 0.5122 0.516 0.5222 0.5242 0.7089 0.0309 0.0316 0.0316 0.0319 0.032 3.7381 3.8228 3.8382 4.2082 4.218 À0.7263 À0.7504 À0.7893 À0.8001 À0.8713 0.8099 0.8159 0.8257 0.8289 1.1209 0.6068 0.615 0.6168 0.6208 0.6837 0.0276 0.028 0.0286 0.0313 0.0339 3.4197 3.4654 3.6127 4.1762 5.4981 À0.574 À0.5924 À0.5972 À0.5994 À0.712 0.9594 0.9724 0.9753 0.9816 1.081 0.5775 0.5857 0.5864 0.5868 0.6175 0.0298 0.0313 0.0315 0.0316 0.034 3.458 3.4993 3.5783 3.5947 4.1888 À0.7383 À0.8037 À0.8232 À0.8258 À0.8953 0.9131 0.9261 0.9271 0.9279 0.9764 0.5715 0.5935 0.5965 0.6003 0.6195 0.0269 0.0269 0.027 0.0278 0.0313 2.8021 2.8386 2.9215 3.2667 4.2978 À0.8571 À0.8603 À0.8833 À0.8914 À0.9155 0.9037 0.9384 0.9432 0.9491 0.9794 LSTM ε-SVR ν-SVR LBM XGB 0.5288 0.5399 0.5475 0.5493 0.7229 0.0329 0.0339 0.034 0.0343 0.0379 3.9301 4.2511 4.2646 4.4093 4.737 À0.5603 À0.5608 À0.7123 À0.727 À0.7287 0.8362 0.8537 0.8657 0.8685 1.143 0.3211 0.4491 0.464 0.5125 0.7115 0.0343 0.0376 0.0482 0.0569 0.0578 5.5072 5.9065 7.9759 10.5002 12.6815 À0.906 À0.9494 À0.9571 À0.9961 À0.9969 0.5077 0.71 0.7337 0.8104 1.125 0.4826 0.4922 0.4953 0.4976 0.6778 0.0351 0.0359 0.036 0.0361 0.0362 4.503 4.5694 4.6788 4.992 5.0014 À0.826 À0.852 À0.878 À0.887 À0.9414 0.7631 0.7783 0.7832 0.7867 1.0717 0.5783 0.5784 0.581 0.5814 0.6304 0.0303 0.0311 0.0316 0.0347 0.0373 3.5642 3.8757 3.9319 4.8625 5.9532 À0.6194 À0.6448 À0.6492 À0.6515 À0.7557 0.9143 0.9145 0.9186 0.9193 0.9967 0.5555 0.5556 0.5564 0.5666 0.5927 0.0332 0.0346 0.0348 0.035 0.0376 3.9254 4.0158 4.1704 4.2243 4.711 À0.8823 À0.9154 À0.9351 À0.9354 À0.9618 0.8783 0.8784 0.8798 0.8958 0.9371 0.5476 0.5638 0.5724 0.5759 0.5909 0.0303 0.0304 0.0304 0.0312 0.0353 3.3726 3.4429 3.5415 3.9141 4.8992 À0.9193 À0.921 À0.9258 À0.9326 À0.9645 0.8659 0.8915 0.905 0.9106 0.9343 01826, returns of XGB increases from 2.29% (L Forecasting exercise random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision.</cell></row></table><note><p><p>Note: SR stands for Sharp ratio, AR stands for annualized return, SOR stands for Sortino ratio, MDD stands for maximum drawdown, and IR stands for information ratio. Benchmark rates used in metrics are the annualized returns of buy-and-hold strategy in each forecasting exercise, which are 0.01826, 0.01185, and 0.01881. Abbreviations: LBM, Light Gradient Boost Decision; LSTM, long-short term memory; MLP, multi-layer perceptron; RFE-RF, recursive feature elimination random forest; SVR, support vector regression; XGB, Extreme Gradient Boost Decision. T ) to 3.23 (L P ), Sharpe ratio increases from 51.64% (L T ) to 74.27% (L P ), Sortino ratio increases from 2.2788 (L T ) to 4.457 (L P ), and information ratio increases from 81.64% (L T ) to 1.1743 (L P ). Although L P still amplifies the general volatility, it seems to work better than L V in solving extreme cases since MDD decreases from À78% (L V ) to À66% (L P ). In addition, XGB at least increases by 39% across three forecasting exercises under each profitability metric. In conclusion, we state the success of the sentiment leverage strategy.</p>T A B L E 1 1 Note:</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Journal of Forecasting. 2023;42:852-871. wileyonlinelibrary.com/journal/for</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>1099131x, 2023, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/for.2922 by NHS Education for Scotland NES, Edinburgh Central Office, Wiley Online Library on [19/06/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are available from the corresponding author upon reasonable request.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SUPPORTING INFORMATION</head><p>Additional supporting information can be found online in the Supporting Information section at the end of this article.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Sentiment disagreement and bitcoin price fluctuations: A psycholinguistic approach</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Ahn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Kim</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Applied Economics Letters</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="412" to="416" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Prediction of cryptocurrency returns using machine learning</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Akyildirim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Goncu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Sensoy</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10479-020-03575-y</idno>
+		<ptr target="https://doi.org/10.1007/s10479-020-03575-y" />
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Operations Research</title>
+		<imprint>
+			<biblScope unit="volume">297</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="3" to="36" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Machine learning from theory to algorithms: An overview</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Alzubi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nayyar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kumar</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/1742-6596/1142/1/012012</idno>
+		<ptr target="https://doi.org/10.1088/1742-6596/1142/1/012012" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Physics: Conference Series</title>
+		<imprint>
+			<biblScope unit="page">12012</biblScope>
+			<date type="published" when="1142">2018. 1142</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Deriving the pricing power of product features by mining consumer reviews</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Archak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ghose</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">G</forename><surname>Ipeirotis</surname></persName>
+		</author>
+		<idno type="DOI">10.1287/mnsc.1110.1370</idno>
+		<ptr target="https://doi.org/10.1287/mnsc.1110.1370" />
+	</analytic>
+	<monogr>
+		<title level="j">Management Science</title>
+		<imprint>
+			<biblScope unit="volume">57</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1485" to="1509" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Causal inference between cryptocurrency narratives and prices: Evidence from a complex dynamic ecosystem</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Azqueta-Gavald On</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.physa.2019.122574</idno>
+		<ptr target="https://doi.org/10.1016/j.physa.2019.122574" />
+	</analytic>
+	<monogr>
+		<title level="j">Physica A: Statistical Mechanics and its Applications</title>
+		<imprint>
+			<biblScope unit="volume">537</biblScope>
+			<biblScope unit="page">122574</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Latent Dirichlet allocation</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Blei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">Y</forename><surname>Ng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">I</forename><surname>Jordan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Machine Learning Research</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="993" to="1022" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Sentiment spillover and price dynamics: Information flow in the cryptocurrency and stock market</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Caferra</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.physa.2022.126983</idno>
+		<ptr target="https://doi.org/10.1016/j.physa.2022.126983" />
+	</analytic>
+	<monogr>
+		<title level="j">Physica A: Statistical Mechanics and its Applications</title>
+		<imprint>
+			<biblScope unit="volume">593</biblScope>
+			<biblScope unit="page">126983</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">An overview of machine learning</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Carbonell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Michalski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Mitchell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Machine Learning</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="3" to="23" />
+			<date type="published" when="1983">1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Technology adoption news and corporate reputation: Sentiment analysis about the introduction of Bitcoin</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Caviggioli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Lamberti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Landoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Meola</surname></persName>
+		</author>
+		<idno type="DOI">10.1108/jpbm-03-2018-1774</idno>
+		<ptr target="https://doi.org/10.1108/jpbm-03-2018-1774" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Product &amp; Brand Management</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="877" to="897" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Sentiment-induced bubbles in the cryptocurrency market</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Hafner</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/jrfm12020053</idno>
+		<ptr target="https://doi.org/10.3390/jrfm12020053" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Risk and Financial Management</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">53</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Xgboost: A scalable tree boosting system</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Guestrin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</title>
+		<meeting>the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</meeting>
+		<imprint>
+			<date type="published" when="2016-08">2016. August</date>
+			<biblScope unit="page" from="785" to="794" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Machine learning model for Bitcoin exchange rate prediction using economic and technology determinants</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Gao</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijforecast.2020.02.008</idno>
+		<ptr target="https://doi.org/10.1016/j.ijforecast.2020.02.008" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="28" to="43" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Experimental explorations on short text topic mining between LDA and NMF based schemes</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lin</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.knosys.2018.08.011</idno>
+		<ptr target="https://doi.org/10.1016/j.knosys.2018.08.011" />
+	</analytic>
+	<monogr>
+		<title level="j">Knowledge-Based Systems</title>
+		<imprint>
+			<biblScope unit="volume">163</biblScope>
+			<biblScope unit="page" from="1" to="13" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The economics of BitCoin price formation</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ciaian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rajcaniova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Kancs</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/00036846.2015.1109038</idno>
+		<ptr target="https://doi.org/10.1080/00036846.2015.1109038" />
+	</analytic>
+	<monogr>
+		<title level="j">Applied Economics</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="issue">19</biblScope>
+			<biblScope unit="page" from="1799" to="1815" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Fuzzy forests: Extending random forest feature selection for correlated, highdimensional data</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Conn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ngun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Ramirez</surname></persName>
+		</author>
+		<idno type="DOI">10.18637/jss.v091.i09</idno>
+		<ptr target="https://doi.org/10.18637/jss.v091.i09" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Statistical Software</title>
+		<imprint>
+			<biblScope unit="volume">91</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="25" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Learning and predictability via technical analysis: Evidence from bitcoin and stocks with hard-to-value fundamentals</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Detzel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Strauss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Financial Management</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="107" to="137" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The use of prior information in forecast combination</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">X</forename><surname>Diebold</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Pauly</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="503" to="508" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Investor reaction to financial disclosures across topics: An application of latent Dirichlet allocation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Feuerriegel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Pröllochs</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/deci.12346</idno>
+		<ptr target="https://doi.org/10.1111/deci.12346" />
+	</analytic>
+	<monogr>
+		<title level="j">Decision Sciences</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="608" to="628" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Additive logistic regression: A statistical view of boosting (with discussion and a rejoinder by the authors)</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Tibshirani</surname></persName>
+		</author>
+		<idno type="DOI">10.1214/aos/1016218223</idno>
+		<ptr target="https://doi.org/10.1214/aos/1016218223" />
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="337" to="407" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Greedy function approximation: A gradient boosting machine</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Friedman</surname></persName>
+		</author>
+		<idno type="DOI">10.1214/aos/1013203451</idno>
+		<ptr target="https://doi.org/10.1214/aos/1013203451" />
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Statistics</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="1189" to="1232" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Social signals and algorithmic trading of Bitcoin</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Garcia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Schweitzer</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rsos.150288</idno>
+		<ptr target="https://doi.org/10.1098/rsos.150288" />
+	</analytic>
+	<monogr>
+		<title level="j">Royal Society Open Science</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">150288</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Forecast performance and bubble analysis in noncausal MAR(1, 1) processes</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gourieroux</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hencic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Jasiak</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/for.2716</idno>
+		<ptr target="https://doi.org/10.1002/for.2716" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="301" to="326" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Guégan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Renault</surname></persName>
+		</author>
+		<title level="m">Does investor sentiment on social media provide robust information for Bitcoin returns predictability? Finance Research Letters</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page">101494</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">A test for superior predictive ability</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Hansen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Business &amp; Economic Statistics</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="365" to="380" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Realized GARCH: A joint model for returns and realized measures of volatility</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Shek</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Applied Econometrics</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="877" to="906" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Understanding cryptocurrencies</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Härdle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Harvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Reule</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/jjfinec/nbz033</idno>
+		<ptr target="https://doi.org/10.1093/jjfinec/nbz033" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Financial Econometrics</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="181" to="208" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Testing the equality of prediction mean squared errors</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Harvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Leybourne</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Newbold</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0169-2070(96)00719-4</idno>
+		<ptr target="https://doi.org/10.1016/S0169-2070" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="719" to="723" />
+			<date type="published" when="1997">1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">A comparative study of Bitcoin price prediction using deep learning</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Im</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/math7100898</idno>
+		<ptr target="https://doi.org/10.3390/math7100898" />
+	</analytic>
+	<monogr>
+		<title level="j">Mathematics</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">898</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Trader leverage and liquidity</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Kahraman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">E</forename><surname>Tookes</surname></persName>
+		</author>
+		<idno type="DOI">10.1111/jofi.12507</idno>
+		<ptr target="https://doi.org/10.1111/jofi.12507" />
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Finance</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1567" to="1610" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Using sentiment analysis to predict intraday Bitcoin price movements</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Karalevicius</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Degrande</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>De Weerdt</surname></persName>
+		</author>
+		<idno type="DOI">10.1108/JRF-06-2017-0092</idno>
+		<ptr target="https://doi.org/10.1108/JRF-06-2017-0092" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Risk Finance</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="56" to="75" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Volatility estimation for Bitcoin: A comparison of GARCH models</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Katsiampa</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.econlet.2017.06.023</idno>
+		<ptr target="https://doi.org/10.1016/j.econlet.2017.06.023" />
+	</analytic>
+	<monogr>
+		<title level="j">Economics Letters</title>
+		<imprint>
+			<biblScope unit="volume">158</biblScope>
+			<biblScope unit="page" from="3" to="6" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">LightGBM: A highly efficient gradient boosting decision tree</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ke</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Finley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">Y</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Neural Information Processing Systems</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="3146" to="3154" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Intelligent forecasting with machine learning trading systems in chaotic intraday Bitcoin market</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lahmiri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bekiros</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.chaos.2020.109641</idno>
+		<ptr target="https://doi.org/10.1016/j.chaos.2020.109641" />
+	</analytic>
+	<monogr>
+		<title level="j">Chaos, Solitons &amp; Fractals</title>
+		<imprint>
+			<biblScope unit="volume">133</biblScope>
+			<biblScope unit="page">109641</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Sentiment analysis and opinion mining</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-3-031-02145-9</idno>
+		<ptr target="https://doi.org/10.1007/978-3-031-02145-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Synthesis Lectures on Human Language Technologies</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="167" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Bitcoin volatility, stock market and investor sentiment. Are they connected?</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Opez-Cabarcos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">Á</forename><surname>Pérez-Pico</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Piñeiro-Chousa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Ševi C</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename></persName>
+		</author>
+		<idno type="DOI">10.1016/j.frl.2019.101399</idno>
+		<ptr target="https://doi.org/10.1016/j.frl.2019.101399" />
+	</analytic>
+	<monogr>
+		<title level="j">Finance Research Letters</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page">101399</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Study on a prediction of P2P network loan default based on the machine learning LightGBM and XGboost algorithms according to different high dimensional data cleaning</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Niu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.elerap.2018.08.002</idno>
+		<ptr target="https://doi.org/10.1016/j.elerap.2018.08.002" />
+	</analytic>
+	<monogr>
+		<title level="j">Electronic Commerce Research and Applications</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="24" to="39" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">How does social media impact Bitcoin value? A test of the silent majority hypothesis</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Mai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">H</forename><surname>Chiang</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/07421222.2018.1440774</idno>
+		<ptr target="https://doi.org/10.1080/07421222.2018.1440774" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Management Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="19" to="52" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Predicting the direction, maximum, minimum and closing prices of daily Bitcoin exchange rate using machine learning techniques</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C A</forename><surname>Mallqui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Fernandes</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.asoc.2018.11.038</idno>
+		<ptr target="https://doi.org/10.1016/j.asoc.2018.11.038" />
+	</analytic>
+	<monogr>
+		<title level="j">Applied Soft Computing</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="596" to="606" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<title level="m" type="main">Predicting the price of Bitcoin using machine learning</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Mcnally</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Roche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Caton</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<publisher>IEEE</publisher>
+			<biblScope unit="page">339</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Cryptocurrency exchanges: Predicting which markets will remain active</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Milunovich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Lee</surname></persName>
+		</author>
+		<idno type="DOI">10.2139/ssrn.3799742</idno>
+		<ptr target="https://doi.org/10.2139/ssrn.3799742" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="945" to="955" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Combining principal component analysis, discrete wavelet transform and XGBoost to trade in the financial markets</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Nobre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">F</forename><surname>Neves</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.eswa.2019.01.083</idno>
+		<ptr target="https://doi.org/10.1016/j.eswa.2019.01.083" />
+	</analytic>
+	<monogr>
+		<title level="j">Expert Systems with Applications</title>
+		<imprint>
+			<biblScope unit="volume">125</biblScope>
+			<biblScope unit="page" from="181" to="194" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Power, trust, social exchange and community support</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Nunkoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Ramkissoon</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.annals.2011.11.017</idno>
+		<ptr target="https://doi.org/10.1016/j.annals.2011.11.017" />
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Tourism Research</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="997" to="1023" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Machine learning models comparison for Bitcoin price prediction</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Phaladisailoed</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Numnonda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">10th International Conference on Information Technology and Electrical Engineering (ICITEE)</title>
+		<imprint>
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<monogr>
+		<title level="m" type="main">Real-time prediction of BITCOIN price using machine learning techniques and public sentiment analysis</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">M</forename><surname>Raju</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Tarif</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2006.14473</idno>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Bridging the gap between relevance matching and semantic matching for short text similarity modeling</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing</title>
+		<meeting>the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing</meeting>
+		<imprint>
+			<publisher>EMNLP-IJCNLP</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="5373" to="5384" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">The boosting approach to machine learning: An overview</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">E</forename><surname>Schapire</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/978-0-387-21579-2_9</idno>
+		<ptr target="https://doi.org/10.1007/978-0-387-21579-2_9" />
+	</analytic>
+	<monogr>
+		<title level="j">Nonlinear Estimation and Classification</title>
+		<imprint>
+			<biblScope unit="volume">171</biblScope>
+			<biblScope unit="page" from="149" to="171" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Stochastic and genetic neural network combinations in trading and hybrid time-varying leverage effects</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sermpinis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stasinakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Dunis</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.intfin.2014.01.006</idno>
+		<ptr target="https://doi.org/10.1016/j.intfin.2014.01.006" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of International Financial Markets, Institutions and Money</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="21" to="54" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Reverse adaptive krill herd locally weighted support vector regression for forecasting and trading exchange traded funds</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sermpinis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stasinakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Hassanniakalager</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ejor.2017.06.019</idno>
+		<ptr target="https://doi.org/10.1016/j.ejor.2017.06.019" />
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">263</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="540" to="558" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">SPRINT: A scalable parallel classifier for data mining</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Shafer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Agrawal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mehta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Vldb</title>
+		<imprint>
+			<date type="published" when="1996-09">1996, September</date>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="page" from="544" to="555" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">A Hitchhiker&apos;s guide to the techniques of adaptive nonlinear models</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">F</forename><surname>Shapiro</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0167-6687(99)00058-X</idno>
+		<ptr target="https://doi.org/10.1016/S0167-6687" />
+	</analytic>
+	<monogr>
+		<title level="j">Insurance: Mathematics and Economics</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">2-3</biblScope>
+			<biblScope unit="page">58</biblScope>
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Bitcoin price prediction using ensembles of neural networks</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Sin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2017 13th International Conference on Natural Computation, Fuzzy Systems and Knowledge Discovery (ICNC-FSKD)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2017-07">2017, July</date>
+			<biblScope unit="page" from="666" to="671" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Krill-herd support vector regression and heterogeneous autoregressive leverage: Evidence from forecasting and trading commodities</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stasinakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sermpinis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Psaradellis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Verousis</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/14697688.2016.1211800</idno>
+		<ptr target="https://doi.org/10.1080/14697688.2016.1211800" />
+	</analytic>
+	<monogr>
+		<title level="j">Quantitative Finance</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1901" to="1915" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Mining Facebook data of people with rare diseases: A content-based and temporal analysis</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Subirats</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Reguera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Bañ On</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>G Omez-Zúñiga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Minguill On</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Armayones</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/ijerph15091877</idno>
+		<ptr target="https://doi.org/10.3390/ijerph15091877" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Environmental Research and Public Health</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">1877</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">A novel cryptocurrency price trend forecasting model based on LightGBM</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Sima</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.frl.2018.12.032</idno>
+		<ptr target="https://doi.org/10.1016/j.frl.2018.12.032" />
+	</analytic>
+	<monogr>
+		<title level="j">Finance Research Letters</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page">101084</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">The mutual predictability of Bitcoin and web search dynamics</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Süssmuth</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="435" to="454" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Statistical properties and multifractality of bitcoin</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Takaishi</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.physa.2018.04.046</idno>
+		<ptr target="https://doi.org/10.1016/j.physa.2018.04.046" />
+	</analytic>
+	<monogr>
+		<title level="j">Physica A: Statistical Mechanics and its Applications</title>
+		<imprint>
+			<biblScope unit="volume">506</biblScope>
+			<biblScope unit="page" from="507" to="519" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Application of support vector machines in financial time series forecasting</title>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">E</forename><surname>Tay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cao</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0305-0483(01)00026-3</idno>
+		<ptr target="https://doi.org/10.1016/S0305-0483(01)00026-3" />
+	</analytic>
+	<monogr>
+		<title level="j">Omega</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="309" to="317" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+		<title level="m" type="main">What causes the attention of Bitcoin? Economics Letters</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Urquhart</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.econlet.2018.02.017</idno>
+		<idno>02.017</idno>
+		<ptr target="https://doi.org/10.1016/j.econlet.2018" />
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">166</biblScope>
+			<biblScope unit="page" from="40" to="44" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Price movement prediction of cryptocurrencies using sentiment analysis and machine learning</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Valencia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>G Omez-Espinosa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Valdés-Aguirre</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/e21060589</idno>
+		<ptr target="https://doi.org/10.3390/e21060589" />
+	</analytic>
+	<monogr>
+		<title level="j">Entropy</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">589</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">IRESpy: An XGBoost model for prediction of internal ribosome entry sites</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Gribskov</surname></persName>
+		</author>
+		<idno type="DOI">10.1186/s12859-019-2999-7</idno>
+		<ptr target="https://doi.org/10.1186/s12859-019-2999-7" />
+	</analytic>
+	<monogr>
+		<title level="j">BMC Bioinformatics</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="409" to="415" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">BiLSTM with multi-polarity orthogonal attention for implicit sentiment analysis</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Zhao</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.neucom.2019.11.054</idno>
+		<ptr target="https://doi.org/10.1016/j.neucom.2019.11.054" />
+	</analytic>
+	<monogr>
+		<title level="j">Neurocomputing</title>
+		<imprint>
+			<biblScope unit="volume">383</biblScope>
+			<biblScope unit="page" from="165" to="173" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<monogr>
+		<title level="m" type="main">Exploring the influence of news articles on Bitcoin price with machine learning</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>IEEE</publisher>
+			<biblScope unit="page">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">Quantifying the cross-correlations between online searches and Bitcoin market</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Shen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.physa.2018.06.073</idno>
+		<ptr target="https://doi.org/10.1016/j.physa.2018.06.073" />
+	</analytic>
+	<monogr>
+		<title level="j">Physica A: Statistical Mechanics and its Applications</title>
+		<imprint>
+			<biblScope unit="volume">509</biblScope>
+			<biblScope unit="page" from="657" to="672" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Forecasting Bitcoin volatility: A new insight from the threshold regression model</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/for.2822</idno>
+		<ptr target="https://doi.org/10.1002/for.2822" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Forecasting</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="633" to="652" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Revisiting Fama-French factors&apos; predictability with Bayesian modelling and copula-based portfolio optimization</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Stasinakis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Sermpinis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">D</forename><surname>Fernandes</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/ijfe.1742</idno>
+		<ptr target="https://doi.org/10.1002/ijfe.1742" />
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Finance &amp; Economics</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1443" to="1463" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

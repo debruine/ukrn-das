@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Equalizing urban agriculture access in Glasgow: A spatial optimization approach</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-10-26">26 October 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Amy</forename><surname>Russell</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Geographical and Earth Sciences</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Ziqi</forename><surname>Li</surname></persName>
+							<email>ziqi.li@fsu.edu</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Geography</orgName>
+								<orgName type="institution">Florida State University</orgName>
+								<address>
+									<country key="US">United States</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Mingshu</forename><surname>Wang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Geographical and Earth Sciences</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">Department of Geography</orgName>
+								<orgName type="institution">Florida State University</orgName>
+								<address>
+									<postCode>32306</postCode>
+									<settlement>Tallahassee</settlement>
+									<country key="US">United States</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Equalizing urban agriculture access in Glasgow: A spatial optimization approach</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-10-26">26 October 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">EEA8834C4F5FCBE2B70D5325034CDDAD</idno>
+					<idno type="DOI">10.1016/j.jag.2023.103525</idno>
+					<note type="submission">Received 1 June 2023; Received in revised form 10 October 2023; Accepted 15 October 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:09+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Community gardens Urban agriculture Food insecurity Spatial optimisation Spatial inequality</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Glasgow, Scotland, United Kingdom, has long-term issues with inequalities in health and food security, as well as large areas of vacant and derelict land. Urban agriculture projects can increase access to fresh food, improve mental health and nutrition, and empower and bring communities together. We investigated the distribution of urban agriculture in Glasgow and found that the current configuration of urban agriculture projects is mostly located centrally in the city, covering 36 % of the total population (approximately 635,000) within 10-minute walking distance. We also found a positive correlation (r = 0.13, p = 0.0003) between the walking travel time to the nearest urban agriculture project and the food desert status. To increase urban agriculture access across the city, we used the Maximal Covering Location Problem (MCLP) model to optimally situate new urban agriculture projects on vacant and derelict land to maximize the covered population. We identified that a minimum of 15 new urban agriculture projects could increase the population coverage to 49 % and equalize the access disparity to a statistically non-significant level. This research shows that converting vacant and derelict land in Glasgow into urban agriculture projects could both help with the city's problem of vacant and derelict land and bring many potential benefits to local communities.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Cities are densely populated areas that often lack space for growing food. With most food being brought in from elsewhere, accessing affordable healthy food can be a challenge. Although there are varying definitions of food security in the literature, the World Health Organization <ref type="bibr">(World Health Organization, 2018)</ref> emphasized that food security should be composed of three pillars: food availability, food accessibility, and knowledge of nutrition and use of food. Food insecurity is experienced in food deserts, where it is difficult to access fresh, affordable food due mainly to a lack of access to stores that stock these types of food.</p><p>Urban agriculture, in the UK context, often refers to community gardens or allotments, spaces where people can grow food <ref type="bibr" target="#b15">(Firth et al., 2011;</ref><ref type="bibr" target="#b47">White and Bunn, 2017)</ref>. While urban agriculture projects are unlikely to provide all the food required to create a food-secure community, they can assist in achieving the three pillars of food security identified by the WHO. Firstly, food can be made more available to people if it is grown near their homes. Secondly, there is a low financial cost to growing and obtaining this food, making fresh food more financially accessible than store-bought produce. Finally, knowledge of food and its preparation can be exchanged with others at the community garden or allotment as well as events such as workshops, as some urban agriculture projects organize.</p><p>Despite the benefits of urban agriculture, the avavaility and accessibility of urban agriculture are often limited and unequal arcoss the city. For example, <ref type="bibr" target="#b25">Mack et al. (2017)</ref> found that in Phoenix, US, most urban community gardens are located in highly central areas of the city. Similarly, <ref type="bibr" target="#b32">Meenar (2017)</ref> found a clustering of areas with high urban agriculture access in the central area of Philadelphia, US and lower access at the edges of the study area. In China, <ref type="bibr" target="#b11">Ding et al. (2022)</ref> found that the spatial distribution of urban community gardens is uneven due to differences in precipitation, temperature, and policies within and between cities. In addition to the issue of food security, there is the Food Justice Movement, which is gaining momentum. The Food Justice Movement believes that communities have the right to grow and eat fresh, nutritious, affordable food <ref type="bibr" target="#b7">(Crossan et al. 2015)</ref>. Thus, everyone should have the choice and resources to grow food. <ref type="bibr">Kneafsey et al. (2016)</ref> found that projects that support local food growing and encourage the growing of exotic crops can advocate food justice. Additionally, shared gardening projects can benefit individuals' relationships with food <ref type="bibr">(Kneafsey et al. 2016)</ref>. Therefore, increasing the avavaility and accessibility of urban agriculture is crucial to promoting food security for city residents.</p><p>In this paper, we examined urban agriculture access in the city of Glasgow, Scotland, which has long-term issues with inequalities in health and food security. There is a well-documented phenomenon known as the "Glasgow Effect," which points to the fact that, in comparison to the rest of the United Kingdom and Europe, residents of Glasgow tend to have a lower life expectancy <ref type="bibr" target="#b38">(Reid, 2011)</ref>. One contributing factor to this is deprivation. Glasgow City Council is the second largest (area) Scottish city council, with the largest share of deprived areas. For example, the 2020 Scottish Index of Multiple Deprivation found that an area in Glasgow City -Carntyne West and Haghill, is the second most deprived area in Scotland. Additionally, North Barlanark and Easterhouse South, another area of Glasgow City, was the fifth most deprived of the 6,976 data zones in Scotland. Glasgow also has significant inequalities in the health of people in affluent areas compared to poorer areas <ref type="bibr" target="#b26">(Macleod et al. 2019)</ref>. In areas of high poverty in Glasgow, people may face barriers to accessing healthy, fresh produce and suffer from food insecurity.</p><p>Glasgow is also confronted with a significant presence of vacant and derelict land (VDL). Despite governmental efforts to reduce it, there remains 939 ha of VDL in the city, constituting over 3 % of Glasgow's total land area <ref type="bibr">(Glasgow City Council, 2020)</ref>. VDL often poses safety, security, and public health concerns for neighborhoods, potentially subjecting residents to additional day-to-day stresses that can have direct impacts on physical health, as well as adverse mental and emotional consequences <ref type="bibr">(Greenberg et al., 1998;</ref><ref type="bibr">Maantay, 2013;</ref><ref type="bibr" target="#b36">Park and Ciorici, 2013)</ref>. Transforming VDL into urban agriculture projects has emerged as an attractive alternative use, with substantial positive effects on neighborhood quality of life. This includes enhancements in aesthetic appeal, increased community involvement, improved mental well-being, greater access to fresh produce, and expanded recreational opportunities, among other benefits <ref type="bibr" target="#b36">(Park and Ciorici, 2013;</ref><ref type="bibr" target="#b10">De Sousa, 2006)</ref>.</p><p>Consequently, this project aims to apply GIS methods to investigate the distribution and accessibility of urban agriculture in Glasgow City, as well as its links with existing food insecurity status through a food desert index. Additionally, the research aims to determine whether vacant land in the city could be utilized to reduce inequalities in urban agriculture access and provide more equitable access using spatial optimization models. This paper is organized as follows: In Section 2, an expanded discussion on the benefits of urban agriculture is presented. Section 3 describes the data and methods used in this research. Section 4 presents the results of the analysis with extensive discussion. The paper concludes in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Benefits of urban agriculture</head><p>The benefits of urban agriculture are well-recognized. Urban agriculture has been proven to increase community engagement, improve mental well-being, and improve access to fresh food, among other things <ref type="bibr" target="#b13">(D'Abundo and Carden, 2009;</ref><ref type="bibr" target="#b18">Hara et al., 2013;</ref><ref type="bibr">McVey et al., 2017;</ref><ref type="bibr" target="#b43">Wakefield et al., 2007;</ref><ref type="bibr" target="#b29">McClintock and Duchemin, 2022)</ref>. In low-income neighborhoods, urban agriculture programs improve the perception of the neighborhood environment, and have the potential to lower crime and depression <ref type="bibr" target="#b0">(Armstrong, 2000)</ref>. In a case study in <ref type="bibr">Massachusetts, McCabe (2014)</ref> found that community garden set-up programs are a cost-effective tool to help reduce youth crime, stabilize the neighborhood, and tackle poor nutrition. <ref type="bibr" target="#b2">Carney et al. (2012)</ref> found that community gardening can reduce food insecurity and strengthen family relationships. They also found that community gardening can improve the diet, for example, by increasing the frequency of vegetable intake per day for both adults and children <ref type="bibr" target="#b2">(Carney et al. 2012)</ref>. While it would be challenging to be completely self-sufficient by growing food in the Scottish climate, urban agriculture projects have shown to be very beneficial to people, particularly in deprived areas. <ref type="bibr" target="#b8">Cumbers et al. (2018)</ref> noted that community gardens provide an attractive and safe space for people to sit outdoors and enjoy in low-income areas of Glasgow. Multiple studies have reported on the positive mental wellbeing effects of urban community gardening in various countries <ref type="bibr" target="#b0">(Armstrong, 2000;</ref><ref type="bibr" target="#b6">Corrigan, 2011;</ref><ref type="bibr" target="#b21">Koay and Dillon, 2020;</ref><ref type="bibr" target="#b37">Petrovic, 2019;</ref><ref type="bibr" target="#b43">Wakefield et al., 2007)</ref>. This was also identified in personal accounts from Glasgow community garden volunteers, who said it helped them get out of the house and relieve stress <ref type="bibr" target="#b7">(Crossan et al., 2015)</ref>. Similarly, a study on three community gardens in Edinburgh found that they were viewed as places with positive mental health and leisure benefits <ref type="bibr" target="#b30">(McVey et al., 2018)</ref>.</p><p>Additionally, urban agriculture projects have proved helpful in tackling social and cultural issues and bringing people from different countries together <ref type="bibr" target="#b30">(McVey et al., 2018)</ref>. All the respondents from community gardens in Edinburgh who were not born in the UK spoke of food production and community engagement being their main reasons for getting involved <ref type="bibr" target="#b30">(McVey et al., 2018)</ref>. Additionally, in Glasgow, community gardens have brought people from different countries together, strengthening connections in their neighborhood <ref type="bibr" target="#b7">(Crossan et al., 2015;</ref><ref type="bibr" target="#b8">Cumbers et al., 2018)</ref>. This has been found elsewhere, for example, in East Harlem, New York <ref type="bibr" target="#b37">(Petrovic et al., 2019)</ref>. Community gardens allow for knowledge exchange about food and cooking, indicating that these projects may increase individuals' knowledge of food preparation <ref type="bibr" target="#b8">(Cumbers et al., 2018;</ref><ref type="bibr" target="#b30">McVey et al., 2018)</ref>. From personal accounts, <ref type="bibr" target="#b16">Furness and Gallaher (2018)</ref> found that sometimes people involved with community gardening already use fresh produce and have knowledge of nutrition. Thus sharing produce with the broader community can help spread knowledge and encourage others to get involved <ref type="bibr" target="#b16">(Furness and Gallaher, 2018)</ref>. <ref type="bibr" target="#b43">Wakefield et al. (2007)</ref> also found that community gardening can improve nutrition.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Data and methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Study area</head><p>Glasgow, UK (55.8642 • N, 4.2518 • W) is the most populous city in Scotland, with a population of around 635,000 and an area of 175 km 2 . It is located in West Central Scotland (See Fig. <ref type="figure" target="#fig_1">1</ref>), along the banks of the River Clyde. Glasgow was once an industrial city with textile production, metal manufacturing, engineering, dye works, and shipbuilding providing many jobs <ref type="bibr" target="#b20">(Kivell and Lockhart, 1996;</ref><ref type="bibr" target="#b24">Maantay and Maroko, 2015)</ref>. The closures of some of these industries in Glasgow led to population declines and the clearance of old houses in the 1970 s and 80 s, contributing to large areas of vacant and derelict land <ref type="bibr" target="#b20">(Kivell and Lockhart, 1996)</ref>. <ref type="bibr" target="#b24">Maantay and Maroko (2015)</ref> found that in areas with higher densities of vacant and derelict land in Glasgow, there are higher occurrences of mental health issues such as anxiety, depression, and psychosis. <ref type="bibr" target="#b7">Crossan et al. (2015)</ref> stated that around 60 % of Glasgow City's population lives within 500 m of vacant land. Whilst this statistic is outdated, in 2020, there were 939 ha of vacant and derelict land in Glasgow, presenting an opportunity to use this land for improving neighborhoods and providing opportunities that can improve people's quality of life. The Vacant and Derelict Land Fund from the Scottish Government gave £2.3 million to Glasgow City Council, for the revitalization of 61 ha of land in 2020/21 (Glasgow City Council, 2020), much of which may not have gone ahead due to the COVID-19 pandemic. The program aimed to develop sites for growing food. Thus, it is important to identify which areas require urban agriculture projects the most.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Data</head><p>The analysis was carried out at the Glasgow City Data Zone (DZ) level using the 2011 Data Zone dataset (revised in 2021, Scottish Government, 2022), as shown in Fig. <ref type="figure" target="#fig_1">1</ref>. Current urban agriculture projects were represented using access point data from allotments and community garden data from the Ordnance Survey Open Greenspace database. We also identified locations of 16 other gardens from a Google search for 'community gardens Glasgow'. We obtained the coordinates from Google Maps of the area identified as the entrance to the garden from a satellite view, similar to <ref type="bibr" target="#b42">Van de Voorde (2017)</ref>. Vacant and derelict land data were obtained from the Vacant and Derelict Land Survey (Improvement Service, 2021). Urban agriculture projects and VDL data were clipped using a polygon covering Glasgow city and the data zones' surrounding areas. This is because, in reality, people can walk to and access areas out of their data zone. To investigate the spatial connection between urban agriculture access and food desert status, the E-food Desert Index (2020) was used. This composite index takes multiple indicators into account, including the proximity to groceries, transport and accessibility, neighborhood socioeconomic factors, and E-commerce availability <ref type="bibr" target="#b34">(Newing and Videira, 2021)</ref>. A higher E-food Desert Index (and lower decile) indicates that the area has more food desert characteristics resulting in a higher level of food insecurity. Road network data to calculate accessibility were obtained from OpenStreetMap at geofabrik.de. Fig. <ref type="figure" target="#fig_2">2</ref> shows the spatial distributions of the existing urban agriculture, VDLs, population density, and E-food desert deciles in Glasgow.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Methods</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.1.">Measuring accessibility to facilities</head><p>In this study, accessibility is considered and measured in terms of the travel time to the site of interest. We use road network distance instead of straight buffer distance to calculate the travel time. Various studies support this decision. <ref type="bibr" target="#b3">Cetin (2015)</ref> employed buffer analysis to assess accessibility, which yielded less reliable results compared to other methods. <ref type="bibr" target="#b44">Wang et al. (2021)</ref> conducted a comparison of spatial accessibility measures to urban greenspace in Ipswich, Australia, and Enschede, the Netherlands. This study concluded that the results of measuring accessibility vary depending on the method used. Furthermore, using a network-based calculation provides a more realistic measure of accessibility than using buffers, as the latter do not take into consideration the actual route that would be taken from origin to destination <ref type="bibr" target="#b44">(Wang et al., 2021)</ref>. <ref type="bibr" target="#b31">Mears and Brindley (2019)</ref> discussed various methods for determining greenspace distribution equity in Sheffield. Once again, network-based calculations are recommended, as buffer analysis was found to overestimate accessibility, particularly for less deprived deciles in their study <ref type="bibr" target="#b31">(Mears and Brindley, 2019)</ref>. It is worth mentioning that there are more complex measures of determining accessibility in the literature, such as variants of the two-step floating catchment area method (2SFCA, Luo and Whippo, 2012), which take into account both demand and supply. However, they are relatively less intuitive in terms of the actual accessibility value when compared to time-or distance-based metrics. The choice of using travel time as an indicator of accessibility in this study is primarily due to its ease of interpretation and communication with the local communities and policymakers. Furthermore, in our subsequent spatial optimization anlaysis, we do consider the population demand.</p><p>Additionally, when evaluating assessibility, various modes of transport can be applied, such as walking, cycling, driving, and public transportation (e.g., <ref type="bibr">Mallick</ref>    <ref type="bibr">et al., 2022)</ref>. Many studies use walking as an accessibility measure <ref type="bibr" target="#b25">(Mack et al., 2017;</ref><ref type="bibr" target="#b32">Meenar, 2017;</ref><ref type="bibr" target="#b31">Mears and Brindley, 2019)</ref>. This is due to people generally being unprepared to travel long distances to access urban agriculture. In this study, accessibility was measured using the walking distance and time. This is because walking as a transport method does not impose any monetary barriers. A walking time of 10 min was used to define good access as used in other studies for general greenspace access (de Sousa <ref type="bibr" target="#b9">Silva et al., 2018;</ref><ref type="bibr" target="#b48">Williams et al., 2020)</ref>, as well as the measure used as part of the Green Space Index (Fields in Trust, 2020). Mears and Brindley (2019) also discuss the varying geographic units of analysis that are used in investigating accessibility. Their findings suggest that using small-area aggregations is appropriate because there is not much difference in results between using the scale of household compared to that of the output area, which had an average population of 309 <ref type="bibr" target="#b31">(Mears and Brindley, 2019)</ref>.</p><p>In summary, we used the travel time (walking) as a measure of accessibility. A travel time matrix between each data zone and each urban agriculture and VDLs was calculated based on OpenStreetMap data and a local open source routing machine (OSRM) server using the routingpy python package <ref type="bibr" target="#b35">(Nolde et al., 2022)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.2.">Identifying potential sites using spatial optimization models</head><p>Due to the variety of benefits of urban agriculture, there is a growing interest in researching ways that urban growing projects can be incorporated into cities. Some methods for finding suitable sites include performing site suitability analysis, visual assessments using remote sensing imagery and GIS data, and participatory mapping (Ligmann-Zielinska, 2017). However, these methods can be time-consuming, and spatial optimization models allow for fast solutions to problems. Spatial optimization models also solve single or multiple geographic problems whilst considering constraints (Ligmann-Zielinska, 2017; <ref type="bibr" target="#b50">Zhou and Cao, 2023)</ref>. There are various optimization models, of which the Maximal Coverage Location Problem (MCLP) was applied in this study to maximize urban agriculture project access coverage. The MCLP model determines the spatial distribution of a specified number of vacant sites (potential urban agriculture projects) that can maximise the coverage of population-weighted data zones within a time standard. MCLP has been widely used in similar literature. For example, <ref type="bibr" target="#b49">Zhang et al. (2022)</ref> used a variant of the MCLP model to site gardens to address food deserts and urban heat. <ref type="bibr" target="#b25">Mack et al. (2017)</ref> used an MCLP model to identify areas of vacant land which could be used for community gardens to benefit food desert residents in Phoenix, Maricopa County.</p><p>The MCLP location model is specified below and was originally defined by <ref type="bibr" target="#b5">Church in 1974 (Church and</ref><ref type="bibr" target="#b5">Revelle, 1974;</ref><ref type="bibr" target="#b4">Church and Murray, 2018)</ref>: Maximise:</p><formula xml:id="formula_0">∑ n i=1 a i y i (1) Subject to: ∑ j∈Ni x j ≥ y i ∀ i (2) ∑ j x j = p ∀ j (3) y i ∈ {0, 1} ∀ i (4) x j ∈ {0, 1} ∀ j (5)</formula><p>where i: index of data zones (demand points) j: index of vacant and derelict land (potential facility points) S: maximal acceptable time standard (10-minutes) d ij : travel time between demand i and facility j N i : {j|d ij &lt; S} p: number of urban agriculture sites (facilities) to be located a i : weight for demand point i (population) y i : 1, if a data zone i is covered within S, otherwise assigned 0 x j : 1, if vacant land j is selected to be a potential urban agriculture site, otherwise assigned 0</p><p>The objective function of model ( <ref type="formula">1</ref>) is to maximize the total population of covered data zones. Constraint (2) specifies that if at least one vacant site is within the time standard S, the data zone is considered to be covered. Constraint (3) is the number of urban agriculture projects to be sited on vacant land, whilst constraints (4) and (5) determine whether vacant land is selected and if a data zone is covered, respectively, using a binary integer condition. Data zones that were more than 10-min walking distance from urban agriculture (demand points) were used as the demand points. The number of new facilities to be located (p) was set to vary between 0 and the total number of vacant land to establish multiple scenarios. The MCLP model was solved using the spopt python library within the Python Spatial Analysis Library (PySAL) <ref type="bibr">(Feng et al., 2021;</ref><ref type="bibr" target="#b39">Rey et al., 2022)</ref>. The data and Jupyter notebooks that generated the results are included in the repository: https://anonymous.4open.science/r/Glasgow_UA_accessibili ty-E21D.</p><p>Due to the non-parametric distributions of the data, Spearman's rank correlation was used to investigate the relationship between travel time to the nearest urban agriculture project and the food desert index. The Spearman correlation coefficient was initially calculated to assess the existing urban agriculture access inequality but also re-calculated for each of the p new urban agriculture sites added, which allows us to examine the changing relationship when investing in more new sites and to provide a validation step as also suggested in <ref type="bibr" target="#b17">Han et al. (2023)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Results and discussion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Accessibility to current nearest urban agriculture</head><p>The results show that there is currently unequal access to urban agriculture projects across data zones in Glasgow City. The existing urban agriculture projects cover approximately 36 % of the total population in the City of Glasgow within a 10-minute walking radius. Thus, they are unlikely to have the capacity to support all people who are interested in using a community garden or allotment. The unequal distribution of urban agriculture access was also noted by <ref type="bibr" target="#b32">Meenar (2017)</ref>, who found 40 % of tracts to have high access (&lt;0.25 miles), 42 % with medium access (&lt;1 mile), and 18 % with low access (&gt;1 mile) in Philadelphia. In Glasgow, the best access to current urban agriculture was generally in the more central portion of the city (see Fig. <ref type="figure" target="#fig_2">2</ref>). This agrees with the findings of <ref type="bibr" target="#b25">Mack et al. (2017)</ref> and <ref type="bibr" target="#b32">Meenar (2017)</ref>. There could be various reasons for this, which are little discussed in the current literature. In Glasgow's context, due to the center of the city being more widely used by tourists, perhaps vacant and derelict land is redeveloped quickly to make the area more appealing. This could mean that if there are no other proposed uses for VLD land, applications for community gardens, even if temporary, may be more likely to be approved than in areas further out of the city. However, perhaps there is more demand for community gardens in the centre of cities as zones further out are more likely to have private gardens than densely populated city centres. This is the also case in Sheffield, UK where there is less private green space in areas with more public green space <ref type="bibr" target="#b1">(Barbosa et al., 2007)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Relationship between urban agriculture projects and food desert characteristics</head><p>The Spearman's rank correlation indicates that there is a statistically significant positive correlation between the walking time to the nearest urban agriculture project and the food desert index. (r = 0.13, p-value = 0.0001). This result suggests that data zones with more food desert characteristics have lower access to urban agriculture compared to data zones with fewer food desert characteristics. This finding is similar to <ref type="bibr" target="#b25">Mack et al. (2017)</ref>, who found that most current community gardens in Maricopa County, Arizona, USA, were located in areas with access to healthy food stores. Thus, the current gardens do not help residents in food deserts due to food deserts not being within reach of food outlets <ref type="bibr" target="#b25">(Mack et al., 2017)</ref>. <ref type="bibr" target="#b25">Mack et al. (2017)</ref> also found that only 32 % of gardens are located within food desert tracts. However, in several areas, this study differed from <ref type="bibr" target="#b25">Mack et al. (2017)</ref>. Firstly, the methods for measuring accessibility differed. This study considered the travel time it would take to walk to urban agriculture projects, while <ref type="bibr" target="#b25">Mack et al. (2017)</ref> looked at whether or not the gardens were within or adjacent to the tract. Secondly, the measurement of food deserts was different. Whilst <ref type="bibr" target="#b25">Mack et al. (2017)</ref> looked at the garden's locations concerning healthy food outlets, this study used the E-food Desert index. This index is comprehensive and covers multiple factors which can make people in an area vulnerable to food insecurity. Whilst the locations of food stores are included in the E-food Index as in <ref type="bibr" target="#b25">Mack et al. (2017)</ref>, the index also considers the distance to and accessibility of stores and socioeconomic and demographic factors such as income deprivation. This is important to consider as a lack of knowledge or dispensable income could limit a population's healthy food consumption even if healthy options are in reach. This is similar to <ref type="bibr" target="#b32">Meenar (2017)</ref>, who used the food insecurity and vulnerability index, which considered areas with poor food habits, hunger, and food hardship, and areas containing at-risk populations, such as those with low income. <ref type="bibr" target="#b32">Meenar (2017)</ref> found the opposite of <ref type="bibr" target="#b25">Mack et al. (2017)</ref> and this study: in Philadelphia, access to urban agriculture improves as food insecurity increases. This was suggested due to urban agriculture projects being set up as interventions in areas where food insecurity and deprivation are prevalent <ref type="bibr" target="#b32">(Meenar, 2017)</ref>. Additionally, <ref type="bibr" target="#b32">Meenar (2017)</ref> found that more vacant land is available in areas with food insecurity and deprivation; thus, more urban agriculture projects are possible in these areas due to the constraints of vacant land.</p><p>It is important to remember that the correlation relationship found is global, so this relationship may vary locally across data zones. This means that whilst some areas with less food desert characteristics have better access to urban agriculture, some actually have poorer access to urban agriculture compared to some food insecure data zones. Therefore, it might be beneficial to conduct local Spearman's rank correlation on this data as <ref type="bibr">Wang et al. (2022)</ref> used in their study. Though there is no extensive literature in this area, the mixed results from these studies indicate that the relationship between urban agriculture projects and deprivation characteristics may vary depending on location both within and between cities. This is likely because this is not a cause-and-effect relationship. As <ref type="bibr" target="#b32">Meenar (2017)</ref> states, reasons unrelated to deprivation or food insecurity influence whether a urban agriculture project is set up, for example, land availability, community capacity, and community interest. Regardless of the socioeconomic background, if the population in a city is particularly interested in urban growth, they may join together to form community growing projects. Similarly, if there is no interest, then it is likely that no urban agriculture will form or thrive. As suggested by <ref type="bibr" target="#b32">Meenar (2017)</ref>, some local councils have schemes to increase growing space in the city, particularly in deprived areas. In Glasgow, this is the case and may be the reason for the weak correlation due to new growing spaces being created in deprived areas, perhaps this has weakened a once stronger relationship of inequality. Thus, it is important in urban planning that the distribution of such projects is considered because of the variety of benefits for both the environment and the people. Due to food injustice in some areas of Glasgow, the city needs more urban agriculture projects to equalize access across data zones. If this is achievable, this will give residents an equal opportunity in having the chance to grow some of their food.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">The potential of using vacant sites to reduce inequalities in urban agriculture access</head><p>Results from the MCLP model are shown in Figs. <ref type="figure">3</ref> and<ref type="figure" target="#fig_3">4</ref>. Fig. <ref type="figure">3a</ref> shows the overall increase in coverage when new UA projects are added to the city, but the overall coverage flats out when more than 100 new sites are located. The maximum achievable population coverage is 80.0 % when considering placing new sites on existing vacant land. More interestingly, in Fig. <ref type="figure">3b</ref>, the Spearman correlation coefficient decreases from positive to negative when developing more urban agriculture sites. The green region is when the correlation coefficient is insignificant (pvalue &gt; 0.05). This can be interpreted as the spatial inequality of urban agriculture locations being reduced by investing in new urban agriculture sites, which reaches a negligible level when placing 15 to 60 sites. The spatial inequality becomes significantly (p-value &lt; 0.05) reversed when placing more than 60 new sites. The message from Fig. <ref type="figure">3a</ref> is that placing more sites will increase the overall coverage. However, Fig. <ref type="figure">3b</ref> provides a practical guide to prioritizing investment in a budget of 15-60 new urban agriculture sites if the aim is to reduce spatial inequality.</p><p>The results show the potential to increase access to urban agriculture projects that can serve Glasgow City residents if vacant land is used for this purpose. When converting more vacant land to urban agriculture, the coverage will increase from 36 % of the total population to 80.8 %. The coverage does not improve when more than 100 gardens are sited. This was expected, similar to the findings of <ref type="bibr" target="#b25">Mack et al. (2017)</ref>, due to vacant land being a constraint in the model. Alternatively, if there is interest in creating community growing projects, they may need to be developed within already used land, for example, parks. This would require cooperation from local councils and approval from the local community.</p><p>Because it is unlikely that many gardens can or will be placed immediately, we evaluated a spectrum of scenarios that can achieve a certain coverage and alleviate the existing spatial inequality in urban agriculture accessibility. We found that using Spearman correlation as a measure of spatial inequality, placing 15 -60 new sites will reduce the correlation between accessibility and food deserts to a statistically negligible level (p-value &lt; 0.05). This will help reduce inequalities in access to urban agriculture in areas with a high E-food score and low food security. We also found that placing more than 60 new sites will reverse the existing inequalities though overall coverage will be increased; therefore, a balance between coverage and inequality needs to be considered.</p><p>Similarly, <ref type="bibr" target="#b49">Zhang et al. (2022)</ref> found that there are trade-offs between siting community gardens and meeting two separate goalsmitigating food insecurity and urban heat. <ref type="bibr" target="#b49">Zhang et al. (2022)</ref> also found that using a spatial optimization approach in planning is important for avoiding clustering of UA and achieving equal access. Similarly, <ref type="bibr" target="#b25">Mack et al. (2017)</ref>, who also used a maximal covering spatial optimization model, found that vacant land in Phoenix could be used for UA to serve food desert residents more optimally. Suppose gardens were to be sited to benefit both areas with food desert characteristics and longer walking times to the current urban agriculture. In that case, it might be beneficial to incorporate both factors into the model.</p><p>The spatial distribution of 15, 30, and 60 new urban agriculture projects and their updated coverage rates are shown in Fig. <ref type="figure" target="#fig_3">4</ref>. With 15 new conversions from existing VDL to urban agriculture, the overall population coverage increases to 49 %, with some existing gaps in the city center and to the northwest and east of the city improving. The northern and south-western parts of the city are being covered when the number of new urban agriculture projects increases to 30, with an overall coverage rate of 59 %. When 60 new sites were placed, overall coverage reached 71 %, and most of the existing gaps were being filled. Most of the newly covered neighborhoods are places with existing food desert characteristics (compared to the food desert index map in Fig. <ref type="figure" target="#fig_2">2</ref>). Fig. <ref type="figure">3</ref>. Changes in the overall population coverage and Spearman correlation coefficient when placing more urban agriculture projects.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4.">Limitations and future considerations</head><p>It is challenging to measure access, and people face more than monetary barriers. For example, physical disabilities may make it difficult or impossible to use urban agriculture depending on their setup.</p><p>The assumption was made that people would be willing to make a 10min journey to a community garden regularly, which may not be the case. The study did not consider which data zones have private gardens, which may influence the demand for urban agriculture. The perceived safety of the surrounding area was not considered, which can influence whether people feel comfortable using a facility <ref type="bibr" target="#b48">(Williams et al., 2020)</ref>. Moreover, the vacant and derelict land survey only considers areas of VDL that are &gt; 0.1 ha. However, urban agriculture can range in size. For example, the smallest community garden identified by <ref type="bibr" target="#b33">Nettle (2016)</ref> in Adelaide was only 40 m 2, which allowed 15 residents to use it regularly. Thus, there could be many viable areas of VDL for placing urban agriculture projects in Glasgow that are smaller than 0.1 ha. Smaller areas of vacant land might have more potential to be long-term urban agriculture projects, as they will not be suitable for building on, so they will have less competition from other projects.</p><p>The study does not consider the difficulties in developing urban agriculture, such as reaching a leasing agreement <ref type="bibr" target="#b7">(Crossan et al., 2015)</ref>. The loss and instability of urban agriculture projects are a big problem, and in reality, it would only be worth developing a community garden if it could be used for a decent amount of time. <ref type="bibr" target="#b12">Dobson et al. (2020)</ref> found that the land used for allotments in Glasgow has continually declined since the 1950s. Therefore, it is important to include locals' ideas on the best use of vacant land. Getting people involved in decisions about setting up projects is important to the benefits are felt by the local community, including social inclusion and crime reduction <ref type="bibr" target="#b41">(Spilková and Vágner, 2018)</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion</head><p>This study examined inequalities in access to urban agriculture (community gardens or allotments) in Glasgow City. The current distribution of urban agriculture projects covers 36 % of the total population within a 10-min walking distance. Overall, residents of data zones with more food desert characteristics have a longer walking time to reach the nearest urban agriculture. We investigated the possibility of utilizing existing vacant and derelict land to develop new urban agriculture projects to increase accessibility and reduce inequality. Using network analysis, spatial optimization (Maximum Coverage Location Problem (MCLP)), and correlation analysis, we identified scenarios and locations that can be prioritized when investing in urban agriculture projects. Specifically, we found that developing 15 -60 new urban agriculture projects across the city can increase the overall population coverage to 50 % -70 % and reduce spatial inequality to a statistically insignificant level. The analytical framework and the results have practical implications for addressing food insecurity, vacant land, and health well-being concerns for the city of Glasgow. The next step in the work will involve communities from diverse groups in future scenario building and decision-making by conducting discussions and surveys to gain a better understanding of their needs and demands regarding food and urban agriculture. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>and Routray, 2001; Zhou et al., 2019; Wang</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. The 746 Data Zones of Glasgow City were used in the study. Contains OS data © Crown Copyright and database right 2022. Contains data from OS Zoomstack and Scottish Government.</figDesc><graphic coords="3,85.04,55.41,425.23,348.19" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Spatial distributions of the existing urban agriculture (UA) project locations, vacant and derelict land, population density, and E-food desert deciles in Glasgow. Contains data from Scottish Government (2020), LGCD (2020), EFDI (Newing and Videira, 2021) and Improvement Service (2021).</figDesc><graphic coords="4,49.61,55.41,496.08,411.12" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Spatial distributions of new urban agriculture projects and updated coverage for scenarios with 15, 30, and 45 new sites.</figDesc><graphic coords="7,49.61,55.42,496.08,188.93" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="6,49.61,546.47,496.08,179.71" type="bitmap" /></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data availability</head><p>Data and code are publicly available in the repository cited in the manuscript</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Declaration of competing interest</head><p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A survey of community gardens in upstate New York: Implications for health promotion and community development</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Armstrong</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S1353-8292(00)00013-7</idno>
+		<ptr target="https://doi.org/10.1016/S1353-8292(00)00013-7" />
+	</analytic>
+	<monogr>
+		<title level="j">Health and Place</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="319" to="327" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Who benefits from access to green space? A case study from Sheffield</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Barbosa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Tratalos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Armsworth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">G</forename><surname>Davies</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">A</forename><surname>Fuller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">J</forename><surname>Gaston</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<publisher>UK. Landsc. and Urban Plan</publisher>
+			<biblScope unit="volume">83</biblScope>
+			<biblScope unit="page" from="187" to="195" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Impact of a Community Gardening Project on Vegetable Intake, Food Security and Family Relationships: A Community-based Participatory Study</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">A</forename><surname>Carney</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Hamada</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Rdesinski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Sprager</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Nichols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">Y</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Pelayo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Sanchez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Shannon</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10900-011-9522-z</idno>
+		<ptr target="https://doi.org/10.1007/s10900-011-9522-z" />
+	</analytic>
+	<monogr>
+		<title level="j">J. of Community Health</title>
+		<imprint>
+			<biblScope unit="volume">37</biblScope>
+			<biblScope unit="page" from="874" to="881" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Using GIS analysis to assess urban green space in terms of accessibility: case study in Kutahya</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Cetin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Sustain. Dev. and World Ecol</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="420" to="424" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">L</forename><surname>Church</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Murray</surname></persName>
+		</author>
+		<title level="m">Location covering models: History, applications and advancements</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2018">2018. 2018</date>
+		</imprint>
+	</monogr>
+	<note>st edition</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The maximal covering location problem</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Church</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Revelle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pap. of the Reg. Sci. Assoc</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="101" to="118" />
+			<date type="published" when="1974">1974</date>
+			<publisher>Springer-Verlag</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Growing what you eat: Developing community gardens in Baltimore</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Corrigan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Maryland. Appl. Geogr</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1232" to="1241" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Glasgow&apos;s Community Gardens: Sustainable Communities of Care</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Crossan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Shaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cumbers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mcmaster</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<publisher>University of Glasgow</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The Work of Community Gardens: Reclaiming Place for Community in the City</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Cumbers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Shaw</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Crossan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Mcmaster</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Work, Employ. and Soc</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="133" to="149" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Environmental justice in accessibility to green infrastructure in two European cities</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>De Sousa Silva</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Viegas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Τ</forename><surname>Panagopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bell</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page">134</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Unearthing the benefits of brownfield to green space projects: An examination of project use and quality of life impacts</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">A</forename><surname>De Sousa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Local Environment</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="577" to="600" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Community Gardens in China: Spatial distribution, patterns, perceived benefits and barriers</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Yue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sustain. Cities and Soc</title>
+		<imprint>
+			<biblScope unit="volume">84</biblScope>
+			<biblScope unit="page">103991</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Urban food cultivation in the United Kingdom: Quantifying loss of allotment land and identifying potential for restoration. Landsc. and Urban Plan</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Dobson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename><surname>Edmondson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">H</forename><surname>Warren</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.landurbplan.2020.103803</idno>
+		<ptr target="https://doi.org/10.1016/j.landurbplan.2020.103803" />
+		<imprint>
+			<date type="published" when="2020">2020. 103803</date>
+			<biblScope unit="volume">199</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Growing Wellness&quot;: The Possibility of Promoting Collective Wellness through Community Garden Education programs</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>D'abundo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Carden</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Community Development</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="83" to="94" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">CHAMPION: The ten-minute walk and why it&apos;s important</title>
+		<ptr target="https://www.fieldsintrust.org/News/the-ten-minute-walk-and-why-its-important" />
+	</analytic>
+	<monogr>
+		<title level="m">Trust</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+		<respStmt>
+			<orgName>Fields in Trust</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Developing &quot;community&quot; in community gardens</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Firth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Maye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pearson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Local Environment</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="555" to="568" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Food access, food security and community gardens in Rockford</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">W</forename><surname>Furness</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">M</forename><surname>Gallaher</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/13549839.2018.1426561</idno>
+		<ptr target="https://doi.org/10.1080/13549839.2018.1426561" />
+	</analytic>
+	<monogr>
+		<title level="j">IL. Local Environment</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="414" to="430" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">An evaluationoptimization-validation framework based on spatial accessibility to schools</title>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Applied Geography</title>
+		<imprint>
+			<biblScope unit="volume">152</biblScope>
+			<biblScope unit="page">102891</biblScope>
+			<date type="published" when="2023">2023</date>
+			<pubPlace>China</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Improving educational equity by maximizing service coverage in rural Changyuan</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A quantitative assessment of vegetable farming on vacant lots in an urban fringe area in Metro Manila: Can it sustain long-term local vegetable demand?</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Hara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Murakami</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Tsuchiya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Palijon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yokohari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Applied Geography</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="195" to="206" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Vacant and Derelict Land -Scotland. Scale 1:10000</title>
+	</analytic>
+	<monogr>
+		<title level="s">Digimap Ordnance Survey Collection</title>
+		<imprint>
+			<date type="published" when="2021-10">2021. October 2021</date>
+		</imprint>
+		<respStmt>
+			<orgName>Improvement Service</orgName>
+		</respStmt>
+	</monogr>
+	<note>Improvement Service</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Derelict and vacant land in Scotland</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Kivell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lockhart</surname></persName>
+		</author>
+		<idno type="DOI">10.1080/14702549608554951</idno>
+		<ptr target="https://doi.org/10.1080/14702549608554951" />
+	</analytic>
+	<monogr>
+		<title level="j">Scottish Geographical Magazine</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="177" to="180" />
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Community gardening: Stress, well-being, and resilience potentials</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">I</forename><surname>Koay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dillon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Environ Res. and Public Health</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page">6740</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Scottish Vacant and Derelict Land Survey 2019. Local Government and Communities Directorate</title>
+		<author>
+			<persName><surname>Lgcd</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>Scottish Government</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Ligmann-Zielinska</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Spatial Optimization. Int. Encycl. of Geogr.: People, the Earth, Environ. and Tech</title>
+		<imprint>
+			<biblScope unit="page" from="1" to="6" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">At-risk&apos; places: inequities in the distribution of environmental stressors and prescription rates of mental health medications in Glasgow, Scotland</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Maantay</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Maroko</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Environ. Res., Lett</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">115003</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Gardening in the desert: a spatial optimization approach to locating gardens in rapidly expanding urban environments</title>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">A</forename><surname>Mack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Credit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Health Geogr</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Understanding the prevalence and drivers of food bank use: evidence from deprived communities in Glasgow</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Macleod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Curl</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kearns</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/S1474746418000064</idno>
+		<ptr target="https://doi.org/10.1017/S1474746418000064" />
+	</analytic>
+	<monogr>
+		<title level="j">Soc. Policy and Soc</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="67" to="86" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Identification and accessibility analysis of rural service centers in Kendrapara District</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">K</forename><surname>Mallick</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">K</forename><surname>Routray</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Appl. Earth Obs. and Geoinform</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="99" to="105" />
+			<date type="published" when="2001">2001</date>
+			<pubPlace>Orissa, India</pubPlace>
+		</imprint>
+	</monogr>
+	<note>: a GIS-based Application</note>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Community Gardens to Fight Urban Youth Crime and Stabilize Neighborhoods</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mccabe</surname></persName>
+		</author>
+		<ptr target="https://scholarworks.merrimack.edu/soe_facpub/24" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Child Health and Human Dev</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Home-grown food: How do urban form, socioeconomic status, and ethnicity influence food gardens in Montreal?</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Mcclintock</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Duchemin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Applied Geography</title>
+		<imprint>
+			<biblScope unit="volume">145</biblScope>
+			<biblScope unit="page">102746</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">The motivations and experiences of community garden participants in Edinburgh</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Mcvey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Nash</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Stansbie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Reg. Stud., Reg. Sci</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="40" to="56" />
+			<date type="published" when="2018">2018</date>
+			<pubPlace>Scotland</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Measuring Urban Greenspace Distribution Equity: The Importance of Appropriate Methodological Approaches</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mears</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Brindley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">I. J. of Geo-Inf</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">286</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Assessing the Spatial Connection between Urban Agriculture and Equity</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Meenar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Built Environment</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">Community gardening as social action. Transforming environmental politics and policy</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Nettle</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2014">2016. 2014</date>
+			<publisher>Ashgate Publishing</publisher>
+			<pubPlace>Routledge, NY</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">E-food Desert Index (EFDI)</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Newing</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Videira</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+		<respStmt>
+			<orgName>User Guide. Leeds Institute for Data Analytics (LIDA) and School of Geography, University of Leeds</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Technical Report and</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+		<title level="m" type="main">Apache Software License (Apache 2.0)</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Nolde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ellersiek</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Beiwinkel</surname></persName>
+		</author>
+		<ptr target="https://github.com/gis-ops/routing-py" />
+		<imprint>
+			<date type="published" when="2022">2022 routingpy</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Determinants of vacant lot conversion into community gardens: Evidence from Philadelphia</title>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">K</forename><surname>Park</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Ciorici</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Urban Sci</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="385" to="398" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+		<title level="m" type="main">Environmental and social dimensions of community gardens in East Harlem</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Petrovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Simpson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Orlove</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Dowd-Uribe</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>Landsc. and Urban Plan</publisher>
+			<biblScope unit="volume">183</biblScope>
+			<biblScope unit="page" from="36" to="49" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Behind the&quot; Glasgow effect</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Reid</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">World Health Organization. Bulletin of the World Health Organization</title>
+		<imprint>
+			<biblScope unit="volume">89</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">706</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">The pysal ecosystem: Philosophy and implementation</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">J</forename><surname>Rey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Anselin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Amaral</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Arribas-Bel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">X</forename><surname>Cortes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Gaboardi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Kang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Knaap</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Lumnitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Oshan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Wolf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Geographical Analysis</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="467" to="487" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">Scottish Index of Multiple Deprivation 2020 v2. Open Government License</title>
+		<author>
+			<persName><forename type="first">Scottish</forename><surname>Government</surname></persName>
+		</author>
+		<ptr target="https://data.cdrc.ac.uk/dataset/index-multiple-deprivation-imd" />
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Food gardens as important elements of urban agriculture: Spatio-developmental trends and future prospects for urban gardening in Czechia</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Spilková</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vágner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nor. Georgr. Tidsskr.-nor. J. of Geogr</title>
+		<imprint>
+			<biblScope unit="volume">72</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Spatially explicit urban green indicators for characterizing vegetation cover and public green space proximity: A case study on Brussels, Belgium</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Van De Voorde</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Digit. Earth</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="798" to="813" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Growing urban health: Community gardening in South-East Toronto</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wakefield</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Yeudall</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Taron</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Reynolds</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Skinner</surname></persName>
+		</author>
+		<idno type="DOI">10.1093/heapro/dam001</idno>
+		<ptr target="https://doi.org/10.1093/heapro/dam001" />
+	</analytic>
+	<monogr>
+		<title level="j">Health Promotion International</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="92" to="101" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Access to urban parks: Comparing spatial accessibility measures using three GIS-based approaches</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput., Environ. and Urban Syst</title>
+		<imprint>
+			<biblScope unit="volume">90</biblScope>
+			<biblScope unit="page">101713</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Ridesharing accessibility from the human eye: Spatial modeling of built environment with street-level images</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">H</forename><surname>Rong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Mu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Shi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput., Environ. and Urban Syst</title>
+		<imprint>
+			<biblScope unit="volume">97</biblScope>
+			<biblScope unit="page">101858</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">The spatial association of social vulnerability with COVID-19 prevalence in the contiguous United States</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Clay Mathews</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Praharaj</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Karna</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Solís</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Environ. Health Res</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1147" to="1154" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Growing in Glasgow: Innovative practices and emerging policy pathways for urban agriculture</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">T</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bunn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Land Use Policy</title>
+		<imprint>
+			<biblScope unit="volume">68</biblScope>
+			<biblScope unit="page" from="334" to="344" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title level="m" type="main">Parks and safety: a comparative study of green space access and inequity in five US cities</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Williams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Logan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">T</forename><surname>Zuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">D</forename><surname>Liberman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Guikema</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<publisher>Landsc. and Urban Plan</publisher>
+			<biblScope unit="volume">201</biblScope>
+			<biblScope unit="page">103841</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<monogr>
+		<title level="m" type="main">The state of food security and nutrition in the world 2018: Building climate resilience for food security and nutrition. Food &amp; Agriculture Org</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">P</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Tong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">L</forename><surname>Turner Ii</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2018">2018. 2022</date>
+			<publisher>Landsc. and Urban Plan</publisher>
+			<biblScope unit="volume">226</biblScope>
+			<biblScope unit="page">104488</biblScope>
+		</imprint>
+	</monogr>
+	<note>Optimizing the co-benefits of food desert and urban heat mitigation through community garden planning</note>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Spatial multi-objective optimization of institutional elderly-care facilities: A case study in Shanghai</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Cao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. of Appl. Earth Obs. and Geoinform</title>
+		<imprint>
+			<biblScope unit="volume">122</biblScope>
+			<biblScope unit="page">103436</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Bike-sharing or taxi? Modeling the choices of travel mode in Chicago using machine learning</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. of Transp. Geog</title>
+		<imprint>
+			<biblScope unit="volume">79</biblScope>
+			<biblScope unit="page">102479</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

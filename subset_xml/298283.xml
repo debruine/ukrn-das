@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Asimov: A framework for coordinating parameter estimation workflows</title>
+				<funder ref="#_aJVwTC8">
+					<orgName type="full">European Research Council</orgName>
+					<orgName type="abbreviated">ERC</orgName>
+				</funder>
+				<funder ref="#_KfUQDFS #_mYP8Vqk">
+					<orgName type="full">National Science Foundation</orgName>
+				</funder>
+				<funder ref="#_qAy3hCd #_xaRPQcy">
+					<orgName type="full">STFC</orgName>
+				</funder>
+				<funder ref="#_xCa4uYd #_3x9kazK">
+					<orgName type="full">Science and Technology Facilities Council</orgName>
+					<orgName type="abbreviated">STFC</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-04-21">21 April 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Daniel</forename><surname>Willia</surname></persName>
+							<idno type="ORCID">0000-0003-1542-1791</idno>
+						</author>
+						<author>
+							<persName><forename type="first">John</forename><surname>Veitc</surname></persName>
+							<idno type="ORCID">0000-0001-6877-3278</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Maria</forename><forename type="middle">Lui</forename><surname>Chiofalo</surname></persName>
+							<idno type="ORCID">0000-0002-4146-1132</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Patrici</forename><surname>Schmidt</surname></persName>
+							<idno type="ORCID">0000-0002-8843-6719</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Rhiannon</forename><forename type="middle">P</forename><surname>Udall</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Avi</forename><surname>Vajpeji</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Charlie</forename><surname>Hoy</surname></persName>
+						</author>
+						<author>
+							<affiliation>
+								<orgName>1 School of Physics and Astronomy, University of Glasgow, </orgName>
+								<address><addrLine>Glasgow, G12 8QQ, United Kingdom Clayton VIC 3800, Australia Clayton VIC 3800, Australia Largo Bruno Pontecorvo 3 I-56126 Pisa, Italy 5 Edgbaston, Birmingham, B15 9TT, United Kingdom Cardiff CF24 3AA, UK</addrLine></address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 2 School of Physics and Astronomy, Monash University, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 3 OzGrav: The ARC Centre of Excellence for Gravitational Wave Discovery, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 4 Department of Physics &quot;Enrico Fermi&quot;, University of Pisa, and INFN, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> LIGO Laboratory, California Institute of Technology 6 School of Physics and Astronomy and Institute for Gravitational Wave Astronomy, University of Birmingham, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 7 Cardiff University,</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Asimov: A framework for coordinating parameter estimation workflows</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-04-21">21 April 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B05198FD248F76A4587F1DD153A638BF</idno>
+					<idno type="DOI">10.21105/joss.04170</idno>
+					<note type="submission">Submitted: 01 February 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:01+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Since the first detection in 2015 of gravitational waves from compact binary coalescence (B. P. Abbott &amp; others, 2016a), improvements to the Advanced LIGO and Advanced Virgo detectors have expanded our view into the universe for these signals. Searches of the latest observing run (O3) have increased the number of detected signals to 90, at a rate of approximately 1 per week (The LIGO Scientific Collaboration, the Virgo Collaboration, <ref type="bibr" target="#b3">Abbott, et al., 2021;</ref>  The LIGO Scientific Collaboration, the Virgo Collaboration, the KAGRA Collaboration, et al., 2021). Future observing runs are expected to increase this even further(B. P. <ref type="bibr" target="#b2">Abbott &amp; others, 2020)</ref>. Bayesian analysis of the signals can reveal the properties of the coalescing black holes and neutron stars by comparing predicted waveforms to the observed data (B. P. <ref type="bibr" target="#b1">Abbott &amp; others, 2016b)</ref>. The proliferating number of detected signals, the increasing number of methods that have been deployed <ref type="bibr" target="#b4">(Ashton &amp; others, 2019;</ref><ref type="bibr" target="#b7">Lange et al., 2018;</ref><ref type="bibr" target="#b12">Veitch &amp; others, 2015)</ref>, and the variety of waveform models <ref type="bibr" target="#b6">(Khan et al., 2020;</ref><ref type="bibr" target="#b8">Ossokine &amp; others, 2020;</ref><ref type="bibr" target="#b9">Pratten &amp; others, 2021)</ref> create an ever-expanding number of analyses that can be considered.</p><p>Asimov is a python package which is designed to simplify and standardise the process of configuring these analyses for a large number of events. It has already been used in developing analyses in three major gravitational wave catalog publications (R. <ref type="bibr" target="#b3">Abbott &amp; others, 2021;</ref>  The LIGO Scientific Collaboration, the Virgo Collaboration, Abbott, et al., 2021;  The LIGO Scientific Collaboration, the Virgo Collaboration, the KAGRA Collaboration, et al., 2021). The source code of Asimov is archived to Zenodo (Williams et al., 2021).</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Statement of Need</head><p>While these developments are positive, they also bring considerable challenges. The first of these lies with the high rate at which gravitational waves can now be detected; thanks to the improved sensitivity of the detectors they observe a much larger volume of space, and the increasing size of the detector network has also increased the total time during which observations occur. The second comes from developments in the analysis techniques and related software. Development of these techniques has accelerated in a short period of time, and the landscape of analysis software has become diverse. It is desirable to be able to use these techniques with ease, but thanks to the highly distributed development process which has produced them, they often have highly heterogeneous interfaces.</p><p>We developed asimov as a solution to both of these problems, as it is capable both of organising and tracking a large number of on-going analyses, but also of performing setup and postprocessing of several different analysis pipelines, providing a single uniform interface. The software has been designed to be easily extensible, making integration with new pipelines straight-forward.</p><p>In addition, ensuring that the large number of analyses are completed successfully, and their results collated efficiently proved a formidable challenge when relying on "by-hand" approaches. The LIGO Scientific Collaboration operate a number of high-throughput computing facilities (the LIGO Data Grid <ref type="bibr">[LDG]</ref>) which are themselves controlled by the htcondor scheduling system. asimov monitors the progress of jobs within the htcondor ecosystem, resubmits jobs to the cluster which fail due to transient problems, such as file I/O errors in computing nodes, and detects the completion of analysis jobs. Upon completion of a job the results are post-processed using the PESummary python package <ref type="bibr" target="#b5">(Hoy &amp; Raymond, 2021)</ref>, and humans can be alerted by a message posted by asimov to a Mattermost or Slack channel. Interaction with htcondor will also allow jobs to be submitted to the Open Science Grid in the future.</p><p>Prior to the development of asimov analyses of gravitational wave data had been configured and run manually, or had relied on collections of shell scripts. Asimov therefore constitutes an new approach, designed to be both more maintainable, and to improve the reproduciblity of results generated by analysis pipelines.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Implementation</head><p>In order to produce a uniform interface to all of its supported pipelines, asimov implements a YAML-formatted configuration file, which is referred to as its "production ledger". This file is used to specify the details of each event to be analysed, details about the data sources, and details of each pipeline which should be applied to the specified data. This allows identical settings to be used with multiple different pipelines, with a minimum of configuration, reducing the possibility of transcription errors between setups. In the current implementation of Asimov the production ledger is stored using an issue tracker on a custom Gitlab instance, with each issue representing a different event. This approach is, however, neither flexible nor scalable, and future development will use an alternative means of storing the ledger.</p><p>Asimov simplifies the process of gathering and collating the various settings and data-products required to configure an analysis. These include data quality information: data from gravitational wave detectors can be affected by non-stationary noise or "glitches" which must be either be removed before analysis, or the analysis must be configured to mitigate their effect on final results. These data are provided to Asimov in YAML format from the appropriate team, and used to make appropriate selections in the analysis.</p><p>The analysis of gravitational wave data is generally performed within a Bayesian framework, which requires prior probability distributions being chosen before the analysis. Ideally these distributions would be chosen such that a very broad range of parameter values is explored and sampled, however this is computationally impractical, and to improve the speed and efficiency of the analysis a rough guess of the parameters is required. This is normally determined by "preliminary" analyses, rougher, rapid analyses performed, which are themselves informed by the detection process which identified the event in the raw detector data. These prior data are analysed by the PEConfigurator tool to determine appropriate prior ranges, and settings for the waveform approximant to be used in the analysis.</p><p>The calibration of the detectors; the correspondance between the strain on the detector and the intensity of light at the interferometer's exit port, can change over the course of an observing run. The uncertainty in this quantity is marginalised by many of the analyses, which requires data files to be collected and provided to the analyses.</p><p>Once the correct data, settings, and calibration information has been identified and collected it is possible to configure analyses. Asimov allows analyses to be described as a dependency tree, allowing the output data products from one analysis to be used as an input for another. This is often useful for coordinating the determination of the PSD of the analysed data.</p><p>Each pipeline is configured with a mixture of configuration files and command-line arguments. Asimov produces the appropriately-formatted configuration file for each pipeline using a template and substitutions from the production ledger. The appropriate command line program is then run for the given pipeline, in order to produce an execution environment and submission data for the htcondor scheduling system. This is then submitted to the LDG, and the job id is collected and stored by asimov.</p><p>It is then possible to automatically monitor the progress of jobs on the LDG, produce a webpage summarising the status of all on-going analyses, and detect the completion of jobs and initialise post-processing.</p></div>		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgements</head><p>DW and JV acknowledge support from <rs type="funder">Science and Technology Facilities Council (STFC)</rs> grants <rs type="grantNumber">ST/V001736/1</rs> and <rs type="grantNumber">ST/V005634/1</rs>. PS acknowledges support from <rs type="funder">STFC</rs> grant <rs type="grantNumber">ST/V005677/1</rs>. CH acknowledges support from <rs type="funder">STFC</rs> grant <rs type="grantNumber">ST/N005430/1</rs> and <rs type="funder">European Research Council (ERC)</rs> Consolidator Grant <rs type="grantNumber">647839</rs>. We are grateful for the support of our colleagues in the <rs type="institution">LIGO-Virgo Compact Binary Coalescence Parameter Estimation working group</rs>, including, but not limited to <rs type="person">Christopher Berry</rs> for his suggestions and insights. The authors are grateful for computational resources provided by the <rs type="institution">Leonard E Parker Center for Gravitation, Cosmology and Astrophysics at the University of Wisconsin-Milwaukee</rs> and supported by <rs type="funder">National Science Foundation</rs> Grants <rs type="grantNumber">PHY-1626190</rs> and <rs type="grantNumber">PHY-1700765</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_xCa4uYd">
+					<idno type="grant-number">ST/V001736/1</idno>
+				</org>
+				<org type="funding" xml:id="_3x9kazK">
+					<idno type="grant-number">ST/V005634/1</idno>
+				</org>
+				<org type="funding" xml:id="_qAy3hCd">
+					<idno type="grant-number">ST/V005677/1</idno>
+				</org>
+				<org type="funding" xml:id="_xaRPQcy">
+					<idno type="grant-number">ST/N005430/1</idno>
+				</org>
+				<org type="funding" xml:id="_aJVwTC8">
+					<idno type="grant-number">647839</idno>
+				</org>
+				<org type="funding" xml:id="_KfUQDFS">
+					<idno type="grant-number">PHY-1626190</idno>
+				</org>
+				<org type="funding" xml:id="_mYP8Vqk">
+					<idno type="grant-number">PHY-1700765</idno>
+				</org>
+			</listOrg>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Observation of Gravitational Waves from a Binary Black Hole Merger</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Abbott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevLett.116.061102</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevLett.116.061102" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. Lett</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">61102</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Properties of the Binary Black Hole Merger GW150914</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Abbott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevLett.116.241102</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevLett.116.241102" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. Lett</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="issue">24</biblScope>
+			<biblScope unit="page">241102</biblScope>
+			<date type="published" when="2016">2016b</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Prospects for observing and localizing gravitational-wave transients with Advanced LIGO, Advanced Virgo and KAGRA</title>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">P</forename><surname>Abbott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s41114-020-00026-9</idno>
+		<ptr target="https://doi.org/10.1007/s41114-020-00026-9" />
+	</analytic>
+	<monogr>
+		<title level="j">Living Rev. Rel</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">3</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">GWTC-2: Compact Binary Coalescences Observed by LIGO and Virgo During the First Half of the Third Observing Run</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Abbott</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevX.11.021053</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevX.11.021053" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. X</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page">21053</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">BILBY: A user-friendly Bayesian inference library for gravitationalwave astronomy</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Ashton</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.3847/1538-4365/ab06fc</idno>
+		<ptr target="https://doi.org/10.3847/1538-4365/ab06fc" />
+	</analytic>
+	<monogr>
+		<title level="j">Astrophys. J. Suppl</title>
+		<imprint>
+			<biblScope unit="volume">241</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">27</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">PESUMMARY: The code agnostic Parameter Estimation Summary page builder</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Hoy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Raymond</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.softx.2021.100765</idno>
+		<ptr target="https://doi.org/10.1016/j.softx.2021.100765" />
+	</analytic>
+	<monogr>
+		<title level="j">SoftwareX</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">100765</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Including higher order multipoles in gravitational-wave models for precessing binary black holes</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ohme</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Chatziioannou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hannam</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevD.101.024056</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevD.101.024056" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. D</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">24056</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Rapid and accurate parameter inference for coalescing, precessing compact binaries</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lange</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>O'shaughnessy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rizzo</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/1805.10457" />
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Multipolar Effective-One-Body Waveforms for Precessing Binary Black Holes: Construction and Validation</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ossokine</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevD.102.044055</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevD.102.044055" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. D</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">44055</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Computationally efficient models for the dominant and subdominant harmonic modes of precessing binary black holes</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pratten</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevD.103.104056</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevD.103.104056" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. D</title>
+		<imprint>
+			<biblScope unit="volume">103</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page">104056</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">GWTC-2.1: Deep Extended Catalog of Compact Binary Coalescences Observed by LIGO and Virgo During the First Half of the Third Observing Run</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Abbott</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Abbott</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Acernese</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ackley</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Adams</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Adhikari</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">X</forename><surname>Adhikari</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">B</forename><surname>Adya</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><surname>Et</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration</orgName>
+			</affiliation>
+		</author>
+		<idno type="arXiv">arXiv:2108.01045</idno>
+		<ptr target="https://arxiv.org/abs/2108.01045" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>arXiv e-Prints</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">GWTC-3: Compact Binary Coalescences Observed by LIGO and</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Abbott</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">D</forename><surname>Abbott</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Acernese</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ackley</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Adams</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Adhikari</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">X</forename><surname>Adhikari</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<author>
+			<persName><surname>Et</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">LIGO Scientific Collaboration ; Virgo Collaboration ; KAGRA Collaboration ; Virgo</orgName>
+			</affiliation>
+		</author>
+		<idno type="arXiv">arXiv:2111.03606</idno>
+		<ptr target="https://arxiv.org/abs/2111.03606" />
+	</analytic>
+	<monogr>
+		<title level="m">During the Second Part of the Third Observing Run. arXiv e-Prints</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Parameter estimation for compact binaries with ground-based gravitational-wave observations using the LALInference software library</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Veitch</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Others</surname></persName>
+		</author>
+		<idno type="DOI">10.1103/PhysRevD.91.042003</idno>
+		<ptr target="https://doi.org/10.1103/PhysRevD.91.042003" />
+	</analytic>
+	<monogr>
+		<title level="j">Phys. Rev. D</title>
+		<imprint>
+			<biblScope unit="volume">91</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">42003</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><surname>Williams</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Macleod</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vajpeyi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Clark</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.4024432</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.4024432" />
+		<title level="m">Transientlunatic/asimov</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,1386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A robust stress update algorithm for elastoplastic models without analytical derivation of the consistent tangent operator and loading/unloading estimation</title>
+				<funder>
+					<orgName type="full">China Postdoctoral Science Foundation</orgName>
+				</funder>
+				<funder ref="#_QP2SWhs">
+					<orgName type="full">National Natural Science Foundation of China</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Dechun</forename><surname>Lu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Geotechnical and Underground Engineering</orgName>
+								<orgName type="institution">Beijing University of Technology</orgName>
+								<address>
+									<postCode>100124</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Yaning</forename><surname>Zhang</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Geotechnical and Underground Engineering</orgName>
+								<orgName type="institution">Beijing University of Technology</orgName>
+								<address>
+									<postCode>100124</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Xin</forename><surname>Zhou</surname></persName>
+							<email>zhouxin@emails.bjut.edu.cn</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Geotechnical and Underground Engineering</orgName>
+								<orgName type="institution">Beijing University of Technology</orgName>
+								<address>
+									<postCode>100124</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Cancan</forename><surname>Su</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Geotechnical and Underground Engineering</orgName>
+								<orgName type="institution">Beijing University of Technology</orgName>
+								<address>
+									<postCode>100124</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Zhiwei</forename><surname>Gao</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">James Watt School of Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Xiuli</forename><surname>Du</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Geotechnical and Underground Engineering</orgName>
+								<orgName type="institution">Beijing University of Technology</orgName>
+								<address>
+									<postCode>100124</postCode>
+									<settlement>Beijing</settlement>
+									<country key="CN">China</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A robust stress update algorithm for elastoplastic models without analytical derivation of the consistent tangent operator and loading/unloading estimation</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">D6D557724BF6D2EFAD7250C4B66CAEC7</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:54+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Stress update algorithm</term>
+					<term>Line search method</term>
+					<term>Complex step derivative approximation</term>
+					<term>Smooth function</term>
+					<term>Consistent tangent operator</term>
+					<term>Constitutive model</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>A robust and concise implicit stress integration algorithm of elastoplastic models is presented. It does not require the loading/unloading estimation and analytical derivation operation for the stress update. First, the elastoplastic stress update problem is recast into an unconstrained minimization problem by utilizing the smooth function to bypass the loading/unloading estimation. Then, the object problem is solved by the line search method instead of the Newton method for better convergence. The consistent tangent operator is evaluated by the complex step derivative approximation without the subtraction cancellation error, which provides the quadratic convergence rate of global iteration. The rationality of the numerical consistent tangent operator is validated by the one obtained by the analytical derivation. A recently developed non-orthogonal elastoplastic (NEP) clay model is implemented using the new algorithm. The algorithm is confirmed through comparing the numerical solution and the analytical one for a cavity expansion problem. The algorithm performance is assessed based on a series of geotechnical boundary value problems.</p><p>It is found that the new algorithm is more robust than the one employed by ABAQUS. The source code of the model implementation can be downloaded from https://github.com/zhouxin615.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>( ) ( )</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">INTRODUCTION</head><p>The stress update problem of elastoplastic models is an initial value problem of the ordinary differential equations (ODEs) constrained by inequalities. The ODEs are usually transformed into algebraic equations to solve based on the explicit <ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b1">2</ref> or implicit <ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b5">[6]</ref> integral schemes. The implicit algorithm requires the Jacobian matrix in the local stress update iteration, which can be difficult to derive, especially for sophisticated soil models. But it is still preferred because it preserves the quadratic convergence rate of global iteration <ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref> .</p><p>The most popular implicit stress updating algorithm may be the return-mapping algorithm where the operator splitting technique addresses the inequality constraints and the Newton method <ref type="bibr" target="#b10">11</ref> solves the nonlinear equations <ref type="bibr" target="#b11">12</ref> . This computational paradigm is also followed by the cutting plane algorithm <ref type="bibr" target="#b12">13</ref> and the semi-implicit algorithm <ref type="bibr" target="#b13">14</ref> and has been used widely in the numerical implementation of advanced soil models <ref type="bibr" target="#b14">15,</ref><ref type="bibr" target="#b15">16</ref> . But it is found that the iterations may not converge for the Newton method when the initial value is far from the final solution or the problem is highly nonlinear due to complex model formulations <ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b17">18</ref> . The loading/unloading estimation of the operator splitting technique also makes the stress update procedure more cumbersome. Therefore, attempts have been made to improve the efficiency of the implicit stress integration method. For instance, one can use the smoothing function to replace the inequality constraints <ref type="bibr" target="#b18">[19]</ref><ref type="bibr" target="#b19">[20]</ref><ref type="bibr" target="#b20">[21]</ref><ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref> or the penalty function <ref type="bibr" target="#b23">24</ref> to bypass loading/unloading judgment. The nonlinear equations can be solved by the homotopy method <ref type="bibr" target="#b24">25</ref> , the line search method <ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b18">19</ref> , or the trust region method <ref type="bibr" target="#b18">19</ref> instead of the Newton method. These three methods can achieve better convergence. The line search method, however, is a more costeffective manner from the perspective of conciseness. Compared with the Newton method, it only adds a onedimensional nonlinear problem about the optimal step size in search, since the trust region method requires optimizing the multidimensional search direction, and the homotopy method needs to solve homotopy equations to obtain a better initial value. Some contributions worthy of attention in this field can be found in the literature <ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b25">26,</ref><ref type="bibr" target="#b20">21,</ref><ref type="bibr" target="#b26">27,</ref><ref type="bibr" target="#b27">28</ref> , which initially focused primarily on constitutive models for metal materials. Theoretically, these methods should also have great potential in implementing advanced soil models with complex formulations and deserves further study.</p><p>In the implicit model implementation, the derivation operation is required to determine the Jacobian matrix and the consistent tangent operator. The former is used for the solution of local nonlinear stress integral equations and the latter is used for global equilibrium iterations. The analytical derivatives of constitutive equations can be obtained easily for some simple cases, e.g., the Mises model, the Mohr-Coulomb model, and others. For elastoplastic soil models with highly nonlinear characteristics <ref type="bibr" target="#b28">29</ref> , however, the analytical derivation operation, especially for the consistent tangent operator, has become an increasingly cumbersome and even impossible task. Numerical differentiation may be preferred to analytical derivation because it avoids tedious algebraic work and is easy to implement <ref type="bibr" target="#b29">30</ref> . There are three practical numerical differentiation methods: the finite difference method <ref type="bibr" target="#b29">30</ref> , the complex step derivative approximation (CSDA) <ref type="bibr" target="#b30">31</ref> , and the Hyper-dual step derivative approximation (HDSDA) <ref type="bibr" target="#b31">32</ref> . The essence of these methods is to expand the object function on different types of number axes and truncate the higher-order term of the Taylor series to obtain the desired derivative term. The calculation results of HDSDA are almost equivalent to those of analytical derivation, but a lot of function overloading and operator overloading are required to define the operation rules of the Hyper-dual number <ref type="bibr" target="#b32">33</ref> . For the finite difference method, there are two kinds of numerical errors, namely the truncation error and the rounding error dominated by subtraction cancellation error. The former can be reduced effectively with a small perturbation value (i.e., differential step size), but the latter will increase with the decrease of the perturbation value. It is often a prerequisite for the successful application of the finite difference method to determine an optimal perturbation value <ref type="bibr" target="#b33">34</ref> . There is no subtraction cancellation error for the CSDA due to the absence of subtraction operation. On the other hand, the operation rules of the complex number have been added to mainstream programming languages. Therefore, the CSDA makes it possible for the concise and robust implementation of constitutive models.</p><p>This study aims to propose a robust and concise stress update algorithm to reduce the complexity in the implicit numerical implementation of advanced elastoplastic models and to improve its computational efficiency. The root of complexity is that the implicit algorithm needs to calculate the Jacobian matrix of nonlinear equations and consistent tangent stiffness, in which tedious derivative operations are required for complex elastoplastic models. Therefore, the proposed algorithm uses the CSDA method with high precision to obtain numerical derivatives instead of analytical derivatives. The loading/unloading estimation for the elastoplastic stress update problem is bypassed by using smooth functions. On the other hand, the main reason for limiting the computational efficiency of implicit algorithms is that the Newton method requires a small load step to ensure the convergence of the solution under strong nonlinear conditions. In the proposed algorithm, the line search strategy will be used to improve the computational efficiency of the algorithm, in which a larger load increment step is allowed. This paper is organized as follows: Section 2 gives the implicit integral scheme of the NEP clay model by the Backward Euler method. In Section 3, the complete stress update procedure is given. Section 4 is devoted to the determination of consistent tangent operator from the analytical and numerical perspectives, where different numerical schemes are discussed and compared. In Section 5, the robustness and accuracy of model implementation are assessed and validated by a series of boundary problems.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">NON-ORTHOGONAL ELASTOPLASTIC (NEP) CLAY MODEL</head><p>The elastoplastic models with the non-orthogonal flow rule have piqued an increasing interest in modelling the mechanical behaviour of geomaterials in recent years, in which some salient material properties (e.g., the dilatancy <ref type="bibr" target="#b34">35,</ref><ref type="bibr" target="#b35">36</ref> , strain hardening/softening 37 , and state-dependence <ref type="bibr" target="#b37">38</ref> ) can be captured by the fractional derivative. A potential function is not required because the direction of plastic flow is given by the fractional gradient of the yield function <ref type="bibr" target="#b38">39</ref> . Though these models show excellent predictive capability for different soils <ref type="bibr" target="#b39">40,</ref><ref type="bibr" target="#b40">41</ref> , no research has been done on the numerical implementation. A NEP clay model established by Liang et al. <ref type="bibr" target="#b34">35</ref> is employed for the algorithm validation because the consistent tangent operator and Jacobian matrix of this model can be analytically derived due to its relative simplicity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Brief review of the model concept</head><p>The NEP clay model is developed based on the modified Cam-clay (MCC) model <ref type="bibr" target="#b41">42</ref> . The basic equations of both models are presented in Table <ref type="table" target="#tab_0">1</ref>. They have the same elastic law and hardening law. The elastic stiffness matrix is expressed as</p><formula xml:id="formula_0">1 2 3 K Kr  =  + -    1 1 1 1 DI<label>(1)</label></formula><p>where I and 1 denote the fourth-order and second-order unit tensors, respectively.</p><p>( ) ( )</p><formula xml:id="formula_1">1.5 1 2 1 r  = - +</formula><p>and  is Poisson's ratio. The bulk modulus K depends on the hydrostatic pressure p :</p><formula xml:id="formula_2">K c p  =<label>(2)</label></formula><p>where ( )</p><formula xml:id="formula_3">0 1 ce   =+ , 0</formula><p>e denotes the initial void ratio. The parameters  and  in Table <ref type="table" target="#tab_0">1</ref> are the swelling and compression indexes of soil in isotropic consolidation conditions, respectively. The calibration method for  and  is presented in Section 2.2.</p><p>In the NEP clay model, the fractional gradient</p><formula xml:id="formula_4">f p f q pq        +       σ σ</formula><p>of the yield function f is used as the plastic flow direction. q and  represent the generalized shear stress and fractional order, respectively. In general, the Riemann-Liouville fractional derivative operator is employed.</p><formula xml:id="formula_5">f p     and f q    </formula><p>are expressed as follows:</p><p>( ) ( )</p><formula xml:id="formula_6">1 22 c 2 2 (1 ) 3 2 pp f q p p p N       - -  = + -   -  -  - (3) ( ) ( ) ( ) 2 c 2 2 31    - -  =+   -  - p p p fq q N q (4)</formula><p>where ( )  is the gamma function, c p is the yield surface size. More details can refer to the literature 35,36,43 .</p><p>The NEP clay model uses a different yield function (See Table <ref type="table" target="#tab_0">1</ref>) in which the ratio of vertical and horizontal axes of the elliptic yield curve at the meridian plane is defined by the parameter N. Based on the volume change condition p v d0  = at the critical state and Eq. ( <ref type="formula">3</ref>), the relationship between parameters  and N is obtained by:</p><formula xml:id="formula_7">2 NM  =-<label>(5)</label></formula><p>where the parameter M (= q/p) is the critical state stress ratio in triaxial compression conditions. It should be emphasized that the shape of the yield curve is controlled by the parameter N, however, in the NEP clay model, N is not an independent material parameter and can be determined by  and M (Eq. ( <ref type="formula" target="#formula_7">5</ref>)). Therefore, for a given parameter M, the change of  value will cause the change of N, leading to the change of the shape of the elliptical yield curves, as shown in Fig. <ref type="figure" target="#fig_9">1 (a)</ref>. From the perspective of model performance, the stiffness and dilatancy behaviour for different clays can be captured by an appropriate  value as shown in Fig. <ref type="figure" target="#fig_9">1 (b)</ref>.  </p><formula xml:id="formula_8">p d : d d =- σ ε ε D ( ) p d : d d =- σ ε ε D Hardening law p 0 c c v 1 dd e pp   + = - p 0 c c v 1 dd e pp   + = - Flow rule p dd f p f q pq       =+       ε σ σ p dd f p f q pq         =+       ε σ σ Yield function ( ) 2 2 2 c f q M p p p = + - ( ) 2 2 2 c f q N p p p = + - Karush-Kuhn-Tucker conditions d 0, 0, d 0 ff    = d 0, 0, d 0 ff    = Model parameters M ,  ,  ,  M ,  ,  ,  , <label>(a)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Parameter calibration and model validation</head><p>It can be seen from  ) in the e-lnp plane, as shown in Fig. <ref type="figure" target="#fig_5">2 (a)</ref>. For the parameter calibration of , it is necessary to measure the vertical distance  between the critical state line (CSL) and the NCL in e-lnp space.</p><p>It can be seen from Fig. <ref type="figure" target="#fig_5">2</ref> that  is exactly equal to the plastic void ratio  </p><formula xml:id="formula_9"> = 1  2 3   = 3 %  1 %  1 3   v %  v  2 2 0 1 x p M pN =+<label>(7)</label></formula><p>Substituting Eqs. ( <ref type="formula" target="#formula_7">5</ref>) and (7) into Eq. ( <ref type="formula">6</ref>), the parameter  can be determined by: In what follows, the drained triaxial compression test of Fujinomori clay (F-clay) reported in literature <ref type="bibr" target="#b43">44</ref> and the undrained triaxial compression test of Boston blue clay (BB-clay) reported in literature <ref type="bibr" target="#b44">45</ref> are used to demonstrate the performance of NEP clay model. The material parameters are determined by the test data provided in the literature and the parameter calibration method mentioned above, as presented in Table <ref type="table" target="#tab_2">2</ref>. The test data of F-clay and the predicted curves of NEP clay model ( = ) are illustrated in Fig. <ref type="figure" target="#fig_6">3</ref> (a), in which the results predicted by the MCC model ( = ) are also presented. The prediction results from these two models finally reach the same stress ratio because the M-value for the two models is the same. However, the NEP clay model better describes the stress-strain behaviours of clay before the critical state, and reflects the deformation characteristics of soil with different stiffness by introducing fractional order  .   </p><formula xml:id="formula_10">1 2 exp 1   =-   -  - <label>(8) (a) (b)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Stress integral equations of the model</head><p>Table <ref type="table" target="#tab_0">1</ref> presents the basic equations of the model defined in the form of the ODEs. In the model implementation, the ODEs need to be discretized into the algebraic equations for the time interval   1 , nn tt + . Based on the Backward Euler method, the control equations of NEP clay model are given by： ( ) </p><formula xml:id="formula_11">1 1 1 1 1 1 1 1 1 1 1 p c, 1 c, p v, 1<label>1</label></formula><formula xml:id="formula_12">+ + + +        = +  - +              =       =   σ σ ε σ σ Dc (9)</formula><p>where ( ) ( )</p><formula xml:id="formula_13">p0 1 ce  = + -.</formula><p>( )</p><formula xml:id="formula_14">, KG = DD</formula><p>is the secant elastic stiffness tensor. The secant bulk modulus</p><formula xml:id="formula_15">K is:</formula><p>( ) ( ) </p><formula xml:id="formula_16">e</formula><formula xml:id="formula_17">p 1 1 v, 1 v, 1 1 : 3 n n n n n p p K  + + + + = = +  - σ 1<label>(12)</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">( )</head><formula xml:id="formula_18">n n n n G + + + = +  - ss γ γ<label>(13)</label></formula><p>where G rK = represents the secant shear modulus, ( ) ( )</p><formula xml:id="formula_19">1 22 c, 1 1 pp 11 v, 1 1 1 2 1 2 : (1 ) 3 2        - - ++ ++ + + + +   =  =  + -   -  -  -  nn nn n n n n pp qp pN ε 1<label>(14) ( ) ( )</label></formula><p>( )</p><formula xml:id="formula_20">1 1 1 c, 1 pp 1 1 1 1 1 21 1 :3 31     - + + + + + + + + + +  -  =  =  +   -   -   n n n n n n n n n p p p q Nq γ ε s P (<label>15</label></formula><formula xml:id="formula_21">)</formula><p>where the fourth-order projection tensor P is determined by 3 = - 11 PI . Substituting Eq. ( <ref type="formula" target="#formula_20">15</ref>) into Eq. ( <ref type="formula" target="#formula_18">13</ref>), one can get the expression for 1 n+ s :</p><formula xml:id="formula_22">1 2 1 + + = + n G c n n+1 s Δγ s<label>(16) where ( ) ( )</label></formula><p>( )</p><formula xml:id="formula_23">1 1 1 c, n+1 1 1 2 6 3 1 nn n n p p p q cG Nq     - ++ + + +  - =  +   -   -   (17)</formula><p>Substituting Eq. ( <ref type="formula" target="#formula_19">14</ref>) into Eq.( <ref type="formula" target="#formula_17">12</ref>) and considering Eq. ( <ref type="formula" target="#formula_22">16</ref>), the update formulas of 1 n p + and 1 n q + can be obtained to replace that of 1 n+ σ in Eq. ( <ref type="formula">9</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>(</head><p>) ( )</p><formula xml:id="formula_24">1 22 c, 1 1 11 1 v, 1 1 2 1 2 exp (1 ) 3 2       - - ++ ++ + + + +    =  - + -    -  -  -    nn nn n n n n n pp qp p p c c pN (18) 1 1 2 3 21 + + + = + nn n G q c s γ<label>(19)</label></formula><p>Finally, the implicit stress integral equations of the NEP clay model can be simplified in the following form:</p><formula xml:id="formula_25">( ) ( ) e 1 v, 1 1 1 2 1 3 p c, 1 c, p v, 1 4 1 1 1 1 exp 0 2 3 0 = 21 exp 0 0, 0, 0   ++ + + ++ + + + +  -  =    +      -=     +     -  =           =  n n n nn n n n n n n n n p p c f G f q c f p p c f ff s γ<label>(20)</label></formula><p>where Eq. ( <ref type="formula" target="#formula_25">20</ref>) contains only 4 equalities. Comparing with Eq. ( <ref type="formula">9</ref>) containing 8 equalities, the number of nonlinear equations is significantly reduced.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">UNCONSTRAINED IMPLICIT STRESS UPDATE BASED ON THE LINE SEARCH METHOD</head><p>Eq. ( <ref type="formula" target="#formula_25">20</ref>) is non-smooth due to the existence of KKT conditions, i.e., Eq. ( <ref type="formula" target="#formula_25">20</ref>)4, where the inequality constraints mean that the nonlinear equations cannot be solved directly. In the operator splitting technique, the "elastic prediction", i.e.,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>( )</head><p>11 ,:</p><formula xml:id="formula_26">trial n n n KG ++ = +  σ σ ε D</formula><p>, is conducted to estimate loading and unloading states of material to address the inequality constraints. If (</p><formula xml:id="formula_27">( ) ( ) e 1 v, 1 1 1 1 2 p 3 c, 1 c, p v, 1 4 2 2 d 1 1 d 1 1 exp 0 2 3 0 21 = exp 0 20     ++ + + ++ + + + +  -  =    +   - =      +         -  =        + + - + =   n n n nn n n n n n n n n p p c f G q f c f p p c f c f c f s γ<label>)</label></formula><p>,:</p><formula xml:id="formula_29">nn c K G + = +  σ ε D and 2 0.5FTOL  =</formula><p>are the parameters in the smoothing function Eq. ( <ref type="formula" target="#formula_28">21</ref>)4.</p><p>FTOL is the allowable error for judging the convergence of solutions of nonlinear equations. Fig. <ref type="figure" target="#fig_10">4</ref> shows that the smooth curve will gradually approximate KKT conditions as the parameter  decreases. There is no need for the loading/unloading estimation in solving Eq. ( <ref type="formula" target="#formula_28">21</ref>). The calculation results exactly satisfy the KKT conditions when the solution of Eq. ( <ref type="formula" target="#formula_28">21</ref>) converges. </p><formula xml:id="formula_30"> = 0.01  = 0.05  = 0.12  = 0.2  = KKT conditions Plastic multiplier   : 0, 0 Plastic state f    = Elastic state: △ = 0, △ f ≤ 0   ( ) ( )   ( )   1 11 1 min = 2 T n nn  + ++ x f x f x (22)</formula><p>The decline of the merit function  can be achieved by the iterative search in multi-dimensional space:</p><formula xml:id="formula_31">      1 k k k k  + =+ x x d<label>(23)</label></formula><p>where   d denotes the search direction, which is usually determined by the Newton direction ( ) fx is the Jacobian matrix of nonlinear equations defined by Eq. ( <ref type="formula" target="#formula_25">20</ref>), which can be calculated by the numerical differentiation. Appendix A also provides the analytical expression of ( ) fx.  is the step size. The most essential task for the line search technique is to optimize the step size k  to achieve the maximum benefit of minimizing k  under a given search direction   k d , which will further produce a one-dimensional sub problem to find k  .</p><formula xml:id="formula_32">  ( ) ( )   1 k k k - = -   d f x f x to provide</formula><p>  ( )</p><formula xml:id="formula_33">1 min k n  + + xd<label>(24)</label></formula><p>However, the exact minimization of Eq. ( <ref type="formula" target="#formula_33">24</ref>) may be computationally expensive and is usually unnecessary. k  is thus updated by a more practical iterative formula with Goldstein's condition:</p><formula xml:id="formula_34">( ) ( ) ( ) ( ) ( ) ( ) 1 1 2 0 0 02 k k k j j j k j k j Accept and exit IF ELSE           +  -    =  +   (25)</formula><p>where the initial value of  is set to 1. The updated step size 1 k j  + needs to be greater than a minimum value to avoid too small a benefit:</p><formula xml:id="formula_35">( ) ( ) ( ) 1 0 max , 02 kk jj k j       +   =  +   (26)</formula><p>where the algorithm parameters  and  are recommended as      </p><formula xml:id="formula_36">1 2 0 k j   - ( ) k j   Acceptable range ( ) 0  O ( )    ( ) 1 k j   + k j  1 k j  +       1 c, 1 3 0 0 0 0 2 1 1 c, 1 1 1 1 c, d 1 0 0 1 1 , ,</formula><formula xml:id="formula_37"> =  = = = Input : σ ε σ σ x ， ， ， ， ， ，     ( )   ( )     ( )   ( ) ( )   ( ) 0 0 0 0 0 1 c, 1 1 1 max 1 *</formula><formula xml:id="formula_38">n n n n k k n k k k j n k k j n q p FTOL k k j        + + + + + + - +  =   = - = =     = = + x do while f x x d f x f f x f x ， ， ， ， ( )   ( ) ( ) ( ) ( ) ( ) ( ) ( ) ( )       2 1 max + 1 2 +1 +1 1 1 1 1 1 2 0 and 0 max , 0 1 2 1 = k k j n k k j j k k j j k j k k k j j n k n n j j j j               + + + + +  -      =   +     = + = + d do while f x d end do x x   1 1 1 1 1 c, 1 c, 1 1 1 1 1 1 1 1 1 Set 1 ompute , ,<label>2</label></formula><formula xml:id="formula_39">+ = + = = =  =  +  = = +   d end do σ s γ s σ 1 s σ ε ， 1 1 c, 1<label>1 1</label></formula><p>, , and</p><formula xml:id="formula_40">n n n n p + + + +   Output : σ σ ε</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">CONSISTENT TANGENT OPERATOR</head><p>The consistent tangent operator of NEP clay model is given by the analytical derivation and the numerical differentiation, respectively. The latter can be easily extended to the implicit calculation of other non-orthogonal models or elastoplastic models.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Analytical evaluation</head><p>The consistent tangent operator can be expressed by:</p><formula xml:id="formula_41">1 1 1 1 1 1 n n n n n n p + + + + + +    =  +    σ s 1 ε ε ε (27)</formula><p>Taking the derivatives of both Eq. ( <ref type="formula" target="#formula_17">12</ref>) and Eq. ( <ref type="formula" target="#formula_22">16</ref>) over</p><formula xml:id="formula_42">1 n+ ε , one can obtain: * * * 1 1 1 1 1 2 1 3 1 1 1 1 n n n n n n n n n pq a K a K a K  + + + + + + + + +    = + +    1 ε ε ε (28) ( ) ( ) 1 1 8 1 9 1 2 9 1 1 1 * 1 1 1 1 8 1 1 7 9 1 7 2 9 1 1 2 1 1 1 1 2 : 2 : 2 1 n n n n n n n n n n n n n n n n a G a a a a G K a q a a a a a a G c c q         + + + + + + + + + + + + + + + + +     = +  +               -   +  + + +       -        s Δγ 1 Δγ ε ε n 1 1 ε ε R: P R<label>(29)</label></formula><p>where ( )</p><formula xml:id="formula_43">* 1 e v, 1 exp n nn K c p c  + + =  . ( )( ) ( ) ( ) ( ) ( ) 2 2 2 2 1 1 1 c, 1 1 8 1 1 2 1 * * 1 1 c , 1 3 1 1 6 3 7 9 3 8 9 1 1 2 2 2 2 1 2 ˆ6 2 1 n n n n n n n n n n n n n q N p p p q a q G N GK p p a GK p a a a a a a a q     - -     - -- + + + + + + + - + + + + + + +   + -   = +    - -       - -  + +  -    -     n+1 I nn Δγ n R<label>(30) ( ) ( ) ( ) ( ) ( ) (</label></formula><p>)</p><formula xml:id="formula_44">1 1 2 c, 1 p 1 1 c, 1 * 1 1 1 1 1 2 1 1 1 c, 1 p 1 1 1 1 2 2 c, 1 1 1 1 2 2 1 3 2 1 ( ) 2 (1 ) 1 2 1 2 2 2 (1 ) 3                     - - + + + + + + + + + + + - + + + - - + + + + +  = +  - - +  -  -  -  -    =+     -     = - -      -  -  -   n n n n n n n n n n n n n n n n n n p c p p p q a K p N p p c p a a p p q p a a pN a ( ) (<label>)</label></formula><formula xml:id="formula_45">( )<label>(</label></formula><p>) ( )</p><formula xml:id="formula_46">1 1 2 1 1 2 c, n+1 1 1 4 c, 1 p 1 1 2 1 1 1 2 2 c, 1 1 * 1 1 5 c, 1 p 1 2 1 6 c, 1 p 2<label>(1 ) 2 2 (1 ) 1 2 (1 ) 3 2 2</label></formula><formula xml:id="formula_47">                  + + + - + + + + + + + - - + + + + + + + + - =  -   =  - -      -  -  -     = + -      -  -  -   =  n n n n n n n n n n n n n n n n n q ap N p p q a p c a p N p p p q p a p c aK pN a p c ( )<label>( ) ( ) ( ) ( ) 2</label></formula><formula xml:id="formula_48">* 1 1 1 1 2 1 1 1 c, 1 1 7 2 1 1 1 8 1 7 * e 9 v, 1 1 1 1 c, 1 1 4 2 2 1 c, 1<label>1 5 (1 ) 3 2 1 16 (2 )</label></formula><p>(2 )</p><formula xml:id="formula_49">       + + + + - + + + + + + - + + + + + + + +                          -      - = +   -  -    = +    = -   = - - = - -  n n n n n n n n n n n n n n n n n q p N K a p p p q a N q a G a a r K K c a p p p a c a p p p a    <label>(31)</label></formula><p>c, 1</p><formula xml:id="formula_50">1 n n p + +  ε</formula><p>can be derived by taking Eq. ( <ref type="formula">9</ref>)3 with respect to</p><formula xml:id="formula_51">1 n+ ε : c, 1 * * * 1 1 4 1 5 1 6 1 1 1 1 n n n n n n n n n p q a K a K a K  + + + + + + + + +    = + +    1 ε ε ε<label>(32)</label></formula><p>There are four unknowns (i.e.,  <ref type="formula">28</ref>), (29), and (32). An additional constraint is needed to close the equations involving unknowns. The total differential of Eq. ( <ref type="formula" target="#formula_25">20</ref>)4 can yield:</p><formula xml:id="formula_52">( ) c, 1 1 1 1 1 4 4 1 c, 1 1 2 1 1 1 1 1 3 : 2 0 n n n n n n n n n n n n n p p f f p p p fM   + + + + + + + + + + + + +         + - - + =           ss ε ε ε ε<label>(33)</label></formula><p>From Eqs. ( <ref type="formula">28</ref>), ( <ref type="formula" target="#formula_42">29</ref>), (32), and (33),  </p><formula xml:id="formula_53">+ + + + + + + + + + + +  = + + + + +    +  -  -  R P R R R P R R R P n n n n n n n n n n n n p a a b K a b a a G K a a a K a a b a a a a b K a a b q K a a b b q K 1 n n γ 1 n Δγ n n n 1 n n n<label>(34)</label></formula><p>( ) </p><formula xml:id="formula_54">+ + + + + +  = + +   +   -   -   R P R R R P R R R P n n n n n n a G a a a a b a a a b a b q a b b q s Δγ 1 ε γ n n 1 n n (35) c, 1 * * * 11 4 1 5 1 6 1 1 1 1 n nn n n n n n n p q a K a K a K  + ++ + + + + + +    = + +    1 ε ε ε<label>(36) 1 12 1</label></formula><p>::</p><formula xml:id="formula_55">n n bb  + +  =+ </formula><p>1n ε RP (37)    where the coefficients ( ) </p><formula xml:id="formula_56">*</formula><formula xml:id="formula_57">      ++ + + + + ++ ++ ++ +        = -  + + + +    -       = - -  +  : R R RR nn n n n nn nn nn n f G K c f f f b a a a b a b q a a a a G K c f q f f f G K c b a a a b a b q a a a fq n+1 n+1 n Δγ nn n Δγ nn ( ) ( ) ( ) ( ) * 11 1 1 4 2 8 3 * 3 1 1 c, 1 3 1 6 2 * 1 1 1 1 2 4 1 7 9 1 2 7 9 1 1 7 1 1 1 * 1 1 2 5 2 7 9 1 7 1 1 2 3 62 2 21 2         + + + + + + ++ ++ + + ++ + +    +     -        =-    = + - -  +  +  + + -  =  + + = n n n n n nn nn n nn n n K c b f b a b G b f q b K p p a p a N G K c b c b a a a a a a b a b G q G K c b a a a a G q ( ) 1 1   +                     - <label>(38)</label></formula><p>Substituting Eqs. (34) and (35) into Eq. ( <ref type="formula">27</ref>), the consistent tangent operator is obtained analytically as follows:  </p><formula xml:id="formula_58">( ) ( ) ( ) * * * 1 1<label>2</label></formula><formula xml:id="formula_59">+ + + + + + + + + + + +  = +  + +  + +     +    -   -   R P R R R P R R R n n n n n n n n n n n n a a b K a b a a G K a a a a a b K a a a a b K a a b q K a a b b q K σ 1 1 1 n 1 n γ 1 ε 1n γ n 1 n n 1 1 n n n ( )<label>8</label></formula><formula xml:id="formula_60">+ + + + + + +   +   -  -  P R P R R R P R R R P n n n n Ga a a a a b a a a b a b q a b b q γ 1 γ n n 1 n n<label>(39)</label></formula><p>where</p><formula xml:id="formula_61">1 1 n n + +   σ ε</formula><p>will degenerate into that of the MCC model presented in the literature <ref type="bibr" target="#b18">19</ref> in the case of 1  = .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Numerical evaluation</head><p>Section 4.1 has provided the analytic consistent tangent operator. It can be observed that it is a cumbersome task to derive analytically the consistent tangent operator for the elastoplastic model with highly nonlinear characteristics.</p><p>The verbose and complex expressions also make programming and code debugging more difficult. Therefore, the numerical evaluation is recommended from the perspective of implementation difficulty. In what follow, the CSDA is used to evaluate the derivatives of stress integral equations. As a comparison, the central difference method (CDM) and forward difference method (FDM) are also presented.</p><p>In the FDM, the derivative of ( ) fx at the interesting point x is obtained by the Taylor expansion of ( )</p><formula xml:id="formula_62">f x h +</formula><p>on the real number axis:</p><formula xml:id="formula_63">( ) ( ) ( ) ( ) ( ) 23 ... 2! 3! f x h f x h f x h f x f x h    + = + + + +<label>(40)</label></formula><p>where h denotes a smaller perturbation value. Assuming the truncation error terms can be neglected, one can yield:</p><formula xml:id="formula_64">( ) ( ) ( ) ( ) f x h f x f x O h h +-  =+ (41)</formula><p>where ( ) Oh indicates that the FDM has first-order accuracy. Following a similar procedure. The Taylor expansion of ( ) f x h on the real number axis can yield:</p><formula xml:id="formula_65">( ) ( ) ( ) ( ) ( ) 23 ... 2! 3! f x h f x h f x h f x f x h    -= - + - +<label>(42)</label></formula><p>From Eqs. ( <ref type="formula" target="#formula_63">40</ref>) and ( <ref type="formula" target="#formula_65">42</ref>), the approximation of ( ) fx  based on the CDM is obtained by:</p><formula xml:id="formula_66">( ) ( ) ( ) ( ) 2 2 f x h f x h f x O h h + - -  =+<label>(43)</label></formula><p>There are two numerical errors in Eqs. ( <ref type="formula">41</ref>) and (43). One is the truncation error which decreases with the decrease of h. The other is the rounding off error caused by representing real numbers with floating-point numbers of finite digits. It is worth emphasizing that the subtraction operation of two very close numbers will cause a significant subtractive cancellation error which is a special case of rounding off error and increases with the decrease of h. The error distribution of the finite difference method with the perturbation is shown in Fig. <ref type="figure" target="#fig_16">7 (a</ref>). In the CSDA <ref type="bibr" target="#b46">47</ref> , the Taylor series expansion is conducted on both the real number and imaginary number axes:</p><formula xml:id="formula_67">( ) ( ) ( ) ( ) ( ) 23 ... 2! 3! f x h f x h f x h f x f x h    + = + - - + i i<label>(44)</label></formula><p>where i denotes the imaginary number ( 2 1</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>=i</head><p>). The approximation formula of ( ) fx  with second-order accuracy can be obtained by the division operation of the imaginary part of Eq. ( <ref type="formula" target="#formula_67">44</ref>) as follows:</p><formula xml:id="formula_68">( ) ( ) ( ) 2 f x h f x O h h +    =+ i I (<label>45</label></formula><formula xml:id="formula_69">)</formula><p>where    I is used to extract the imaginary part of the argument. The approximation formula in Eq. ( <ref type="formula" target="#formula_68">45</ref>) can be easily extended to multi-dimensional cases as follows:</p><p>( ) ( )</p><formula xml:id="formula_70">2 ii i ii fh f Oh xh  +   =+  xe i I (46)</formula><p>where i</p><p>x denotes ith component of x . i e and i h denote ith unit vector and the perturbation value in ith direction.</p><p>It can be found that there is no subtraction operation in the CSDA. Therefore, there is no subtraction cancellation error and the rounding off error is bounded. On the other hand, the truncation error can be reduced by decreasing the perturbation value. In theory, there is no lower bound for the perturbation value in the CSDA <ref type="bibr" target="#b30">31</ref> . Fig. <ref type="figure" target="#fig_16">7</ref>  which the double-precision computation is conducted and the lower limit of relative total error is set to eps = 2.2204e-16 (double floating-point relative accuracy). It is clear that, at the beginning of decreasing perturbation, the decline rate of the relative total error of CSDA and CDM is approximately the same and faster than that of FDM since CSDA and CDM are second-order accuracy schemes while FDM is first-order accuracy scheme. With the further decrease of perturbation, the relative total errors of CDM and FDM begin to increase due to the presence of subtractive cancellation error while in the CSDA any perturbation value lower than 10 -8 gives rise to a relative error near eps. A clearer contrast can be found in Fig. <ref type="figure" target="#fig_17">8 (b)</ref>, in which the precision of the variables is set to 100 bits. Therefore, it can be approximately considered that there is no rounding off error in the calculation results and the total error equals the truncation error. Based on the presented CSDA, the numerical Jacobian matrix of Eq. ( <ref type="formula" target="#formula_25">20</ref>) can be easily obtained without cumbersome derivation. To numerically calculate the consistency tangent operator, however, the non-orthogonal stress integral equations usually need to be expressed in the following more general form:</p><p>( )</p><formula xml:id="formula_71">( ) c p 1 1 1 p c, 1 c, p v, 1 2 2 d 1 1 d 1 1 : exp 0 0 2 n n n n p n n n n n n n f f p p c f c f c f     + + + ++  + + + +  --  -          = -  =                  + + - +  σ σ σ ε ε 0 D (47)</formula><p>Taking the total differential of Eq. ( <ref type="formula">47</ref>) with independent variables dd 00 d 0 0 0 0 0 0 0 0 00 d</p><formula xml:id="formula_72">p p p n n n f f f p f f f f p p f f f p        + +    +                              + =                                    σ σ σ σ σ ε σ ε 0 σ σ (<label>48</label></formula><formula xml:id="formula_73">)</formula><p>where the Jacobian matrix of Eq. ( <ref type="formula">47</ref>) can be solved by the numerical evaluation. After transposition and matrix inversion operations, one can obtain:</p><formula xml:id="formula_74">  c c c 1 c c c 11 1 c 1 d d d 00 d 0 0 0 0 0 0 0 0 00 d p p p nn n n f f f p f f f f p p f f f p        - ++ +    +                            = -  =                                    σ σ σ σ σ ε σ ε ε A σ σ (49)</formula><p>where the consistent tangent operator is determined by extracting 6×6 upper-left block matrix of   A .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">NUMERICAL VALIDATION</head><p>The NEP clay model can degenerate into the MCC model under the condition of 1.0  = . In this case, the accuracy of model implementation can be validated by the analytical solutions of the MCC model in a cylindrical cavity expansion problem. The robustness of model implementation can be also assessed by comparison with the MCC model that is available in the ABAQUS software. In what follows, the accuracy and performance of the presented model implementation are validated and evaluated. The influence of perturbation value on the numerical stability is also investigated. In particular, the ability of the model implementation to address the coupling geotechnical problem is also assessed by a pile foundation bearing capacity test under the undrained condition. These computations were made on Intel ® Core(TM) i5-6200U processor 2.3 GHz processor running on a 64-bit Windows 10 operating system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Cylindrical cavity expansion</head><p>The cylindrical cavity expansion is a typical axisymmetric problem, as shown in Fig. <ref type="figure">9</ref>(a), and thus its mathematical description can be transformed into ODEs, which makes it possible to obtain the analytical solution to the problem. With the aid of scientific computing software Mathematica, Chen and Abousleiman have given the undrained <ref type="bibr" target="#b47">48</ref> and drained <ref type="bibr" target="#b48">49</ref> exact solutions of the MCC model in the case of cylindrical cavity expansion, which provides a valuable benchmark for the verification of the stress update results of the critical state models. Fig. <ref type="figure">9(b)</ref> shows the simplified finite element model where the eight-node axisymmetric elements (CAX8) and the corresponding pore pressure elements (CAX8P) are employed respectively for the drained and undrained cases. It should be noted that the displacement of the right boundary in 1-direction is constrained in the undrained case and is free in the drained case.</p><p>The initial state of soil and model parameters <ref type="bibr" target="#b47">48</ref> are presented in Table <ref type="table" target="#tab_15">3</ref> and<ref type="table" target="#tab_20">Table 5</ref>. In particular, the permeability of soil and water weight are set to 10 kN m 50 for the undrained case, respectively. The total analysis time of 0.001 s is used to approximate undrained loading conditions. Fig. <ref type="figure" target="#fig_11">10</ref> shows the calculation results of the cylindrical cavity expansion problem under drained and undrained conditions, respectively. The over consolidation ratios (OCR) of examples is set to 10. It is clear that the numerical solution from the model implementation is in good agreement with the analytical solution.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Conventional triaxial compression test</head><p>From the analysis results of Section 3.2, the computational accuracy of numerical differentiation methods depends heavily on the perturbation value. The inappropriate perturbation value may destroy the quadratic convergence when the consistent tangent operator is evaluated by numerical differentiation. In this subsection, the influence of perturbation value on the performance of numerical consistent tangent operator is assessed by an example of conventional triaxial compression demonstrated in Fig. <ref type="figure" target="#fig_9">11</ref>. The model parameters of soil are tabulated in Table <ref type="table" target="#tab_20">5</ref>. The initial stress state of 1   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head></head><p>, the analytical derivation and numerical differentiation schemes both have about the same amount of global iterations, which indicates that the numerical consistent tangent operator obtained by FDM, CDM, and CSDA all achieve quadratic convergence.</p><p>With the further decrease of h, the CSDA still remains convergent, the global iterations of the other two difference methods increase again, and even the global calculation encounter failure when  <ref type="table" target="#tab_16">4</ref>, it is observed that CSDA is superior to other numerical differentiation methods in numerical stability. Finally, an additional case denoted by full CSDA is also presented in Table <ref type="table" target="#tab_16">4</ref>, where both the consistent tangent operator and the Jacobian matrix are evaluated by the CSDA.  It can be found that the full CSDA consumes more CPU time than CSDA because the full CSDA involves more 383 numerical evaluation of derivatives. In addition, the convergence of full CSDA is worse than that of CSDA when the 384 perturbation value is large. The reason is that the truncation error of the numerical solution obtained by the full CSDA 385 will not only influence the convergence of the global solution but also influence the convergence of local iteration by 386 the Jacobian matrix. Whereas, the full CSDA will make the model implementation extremely simple because there is 387 no need for any analytical derivative evaluation for both the consistent tangent operator and Jacobian matrix. In the practical application, the simple derivative terms in the two can be analytically derived to reduce the computational overhead.</p><p>In what follows, the convergence behaviour of the proposed algorithm on the global level is investigated in the cases of  = 1.0 and 0.9. Fig. <ref type="figure" target="#fig_26">13</ref> shows the changing law of logarithm normalized largest residual force with the global iteration number, where the numerical consistent tangent operator obtained by the CSDA and the analytical consistent tangent operator are compared. The global iterations number of each load step is almost less than 4 due to the global quadratic convergence of consistent tangent operator. In addition, the convergence behaviours of the numerical consistent tangent operator is almost the same as that of the analytical one, which shows that the proposed algorithm based on the CSDA can avoid tedious derivative operation while ensuring the global quadratic convergence. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">Strip foundation under inclined load</head><p>In what follows, the convergence of the model implementation under large load increment input is investigated by comparing it with the default MCC model of ABAQUS. The analytical Jacobian matrix and consistent tangent operator are used to objectively evaluate the gain from the line search method on the algorithm's convergence. The target example is a strip foundation under an inclined load. Fig. <ref type="figure" target="#fig_10">14</ref> presents boundary conditions and finite element mesh of example. The elastic model and NEP clay model are adopted for the strip foundation and soil, respectively.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">Pile foundation bearing capacity test</head><p>The last boundary problem is a pile load capacity in the undrained clay subsoil. In view of the symmetry of the problem, a quarter model as shown in Fig. <ref type="figure" target="#fig_16">17</ref>    </p><formula xml:id="formula_75"> = 0.6  = 1.0  = 1.4  = 1.7  = Displacement / m</formula><p>Reaction force / kN  The proposed algorithm is extremely attractive for the implicit implementation of the complex elastoplastic model since there is no need for cumbersome derivative evaluation and loading/unloading estimation. Users are only required to pay attention to the construction of implicit stress integral equations. Although the numerical differentiation requires more computational overhead than the analytical derivation for the determination of the Jacobian matrix and consistent tangent operator, this additional time consumption can be reduced by using the analytical derivation to obtain simple derivative terms.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CREDIT AUTHORSHIP CONTRIBUTION STATEMENT</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX B. MATRIX REPRESENTATION OF TENSORS:</head><p>The matrix representation of second order includes:  The matrix representation of fourth order includes: </p><formula xml:id="formula_76">T ij f f f f f f f         =              (B2) ij i j   =   σ</formula></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>the NCL and the CSL in the e-lnp plane M slope of the critical state line in triaxial compression conditions N shape parameter of the elliptical yield curve  dimensional parameter, smoothing parameter in the smoothing function  ,  parameters of line search method  , d size and direction of search step</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 NEP</head><label>1</label><figDesc>Fig. 1 NEP clay model: (a) yield curves; (b) stress-strain curves.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>by the internal friction angle  in triaxial compression conditions. In the isotropic consolidation compression test, the swelling index  and compression index  can be determined by the slopes of swelling line (SWL:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>can be obtained by substituting stress point ( ) 00 , p Mp into the yield function:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 2</head><label>2</label><figDesc>Fig. 2 Determination of parameter : (a) e-lnp plane; (b) p-q plane.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 3 (</head><label>3</label><figDesc>b) shows the model predictions and test data under undrained conditions, where a  is the axial strain. Comparing with the MCC model, the NEP clay model can more reasonably capture the strength and deformation characteristics of BB-clay under undrained conditions. The reason is that under undrained conditions, predicted by the model is influenced by the pore pressure which is closely associated with the volume change of soil, as shown in Fig.3 (c). The NEP clay model can more reasonably describe the dilatancy law of soil by selecting a suitable  -value.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 3</head><label>3</label><figDesc>Fig. 3 Model validation for: (a) F-clay; (b) stress-strain curve of BB-clay; (c) stress path of BB-clay.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>1</head><label>1</label><figDesc>trial n+ σ is within the current yield surface, i.e., ( ) stress update follows the elastic Hooke's law and no plastic strain occurs in this step. On the other hand, if 1 trial n+ σ exceeds the current yield surface, i.e., ( ) stress point. The solving process is also known as the "plastic correction". The loading/unloading estimation is required at each increment step, which increases the complexity of the model implementation. To this end, the KKT conditions in Eq. (20)4 are replaced equivalently by the Fischer-Burmeister smooth function<ref type="bibr" target="#b18">19</ref> .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>Fig. 4</head><label>4</label><figDesc>Fig. 4 Fischer-Burmeister smooth function.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>4 10 -</head><label>10</label><figDesc>and 0.1 46 . Eqs.<ref type="bibr" target="#b24">(25)</ref> and<ref type="bibr" target="#b25">(26)</ref> essentially provide an inexact line search strategy, in which the step size for a given descent direction   k d is not a value that minimizes xd , but an acceptable range, as shown in Fig.5. Finally, the complete stress update procedure of the NEP clay model is demonstrated in Fig.6.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Fig. 5</head><label>5</label><figDesc>Fig. 5 Inexact line search method.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><head>Fig. 7</head><label>7</label><figDesc>Fig. 7 Errors change with the perturbation h: (a) FDM/CDM; (b) CSDA..</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head>Fig. 8</head><label>8</label><figDesc>Fig. 8 Change of relative errors with the perturbation value: (a) relative total error; (b) relative truncation error; (c)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_21"><head>Fig. 9 Fig. 10</head><label>910</label><figDesc>Fig. 10 Comparison between analytical and numerical solutions: (a) undrained condition; (b) drained condition.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_22"><head>Fig. 11 Fig. 12</head><label>1112</label><figDesc>Fig. 11 Summary of conventional triaxial compression test: (a) problem schematic; (b) finite element mesh.</figDesc><graphic coords="26,370.44,399.45,103.34,206.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_23"><head></head><label></label><figDesc>consistent tangent operators obtained by three numerical methods require more global iteration steps than the analytical consistent tangent operator or have encountered failure in the global iteration, which shows that the truncation error caused by too large perturbation value has seriously distorted the numerical solution. In the case of</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_24"><head></head><label></label><figDesc>The reason is that the increasing subtractive cancellation error caused by the decrease of h has resulted in the distortion of the numerical consistent tangent operator again, which further spoils the convergence of global iteration. From the results presented in Table</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_26"><head>Fig. 13</head><label>13</label><figDesc>Fig. 13 Convergence behaviour at the global equilibrium iteration: (a)  = 1.0; (b)  = 0.9.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_27"><head>1 -Fig. 14 Fig. 15 Fig. 16</head><label>1141516</label><figDesc>Fig. 14 Strip foundation: (a) model geometry; (b) finite element mesh.</figDesc><graphic coords="30,131.07,472.58,294.01,149.30" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_28"><head>3 8Fig. 17 Fig. 18</head><label>31718</label><figDesc>Fig.18 (a) shows the reaction force-displacement curves from ABAQUS and UMAT. It is clear that when the</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_30"><head></head><label></label><figDesc>function, line search method, and CSDA to implement the NEP clay model. In the model implementation, the smooth function replaces inequality constraints of stress integral equations to eliminate the non-smoothness. The use of the line search method makes the proposed algorithm have a better convergence in large step calculation, even for strong nonlinear cases. The CSDA was used to numerically evaluate the Jacobian matrix used in the local iteration of the model and the consistent tangent operator used in the global iteration to provide quadratic convergence. The NEP clay model has been implemented into the ABAQUS through the new algorithm. For the validation purpose, the performance of model implementation was assessed by four boundary value problems. In the cylindrical cavity expansion examples, the numerical predictions with the UMAT were in good agreement with the analytical solution, which verified the accuracy of the model implementation. Conventional triaxial compression examples under different perturbation values show that the CSDA has a better numerical robustness than the FDM and the CDM because it has no subtraction cancellation error. The strip foundation example under inclined load also indicated that the proposed algorithm has better convergence than the ABAQUS default algorithm and allows large step load calculation. As a potential application, the model implementation based on the proposed algorithm was used for the analysis of bearing capacity of the pile in the undrained clay subsoil, where the consistency of the results from the UMAT and the ABAQUS further verify the effectiveness of the model implementation in dealing with geotechnical problems.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_32"><head>e</head><label></label><figDesc>denote the orthonormal bases of second-order tensor. The Kronecker delta ij  can be expressed by:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_33"><head>e</head><label></label><figDesc>are the orthonormal bases of fourth-order tensor and ij kl  can be expressed by:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1</head><label>1</label><figDesc>Basic evaluation equations of two models</figDesc><table><row><cell>Basic equations</cell><cell>MCC model</cell><cell>NEP clay model</cell></row><row><cell>Hooke's law</cell><cell>(</cell><cell>)</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>Table 1 that the NEP clay model has 5 material parameters, i.e., M, , ,  and , among which the calibration methods of parameters M, ,  and  can refer to the MCC model. Only one more material parameter  is added for the NEP clay model. Although the literature 35 has provided the detailed parameter calibration</figDesc><table><row><cell>method of the NEP clay model, a brief review is necessary for the calibration method to facilitate the numerical</cell></row><row><cell>application of the NEP clay model. First, the parameter</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 2</head><label>2</label><figDesc></figDesc><table><row><cell cols="7">Material parameters of the NEP clay model</cell><cell></cell></row><row><cell>Material parameters</cell><cell>( 1 e 0  +</cell><cell>)</cell><cell>( 1 e 0  +</cell><cell>)</cell><cell></cell><cell></cell><cell></cell></row><row><cell>F-clay</cell><cell>0.0444</cell><cell></cell><cell>0.0047</cell><cell></cell><cell cols="3">0.3 1.36 1.23</cell></row><row><cell>BB-clay</cell><cell>0.0883</cell><cell></cell><cell>0.0173</cell><cell></cell><cell cols="3">0.1 1.35 1.47</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6"><head></head><label></label><figDesc>the quadratic convergence rate of local stress update iteration, where k denotes the iteration number in the local stress update.</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_15"><head>Table 3</head><label>3</label><figDesc>Initial state of soil in the cylindrical cavity expansion problem</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_16"><head>Table 4</head><label>4</label><figDesc>reports the total number of global iterations for the 14 steps and CPU time required by the numerical consistent tangent operator with the different perturbations. It is worth emphasizing that the CPU time and global iterations are 38.1s and 39 for the analytical derivation case. In the case of</figDesc><table /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_17"><head>Table 4</head><label>4</label><figDesc>Computational overhead of different numerical schemes 382</figDesc><table><row><cell></cell><cell cols="3">Number of global iterations</cell><cell></cell><cell></cell><cell cols="2">CPU time / s</cell></row><row><cell>h</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell></cell><cell>FDM</cell><cell>CDM</cell><cell cols="3">CSDA Full CSDA FDM</cell><cell>CDM</cell><cell>CSDA</cell><cell>Full CSAD</cell></row><row><cell>10 0</cell><cell cols="4">failure failure failure failure</cell><cell cols="2">failure failure</cell><cell>failure</cell><cell>failure</cell></row><row><cell cols="2">10 -1 56</cell><cell>56</cell><cell cols="2">failure failure</cell><cell>98.3</cell><cell>100.1</cell><cell>failure</cell><cell>failure</cell></row><row><cell cols="2">10 -2 55</cell><cell>47</cell><cell>47</cell><cell>failure</cell><cell>95.4</cell><cell>86.4</cell><cell>84.3</cell><cell>failure</cell></row><row><cell cols="2">10 -3 36</cell><cell>38</cell><cell>39</cell><cell>failure</cell><cell>69.4</cell><cell>73.5</cell><cell>72.4</cell><cell>failure</cell></row><row><cell cols="2">10 -4 38</cell><cell>40</cell><cell>39</cell><cell>42</cell><cell>72.1</cell><cell>76.1</cell><cell>72.0</cell><cell>194.7</cell></row><row><cell cols="2">10 -5 39</cell><cell>39</cell><cell>39</cell><cell>40</cell><cell>73.0</cell><cell>74.9</cell><cell>71.9</cell><cell>166.0</cell></row><row><cell cols="2">10 -6 40</cell><cell>39</cell><cell>40</cell><cell>40</cell><cell>74.4</cell><cell>75.6</cell><cell>73.5</cell><cell>162.2</cell></row><row><cell cols="2">10 -7 40</cell><cell>39</cell><cell>42</cell><cell>39</cell><cell>74.4</cell><cell>75.5</cell><cell>76.8</cell><cell>159.9</cell></row><row><cell cols="2">10 -8 40</cell><cell>39</cell><cell>39</cell><cell>42</cell><cell>75.0</cell><cell>74.4</cell><cell>72.1</cell><cell>169.8</cell></row><row><cell cols="2">10 -9 39</cell><cell>40</cell><cell>39</cell><cell>41</cell><cell>73.8</cell><cell>75.8</cell><cell>72.2</cell><cell>165.0</cell></row><row><cell cols="2">10 -10 39</cell><cell>43</cell><cell>42</cell><cell>40</cell><cell>72.8</cell><cell>80.6</cell><cell>76.4</cell><cell>162.1</cell></row><row><cell cols="2">10 -11 47</cell><cell>42</cell><cell>40</cell><cell>39</cell><cell>86.6</cell><cell>79.4</cell><cell>74.4</cell><cell>159.5</cell></row><row><cell cols="3">10 -12 failure 58</cell><cell>39</cell><cell>40</cell><cell cols="2">failure 103.0</cell><cell>71.6</cell><cell>161.0</cell></row><row><cell cols="4">10 -13 failure failure 39</cell><cell>40</cell><cell cols="2">failure failure</cell><cell>71.9</cell><cell>161.9</cell></row><row><cell cols="4">10 -14 failure failure 41</cell><cell>40</cell><cell cols="2">failure failure</cell><cell>74.6</cell><cell>160.2</cell></row><row><cell cols="4">10 -15 failure failure 40</cell><cell>39</cell><cell cols="2">failure failure</cell><cell>73.8</cell><cell>156.6</cell></row><row><cell cols="4">10 -16 failure failure 39</cell><cell>39</cell><cell cols="2">failure failure</cell><cell>71.3</cell><cell>157.5</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_20"><head>Table 5</head><label>5</label><figDesc>Material parameters of NEP clay model used for boundary value problemsThis paper has proposed a robust and concise implicit stress update algorithm through the combination of smooth</figDesc><table><row><cell>Boundary value problems</cell><cell>M</cell><cell></cell><cell></cell><cell></cell><cell>1 e</cell><cell></cell></row><row><cell>Cylindrical cavity expansion 48</cell><cell>1.2</cell><cell cols="5">0.15 0.03 0.278 1.823 1.0</cell></row><row><cell cols="2">Conventional triaxial compression test 1.0</cell><cell cols="3">0.25 0.05 0.3</cell><cell cols="2">1.825 0.9/1.0</cell></row><row><cell>Square/Strip foundations 51</cell><cell cols="4">0.898 0.25 0.05 0.3</cell><cell>1.6</cell><cell>0.3~1.7</cell></row><row><cell>Pile foundation 20</cell><cell>1.2</cell><cell>0.2</cell><cell cols="2">0.04 0.35</cell><cell>2.0</cell><cell>0.3~1.7</cell></row><row><cell>6. CONCLUSION</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_22"><head></head><label></label><figDesc>ee , where</figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="2"> </cell><cell>ij</cell><cell cols="3">can be expressed by:</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="6">  =  ij  </cell><cell>11</cell><cell> </cell><cell>22</cell><cell> </cell><cell>33</cell><cell> </cell><cell>12</cell><cell> </cell><cell>23</cell><cell> </cell><cell>13</cell><cell> T</cell><cell>(B3)</cell></row><row><cell cols="2"> ε</cell><cell cols="2">n</cell><cell cols="2">1 +</cell><cell> = </cell><cell cols="3">ij i ee , where j </cell><cell cols="5">ij  can be expressed by: </cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="5">  =  ij  </cell><cell>11</cell><cell> </cell><cell>22</cell><cell> </cell><cell>33</cell><cell> </cell><cell>12</cell><cell> </cell><cell>23</cell><cell> </cell><cell>13</cell><cell> T</cell><cell>(B4)</cell></row><row><cell cols="3"> γ</cell><cell cols="2">n</cell><cell>1 +</cell><cell cols="2"> = </cell><cell cols="2">ij i ee , where j </cell><cell cols="5">ij  =  - ij ij    </cell><cell>v 3</cell><cell>can be expressed by:</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="5">  =  ij  </cell><cell>11</cell><cell> </cell><cell>22</cell><cell> </cell><cell>33</cell><cell> </cell><cell>12</cell><cell> </cell><cell>23</cell><cell> </cell><cell>13</cell><cell> T</cell><cell>(B5)</cell></row><row><cell cols="15">ˆˆij i n = n e e , where ˆij j n can be expressed by:</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell cols="7"> ˆˆˆˆˆˆˆT  11 22 33 12 23 13 ij n n n n n n n ==</cell><cell>1 s</cell><cell></cell><cell>11 s</cell><cell>22 s</cell><cell>33 s</cell><cell>12 s</cell><cell>23 s</cell><cell>13 s</cell><cell> T</cell><cell>(B6)</cell></row><row><cell>n</cell><cell cols="8">ij i n = e e , where j</cell><cell cols="6">ij n can be expressed by:</cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>ij n</cell><cell>=</cell><cell></cell><cell>11 ˆˆˆˆˆ2 22 33 n n n</cell><cell>12 n</cell><cell>2</cell><cell>23 n</cell><cell>2</cell><cell>13 n</cell><cell> T</cell><cell>(B7)</cell></row></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>Support for this study is provided by the <rs type="funder">National Natural Science Foundation of China</rs> (Grant Nos., 52025084 and <rs type="grantNumber">52008231</rs>) and <rs type="funder">China Postdoctoral Science Foundation</rs> (Grant Nos., 2022M721884).</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_QP2SWhs">
+					<idno type="grant-number">52008231</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The source codes of this study are available from https://github.com/zhouxin615.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX A. DETAILS OF JACOBIAN MATRIX:</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Explicit stress integration of complex soil models</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Sheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rouainia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Sloan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Anal Met</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="1209" to="1229" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Nonlocal regularization of an anisotropic critical state model for sand</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">W</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Geotech</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="427" to="439" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Implicit integration of constitutive equation based on a nonlinear elastic stress predictor</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">I</forename><surname>Borja</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Cam-Clay Plasticity</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">I</forename><surname>Part</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">88</biblScope>
+			<biblScope unit="page" from="225" to="240" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Cam-clay plasticity, part 1: implicit integration of elasto-plastic constitutive relations</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">I</forename><surname>Borja</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">R</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="page" from="49" to="72" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A unified approach to the implicit integration of standard, non-standard and viscous plasticity models</title>
+		<author>
+			<persName><forename type="first">De</forename><surname>Borst</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Heeres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Anal Met</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1059" to="1070" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Implicit Integration of Non-Standard Plasticity Models. Application of Numerical Methods to Geotechnical Problems</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">M</forename><surname>Heeres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">De</forename><surname>Borst</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="483" to="492" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Return mapping algorithms and stress predictors for failure analysis in geomechanics</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Griffiths</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Eng Mech</title>
+		<imprint>
+			<biblScope unit="volume">135</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="276" to="284" />
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Observations on return mapping algorithms for piecewise linear yield criteria</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Griffiths</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Geomech</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="253" to="265" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<author>
+			<persName><forename type="first">T</forename><surname>Duretz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Souche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Borst</surname></persName>
+		</author>
+		<title level="m">Le Pourhiet L. The Benefits of Using a Consistent Tangent Operator for Viscoelastoplastic Computations in Geodynamics. Geochemistry, Geophysics, Geosystems</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="4904" to="4924" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">A fully convex reformulation of the original Matsuoka-Nakai failure criterion and its implicit numerically efficient integration algorithm</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Panteghini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Lagioia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Anal Met</title>
+		<imprint>
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="593" to="614" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A coupled THM finite element formulation for unsaturated soils and a strategy for its nonlinear solution</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Potts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">J</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zdravković</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">136</biblScope>
+			<biblScope unit="page">104221</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">An analysis of a new class of integration algorithms for elastoplastic constitutive relations</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ortiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Simo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Meth Eng</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="353" to="366" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A unified approach to finite deformation elastoplastic analysis based on the use of hyperelastic constitutive equations</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Simo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ortiz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="221" to="245" />
+			<date type="published" when="1985">1985</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Formulation of implicit finite element methods for multiplicative finite deformation plasticity</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Moran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Ortiz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">F</forename><surname>Shih</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Meth Eng</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="483" to="514" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Implicit integration of incrementally non-linear, zero-elastic range, bounding surface plasticity</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">L</forename><surname>Petalas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">F</forename><surname>Dafalias</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="page" from="386" to="402" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Assessing the accuracy and efficiency of different order implicit and explicit integration schemes</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lloret-Cabot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Sheng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">141</biblScope>
+			<biblScope unit="page">104531</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A multi-stage return algorithm for solving the classical damage component of constitutive models for rocks, ceramics, and other rock-like media</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">M</forename><surname>Brannon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Leelavanichkul</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Fracture</title>
+		<imprint>
+			<biblScope unit="volume">163</biblScope>
+			<biblScope unit="page" from="133" to="149" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A return mapping algorithm for isotropic and anisotropic plasticity models using a line search method</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">M</forename><surname>Scherzinger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">317</biblScope>
+			<biblScope unit="page" from="526" to="553" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">An unconstrained stress updating algorithm with the line search method for elastoplastic soil models</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">C</forename><surname>Su</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">W</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">143</biblScope>
+			<biblScope unit="page">104592</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">An open-source unconstrained stress updating algorithm for the modified Cam-clay model</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">N</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rabczuk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">390</biblScope>
+			<biblScope unit="page">114356</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Smooth finite strain plasticity with non-local pressure support</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Areias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rabczuk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Meth Eng</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="106" to="134" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Semi-implicit finite strain constitutive integration of porous plasticity models</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Areias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rabczuk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">César</forename><surname>De Sá</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Finite Elem Anal Des</title>
+		<imprint>
+			<biblScope unit="volume">104</biblScope>
+			<biblScope unit="page" from="41" to="55" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Semi-implicit finite strain constitutive integration and mixed strain/stress control based on intermediate configurations</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Areias</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Rabczuk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">César</forename><surname>De Sá</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Alves</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">L</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Eng Struct</title>
+		<imprint>
+			<biblScope unit="volume">124</biblScope>
+			<biblScope unit="page" from="344" to="360" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Computational Cam clay plasticity using second-order cone programming</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Krabbenhoft</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Lyamin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">209</biblScope>
+			<biblScope unit="issue">212</biblScope>
+			<biblScope unit="page" from="239" to="249" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Implicit numerical integration of highly nonlinear plasticity models</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Geng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Guo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">G</forename><surname>Di</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">132</biblScope>
+			<biblScope unit="page">103961</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Levenberg-Marquardt vs Powell&apos;s dogleg method for Gurson-Tvergaard-Needleman plasticity model</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shterenlikht</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Alexander</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">237</biblScope>
+			<biblScope unit="issue">240</biblScope>
+			<biblScope unit="page" from="1" to="9" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Numerical integration algorithm of updated homogeneous anisotropic hardening model through finite element framework</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">Y</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lee</forename><surname>Sy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Barlat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">372</biblScope>
+			<biblScope unit="page">113449</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Stress integration-based on finite difference method and its application for anisotropic plasticity and distortional hardening under associated and non-associated flow rules</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Yoon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">345</biblScope>
+			<biblScope unit="page" from="123" to="160" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Comparison of implicit and explicit numerical integration schemes for a bounding surface soil model without elastic range</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Carow</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Rackwitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">140</biblScope>
+			<biblScope unit="page">104206</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Numerical differentiation for local and global tangent operators in computational plasticity</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pérez-Foguet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rodrıǵuez-Ferran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Huerta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">189</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="277" to="296" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Complex step derivative approximation for numerical evaluation of tangent moduli</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kiran</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Khandelwal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Struct</title>
+		<imprint>
+			<biblScope unit="volume">140</biblScope>
+			<biblScope unit="page" from="1" to="13" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A highly accurate 1st-and 2nd-order differentiation scheme for hyperelastic material models based on hyper-dual numbers</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tanaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sasagawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Omote</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fujikawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Balzani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schröder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">283</biblScope>
+			<biblScope unit="page" from="22" to="45" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">Multi-objective optimization using hyper-dual numbers</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Fike</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<publisher>Stanford university</publisher>
+			<pubPlace>Palo Alto</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Numerical calculation of thermo-mechanical problems at large strains based on complex step derivative approximation of tangent stiffness matrices</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Balzani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gandhi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Tanaka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Schröder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Mech</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="861" to="871" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Non-orthogonal elastoplastic constitutive model for sand with dilatancy</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="page">103329</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">A 3D non-orthogonal plastic damage model for concrete</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">P</forename><surname>Meng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Method Appl M</title>
+		<imprint>
+			<biblScope unit="volume">360</biblScope>
+			<biblScope unit="page">112716</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Non-orthogonal elastoplastic constitutive model with the critical state for clay</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page">103200</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Fractional order plasticity modelling of state-dependent behaviour of granular soils without using plastic potential</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">F</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">F</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">Z</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Plasticity</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="page" from="53" to="69" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Phenomenological fractional stress-dilatancy model for granular soil and soil-structure interface under monotonic and cyclic loads</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">F</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Sumelka</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">F</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Nimbalkar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Geotech</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="3115" to="3132" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">A micromechanics-based fractional frictional damage model for quasi-brittle rocks</title>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">F</forename><surname>Qu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><forename type="middle">Z</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">J</forename><surname>Cao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">139</biblScope>
+			<biblScope unit="page">104391</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">A 3D fractional elastoplastic constitutive model for concrete material</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">S</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Solids Struct</title>
+		<imprint>
+			<biblScope unit="volume">165</biblScope>
+			<biblScope unit="page" from="160" to="175" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+		<title level="m" type="main">On the generalized stress-strain behaviour of wet clay: Engineering Plasticity</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">H</forename><surname>Roscoe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">B</forename><surname>Burland</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1968">1968</date>
+			<publisher>Cambridge University Press</publisher>
+			<pubPlace>Cambridge</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Fractional elastoplastic constitutive model for soils based on a novel 3D fractional plastic flow rule</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">L</forename><surname>Du</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">W</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">105</biblScope>
+			<biblScope unit="page" from="277" to="290" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">A generalized elastoplastic constitutive model for clay in three-dimensional stresses</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nakai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Matsuoka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Soils Found</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="81" to="98" />
+			<date type="published" when="1986">1986</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">An experimental study of the time-dependent undrained shear behavior of resedimented clay using automated stress path triaxial equipment</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Sheahan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1991">1991</date>
+			<publisher>Massachusetts Institute of Technology</publisher>
+			<pubPlace>Cambridge</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">On the formulation of closest-point projection algorithms in elastoplasticity-part II: Globally convergent schemes</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pérez-Foguet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Armero</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Meth Eng</title>
+		<imprint>
+			<biblScope unit="volume">53</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="331" to="374" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Numerical differentiation of analytic functions</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">N</forename><surname>Lyness</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">B</forename><surname>Moler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Siam J Numer Anal</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="202" to="210" />
+			<date type="published" when="1967">1967</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Exact undrained elasto-plastic solution for cylindrical cavity expansion in modified Cam Clay soil</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">N</forename><surname>Abousleiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Géotechnique</title>
+		<imprint>
+			<biblScope unit="volume">62</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="447" to="456" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Exact drained solution for cylindrical cavity expansion in modified Cam Clay soil</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">N</forename><surname>Abousleiman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Géotechnique</title>
+		<imprint>
+			<biblScope unit="volume">63</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="510" to="517" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Integration of anisotropic modified Cam Clay model in finite element analysis: Formulation, validation, and application</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">Z</forename><surname>Voyiadjis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Geotech</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="page">103198</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Aspects of finite element implementation of critical state models</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Sheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">W</forename><surname>Sloan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Yu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Comput Mech</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="185" to="196" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

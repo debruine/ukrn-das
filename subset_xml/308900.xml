@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Spontaneous muscle activity classification with delay-based reservoir computing</title>
+				<funder ref="#_vrkfQDT">
+					<orgName type="full">CASE</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">UK EPSRC</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Analog Neuromorphic Processing for Biosensors</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-11-30">30 November 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Antonia</forename><surname>Pavlidou</surname></persName>
+							<email>a.pavlidou.1@research.gla.ac.uk</email>
+						</author>
+						<author>
+							<persName><forename type="first">Xiangpe</forename><surname>Liang</surname></persName>
+							<idno type="ORCID">0000-0002-2039-5498</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Neg</forename><forename type="middle">Ghahremani</forename><surname>Arekhloo</surname></persName>
+							<idno type="ORCID">0000-0001-8412-8164</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Haobo</forename><surname>Li</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Justus</forename><surname>Marquetand</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Hadi</forename><surname>Heidari</surname></persName>
+							<email>hadi.heidari@glasglow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation>
+								<orgName>1 Microelectronics Lab (meLAB), James Watt School of Engineering, University of Glasgow, </orgName>
+								<address><addrLine>Glasgow G12 8QQ, United Kingdom Glasgow G12 8QQ, United Kingdom 72076 Tübingen, Germany 72076 Tübingen, Germany 72076 Tübingen, Germany</addrLine></address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 2 Extreme Light Group, School of Physics and Astronomy, University of Glasgow, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 3 Department of Epileptology, Hertie-Institute for Clinical Brain Research, University of Tübingen, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 4 Department of Neural Dynamics and Magnetoencephalography, Hertie-Institute for Clinical Brain Research, University of Tübingen, </orgName>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> 5 MEG-Center, University of Tübingen,</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Spontaneous muscle activity classification with delay-based reservoir computing</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-11-30">30 November 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">3AE607E1BCCF41C9B8195A1FADF5E248</idno>
+					<idno type="DOI">10.1063/5.0160927</idno>
+					<note type="submission">Submitted: 6 June 2023 • Accepted: 26 October 2023 •</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:09+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Neuromuscular disorders (NMDs) affect various parts of a motor unit, such as the motor neuron, neuromuscular junction, and muscle fibers. Abnormal spontaneous activity (SA) is detected with electromyography (EMG) as an essential hallmark in diagnosing NMD, which causes fatigue, pain, and muscle weakness. Monitoring the effects of NMD calls for new smart devices to collect and classify EMG. Delaybased Reservoir Computing (DRC) is a neuromorphic algorithm with high efficiency in classifying sequential data. This work proposes a new DRC-based algorithm that provides a reference for medical education and training and a second opinion to clinicians to verify NMD diagnoses by detecting SA in muscles. With a sampling frequency of Fs = 64 kHz, we have classified SA with EMG signals of 1 s of muscle recordings. Furthermore, the DRC model of size N = 600 nodes has successfully detected SA signals against normal muscle activity with an accuracy of up to 90.7%. The potential of using neuromorphic processing approaches in point-of-care diagnostics, alongside the supervision of a clinician, provides a more comprehensive and reliable clinical profile. Our developed model benefits from the potential to be implemented in physical hardware to provide near-sensor edge computing.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>The neuromuscular system, comprised of the nervous and skeletal systems, allows for precise and coordinated muscle force production. The overall estimate of neuromuscular disorders (NMDs) affecting the peripheral motor neurons, neuromuscular junctions, and skeletal muscles, known as a peripheral neuromuscular disorder, exceeds 1 in 3000 people in all age groups. <ref type="bibr" target="#b0">1</ref> Assessment of NMDs through invasive needle electromyography (iEMG) consists of recording and analyzing signals in both resting muscle and voluntary muscle contraction. Since the skeletal muscles (except the end-plate zone) are electrically silent in resting conditions, the presence of electrical signals in a rest state [known as spontaneous activity (SA)] represents peripheral neuromuscular disorders, which can be derived from dysfunction of motor neurons, neuromuscular junctions, and innervated muscle fibers. <ref type="bibr" target="#b1">2</ref> As SAs can be generated from abnormalities at different levels of the peripheral neuromuscular system, identifying the origin of spontaneous activity is essential for diagnosing and monitoring NMD, the temporal course of the disease, and its severity. Determining the source of SAs can be accomplished by distinguishing spontaneous waveform characteristics such as morphology, frequency, number of phases, and initial deflection. <ref type="bibr" target="#b2">3</ref> Fibrillation potentials are the most common type of SAs recorded by iEMG. Fibrillation potentials represent muscle activities that occur in response to the spontaneous activation of muscle fibers in the absence of innervation. Therefore, any lesion through the entire length of the innervating motor neuron, which can cause muscles to lose connection with the innervating neuron, generates ARTICLE pubs.aip.org/aip/aml fibrillation potentials. <ref type="bibr" target="#b3">4</ref> The firing pattern of fibrillation is regular, with the frequency rate usually in the 0.5-15 Hz range. The amplitude of the fibrillation potential is between 10 and 100 μV, and it may become lower than 10 μV under chronic conditions (more than 6-12 months). <ref type="bibr" target="#b4">5</ref> While electrical muscle activities have been measured by surface EMG (sEMG) over the past decades, their application in diagnosing NMD and its characteristics, including SAs, is hampered by many inherent challenges, such as electrode placement and its low spatial resolution. <ref type="bibr" target="#b5">6</ref> To enhance the spatial resolution, EMG can be recorded through needle EMG by penetrating through the electrically isolating tissue interposed between the skeletal muscle and the skin, measuring the skeletal muscle electrical signals directly with high spatial resolution. However, there are drawbacks associated with the needle EMG method, including limited sampling locations, being invasive and painful, and the potential risks associated with needle insertion. <ref type="bibr" target="#b6">7</ref> Despite all these challenges with iEMG, it is still the gold standard method for diagnosing NMDs and SA as it offers a high spatial resolution recording. To reduce the pain caused by needle movement inside the muscle for diagnosing SA and NMDs, there is a need for a solid computing processor that can help inexperienced clinicians, such as junior clinicians, analyze the EMG readings in real-time. Therefore, by decreasing the required time for SA diagnosis by implementing a computing processor, the pain and potential risks are reduced significantly.</p><p>In this paper, we propose the use of delay-based reservoir computing (DRC) as a machine learning (ML) method for automatically diagnosing muscle fibrillation, a type of SA, to assist new doctors during training. Mathematical analysis was first proposed for healthcare applications in 1959, <ref type="bibr" target="#b7">8</ref> inspiring the field of healthcare informatics and, as an extension, the use of artificial intelligence (AI) and ML in healthcare.</p><p>Typical commercially available computing devices follow the von Neumann architecture, which has been proven inefficient when being used for complex ML learning applications since the computational and memory units are separate, leading to bottlenecks. <ref type="bibr" target="#b8">9</ref> Neuromorphic computing has proven promising in tackling this problem by introducing in-memory computing using different architectures, which would otherwise be impossible with von Neumann computers. DRC is a type of reservoir computing (RC) and, as an extension of recurrent neural networks (RNNs) (Fig. <ref type="figure" target="#fig_0">1</ref>), has been proven efficient enough to classify data of various types using in-memory computing with low power consumption. <ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b10">11</ref> RNN takes its name from the recurrent loop on the neurons, which offers a memory element to the system accounting for previous neuron states as well (see Fig. <ref type="figure" target="#fig_0">1</ref> for illustration), making them ideal for processing sequential data as they retain a memory of their previous state. <ref type="bibr" target="#b11">12</ref> However, said recurrent loop makes RNNs particularly difficult and computationally expensive to train, leading researchers in the development of Reservoir Computing (RC). RCs replace part of the neural network with a randomly linked neuron (Fig. <ref type="figure" target="#fig_0">1</ref>). <ref type="bibr" target="#b9">10</ref> The purpose of the reservoir itself is to convert the input signal (u) to a high-dimensional spatiotemporal state space (x), and RC networks are more accessible to train than RNN since the weights at the input and inside of the reservoir remain untrained while the output weights are trained via regression. <ref type="bibr" target="#b9">10</ref> In addition, RCs behave as memory units themselves, making them a type of in-memory computing network. This is highly favorable for reducing power consumption as it does not require data to be constantly transferred between the memory unit and central processing unit (CPU), which is where the computations are performed. <ref type="bibr" target="#b8">9</ref> An example of RC is the Echo State Network (ESN), which is a digital algorithm in which the neurons inside the reservoir are randomly interconnected. The number of neurons within the reservoir is denoted as N. <ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b13">14</ref> By incorporating delay lines in RC models, the number of nodes and, consequently, the complexity of the reservoir will be reduced to a single node. <ref type="bibr" target="#b13">14</ref> DRC was first proposed in 2011, <ref type="bibr" target="#b13">14</ref> and it was proven to be very high performing while simpler than standard RC models (see Fig. <ref type="figure" target="#fig_0">1</ref>).</p><p>In the input of a DRC, the sampled signal is multiplied by the binary mask M of length N, randomly allocated +1 and -1. <ref type="bibr" target="#b14">15</ref> The resulting signal, J(k), is given by Eq. ( <ref type="formula" target="#formula_0">1</ref>), where "u" is the input signal, "k" is the node counter, "s" is the scaling factor, "b" is the bias, and "⌊ ⌋" indicates the floor function. <ref type="bibr" target="#b14">15</ref> J(k) is then fed inside the physical node and then to the N virtual neurons. Each of the neurons within the reservoir is separated by a time step θ, taking τ seconds in total for each sample to complete the entire reservoir cycle 1. 15</p><formula xml:id="formula_0">J(k) = u(⌊ k N ⌋) ⋅ M(k%N) s + b<label>(1)</label></formula><p>The dataset used for this work consists of 78 readings of various durations taken across a variety of muscles and subjects. Those  readings were segmented into 1 s recordings to create an even distribution between the different classes, with 183 data points in total, with an equal number of recordings corresponding to healthy rest (R), fibrillation during rest (F), and healthy voluntary movement (VM). They were downsampled to 91 Hz to avoid overfitting, while any frequencies outside the 30 Hz to 10 kHz range were removed, <ref type="bibr" target="#b4">5</ref> along with the 50 Hz frequency, which tends to be noise induced by the mains. In addition, values less than 3 μV were removed to make the SA peaks more prominent. The three conditions under which the recordings were obtained, R, F, and VM, were initially coded as classes 0, 1, and 2. At this point, the data were ready to be masked and inserted into the reservoir. <ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b14">15</ref> The physical node, which is present at the input of the reservoir, is responsible for the non-linearity of the system and for relating the nodes' state to the previous inputs. The circuit configuration is visualized in Fig. <ref type="figure" target="#fig_1">2</ref> and is derived from Ref. 13.</p><p>The low-pass filter (LPF) component will determine the response speed of the non-linear (NL) node, for which a quick response will lead to a smaller memory. It is not ideal for the system to always reach a saturation state for each input sample, as this might eliminate its memory feature. The ideal value of R5 in the LPF is calculated by Eq. ( <ref type="formula">2</ref>). If we consider that Tc = 5θ and θ = τ/N, <ref type="bibr" target="#b12">13</ref> then,</p><formula xml:id="formula_1">R5 = Tc 2π C = 5τ 2π CN (2)</formula><p>At the output layer, we dedicate one final neuron for each class. In this work, we used three output classes to indicate when the muscle is at rest, when there is voluntary movement, and for fibrillation, denoted as R, VM, and F, respectively. Each neuron on the output layer is individually connected to all N of the reservoir (Fig. <ref type="figure">3</ref>).</p><p>The Mackey-Glass (MG) node circuit was initially constructed according to Ref. 17, but that provided very low accuracy and a near 0 memory capacity, so the resistor values were adjusted to stabilize the system. <ref type="bibr" target="#b17">18</ref> By setting our delay time to a constant τ = 1/180 and knowing that C = 2.7 nF, 17 R5 depends on the size of the reservoir, and hence Eq. ( <ref type="formula">2</ref>), becomes Eq. ( <ref type="formula" target="#formula_2">3</ref>), (given below)</p><formula xml:id="formula_2">R5 = 5/180 2π(2.7e -9)N = 1.6374 × 10 6 N .<label>(3)</label></formula><p>The input/output response of the MG node for a reservoir of size N = 10 nodes is given in Fig. <ref type="figure">4</ref>.</p><p>The equation used to train W out is given by Eq. ( <ref type="formula" target="#formula_2">3</ref>), with Y target being the reference class for the training d and the regularization coefficient β = e -8 . <ref type="bibr" target="#b18">19</ref> W out will be a matrix of dimensions (N × 3), relating each virtual reservoir neuron with each class. The result, Y, We can see how the physical node reserves previous states and slowly approaches the next input. This allows for a memory feature in the systems. While we decrease the R 5 value, the memory is reduced as well. In the picture on the left, it appears that the MG node reaches a steady state for every input value, which means that the memory in this case is near 0. The R 5 value for the picture on the right was chosen using Eq. ( <ref type="formula">2</ref>), and it is seen how the system approaches a steady state more slowly, retaining this way part of the memory.</p><p>is a matrix with three rows, indicating the relevance of each node to each of the three classes as follows: <ref type="bibr" target="#b18">19</ref> W out = Y target X T (XX T + βI), (4)</p><formula xml:id="formula_3">Y = W out X. (<label>5</label></formula><formula xml:id="formula_4">)</formula><p>The classes at this point are in a matrix of three rows of length equal to the size of the data, and the classification result Y will show how likely the recording belongs to each class.</p><p>In order to test the classification accuracy A, we compare Y to the reference matrix Y test using Eq. ( <ref type="formula" target="#formula_5">6</ref>), where L is the number of data points used for testing. The data were then reordered, and the process was repeated several times to test the overall stability of the system as well as to examine different N sizes,</p><formula xml:id="formula_5">A(%) = ∑ L k=1 (Ytest(k) -Y(k)) L . (<label>6</label></formula><formula xml:id="formula_6">)</formula><p>The algorithm was trained and tested for various N values, starting from 20 nodes all the way up to 600, and its accuracy improved significantly. For an N = 600 nodes, the algorithm reached an accuracy of 89.5%.</p><p>With ESN being a similar version of the RC, the process was repeated with the same data using the code provided in Ref. 19. Although for DRC the accuracy seemed to improve by increasing the number of neurons in the reservoir, the ability of the ESN to distinguish between the muscle in rest, during fibrillation, and during voluntary movement seemed to decrease. Figure <ref type="figure">5</ref> shows the comparison of DRC and ESN in accurately diagnosing each class.</p><p>The three states during which the readings were obtained were recorded using different people and different muscles around the body. This was done to increase variability in the dataset in order to see how well the algorithm can perform on a variety of fibrillation inputs. 64 kHz was found to be unnecessarily high and, therefore, reduced to 91 Hz to avoid overfitting. <ref type="bibr" target="#b19">20</ref> The initial dataset used consisted of only nine readings, with a big class imbalance that threw off the stability of the algorithm. For this, we have included an additional 25 F readings, 18 VM, and 12 R; however, due to the massive class imbalance, the algorithm was very unstable at providing a diagnosis, with the accuracy varying vastly between different rounds of the same N size. To tackle this, the readings were segmented into FIG. <ref type="figure">5</ref>. Accuracy plot comparison for DRC and ESN in detecting the muscle state for three classes: F, R, and VM. It is observed that the DRC performs with higher accuracy, especially while the reservoir size N increases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>ARTICLE</head><p>pubs.aip.org/aip/aml smaller recordings (1 s each), and we used 61 readings for each class, bringing the total to 183 readings. Due to the length of some of these recordings, the data could be further expanded, but this number was chosen to maintain a balance between the three classes.</p><p>During the initial stage of setting up the system, the reservoir size was kept at a small size of N = 10 nodes. With the NL values set as in Ref. 13, the system was very unstable. By adjusting our R5 to be varied with the reservoir size, the system behaved in a more stable manner, <ref type="bibr" target="#b20">21</ref> and it was then decided it was ready to test its classification abilities using our EMG dataset. The final configuration of the MG node is given in Fig. <ref type="figure" target="#fig_1">2</ref>. Before the masked data were put through the MG node, they were time-multiplexed at θ intervals each, using the binary mask. Looking at Fig. <ref type="figure">4</ref>, we can understand the role of the NL node in associating the input values with the previous states. <ref type="bibr" target="#b12">13</ref> The faster the MG node reaches a steady state, the less association there is with its past states.</p><p>The 183 data recordings were shuffled and divided into training and testing; 120 of those were used for training and 60 for testing. The last three were left out to increase the variance between repetitions of the same cycles, as in order to have a more accurate view of the algorithm, it was run five times for each N value. Figure <ref type="figure">5</ref> illustrates how the mean accuracy increases with the number of nodes within our reservoir, while for ESN it tends to drop. Although ESN has been proven to be powerful in various applications <ref type="bibr" target="#b18">19,</ref><ref type="bibr" target="#b21">22</ref> for muscle fibrillation, DRC has been proven to be overall more accurate. For this work, we chose to compare our DRC algorithm with a standard ESN since they are similar, with ESN being fully digital and containing a randomly connected reservoir, as opposed to DRC being partly analog and with a linearly connected reservoir.</p><p>In conclusion, DRC is an in-memory computing ML algorithm for sequential data, as it is derived from RNN. It has been specifically created to be more power efficient and compact than typical digital ML algorithms, and in this paper, we explore using a DRC to detect fibrillation potential (a type of spontaneous activity) in patients via EMG recordings. Fibrillation is a type of spontaneous activity observed in a neuropathic disorder (neuropathies, radiculopathies) and is critical for diagnosing and monitoring NMDs, along with the time course of the disease and its severity. We explain in detail the nature of our EMG readings, along with how fibrillations appear in the signal and how they were filtered to make the muscle activity more prominent. We have included a description of how the data were prepared for entering the reservoir, the role of the NL node, and its effect on the characteristic memory of the system. Overall, we have provided a detailed explanation of how to build a DRC, along with equations and figures. With our EMG readings taken by different participants during fibrillation (F) in rest, healthy rest (R), and voluntary movement (VM) from multiple muscles around their body, we have explored the accuracy of the DRC for continuously increasing the size of the reservoir and shown how the larger the reservoir, the better. The analogous calculations were performed with the same dataset, using an ESN, which is a similar model, with a randomly interconnected reservoir layer instead of a linearly connected one, which is the case for DRC. This showed that although the ESN performed adequately, its accuracy was not as high as that obtained using the DRC model.</p><p>To the best of our knowledge, there has not been a report of this specific application using a DRC or any other type of RC for diagnosing muscle fibrillations through needle EMG. Considering the above findings, the DRC has been successful in detecting the muscle state using a single sensor. The algorithm can distinguish fibrillation from voluntary movement and rest with almost 90% accuracy for a reservoir of size N = 600 nodes (Table <ref type="table" target="#tab_0">I</ref>), and in addition, we have proven that our system can be reliable in providing a reference while medical practitioners perform their clinical assessments. In future work, the algorithm described in this paper will be implemented on-chip to prove in application our system's low-power, in-memory computing nature.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>FIG. 1 .</head><label>1</label><figDesc>FIG. 1.Progression of how DRC was derived from RNN. RNN is the type of Artificial Neural Network (ANN) used to process time series data (left), and RC is the simplified version of RNN (center), with randomly interconnected neurons. DRC is a further simplified version of RC, using a single dynamical node and a delay line, all of which collectively make up the reservoir.</figDesc><graphic coords="3,67.37,545.71,457.92,107.76" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>FIG. 2 .</head><label>2</label><figDesc>FIG. 2. DRCs utilize a single analog non-linear node at their input. The two most important parts of it are the non-linear part and the LPF part. This configuration was derived from Refs. 16 and 17.</figDesc><graphic coords="4,69.09,84.22,192.48,145.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>FIG. 3 .FIG. 4 .</head><label>34</label><figDesc>FIG.3. Full DRC system process for classification, which is the simplified evolution of the RC we have seen in the figure before. The first block (a) shows the masking of the data at the input layer, the second block (b) illustrates how the physical NL node is delayed into the virtual nodes, and the output layer is shown in the third block (c) as each of the N virtual nodes is connected to each of the nodes representing the classes through the weight matrix W out of dimensions (N × 3).</figDesc><graphic coords="4,143.33,485.95,306.00,167.52" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="1,0.00,-0.00,116.21,852.41" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="1,130.00,645.29,435.00,116.71" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="5,80.45,84.22,431.76,186.72" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>TABLE I .</head><label>I</label><figDesc>Performance benchmarks of the DRC and its ability to detect the correct out of three classes. The values below correspond to the mean taken for five iterations for each N size.</figDesc><table><row><cell>N</cell><cell>Accuracy</cell><cell>Specificity</cell><cell>Sensitivity</cell><cell>Precision</cell></row><row><cell>20</cell><cell>68</cell><cell>84</cell><cell>68.25</cell><cell>68</cell></row><row><cell>50</cell><cell>73</cell><cell>87</cell><cell>73</cell><cell>73.75</cell></row><row><cell>100</cell><cell>77</cell><cell>89.25</cell><cell>77.75</cell><cell>77.25</cell></row><row><cell>200</cell><cell>81</cell><cell>90.5</cell><cell>80.75</cell><cell>80.75</cell></row><row><cell>300</cell><cell>87</cell><cell>93.75</cell><cell>88.25</cell><cell>86.5</cell></row><row><cell>600</cell><cell>88</cell><cell>94</cell><cell>89.5</cell><cell>88.75</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>© Author(s) 2023</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>This work was supported by the <rs type="funder">UK EPSRC</rs> under the grant Industrial <rs type="funder">CASE</rs> (Grant No. <rs type="grantNumber">EP/W522168/1</rs>), <rs type="funder">Analog Neuromorphic Processing for Biosensors</rs>.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_vrkfQDT">
+					<idno type="grant-number">EP/W522168/1</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AUTHOR DECLARATIONS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflict of Interest</head><p>The authors have no conflicts to disclose. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Author Contributions</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Antonia</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY</head><p>The data that support the findings of this study are available within the article.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Population frequencies of inherited neuromuscular diseases-A world survey</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">E</forename><surname>Emery</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/0960-8966(91)90039-u</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neuromuscular Disord</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="19" to="29" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Normal and abnormal spontaneous activity</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">I</forename><surname>Rubin</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/B978-0-444-64032-1.00017-5</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Handb. Clin. Neurol</title>
+		<imprint>
+			<biblScope unit="volume">160</biblScope>
+			<biblScope unit="page" from="257" to="279" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Preston</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">E</forename><surname>Shapiro</surname></persName>
+		</author>
+		<title level="m">Electromyography and Neuromuscular Disorders E-Book: Clinical-Electrophysiologic Correlations</title>
+		<imprint>
+			<publisher>Elsevier Health Sciences</publisher>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">Expert Consult-Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The basics of electromyography</title>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">R</forename><surname>Mills</surname></persName>
+		</author>
+		<idno type="DOI">10.1136/jnnp.2005.069211</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Neurol., Neurosurg. Psychiatry</title>
+		<imprint>
+			<biblScope unit="volume">76</biblScope>
+			<biblScope unit="issue">suppl_2</biblScope>
+			<biblScope unit="page" from="32" to="35" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Ferrante</surname></persName>
+		</author>
+		<title level="m">Comprehensive Electromyography: With Clinical Correlations and Case Studies</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Optically pumped magnetometers reveal fasciculations non-invasively</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Marquetand</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.clinph.2021.06.009</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Neurophysiol</title>
+		<imprint>
+			<biblScope unit="volume">132</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="2681" to="2684" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Needle EMG muscle identification: A systematic approach to needle EMG examination</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Menkes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Pierce</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.cnp.2019.08.003</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Clin. Neurophysiol. Pract</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="199" to="211" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Reasoning foundations of medical diagnosis: Symbolic logic, probability, and value theory aid our understanding of how physicians reason</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">S</forename><surname>Ledley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">B</forename><surname>Lusted</surname></persName>
+		</author>
+		<idno type="DOI">10.1126/science.130.3366.9</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">130</biblScope>
+			<biblScope unit="issue">3366</biblScope>
+			<biblScope unit="page" from="9" to="21" />
+			<date type="published" when="1959">1959</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Adaptive extreme edge computing for wearable devices</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Covi</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fnins.2021.611300</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front. Neurosci</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">429</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Recent advances in physical reservoir computing: A review</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tanaka</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.neunet.2019.03.005</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Networks</title>
+		<imprint>
+			<biblScope unit="volume">115</biblScope>
+			<biblScope unit="page" from="100" to="123" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The business of building brains</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bains</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41928-020-0449-1</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Electron</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="348" to="351" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<author>
+			<persName><forename type="first">L</forename><surname>Medsker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">C</forename><surname>Jain</surname></persName>
+		</author>
+		<title level="m">Recurrent Neural Networks: Design and Applications</title>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Reservoir computing based on delay-dynamical systems</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Appeltant</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+		<respStmt>
+			<orgName>Vrije Universiteit Brussel/Universitat de les Illes Balears</orgName>
+		</respStmt>
+	</monogr>
+	<note>These de Doctorat</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Information processing using a single dynamical node as complex system</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Appeltant</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/ncomms1476</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Nat. Commun</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">468</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A neuromorphic model with delay-based reservoir for continuous ventricular heartbeat detection</title>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vuckovic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Mercer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Heidari</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tbme.2021.3129306</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Biomed. Eng</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1837" to="1849" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Electronic Implementation of the Mackey-Glass Delayed Model</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Amil</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cabeza</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Martı</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Trans. Circuits Syst. I</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Delay-based reservoir computing: Noise effects in a combined analog and digital implementation</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Soriano</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tnnls.2014.2311855</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Neural Networks Learn. Syst</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="388" to="393" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A delay-based reservoir computing model for chaotic series prediction</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pavlidou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Heidari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE Conference on Electronic Circuits and Systems (ICECS)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="1" to="4" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">A practical guide to applying echo state networks</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Lukoševičius</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Neural Networks: Tricks of the Trade</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="659" to="686" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Early prediction of sepsis via SMOTE upsampling and mutual information based downsampling</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Ong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Mun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Motani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2019 Computing in Cardiology (CinC</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="1" to="4" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">A delay-based reservoir computing model for chaotic series prediction</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pavlidou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Heidari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2022 29th IEEE International Conference on Electronics, Circuits and Systems (ICECS)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="1" to="2" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Tutorial on training recurrent neural networks, covering BPPT, RTRL, EKF and the &apos;echo state network&apos; approach</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jaeger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">German National Research Center for Information Technology GMD Report</title>
+		<imprint>
+			<biblScope unit="volume">159</biblScope>
+			<biblScope unit="page">48</biblScope>
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Silting and Tilting for Weakly Symmetric Algebras</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2021-09-06">6 September 2021</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Jenny</forename><surname>August</surname></persName>
+							<email>jennyaugust@mpim-bonn.mpg.de</email>
+							<affiliation key="aff0">
+								<orgName type="department">Max Planck Institute for Mathematics</orgName>
+								<address>
+									<addrLine>Vivatsgasse 7</addrLine>
+									<postCode>53111</postCode>
+									<settlement>Bonn</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Alex</forename><surname>Dugas</surname></persName>
+							<email>adugas@pacific.edu</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Mathematics</orgName>
+								<orgName type="institution">University of the Pacific</orgName>
+								<address>
+									<postCode>95211</postCode>
+									<settlement>Stockton</settlement>
+									<region>CA</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Silting and Tilting for Weakly Symmetric Algebras</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2021-09-06">6 September 2021</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">482EB33130A780AD3A2C82559F5F30C9</idno>
+					<idno type="DOI">10.1007/s10468-021-10090-6</idno>
+					<note type="submission">Received: 18 March 2021 / Accepted: 28 July 2021 /</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:57+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Tilting complex</term>
+					<term>Silting mutation</term>
+					<term>Weakly symmetric algebras Mathematics Subject Classification (2010) Primary 18E30</term>
+					<term>Secondary 16G10</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>If A is a finite-dimensional symmetric algebra, then it is well-known that the only silting complexes in K b (projA) are the tilting complexes. In this note we investigate to what extent the same can be said for weakly symmetric algebras. On one hand, we show that this holds for all tilting-discrete weakly symmetric algebras. In particular, a tilting-discrete weakly symmetric algebra is also silting-discrete. On the other hand, we also construct an example of a weakly symmetric algebra with silting complexes that are not tilting.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>For a finite-dimensional k-algebra A, the tilting complexes play a central role in the category K b (proj A) of perfect complexes. One of the main tools used in their study is mutation, but to get a well-behaved mutation, one is led to consider the weaker notion of silting complexes instead. While the silting theory of A can be quite complicated in general, the notion of silting-discreteness was introduced by Aihara <ref type="bibr" target="#b2">[3]</ref> as a strong finiteness property. This can make it possible to describe all the silting complexes over A and their behavior under mutation. For example, under this condition it is well known that A is silting-connected <ref type="bibr" target="#b2">[3]</ref> i.e. any two silting complexes of A can be connected by a sequence of mutations.</p><p>The silting-discreteness property also has particularly nice implications on the Bridgeland stability manifold associated to D b (mod A) <ref type="bibr" target="#b1">[2,</ref><ref type="bibr" target="#b14">15]</ref> -a topological invariant related to the t-structures in this category. In particular, Pauksztello-Saorin-Zvonareva show that for a silting-discrete algebra, the bounded t-structures in D b (mod A) are in bijection with basic silting complexes in K b (proj A) <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b14">15]</ref>. Moreover, they use this to show the stability manifold is contractible in this case, something which is often very difficult to determine in more geometric settings.</p><p>With this in mind, the results in this article were broadly motivated by the question of which finite-dimensional algebras are silting-discrete. Because of their connection with derived equivalences, it is often easier to control the tilting complexes of an algebra, rather than all the silting complexes. For example, Aihara-Mizuno <ref type="bibr" target="#b5">[6]</ref> use the associated equivalences to show that the preprojective algebras of Dynkin type are tilting-discrete, but it remains an open question whether they are all silting-discrete. In particular, the easiest settings to establish silting-discreteness will be when the notions of silting and tilting (and hence also silting-discrete and tilting-discrete) coincide. This is well-known for symmetric algebras, and so we asked whether the same is true for weakly symmetric algebras. As we show below, if a weakly symmetric algebra is tilting-discrete, then it must also be siltingdiscrete, and in this case all silting complexes are tilting. In particular, this applies to the weakly symmetric preprojective algebras (those of type D 2n , E 7 and E 8 ), a result which we have since learned was already known to Aihara <ref type="bibr" target="#b3">[4]</ref>, although the proof does not explicitly appear in <ref type="bibr" target="#b5">[6]</ref>. Furthermore, after writing we became aware of work of Adachi and Kase <ref type="bibr" target="#b0">[1]</ref>, which independently proves both of these results as a consequence of a more general theory of ν-stable silting.</p><p>However, we additionally return to the question of whether every silting complex over a weakly symmetric algebra is tilting, and we show that the answer is negative in general. We achieve this by constructing examples of weakly symmetric algebras with silting complexes that are not tilting. These examples are modifications of the examples of siltingdisconnected algebras in <ref type="bibr" target="#b10">[11]</ref>, and in fact provide further examples of algebras with this property.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Preliminaries</head><p>We let A be a basic finite-dimensional algebra over an algebraically closed field k with n isomorphism classes of simple (right) modules. We write e 1 , . . . , e n for a complete set of pairwise orthogonal primitive idempotents for A, and write P i = e i A for the indecomposable projective right A-modules. We primarily work with right A-modules and use mod A for the category of finitely generated right A-modules, D b (mod A) for the bounded derived category and K b (proj A) for the homotopy category of perfect complexes over A.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Twisted Modules</head><p>Let σ be a k-algebra automorphism of A, acting on the left. For any right A-module M, we define the twisted module M σ to be M as a k-vector space with the right action of A given by m•a = mσ (a) for all m ∈ M and a ∈ A. Similarly, for a left A-module N , we can define the twisted module σ N as N but with A-action given by a•m = σ (a)m for all a ∈ A and m ∈ N . Observe that we have natural isomorphisms M σ ∼ = M ⊗ A A σ and σ N ∼ = σ A ⊗ A N for all right (resp. left) A-modules M (resp. N ). Thus σ induces an automorphism σ * := -⊗ A A σ of the category mod A. This action restricts to an automorphism of proj A and hence also induces automorphisms of K b (proj A) and D b (mod A).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Nakayama Automorphism</head><p>Writing D := Hom k (-, k) for the standard k-duality between left and right A-modules, the Nakayama functor ν := D Hom A (-, A) is a right exact functor isomorphic to -⊗ A DA. It induces an equivalence proj A ∼ -→ injA whose quasi-inverse is ν -1 := Hom A (DA, -).</p><p>Recall that A is self-injective if and only if there is an isomorphism of right (or left) modules A ∼ -→ DA. In this case, all projective modules are injective and vice versa, and there always exists an algebra automorphism ν : A → A such that there is an isomorphism of A-bimodules ϕ : A ν → DA.</p><p>Note that ν is unique up to inner automorphism, and we call ν the Nakayama automorphism of A since ν * := -⊗ A A ν coincides with the Nakayama functor ν. It is well known that A is symmetric if and only if ν is inner which is if and only if ν is isomorphic to the identity functor. Note that ν(P i ) ∼ = I i for all finite-dimensional algebras, but if A is self-injective, then there exists a permutation π such that, for all i,</p><formula xml:id="formula_0">P i ∼ = I π(i) , or equivalently, νP i ∼ = P π -1 (i) .</formula><p>This permutation π is known as the Nakayama permutation of A. Definition 2.1 An algebra is weakly symmetric if the Nakayama permutation is the identity i.e. P i ∼ = νP i for all i. Or equivalently, if ν(e i ) ∼ = e i for all i.</p><p>Note that the weakly symmetric property is strictly weaker than being symmetric. Theorem 2.2 <ref type="bibr">[8, 4.8]</ref> The preprojective algebras of ADE Dynkin type are self-injective. They are weakly symmetric if the Dynkin type is D 2n , E 7 , or E 8 but these are not symmetric unless char k = 2.</p><p>As an equivalent way to characterise weakly symmetric algebras, note that when A is self-injective, the Nakayama functor restricts to an equivalence ν : proj A → proj A and hence there is an induced equivalence</p><formula xml:id="formula_1">ν : K b (proj A) → K b (proj A). ( 2 . A )</formula><p>This further induces a group automorphism on the Grothendieck group K 0 (proj A) ∼ = K 0 (K b (proj A)) and the weakly symmetric algebras are precisely those self-injective algebras for which this automorphism is the identity. This property will be key to several arguments in the next section (see Propositions 3.1 and 3.6).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Nakayama and Tilting</head><p>Recall that a complex T ∈ K b (proj A) is called tilting (resp. silting) if</p><p>(1) Hom K b (proj A) (T , T [n]) = 0 for all n = 0 (resp. for all n &gt; 0);</p><p>(2) the smallest full triangulated subcategory of K b (proj A) containing T and closed under forming direct summands is K b (proj A).</p><p>We will write tilt A (resp. silt A) for the set of isomorphism classes of basic tilting (resp. silting) complexes in K b (proj A). If A is self-injective, it follows from the autoequivalence (2.A) that if T is a tilting (resp. silting) complex, then so is νT .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Theorem 2.3 [3, A.4] If</head><p>A is self-injective then a basic silting complex T is tilting if and only if νT ∼ = T .</p><p>Recall that when A is symmetric, ν ∼ = id, and hence a direct corollary of this result is the well-known fact that all silting complexes over a symmetric algebra are tilting complexes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Silting Mutation</head><p>To create new silting complexes from a given one, Aihara-Iyama introduced the notion of mutation <ref type="bibr" target="#b4">[5]</ref>.</p><formula xml:id="formula_2">Definition 2.4 Suppose that T = X ⊕ Y ∈ K b (proj A) is a basic silting complex. Then consider a triangle X f -→ Y g -→ X → X[1]</formula><p>where f is a left add(Y )-approximation of X. Then μ X (T ) := X ⊕ Y is a silting complex called the left mutation of T with respect to X. There is a dual notion of right mutation. Such mutations are called irreducible if X is indecomposable.</p><p>For any finite-dimensional algebra A, we may view the algebra as a complex centred in degree zero, and this will always be a tilting complex. An algebra A is called siltingconnected (resp. weakly silting-connected) if all basic silting complexes in K b (proj A) can be obtained from A by a sequence of irreducible (resp. not necessarily irreducible) mutations, left or right at each stage. Note that not all algebras are weakly siltingconnected <ref type="bibr" target="#b10">[11]</ref>.</p><p>If A is self-injective, we say that a complex X ∈ K b (proj A) is Nakayama stable if ν(X) ∼ = X. In other words, Theorem 2.3 says that a silting complex T is tilting if and only if it is Nakayama stable. We further call T strongly Nakayama stable if each indecomposable summand of T is Nakayama stable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proposition 2.5 [11, 2.1] If</head><p>A is self-injective and T is a strongly Nakayama stable tilting complex, then any (not necessarily irreducible) mutation of T is also strongly Nakayama stable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Tilting Theory for Weakly Symmetric Algebras</head><p>In this section, we make some initial observations on the tilting theory of weakly symmetric algebras, before then placing an extra condition on the algebras, known as tiltingdiscreteness, and showing that all silting complexes are tilting in this case. As before, we let A be a basic finite-dimensional algebra over an algebraically closed field k with n isomorphism classes of simple modules.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Initial Observations</head><p>Since a basic silting complex T ∈ K b (proj A) has n indecomposable summands by <ref type="bibr">[5, 2.</ref>28], we can write T = ⊕ n i=1 T i where each T i is indecomposable. If A is self-injective and T is tilting, then Theorem 2.3 shows ν must permute these summands. In this case, the associated standard derived equivalence D b (mod A) → D b (mod End(T )) maps the T i to the distinct indecomposable projective modules over End(T ), and commutes with the Nakayama functors of the two algebras <ref type="bibr">[17, 5.2]</ref>. Hence it follows that the permutation of the T i induced by ν will correspond with the Nakayama permutation of End(T ). Proposition 3.1 Let A be weakly symmetric. Then any tilting complex T ∈ K b (proj A) is strongly Nakayama stable. Consequently, any algebra derived equivalent to A is also weakly symmetric.</p><p>Proof The Grothendieck group of the triangulated category K b (proj A) is a free abelian group with basis elements [P i ] for each indecomposable projective A-module P i . Since a tilting complex</p><formula xml:id="formula_3">T = ⊕ n i=1 T i ∈ K b (proj A) with B = End(T ) induces an equivalence of triangulated categories K b (proj B) → K b (proj A) taking B to T , it induces an isomorphism of Grothendieck groups taking the natural basis over B to {[T i ]} n i=1 .</formula><p>Thus the latter is a basis for the Grothendieck group of K b (proj A) (this is in fact true if T is any silting complex by <ref type="bibr">[5, 2.27]</ref>). However, if A is weakly symmetric, we have νP i ∼ = P i for all i, and thus ν acts as the identity on the Grothendieck group. Since ν permutes the T i , if</p><formula xml:id="formula_4">νT i ∼ = T j , then [T i ] = [νT i ] = [T j ]</formula><p>in the Grothendieck group, which means that T i = T j ∼ = νT i , as required. The second statement of the proposition, now follows from the fact mentioned above that the action of ν on the T i induces the Nakayama permutation of End(T ).</p><p>Our next observation is the following direct corollary of Proposition 2.5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proposition 3.2 If</head><p>A is a weakly symmetric algebra, then all silting complexes reachable from A via iterated mutation are strongly Nakayama stable tilting complexes. Moreover, their endomorphism algebras will all be weakly symmetric algebras.</p><p>Proof Since A is weakly symmetric, by definition we have νP i ∼ = P i for all indecomposable projective modules and thus A is a strongly Nakayama stable tilting complex. By Proposition 2.5, any mutation of A is again a strongly Nakayama stable tilting complex, and hence iterating this result shows any silting complex reachable from A is a strongly Nakayama stable tilting complex. The second statement again uses the fact mentioned above that the action of ν on a tilting complex T induces the Nakayama permutation of End(T ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Corollary 3.3 If</head><p>A is weakly symmetric and weakly silting-connected, then every silting complex for A is a strongly Nakayama stable tilting complex.</p><p>Proof By Proposition 3.2, since A is weakly symmetric, all silting complexes reachable from A by mutation are strongly Nakayama stable tilting complexes. Since A is weakly silting-connected, these are all the silting complexes of A and hence the result follows.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Tilting-discreteness</head><p>Silting-and tilting-discreteness are notions which were developed by Aihara-Mizuno <ref type="bibr" target="#b5">[6]</ref> using the partial order on silting complexes introduced by Aihara-Iyama <ref type="bibr" target="#b4">[5]</ref>. This partial order is one of the key tools used when studying silting theory, as it is known to control mutation. It may also be used to define a certain subset of silting complexes, often studied because of their connections with τ -tilting theory and cluster-tilting theory.</p><formula xml:id="formula_5">Definition 3.5 A basic silting complex T ∈ K b (proj A) is called two-term if A ≥ T ≥ A[1]</formula><p>or equivalently, T only has nonzero terms in degrees 0 and -1. Proposition 3.6 For a weakly symmetric algebra A, all two-term silting complexes are tilting.</p><p>Proof Suppose that A = n i=1 P i and that T is a two-term silting complex for A. Then, since the [P i ] give a basis of the Grothendieck group of K b (proj A), we may write</p><formula xml:id="formula_6">[T ] = n i=1 a i [P i ]</formula><p>and, using the language of <ref type="bibr" target="#b9">[10]</ref>, we say that the g-vector of T is (a 1 , . . . , a n ) ∈ Z n . Now νT is another two-term silting complex for A, and since A is weakly symmetric (νP i ∼ = P i for all i), νT must have the same g-vector. However, by <ref type="bibr">[10, 6.5]</ref>, g-vectors completely determine two-term silting complexes and thus T ∼ = νT and T is tilting by Theorem 2.3.</p><p>If an algebra A has finitely many basic two-term silting complexes, the algebra is called τ -tilting finite. Aihara <ref type="bibr" target="#b2">[3]</ref> generalised this notion, with Aihara-Mizuno then developing it further. Definition 3.7 <ref type="bibr">[6, 2.4, 2.11</ref></p><formula xml:id="formula_7">] A self-injective finite-dimensional algebra A is called tilting- discrete (resp. silting-discrete) if the set {T ∈ tilt A | P ≥ T ≥ P [1]} (resp. {T ∈ silt A | P ≥ T ≥ P [1]})</formula><p>is finite for any tilting (resp. silting) complex P obtained from A by iterated irreducible left mutation.</p><p>It is clear that silting-discrete implies tilting-discrete and if the algebra A is symmetric, the two notions are equivalent. It is also known that silting-discrete implies silting-connected [6, 3.9] and tilting-discrete implies tilting-connected <ref type="bibr">[9, 5.14]</ref>. However, if we only know an algebra is tilting-discrete, it is generally unknown whether the algebra is also siltingdiscrete/silting-connected.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proposition 3.8 (Cf. [1, Cor. 2.26]) If</head><p>A is a tilting-discrete weakly symmetric algebra, then A is in fact silting-discrete and all silting complexes for A are tilting.</p><p>Proof Suppose that P is a silting complex obtained from A by iterated irreducible left mutation. Then, since A is weakly symmetric, P is a strongly Nakayama stable tilting complex, and B := End A (P ) is a weakly symmetric algebra using Proposition 3.2. Thus, there is a standard derived equivalence</p><formula xml:id="formula_8">F : D b (mod A) → D b (mod B) P → B</formula><p>and this preserves silting (resp. tilting) complexes and the silting order (see e.g. <ref type="bibr">[7, 2.8]</ref>). In particular, F induces a bijection</p><formula xml:id="formula_9">{T ∈ silt A | P ≥ T ≥ P [1]} ↔ {S ∈ silt B | B ≥ S ≥ B[1]} (3.A)</formula><p>which further restricts to a bijection</p><formula xml:id="formula_10">{T ∈ tilt A | P ≥ T ≥ P [1]} ↔ {S ∈ tilt B | B ≥ S ≥ B[1]}. ( 3 . B )</formula><p>By the tilting-discreteness of A, the left hand side of (3.B) is finite and hence so is the right hand side. However, as B is weakly symmetric, Proposition 3.6 shows that</p><formula xml:id="formula_11">{S ∈ tilt B | B ≥ S ≥ B[1]} = {S ∈ silt B | B ≥ S ≥ B[1]}</formula><p>and thus, both sides in (3.A) are also finite, proving that A is silting-discrete. Then by <ref type="bibr">[3, 3.9]</ref>, this implies A is silting-connected and thus all silting complexes can all be obtained from A by iterated mutation. Using Proposition 3.3 this shows that all silting complexes are strongly Nakayama stable tilting complexes.</p><formula xml:id="formula_12">Corollary 3.9 (Cf. [4, Ex. 22], [1, Ex. 2.27])</formula><p>The preprojective algebras of Dynkin type D 2n , E 7 and E 8 are silting-discrete algebras, where every silting complex is a tilting complex.</p><p>Proof By Theorem 2.2, these algebras are weakly symmetric and <ref type="bibr">[6, 5.1]</ref> shows that they are tilting-discrete. The result then follows directly from Proposition 3.8.</p><p>One application of silting-discreteness is in the study of Bridgeland stability. Given a triangulated category, in this case the bounded derived category of our finite-dimensional algebra, Bridgeland stability constructs a complex manifold associated to this category. If A is a finite-dimensional silting-discrete algebra, then <ref type="bibr" target="#b14">[15]</ref> show that this manifold will be contractible, and combining this with Proposition 3.8 immediately gives the following. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Examples</head><p>We now give examples of weakly symmetric algebras with silting complexes that are not tilting. The examples are based on those in <ref type="bibr" target="#b10">[11]</ref>, so we begin by reviewing the necessary details from that work.</p><p>We fix an even integer n ≥ 4 and let A be the path algebra of the quiver</p><formula xml:id="formula_13">Q = 1 x / / y / / 2 x / / y / / • • • x / / y / / n</formula><p>modulo the relations x 2 = y 2 = 0. We write e i for the primitive idempotent of A corresponding to vertex i (for 1 ≤ i ≤ n). As A has finite global dimension, we can identify K b (proj A) with D b (mod A), and we write S := -⊗ L A DA for the Serre functor on this category.</p><p>We let σ ∈ Aut k (A) be the order two automorphism induced by the automorphism of Q that fixes each vertex and swaps each pair of x and y arrows. We write σ * for the induced automorphisms on the categories mod A, K b (proj A), or D b (mod A) depending on context. We set E = e 1 A/e 1 yA, which is a uniserial module of length n, and note that σ * E ∼ = e 1 A/e 1 xA E. Now E defines a spherical twist functor, which we can apply to A to obtain a tilting complex T that fits into an exact triangle</p><formula xml:id="formula_14">E[1 -n] n → A → T → E[2 -n] n (4.A)</formula><p>in D b (mod A). By applying σ * , and using the fact that σ * A ∼ = A we obtain another triangle</p><formula xml:id="formula_15">σ * E[1 -n] n → A → σ * T → σ * E[2 -n] n . ( 4 . B )</formula><p>To get a weakly symmetric algebra, we can form the twisted trivial extension of A using the automorphism σ . Thus we define := T σ A = A σ DA, where the latter denotes the usual bimodule extension of A by the bimodule σ DA. The idempotents e i of A induce a complete set of primitive orthogonal idempotents (e i , 0) of , which we will continue to write as e i . In general, by [12, Prop. 2.2] the Nakayama automorphism ν of T σ A is given by ν(a, f ) = (σ (a), f σ -1 ).</p><p>( 4 . C )</p><p>In particular, since σ fixes the idempotents e i of A, we see also that ν(e i ) = e i for all i, and thus is weakly symmetric. The quiver and relations of a twisted trivial extension can be computed as described in <ref type="bibr">[13, §3]</ref>, for example. In our case, we see that has quiver with relations x 2 = y 2 = 0 and xv = ux = yu = vy = 0, together with additional relations expressing equality of the two (remaining) nonzero paths of length n at each vertex: for 0 ≤ r &lt; q := n/2, (xy) r v(xy) q-r-1 x = (yx) r u(yx) q-r-1 y and (xy) r xu(yx) q-r-1 = (yx) r yv(xy) q-r-1 .</p><p>One can contrast these relations with those of the untwisted trivial extension, which are described just after Question 1 in <ref type="bibr" target="#b10">[11]</ref>. Furthermore, while the Nakayama automorphism of the untwisted trivial extension is the identity, we can see from Eq. (4.C) that the Nakayama automorphism on swaps each pair x and y (of parallel arrows), while also swapping u and for all j = n -2, n -1. In particular, for all j &lt; 0, we have Hom(T , σ * T [j ]) ∼ = Hom(T , A[j ]). We now show that Hom(T , A[j ]) = 0 for j &lt; 0. Apply Hom(-, A[j ]) to Eq. with homology concentrated in degree 1. As the last term of Eq. (4.E) vanishes for j = 0, we obtain Hom(T , A[j ]) = 0 for all j &lt; 0, as required (in fact, for all j = 0, 1). Consequently, Hom(T , σ * T [j ]) = 0 for all j &lt; 0 as required. Thus T ⊗ A is a silting complex. While we can see that T ⊗ A is not a tilting complex since it is not invariant under the Nakayama functor of , which switches x and y, we also provide a direct proof by showing that it has nonzero self-extensions in degree 2n.</p><p>Applying Hom(T , -) to Eq. (4.B), and using Hom(T , A[j ]) = 0 for j = 0, 1, and then Eq. As a consequence of Proposition 3.8, the algebra is not tilting-discrete. In fact, combining with Corollary 3.3, we see that it is not even weakly silting-connected. We conclude by pointing out another interesting property of the silting complex T ⊗ A , which follows from Propositions 3.1 and 2.5, and to our knowledge has not been observed in other examples.</p><p>Corollary 4.3 For and T as defined above, T ⊗ A is a silting complex which is not connected to any tilting complex by iterated silting mutations.</p><p>Funding Open Access funding enabled and organized by Projekt DEAL.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Definition 3 . 4</head><label>34</label><figDesc>If T , S ∈ K b (proj A) are two silting complexes, then we say T ≥ S if Hom K b (proj A) (T , S[n]) = 0 for all n &gt; 0.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Corollary 3 .</head><label>3</label><figDesc><ref type="bibr" target="#b9">10</ref> If A is a finite-dimensional weakly symmetric tilting-discrete algebra, then the Bridgeland stability manifold of D b (mod A) is contractible.Proof This follows directly from Proposition 3.8 and<ref type="bibr" target="#b14">[15]</ref>.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Proposition 4 . 1</head><label>41</label><figDesc>[11, 4.1] E and σ * E are Hom-orthogonal (n -1)-spherical objects in D b (mod A).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>(4.A) to get an exact sequenceHom(E[2n] n , A[j ]) → Hom(T , A[j ]) → Hom(A, A[j ]). (4.E)By a direct calculation, we see that the first term vanishes for all j = 1. Indeed, replacing E[2n] by its projective resolution 0 Ae n → 0</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>(4.D), gives Hom(T , σ * T [n -2]) ∼ = Hom(T , σ * E n ) ∼ = Hom(A, σ * E n ) ∼ = σ * E n . Thus Hom K b ( ) (T ⊗ A , T ⊗ A [2n]) ∼ = D Hom(T , σ * T [n -2]) ∼ = D(σ * E) n = 0.</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data Availability Data sharing is not applicable to this article as no datasets were generated or analysed during the current study.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>v. For n = 4, the tilting complex T ∈ K b (proj A) from Eq. (4.A) is described in <ref type="bibr" target="#b10">[11]</ref>. The corresponding complex T ⊗ A ∈ K b (proj ) will look the same, but with each A replaced by . Its indecomposable summands are as follows, where we indicate the degree-0 term by underlining it: / / e 1 ⊕ e 3 (0 y) / / e 2 y / / e 1 / / 0 As this complex is clearly not invariant under the Nakayama functor ν, it is not a tilting complex. However, it is silting.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proposition 4.2 Let A, σ and T be as above, and let</head><p>Proof The proof is similar to Rickard's that T ⊗ A T A is a tilting complex over the trivial extension algebra T A for any tilting complex T over A <ref type="bibr" target="#b15">[16]</ref>. We begin by noting that T ⊗ A generates K b (proj ). This can be seen using that T generates K b (proj A) and -⊗ A : K b (proj A) → K b (proj ) is an exact functor of triangulated categories taking A to . It remains to show that</p><p>To this end, observe that for all i = 0</p><p>where the penultimate isomorphism is from the fact that T A is a tilting complex and the last is by Serre duality. Thus it suffices to show that Hom K b (A) (T , σ * T [j ]) = 0 for all j &lt; 0.</p><p>For the remainder of the proof, we are working in the category K b (proj A), and so we will omit the corresponding subscripts in our Hom-spaces. Applying Hom(-, σ * E[j ]) to Eq. (4.A) and using the fact that E and σ * E are Hom-orthogonal, we get isomorphisms</p><p>for all j , and the latter vanishes for all j = 0 since the homology of σ * E is concentrated in degree 0. Now we apply Hom(T , -) to Eq. </p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Examples of tilting-discrete self-injective algebras which are not silting-discrete</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Adachi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kase</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2012.14119v2</idno>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Discreteness of silting objects and t-structures in triangulated categories</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Adachi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mizuno</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc. Lond. Math Soc. (3)</title>
+		<imprint>
+			<biblScope unit="volume">118</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="42" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Tilting-connected symmetric algebras</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aihara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Algebras and Representation Theory</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="873" to="894" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">On silting-discrete triangulated categories</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aihara</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 47th Symposium on Ring Theory and Representation Theory</title>
+		<meeting>the 47th Symposium on Ring Theory and Representation Theory</meeting>
+		<imprint>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="7" to="13" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Silting mutation in triangulated categories</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aihara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Iyama</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Lond. Math. Soc</title>
+		<imprint>
+			<biblScope unit="volume">85</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="633" to="668" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Classifying tilting complexes over preprojective algebras of dynkin type</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Aihara</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mizuno</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Algebra Number Theory</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1287" to="1315" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">On the finiteness of the derived equivalence classes of some stable endomorphism rings</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>August</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Math. Z</title>
+		<imprint>
+			<biblScope unit="volume">296</biblScope>
+			<biblScope unit="page" from="1157" to="1183" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Periodic algebras which are almost Koszul</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Brenner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C R</forename><surname>Butler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>King</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Algebr. Represent. Theory</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="331" to="367" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Simple minded systems, configurations and mutations for representationfinite self-injective algebras</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Chan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Koenig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Pure Appl. Algebra</title>
+		<imprint>
+			<biblScope unit="volume">219</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1940" to="1961" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">τ -tilting finite algebras, bricks and g-vectors</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Demonet</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Iyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Jasso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. Math. Res. Not. IMRN</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="852" to="892" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Some algebras that are not silting connected</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dugas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Algebra</title>
+		<imprint>
+			<biblScope unit="volume">567</biblScope>
+			<biblScope unit="page" from="371" to="385" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Higher zigzag algebras</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Grant</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Doc. Math</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="749" to="814" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">On trivial extensions and higher preprojective algebras</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">Y</forename><surname>Guo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Algebra</title>
+		<imprint>
+			<biblScope unit="volume">547</biblScope>
+			<biblScope unit="page" from="379" to="397" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Silting objects, simple-minded collections, t-structures and co-t-structures for finite-dimensional algebras</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Koenig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Yang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Doc. Math</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="403" to="438" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Contractibility of the stability manifold for silting-discrete algebras</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pauksztello</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Saorín</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zvonareva</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Forum Math</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1255" to="1263" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Derived categories and stable equivalence</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rickard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Pure Appl. Algebra</title>
+		<imprint>
+			<biblScope unit="volume">61</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="303" to="317" />
+			<date type="published" when="1989">1989</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Derived equivalences as derived functors</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rickard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. London Math. Soc</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="37" to="48" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Predicting the magnitude and timing of peak electricity demand: A competition case study</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Daniel</forename><forename type="middle">L</forename><surname>Donaldson</surname></persName>
+							<email>d.l.donaldson@bham.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">School of Engineering</orgName>
+								<orgName type="institution">University of Birmingham</orgName>
+								<address>
+									<settlement>Birmingham</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Jethro</forename><surname>Browell</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">School of Mathematics and Statistics</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">|</forename><forename type="middle">Ciaran</forename><surname>Gilbert</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Independent Researcher</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Ciaran</forename><surname>Gilbert</surname></persName>
+							<idno type="ORCID">0000-0002-5960-666X</idno>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Birmingham</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Predicting the magnitude and timing of peak electricity demand: A competition case study</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">7F7773422F5C271ED9A0C1435D9A5E83</idno>
+					<idno type="DOI">10.1049/stg2.12152</idno>
+					<note type="submission">Received: 30 August 2023 -Revised: 14 November 2023 -Accepted: 2 December 2023 -IET Smart Grid</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:12+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>As weather dependence of the electricity network grows, there is an increasing need to predict the time at which the network peak load will occur. Improving forecasts of peak hour can lead to more accurate scheduling of generation as well as the ability to use flexibility to improve system utilisation or defer capital investment. While there are extensive benchmark models for forecasting electricity demand, their efficacy at forecasting the time or shape of the peak remains to be seen. Global forecasting competitions provide a unique opportunity to compare multiple methodologies under common performance criteria and incentives. The methodology and results are detailed from the Big Data and Energy Analytics Laboratory Challenge 2022 used by the team 'peaky-finders' and investigates the suitability of using hourly methods to forecast daily peak magnitude, time, and shape. The resulting approach provides a reproducible ensemble benchmark against which to evaluate more complex methods. Results indicate that simple regression techniques can perform well and outperform more complicated methods during seasons with low hourly variability, however ensemble methods show higher accuracy overall. The results also highlight the significant impact of extreme weather on forecast accuracy, demonstrating the importance of forecasting processes that are resilient to extreme weather.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">| INTRODUCTION</head><p>Safe operation of the electric grid requires a continuous balance of supply and demand. In order to achieve this in a reliable, economic, and clean fashion, load forecasts must be produced on a variety of time horizons. Forecasts one to 10 years ahead (long-term) enable generation and transmission capacity planning whereas forecasts minutes to weeks ahead (short-term) are required for operation of the grid and generation scheduling <ref type="bibr" target="#b0">[1]</ref>. A bibliometric search via Web of Science for prior work in the area of short-term load forecasting (STLF) using the query ALL = (short term AND ("load forecasting") AND (energy OR electric*)) returned nearly 3000 papers with the growth in published literature shown in Figure <ref type="figure" target="#fig_0">1</ref>.</p><p>Despite the significant number of papers, inconsistencies exist in: <ref type="bibr" target="#b0">(1)</ref> the robustness of data used for analysis and validation, (2) choice of evaluation metrics and (3) models used for comparison <ref type="bibr" target="#b1">[2]</ref>. As a result, despite the numerous publications, it is difficult to discern the current 'state-of-the-art'. That being said there are some clear principles which are evident: <ref type="bibr" target="#b0">(1)</ref> Ensemble models often outperform their individual components <ref type="bibr" target="#b2">[3]</ref>; and (2) Careful selection of features is key, including the choice of weather data.</p><p>Forecasting competitions provide an effective means overcome this challenge by assessing the performance of a variety of methods and approaches on the same data, and aim to provide a fair comparison of their efficacy and benefit <ref type="bibr" target="#b3">[4]</ref>. Even after the competition, future researchers can use the competition data to compare their new methods against the competition benchmarks, further supporting advancement of new methods and open science. Examples include the 2001 EUNITE competition <ref type="bibr" target="#b4">[5]</ref>, and the Global Energy Forecasting Competition (GEFCOM) series held over 2012, 2014, and 2017 in which hundreds of competitors from industry and academia have tackled emerging energy industry forecasting tasks <ref type="bibr" target="#b5">[6]</ref>. Competitions have also been held with industry including Western Power Distribution <ref type="bibr" target="#b6">[7]</ref>, the IEEE Computational Intelligence Society in partnership with E.ON <ref type="bibr" target="#b7">[8]</ref>, and the Day-Ahead Electricity Demand Forecasting Competition supported by BluWave-ai <ref type="bibr" target="#b2">[3]</ref>. However, while many of these competitions required the development of hourly forecasts of which one of these hours was the peak, they were not expressly focused on peak demand magnitude, timing and shape.</p><p>For purposes of capacity or adequacy planning, the magnitude of the peak has been of primary importance <ref type="bibr" target="#b8">[9]</ref>. This was sufficient as most generation was dispatchable, enabling operators to schedule in such a fashion to account for the uncertainty in the demand due to socio-economic and weather related factors. This has worked well and the annual peak demand often follows a consistent pattern each year, resulting in a fairly consistent peak hour. Seasonal peak demand has also been of interest to inform customer billing, such as the charges for industrial and commercial customers. One example of this is the use of 'triads'-'the three half-hour settlement periods of highest demand on the GB electricity transmission system between November and February (inclusive) each year, separated by at least 10 clear days'-by the GB transmission system operator to determine charges for customers based on the their peak usage <ref type="bibr" target="#b9">[10]</ref>. However new technologies and use cases are requiring the production of forecasts that are more granular both spatially and temporally as seen in Figure <ref type="figure">2</ref> resulting in the need for evaluation of new methods and approaches. For example, knowing when the peak occurs can support more effective decision-making for energy storage dispatch <ref type="bibr" target="#b10">[11,</ref><ref type="bibr" target="#b11">12]</ref> as was the focus of the aforementioned WPD POD data challenge.</p><p>For utilities, growth in solar PV generation can shift the peak hour later in the day. This has required updates to tariffs, and re-education of consumers to encourage use of energy during times when it is more plentiful <ref type="bibr" target="#b12">[13]</ref>. Examples of the significance of this shift can be seen at a regional level in California where historical data shows that the annual peak time for the California Independent System Operator has shifted from roughly <ref type="bibr">15:30 (1998-2000)</ref> to 17:00 (2020-2022) <ref type="bibr" target="#b13">[14]</ref>. There have also been opportunities created for generation owners and distributed energy resource (DER) service providers to predict the day and time at which the peak will occur, enabling them to dispatch resources to maximise economic gains <ref type="bibr" target="#b10">[11]</ref>.</p><p>Demand response and critical peak pricing programs introduced some value from knowing the time at which the peak was expected, as this information enabled more effective programs <ref type="bibr" target="#b14">[15]</ref>. However, efforts to decarbonise the energy sector are elevating the importance of knowing the time at which the peak occurs to support decision-making for battery charging and discharging. While there are established forecasting methods and metrics for the prediction of electricity demand, the evaluation of these methods for peak hour prediction remains nascent. Research in this area includes using weather probability to predict the top k peak days <ref type="bibr" target="#b14">[15]</ref>, and ensemble machine learning to predict peak days and the peak hour on those days <ref type="bibr" target="#b15">[16]</ref>. Authors in Ref. <ref type="bibr" target="#b16">[17]</ref> have also introduced a toolkit designed to support comparison of such methods. Recently it was demonstrated in Ref. <ref type="bibr" target="#b17">[18]</ref> that fusion of daily peak and half-hourly forecasts could improve the accuracy of demand forecasts, offering improvements of over 10% during peak hours for forecasts from the individual household to distribution substation level. However, these publications all used differing datasets, limiting the ability to directly compare the relative performance of methods. Furthermore, across existing works on peak load forecasting, there is a lack of consistency in the metric used for evaluation, and the horizon that is being evaluated. For example, error metrics for evaluation differ across works and include precision and/or recall <ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref><ref type="bibr" target="#b16">[17]</ref>, accuracy <ref type="bibr" target="#b15">[16]</ref>, mean squared error <ref type="bibr" target="#b10">[11]</ref> or continuous ranked probability score <ref type="bibr" target="#b17">[18]</ref>. The toolkit presented in Ref. <ref type="bibr" target="#b16">[17]</ref> provides some first steps towards a means to unify evaluation and enable comparison, but is mostly focused on monthly and daily peak prediction rather than the magnitude, hour and daily shape. While it does include one model for peak hour forecasting (Long Short Term Memory-LSTM) the implementation uses demand from the prior 7 days to predict day ahead peak hour which may not always be available.</p><p>To address this gap in the established literature, a forecasting competition, the Big Data and Energy Analytics Laboratory (BigDEAL) Challenge 2022 (BDC22) was held from Nov--Dec 2022 to provide a platform through which to evaluate methods for forecasting the magnitude, time, and shape of electricity demand. While forecasting competitions can provide benefit to the participants, the publication of methods from the competitors provides a mechanism via which to enable the wider field to reproduce and evaluate future methods. To that end, this paper reflects the following contributions: (1) Presentation of the methodology used by our team 'peaky-finders' which finished fourth overall, and third in the track focused on the magnitude of peak demand. (2) Discussion of lessons learnt as a result of the competition which can further benefit practitioners and researchers in the field.</p><p>The economic value of improvements to the accuracy of peak timing may lead some end-users to develop bespoke forecasting methods for this application. However, as short term forecasting is often done already on an hourly basis, the time of the peak is already inherently predicted without requiring development of an additional method. Therefore, this paper proposes a methodology to extract forecasts of the peak hour and shape from traditional hourly forecasts that can provide a benchmark against which to measure the benefit of more complex methods. Lessons learnt from the forecasting competition that point to several areas for future research to further enhance forecasts of the peak hour.</p><p>The rest of the paper is structured as follows: Sections 2 and 3 present the competition's data and methodology. The modelling results and discussion are given in Sections 4 and 5. Finally Section 6 presents the conclusions and areas for future research.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">| PEAK FORECASTING COMPETITION</head><p>BDC2022 had a theme of peak load forecasting and was organised by academics from UNC Charlotte. The competition began with a qualifying match from 31 October to 10 November 2022; 121 contestants from 27 countries formed 78 teams to take part <ref type="bibr" target="#b18">[19]</ref>. The match was divided into three tracks whereby teams were tasked to provide ex-post forecasts of hourly loads, daily peak magnitude, and timing of daily peaks. Our team, 'peaky-finders' finished above 'Shreyashi's Recency Benchmark' in all three tracks, and therefore was invited to compete in the final match alongside 13 other teams and three individuals.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">| Final match structure</head><p>For the Final match, teams were tasked to produce ex-ante daily peak load forecasts for six rounds for three U.S. local distribution companies (LDC). Historical data over the 3 year period from 2015 to 2017 was provided for training alongside historical actual temperature from six weather stations. In contrast to the qualifying match (and much of the forecasting literature) the competition used day-ahead temperature forecasts for each of the rounds making the results more relevant to real-world application. Actual data from the prior round and temperature forecasts for the next round were released every 3-5 days. The time-frame and data for each of the six rounds is shown in Table <ref type="table">1</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">| Performance metrics</head><p>Past literature and competition discussions have demonstrated the importance of metrics on forecast evaluation, and that the method used can highly depend on the desired metric. As there is not an established set of performance metrics for peak time forecasting, the organisers of the competition selected the following metrics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1">| Track 1-Magnitude</head><p>The error metric for this track (M) is calculated as the Mean Absolute Percentage Error (MAPE) as given in Equation (1).</p><formula xml:id="formula_0">M ¼ 1 n X n d¼1 j L pk d À Lpk d L pk d j<label>ð1Þ</label></formula><p>where L pk d and Lpk d are the actual and estimated peak load on a given day d; and n represents the number of days in the evaluation period.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.2">| Track 2-Timing</head><p>The error metric for this track (T) is the weighted sum of absolute errors with cap calculated as</p><formula xml:id="formula_1">T ¼ X n d¼1 w d Δ t<label>ð2Þ</label></formula><p>where Δ t ¼ jt pk d À tpk d j and the weights w d are</p><formula xml:id="formula_2">w d ¼ 8 &gt; &gt; &lt; &gt; &gt; : Δ t , if Δ t ≤ 1 2, if 2 ≤ Δ t ≤ 4 10, otherwise :<label>ð3Þ</label></formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.3">| Track 3-Shape</head><p>First the 24 hourly load forecasts of each day will be normalised by the peak forecast of that day to obtain the shape of that day. The same was done for the actual load. The sum of absolute errors is then calculated during the 5-h peak period</p><formula xml:id="formula_3">(peak hour þ/À 2 h) of every day S ¼ X n d¼1 X 2 k¼À 2 js t pk d þk,d À ŝt pk d þk,d j<label>ð4Þ</label></formula><p>where s and ŝ represent the normalised actual and estimated load at a point in time divided by the actual peak load of that day, and k represents the 5 h surrounding the peak. Data cleansing was not performed, however one notable anomaly in the historical data is discussed in detail in Section 4.1. The historical data for the case studies is illustrated Figure <ref type="figure" target="#fig_2">3a</ref>,b, showing the load time series and load-temperature relationship, respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">| METHODOLOGY</head><p>This section presents the approach used by the peaky-finders in BDC2022 along with the underlying theoretical foundation with an overview presented in Figure <ref type="figure">4</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">| Explanatory variable creation</head><p>The explanatory variables we used throughout the competition can be grouped into four areas:</p><p>1. Linear Trend-to capture any longer term change in the demand 2. Calendar Effects-Hour, Day of the Week, and Month were all used as categorical variables to reflect seasonal differences in demand 3. Holiday Variables-Indication of whether a day was a holiday or not as holidays can influence the demand. All holidays were treated uniformly. 4. Temperature terms including lagged, rolling average and smoothed temperature</p><p>In practice, utilities can evaluate meteorological forecasts and build models to correct any systematic biases that may be present; however, only historical weather data was provided for the competition for model development. Therefore it was not possible to evaluate the accuracy of the weather forecasts being provided ahead of the first round. To account for the possible error in the forecast, three temperature scenarios were produced and three corresponding demand forecasts were generated using these scenarios and averaged to form a final demand forecast. When creating temperature scenarios for projecting future demand, one method to model the most likely weather conditions is a shifted date approach as described in Ref. <ref type="bibr" target="#b19">[20]</ref> whereby the temperature values are shifted forward and backwards by a certain number of days to generate a range of temperature scenarios to use for forecasting. This approach was applied in Ref. <ref type="bibr" target="#b20">[21]</ref> when creating forecasts for the sizing of non-wires alternatives and other temperature resampling approaches have also been proposed in Refs. <ref type="bibr" target="#b21">[22,</ref><ref type="bibr" target="#b22">23]</ref> to generate probabilistic forecasts.</p><p>While this competition did not require a probabilistic output, given the use of forecast temperature values, a shifted time approach based on Ref. <ref type="bibr" target="#b19">[20]</ref> was used to account for uncertainty in the actual temperature. A new set of features was created by shifting the forecast temperature forward and backward by 1 h resulting in three distinct feature matrices for each hour: F(T tÀ 1 ), F(T t ), and F(T tþ1 ). A forecast is produced using each set of features and then the resulting three forecasts are averaged to produce a single output. These time shifted versions will be referred to by appending 'À T' to the corresponding forecasting model name.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">| Forecasting models</head><p>Two main model families were used to produce the forecasts for our team. based on the vanilla benchmark with recency used in GEF-COM 2017 <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b23">24]</ref> and BFCom2018 <ref type="bibr" target="#b24">[25]</ref>. The logarithm of the load (L) at time t is given by</p><formula xml:id="formula_4">logðL t Þ ¼ β 0 þ β 1 D � H þ β 2 M þ β 3 M � T t þ β 4 M � T 2 t þ β 5 M � T 3 t þ β 6 H � T t þ β 7 H � T 2 t þ β 8 H � T 3 t ð5Þ</formula><p>where D is day of the week; H is hour; M is month; and T is temperature. Additional variables from the list above were also incorporated as additional linear predictors, and the regression parameters are estimated via ordinary least squares. Second, a Gradient Boosting Machine (GBM) was developed using a combination of the explanatory variables mentioned above and again the logarithm of the load was used as the target variable. Reference material is provided by Refs. <ref type="bibr" target="#b25">[26,</ref><ref type="bibr" target="#b26">27]</ref>. Prior research also demonstrates GBM to be effective for STLF <ref type="bibr" target="#b27">[28,</ref><ref type="bibr" target="#b28">29]</ref>. Here we use Gradient Boosting Trees, which comprise multiple decision trees that are combined to generate predictions <ref type="bibr" target="#b29">[30]</ref>. For each decision tree, the input space is split into disjoint regions and each observation is assigned to the corresponding 'leaf' of the tree. Divisions between regions are selected to minimise some cost function measuring the fit between individual observations and a predictions computed based on the all observations assigned to a given leaf. This allows decision trees to capture non-linear relationships and interactions between input variables efficiently. New trees are added to improve the prediction of the model fit by minimising the negative gradient of the loss function from the model's previous iteration. The learning relationship is governed by several hyper-parameters, such as the number of trees (stopping criterion), the maximum number of splits in a single tree, and a learning rate that controls the contribution of each new tree to the model.</p><p>Finally, in addition to the individual MLR and GBM based models, a series of 'ensemble' models are produced by taking the average of the output of individual MLR and GBM models. These ensemble models are referred to using the abbreviation 'ENS'. Table <ref type="table">2</ref> provides further detail of each of the ensemble models considered.</p><p>Other families of models may be considered for this task and have been widely reported in the literature. Classical time series methods were considered, for example, but the organisation of the competition into rounds prevented use of these methods due to lagged demand observations not being available. There is also large literature on deep learning for load forecasting, however, given the modest volume of training data available, weakness of these models in past forecasting competitions, and less experience from the team with these models, we did not consider applying them.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">| Peak forecast production</head><p>For the competition, each of the above models was developed to produce an hourly forecast, before re-sampling the peak values from each day to generate the daily peak forecast. Given the focus on only the time around the peak hour, a matrix of weights was generated for the training data to penalise the model more significantly for errors made during peak time. Two weighting approaches were evaluated. The first was to weight the training data proportional to the overall daily load. The second was to use a Gaussian kernel N ðxjμ; σ 2 Þ where x is the hour, μ is the peak hour, and σ 2 is set at 1.5 h. The value of σ 2 was selected heuristically for the competition but preliminary evaluations during the competition suggested larger values may not be as effective. These methods will be referred to as 'L' for the load based weighting and 'W' for Gaussian based weighting when describing the models. An example of each of these methods applied to a single day can be seen in Figure <ref type="figure">5</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">| Model selection across rounds</head><p>This section describes the models used for each round, the model selection process, and any rationale for changes. Given the reduction in training data in comparison to the qualifier, we used fewer explanatory variables to avoid over-fitting. Of the six overall weather stations, we used the MLR in Equation ( <ref type="formula">5</ref>) to identify the weather stations that yielded the lowest MAPE for each LDC. Hyper-parameter tuning was performed for each model during the qualifying match; however, given the limited time for the final match optimal hyper-parameter selection was not repeated for each round and a fixed set of features was used. Further description of the model and rationale is given below for each round and Table <ref type="table">3</ref> presents the models used for each round across all three tracks. Hyperparameters are given in Section 4.</p><p>T A B L E 2 Description of individual and ensemble models evaluated.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model</head><p>GBM included MLR included Temp. shift Weight</p><formula xml:id="formula_5">GBM Y - - - GBM-T Y - Y - MLR - Y - - MLR-T - Y Y - MLR-L - Y - Load MLR-W - Y - Pk MLR-TL - Y Y Load MLR-TW - Y Y Pk ENS Y Y - - ENS-L Y Y - Load ENS-W Y Y - Pk ENS-T Y Y Y - ENS-TL Y Y Y Load ENS-TW Y Y Y Pk 3.4.1 | Rounds 1, 3,</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>and 4</head><p>Hourly forecasts were generated using the GBM and MLR models then averaged to form a single forecast. The process was repeated two additional times with the temperature values shifted forward by 1 h and backward by 1 h. Then the average of these three forecasts (À 1/0/þ1) was taken to produce the final forecast for Track 3. The peak magnitude and hour of peak for Tracks 1 and 2, were selected from this hourly forecast.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.2">| Round 2</head><p>For this round we hypothesised that shifting the temperature forward and backward might be contributing to increased error for Track 2 and 3 and excluded it for this round. However, we were not evaluating the forecast using the exact scoring metrics from Track 2 and 3, and unfortunately we would have performed better had we remained with the methodology from Round 1 (ENS-T) rather than ENS; 7% better in Track 2 and 0.7% better in Track 3 as shown in Tables <ref type="table">5</ref> and<ref type="table">6</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.3">| Round 5</head><p>In round 5 we introduced a kernel-based weighting scheme to give greater weight to more recent training samples. This was used only for the regression model, as the GBM implementation we used was not compatible with weights. We decided to exclude the GBM models for Track 3 as the performance of the MLR only model was better than the combined model with the GBM, and were being beat by the recency benchmark in Rounds 3 and 4. One other realisation was made after submitting our forecast for this round, that we had inadvertently excluded the August 2018 data from the training for the final model (as typically the prior round's data was used as a validation set for the model).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.4">| Round 6</head><p>For this round the weather appeared more similar to Rounds 1 and 2. During these rounds, there were often a mix of peak hours in the morning and the evening, and therefore our weighting approach had to be altered to better reflect periods of high loading that may not be in proximity to the actual peak. We used this updated weight for the regression model for Track 3. However we only used it for Track 3 as when evaluating it using some of the prior rounds, we saw weighting yield much higher error in Track 2 and only marginal gains in Track 1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">| RESULTS</head><p>The approach was programed via R <ref type="bibr" target="#b30">[31]</ref>, making use of the following libraries/packages: dplyr <ref type="bibr" target="#b31">[32]</ref>, tibbletime <ref type="bibr" target="#b32">[33]</ref>, readxl <ref type="bibr" target="#b33">[34]</ref>, lubridate <ref type="bibr" target="#b34">[35]</ref>, Metrics <ref type="bibr" target="#b35">[36]</ref>, data.table <ref type="bibr" target="#b36">[37]</ref>, gbm <ref type="bibr" target="#b25">[26]</ref>, zoo <ref type="bibr" target="#b37">[38]</ref>, and tis <ref type="bibr" target="#b38">[39]</ref>. Code is available at https://github.com/ DLDonaldson/BigDEALChallenge2022_peakyfinders to reproduce this approach. This section explores and compares the models used throughout the competition on the full set of data.</p><p>For the MLR model results presented in this paper the following features were used as inputs into the MLR model given in Equation ( <ref type="formula">5</ref>): Trend, Hour, Month, Weekday, Holiday, Weekday � Hour, third order polynomials of Temperature (T ), lagged temperature (T lag1 , T lag2 , T lag3 , T lag6 ), averaged temperature (T sma1 ), smoothed temperature (T es995 , T es99 ), and those polynomials crossed with Hour and Month. For the GBM model the following features were added: lagged temperature (T lag4 , T lag5 , T lag9 , T lag12 , T lag15 , T lag18 , T lag21 , T lag24 ), averaged temperature (T sma2 , T sma3 ) and the cross effects were removed, and only first order terms of each variable were included. The following hyperparameters were also set: distribution = 'Laplace', n.trees = 2000, n.minobsinnode = 300, interaction.depth = 3, bag.fraction = 0.8, shrinkage = 0.1, cv. folds = 5. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">| Track 1</head><p>The aim of Track 1 was to produce forecasts of the daily peak load for each of the three LDCs. This was the highest performing track for the peaky-finders, placing 3rd overall and 1st in Round 3. The results for each round are shown in Table <ref type="table">4</ref>. The impact of ensembling, temperature shifting, and weighting each played a role in improving the overall forecast performance. Firstly, the individual GBM and MLR models were compared to the ensembled model. Results across each of the rounds indicate that ensembling approaches performed best overall, with the exception of the period from June to August. When considering the overall the shifted-time approach to handle the temperature forecast error, benefits were marginal prior to considering the weighting methods. However a similar benefit was not observed for the weighted approach, where a single temperature series yielded better performance overall.</p><p>During the competition, the weighting methods were not developed until later rounds, and therefore were not implemented until Round 5. Unfortunately, this was the only round in which using the weighted methods resulted in worse performance. As a result, the approach for round 6 reverted back to the standard model, where continued use would have instead reduced the MAPE from an average of 4.19%-4%. Overall across all rounds, the use of ENS-TW would have improved the team performance by 0.07%. Fundamentally, the use of the weighting factor gives a higher priority to the performance of the model in the hours surrounding the daily peak. Therefore, the performance of the model in other hours is sacrificed in order to achieve this objective and model selection should be based on the bespoke error metric considered rather than the overall hourly error.</p><p>One significant anomaly in the results was observed in the performance during round 5. This round in particular included a significant disturbance in the load data caused by a hurricane that struck the area causing power outages, and therefore a reduction in load. Data for the load during this period and the corresponding disruption to the load-temperature relationship can be seen in Figures <ref type="figure" target="#fig_5">6</ref> and<ref type="figure" target="#fig_6">7</ref>    round, and therefore normalisation is performed by dividing the total error metric for the round by the number of days in that round. This enables comparison of the performance from one round to another. The results are provided in Table <ref type="table">5</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jan-Feb</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mar-May</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jun-Jul Aug</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Sep-Oct</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nov-Dec</head><note type="other">GBM</note><p>Performance reveals the ability to predict the time within 1-2 h of the true time on average. Improvement was also observed from the shifting of temperature. Even after weighting, models including shifts in temperature were optimal for three of the six rounds.</p><p>In this round, the decision-making regarding the model to use yielded improvements to forecast performance in one round (Round 5) and worse performance in another (Round 2). Overall this variation netted out and the overall average of the ensembled methods demonstrates close performance (variation from 1.37 to 1.41). However, the error varies significantly across rounds due to some time of year having days with multiple periods (making it difficult to detect which will be the peak) and others with a clear single peak. This can be seen in Figure <ref type="figure">8</ref> where one day has a clear peak at hour 18, whereas another day has a peak at hour 20, and another hour with almost the same magnitude 8 h earlier.</p><p>Seasonal challenges result when trying to anticipate peak hour. This is a result of the underlying variability in peak hour. Similar effects may be observed with growth in solar photovoltaic generation. Understanding the link between this variability and the accuracy of forecasting approaches can provide insight into the reliability of peak related scheduling or energy optimisation efforts. The Error metric has been normalised by the number of days in each round to enable ease of comparison of model performance across rounds. To track how much difference there is in the peak hour from one day to the next across the region of interest, the monthly standard deviation in peak hour is used. For the region of interest, there is a significant difference across seasons with the monthly standard deviation in peak hour ranging from roughly 1 hour in the summer months to six in winter months as shown in Figure <ref type="figure">9</ref>. The performance across rounds also varies with the period from March to July resulting in the least error overall. In some rounds with little variation Rounds 3 and 4, simple MLR based methods yielded the highest accuracy. This was evidenced in the competition where the benchmark model outperformed many of the competitors in these rounds. In this Track, similar benefits of ensembling with rounds 1, 2, and 4-6 showing improvements from the shifts in temperature.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model Time period/round</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Average</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model information</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Train</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2015-2017</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jan-Feb</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mar-May</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jun-Jul Aug</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Sep-Oct</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nov-Dec</head><note type="other">GBM</note></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">| Track 3</head><p>In this round similar findings as prior Tracks were seen as far as the model performance. The overall results for each of the methods for Track 3 can be found in Table <ref type="table">6</ref>. First, overall, the ensemble methods outperformed the methods reliant on a single approach. Second, there was limited difference between the average performance of the ensemble models over the 6 rounds. However, what is not apparent is the significance of a shift in the daily shape metric. Finally, larger differences occur in the natural variation over the year than in between the different models. This track was the lowest performing round for the 'peaky-finders' and the only track in which the team scored below the recency benchmark. The Error metric has been normalised by the number of days in each round to enable ease of comparison of model performance across rounds. metric to the business decisions that would be affected by metrics for peak hour forecasting. This is true not only for this competition, but for the larger field as the separation of performance metrics from the business decisions being informed can result in wasted model development efforts and suboptimal use of resources.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model Time period/round</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Average</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Model information</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Train</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2015-2017</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jan-Feb</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mar-May</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Jun-Jul Aug</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Sep-Oct</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Nov-Dec</head><note type="other">GBM</note></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">| Temperature error</head><p>One of the issues that our team sought to deal with was the impact of errors in temperature forecasts on load forecast accuracy. The results demonstrate that the approach provided incremental benefits across all three rounds. However, the computational cost was tripled due to the need to calculate three times the number of forecasts. With advance knowledge of the types and magnitude of the forecast temperature error, other approaches to make the forecasting process more robust to temperature errors would be of benefit. Due to the time limitations in the competition the shifts in hour were limited to �1 however similar to the evaluation of the number of lags to use in Ref. <ref type="bibr" target="#b23">[24]</ref> empirical determination of the most suitable shifts in temperature could be done. Another alternative approach could be to create a single synthetic temperature series with which to forecast rather than combining the forecast results. Furthermore, in practice the availability of ensemble forecasts may provide a better means to account for uncertainty in weather parameters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3">| Competition decision making</head><p>One of the most significant challenges that arose during the competition was selecting the forecast model to use for each round. Upon the completion of the round and the receipt of the actual data, there was a relatively short time period in which the decision had to be made to continue with the existing approach, or try to further improve the forecasting performance. Such adjustments to the models used did not always improve forecast performance. For example, decisions on the forecasting methodology based judgmentally on prior rounds led to selection of sub-optimal models for Rounds 2 (lack of temperature correction), and 6 (lack of weighting in Tracks 1 and 2). Another example is that the choice to use the weighting approach in Round 5 for Track 1 resulted in reduced performance and therefore the weighting was not used for Track 1 in Round 6 (thought it would have provided benefit). Ultimately, forecaster judgement of when to implement a new model (evaluated based on historical data) will always carry some risk of reduced performance when exposed to new data. This highlights the benefit of a causal understanding of how changes in forecast model lead to improved forecast performance. If better understanding of the underlying reason why features or models better perform (as opposed to 'the metric improved by xx%') can be gained then forecasters can have more confidence that they will continue to provide benefit in the future.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.4">| Relevance of competition to practice</head><p>Large-scale forecasting competitions can provide valuable insight into the performance of forecasting methods and serve to compare newly proposed methods with established state-ofthe-art, and to show that these methods work in practice. They can also promote emerging challenges and stimulate research activity, as in the case of daily peak load forecasting, which has received relatively little attention in the academic literature to date. Predicting the timing of daily peak load is certainly distinct from classical time series prediction, though we did not treat is as such here. For example, others have addressed the property that there is, by definition, exactly one peak each day via ordinal regression <ref type="bibr" target="#b17">[18]</ref> and cardinal points <ref type="bibr" target="#b39">[40,</ref><ref type="bibr" target="#b40">41]</ref>. However, forecast users may be interested in other definitions of peaks. We saw examples of days with two distinct peaks in this competition; both may be relevant to energy system operation. It may even be preferable to integrate the forecasting and decision-making process, as was demonstrated for peak shaving using battery energy storage in Ref. <ref type="bibr" target="#b11">[12]</ref>. The competition set-up prevented the use of recent observations and therefore classical time series methods, so the potential benefits of these methods could not be studied. Unusual or previously unseen conditions are of particular interest to forecast practitioners as they can introduce substantial uncertainty and may have a large impact on energy systems. The BDC22 included a period affected by a hurricane, which disrupted power supplies and reduced electricity load substantially for several days. This event was unpredictable following a strategy of 'learning from data' (competition data at least) as nothing like it was present in the provided historic data. In practice, the operational forecasters would have been well aware of the inclement weather and able to make adjustments to their forecasts, perhaps even based on past experience of similar events. Competitors in BDC22 may also have been aware of this particular hurricane, which hit the organisers' home state, or discovered it after noticing the unusual temperature data, and been able to make adjustments. We are therefore sceptical as to the relevance and benefit of including such events in ex-post competitions with limited explanatory data and suggest that future forecasting competitions aim to recreate the reality of operational forecasting where such events are concerned.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">| CONCLUSION</head><p>This paper presents the approach used by the team 'peakyfinders' to predict the hourly magnitude, time, and shape of the peak load using an ensemble of MLR and GBM models. The results indicate that hourly models for forecasting electricity demand provide reasonable performance when identifying the time of the peak. As the volatility grows, the ability of a single approach to predict the time and magnitude of the demand remains feasible. However, more bespoke additions such as the proposed weighting scheme can be used to increase accuracy for the hour of peak. However, this necessitates the production and maintenance of several disparate forecasts which increases complexity. Therefore, utilities must identify the sensitivity of their scheduling and dispatch decisions to these factors in order to determine the point at which bespoke modelling is required, for example, should days be considered as containing just one or multiple peaks? Calculating and tracking the variability of peak hour over time is one useful metric by which utilities can evaluate the need for bespoke peak hour forecasting model development. As this work presents the outcomes of the BDC2022 forecasting competition, which included data from one region of the United States, future work should evaluate the performance of similar methods on diverse data from multiple regions of the world to investigate the differences that seasonality and load composition have on the performance of peak load forecasting methods.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>T A B L E 1</head><label>1</label><figDesc>Structure of BDC 2022 final match.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>First, a Multiple Linear Regression (MLR) model F I G U R E 3 Plots illustrating some of the main properties of load time series, such as annual seasonality and temperature response. F I G U R E 4 Overview of the approach.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>T A B L E 3</head><label>3</label><figDesc>Models used for each round of the competition. -TW, GBM-T MLR-TW, GBM-T MLR-TW Round 6 MLR-T, GBM-T MLR-T, GBM-T MLR-TL, GBM-T F I G U R E 5 Comparison of the weighting approaches for an example day in January.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>4. 2 | 2</head><label>22</label><figDesc>Track The aim of Track 2 was to predict the hour in which the peak demand occurs. The number of days are different across each T A B L E 4 Results from Track 1 with the best performing model indicated in bold and underlined and the model used in the competition shaded in yellow.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>F I G U R E 6</head><label>6</label><figDesc>Unexpected event shown in the load for Round 5 (highlighted in red).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>F I G U R E 7</head><label>7</label><figDesc>Same unexpected event. The data overall is shown in black, round 5 in blue, and the data for September 14-17 (The dates of a hurricane which hit the United States) shown in red. T A B L E 5 Results from Track 2 with the best performing model indicated in bold and underlined and the model used in the competition shaded in yellow.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>5 | DISCUSSION 5 . 1 |</head><label>551</label><figDesc>Forecast evaluation metricsWith new areas of forecasting come new metrics. Where over time standards and methods of performance have been developed around acceptable 'MAPE' or other demand forecasting metrics, work remains to be done to link the forecast F I G U R E 9 Data for all three local distribution companies shows the peak hour varies much more significantly in winter than summer. T A B L E 6 Results from Track 3 with the best performing model indicated in bold and underlined and the model used in the competition shaded in yellow.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>10 -</head><label>10</label><figDesc>DONALDSON ET AL.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>included MLR included Temp. shift Weight</head><label></label><figDesc></figDesc><table><row><cell>GBM</cell><cell>2.61%</cell><cell>6.18%</cell><cell>4.96%</cell><cell>5.00%</cell><cell>3.34%</cell><cell>7.68%</cell><cell>4.40%</cell><cell>5.26%</cell><cell>Y</cell><cell>-</cell><cell>-</cell><cell>-</cell></row><row><cell>GBM-T</cell><cell>2.54%</cell><cell>6.10%</cell><cell>4.93%</cell><cell>4.89%</cell><cell>3.30%</cell><cell>7.66%</cell><cell>4.34%</cell><cell>5.21%</cell><cell>Y</cell><cell>-</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR</cell><cell>3.35%</cell><cell>5.41%</cell><cell>5.31%</cell><cell>4.91%</cell><cell>3.69%</cell><cell>8.20%</cell><cell>4.34%</cell><cell>5.31%</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>MLR-T</cell><cell>3.33%</cell><cell>5.44%</cell><cell>5.34%</cell><cell>4.89%</cell><cell>3.71%</cell><cell>8.21%</cell><cell>4.32%</cell><cell>5.32%</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR-L</cell><cell>3.11%</cell><cell>5.25%</cell><cell>5.22%</cell><cell>4.74%</cell><cell>3.53%</cell><cell>8.31%</cell><cell>4.14%</cell><cell>5.20%</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>MLR-W</cell><cell>3.10%</cell><cell>5.43%</cell><cell>5.24%</cell><cell>4.60%</cell><cell>3.51%</cell><cell>8.47%</cell><cell>4.49%</cell><cell>5.29%</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>MLR-TL</cell><cell>3.08%</cell><cell>5.28%</cell><cell>5.25%</cell><cell>4.75%</cell><cell>3.57%</cell><cell>8.30%</cell><cell>4.12%</cell><cell>5.21%</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell>MLR-TW</cell><cell>3.16%</cell><cell>5.35%</cell><cell>5.19%</cell><cell>4.59%</cell><cell>3.49%</cell><cell>8.48%</cell><cell>4.42%</cell><cell>5.25%</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row><row><cell>ENS</cell><cell>2.77%</cell><cell>5.23%</cell><cell>5.01%</cell><cell>4.74%</cell><cell>3.48%</cell><cell>7.65%</cell><cell>4.20%</cell><cell>5.05%</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>ENS-L</cell><cell>2.66%</cell><cell>5.15%</cell><cell>5.00%</cell><cell>4.69%</cell><cell>3.42%</cell><cell>7.74%</cell><cell>4.13%</cell><cell>5.02%</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>ENS-W</cell><cell>2.50%</cell><cell>4.97%</cell><cell>4.92%</cell><cell>4.68%</cell><cell>3.38%</cell><cell>7.79%</cell><cell>4.03%</cell><cell>4.96%</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>ENS-T</cell><cell>2.74%</cell><cell>5.18%</cell><cell>5.03%</cell><cell>4.72%</cell><cell>3.47%</cell><cell>7.66%</cell><cell>4.19%</cell><cell>5.04%</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>ENS-TL</cell><cell>2.63%</cell><cell>5.10%</cell><cell>5.01%</cell><cell>4.67%</cell><cell>3.41%</cell><cell>7.74%</cell><cell>4.10%</cell><cell>5.01%</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell>ENS-TW</cell><cell>2.47%</cell><cell>5.03%</cell><cell>4.93%</cell><cell>4.67%</cell><cell>3.36%</cell><cell>7.83%</cell><cell>4.00%</cell><cell>4.97%</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>included MLR included</head><label></label><figDesc></figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Temp.</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>shift</cell><cell>Weight</cell></row><row><cell>GBM</cell><cell>1.08</cell><cell>1.45</cell><cell>1.25</cell><cell>1.14</cell><cell>1.52</cell><cell>1.83</cell><cell>2.17</cell><cell>1.56</cell><cell>Y</cell><cell>-</cell><cell>-</cell><cell>-</cell></row><row><cell>GBM-T</cell><cell>1.04</cell><cell>1.46</cell><cell>1.20</cell><cell>1.15</cell><cell>1.52</cell><cell>1.68</cell><cell>1.95</cell><cell>1.49</cell><cell>Y</cell><cell>-</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR</cell><cell>1.13</cell><cell>1.65</cell><cell>1.17</cell><cell>1.19</cell><cell>1.18</cell><cell>1.86</cell><cell>2.20</cell><cell>1.54</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>MLR-T</cell><cell>1.11</cell><cell>1.51</cell><cell>1.09</cell><cell>1.15</cell><cell>1.10</cell><cell>1.85</cell><cell>2.19</cell><cell>1.48</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR-L</cell><cell>1.09</cell><cell>1.73</cell><cell>1.12</cell><cell>1.09</cell><cell>1.15</cell><cell>1.84</cell><cell>2.07</cell><cell>1.50</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>MLR-W</cell><cell>1.72</cell><cell>2.45</cell><cell>1.43</cell><cell>0.99</cell><cell>1.22</cell><cell>2.01</cell><cell>2.75</cell><cell>1.81</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>MLR-TL</cell><cell>1.05</cell><cell>1.69</cell><cell>1.14</cell><cell>1.09</cell><cell>1.24</cell><cell>1.87</cell><cell>2.13</cell><cell>1.53</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell>MLR-TW</cell><cell>1.71</cell><cell>2.11</cell><cell>1.41</cell><cell>1.01</cell><cell>1.27</cell><cell>1.83</cell><cell>2.75</cell><cell>1.73</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row><row><cell>ENS</cell><cell>0.99</cell><cell>1.18</cell><cell>1.16</cell><cell>1.04</cell><cell>1.27</cell><cell>1.84</cell><cell>2.00</cell><cell>1.41</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>ENS-L</cell><cell>0.95</cell><cell>1.10</cell><cell>1.11</cell><cell>1.03</cell><cell>1.24</cell><cell>1.82</cell><cell>1.91</cell><cell>1.37</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>ENS-W</cell><cell>1.09</cell><cell>1.44</cell><cell>1.11</cell><cell>1.05</cell><cell>1.31</cell><cell>1.67</cell><cell>1.93</cell><cell>1.42</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>ENS-T</cell><cell>0.99</cell><cell>1.17</cell><cell>1.07</cell><cell>1.04</cell><cell>1.30</cell><cell>1.77</cell><cell>1.96</cell><cell>1.39</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>ENS-TL</cell><cell>0.95</cell><cell>1.20</cell><cell>0.98</cell><cell>1.07</cell><cell>1.28</cell><cell>1.80</cell><cell>1.96</cell><cell>1.38</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell>ENS-TW</cell><cell>1.07</cell><cell>1.43</cell><cell>1.08</cell><cell>1.03</cell><cell>1.28</cell><cell>1.63</cell><cell>1.86</cell><cell>1.38</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row></table><note><p>F I G U R E 8 Differences in daily load shape across 2 days. 8 -DONALDSON ET AL.</p></note></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>included MLR included</head><label></label><figDesc></figDesc><table><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>Temp.</cell><cell></cell></row><row><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>shift</cell><cell>Weight</cell></row><row><cell>GBM</cell><cell>0.089</cell><cell>0.119</cell><cell>0.108</cell><cell>0.102</cell><cell>0.098 0.121</cell><cell>0.172</cell><cell>0.120</cell><cell>Y</cell><cell>-</cell><cell>-</cell><cell>-</cell></row><row><cell>GBM-T</cell><cell>0.084</cell><cell>0.115</cell><cell>0.103</cell><cell>0.102</cell><cell>0.095 0.112</cell><cell>0.168</cell><cell>0.116</cell><cell>Y</cell><cell>-</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR</cell><cell>0.085</cell><cell>0.127</cell><cell>0.103</cell><cell>0.085</cell><cell>0.075 0.102</cell><cell>0.173</cell><cell>0.111</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>MLR-T</cell><cell>0.081</cell><cell>0.122</cell><cell>0.101</cell><cell>0.087</cell><cell>0.077 0.101</cell><cell>0.173</cell><cell>0.110</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>MLR-L</cell><cell>0.081</cell><cell>0.119</cell><cell>0.101</cell><cell>0.085</cell><cell>0.076 0.099</cell><cell>0.164</cell><cell>0.108</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>MLR-W</cell><cell>0.090</cell><cell>0.156</cell><cell>0.099</cell><cell>0.085</cell><cell>0.082 0.102</cell><cell>0.162</cell><cell>0.114</cell><cell>-</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>MLR-TL</cell><cell>0.077</cell><cell>0.116</cell><cell>0.098</cell><cell>0.087</cell><cell>0.078 0.099</cell><cell>0.163</cell><cell>0.107</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell cols="2">MLR-TW 0.089</cell><cell>0.144</cell><cell>0.094</cell><cell>0.086</cell><cell>0.080 0.097</cell><cell>0.158</cell><cell>0.110</cell><cell>-</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row><row><cell>ENS</cell><cell>0.077</cell><cell>0.109</cell><cell>0.096</cell><cell>0.087</cell><cell>0.082 0.101</cell><cell>0.165</cell><cell>0.107</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>-</cell></row><row><cell>ENS-L</cell><cell>0.075</cell><cell>0.106</cell><cell>0.096</cell><cell>0.087</cell><cell>0.083 0.101</cell><cell>0.161</cell><cell>0.105</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Load</cell></row><row><cell>ENS-W</cell><cell>0.074</cell><cell>0.110</cell><cell>0.092</cell><cell>0.086</cell><cell>0.083 0.100</cell><cell>0.154</cell><cell>0.104</cell><cell>Y</cell><cell>Y</cell><cell>-</cell><cell>Pk</cell></row><row><cell>ENS-T</cell><cell>0.075</cell><cell>0.107</cell><cell>0.095</cell><cell>0.090</cell><cell>0.082 0.099</cell><cell>0.165</cell><cell>0.106</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>-</cell></row><row><cell>ENS-TL</cell><cell>0.074</cell><cell>0.104</cell><cell>0.095</cell><cell>0.090</cell><cell>0.082 0.099</cell><cell>0.160</cell><cell>0.105</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Load</cell></row><row><cell>ENS-TW</cell><cell>0.072</cell><cell>0.106</cell><cell>0.091</cell><cell>0.089</cell><cell>0.082 0.096</cell><cell>0.153</cell><cell>0.103</cell><cell>Y</cell><cell>Y</cell><cell>Y</cell><cell>Pk</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>25152947, 0, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/stg2.12152 by University Of Glasgow, Wiley Online Library on [18/04/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_1"><p>-DONALDSON ET AL. 25152947, 0, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/stg2.12152 by University Of Glasgow, Wiley Online Library on [18/04/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_2"><p>DONALDSON ET AL. 25152947, 0, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/stg2.12152 by University Of Glasgow, Wiley Online Library on [18/04/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGEMENTS</head><p>The authors would like to thank <rs type="person">Tao Hong</rs> and <rs type="person">Shreyashi Shukla</rs> for organising the competition and the <rs type="institution">University of Birmingham</rs> for supporting the publication.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>Data from the BigDEAL Challenge 2022 was used as the basis for this manuscript. The code that support the findings of this study are openly available on Github at https://github.com/ DLDonaldson/BigDEALChallenge2022_peakyfinders.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONFLICT OF INTEREST STATEMENT</head><p>The authors declare no conflicts of interest.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Market Operations in Electric Power Systems: Forecasting, Scheduling, and Risk Management</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Shahidehpour</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yamin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Li</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003">2003</date>
+			<publisher>John Wiley and Sons</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Energy forecasting: a review and outlook</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hong</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/oajpe.2020.3029979</idno>
+		<ptr target="https://doi.org/10.1109/oajpe.2020.3029979" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Open Access J. Power Energy</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="376" to="388" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Day-ahead electricity demand forecasting competition: post-covid paradigm</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Farrokhabadi</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/oajpe.2022.3161101</idno>
+		<ptr target="https://doi.org/10.1109/oajpe.2022.3161101" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Open Access J. Power Energy</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="185" to="191" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A brief history of forecasting competitions</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Hyndman</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijforecast.2019.03.015</idno>
+		<ptr target="https://doi.org/10.1016/j.ijforecast.2019.03.015" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Forecast</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="7" to="14" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note>m4 Competition</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Load forecasting using support vector machines: a study on eunite competition 2001</title>
+		<author>
+			<persName><forename type="first">B.-J</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M.-W</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C.-J</forename><surname>Lin</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tpwrs.2004.835679</idno>
+		<ptr target="https://doi.org/10.1109/tpwrs.2004.835679" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1821" to="1830" />
+			<date type="published" when="2004">2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Global energy forecasting competition 2017: hierarchical probabilistic load forecasting</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Black</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijforecast.2019.02.006</idno>
+		<ptr target="https://doi.org/10.1016/j.ijforecast.2019.02.006" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Forecast</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="1389" to="1399" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">P</forename><surname>Distribution</surname></persName>
+		</author>
+		<ptr target="https://www.nationalgrid.co.uk/pod-data-science-challenge" />
+		<title level="m">Presumed Open Data: Data Science Challenge</title>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">IEEE-CIS Technical Challenge on Energy Prediction from Smart Meter Data</title>
+		<author>
+			<persName><forename type="first">I</forename><surname>Triguero</surname></persName>
+		</author>
+		<idno type="DOI">10.21227/2npg-c280.s</idno>
+		<ptr target="https://dx.doi.org/10.21227/2npg-c280.s" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Dataport</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Short-term load forecasting</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Gross</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Galiana</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/proc.1987.13927</idno>
+		<ptr target="https://doi.org/10.1109/proc.1987.13927" />
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE</title>
+		<meeting>IEEE</meeting>
+		<imprint>
+			<date type="published" when="1987">1987</date>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="page" from="1558" to="1573" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">National</forename><surname>Grid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eso</forename></persName>
+		</author>
+		<ptr target="https://www.nationalgrideso.com/document/130641/download" />
+		<imprint/>
+	</monogr>
+	<note>What Are Electricity Triads? [Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Data-driven energy storage scheduling to minimise peak demand on distribution systems with PV generation</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Borghini</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en14123453</idno>
+		<ptr target="https://doi.org/10.3390/en14123453" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page">3453</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Forecasting for battery storage: choosing the error metric</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Singleton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Grindrod</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/en14196274</idno>
+		<ptr target="https://doi.org/10.3390/en14196274" />
+	</analytic>
+	<monogr>
+		<title level="j">Energies</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page">6274</biblScope>
+			<date type="published" when="2021">19. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Time-of-Use Residential Transition Frequently Asked Questions</title>
+		<author>
+			<persName><forename type="first">Pacific</forename><surname>Gas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">(</forename><surname>Electric</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Pg&amp;e)</surname></persName>
+		</author>
+		<ptr target="https://www.pge.com/pge_global/common/pdfs/rate-plans/rate-plan-options/time-of-use-base-plan/TOU-Transition-FAQs.pdf" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">California Independent System Operator: California ISO Peak Load History</title>
+		<ptr target="https://www.caiso.com/documents/californiaisopeakloadhistory.pdf" />
+		<imprint>
+			<date type="published" when="1998">1998 through 2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Predicting peak-demand days in the Ontario peak reduction program for large consumers</title>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Jiang</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/2602044.2602076</idno>
+		<ptr target="https://doi.org/10.1145/2602044.2602076" />
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 5th International Conference on Future Energy Systems, Ser. E-Energy &apos;14</title>
+		<meeting>the 5th International Conference on Future Energy Systems, Ser. E-Energy &apos;14<address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2014">2014</date>
+			<biblScope unit="page" from="221" to="222" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Predicting peak day and peak hour of electricity demand with ensemble machine learning</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Fu</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fenrg.2022.944804</idno>
+		<ptr target="https://doi.org/10.3389/fenrg.2022.944804" />
+	</analytic>
+	<monogr>
+		<title level="j">Front. Energy Res</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Peaktk: an open source toolkit for peak forecasting in energy systems</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bovornkeeratiroj</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3530190.3534791</idno>
+		<ptr target="https://doi.org/10.1145/3530190.3534791" />
+	</analytic>
+	<monogr>
+		<title level="m">ACM SIGCAS/SIGCHI Conference on Computing and Sustainable Societies (COMPASS), Ser. COMPASS &apos;22</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<publisher>Association for Computing Machinery</publisher>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="page" from="324" to="339" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Probabilistic load forecasting for the low voltage network: forecast fusion and daily peaks</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Gilbert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Browell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Stephen</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.segan.2023.100998</idno>
+		<ptr target="https://doi.org/10.1016/j.segan.2023.100998" />
+	</analytic>
+	<monogr>
+		<title level="j">Sustain. Energy Grids Networks</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page">100998</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Bigdeal Challenge</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hong</surname></persName>
+		</author>
+		<ptr target="http://blog.drhongtao.com/" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<ptr target="https://www.pjm.com/~/media/library/reports-notices/load-forecast/2016-load-forecast-whitepaper.ashx" />
+		<title level="m">PJM Interconnection: Load Forecasting Model Whitepaper</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Weather informed need attributes for non-wires alternatives in distribution networks</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Donaldson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jayaweera</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PESGM41954.2020.9281917</idno>
+		<ptr target="https://doi.org/10.1109/PESGM41954.2020.9281917" />
+	</analytic>
+	<monogr>
+		<title level="m">2020 IEEE Power and Energy Society General Meeting (PESGM)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1" to="5" />
+		</imprint>
+	</monogr>
+	<note>Montreal</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Long term probabilistic load forecasting and normalization with hourly information</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wilson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xie</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tsg.2013.2274373</idno>
+		<ptr target="https://doi.org/10.1109/tsg.2013.2274373" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Smart Grid</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="456" to="462" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Density forecasting for long-term peak electricity demand</title>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">J</forename><surname>Hyndman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Fan</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tpwrs.2009.2036017</idno>
+		<ptr target="https://doi.org/10.1109/tpwrs.2009.2036017" />
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Power Syst</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="1142" to="1153" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Electric load forecasting with recency effect: a big data approach</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Hong</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijforecast.2015.09.006</idno>
+		<ptr target="https://doi.org/10.1016/j.ijforecast.2015.09.006" />
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Forecast</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="585" to="597" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">Improving Forecast Accuracy Using a Synthetic Weather Station: An Incremental Approach and Bfcom2018 Lessons Learned</title>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">L</forename><surname>Donaldson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">A</forename><surname>Khan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Jayaweera</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/PTC.2019.8810869</idno>
+		<ptr target="https://doi.org/10.1109/PTC.2019.8810869" />
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<publisher>IEEE Milan PowerTech</publisher>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">GBM: Generalized Boosted Regression Models</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Greenwell</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=gbm" />
+		<imprint/>
+	</monogr>
+	<note>R package version 2.1.8.1 (2022). [Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<author>
+			<persName><forename type="first">B</forename><surname>Boehmke</surname></persName>
+		</author>
+		<ptr target="http://uc-r.github.io/gbm_regression" />
+		<title level="m">UC Business Analytics R Programming Guide</title>
+		<imprint>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Comparison of three short-term load forecast models in southern California</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.energy.2019.116358</idno>
+		<ptr target="https://doi.org/10.1016/j.energy" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy</title>
+		<imprint>
+			<biblScope unit="volume">189</biblScope>
+			<biblScope unit="page">116358</biblScope>
+			<date type="published" when="2019">2019. 2019.116358</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Impacts of building load dispersion level on its load forecasting accuracy: data or algorithms? Importance of reliability and interpretability in machine learning</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Hu</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.enbuild.2023.112896</idno>
+		<ptr target="https://doi.org/10.1016/j.enbuild.2023.112896" />
+	</analytic>
+	<monogr>
+		<title level="j">Energy Build</title>
+		<imprint>
+			<biblScope unit="volume">285</biblScope>
+			<biblScope unit="page">112896</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Greedy function approximation: a gradient boosting machine</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Friedman</surname></persName>
+		</author>
+		<idno type="DOI">10.1214/aos/1013203451</idno>
+		<ptr target="https://doi.org/10.1214/aos/1013203451" />
+	</analytic>
+	<monogr>
+		<title level="j">Ann. Stat</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1189" to="1232" />
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<ptr target="https://www.R-project.org/" />
+		<title level="m">R Core Team: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing</title>
+		<meeting><address><addrLine>Vienna</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">dplyr: A Grammar of Data Manipulation. R package version 1</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wickham</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=dplyr" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">10</biblScope>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">tibbletime: Time Aware Tibbles</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Vaughan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dancho</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=tibbletime" />
+		<imprint/>
+	</monogr>
+	<note>R package version 0.1.7 (2022). [Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">readxl: Read Excel Files</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wickham</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bryan</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=readxl" />
+		<imprint/>
+	</monogr>
+	<note>R package version 1.4.1 (2022). [Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Dates and times made easy with lubridate</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Grolemund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wickham</surname></persName>
+		</author>
+		<idno type="DOI">10.18637/jss.v040.i03</idno>
+		<ptr target="https://doi.org/10.18637/jss.v040.i03" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Stat. Software</title>
+		<imprint>
+			<biblScope unit="volume">40</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="1" to="25" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+		<title level="m" type="main">Metrics: Evaluation Metrics for Machine Learning</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hamner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Frasco</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=Metrics" />
+		<imprint/>
+	</monogr>
+	<note>R package version 0.1.4 (2018). [Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">Data.Table: Extension of &apos;data.frame&apos;. R package version 1</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Dowle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Srinivasan</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=data.table" />
+		<imprint>
+			<date type="published" when="2022">2022</date>
+			<biblScope unit="volume">14</biblScope>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">zoo: S3 infrastructure for regular and irregular time series</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zeileis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Grothendieck</surname></persName>
+		</author>
+		<idno type="DOI">10.18637/jss.v014.i06</idno>
+		<ptr target="https://doi.org/10.18637/jss.v014.i06" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Stat. Software</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1" to="27" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+		<title level="m" type="main">tis: Time Indexes and Time Indexed Series. R package version 1</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hallman</surname></persName>
+		</author>
+		<ptr target="https://CRAN.R-project.org/package=tis" />
+		<imprint>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page">39</biblScope>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Using combined forecasts with changing weights for electricity demand profiling</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">W</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Majithia</surname></persName>
+		</author>
+		<idno type="DOI">10.1057/palgrave.jors.2600856</idno>
+		<ptr target="https://doi.org/10.1057/palgrave.jors.2600856" />
+	</analytic>
+	<monogr>
+		<title level="j">J. Oper. Res. Soc</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="72" to="82" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">Comparative models for electrical load forecasting</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Bunn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">D</forename><surname>Farmer</surname></persName>
+		</author>
+		<ptr target="https://www.osti.gov/biblio/6256333" />
+		<imprint>
+			<date type="published" when="1985">1985</date>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+	<note>Online</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

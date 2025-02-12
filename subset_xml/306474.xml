@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Sidewall grating slot waveguide microring resonator biochemical sensor</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-09-26">26 September 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Weiqin</forename><surname>Chen</surname></persName>
+							<idno type="ORCID">0000-0002-2851-413X</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Xiao</forename><surname>Sun</surname></persName>
+							<idno type="ORCID">0000-0001-8405-8389</idno>
+						</author>
+						<author>
+							<persName><forename type="first">Shengwe</forename><surname>Ye</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Bocheng</forename><surname>Yuan</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Yiming</forename><surname>Sun</surname></persName>
+						</author>
+						<author>
+							<persName><roleName>AND</roleName><forename type="first">John</forename><forename type="middle">H</forename><surname>Marsh</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Lianping</forename><surname>Hou</surname></persName>
+						</author>
+						<author>
+							<affiliation>
+								<orgName>James Watt School of Engineering, University of Glasgow,</orgName>
+								<address><addrLine>Glasgow G12 8QQ, UK *</addrLine></address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Sidewall grating slot waveguide microring resonator biochemical sensor</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-09-26">26 September 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">84BC25CF319D15112EE5BF27D1EEEBA6</idno>
+					<idno type="DOI">10.1364/OL.502203</idno>
+					<note type="submission">Received 31 July 2023; revised 28 August 2023; accepted 10 September 2023; posted 12 September 2023;</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:07+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Integrated microring resonator structures based on siliconon-insulator (SOI) platforms are promising candidates for high-performance on-chip sensing. In this work, a novel sidewall grating slot microring resonator (SG-SMRR) with a compact size (5 µm center radius) based on the SOI platform is proposed and demonstrated experimentally. The experiment results show that the refractive index (RI) sensitivity and the limit of detection value are 620 nm/RIU and 1.4 × 10 -4 RIU, respectively. The concentration sensitivity and minimum concentration detection limit are 1120 pm/% and 0.05%, respectively. Moreover, the sidewall grating structure makes this sensor free of free spectral range (FSR) limitation. The detection range is significantly enlarged to 84.5 nm in lab measurement, four times that of the FSR of conventional SMRRs. The measured Q-factor is 3.1 × 10 3 , and the straight slot waveguide transmission loss is 24.2 dB/cm under sensing conditions. These results combined with the small form factor associated with a silicon photonics sensor open up applications where high sensitivity and large measurement range are essential.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Introduction. Label-free optical sensors are attractive in fields such as biomedical research, disease diagnosis, healthcare, and environment monitoring due to their simplicity and low cost compared with label-based detection strategies <ref type="bibr" target="#b0">[1]</ref>. Silicon-oninsulator (SOI) platforms are favored candidates for photonic integrated circuits (PICs) because they are compatible with well-established metal-oxide-semiconductor (CMOS) fabrication technologies. Also, the high refractive index (RI) contrast in SOI wafers provides strong optical mode field confinement and enables tight bending designs <ref type="bibr" target="#b1">[2]</ref>. Structures for label-free optical sensing based on the SOI platform have been widely investigated, including Mach-Zehnder interferometer sensors, microring resonator (MRR) sensors, and grating sensors <ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref>.</p><p>For MRR sensors, wavelength interrogation is more conducive to meeting the requirements of a large detection range and easy identification compared to traditional intensity interrogation <ref type="bibr" target="#b5">[6]</ref>. When testing high concentrations of analytes using wavelength interrogation, the resonant wavelength will move across the entire free spectral range (FSR) of an MRR with high refractive index (RI) sensitivity. Therefore, schemes such as Mach-Zehnder interferential coupled microrings <ref type="bibr" target="#b6">[7]</ref>, serially coupled double MRRs <ref type="bibr" target="#b7">[8]</ref>, and grating-coupled silicon MRRs <ref type="bibr" target="#b8">[9]</ref> have been proposed to mitigate the FSR limitation and enlarge the detection range.</p><p>For sensor performance improvement, many schemes have been proposed to improve the sensitivity. The traditional bulk sensitivity of a strip waveguide MRR is around 70 nm/RIU, and 270 nm/RIU can be achieved using a special quasi-TM design <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b10">11]</ref>. The slot MRR (SMRR) structures are investigated since they could enhance the light-analyte interaction, with experimentally demonstrated sensitivities of up to 298 nm/RIU (5 µm radius) and 476 nm/RIU (30 µm radius) <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b12">13]</ref>.</p><p>In this paper, we propose and experimentally demonstrate a compact label-free optical sensor using a combination of sidewall grating and slot microring resonator (SG-SMRR) structures. This sensor offers an FSR-free large detection range (84.5 nm in lab measurement), four times that of a conventional MRR, and a high measured bulk sensitivity (620 nm/RIU) with a limit of detection (LOD) value of 1.4 × 10 -4 RIU. The concentration sensitivity for a sodium chloride solution was as high as 1120 pm/% with a minimum concentration detection limit of 0.05%. The measured slot waveguide transmission loss is 5.2 dB/cm with air cladding, and the Q-factor of the sensor is 3.1 × 10 3 . This is the first demonstration of a fabricated SG-SMRR based on the SOI platform offering both an FSR-free large detection range and high sensitivity.</p><p>Device design and fabrication. The SG-SMRR sensor was designed based on the standard SOI wafer structure consisting of a 220 nm top silicon layer and a 2 µm buried oxide (BOX) layer on a 675 µm-thick silicon substrate. A three-dimensional (3D) schematic of the proposed sensing device with detailed parameters is illustrated in Fig. <ref type="figure" target="#fig_0">1</ref>. The structure parameters were calculated and optimized using the 2D and 3D finitedifference time-domain (FDTD) and MODE solutions software from Lumerical Inc. (Vancouver, BC, Canada) <ref type="bibr" target="#b13">[14]</ref>. The grating couplers were simulated to optimize the grating pitch, duty cycle, and fiber coupling position to achieve the highest coupling efficiency of 44%. The effective indices of the SMRR and SG were designed to achieve an operation wavelength near 1550 nm. The SG-SMRR structure was simulated using the finite-difference eigenmode (FDE) solver and variational FDTD to calculate the transmission spectral responses and mode field distribution. A tunable laser of TE polarization (to match the TE0 fundamental mode of the waveguide) was injected into the strip bus waveguide, and pure water was chosen as the cladding material for the structural parameters optimization. The structure contains focused grating couplers at the ends of the bus waveguides to couple the device optically to cleaved single mode fibers (SMF). The SMRR with sidewall grating enables sensing with high sensitivity over a large detection range. Homogeneous sensing was achieved by immersing this sensor device in aqueous solutions in both simulation and experiment. This sensing investigation can easily be extended to surface sensing applications by modeling the device with a thin adsorbed analyte layer covering the SG-SMRR.</p><p>The bend radius (R) of the SG-SMRR is the distance between the center of the rings and the center of the slot, which was designed to be 5 µm. The gap width between the bus and the outer ring waveguide is denoted as g 1 (240 nm), and the slot width between the two ring waveguides is g 2 (100 nm). The bus waveguide width W 1 and the slot waveguide width W 2 both set to 200 nm, which results in a high mode confinement factor and extremely strong electric field enhancement in the slot. The etched SGs on the inner and outer slot waveguides have azimuthal periods of Λ 1 (345 nm) and Λ 2 (368 nm), respectively. The duty cycle, or the filling factor (FF, ratio of the silicon grating length to the period), is 85%, and the corrugation depth of the grating H g is 10 nm. The bus and slot waveguide are both single transverse mode configurations.</p><p>The theory of the double-peak transmission spectrum generated by this sensing structure is mainly based on the electromagnetically induced transparency (EIT)-like effect. Part of the injected light field propagates through the coupling region of the bus and microring waveguide in a clockwise direction, and a part of the field is reflected counterclockwise by the gratings. The interactions between the two different propagating modes in the MRR produce the EIT-like effect. As is well known, a uniform Bragg grating is a partially reflective element. After optimization, the grating reflection spectrum stop band was centered at a specified resonant peak of the transmission spectrum of the MRR, and these double peaks then dominate and the others are suppressed. With the help of the reflection spectrum, only one EIT-like spectrum is retained over a relatively wide wavelength range. Thus, the EIT-like effect can be generated by the interaction between slot waveguide microring and sidewall gratings.</p><p>The fabrication process consisted of four main steps, as shown in Fig. <ref type="figure" target="#fig_1">2(a)</ref>. The steps are similar to those illustrated in <ref type="bibr" target="#b14">[15]</ref> except the fourth step, a 1 µm polymethyl methacrylate (AR-P  <ref type="figure" target="#fig_1">2(c</ref>). Compared with the designed dimensions, the maximum deviation is within 2 nm. The measured period and duty cycle of the fabricated grating coupler are 672 nm and 39.9% with an etch depth of 100 nm (close to the designed period of 671 nm and duty cycle of 39.9%). The differences are due to proximity effects during the EBL writing and sidewall etching errors during the inductively coupled plasma (ICP)-reactive ion etching (RIE) process <ref type="bibr" target="#b15">[16]</ref>.</p><p>Device measurements. In the experimental setup, a super luminescent diode (SLD, THORLABS S5FC1005P-PM Benchtop SLD Source), with a central wavelength of 1550 nm and maximum output power of 22 mW was used as the light source to measure the spectral response. The experimental setup is shown in Fig. <ref type="figure" target="#fig_2">3</ref>. The TE-polarized input and output beams were coupled into and out of the SG-SMRR sensor via 10 µm corecleaved SMFs with 10°input and output angles through the grating couplers (GCs). An optical spectrum analyzer (OSA) with a resolution bandwidth (RBW) of 0.06 nm was connected to the output SMF to measure the transmission spectrum of the sensor. For sensitivity measurement and calculation, different concentrations of solutions and analytes are dropped on the sensing MRR part as shown in Fig. <ref type="figure" target="#fig_2">3</ref>. An automated measurement system using LABVIEW software based on the  general-purpose interface bus (GPIB) connection was employed for swift data acquisition, especially important for quickly evaporating solvents.</p><p>The simulated and measured coupling efficiencies as a function of the wavelength of the output grating coupler are shown in Fig. <ref type="figure" target="#fig_3">4(a)</ref>. In measurement, the central wavelength and coupling efficiency of the fabricated grating coupler are 1555 nm and 41%, respectively (the simulated central wavelength and coupling efficiency are 1556 nm and 44%, respectively). The difference in central wavelength and coupling efficiency may be due to deviations in the coupling tilt angle of the SMFs. The transmission spectra of the simulated and measured SG-SMRR with water cladding layer are shown in Fig. <ref type="figure" target="#fig_3">4(b</ref>). The measured principal resonant double peaks are at 1555.5 and 1557.6 nm, respectively, and can be tuned from 1555.5 to 1650 nm with different RI solutions as cladding layers (the simulated resonant double peaks are at 1554.2 and 1556.6 nm, respectively). The small 1 nm redshift of the measured resonant peak compared with the simulation result is due to fabrication errors in the SG period and FF. The distance between the first main peak and the maximum measurement range that could be achieved in the experiment is defined as the quasi-FSR. In theory and simulation, this proposed sensor is free from the FSR limitation and the detection range is unbounded. Due to the wavelength range limit of the SLD broadband light source and the OSA used in lab measurement, the practical measurement limit of the quasi-FSR is 84.5 nm, 4.2 times that of the FSR of the conventional SMRR (20.4 nm). Hence the operating range of the proposed SG-SMRR is expanded significantly. This wide operating range brings the advantage of wide dynamic range (in terms of analyte concentration) and enabling measurement of high-concentration solutions. The Q-factor can be calculated as the resonant wavelength (1555.5 nm) divided by the FWHM (0.5 nm) of the measured transmission spectrum. The calculated Q-factor is 3.1 × 10 3 , which is two times that of the SMRR with a grating structure reported in <ref type="bibr" target="#b16">[17]</ref>. The transmission loss of the slot SOI waveguides is measured from the coupled output power using different lengths of waveguide. The transmission loss is 5.2 dB/cm for the straight slot SOI waveguide with air cladding. The water absorption loss is 47.5 dB/cm at a wavelength of 1.55 µm <ref type="bibr" target="#b17">[18]</ref>, and the optical confinement factor in the slot is 0.4. Thus under sensing conditions, the propagation loss of the straight slot waveguide is 5.2 dB/cm + 0.4 × 47.5 dB/cm = 24.2 dB/cm, and the estimated bending loss is around 86 dB/cm.</p><p>In the bulk and concentration sensitivity measurement, different concentrations of sodium chloride (NaCl) and Dglucose (C 6 H 12 O 6 ) were used as analytes and dropped onto the  SG-SMRR. Concentration changes (mass%) of sodium chloride and glucose result in the RI changes, which can be derived using a third-order polynomial fit described in <ref type="bibr" target="#b14">[15]</ref>. The simulated and measured transmission spectra for different concentrations of glucose and sodium chloride are shown in Figs. <ref type="figure" target="#fig_4">5(a</ref>   <ref type="table" target="#tab_0">1</ref>. Our sensor shows advantages in terms of its simple structure (single bus waveguide), FSR free detection range, higher Q-factor and extinction ratio (ER), and high sensitivity verified experimentally. The S RI in <ref type="bibr" target="#b16">[17]</ref> is comparable to ours but is based only on simulation results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion.</head><p>A novel and compact SG-SMRR sensing structure (5 µm radius) based on the SOI platform has been proposed and demonstrated experimentally. The measured bulk sensitivity and LOD values are 620 nm/RIU and 1.4 × 10 -4 RIU, respectively. The concentration sensitivity and minimum concentration detection limit are 1120 pm/% and 0.05%. Moreover, the theoretical detection range is unbounded, and the experimental detection range measured here is 84.5 nm, four times that of the free spectral range of conventional slot MRRs. Under sensing conditions, the measured Q-factor is 3.1 × 10 3</p><p>, and the straight slot waveguide transmission loss is 24.2 dB/cm. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>LetterFig. 1 .</head><label>1</label><figDesc>Fig. 1. Schematic of the SG-SMRR device.</figDesc><graphic coords="2,50.80,53.80,234.00,94.32" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. (a) Fabrication steps of the device. (b) SEM image of the SG-SMRR sensor. (c) Zoom image of bus waveguide, SMRR, and SG.</figDesc><graphic coords="2,314.64,53.80,232.08,161.28" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Schematic of the measurement setup.</figDesc><graphic coords="2,313.68,635.63,234.00,83.04" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. (a) Coupling efficiency of the simulated (black line) and measured (red line) focused grating coupler. (b) Transmission spectra of the simulated (black line) and measured (red line) SG-SMRR with water cladding layer.</figDesc><graphic coords="3,50.80,53.80,234.00,93.36" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. (a) Simulated and (b) measured transmission spectra for different concentrations of glucose solutions. (c) Simulated and (d) measured transmission spectra of different concentrations of NaCl solutions.</figDesc><graphic coords="3,313.68,53.80,234.00,258.72" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. (a) Simulation and experimental RI sensitivities of SG-SMRR for glucose and NaCl solutions. (b) Simulation and experimental concentration sensitivities of SG-SMRR for glucose and NaCl solutions.</figDesc><graphic coords="3,313.68,381.19,234.00,99.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>) and 5(c) and Figs. 5(b) and 5(d), respectively. The resonant double peaks initially start at 1555.5 and 1557.6 nm, respectively, and are redshifted when the concentration of solution is increased. The simulated and measured RI and concentration sensitivities of the device to glucose and sodium chloride concentration are shown in Figs. 6(a) and 6(b), respectively. The simulated and measured RI sensitivities (S RI ) for sodium chloride are 650 and 620 nm/RIU, respectively, and for glucose are 646 and 616 nm/RIU, respectively. The derivation of the two measured sensitivities is limited by RBW of the OSA. The measured RI sensitivity is more than two times that of optimized designed single-strip SOI-based quasi-TM MRRs and higher than that of Letter</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Funding.</head><label></label><figDesc>Engineering and Physical Sciences Research Council.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 . Comparison of Key Features of SOI MRR Sen- sors S RI (nm/RIU)</head><label>1</label><figDesc>× 10 -4 RIU. The measured concentration sensitivities (S c ) are 1120 and 1095 pm/% for NaCl and glucose solutions, respectively, and the corresponding simulation values are 1156 and 1139 pm/%. The corresponding measured concentration LOD values for NaCl is 0.05%. It should be noted that the surface sensitivity (S s ) could not be determined experimentally due to the lack of an accurate molecule binding and protein layer thickness measurement tool. However, we estimate that the experimental S s value should be close to the simulated value of 5.2 nm/nm based on the RI and concentration sensitivity results.A comparison of the performance of different sensors is shown in Table</figDesc><table><row><cell></cell><cell></cell><cell>Q</cell><cell>ER</cell><cell>FSR</cell></row><row><cell></cell><cell></cell><cell></cell><cell>(dB)</cell><cell>(nm)</cell></row><row><cell>Optimized</cell><cell>403</cell><cell>1.2 × 10 3</cell><cell>14</cell><cell>23</cell></row><row><cell>SMRR [19]</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>Grating</cell><cell>433</cell><cell>4.3 × 10 3</cell><cell>10</cell><cell>Free</cell></row><row><cell>DSMRR [20]</cell><cell></cell><cell></cell><cell></cell><cell></cell></row><row><cell>IG-SMRR [17]</cell><cell>643</cell><cell>1.4 × 10 3</cell><cell>11</cell><cell></cell></row><row><cell>This work</cell><cell>650/620</cell><cell>3.1 × 10 3</cell><cell>15</cell><cell>Free</cell></row><row><cell cols="5">previously reported SMRRs in [12,13]. The related RI LOD</cell></row><row><cell>value is 1.4</cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>0146-9592/23/195113-04 Journal © 2023 Optica Publishing Group</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>Vol. 48, No. 19 / 1 October 2023 / Optics Letters</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgment. We would like to acknowledge the staff of the <rs type="institution">James Watt Nanofabrication Centre at the University of Glasgow</rs> for their help in fabricating the devices.</p><p>Disclosures. The authors declare no conflicts of interest.</p></div>
+			</div>
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Data availability. Data underlying the results presented in this paper are not publicly available at this time but may be obtained from the authors upon reasonable request.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">X</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">M</forename><surname>White</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">I</forename><surname>Shopova</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">D</forename><surname>Suter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sun</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.aca.2008.05.022</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Anal. Chim. Acta</title>
+		<imprint>
+			<biblScope unit="volume">620</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Fattal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">G</forename><surname>Beausoleil</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.16.004309</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page">4309</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>He</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/JOSAB.26.000511</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Opt. Soc. Am. B</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="page">511</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">I</forename><forename type="middle">S</forename><surname>Amiri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Ariannejad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Daud</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Yupapin</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.rinp.2018.05.004</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Results Phys</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">1578</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">E</forename><surname>Luan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Shoman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Ratner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">C</forename><surname>Cheung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chrostowski</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/s18103519</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">3519</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Y</forename><surname>Chao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">J</forename><surname>Guo</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JLT.2005.863333</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Lightwave Technol</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page">1395</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Dai</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OL.35.004229</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Lett</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page">4229</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">R</forename><surname>Kolli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Srinivasulu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Hegde</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Badrinarayana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Talabattula</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.ijleo.2016.11.212</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Optik</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page">1063</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Yun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chrostowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Jaeger</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.3696082</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Appl. Phys. Lett</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="page">121118</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">De</forename><surname>Vos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Bartolozzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Schacht</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bienstman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Baets</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.15.007610</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page">7610</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Talebifard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">A</forename><surname>Jaeger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Kwok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Ratner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Chrostowski</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/BOE.8.000500</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed. Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="page">500</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Claes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">G</forename><surname>Molera</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">De</forename><surname>Vos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Schacht</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Baets</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bienstman</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JPHOT.2009.2031596</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Photonics J</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page">197</biblScope>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">V</forename><surname>Mere</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Muthuganesan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Kar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Van Kruijsdijk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">K</forename><surname>Selvaraja</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JSEN.2020.2974502</idno>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Sens. J</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page">5970</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Achieve more with light</title>
+		<ptr target="http://www.lumerical.com" />
+		<imprint>
+			<date type="published" when="2019-11-14">14 November 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Ye</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Xiong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Marsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Hou</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/OE.483990</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Express</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page">20034</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Chang</surname></persName>
+		</author>
+		<idno type="DOI">10.1116/1.568515</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Vac. Sci. Technol</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">1271</biblScope>
+			<date type="published" when="1975">1975</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<idno type="DOI">10.1142/S0217984920503078</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Mod. Phys. Lett. B</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="page">2050307</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">F</forename><surname>Palmer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Williams</surname></persName>
+		</author>
+		<idno type="DOI">10.1364/JOSA.64.001107</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Opt. Soc. Am. B</title>
+		<imprint>
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page">1107</biblScope>
+			<date type="published" when="1974">1974</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">B</forename><surname>Shi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/s22176467</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sensors</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page">6467</biblScope>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Sang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/j.optcom.2021.127280</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Opt. Commun</title>
+		<imprint>
+			<biblScope unit="volume">499</biblScope>
+			<biblScope unit="page">127280</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

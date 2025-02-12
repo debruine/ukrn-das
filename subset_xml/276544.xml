@@ -1,0 +1,2178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">White-Box: On the Prediction of Collaborative Filtering Recommendation Systems&apos; Performance</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Iulia</forename><surname>Paun</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">School of Computing Science</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="institution" key="instit1">YASHAR MOSHFEGHI</orgName>
+								<orgName type="institution" key="instit2">NeuraSearch Laboratory University of Strathclyde</orgName>
+								<address>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">School of Computing Science</orgName>
+								<orgName type="institution">NIKOS NTARMOS</orgName>
+							</affiliation>
+							<affiliation key="aff3">
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<country key="GB">Scotland, UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">White-Box: On the Prediction of Collaborative Filtering Recommendation Systems&apos; Performance</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">D41B09F41362344857C074257BD8D24E</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-20T15:51+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Recommendation systems</term>
+					<term>efficiency evaluation</term>
+					<term>effectiveness evaluation</term>
+					<term>sampling-based time and memory prediction</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Collaborative Filtering recommendation algorithms (CF) are a popular solution to the information overload problem, aiding users in the item selection process. Relevant research has long focused on refining and improving these models to produce better (more effective) recommendations, and has converged on a methodology to predict their effectiveness on target datasets by evaluating them on random samples of the latter. However, predicting the efficiency of the solutions -especially with regards to their time-and resource-hungry training phase, whose requirements dwarf those of the prediction/recommendation phase -has received little to no attention in the literature. This paper addresses this gap for a number of representative and highly popular CF models, including algorithms based on matrix factorisation, k-nearest neighbours, co-clustering, and slope one schemes. To this end, we first study the computational complexity of the training phase of said CF models and derive time and space complexity equations. Then, using characteristics of the input and the aforementioned equations, we contribute a methodology for predicting the processing time and memory usage of their training phase. Our contributions further include an adaptive sampling strategy, to address the trade-off between resource usage costs and prediction accuracy, and a framework which quantifies both the efficiency and effectiveness of CF. Finally, a systematic experimental evaluation demonstrates that our method outperforms state-of-the-art regression schemes by a considerable margin, with an overhead that is a small fraction of the overall requirements of CF training.</p><p>CCS Concepts: • Information systems → Recommender systems; Evaluation of retrieval results.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Recommendation systems have been extensively used to aid users in the item selection process by producing tailored content in line with the users' tastes and needs <ref type="bibr" target="#b66">[66]</ref>. This, in turn, has also impacted the way providers deliver content to the users, as they need to strike a balance between revenue maximisation and the users' satisfaction <ref type="bibr" target="#b7">[7]</ref>. An important class of recommendation systems are Collaborative Filtering-based recommendation systems (CF), which recommend items to a user based on similar users' preferences. CF models can rely on explicit feedback datasets, where the users' tastes are captured through ratings given by users to items (e.g., the ratings could be in the range of 1 to 5, where a higher rating value indicates that the user enjoyed the item), or on implicit data (e.g., users interacting with items -watching a movie, reading an article, etc.without providing explicit feedback).</p><p>One of the challenges in building CF engines is the selection of the algorithms to be used. While there is a growing body of literature that focuses on developing novel and better algorithms for attaining users' satisfaction <ref type="bibr" target="#b54">[54,</ref><ref type="bibr" target="#b84">84]</ref> and producing accurate recommendations <ref type="bibr" target="#b69">[69,</ref><ref type="bibr" target="#b86">86]</ref>, less attention and efforts have been allocated for studying the prediction of the efficiency and resource consumption of CF models, particularly during their highly expensive training phase. Focusing only on the nominal accuracy of the CF algorithms is a fallacy, as there is an inherent trade-off between the efficiency of the system (training phase resource consumption) and the effectiveness (accuracy) of the recommendations <ref type="bibr" target="#b63">[63,</ref><ref type="bibr" target="#b64">64]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">Motivation</head><p>It is often the case that a one-CF-model-fits-all solution becomes unfeasible due to the dynamic relationship between users and items, and the rate at which new algorithms are proposed in the literature. At the same time, the models need to be periodically retrained to capture the latest user preferences and needs <ref type="bibr" target="#b7">[7]</ref>. Companies then have to decide whether and when to retrain their CF models, since the training time and memory usage are often quite high (surely several orders of magnitude higher than the time it takes to produce a recommendation given a trained CF <ref type="bibr" target="#b7">[7,</ref><ref type="bibr" target="#b74">74]</ref>), while high training times/resource utilisation also translate to expensive energy and monetary costs for the content providers <ref type="bibr" target="#b74">[74]</ref>, and even raise concerns for damage to the environment as a result of increased amounts of CO 2 emissions <ref type="bibr" target="#b76">[76]</ref>. These problems are further exacerbated by the ongoing data generation growth, identified by a recent study released by Amazon <ref type="bibr" target="#b74">[74]</ref> as one of the key factors which impact the scalability of CF algorithms.</p><p>From the point of view of effectiveness, the problem of choosing a model is routinely addressed by drawing random samples from the target dataset, training and evaluating the candidate models on these samples, then using the resulting effectiveness figures as proxies for the effectiveness of the model on the complete dataset <ref type="bibr">[1,</ref><ref type="bibr" target="#b18">18,</ref><ref type="bibr" target="#b24">24]</ref>. Throughout the paper, we will refer to this approach as the black-box performance evaluation. It is often the case that a model with higher time/space complexity requires higher training time and also a higher rate at which the latter increases as a function of the size of the input. This makes the above sampling-based approach quite appealing, as the loss in accuracy is more than offset by the gain in processing time. However, extending it to the prediction of efficiency (training time, memory usage, etc.) over the complete dataset is far from straightforward. On one hand, the sampling strategies typically used in the relevant literature fail to capture the characteristics of the input that define the model's efficiency <ref type="bibr">[1,</ref><ref type="bibr" target="#b18">18,</ref><ref type="bibr" target="#b24">24]</ref> (see also §3.4). On the other hand, the very processing time/resource consumption scaling characteristics that make this approach appealing, also make efficiency prediction challenging; one can no longer just use the resulting efficiency figures as proxies for the complete dataset but rather needs to build a regression model to predict these quantities. To this end, we propose developing regression models ( §3.3) that try to quantify the constant factors hidden by the time and space complexity analysis of CF algorithms. We call this methodology the White-Box<ref type="foot" target="#foot_0">1</ref> approach, as opposed to the blackbox technique described above. Finally, we revisit the sampling strategies used for effectiveness prediction purposes, and propose a scheme whose output can be used to offer accurate predictions for both effectiveness and efficiency purposes.</p><p>Predicting and modelling resource utilisation has always been a popular topic due to the evergrowing data and the challenges associated with it (e.g., availability, security, consistency, etc.) <ref type="bibr" target="#b58">[58]</ref>. Over the years, different research communities have been working towards building and optimising more efficient models to save energy <ref type="bibr" target="#b13">[13,</ref><ref type="bibr" target="#b43">43]</ref>, and minimise resource consumption <ref type="bibr" target="#b26">[26,</ref><ref type="bibr" target="#b87">87]</ref>. On this note, we channel our attention towards evaluating and predicting the CF models' resource consumption, a topic that the literature has largely overlooked. Our work could be used by users (e.g., companies that use and deploy CF engines) to allow for better planning of resources, such as CPU and memory, to be provisioned for their applications in local clusters/data centres. This, in turn, could be potentially extended to cloud-based providers, in the same vein as <ref type="bibr" target="#b50">[50]</ref>, where a simple model can determine the optimal instance configuration based on the the workload, hardware, and cost, to map the requested resources to physical resources better, maximising the number of users who can use their services concurrently. Moreover, modelling the highly resourceand time-consuming training stage of CF models is beneficial for both the research community and industry, since these CF algorithms are frequently utilised in recommendation engines <ref type="bibr" target="#b81">[81]</ref> and evaluation studies <ref type="bibr" target="#b17">[17,</ref><ref type="bibr" target="#b18">18]</ref> <ref type="foot" target="#foot_1">2</ref> . Consequently, we formalise the research problem addressed in this work, as described in the following paragraphs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">Problem Formulation</head><p>As discussed in previous section, the aim of this work is to estimate resource consumption, alongside recommendations' quality, for CF models using a white-box approach. In particular, determining when a CF algorithm could have an expensive training time or memory usage is an essential challenge, leading us to our problem formulation: given a CF algorithm A in the families of algorithms considered in this work, and an input dataset B, predict the time and memory required to train algorithm A on B. This problem fits within system resource tracking and management topic, which has been broadly studied in the context of computational performance <ref type="bibr" target="#b65">[65,</ref><ref type="bibr" target="#b77">77]</ref>.</p><p>Our goal is to produce a framework and methodology, which allows the accurate prediction of the processing time and memory usage during the training phase of CF models, based on measurements acquired on samples of the input dataset. To this end, we focus on well-known CF algorithms including singular value decomposition, k-nearest neighbours, slope-one schemes, matrix factorisation, etc. <ref type="bibr" target="#b45">[45]</ref>. In our study, we included all CF models implemented in the Surprise framework <ref type="bibr" target="#b45">[45]</ref> covering a wide area of the design space. The selection criterion for these CF was based on their popularity and frequency in recent and related benchmarking works, such as <ref type="bibr" target="#b17">[17]</ref><ref type="bibr" target="#b18">[18]</ref><ref type="bibr" target="#b19">[19]</ref><ref type="bibr" target="#b24">24]</ref>. Furthermore, we propose using the time and space complexity analysis of these CF algorithms combined with curve fitting primitives as a reliable solution towards the accurate prediction of their training times and memory usage. Then, we sample the input (i.e., the user-item rating matrix -URM) and extract characteristics of each sample (e.g., number of users/items/ratings, density of the rating matrix, etc.). As part of the sampling process, we investigate what sampling strategies could be used to make the resource utilisation prediction problem viable (i.e., how many samples are enough for accurate predictions of processing time or memory usage versus the processing cost of training a given algorithm on those samples). To this end, we formulate the following central research question: RQ: Given the processing times and memory usage of a CF algorithm on a subset of the data, how can we quantify its expected time/memory consumption for the full dataset?</p><p>As part of the central RQ, we have examined the following secondary RQs: (a) How can we use complexity analysis to estimate the resource consumption of a CF algorithm? (b) Can the efficiency of a CF model on the full dataset be predicted using solely characteristics of the input (i.e., URM) and the efficiency of the CF model on a set of samples? (c) Given an upper sample size S%, how do we determine when to stop sampling based on the number of samples for which we obtain consistent resource usage measurements (i.e., the time/memory values are in a tight interval)? (d) How should we sample the base data, such that the quality of the predicted efficiency/effectiveness of a CF model is not harmed?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3">Contributions</head><p>As discussed in the next section, a large body of literature investigated the effectiveness of the CF, including how the quality (i.e., precision, recall, accuracy) of the recommendations changes with respect to different dataset characteristics <ref type="bibr" target="#b15">[15,</ref><ref type="bibr" target="#b24">24,</ref><ref type="bibr" target="#b44">44]</ref>. Therefore, this does not fall within the main scope of our work, but we refer to the relevant literature <ref type="bibr" target="#b14">[14,</ref><ref type="bibr" target="#b22">22,</ref><ref type="bibr" target="#b42">42,</ref><ref type="bibr" target="#b70">70,</ref><ref type="bibr" target="#b78">78,</ref><ref type="bibr" target="#b80">80,</ref><ref type="bibr" target="#b83">83]</ref> and benchmarks <ref type="bibr" target="#b45">[45]</ref> for comparing the selected CF algorithms regarding their accuracy in recommendation tasks. However, to demonstrate the flexibility of our sampling strategy ( §3.4) for both efficiency (e.g., training processing time and memory) and effectiveness estimation, we also incorporate in our framework a component that predicts the quality of the recommendations based on the characteristics of the input ( §4.5).</p><p>To the best of our knowledge, this is the first study that explores the CF algorithms' efficiency performance, addressing the processing time and memory estimation problem through an adaptive sampling-based strategy and different curve-fitting approaches. Our efforts led to the following contributions:</p><p>C1: An adaptive sampling strategy that dynamically draws samples to jointly satisfy a userdefined accuracy/error threshold and/or a predefined resource constraint (e.g., maximum time quota); C2: A methodology that assesses the efficiency of a CF algorithm through training processing time and memory cost models based on its computational complexity; C3: A tool and framework that predicts the training processing time and memory usage, and effectiveness of the CF algorithms through sampling-based probabilistic analysis and characteristics of the input; C4: An extensive experimental evaluation, comparing our framework above against state-of-theart regression models.</p><p>Finally, although in this work we have focused on applying the above on CF models, we believe that the proposed methodology and prediction tools are flexible enough to also be applicable to other algorithms and use cases; exploring such directions is outside the scope of this work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">BACKGROUND AND RELATED WORK</head><p>CF evaluation is a major area of interest, as numerous studies and projects tried to determine the best metrics and practices in this field. So far, both efficiency and effectiveness have been established as the critical areas towards assessing the CF performance <ref type="bibr" target="#b39">[39]</ref>. While there are still ongoing debates about online versus offline evaluation <ref type="bibr" target="#b35">[35,</ref><ref type="bibr" target="#b39">39]</ref>, it is notably harder (if not impossible) to reproduce online studies. Consequently, offline assessment has been used as a primary tool for establishing the overall performance of a CF and gaining insights into its behaviour under certain constraints and limitations <ref type="bibr" target="#b35">[35,</ref><ref type="bibr" target="#b39">39]</ref>. Traditionally, the evaluation of the CF focuses on splitting the dataset/input into training and testing collections, which are then used to assess the output of the CF model. The limitation of this approach is that often sparsity and popularity biases affect the evaluation protocol <ref type="bibr" target="#b9">[9]</ref>. This issue can be alleviated using "random" sampling. Random sampling techniques have been intensively used in the past decades in various contexts and applications. For example, in databases, the size of the results for a given query was predicted using random sampling <ref type="bibr" target="#b36">[36,</ref><ref type="bibr" target="#b40">40,</ref><ref type="bibr" target="#b55">55]</ref>. Other works focused on computing the optimal bound for the number of samples needed for satisfying a predefined error metric <ref type="bibr" target="#b4">[4,</ref><ref type="bibr" target="#b21">21,</ref><ref type="bibr" target="#b33">33]</ref>. Furthermore, efficient sampling techniques have been developed to address the limited computational resources availability for analysing large datasets <ref type="bibr" target="#b59">[59]</ref>. All these efforts have contributed towards better ways of drawing samples, which is critical for predicting a chosen quantity since the number of samples and their distribution impacts the accuracy of the predictions <ref type="bibr" target="#b62">[62]</ref>.</p><p>One of the drawbacks of CF evaluation is that the studies only report the quality of the recommendations through effectiveness metrics <ref type="bibr" target="#b35">[35,</ref><ref type="bibr" target="#b39">39]</ref>. However, recent work <ref type="bibr" target="#b56">[56]</ref> also presents some insights into the observed efficiency (processing time) of the models. Thus, and in the context of environmental awareness <ref type="bibr" target="#b76">[76]</ref>, we speculate that as more complex models will be developed, the community will move their attention and efforts to (a) report the (resource) cost of new models, and (b) incorporate ways of minimising the hardware usage. This is yet another reason why it is essential to be able to predict the efficiency cost of CF by performing the training of the models on only small samples of the target datasets.</p><p>Recent interest has been shown towards investigating how dataset characteristics (e.g., number of users, items, ratings density/sparsity) affect the quality of the recommendations and their impact on the CF effectiveness. In <ref type="bibr">[1,</ref><ref type="bibr" target="#b24">24]</ref>, the authors explore the effect of the structural properties of the user-item rating matrices regarding the accuracy and robustness of the CF algorithms used in the studies. Their results confirm a relationship between dataset characteristics and the CF models' behaviour and highlight the standard practice of using samples to evaluate the effectiveness of CF while alleviating the high processing costs of testing on the complete dataset. In <ref type="bibr" target="#b63">[63]</ref>, we argued that properties of the input data further affect the inherent trade-off between the efficiency and effectiveness of a CF and that the choice of the algorithm should be based on the latter as well.</p><p>Lately, CF have also been evaluated with respect to their accuracy using sampling-based probabilistic analysis methods <ref type="bibr" target="#b17">[17,</ref><ref type="bibr" target="#b18">18]</ref>. To this end, the standard practice consists of training the selected CF on a sample of the dataset and using its offline measured accuracy as a proxy for the effectiveness over the complete dataset <ref type="bibr" target="#b24">[24]</ref>. This approach could also be extended to quantify the efficiency of these CF algorithms as discussed in <ref type="bibr" target="#b63">[63,</ref><ref type="bibr" target="#b64">64]</ref>. However, several challenges are associated with sampling for efficiency and effectiveness prediction, as demonstrated in the experimental evaluation ( §4.5). Thus, we argue that this is a combination of two factors: (a) the samples produced by the standard practice sampling strategies usually employed for effectiveness purposes do not lend themselves well to efficiency predictions; and (b) due to the inherent (often) non-linear scaling of computational requirements over the dataset size. This work aims to address these gaps, and the resource consumption prediction problem, for a set of highly popular and impactful CF models.</p><p>In the past decades, algorithms' processing time prediction problem has been extensively studied across different communities with numerous results. For example, in parallel computing, linear regression models have been used to predict the processing time of different library implementations for multiprocessors <ref type="bibr" target="#b11">[11]</ref>. Other works focused on predicting the runtime of various planning algorithms, for selecting which algorithm to run and for how long <ref type="bibr" target="#b28">[28,</ref><ref type="bibr" target="#b41">41,</ref><ref type="bibr" target="#b68">68]</ref>. Predicting the processing time of parameterised algorithms has drawn high interest from the research community, with existing solutions incorporating the parameters as additional inputs for the prediction models <ref type="bibr" target="#b6">[6,</ref><ref type="bibr" target="#b67">67]</ref>. Another area explored consists of runtime prediction applications, such as determining instance hardness <ref type="bibr" target="#b52">[52]</ref> and parameter optimisation/tuning <ref type="bibr" target="#b67">[67]</ref>. Additionally, in Database Management Systems (DBMS), in the past 15 years, the number of potential database designs (e.g. indexes, table partitions) and configurations (i.e., knobs to turn and fine-tune) has grown by 3× for Postgres and by nearly 6× for MySQL <ref type="bibr" target="#b82">[82]</ref> making the Database Administrators' (DBAs) job very challenging. The main issues with configuration knobs are that there is a large number of parameters that have to be optimised and they control many aspects of the database system (e.g., disk I/O, memory, etc) <ref type="bibr" target="#b82">[82]</ref>. To this end, existing solutions <ref type="bibr" target="#b82">[82]</ref> focus on auto-tuning these knobs and suggest configuration plans that are better than those derived by human experts. To further optimise DBMS, other works <ref type="bibr" target="#b48">[48,</ref><ref type="bibr" target="#b53">53]</ref> focus on computing cost models for estimating the resource consumption of processing different types of queries. We believe the same scenarios apply to CF, as there are numerous algorithms which can be used, and each one has different configurations and parameters to optimise/tune, resource usage costs, and accuracy rates as showcased in our experimental evaluation. Therefore, the problem of quantifying the performance of CF models w.r.t. both resource consumption and effectiveness becomes more interesting.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">THE WHITE-BOX APPROACH</head><p>When faced with the task of predicting the effectiveness of a CF on a dataset, based on its behaviour on a sample of that dataset, the standard practice consists of building a regression model over data points gathered through iteratively: (i) randomly sampling over all ratings in the dataset, (ii) training the CF over the sample, (iii) evaluating its effectiveness over the sample <ref type="bibr" target="#b24">[24]</ref>. We follow a similar strategy with a few notable changes summarised in figure <ref type="figure" target="#fig_0">1</ref>. The proposed pipeline covers the steps that our users need to follow to estimate the processing time and memory usage for training a CF algorithm on a chosen dataset. In the following subsections, we discuss each of the steps in more depth, and show how using the expected complexity of a CF algorithm, samples of the data, and a simple regression model, can lead to fast, accurate and interpretable predictions of the efficiency and effectiveness of the CF model. Given the the input data (user-item rating matrix -URM), we: (step 1a) extract features such as the number of users, items, ratings, the density of the matrix, etc.; and (step 1b) sample the URM following the strategy described in §3.4. In step 2 we train the various classes of CF models ( §3.2) on the samples drawn, while (step 3) gathering efficiency metrics, such as processing time and memory overhead, and effectiveness metrics for the quality of the recommendations (i.e., RMSE for the predicted rating values). In steps 4a and 4b, we train our proposed prediction models, detailed in §3.3, given the recorded metrics, then learn and predict the efficiency (processing time, memory) and effectiveness (RMSE) of the CF on the full dataset. This process (steps 2-4) is repeated until the user-defined termination condition (prediction accuracy, time budget, etc.) is met (step 5).</p><p>At the core of our method is the idea that if we understand the computational complexity of each CF algorithm (captured using big-O time and space complexity analysis), we can predict its efficiency (i.e., processing time and memory usage). Throughout the paper, we refer to time complexity as the processing time taken by an algorithm to train on a particular input. Similarly, we name space complexity the memory usage incurred when a CF model is trained on an input. For all the CF analysed, we define the characteristics (1 step 1a) of their input (i.e., the user-item rating matrix -URM), with respect to the number of users, m, the number of items, n, the total number of ratings, 𝝆, and the density of the rating matrix, 𝜹 (= 𝜌 𝑚×𝑛 ).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Algorithms</head><p>A CF algorithm is considered explicit if its input is based on fixed ratings (usually from 1 to 5) emerging from scores awarded by users to items. In this work, we analyse the following CF categories:</p><p>(i) Basic algorithms; chosen representatives include a Baseline algorithm derived from <ref type="bibr" target="#b46">[46]</ref>, as well as a Maximum Likelihood Estimation based Random approach <ref type="bibr" target="#b61">[61]</ref>. (ii) Algorithms based on K-nearest neighbours; chosen representatives include Basic KNN (KNN) <ref type="bibr" target="#b38">[38]</ref>, KNN taking into account the mean rating of each user (Centred KNN) <ref type="bibr" target="#b25">[25]</ref>, and KNN taking into account a baseline rating (KNN Baseline) (formula (3), section 2.2 in <ref type="bibr" target="#b46">[46]</ref>).</p><p>The former two use Mean Squared Difference (MSD) <ref type="bibr" target="#b16">[16]</ref> as the distance metric, while the latter uses Pearson correlation coefficients <ref type="bibr" target="#b38">[38]</ref> centred using baseline scores. (iii) Variants of matrix factorisation (MF); chosen algorithms include Non-negative Matrix Factorisation (NMF) <ref type="bibr" target="#b57">[57]</ref> and Singular Value Decomposition (SVD) derived from <ref type="bibr" target="#b66">[66]</ref>. (iv) Slope-based algorithms; chosen representatives include the Slope One scheme <ref type="bibr" target="#b51">[51]</ref>. (v) Co-clustering approaches; chosen representatives include the algorithm presented in <ref type="bibr" target="#b32">[32]</ref>.</p><p>For further details on these algorithms and their implementation, we refer interested readers to the documentation of the popular Surprise framework <ref type="bibr" target="#b45">[45]</ref>, which was also used for our experiments. Surprise is a Python-based CF engine that allows users to build and test CF algorithms, which work on explicit feedback datasets. This framework allows researchers to quickly set up their experimental evaluations, provides complete control over the experiments, and contains various tool and metrics to assess the CFs' performance. Surprise also allows users to experiment with built-in datasets (e.g., Movielens <ref type="bibr" target="#b37">[37]</ref>), but also to incorporate their bespoke collections. Surprise engine comprises many ready-to-use traditional CF models, described in the previous paragraph, for solving the rating prediction problem <ref type="bibr" target="#b1">[2]</ref>, and is frequently used as a benchmark in the research community <ref type="bibr" target="#b85">[85]</ref>. Our methodology naturally extends to implicit CF algorithms, which rely on inferring users' preferences based on their interactions with the items, such as which pages they visited and for how long, where they clicked, etc.; we omit discussing them in this work due to space constraints.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Complexity Analysis</head><p>Traditionally, the performance of an algorithm is captured through asymptotic worst-case complexity equations using big-O notation <ref type="bibr" target="#b23">[23]</ref>. This method allows us to determine an upper bound to the way an algorithm's processing time grows or declines as a function of characteristics of its input. The CF models studied in this work are based on well-known algorithms, for which big-O analysis has been provided by the relevant literature <ref type="bibr" target="#b14">[14,</ref><ref type="bibr" target="#b22">22,</ref><ref type="bibr" target="#b42">42,</ref><ref type="bibr" target="#b70">70,</ref><ref type="bibr" target="#b78">78,</ref><ref type="bibr" target="#b80">80,</ref><ref type="bibr" target="#b83">83]</ref>. However, it is often the case that design decisions may make the complexity characteristics of particular implementations to diverge from the theoretical bounds -a fact often hidden behind constant factors or terms ignored during big-O analysis <ref type="bibr" target="#b3">[3]</ref>. We thus further formulate and propose time and space complexity equations based on the actual implementation of said CF models. In the following paragraphs, we list the algorithmic complexities based on (a) literature <ref type="bibr" target="#b14">[14,</ref><ref type="bibr" target="#b22">22,</ref><ref type="bibr" target="#b42">42,</ref><ref type="bibr" target="#b70">70,</ref><ref type="bibr" target="#b78">78,</ref><ref type="bibr" target="#b80">80,</ref><ref type="bibr" target="#b83">83]</ref> and (b) implementation. For the latter, we used Surprise's <ref type="bibr" target="#b45">[45]</ref> documentation and implementation, and derived the expected time and space complexity of CF models captured through big-O notation and the characteristics of the input outlined in §3. For the purpose of our approach, the number f of latent factors as well as the number e of epochs, where applicable, are considered constants set to the predefined/recommended values by <ref type="bibr" target="#b45">[45]</ref>.</p><p>The baseline CF is based on the ALS (Alternating Least Squares) algorithm, the naive solver <ref type="foot" target="#foot_2">3</ref>version, which has a complexity of 𝑂 ( mnf). If we further fix f to a default/recommended number, the complexity can be further abstracted to 𝑶 (mn) <ref type="bibr" target="#b42">[42]</ref>. However, by examining the implementation of the baseline CF algorithm, for a given number of epochs e, firstly the users' baseline is computed in m 2 steps, followed by the items' baseline which takes n 2 operations. If we fix e to a predefined/recommended value, baseline's overall time complexity is 𝑶 (m 2 + n 2 ). For memory usage, apart from the size of the URM, which in all cases takes 𝑶 (𝝆) of memory, the baseline algorithm stores the users', items' resp., baseline in an array of size 𝑶 (m), 𝑶 (n) resp.; since, both baselines are used by this CF, the overall space complexity is 𝑶 (m + n).</p><p>The random algorithm, based on Maximum Likelihood Estimation (MLE), predicts the missing ratings over a normal distribution, computed in maximum 𝑶 (mn) steps <ref type="bibr" target="#b80">[80]</ref>. The implementation reveals that the random CF computes a global mean and standard deviation during its training phase. These are typically done in two stages (first, compute the mean, then the standard deviation), each of which scans over all rating values. As such, the algorithm's time complexity is in 𝑶 (𝝆). The random CF does not require additional memory during its training phase as there are no auxiliary data structures that need to be allocated for the computing of the mean and standard deviation. Therefore, its space complexity matches the size of the URM, namely 𝑶 (𝝆).</p><p>For the neighbourhood based CF algorithms (i.e., KNN, centred KNN, and KNN baseline), the training phase computes the distance of every user to every other user (or every item to every other item, depending on whether the approach is user-or item-centric), taking into account only the items (users, respectively) that are common across users (items, respectively). This leads to a complexity of 𝑶 (m 2 n 2 ) <ref type="bibr" target="#b83">[83,</ref><ref type="bibr" target="#b89">89]</ref>. However, at the implementation level, for KNN we derived a time complexity of 𝑶 ( 𝝆 2</p><p>x + x 2 ), where 𝒙 can be either m for user-based KNN, or n, for item-based KNN, respectively. At the core of the KNN-based CF, the similarity function computes the distance across the relevant users or items with respect to (a) the ratings they gave (for users) and (b) the rated items. By investigating the rating frequency distribution of all datasets outlined in section §4.1, we concluded that the number of per-user and/or per-item ratings follows a uniform distribution (i.e., 𝜌 m ratings per user, or 𝜌 n ratings per items). We thus make the following simplifying assumption: in the similarity function, the distances are computed in x × 𝜌 2</p><p>x 2 , which can be simplified to</p><formula xml:id="formula_0">𝜌 2 x .</formula><p>Then, the distance is computed for pairs of common users/items in x 2 time (m 2 for users or n 2 for items, respectively). Centred KNN has a similar complexity to KNN, as they use the same similarity metric (MSD), but takes an extra (𝝆) step to compute the mean ratings of each user (item, respectively), which brings the overall time complexity to 𝑶 ( 𝝆 2</p><p>x + x 2 + 𝝆). KNN Baseline is also based on KNN, and computes distances across users (items, respectively) using Pearson correlation coefficients <ref type="bibr" target="#b38">[38]</ref>, and takes into account baseline ratings. It's overall time complexity, as derived from its implementation, is the same as the one for Centred KNN -i.e., 𝑶 (</p><formula xml:id="formula_1">𝝆 2 x + x 2 + 𝝆).</formula><p>To compute the distances and similarities between pairs of users, items resp., the KNN-based CF utilise additional matrices of size 𝑶 (m 2 ), 𝑶 (n 2 ) resp. Therefore, the memory usage for KNNs during training is 𝑶 (m 2 ) or 𝑶 (n 2 ) depending on whether distances/similarities are computed across users or across items.</p><p>The NMF model is based on the SGD algorithm, which achieves a computational complexity of 𝑂 ( em𝜌) <ref type="bibr" target="#b70">[70]</ref>. If we fix the number of epochs, the complexity can be reduced to 𝑶 (m𝝆). In the Surprise framework <ref type="bibr" target="#b45">[45]</ref>, for a fixed number of epochs and factors, NMF decomposes a given user-item ratings matrix, with respect to the number of users (m), items (n), and ratings (𝜌). Therefore, the missing ratings are computed in 𝑶 (𝝆 + m + n) (or 𝑶 (ef(𝝆 + m + n)), including the number of epochs, e, and factors, f). The implementation also reveals that during training additional memory is allocated for two matrices, one for the user latent factors, which takes 𝑶 (mf) of memory, and the other one for item latent factors, which is stored in 𝑶 (nf). This brings NMF's overall memory usage to 𝑶 (mf + nf).</p><p>SVD, a popular CF-based approach, has been intensively used to produce recommendations on explicit datasets. Over time, multiple variations of SVD have developed <ref type="bibr" target="#b22">[22]</ref>, leading to a significant number of implementations. However, most of them converge to a complexity of 𝑶 (mn 2 ), even though other studies, such as <ref type="bibr" target="#b47">[47]</ref>, claim that the overall complexity of SVD is close to 𝑂 ( n 2 m + m 2 n). The SVD's implementation found in Surprise <ref type="bibr" target="#b45">[45]</ref> uses the user-item ratings matrix in 𝑶 (e𝝆f) time to factorise the corresponding user and item factors. SVD's time complexity can be simplified to 𝑶 (𝝆) for a fixed number of epochs (e) and factors (f). For memory requirements, during training, SVD follows similar storage requirements as NMF, having a space complexity of 𝑶 (mf + nf).</p><p>For slope-based solutions, the Slope One algorithm has a generic time complexity of 𝑶 (mn 2 ), as it computes the average difference between pairs of relevant items as described in <ref type="bibr" target="#b78">[78]</ref>. At implementation level, Slope One firstly computes the frequency of the pairs of items (i, j), followed by the deviation between item i's ratings and item j's ratings. This is achieved in 𝑂 (</p><formula xml:id="formula_2">𝜌 2 m + n 2 ).</formula><p>Then, the relevant ratings are predicted using the users' mean ratings combined with the aforementioned frequency and deviation arrays, which means another 𝑂 (𝜌), leading to an overall time complexity of 𝑶 ( 𝝆 2 m + n 2 + 𝝆). For memory requirements, during training, Slope One allocates two additional matrices to compute the frequency and deviation between pairs of items across the dataset. Consequently, the expected memory usage is 𝑶 (n 2 ).</p><p>Lastly, the Co-clustering CF with a fixed number of user-item clusters converges towards a computation complexity of 𝑶 (mn) <ref type="bibr" target="#b14">[14]</ref>. By examining its implementation, Co-clustering splits users and items into clusters in 𝑂 ( m) + 𝑂 ( n) and co-clusters in 𝑂 (𝜌) steps, using an assignment technique similar to K-means. This makes Co-clustering train in 𝑶 (m + n + 𝝆) time. During training, the Co-clustering CF computes the users and items mean across the entire collection and stores them in arrays of size 𝑶 (m), 𝑶 (n) resp. Then, users and items clusters and co-clusters are built, which require another 𝑶 (m), 𝑶 (n), and 𝑶 (mn) resp. of memory. This brings the overall space complexity to 𝑶 (m + n + mn).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Prediction Models</head><p>Knowing the worst-case (big-O) complexity can help determine the upper bound on the number of resources used by an algorithm while being executed against all possible inputs <ref type="bibr" target="#b23">[23]</ref>. However, in practice, the likelihood of encountering inputs that elicit the worst-case processing time of an algorithm is relatively low <ref type="bibr" target="#b23">[23]</ref>. Therefore, the computational complexity theory has devised the average-case complexity to measure the efficiency of an algorithm through its expected processing time/memory averaged over all inputs. Computing average-case complexity is often a hard problem since the distribution of all possible inputs is required to derive theoretical bounds analytically. Instead, our methodology is based on approximating probabilistic analysis, through an adaptive sampling strategy (1 step 1b), which predicts the expected processing time/memory of a given CF algorithm over an input/dataset. We employ this strategy for determining both the processing time and memory usage requirements.</p><p>Using the above algorithmic complexities, the processing times and memory usage measured across different inputs (1 step 3), and the characteristics of the data, we propose building the following types of models for time/memory prediction. Our approach is based on estimating the hidden factors (or unknown parameters) in the time and space complexity equations derived from the algorithms' implementations, mentioned in §3.2. Given that the processing time/memory estimation is based on an overdetermined system, with more sets of equations than unknowns, we constructed our models based on the least squares approach <ref type="bibr" target="#b10">[10]</ref>. This technique is based on minimising the sum of the squares of the residuals (i.e., the difference between the observed/measured processing times/memory usage and the predicted/fitted values) computed in the equations.</p><p>3.3.1 Linear Models. Since for each sample of the input we know the fixed number of users, items, and ratings, we encapsulate the performance (i.e., processing time and memory) of the CF algorithms through complexity equations summarised as follows:</p><formula xml:id="formula_3">𝑝𝑒𝑟 𝑓 𝑜𝑟𝑚𝑎𝑛𝑐𝑒 = 𝑓 (𝑋 ) = 𝛼𝑋 + 𝛽 (<label>1</label></formula><formula xml:id="formula_4">)</formula><p>where 𝑋 is a combination of the independent variables 𝑚, 𝑛, and 𝜌, while 𝛼 and 𝛽 are the slope and intercept that were computed using linear least-squares regression. For example, the equation for computing processing time for baseline becomes 𝛼 (𝑚 2 +𝑛 2 ) +𝛽, that of NMF becomes 𝛼 (𝜌 +𝑚 +𝑛) +𝛽, etc. Similarly, for predicting memory usage of SVD, we compute 𝛼 and 𝛽 using 𝛼 (𝑚𝑓 + 𝑛𝑓 ) + 𝛽. This approach allows us to quickly compute the hidden factors of the complexity equations, while capturing the characteristics of the URM, as evidenced by our experiments. Additionally, we also compute the prediction error interval <ref type="bibr" target="#b27">[27,</ref><ref type="bibr" target="#b60">60]</ref>, which quantifies the uncertainty of our predicted time and memory usage. This allows us to provide upper and lower bounds on the estimates at each sample size. Furthermore, we compute these intervals using a combination of the variance of the outcome variable (i.e., time, memory) and the estimated variance of the model<ref type="foot" target="#foot_3">4</ref>  <ref type="bibr" target="#b27">[27,</ref><ref type="bibr" target="#b73">73]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.2">Bayesian Models.</head><p>Another approach that we explored was to estimate the performance of the CF algorithms using a Bayesian inference <ref type="bibr" target="#b20">[20]</ref>. In this setup, our aim is still to compute the hidden coefficients of the complexity equations from §3.2, but using probability distributions rather than point estimates. Therefore, our predicted variable (i.e., processing time, memory) will be drawn from a probability distribution. To this end, we infer the performance of the CF using a normal (Gaussian) distribution <ref type="bibr" target="#b20">[20]</ref>, characterised by mean and variance, as seen below:</p><formula xml:id="formula_5">𝑝𝑒𝑟 𝑓 𝑜𝑟𝑚𝑎𝑛𝑐𝑒 ∼ N(𝛼𝑋 + 𝛽, 𝜎 2 )<label>(2)</label></formula><p>where 𝛼, 𝛽, 𝜎 2 are also coming from distributions. Since 𝜎 2 will always be a positive number, we chose a prior distribution, which yields only positive values, such as the Exponential distribution <ref type="bibr" target="#b20">[20]</ref>, where 𝜎 2 ∼ 𝐸𝑥𝑝 (1). For 𝛼 and 𝛽 coefficients, we used normal (Gaussian) distributions and restricted the parameter space using priors learnt with the previous linear regression models <ref type="bibr" target="#b31">[31]</ref>. In Bayesian inference, the main goal is to use sampling methods to draw samples from the posterior to approximate the posterior <ref type="bibr" target="#b20">[20]</ref>. According to the standard practice <ref type="bibr" target="#b20">[20,</ref><ref type="bibr" target="#b31">31]</ref>, we can use Monte Carlo methods <ref type="bibr" target="#b71">[71]</ref> to draw random samples from a distribution to approximate the said distribution.</p><p>While there are several ways to perform Monte Carlo sampling, the most common and currently used <ref type="bibr" target="#b20">[20,</ref><ref type="bibr" target="#b31">31]</ref> is Markov Chain Monte Carlo (MCMC) sampling <ref type="bibr" target="#b12">[12]</ref> <ref type="foot" target="#foot_4">5</ref> . One of the challenges of fitting the Bayesian models is to ensure that all parameters show convergence. This can be checked by computing the potential scale reduction ( R), which should always have a value below 1.1 <ref type="bibr" target="#b20">[20]</ref>. The rule of thumb is that convergence has been achieved when R is very close to 1.0 <ref type="bibr" target="#b31">[31]</ref>.</p><p>As with the linear regression models, for Bayesian regressors, we can compute the Monte Carlo Standard Error (MCSE), which is an estimate of the inaccuracy of Monte Carlo samples in MCMC algorithms <ref type="bibr" target="#b31">[31]</ref>. MCSE can be used to quantify the uncertainty of the predictions for processing time and memory usage in MCMC models by computing the standard deviation and variance around the posterior mean of the samples<ref type="foot" target="#foot_5">6</ref>  <ref type="bibr" target="#b31">[31,</ref><ref type="bibr" target="#b75">75]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.3">Baselines and Contenders</head><p>. We compare our proposed processing time and memory prediction models (white-box approach) against two types of baselines: (i) a hard baseline using linear regression to learn the hidden factors in the complexity equations described in the literature; and (ii) a soft baseline, which assumes that the complexity of the algorithms is unknown, and therefore the processing time and memory predictions will be computed using just the characteristics of the input (black-box method). The latter was tested using several off-the-shelf state-of-the-art regression algorithms available through the H2O analytics platform <ref type="foot" target="#foot_6">7</ref> . A few examples of the tested regressors include Random Forest, Deep Neural Net, Support Vector Machine (SVM), and Adaptive Boosting. In the experimental evaluation, we only report on the results of the best performer with regards to prediction accuracy (i.e., lowest RMSE), namely Gradient Boosting Machine (GBM) <ref type="bibr" target="#b30">[30]</ref>. GBM was ranked as the best state-of-the-art regression model since it acquired the lowest RMSE, following the K-fold cross-validation procedure described in <ref type="bibr" target="#b49">[49]</ref>.</p><p>In our experimental evaluation ( §4.5), we also predict the effectiveness (i.e., quality of the recommendations) of the CF given a sample of the input data and characteristics of the URM. To this end, we have employed state-of-the-art regressors, which include Gradient Boosting Machine (GBM) <ref type="bibr" target="#b30">[30]</ref>, AdaBoost Regressor (ABR) <ref type="bibr" target="#b29">[29]</ref>, and Support Vector Regressor (SVR) <ref type="bibr" target="#b5">[5]</ref>. These models were selected by running the H2O AutoML tool <ref type="bibr" target="#b49">[49]</ref> in a process similar to the one described in the previous paragraph. Since the effectiveness of the CF algorithms is a well-studied area <ref type="bibr">[1,</ref><ref type="bibr" target="#b8">8,</ref><ref type="bibr" target="#b24">24]</ref>, it is not within the main scope of this paper. However, as demonstrated in our results ( §4.5), by using our adaptive sampling technique ( §3.4), we do not need to employ different sampling strategies to draw samples for predicting efficiency and effectiveness. Consequently, using the sampler in one go, we gain information about the recommendations' quality and the performance and resources used while training the CF algorithms.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Adaptive Sampling</head><p>The standard practice of drawing samples for assessing the effectiveness of the recommendations involves choosing random triplets of the form (𝑢𝑠𝑒𝑟, 𝑖𝑡𝑒𝑚, 𝑟𝑎𝑡𝑖𝑛𝑔) from the input, and then filtering them based on a predefined characteristic of the URM (e.g., the density of the sample needs to be above/below a certain threshold) <ref type="bibr">[1,</ref><ref type="bibr" target="#b24">24]</ref>. However, this approach does not work well for drawing samples to predict the efficiency (i.e., processing time, memory) of the CF algorithms; see §4.3 for the related results. Instead, we propose a simple yet reliable sampling strategy, which provides good samples that can be used for predicting both the efficiency and effectiveness of the CF at the same time. It should be noted that drawing samples from a dataset is not for free, and therefore, we believe that it is essential to use a strategy that can be used not only to determine the accuracy of the recommendations, but also reflects the complexity characteristics of the input data.</p><p>When sampling the URM, we asked ourselves how many samples and how large should they be to get a representative measure of the CF algorithms' performance. To this end, we propose the following sampling strategy (figure 1 step 1b) described in algorithm 1. Initially, the user of our system provides us with an upper sample size -say 𝑆 (%) -as well as with a time budget 𝑇 for our method; however, if these are not provided or unknown the default values, as outlined in §4.3, will be used for sampling the URM. We then draw an initial sample by uniformly at random selecting a 𝑆% subset of the users and 𝑆% subset of the items, and including in the sample all associated ratings.</p><p>We then use a strategy similar to Monte Carlo rejection sampling <ref type="bibr" target="#b79">[79]</ref>, to recursively subsample to produce even smaller samples. This strategy has two key characteristics: (a) sub-sampling allows us to produce a number of samples at different sampling rates at a fraction of the cost of sampling the complete dataset; and (b) by sampling user/item IDs, the sample better reflects the complexity characteristics of the base data. For each sample drawn, we train the CF models and record its training time (figure 1 steps 2 and 3); we then decide whether to proceed with more samples given the so-far cumulative execution time of the above process and the time budget 𝑇 (1 step 5). Furthermore, the number of samples we draw using algorithm 1 should be dynamic and based on (a) a user-defined upper limit and (b) a user-defined accuracy/error threshold. Ideally, we would like to have a number of samples that provides good accuracy for the processing time and memory prediction models. However, we should not use too many samples, such that their total processing time would be larger than the training time of the entire dataset (see §4.5 for the related results).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Algorithm 1: Adaptive Sampling Algorithm</head><p>Input : Dataset D, Algorithm A, max sample size S, max time budget T, accuracy_threshold.</p><p>Output : The required samples and their stats. For sampling the URM using the proposed algorithm, the user-defined upper limit is captured through a maximum time budget 𝑇 and a maximum sample size 𝑆. As each sample is drawn, the remaining time budget and sample size are (re)calculated for each iteration through the adapt() function, which takes into account the previous time budget 𝑇 ′ and sample size 𝑆 ′ . The adapt() function gradually reduces the next sample size that will be drawn (e.g., in decrements of 10%) and the amount of time allocated for this operation, based on the time 𝑡 spent so far on drawing the current sample and the available time budget. The measurements are repeated multiple times for each (sub)sample to compute the average 𝑚 of the resource usage (processing time or memory overhead) values recorded while training on the current sample, and the confidence interval 𝑐 selected by the user (or default 99%). In this computation, we discard the measurement for the first iteration to avoid effects of cold caches and overheads of the language runtime. Thus, the algorithm is filtering high-end outliers that can skew the accuracy of the processing time and memory prediction models. The proposed sampling algorithm stops drawing sub-samples for a given sample size if either there is not enough time left within the time budget 𝑇 or the 𝑎𝑐𝑐𝑢𝑟𝑎𝑐𝑦_𝑡ℎ𝑟𝑒𝑠ℎ𝑜𝑙𝑑 has been met. Furthermore, our sampling algorithm can also use a user-defined 𝑎𝑐𝑐𝑢𝑟𝑎𝑐𝑦_𝑡ℎ𝑟𝑒𝑠ℎ𝑜𝑙𝑑 as part of its input. This 𝑎𝑐𝑐𝑢𝑟𝑎𝑐𝑦_𝑡ℎ𝑟𝑒𝑠ℎ𝑜𝑙𝑑 controls the variance of the measurements of the processing times recorded by training the CF on the sub-samples within a sample size. The iterative execution on a single sample then may terminate early if the ratio 𝑐/𝑚 satisfies said threshold. Thus we ensure that the processing times or memory overhead measured on the samples have low variance (i.e., the recorded time/memory values are in a tight interval). This is an important aspect to be considered while sampling, as the quality of the samples can impact the accuracy of the resource cost models as demonstrated in §4.5.</p><p>The proposed adaptive sampling algorithm allows us to minimise the number of samples needed for processing time and memory overhead prediction without sacrificing the accuracy of the resource cost models. Moreover, using an accuracy threshold and a fixed confidence interval lead to a reliable stopping strategy for drawing random samples and collecting time and memory measurements. Another idea that we investigated for determining when we have acquired a large enough sample is to analyse the prediction error interval in LR models and/or the uncertainty in Bayesian models described in §3.3 and showcased in §4.5. However, as this method depends on the resource prediction model used (i.e., works only with LR and Bayesian models), we prefer and propose a model-agnostic sampling strategy based on an upper limit for time and sample size, as well as an accuracy/error threshold which reflects the quality of the samples.</p><p>Moreover, this tool can be easily customised by the users, allowing them to determine the optimal bounds for the number of needed samples based on how much variance is allowed to be present in the generated samples. In our experiments, we used a 0.1 accuracy threshold, corresponding to 10% -15% variance and 99% confidence interval (as described in §4.3). However, depending on the constraints imposed on the random samples, the users could alter the accuracy threshold values to be in line with their needs and requirements. We note that a smaller accuracy threshold will map to less variance in the processing time values, and hence the predictions are more accurate.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">EXPERIMENTAL EVALUATION</head><p>This section describes our experimental evaluation methodology and discusses our results. In brief, our extensive experiments show that by using a relatively small subset of a dataset, D s , and the time it takes to train a CF algorithm A on D s , we can accurately predict A's expected processing time and memory usage on the full dataset D. Additionally, we show that there is an inherent efficiency-effectiveness trade-off between the quality of the predictions and their procurement cost. Further, we provide insights into the cost of sampling compared to the cost of training the CF models, as well as the cost of running our prediction models on the base data. Lastly, we discuss the advantages of the proposed sampling strategy compared to current standard practices.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Datasets and Recommendation Task</head><p>For this study, we used the MovieLens (ML) 100K, 1M, and 20M collections <ref type="bibr" target="#b37">[37]</ref>, as well as the GoodBooks (GB) 10K dataset <ref type="bibr" target="#b88">[88]</ref>. Each of these datasets consists of explicit ratings, from 1 to 5, given by users to items (i.e., films for ML and books for GB). While ML 100K (610 users and 9724 items) and 1M (6040 users and 3706 items) are smaller collections with densities of 0.017 and 0.045, respectively, GB 10K (53424 users and 10000 items) is a larger collection with a density of 0.012. In addition, we also probed our efficiency cost models with ML 20M, a very large dataset containing 138493 users, 26744 items, and a density of 0.0043. The different datasets characteristics and sizes allowed us to experiment with our proposed performance prediction tool and methodology, showing that it can be successfully used on collections with different properties.</p><p>The recommendation task investigated in this paper refers to predicting the usefulness or relevance of a given item to a user <ref type="bibr" target="#b72">[72]</ref>. In short, after an item is selected, the CF model estimates the rating the user would give to this item, and if the rating is above a particular threshold value, then the item is presented to the user as a recommendation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Evaluation Protocol</head><p>All experiments were carried out on Linux servers, each having 2 Intel Xeon E5-2660 CPUs (8 physical cores each with 2-way hyper-threading (HT)) and 64GB of RAM, running Ubuntu Linux 14.04.6. As the GoodBooks dataset is significantly larger and denser, we ran the corresponding experiments on a higher-spec Linux server with 4 Intel Xeon E7-4870 v2 CPUs (15 physical cores each with 2-way HT) and 512 GB of RAM, running Ubuntu Linux 16.04.7. During the experimental evaluation, all resource-intensive processes were suspended to avoid interference with our measurements.</p><p>We measured the processing times of the various CF algorithms on inputs sampled as described above. To this end, we utilised the getrusage method from Python's resource module, with the overall training time for each sample computed as the sum of the time spent executing in user mode (ru_utime) and system mode (ru_stime) <ref type="foot" target="#foot_7">8</ref> . To retrieve the memory usage of the CF, we recorded the information from the proc filesystem via the "/proc/ [pid]/status" file <ref type="foot" target="#foot_8">9</ref> , which contains the utilised memory by the current process (identified by pid) reported directly by the Linux kernel. From this file, we based our memory usage computations on the "VmSize" field, which returns the overall memory used by a specific process. To cross-check our approach regarding memory measurements, we also recorded the memory usage while training the CF model using a memory profiler. For this task, we used the memory-profiler<ref type="foot" target="#foot_9">10</ref> module from Python, and ensured that the results reported by the profiler match the ones recorded using the proc filesystem.</p><p>We gathered measurements for samples as provided by our sampling strategy, trained our models on the produced statistics, and used them to predict the respective resource usage over the complete dataset. We evaluated our predictions using normalised RMSE (NRMSE) computed as:</p><formula xml:id="formula_6">𝑁 𝑅𝑀𝑆𝐸 = 𝑅𝑀𝑆𝐸 𝑦<label>(3)</label></formula><p>where 𝑦 is the mean of the actual time/memory values in the corresponding sample. As KNN Baseline and Centred KNN followed the same time and space complexity and showed similar processing time and memory usage behaviour in all experiments, we only show results for the latter.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Sampling Strategy</head><p>We gathered measurements for values of 𝑆 (upper limit to the sample size) ranging from 10% all the way to 100% in increments of 10% (i.e., 10%, 20%, . . ., 100%) using algorithm 1. For each draw, we also used a fixed random seed s from a predefined set of seeds to ensure reproducibility. For the scope of our experimental evaluation, in algorithm 1, we set the confidence to 99%, and use a predefined variance of the processing times and memory overhead in each sample size (e.g., 10%, . . ., 100% of the data) in the range of 10% to 15% coupled with the default accuracy threshold of 0.1. Last, we set the overall time quota 𝑇 to the default values of 50000, 2000, 500, 100 seconds per sample for ML20M, GB 10K, ML 1M, and ML 100K, respectively. The results ( §4.5) indicate that this setup offered a good trade-off between the number of samples needed and their quality. Other values were explored but led to comparable results and are omitted for space reasons. Furthermore, to highlight the performance of our resource consumption prediction models we sampled the input data all the way to 100%, which accounts for the full dataset; however, our empirical findings ( §4.5) indicate that a default sample size of 30-40% produces accurate predictions of the processing time and memory overhead of CF required during training. Finally, we also analyse whether the standard practice sampling strategy <ref type="bibr">[1,</ref><ref type="bibr" target="#b24">24]</ref> used for determining the effectiveness of a CF, performs for predicting its efficiency (i.e., training time and memory), and we show that our proposed sampling approach leads to good accuracy for both efficiency and effectiveness prediction purposes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.4">Contenders</head><p>For RQ (a) and (b), we investigated whether the dependent variable (i.e., the expected training time and memory usage of a CF algorithm on a dataset D) can be predicted using samples of D and the characteristics of the input representing the independent variables as described in §3. As part of RQ (a), we conducted an extensive experimental evaluation of our White-Box approach, as discussed in §3.2 (denoted in the remainder of this section as WB/LR and WB/Bayes, when using a linear regression or Bayesian prediction approach respectively). We compare our solution against two types of baseline approaches: (i) a hard baseline (denoted WB/Lit/LR), in the form of a white-box linear regressor built using algorithmic complexities provided by the relevant literature, and (ii) a soft baseline, in the form of the best performing state-of-the-art black-box regressor (GBM).</p><p>In the latter case, the regression model is trained on characteristics resulting from training the CF models on samples of the input dataset, without having any knowledge of the inner space/time complexity of the latter. To this end, we augmented the structural input features (𝑚, 𝑛, 𝜌), with rating distribution/frequency-related features. Specifically, in line with the practice in the state-of-the-art <ref type="bibr">[1,</ref><ref type="bibr" target="#b24">24]</ref>, we modelled the concentration of users' (items', respectively) ratings by using the Gini coefficient <ref type="bibr" target="#b34">[34]</ref> as described in equation 4, where w is the number of users (items, respectively), 𝜌 k is the number of ratings given by a user (or received by an item, respectively), and 𝜌 total is the total number of ratings.</p><formula xml:id="formula_7">𝐺𝑖𝑛𝑖 𝑤 = 1 -2 × w 𝑘=1 w + 1 -𝑘 w + 1 × 𝜌 k 𝜌 total (4)</formula><p>We thus compute the Gini coefficient for users, 𝐺𝑖𝑛𝑖 𝑢𝑠𝑒𝑟𝑠 , and items, 𝐺𝑖𝑛𝑖 𝑖𝑡𝑒𝑚𝑠 , and include them as extra features for the black-box approach. We experimented with multiple state-of-the-art regressors and report results for the best performer, Gradient Boosting Machine (GBM).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.5">Results</head><p>Figures <ref type="figure" target="#fig_2">2a,</ref><ref type="figure" target="#fig_2">2b</ref>, and 2c depict the predicted training time for the complete dataset, as predicted when using different upper sample sizes. Specifically, the curves on these figures show the predicted fulldataset training time (y-axis) versus the upper sample size limit (x-axis) on which the contenders where applied. The horizontal black line represents the actual training time over the entire dataset. In other words, the closer a curve is to the black line the more accurate the prediction, and the earlier a curve approaches the black line the smaller a sample is required to achieve this result. The orange and purple areas show the prediction error interval and uncertainty for the predictions of WB/LR and WB/Bayes respectively, as presented in §3.3. Our results indicate that WB/LR, using simple linear regression, outperforms the much more complex best performing state-of-the-art regressor (GBM). In most cases a 30%-40% upper sample size limit seems enough to allow WB/LR to achieve highly accurate prediction. Interestingly, WB/Bayes also seems to achieve good accuracy in the processing time prediction task with similarly small sample sizes; however, its training cost is considerably greater than the one for WB/LR and WB/Lit/LR as discussed shortly (table <ref type="table" target="#tab_0">1</ref>). When assessing the overall performance of our framework, we also need to consider the cost of sampling the dataset, training the CF algorithms on the samples, and running the prediction models on the base data (i.e., (processing time and memory usage). To this end, figures 3a, 3b, and 3c highlight the cost of acquiring samples from the dataset (blue bars) stacked on top of the cost for training the CF on these samples (red bars). The training time for the full dataset is depicted with a black horizontal line. In other words, when a composite blue-red bar reaches or exceeds the black horizontal line, then this denotes that it is more efficient to train the CF algorithms directly on the full dataset rather than draw samples and train on them. We note that for CF algorithms with more expensive training cost (e.g., KNN-based CF), the processing time exhibits a steeper increase across samples. Hence, our framework is more valuable for predicting the efficiency of such CF models, as we can draw a small and cheap sample of the data, while accurately estimating the processing time and memory of the CF on the full dataset.</p><p>So far, we examined how the processing time varies when sampling the datasets and training the CF algorithms on the given samples. However, training and running the prediction models on the base data also involves a cost. Table <ref type="table" target="#tab_0">1</ref> presents the average time taken by each prediction model across ML100K, ML1M, and GB10K. As we can see, the cheapest models are WB/LR and WB/Lit/LR, followed by GBM, while WB/Bayes is by far the slowest (by several orders of magnitude). Therefore, for predicting the efficiency of a CF model, it is important not only to select an adequate sampling strategy but also a cheap and accurate predictor, such as our proposed approach (WB/LR).</p><p>Figures <ref type="figure" target="#fig_6">4a,</ref><ref type="figure" target="#fig_6">4b</ref>, and 4c illustrate the accuracy of the predictions for memory usage across the three datasets. These figures are similar in design to 2; on the y-axis we have the memory usage for training the CF models over the complete dataset, as predicted using as the upper sample size limit the value on the x-axis, while the horizontal black line depicts the actual memory usage for training the CF models over the complete input dataset. Similarly to the time prediction models, the proposed approach (WB/LR, orange curve) outperforms the best state-of-the-art regressor (GBM, green curve). WB/Bayes (purple curve) again achieves good accuracy in the prediction task, but for a much higher training cost as discussed earlier. Again, a 30%-40% sample suffices for WB/LR and WB/Bayes to produce highly accurate predictions. WB/Lit/LR is not shown on this figure as, alas, the literature around the CF models considered here provides no space complexity analysis.</p><p>Another benefit of using the processing time and memory prediction models is knowing when to stop sampling the input data and training the CF models. We have discussed in §4.3 a simple   To fully assess the performance of a CF algorithm on a given input, we need to examine both efficiency and effectiveness. The results above demonstrated how the proposed sampling strategy and models could address the former (i.e., efficiency). For the latter (i.e., effectiveness), we employ state-of-the-art regression models to learn the quality of the recommendations given a CF algorithm, a collection of samples (drawn using the strategy in §3.4), and characteristics of the input. Figures <ref type="figure" target="#fig_7">5a,</ref><ref type="figure" target="#fig_7">5b</ref>, and 5c show the predicted recommendation effectiveness for the popular CF algorithms implemented in Surprise <ref type="bibr" target="#b45">[45]</ref>. We note that a sample size of 30-40% (same size as for efficiency models) attains good accuracy for predicting the effectiveness of a CF model. Consequently, our tool and methodology allow one to draw a single set of samples for predicting both the effectiveness and efficiency of a CF in one.</p><p>As presented in table 2, we also analysed the efficiency-effectiveness trade-offs emerging from the training cost on various sample sizes compared to the normalised RMSE for the estimated processing times. For the selected CF algorithms, we measured the training cost in terms of time (seconds) and power consumption (kWh), which combined can indicate the monetary cost quantified in US dollars ($). Then, this cost is compared to the normalised RMSE values obtained from predicting the processing time of the entire dataset using our proposed methods (WB/LR and WB/Bayes), as well as the hard (WB/Lit/LR) and soft (GBM) baselines. This study was conducted on GoodBooks 10K, as we believe it is a good case of when a bigger sample that is more expensive does not necessarily improve the accuracy of the predictions.</p><p>For example, let us examine the baseline CF model. As the sample size increases and therefore the training cost, the prediction error decreases, leading to more accurate expected processing times. However, not all CF algorithms display this behaviour. For SVD, a bigger and more expensive sample does not necessarily minimise the NRMSE value; this means that while the cost of training increases, the processing time predictions' accuracy remains relatively constant, without further improvements. Therefore, we believe that knowing the training cost of a CF algorithm versus its nominal effectiveness (i.e., the quality of the recommendations) is a critical aspect that should be taken into consideration for building and deploying efficient CF models without sacrificing the users' satisfaction while maximising the content providers' revenue.</p><p>Another interesting aspect to examine when choosing a CF algorithm is its effectiveness, as well as training and deployment costs. For the former, benchmarks such as the one from <ref type="bibr" target="#b45">[45]</ref> (a) MovieLens 1M (b) MovieLens 20M and also our results (i.e., figures 5a, 5b, and 5c) show that different CF models can have similar recommendation quality (e.g., RMSE and MAE for KNN and SVD). However, the training cost is considerably higher for one CF model over the other one. Therefore, when CF algorithm selection represents a critical decision based on the infrastructure available, we propose using our prediction tool, methodology, and sampling strategy to determine if a CF model would be feasible and fit the operational time and memory constraints before allocating and spending many resources for it.</p><p>As part of RQ (c), in table 3, we report the average variance ratio (where 0 corresponds to 0% and 1 corresponds to 100%) across samples in different subsets of data for a fixed confidence value of 99% and the constraints from §4.3 (i.e., 10-15% variance in the processing time values). While  most algorithms seem to achieve a low variance in the processing times from the 20% subset of data on MovieLens 100K, we can observe that for the 10% partition, which also corresponds to the smallest input, some CF, such as KNN, KNN Baseline, and Baseline are less stable. This was expected since these algorithms were the fastest on very small inputs, and the recorded training times were as small as 0.78 milliseconds (KNN). However, as the size of the input data increases, the variance across samples decreases, resulting in steadier measurements. This behaviour was also observed on the larger datasets (ML 1M and GB 10K), which yielded similar results (i.e. 5% variance, or 0.05 in table <ref type="table" target="#tab_2">3</ref>, starting with the 10% data split); these are not included for space considerations. For RQ (d), we firstly investigated if the standard practice sampling strategy can be employed to draw samples that capture both the efficiency and effectiveness of CF on a subset of the data. Figures <ref type="figure" target="#fig_8">6a</ref> and<ref type="figure" target="#fig_8">6b</ref> present the raw measured effectiveness of a CF algorithm on an upper sample S% that has been chosen using (i) standard practice sampling <ref type="bibr">[1,</ref><ref type="bibr" target="#b24">24]</ref> and (ii) the proposed sampling mechanism ( §3.4). Interestingly, the two sampling strategies have a similar performance regarding the accuracy of the produced recommendations. We note that for the random algorithm, it is expected to have different RMSEs every time a sample is drawn, using either strategy, since the recommendations are produced at random. Thus, for effectiveness, we conclude that both strategies can be successfully used with similar performance.</p><p>However, if we examine the two sampling strategies to predict the efficiency (e.g., processing time) of a CF model, more notable changes are observed. Figures <ref type="figure" target="#fig_9">7a</ref> and<ref type="figure" target="#fig_9">7b</ref> show the performance of the prediction models, which have been trained on samples drawn using the two strategies. Our results indicate that the standard practice sampling strategy fails to capture the complexity characteristics of the base data, as the prediction models (non-dashed curves) are far away from the ground truth (black horizontal line). On the other hand, the models that have been trained using the proposed sampling approach (dashed curves) are a lot more accurate in predicting the efficiency of the CF algorithms. Consequently, since our adaptive sampling algorithm ( §3.4) works well for both efficiency and effectiveness prediction, it has been used throughout the experimental evaluation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">CONCLUSIONS</head><p>The accurate prediction of the resource consumption during the training phase of CF models is of exceptional practical interest to establishments of all sizes from both academia and industry. However, so far, the relevant literature does not capture this pressing problem. This paper addresses the challenge of predicting processing time and memory overhead of CF algorithms using a simple yet highly effective approach. This incorporates a fit-for-purpose sampling scheme and a fast but accurate linear regression scheme over time and space complexity equations drawn from the algorithms' implementations. Furthermore, we showed that using a smaller sample of a dataset, the CF models' performance and resource cost could be estimated with our methodology without training on the entire collection. Our sampling strategy also allows the prediction of both efficiency and effectiveness while paying the cost of sampling only once.</p><p>Despite its simplicity, our proposed methodology and resource cost models for CF algorithms manage to considerably outperform in accuracy even the best performing off-the-shelf state-of-theart regressor. Moreover, our approach is also faster than all contenders, including the best state-ofthe-art regressor, and utilises only a fraction of the resources used by them. We view this work as one of the first core steps towards a systematic exploration of the efficiency-effectiveness trade-offs inherent in modern recommendation systems. While our methodology was developed and probed </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>4aFig. 1 .</head><label>1</label><figDesc>Fig.1. Overview of the proposed pipeline. Given the the input data (user-item rating matrix -URM), we: (step 1a) extract features such as the number of users, items, ratings, the density of the matrix, etc.; and (step 1b) sample the URM following the strategy described in §3.4. In step 2 we train the various classes of CF models ( §3.2) on the samples drawn, while (step 3) gathering efficiency metrics, such as processing time and memory overhead, and effectiveness metrics for the quality of the recommendations (i.e., RMSE for the predicted rating values). In steps 4a and 4b, we train our proposed prediction models, detailed in §3.3, given the recorded metrics, then learn and predict the efficiency (processing time, memory) and effectiveness (RMSE) of the CF on the full dataset. This process (steps 2-4) is repeated until the user-defined termination condition (prediction accuracy, time budget, etc.) is met (step 5).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>4 ( 15 while 16 T</head><label>41516</label><figDesc>1 train_samples = []; stats = []; 2 T' = T; S' = S; D' = D; 3 do /* Compute sample size and time budget for current iteration */ T_cur, S_cur) = adapt(T', S'); processing time, memory by training A on d */ 10 stats.push(get_memory_and_processing_time(A, d)); (c/m &gt;= accuracy_threshold and t &lt;= T_cur); ' -= t; D' = d; S' = S_cur; 17 while (T' &gt; 0); 18 return (train_samples, stats)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 2 .</head><label>2</label><figDesc>Fig. 2. Predicted processing times for (a) MovieLens 1M, (b) MovieLens 20M, and (c) GoodBooks 10K collections, for various values of 𝑆 (upper sample size limit), using our approaches (WB/LR and WB/Bayes) and the two baselines (linear regression over literature complexity equations (WB/Lit/LR), and state-of-the-art regressor (GBM)). The black horizontal line represents the actual training time over the entire dataset.</figDesc><graphic coords="18,67.52,84.68,350.95,215.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Sampling and training time cost across datasets ((a) MovieLens 100K, (b) MovieLens 1M, and (c) GoodBooks 10K) w.r.t. upper sample size S% compared to the processing time for the entire dataset (black line).</figDesc><graphic coords="20,67.52,84.68,350.97,206.03" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Predicted memory usage for the CF algorithms on the full (a) MovieLens 1M, (b) MovieLens 20M, and (c) GoodBooks 10K datasets using our approaches (WB/LR and WB/Bayes) and the GBM baseline. The black horizontal line represents the actual memory usage over the entire collection.</figDesc><graphic coords="22,67.52,84.68,350.95,215.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Fig. 5 .</head><label>5</label><figDesc>Fig. 5. Predicted effectiveness (i.e., recommendation quality) for the full (a) MovieLens 1M, (b) MovieLens 20M, and (c) GoodBooks 10K datasets using state of the art regressors, such as Ada Boost Regressor (ABR), Support Vector Regressor (SVR), and Gradient Boosting Machine (GBM). The black horizontal line represents the actual recommendation quality (RMSE) over the entire collection.</figDesc><graphic coords="24,67.52,84.68,350.95,202.93" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Fig. 6 .</head><label>6</label><figDesc>Fig. 6. Actual CF effectiveness (i.e., quality of the produced recommendations) for the full (a) MovieLens 100K and (b) MovieLens 1M datasets using the standard practice (SP) strategy (red curve) compared to our proposed adaptive sampling approach (blue curve).</figDesc><graphic coords="26,67.52,283.60,350.97,176.80" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>Fig. 7 .</head><label>7</label><figDesc>Fig. 7. Predicted processing times for the full (a) MovieLens 100K and (b) MovieLens 1M datasets using our approaches (WB/LR and WB/Bayes) and the 2 baselines (WB/Lit/LR and GBM). Each prediction model has been trained and tested against the two sampling strategies w.r.t. ratings/interactions (i.e., standard practice (SP) sampling), as well as users and items (i.e., proposed sampling).</figDesc><graphic coords="27,67.52,328.35,350.95,221.55" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="17,67.52,177.65,350.95,215.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="17,67.52,415.22,350.95,215.45" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="23,67.52,84.68,350.95,202.93" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="23,67.52,309.73,350.96,198.40" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc>Mean and standard deviation of processing time (i.e., training and prediction time) for the prediction models across MovieLens 100K, MovieLens 1M, and GoodBooks 10K. However, we can assess the quality of the predictions on a given upper sample size S% by quantifying the prediction error interval in linear models and uncertainty in the Bayesian models as presented in §3.3. As the predictors get more accurate, the prediction error interval and the uncertainty decrease/shrink; hence, we could stop sampling the dataset and training the models. In our experiments, we noticed that an upper sample size of 30-40% produces good estimations for the processing time and memory usage. From figures 3a, 3b, and 3c we can see that sampling and training our best predictor (LR) on a sample size of 30-40% of the entire collection is much cheaper than training the CF models on the complete datasets.</figDesc><table><row><cell></cell><cell cols="2">Mean Runtime (s)</cell><cell></cell><cell></cell><cell>Standard Deviation</cell></row><row><cell></cell><cell cols="2">WB/LR WB/Bayes WB/Lit/LR</cell><cell>GBM</cell><cell cols="2">WB/LR WB/Bayesian WB/Lit/LR</cell><cell>GBM</cell></row><row><cell>Baseline</cell><cell>0.000846 12.976536</cell><cell cols="3">0.000821 0.560964 0.000076</cell><cell>0.630854</cell><cell>0.000008 0.193972</cell></row><row><cell>Random</cell><cell>0.000811 12.490760</cell><cell cols="3">0.000831 0.498211 0.000014</cell><cell>0.636542</cell><cell>0.000017 0.074976</cell></row><row><cell>KNN</cell><cell>0.000828 12.782280</cell><cell cols="3">0.000821 0.478027 0.000009</cell><cell>0.372070</cell><cell>0.000007 0.019466</cell></row><row><cell cols="2">Centred KNN 0.000835 12.342325</cell><cell cols="3">0.000834 0.471252 0.000019</cell><cell>0.553207</cell><cell>0.000019 0.028891</cell></row><row><cell cols="2">KNN Baseline 0.000806 13.305759</cell><cell cols="3">0.000805 0.486257 0.000012</cell><cell>0.648463</cell><cell>0.000020 0.017886</cell></row><row><cell cols="2">Co-clustering 0.000793 12.845628</cell><cell cols="3">0.000801 0.467534 0.000014</cell><cell>0.782792</cell><cell>0.000012 0.022713</cell></row><row><cell>Slope One</cell><cell>0.000829 13.280002</cell><cell cols="3">0.001018 0.501125 0.000013</cell><cell>0.629301</cell><cell>0.000140 0.072633</cell></row><row><cell>SVD</cell><cell>0.000811 13.438938</cell><cell cols="3">0.000833 0.524837 0.000015</cell><cell>0.619231</cell><cell>0.000029 0.091137</cell></row><row><cell>NMF</cell><cell>0.000840 13.330891</cell><cell cols="3">0.000817 0.508564 0.000040</cell><cell>0.503423</cell><cell>0.000009 0.027130</cell></row><row><cell cols="6">stopping strategy based on the variance of the resource (i.e., time, memory) measurements across</cell></row><row><cell>samples.</cell><cell></cell><cell></cell><cell></cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head>Table 2 .</head><label>2</label><figDesc>Estimated training cost vs. prediction accuracy w.r.t. different sample sizes on GoodBooks 10K.</figDesc><table><row><cell></cell><cell></cell><cell cols="2">Training Resources</cell><cell></cell><cell cols="4">Predictions' Accuracy (NRMSE)</cell></row><row><cell></cell><cell cols="7">Upper Sample Size S% Time (s) Power (kWh) Cost ($) WB/LR WB/Bayes WB/Lit/LR</cell><cell>GBM</cell></row><row><cell></cell><cell>20</cell><cell>3.5</cell><cell>0.13</cell><cell>0.02</cell><cell>0.16</cell><cell>13.59</cell><cell>12.35</cell><cell>19.98</cell></row><row><cell>Baseline</cell><cell>40</cell><cell>16.67</cell><cell>0.6</cell><cell>0.07</cell><cell>0.01</cell><cell>4.25</cell><cell>7.03</cell><cell>16.25</cell></row><row><cell></cell><cell>60</cell><cell>37.13</cell><cell>1.34</cell><cell>0.16</cell><cell>0.06</cell><cell>0.01</cell><cell>3.98</cell><cell>10.23</cell></row><row><cell></cell><cell>20</cell><cell>1.86</cell><cell>0.07</cell><cell>0.01</cell><cell>0.05</cell><cell>0.02</cell><cell>5.55</cell><cell>9.57</cell></row><row><cell>Random</cell><cell>40</cell><cell>7.91</cell><cell>0.29</cell><cell>0.03</cell><cell>0.05</cell><cell>0.01</cell><cell>3.18</cell><cell>7.52</cell></row><row><cell></cell><cell>60</cell><cell>17.67</cell><cell>0.64</cell><cell>0.08</cell><cell>0.03</cell><cell>0.009</cell><cell>1.69</cell><cell>4.92</cell></row><row><cell></cell><cell>20</cell><cell>64.45</cell><cell>2.33</cell><cell>0.28</cell><cell>0.39</cell><cell>0.05</cell><cell>840.67</cell><cell>1453.77</cell></row><row><cell>KNN</cell><cell>40</cell><cell>455.25</cell><cell>16.44</cell><cell>1.97</cell><cell>28.39</cell><cell>26.79</cell><cell>521.28</cell><cell>1344.44</cell></row><row><cell></cell><cell>60</cell><cell>1729.19</cell><cell>62.44</cell><cell>7.49</cell><cell>0.3</cell><cell>0.06</cell><cell>187.97</cell><cell>1000.23</cell></row><row><cell></cell><cell>20</cell><cell>76.39</cell><cell>2.76</cell><cell>0.33</cell><cell>10.5</cell><cell>11.75</cell><cell>855.98</cell><cell>1582.24</cell></row><row><cell>Centred KNN</cell><cell>40</cell><cell>496.68</cell><cell>17.94</cell><cell>2.15</cell><cell>30.73</cell><cell>23.26</cell><cell>561.38</cell><cell>1453.82</cell></row><row><cell></cell><cell>60</cell><cell>1595.96</cell><cell>57.63</cell><cell>6.92</cell><cell>35.8</cell><cell>33.72</cell><cell>333.77</cell><cell>1153.67</cell></row><row><cell></cell><cell>20</cell><cell>83.38</cell><cell>3.01</cell><cell>0.36</cell><cell>228.02</cell><cell>247.41</cell><cell>569.47</cell><cell>1330.45</cell></row><row><cell>KNN Baseline</cell><cell>40</cell><cell>482.86</cell><cell>17.44</cell><cell>2.09</cell><cell>0.59</cell><cell>0.01</cell><cell>390.03</cell><cell>1185.3</cell></row><row><cell></cell><cell>60</cell><cell>1629.22</cell><cell>58.83</cell><cell>7.06</cell><cell>4.49</cell><cell>4.65</cell><cell>141.52</cell><cell>943.11</cell></row><row><cell></cell><cell>20</cell><cell>29.7</cell><cell>1.07</cell><cell>0.13</cell><cell>0.19</cell><cell>0.01</cell><cell>80.49</cell><cell>140.93</cell></row><row><cell>Co-clustering</cell><cell>40</cell><cell>119.89</cell><cell>4.33</cell><cell>0.52</cell><cell>0.55</cell><cell>0.11</cell><cell>46.56</cell><cell>115.53</cell></row><row><cell></cell><cell>60</cell><cell>269.85</cell><cell>9.74</cell><cell>1.17</cell><cell>0.29</cell><cell>0.01</cell><cell>24.39</cell><cell>71.38</cell></row><row><cell></cell><cell>20</cell><cell>3.62</cell><cell>0.13</cell><cell>0.02</cell><cell>466.88</cell><cell>393.51</cell><cell>57.44</cell><cell>95.66</cell></row><row><cell>Slope One</cell><cell>40</cell><cell>21.84</cell><cell>0.79</cell><cell>0.09</cell><cell>29.81</cell><cell>19.59</cell><cell>42.01</cell><cell>89.85</cell></row><row><cell></cell><cell>60</cell><cell>78.93</cell><cell>2.85</cell><cell>0.34</cell><cell>5.73</cell><cell>2.14</cell><cell>24.37</cell><cell>74.62</cell></row><row><cell></cell><cell>20</cell><cell>56.98</cell><cell>2.06</cell><cell>0.25</cell><cell>0.32</cell><cell>0.04</cell><cell>0.25</cell><cell>277.31</cell></row><row><cell>SVD</cell><cell>40</cell><cell>226.85</cell><cell>8.19</cell><cell>0.98</cell><cell>2.09</cell><cell>1.20</cell><cell>0.39</cell><cell>228.91</cell></row><row><cell></cell><cell>60</cell><cell>545.71</cell><cell>19.71</cell><cell>2.37</cell><cell>0.1</cell><cell>0.21</cell><cell>0.71</cell><cell>127.48</cell></row><row><cell></cell><cell>20</cell><cell>62.34</cell><cell>2.25</cell><cell>0.27</cell><cell>10.78</cell><cell>0.55</cell><cell>10.49</cell><cell>288.54</cell></row><row><cell>NMF</cell><cell>40</cell><cell>244.28</cell><cell>8.82</cell><cell>1.06</cell><cell>18.87</cell><cell>0.36</cell><cell>18.71</cell><cell>235.87</cell></row><row><cell></cell><cell>60</cell><cell>561.34</cell><cell>20.27</cell><cell>2.43</cell><cell>14.97</cell><cell>0.002</cell><cell>14.9</cell><cell>144.11</cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2"><head>Table 3 .</head><label>3</label><figDesc>Average variance across 5 samples for various values of 𝑆 over the MovieLens 100K dataset.</figDesc><table><row><cell cols="4">S % Baseline Centred KNN Random Co-clustering</cell><cell>KNN</cell><cell>KNN Baseline</cell><cell>NMF</cell><cell>Slope One</cell><cell>SVD</cell></row><row><cell>10 0.250706</cell><cell>0.027964</cell><cell>0.067672</cell><cell>0.044952</cell><cell>0.966998</cell><cell>0.430209</cell><cell>0.048225</cell><cell>0.097964</cell><cell>0.055360</cell></row><row><cell>20 0.049200</cell><cell>0.018693</cell><cell>0.040723</cell><cell>0.033381</cell><cell>0.173672</cell><cell>0.043722</cell><cell>0.035976</cell><cell>0.090190</cell><cell>0.038803</cell></row><row><cell>30 0.032348</cell><cell>0.018011</cell><cell>0.029437</cell><cell>0.026288</cell><cell>0.044634</cell><cell>0.049973</cell><cell>0.028211</cell><cell>0.084882</cell><cell>0.029211</cell></row><row><cell>40 0.026480</cell><cell>0.017744</cell><cell>0.025777</cell><cell>0.022463</cell><cell>0.027991</cell><cell>0.026873</cell><cell>0.023757</cell><cell>0.062660</cell><cell>0.030115</cell></row><row><cell>50 0.019236</cell><cell>0.014401</cell><cell>0.018921</cell><cell>0.017123</cell><cell>0.023000</cell><cell>0.018624</cell><cell>0.017933</cell><cell>0.060335</cell><cell>0.018390</cell></row><row><cell>60 0.015513</cell><cell>0.014273</cell><cell>0.016325</cell><cell>0.025878</cell><cell>0.018855</cell><cell>0.018155</cell><cell>0.014537</cell><cell>0.054240</cell><cell>0.015502</cell></row><row><cell>70 0.012500</cell><cell>0.012400</cell><cell>0.011676</cell><cell>0.016157</cell><cell>0.016994</cell><cell>0.015884</cell><cell>0.013080</cell><cell>0.032698</cell><cell>0.015423</cell></row><row><cell>80 0.010277</cell><cell>0.011007</cell><cell>0.010337</cell><cell>0.009992</cell><cell>0.011521</cell><cell>0.010502</cell><cell>0.009411</cell><cell>0.026711</cell><cell>0.010177</cell></row><row><cell>90 0.006314</cell><cell>0.010413</cell><cell>0.006731</cell><cell>0.006102</cell><cell>0.009067</cell><cell>0.015581</cell><cell>0.006380</cell><cell>0.015045</cell><cell>0.005691</cell></row><row><cell>100 0.025653</cell><cell>0.008101</cell><cell>0.002862</cell><cell>0.005187</cell><cell>0.050106</cell><cell>0.017862</cell><cell>0.005243</cell><cell>0.006064</cell><cell>0.006068</cell></row></table></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0"><p>The term "white box" is also used to refer to simple predictive models, such as linear regression and decision trees, that are easy to explain and interpret. The fact that our proposed solution utterly also uses linear regression is a lucky coincidence.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="2" xml:id="foot_1"><p>These challenges were also discussed with industry professionals (e.g., Amazon, Netflix), as part of the Doctoral Symposium in ACM RecSys 2020<ref type="bibr" target="#b63">[63]</ref>, who highlighted the importance of model selection, training, and deployment based on the available resources and the targeted effectiveness/accuracy outcome.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="3" xml:id="foot_2"><p>Naive ALS is described in http://web.cs.ucla.edu/~chohsieh/teaching/CS260_Winter2019/lecture13.pdf</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="4" xml:id="foot_3"><p>An example on how to compute the prediction error intervals is provided in https://learnche.org/pid/least-squaresmodelling/least-squares-model-analysis#prediction-error-estimates-for-the-y-variable.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="5" xml:id="foot_4"><p><ref type="bibr" target="#b5">5</ref> In Python, MCMC is implemented using the PyMC3 library available at https://docs.pymc.io/. This is also what we used in our experiments.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="6" xml:id="foot_5"><p>A practical example for quantifying uncertainty can be found in https://towardsdatascience.com/pymc3-and-bayesianinference-for-parameter-uncertainty-quantification-towards-non-linear-models-a03c3303e6fa.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="7" xml:id="foot_6"><p><ref type="bibr" target="#b7">7</ref> Fro the list of regressors and documentation of H2O, see: http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="8" xml:id="foot_7"><p>Please see https://docs.python.org/3/library/resource.html for further information.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="9" xml:id="foot_8"><p>More information about the proc filesystem can be found at https://man7.org/linux/man-pages/man5/proc.5.html.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="10" xml:id="foot_9"><p>Memory-profiler is available at https://pypi.org/project/memory-profiler/.</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_10"><p>(a) MovieLens 1M (b) MovieLens 20M</p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>with CF models, we believe it could be applied and used for other classes of algorithms and use cases. In the near future we plan to expand our methodology to other areas of the recommendation systems' design space, such as deep learning models, and estimate the training cost for other resources (e.g., GPU usage).</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Impact of data characteristics on recommender systems performance</title>
+		<author>
+			<persName><forename type="first">Gediminas</forename><surname>Adomavicius</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jingjing</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Management Information Systems (TMIS)</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="1" to="17" />
+			<date type="published" when="2012">2012. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Charu</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Aggarwal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Recommender systems</title>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title/>
+		<author>
+			<persName><surname>Springer</surname></persName>
+		</author>
+		<imprint>
+			<pubPlace>Berlin, Heidelberg</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Computational complexity: a modern approach</title>
+		<author>
+			<persName><forename type="first">Sanjeev</forename><surname>Arora</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Boaz</forename><surname>Barak</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009">2009</date>
+			<publisher>Cambridge University Press</publisher>
+			<pubPlace>Cambridge, UK.</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Sample size: How much is enough?</title>
+		<author>
+			<persName><surname>Homer W Austin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Quality and Quantity</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="239" to="245" />
+			<date type="published" when="1983">1983. 1983</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Support vector regression</title>
+		<author>
+			<persName><forename type="first">Mariette</forename><surname>Awad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rahul</forename><surname>Khanna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Efficient learning machines</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="67" to="80" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Tuning search algorithms for real-world applications: A regression tree based approach</title>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>Bartz-Beielstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sandor</forename><surname>Markon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2004 Congress on Evolutionary Computation</title>
+		<meeting>the 2004 Congress on Evolutionary Computation<address><addrLine>Portland, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page" from="1111" to="1118" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Recommender systems for product bundling</title>
+		<author>
+			<persName><forename type="first">Moran</forename><surname>Beladev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lior</forename><surname>Rokach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bracha</forename><surname>Shapira</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Knowledge-Based Systems</title>
+		<imprint>
+			<biblScope unit="volume">111</biblScope>
+			<biblScope unit="page" from="193" to="206" />
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">A performance prediction approach to enhance collaborative filtering performance</title>
+		<author>
+			<persName><forename type="first">Alejandro</forename><surname>Bellogín</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">European Conference on Information Retrieval</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="page" from="382" to="393" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Statistical biases in Information Retrieval metrics for recommender systems</title>
+		<author>
+			<persName><forename type="first">Alejandro</forename><surname>Bellogín</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Iván</forename><surname>Cantador</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Retrieval Journal</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="606" to="634" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Numerical methods for least squares problems</title>
+		<author>
+			<persName><forename type="first">Ake</forename><surname>Bjorck</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1996">1996</date>
+			<biblScope unit="volume">51</biblScope>
+			<pubPlace>Siam, Philadelphia, USA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">High-level optimization via automated statistical modeling</title>
+		<author>
+			<persName><forename type="first">Eric</forename><forename type="middle">A</forename><surname>Brewer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGPLAN Notices</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="80" to="91" />
+			<date type="published" when="1995">1995. 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Handbook of markov chain monte carlo</title>
+		<author>
+			<persName><forename type="first">Steve</forename><surname>Brooks</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Gelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Galin</forename><surname>Jones</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Xiao-Li</forename><surname>Meng</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011">2011</date>
+			<publisher>CRC press</publisher>
+			<pubPlace>Florida, United States</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Energy efficiency for cloud computing system based on predictive optimization</title>
+		<author>
+			<persName><forename type="first">Dinh-Mao</forename><surname>Bui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yongik</forename><surname>Yoon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eui-Nam</forename><surname>Huh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungik</forename><surname>Jun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sungyoung</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Parallel and Distrib. Comput</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="page" from="103" to="114" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Co-clustering under the maximum norm</title>
+		<author>
+			<persName><forename type="first">Laurent</forename><surname>Bulteau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vincent</forename><surname>Froese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sepp</forename><surname>Hartung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rolf</forename><surname>Niedermeier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Algorithms</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">17</biblScope>
+			<date type="published" when="2016">2016. 2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Comparison of collaborative filtering algorithms: Limitations of current techniques and proposals for scalable, high-performance recommender systems</title>
+		<author>
+			<persName><forename type="first">Fidel</forename><surname>Cacheda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Víctor</forename><surname>Carneiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Diego</forename><surname>Fernández</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vreixo</forename><surname>Formoso</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on the Web (TWEB)</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="33" />
+			<date type="published" when="2011">2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Comparison of Collaborative Filtering Algorithms: Limitations of Current Techniques and Proposals for Scalable, High-Performance Recommender Systems</title>
+		<author>
+			<persName><forename type="first">Fidel</forename><surname>Cacheda</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Víctor</forename><surname>Carneiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Diego</forename><surname>Fernández</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vreixo</forename><surname>Formoso</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/1921591.1921593</idno>
+		<ptr target="https://doi.org/10.1145/1921591.1921593" />
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Web</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">33</biblScope>
+			<date type="published" when="2011-02">2011. Feb. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Should I follow the crowd? A probabilistic analysis of the effectiveness of popularity in recommender systems</title>
+		<author>
+			<persName><forename type="first">Rocío</forename><surname>Cañamares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The 41st International ACM SIGIR Conference on Research &amp; Development in Information Retrieval</title>
+		<meeting><address><addrLine>Michigan, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="415" to="424" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">On Target Item Sampling in Offline Recommender System Evaluation</title>
+		<author>
+			<persName><forename type="first">Rocío</forename><surname>Cañamares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Fourteenth ACM Conference on Recommender Systems</title>
+		<meeting><address><addrLine>Rio de Janeiro, Brazil</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="259" to="268" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Offline evaluation options for recommender systems</title>
+		<author>
+			<persName><forename type="first">Rocío</forename><surname>Cañamares</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pablo</forename><surname>Castells</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alistair</forename><surname>Moffat</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Retrieval Journal</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="page" from="387" to="410" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bradley</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Thomas</forename><forename type="middle">A</forename><surname>Carlin</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Louis</surname></persName>
+		</author>
+		<title level="m">Bayesian methods for data analysis</title>
+		<meeting><address><addrLine>Florida, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Random sampling for histogram construction: How much is enough?</title>
+		<author>
+			<persName><forename type="first">Surajit</forename><surname>Chaudhuri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Rajeev</forename><surname>Motwani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivek</forename><surname>Narasayya</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGMOD Record</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="436" to="447" />
+			<date type="published" when="1998">1998. 1998</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Computation of the singular value decomposition</title>
+		<author>
+			<persName><forename type="first">Alan</forename><surname>Kaylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cline</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Inderjit S</forename><surname>Dhillon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Handbook of Linear Algebra</title>
+		<editor>
+			<persName><forename type="first">Leslie</forename><surname>Hogben</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Boca Raton, FL, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Chapman &amp; Hall/CRC</publisher>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page" from="45" to="46" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<author>
+			<persName><forename type="first">H</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Charles</forename><forename type="middle">E</forename><surname>Cormen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ronald</forename><forename type="middle">L</forename><surname>Leiserson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Clifford</forename><surname>Rivest</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Stein</surname></persName>
+		</author>
+		<title level="m">Introduction to Algorithms, Third Edition</title>
+		<meeting><address><addrLine>Cambridge, Massachusetts</addrLine></address></meeting>
+		<imprint>
+			<publisher>The MIT Press</publisher>
+			<date type="published" when="2009">2009</date>
+		</imprint>
+	</monogr>
+	<note>rd ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">How Dataset Characteristics Affect the Robustness of Collaborative Recommendation Models</title>
+		<author>
+			<persName><forename type="first">Yashar</forename><surname>Deldjoo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tommaso</forename><surname>Di Noia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eugenio</forename><forename type="middle">Di</forename><surname>Sciascio</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Felice</forename><forename type="middle">Antonio</forename><surname>Merra</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval</title>
+		<meeting>the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval<address><addrLine>Xi&apos;an, China</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="951" to="960" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A comprehensive survey of neighborhood-based recommendation methods</title>
+		<author>
+			<persName><forename type="first">Christian</forename><surname>Desrosiers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><surname>Karypis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender systems handbook</title>
+		<meeting><address><addrLine>Boston, MA, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="page" from="107" to="144" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Optimizing Inference Performance of Transformers on CPUs</title>
+		<author>
+			<persName><forename type="first">Dave</forename><surname>Dice</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alex</forename><surname>Kogan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 1st Workshop on Machine Learning and Systems (EuroMLSys)</title>
+		<meeting>the 1st Workshop on Machine Learning and Systems (EuroMLSys)<address><addrLine>Edinburgh, United Kingdom</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1" to="8" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><surname>Norman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Harry</forename><surname>Draper</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Smith</surname></persName>
+		</author>
+		<title level="m">Applied regression analysis</title>
+		<meeting><address><addrLine>Hoboken, NJ, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="volume">326</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">How to Solve It Automatically: Selection Among Problem Solving Methods</title>
+		<author>
+			<persName><forename type="first">Eugene</forename><surname>Fink</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AIPS. AAAI</title>
+		<meeting><address><addrLine>Wisconsin, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1998">1998</date>
+			<biblScope unit="page" from="128" to="136" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A decision-theoretic generalization of on-line learning and an application to boosting</title>
+		<author>
+			<persName><forename type="first">Yoav</forename><surname>Freund</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><forename type="middle">E</forename><surname>Schapire</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of computer and system sciences</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="119" to="139" />
+			<date type="published" when="1997">1997. 1997</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<author>
+			<persName><forename type="first">Jerome</forename><surname>Friedman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Trevor</forename><surname>Hastie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Robert</forename><surname>Tibshirani</surname></persName>
+		</author>
+		<title level="m">The elements of statistical learning</title>
+		<meeting><address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2001">2001</date>
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+	<note>Springer series in statistics</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Gelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hal</forename><forename type="middle">S</forename><surname>John B Carlin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">David</forename><forename type="middle">B</forename><surname>Stern</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aki</forename><surname>Dunson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Donald</forename><forename type="middle">B</forename><surname>Vehtari</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Rubin</surname></persName>
+		</author>
+		<title level="m">Bayesian data analysis</title>
+		<meeting><address><addrLine>Florida, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>CRC press</publisher>
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">A scalable collaborative filtering framework based on co-clustering</title>
+		<author>
+			<persName><forename type="first">Thomas</forename><surname>George</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Srujana</forename><surname>Merugu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Fifth IEEE International Conference on Data Mining (ICDM&apos;05)</title>
+		<meeting><address><addrLine>Houston, Texas</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page">4</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Fast incremental maintenance of approximate histograms</title>
+		<author>
+			<persName><forename type="first">Yossi</forename><surname>Phillip B Gibbons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Viswanath</forename><surname>Matias</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Poosala</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Database Systems (TODS)</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="261" to="298" />
+			<date type="published" when="2002">2002. 2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Measurement of inequality of incomes</title>
+		<author>
+			<persName><forename type="first">Corrado</forename><surname>Gini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The economic journal</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="124" to="126" />
+			<date type="published" when="1921">1921. 1921</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Evaluating recommender systems</title>
+		<author>
+			<persName><forename type="first">Asela</forename><surname>Gunawardana</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Guy</forename><surname>Shani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Recommender systems handbook</title>
+		<meeting><address><addrLine>Boston, MA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page" from="265" to="308" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Sequential sampling procedures for query size estimation</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Peter</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arun</forename><forename type="middle">N</forename><surname>Haas</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Swami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 1992 ACM SIGMOD international conference on Management of data</title>
+		<meeting>the 1992 ACM SIGMOD international conference on Management of data<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="1992">1992</date>
+			<biblScope unit="page" from="341" to="350" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">The movielens datasets: History and context</title>
+		<author>
+			<persName><forename type="first">Maxwell</forename><surname>Harper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><forename type="middle">A</forename><surname>Konstan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acm transactions on interactive intelligent systems (tiis)</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="19" />
+			<date type="published" when="2015">2015. 2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">An algorithmic framework for performing collaborative filtering</title>
+		<author>
+			<persName><forename type="first">Jonathan</forename><forename type="middle">L</forename><surname>Herlocker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><forename type="middle">A</forename><surname>Konstan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Al</forename><surname>Borchers</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Riedl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 22nd annual international ACM SIGIR conference on Research and development in information retrieval</title>
+		<meeting>the 22nd annual international ACM SIGIR conference on Research and development in information retrieval<address><addrLine>Berkeley, CA, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="page" from="230" to="237" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Evaluating collaborative filtering recommender systems</title>
+		<author>
+			<persName><forename type="first">Jonathan</forename><forename type="middle">L</forename><surname>Herlocker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joseph</forename><forename type="middle">A</forename><surname>Konstan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Loren</forename><forename type="middle">G</forename><surname>Terveen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><forename type="middle">T</forename><surname>Riedl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Information Systems (TOIS)</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="5" to="53" />
+			<date type="published" when="2004">2004. 2004</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Error-constrained COUNT query evaluation in relational databases</title>
+		<author>
+			<persName><forename type="first">Wen-Chi</forename><surname>Hou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gultekin</forename><surname>Ozsoyoglu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Erdogan</forename><surname>Dogdu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGMOD Record</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="page" from="278" to="287" />
+			<date type="published" when="1991">1991. 1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Exploiting competitive planner performance</title>
+		<author>
+			<persName><forename type="first">Adele</forename><forename type="middle">E</forename><surname>Howe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eric</forename><surname>Dahlman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Scheetz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anneliese</forename><surname>Von</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mayrhauser</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">European Conference on Planning</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1999">1999</date>
+			<biblScope unit="page" from="62" to="72" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">Collaborative filtering for implicit feedback datasets</title>
+		<author>
+			<persName><forename type="first">Yifan</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yehuda</forename><surname>Koren</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chris</forename><surname>Volinsky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Eighth IEEE International Conference on Data Mining</title>
+		<meeting><address><addrLine>Pisa, Italy</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2008">2008. 2008</date>
+			<biblScope unit="page" from="263" to="272" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Energy-efficient resource utilization for heterogeneous embedded computing systems</title>
+		<author>
+			<persName><forename type="first">Jing</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Renfa</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jiyao</forename><surname>An</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Derrick</forename><surname>Ntalasha</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fan</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Keqin</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Comput</title>
+		<imprint>
+			<biblScope unit="volume">66</biblScope>
+			<biblScope unit="page" from="1518" to="1531" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">A comparison of collaborative-filtering recommendation algorithms for e-commerce</title>
+		<author>
+			<persName><forename type="first">Zan</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hsinchun</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Intelligent Systems</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="68" to="78" />
+			<date type="published" when="2007">2007. 2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<analytic>
+		<title level="a" type="main">Surprise: A Python library for recommender systems</title>
+		<author>
+			<persName><forename type="first">Nicolas</forename><surname>Hug</surname></persName>
+		</author>
+		<idno type="DOI">10.21105/joss.02174</idno>
+		<ptr target="https://doi.org/10.21105/joss.02174" />
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Open Source Software</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page">2174</biblScope>
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Factor in the neighbors: Scalable and accurate collaborative filtering</title>
+		<author>
+			<persName><forename type="first">Yehuda</forename><surname>Koren</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Knowledge Discovery from Data (TKDD)</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="1" to="24" />
+			<date type="published" when="2010">2010. 2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+		<title level="m" type="main">Towards a scalable kNN CF algorithm: Exploring effective applications of clustering</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Shyong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adam</forename><surname>Lam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><surname>Lapitz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Karypis</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Riedl</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006">2006</date>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="147" to="166" />
+			<pubPlace>Berlin, Heidelberg</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">A Survey on Advancing the DBMS Query Optimizer: Cardinality Estimation, Cost Model, and Plan Enumeration</title>
+		<author>
+			<persName><forename type="first">Hai</forename><surname>Lan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhifeng</forename><surname>Bao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuwei</forename><surname>Peng</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Data Science and Engineering</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="1" to="16" />
+			<date type="published" when="2021">2021. 2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<monogr>
+		<author>
+			<persName><forename type="first">Erin</forename><surname>Ledell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sebastien</forename><surname>Poirier</surname></persName>
+		</author>
+		<ptr target="https://www.automl.org/wp-content/uploads/2020/07/AutoML_2020_paper_61.pdf" />
+		<title level="m">AutoML: Scalable Automatic Machine Learning. In 7th ICML Workshop on Automated Machine Learning (AutoML). ICML</title>
+		<meeting><address><addrLine>Vienna, Austria</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1" to="16" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Towards cost-optimal query processing in the cloud</title>
+		<author>
+			<persName><forename type="first">Viktor</forename><surname>Leis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maximilian</forename><surname>Kuschewski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the VLDB Endowment</title>
+		<meeting>the VLDB Endowment</meeting>
+		<imprint>
+			<date type="published" when="2021">2021. 2021</date>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="1606" to="1612" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Slope one predictors for online rating-based collaborative filtering</title>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Lemire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anna</forename><surname>Maclachlan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2005 SIAM International Conference on Data Mining</title>
+		<meeting>the 2005 SIAM International Conference on Data Mining<address><addrLine>Newport Beach, California</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005">2005</date>
+			<biblScope unit="page" from="471" to="475" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Learning the empirical hardness of optimization problems: The case of combinatorial auctions</title>
+		<author>
+			<persName><forename type="first">Kevin</forename><surname>Leyton-Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eugene</forename><surname>Nudelman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yoav</forename><surname>Shoham</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Conference on Principles and Practice of Constraint Programming</title>
+		<meeting><address><addrLine>Ithaca, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2002">2002</date>
+			<biblScope unit="page" from="556" to="572" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Robust Estimation of Resource Consumption for SQL Queries using Statistical Techniques</title>
+		<author>
+			<persName><forename type="first">Jiexing</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Arnd</forename><surname>Christian König</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Vivek</forename><surname>Narasayya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Surajit</forename><surname>Chaudhuri</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the VLDB Endowment</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2012">2012. 2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Personalized content recommendation and user satisfaction: Theoretical synthesis and empirical findings</title>
+		<author>
+			<persName><forename type="first">Ting-Peng</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Hung-Jen</forename><surname>Lai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yi-Cheng</forename><surname>Ku</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Management Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="45" to="70" />
+			<date type="published" when="2006">2006. 2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title level="a" type="main">Query size estimation by adaptive sampling</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Richard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><forename type="middle">F</forename><surname>Lipton</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Naughton</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Comput. System Sci</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="page" from="18" to="25" />
+			<date type="published" when="1995">1995. 1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Performance comparison of neural and nonneural approaches to session-based recommendation</title>
+		<author>
+			<persName><forename type="first">Malte</forename><surname>Ludewig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Noemi</forename><surname>Mauro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sara</forename><surname>Latifi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dietmar</forename><surname>Jannach</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 13th ACM conference on recommender systems</title>
+		<meeting>the 13th ACM conference on recommender systems<address><addrLine>Copenhagen, Denmark</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="462" to="466" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">An efficient non-negative matrix-factorization-based approach to collaborative filtering for recommender systems</title>
+		<author>
+			<persName><forename type="first">Xin</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Mengchu</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yunni</forename><surname>Xia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Qingsheng</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Industrial Informatics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="1273" to="1284" />
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Machine learning with big data: Challenges and approaches</title>
+		<author>
+			<persName><forename type="first">Alexandra L'heureux</forename></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Katarina</forename><surname>Grolinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Hany</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Miriam</forename><forename type="middle">Am</forename><surname>Elyamany</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Capretz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ieee Access</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="7776" to="7797" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">Random sampling techniques for space efficient online computation of order statistics of large datasets</title>
+		<author>
+			<persName><forename type="first">Gurmeet</forename><surname>Singh Manku</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bruce</forename><forename type="middle">G</forename><surname>Sridhar Rajagopalan</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Lindsay</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGMOD Record</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page" from="251" to="262" />
+			<date type="published" when="1999">1999. 1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<monogr>
+		<author>
+			<persName><forename type="first">Gerald</forename><forename type="middle">J</forename><surname>William Q Meeker</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Luis</forename><forename type="middle">A</forename><surname>Hahn</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Escobar</surname></persName>
+		</author>
+		<title level="m">Statistical intervals: a guide for practitioners and researchers</title>
+		<meeting><address><addrLine>Hoboken, NJ, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>John Wiley &amp; Sons</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">541</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">Maximum Likelihood Estimation</title>
+		<author>
+			<persName><forename type="first">Pierre</forename><surname>Moulin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Venugopal</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Veeravalli</surname></persName>
+		</author>
+		<idno type="DOI">10.1017/9781107185920.017</idno>
+		<ptr target="https://doi.org/10.1017/9781107185920.017" />
+	</analytic>
+	<monogr>
+		<title level="m">Statistical Inference for Engineers and Data Scientists</title>
+		<meeting><address><addrLine>Cambridge</addrLine></address></meeting>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="319" to="357" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<monogr>
+		<title level="m" type="main">Machine learning: a probabilistic perspective</title>
+		<author>
+			<persName><forename type="first">Kevin P</forename><surname>Murphy</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012">2012</date>
+			<publisher>MIT press</publisher>
+			<pubPlace>London, UK.</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<analytic>
+		<title level="a" type="main">Efficiency-Effectiveness Trade-offs in Recommendation Systems</title>
+		<author>
+			<persName><forename type="first">Iulia</forename><surname>Paun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 14th ACM Conference on Recommender Systems (RecSys &apos;20)</title>
+		<meeting>the 14th ACM Conference on Recommender Systems (RecSys &apos;20)<address><addrLine>Rio de Janeiro, Brazil</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="770" to="775" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<analytic>
+		<title level="a" type="main">Are we there yet? Estimating Training Time for Recommendation Systems</title>
+		<author>
+			<persName><forename type="first">Iulia</forename><surname>Paun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yashar</forename><surname>Moshfeghi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nikos</forename><surname>Ntarmos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 1st Workshop on Machine Learning and Systems (EuroMLSys)</title>
+		<meeting>the 1st Workshop on Machine Learning and Systems (EuroMLSys)<address><addrLine>Edinburgh, United Kingdom</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<analytic>
+		<title level="a" type="main">Heterogeneity and dynamicity of clouds at scale: Google trace analysis</title>
+		<author>
+			<persName><forename type="first">Charles</forename><surname>Reiss</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexey</forename><surname>Tumanov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Gregory</forename><forename type="middle">R</forename><surname>Ganger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Randy</forename><forename type="middle">H</forename><surname>Katz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Michael</forename><forename type="middle">A</forename><surname>Kozuch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the third ACM symposium on cloud computing</title>
+		<meeting>the third ACM symposium on cloud computing<address><addrLine>San Jose, CA, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2012">2012</date>
+			<biblScope unit="page" from="1" to="13" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<monogr>
+		<author>
+			<persName><forename type="first">Francesco</forename><surname>Ricci</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Lior</forename><surname>Rokach</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bracha</forename><surname>Shapira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Paul</forename><forename type="middle">B</forename><surname>Kantor</surname></persName>
+		</author>
+		<title level="m">Recommender Systems Handbook</title>
+		<meeting><address><addrLine>Boston, Massachusetts</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+	<note>st ed.</note>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<analytic>
+		<title level="a" type="main">Tuning the performance of the MMAS heuristic</title>
+		<author>
+			<persName><forename type="first">Enda</forename><surname>Ridge</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Daniel</forename><surname>Kudenko</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Workshop on Engineering Stochastic Local Search Algorithms</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="46" to="60" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<analytic>
+		<title level="a" type="main">Learned models of performance for many planners</title>
+		<author>
+			<persName><forename type="first">Mark</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adele</forename><surname>Howe</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Landon</forename><surname>Flom</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ICAPS 2007 Workshop AI Planning and Learning</title>
+		<meeting><address><addrLine>Rhode Island, USA</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2007">2007</date>
+			<biblScope unit="page" from="36" to="40" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<analytic>
+		<title level="a" type="main">Engagement in proactive recommendations</title>
+		<author>
+			<persName><forename type="first">Laurens</forename><surname>Rook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adem</forename><surname>Sabic</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Markus</forename><surname>Zanker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Intelligent Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="79" to="100" />
+			<date type="published" when="2020">2020. 2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<monogr>
+		<title level="m" type="main">Stochastic gradient descent 0.23.0 documentation</title>
+		<author>
+			<persName><surname>Scikit-Learn</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Org</surname></persName>
+		</author>
+		<ptr target="https://scikit-learn.org/stable/modules/sgd.html#complexity" />
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<analytic>
+		<title level="a" type="main">Monte Carlo sampling methods</title>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Shapiro</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Handbooks in operations research and management science</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="353" to="425" />
+			<date type="published" when="2003">2003. 2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<analytic>
+		<title level="a" type="main">Social information filtering: algorithms for automating &quot;word of mouth</title>
+		<author>
+			<persName><forename type="first">Upendra</forename><surname>Shardanand</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pattie</forename><surname>Maes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the SIGCHI conference on Human factors in computing systems</title>
+		<meeting>the SIGCHI conference on Human factors in computing systems<address><addrLine>New York, Denver, Colorado</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="1995">1995</date>
+			<biblScope unit="page" from="210" to="217" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<analytic>
+		<title level="a" type="main">Machine learning approaches for estimation of prediction interval for the model output</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Durga</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dimitri</forename><forename type="middle">P</forename><surname>Shrestha</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Solomatine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Networks</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="225" to="235" />
+			<date type="published" when="2006">2006. 2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<analytic>
+		<title level="a" type="main">Two decades of recommender systems at Amazon</title>
+		<author>
+			<persName><forename type="first">Brent</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Greg</forename><surname>Linden</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">com. Ieee internet computing</title>
+		<imprint>
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="12" to="18" />
+			<date type="published" when="2017">2017. 2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<monogr>
+		<title level="m" type="main">Uncertainty quantification: theory, implementation, and applications</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ralph</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Smith</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">12</biblScope>
+			<pubPlace>Siam, Philadelphia, United States</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<monogr>
+		<title level="m" type="main">Energy and Policy Considerations for Deep Learning in NLP</title>
+		<author>
+			<persName><forename type="first">Emma</forename><surname>Strubell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ananya</forename><surname>Ganesh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Mccallum</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:1906.02243</idno>
+		<ptr target="http://arxiv.org/abs/1906.02243" />
+		<imprint>
+			<date type="published" when="2019">2019. 2019</date>
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<analytic>
+		<title level="a" type="main">Rose: Cluster resource scheduling via speculative over-subscription</title>
+		<author>
+			<persName><forename type="first">Xiaoyang</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chunming</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Renyu</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Garraghan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tianyu</forename><surname>Wo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jie</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jianyong</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chao</forename><surname>Li</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2018 IEEE 38th International Conference on Distributed Computing Systems (ICDCS)</title>
+		<meeting><address><addrLine>Vienna, Austria</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="949" to="960" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">One real-time personalized recommendation systems based on slope one algorithm</title>
+		<author>
+			<persName><forename type="first">Zilei</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nianlong</forename><surname>Luo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wei</forename><surname>Kuang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2011 Eighth International Conference on Fuzzy Systems and Knowledge Discovery (FSKD)</title>
+		<meeting><address><addrLine>Shanghai, China</addrLine></address></meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2011">2011</date>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="1826" to="1830" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<analytic>
+		<title level="a" type="main">Monte Carlo integration with acceptance-rejection</title>
+		<author>
+			<persName><forename type="first">Zhiqiang</forename><surname>Tan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Computational and Graphical Statistics</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="735" to="752" />
+			<date type="published" when="2006">2006. 2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<analytic>
+		<title level="a" type="main">The relative complexity of maximum likelihood estimation, map estimation, and sampling</title>
+		<author>
+			<persName><forename type="first">Christopher</forename><surname>Tosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sanjoy</forename><surname>Dasgupta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference on Learning Theory</title>
+		<meeting><address><addrLine>Phoenix, United States</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2019">2019</date>
+			<biblScope unit="page" from="2993" to="3035" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<analytic>
+		<title level="a" type="main">Recommendation of Food Items for Thyroid Patients Using Content-Based KNN Method</title>
+		<author>
+			<persName><forename type="first">S</forename><surname>Vaishali</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Samiksha</forename><surname>Vairale</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Shukla</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Data Science and Security</title>
+		<meeting><address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2021">2021</date>
+			<biblScope unit="page" from="71" to="77" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<analytic>
+		<title level="a" type="main">Automatic database management system tuning through large-scale machine learning</title>
+		<author>
+			<persName><forename type="first">Dana</forename><surname>Van Aken</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Andrew</forename><surname>Pavlo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Geoffrey</forename><forename type="middle">J</forename><surname>Gordon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bohan</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2017 ACM International Conference on Management of Data</title>
+		<meeting>the 2017 ACM International Conference on Management of Data<address><addrLine>Chicago, US</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="page" from="1009" to="1024" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<analytic>
+		<title level="a" type="main">A CUDA-enabled parallel implementation of collaborative filtering</title>
+		<author>
+			<persName><forename type="first">Zhongya</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ying</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pengshan</forename><surname>Ma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Procedia Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="page" from="66" to="74" />
+			<date type="published" when="2014">2014. 2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<analytic>
+		<title level="a" type="main">Recommendation systems and consumer satisfaction online: moderating effects of consumer product awareness</title>
+		<author>
+			<persName><forename type="first">Ling-Ling</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yuh-Jzer</forename><surname>Joung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonglin</forename><surname>Lee</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2013 46th Hawaii International Conference on System Sciences</title>
+		<meeting><address><addrLine>Wailea, Maui, HI, United States</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="page" from="2753" to="2762" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<analytic>
+		<title level="a" type="main">Openrec: A modular framework for extensible and adaptable recommendation algorithms</title>
+		<author>
+			<persName><forename type="first">Longqi</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Eugene</forename><surname>Bagdasaryan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Joshua</forename><surname>Gruenstein</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheng-Kang</forename><surname>Hsieh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Deborah</forename><surname>Estrin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Eleventh ACM International Conference on Web Search and Data Mining</title>
+		<meeting>the Eleventh ACM International Conference on Web Search and Data Mining<address><addrLine>Los Angeles, CA, United States</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018">2018</date>
+			<biblScope unit="page" from="664" to="672" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<analytic>
+		<title level="a" type="main">Making sense of recommendations</title>
+		<author>
+			<persName><forename type="first">Michael</forename><surname>Yeomans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Anuj</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sendhil</forename><surname>Mullainathan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jon</forename><surname>Kleinberg</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Behavioral Decision Making</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="page" from="403" to="414" />
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<analytic>
+		<title level="a" type="main">Towards {GPU} Utilization Prediction for Cloud Deep Learning</title>
+		<author>
+			<persName><forename type="first">Gingfung</forename><surname>Yeung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Damian</forename><surname>Borowiec</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Adrian</forename><surname>Friday</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Harper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Peter</forename><surname>Garraghan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">12th {USENIX} Workshop on Hot Topics in Cloud Computing</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+	<note>HotCloud 20</note>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<monogr>
+		<author>
+			<persName><forename type="first">Zygmunt</forename><surname>Zajac</surname></persName>
+		</author>
+		<ptr target="http://fastml.com/goodbooks-10k" />
+		<title level="m">Goodbooks-10k: a new dataset for book recommendations</title>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<analytic>
+		<title level="a" type="main">Efficient collaborative filtering recommendations with multi-channel feature vectors</title>
+		<author>
+			<persName><forename type="first">Heng-Ru</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Fan</forename><surname>Min</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Zhi-Heng</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Song</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Machine Learning and Cybernetics</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="1165" to="1172" />
+			<date type="published" when="2019">2019. 2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

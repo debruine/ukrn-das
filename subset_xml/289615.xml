@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Computational Ghost Imaging with the Human Brain</title>
+				<funder ref="#_WGjT2uq">
+					<orgName type="full">China Scholarship Council</orgName>
+				</funder>
+				<funder ref="#_xMFcTx5">
+					<orgName type="full">UK Engineering and Physical Sciences Research Council</orgName>
+				</funder>
+				<funder>
+					<orgName type="full">Royal Academy of Engineering Chair in Emerging Technologies programme</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-02-24">24 February 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Gao</forename><surname>Wang</surname></persName>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Daniele</forename><surname>Faccio</surname></persName>
+							<email>daniele.faccio@glasgow.ac.uk</email>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">School of Physics and Astronomy</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8QQ</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="institution">University of Glasgow</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Computational Ghost Imaging with the Human Brain</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-02-24">24 February 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">B480F7F074F0B42217BF7A5E8FC5759B</idno>
+					<idno type="DOI">10.34133/icomputing.0014</idno>
+					<note type="submission">Submitted 12 September 2022 Accepted 22 December 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T11:52+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Brain-computer interfaces are enabling a range of new possibilities and routes for augmenting human capability. Here, we propose brain-computer interfaces as a route towards forms of computation, i.e., computational imaging, that blend the brain with external silicon processing. We demonstrate ghost imaging of a hidden scene using the human visual system that is combined with an adaptive computational imaging scheme. This is achieved through a projection pattern "carving" technique that relies on realtime feedback from the brain to modify patterns at the light projector, thus enabling more efficient and higher-resolution imaging. This brain-computer connectivity demonstrates a form of augmented human computation that could, in the future, extend the sensing range of human vision and provide new approaches to the study of the neurophysics of human perception. As an example, we illustrate a simple experiment whereby image reconstruction quality is affected by simultaneous conscious processing and readout of the perceived light intensities.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Neurotechnologies and specifically brain-computer interfaces (BCIs) provide a route to augmenting human cognitive abilities, with applications ranging from decision-making to memory enhancement <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref><ref type="bibr" target="#b6">[6]</ref><ref type="bibr" target="#b7">[7]</ref><ref type="bibr" target="#b8">[8]</ref><ref type="bibr" target="#b9">[9]</ref><ref type="bibr" target="#b10">[10]</ref>. Visual control of BCIs is a specific example of interface that typically relies on the so-called steady-state visual evoked potential (SSVEP) and that can be read out either with implanted electrodes or, more readily, using an electroencephalogram (EEG) <ref type="bibr" target="#b12">[11]</ref><ref type="bibr" target="#b13">[12]</ref><ref type="bibr" target="#b14">[13]</ref><ref type="bibr" target="#b15">[14]</ref>. In this case, it is the visual system that acts as a sensor of the surrounding environment and/or controller of the computer. SSVEP requires a periodically repeating illumination pattern or light modulation, typically in the 3-to 4-Hz up to the 30-to 40-Hz region, to stimulate a steady-state (periodic) response in the brain. A well-known feature of SSVEP is also the strong nonlinearity in the form of multiple harmonics in the output power spectrum <ref type="bibr" target="#b16">[15]</ref><ref type="bibr" target="#b17">[16]</ref><ref type="bibr" target="#b18">[17]</ref>.</p><p>A question that we address here builds upon BCIs based on visually evoked responses in the brain and relates to whether the brain can be integrated into forms of computational imaging.</p><p>Computational imaging is the use of computer-based approaches to complement or enhance machine vision or imaging. A notable example relevant to this work is ghost imaging (GI).</p><p>In its simplest version, GI relies on illuminating an object with a series of light patterns and then detecting only the corresponding reflected or transmitted gray-scale intensity values that will vary due to the different spatial overlap of each pattern with the object. By weighting each pattern with the corresponding measured intensity value and summing over all patterns, one can reconstruct an image of the object. Substantial research has been devoted also to the problem of optimizing the shape or required number of illumination patterns, including also compressive sensing techniques <ref type="bibr" target="#b19">[18]</ref><ref type="bibr" target="#b20">[19]</ref><ref type="bibr" target="#b21">[20]</ref><ref type="bibr" target="#b22">[21]</ref><ref type="bibr" target="#b23">[22]</ref><ref type="bibr" target="#b24">[23]</ref><ref type="bibr" target="#b25">[24]</ref><ref type="bibr" target="#b26">[25]</ref><ref type="bibr" target="#b27">[26]</ref><ref type="bibr" target="#b28">[27]</ref><ref type="bibr" target="#b29">[28]</ref><ref type="bibr" target="#b30">[29]</ref><ref type="bibr" target="#b31">[30]</ref><ref type="bibr" target="#b32">[31]</ref><ref type="bibr" target="#b33">[32]</ref>.</p><p>A key point of this and other computational techniques is that they rely on some form of machine-based detection, i.e., cameras or single-pixel sensors and these are then combined with computational algorithmic approaches to retrieve scene images.</p><p>In this work, we propose a route towards brain-computer forms of computational imaging. We demonstrate a GI protocol that relies on relaying light intensity information reflected from a surface and that is read out as an SSVEP from the brain. This information is then processed by a computer-based algorithm and an artificial neural network that reconstructs an image from the SSVEP power spectrum. This imaging process is made more efficient by an adaptive computational loop whereby the SSVEP signal also indicates how to select the appropriate illumination patterns that are sent on to the scene being imaged. We then show preliminary results whereby the reconstructed imaging quality is used to quantify the difference between nonconscious processing of the light intensity (through the EEG signal) and explicit conscious processing (by asking the participant to either verbally communicate or type on a keyboard the perceived light intensity).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Materials and Methods</head><p>Computational GI relies on a light source that can project a series of typically binary (black and white) patterns, P n . These light patterns are then reflected (or transmitted) from the object or scene we wish to image and collected with a bucket detector (i.e., sensitive only to total energy), a n . Then, summation of all the bucket value-weighted patterns will produce an image, O = ∑a n P n . A very common choice of patterns is the Hadamard set, H, that can be recursively defined.</p><p>Over the years, researchers have optimized GI by using different light sources, detectors or computational algorithms.</p><p>Recent attempts have also used the human visual system as a detector where the visual persistence time of the retina is used to directly perform the summation operation described above, i.e., a series of preweighted patterns are precalculated and are then visualized at sufficiently high rates that they are effectively perceived by the eye as an accumulated sum <ref type="bibr" target="#b34">[33]</ref><ref type="bibr" target="#b35">[34]</ref><ref type="bibr" target="#b36">[35]</ref>. Conversely, here we implement a form of computational GI in which the human visual cortex processes visual data and also provides feedback that allows to adapt the projected patterns in real time so as to minimize measurement time.</p><p>A schematic overview of the experiments is shown in Fig. <ref type="figure">1</ref>. We project a series of binary Hadamard patterns using a standard digital light projector onto an object. The light transmitted past the object is then observed in reflection from a secondary white surface (white wall). Each binary pattern is periodically switched on/off for several periods with a frame rate that is chosen in the 3-to 30-Hz region. We detect the SSVEP generated by the visual cortex activity from a single electrode placed at O z , the medial visual cortex region (see the Supplementary Materials). This SSVEP is then analyzed in the spectral domain and the corresponding fundamental (i.e., at the same frequency of the light modulation) and higher harmonic (due to neuron nonlinearity) amplitudes are extracted. These are then used to reconstruct an image of the object, which as shown in the schematic overview, is hidden behind a wall.</p><p>In all our measurements, the object has actually illuminated only one column or stripe at a time; i.e., we project the Hadamard matrix column vectors as single-line elements that illuminate the object at a horizontal pixel location, starting, e.g., from the left of the object. Once all of the patterns from Hadamard patterns have been projected at this fixed horizontal location, we then shift one pixel to the right and repeat the projection and carving sequence. This procedure is iteratively repeated until the object has been fully scanned.</p><p>The first step for any form of imaging requires calibration of the detection system and identification of linear regions or at least regions in which the system response is monotonic with increasing input intensity. In this case, the "system" is the visual system and SSVEP readout, which is known to exhibit significant nonlinearity. We characterized the (non)linearity of the SSVEP readout with a standard liquid crystal display (LCD) screen that displayed a flickering uniform intensity with a frequency between 3 and 30 Hz and that was varied across the full 8-bit range of the screen, i.e., in values from 0 to 255, corresponding to completely black (no light) and very bright (corresponding to 125 lm). The EEG signal is then Fourier transformed <ref type="bibr" target="#b37">[36,</ref><ref type="bibr" target="#b38">37]</ref>. Clear harmonic peaks are observed as expected <ref type="bibr" target="#b14">[13]</ref>, and we then consider the maximum values of the individual harmonics (up to the fourth) as well as the total sum of these values (the total SSVEP energy). The SSVEP energy heatmap for each individual harmonic shows a complicated and typically nonmonotonic dependence for varying screen intensity and flicker frequency (see the Supplementary Materials).</p><p>Figure <ref type="figure">2A</ref> shows the total SSVEP energy. Here, we can identify 2 ideal flicker frequency regions at 6 and 15 Hz, shown in Fig. <ref type="figure">2B</ref>. The region around 15 Hz shows a clear monotonic increase of SSVEP energy with increasing illumination and a similar behavior occurs also at 6 Hz, albeit only for a more limited screen intensity range (between 0 and ∼125 bits, i.e., between 0 and ∼75 lm). The same calibration measurements  performed across 3 different people resulted in a similar behavior (see the Supplementary Materials). We therefore perform most of our experiments at either 15 Hz (using the full 0 to 125 lm intensity range) or 6 Hz (using a limited intensity range).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results and Discussion</head><p>Using the setup shown in Fig. <ref type="figure">1</ref>, objects are illuminated with Hadamard patterns that are each periodically flickered (see the Supplementary Materials for full details).</p><p>Figure <ref type="figure" target="#fig_2">3A</ref> and B shows results for the standard GI approach for a 4 × 4 pixel object with a 6-Hz flicker frequency and for 4 s and 2 s illumination time for each of the first 16 Hadamard patterns. The columns show the ghost image reconstruction obtained using each individual harmonic SSVEP energy and then for the total energy (sum over all harmonics). Only the total SSVEP energy allows the reconstruction of a clear image, in keeping with the calibration tests. More complicated images require more pixels. For example, Fig. <ref type="figure" target="#fig_2">3C</ref> and<ref type="figure">D</ref> shows the attempts to image the letter "T" on an 8 × 8 pixel grid. At 4 s illumination time (Fig. <ref type="figure" target="#fig_2">3D</ref>), we obtain only a very noisy image. Increasing the illumination time to 8 s for each pattern (Fig. <ref type="figure" target="#fig_2">3C</ref>) provides a marginally better image where the letter "T" is starting to emerge, hinting that significantly increasing illumination times could lead to better images. However, this strategy would lead to impractical experiment times that could then lead to other problems, including fatigue for the viewer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Adaptive GI with the human brain</head><p>An adaptive feedback loop is employed to adjust the projected Hadamard patterns dynamically during the measurement process and thus improve both the imaging speed and the image quality.</p><p>The underlying principle of this is a "Hadamard matrix carving" method that is based on the observation that when projecting Hadamard (or any given choice of) patterns onto an object, not all patterns will have significant overlap with the object and this can be used to dynamically adapt the choice of successive projections.</p><p>In brief, patterns are taken from the Hadamard matrix H. This matrix has columns composed of vector Hadamard patterns, each of length equal to the total number of pixels in the image, N, and therefore, H has rank N. These patterns (i.e., columns taken from H) are projected one at a time. Whenever a bucket value is measured that is below a certain threshold, this indicates that this specific pattern has a minimal or zero overlap with the object. We therefore apply a "row carving" operator, R, that "carves" the Hadamard matrix by removing all rows corresponding to the nonzero row elements of the pattern. The resulting matrix will have a reduced rank, N/2. We then apply a "column carving" operator, C, that removes columns that do not contribute to increasing the matrix rank. In this way, we obtain a new square, carved matrix H c = RHC that also has rank N/2. This process is then repeated on H ′ , with additional carving being applied each time a pattern is found with no overlap with the object, each time reducing by a factor 2× the rank and therefore the number of required illumination patterns. The final result will be a reduced H c that contains N/2 m patterns instead of N with a corresponding reduction in measurement time. The precise value of m and, therefore, of the reduction of the measurement time depends on the specific details of the object that is being imaged. In general terms, sparse binary objects can lead to very significant gains in terms of patterns that are dropped with a significant decrease of measurement time, as shown below.</p><p>Full details with a worked example of the Hadamard carving approach are provided in the Supplementary Materials.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Image reconstruction</head><p>Various approaches can be implemented to reconstruct the final image. As seen above, the standard GI where the image is reconstructed as O = ∑a n H n will give rather noisy images.</p><p>We can use the carving approach described above and then reconstruct an image from</p><formula xml:id="formula_0">O = H c ⋅ H T c -1 ⋅ H c ⋅ B,</formula><p>where B indicates the vector formed by all the measured SSVEP values (see the Supplementary Materials for details). We can additionally use the patterns that were eliminated as masks that indicate where we should expect the image to have zero intensity. This "carved ghost imaging" (CGI) approach leads to significant improvement by removing noise from pixels outside the object.</p><p>Finally, we implemented an end-to-end deep neural network (DNN-GI) that consists of both an image reconstruction and denoising step. The DNN is therefore composed of a linear layer that is trained to reconstruct an image taking as an input only the detected bucket (i.e., SSVEP) values followed by a series of nonlinear layers for denoising <ref type="bibr" target="#b39">[38]</ref> (see details in the Supplementary Materials).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Adaptive GI results</head><p>Objects are illuminated with 16 × 16 pixel Hadamard patterns with 2-s illumination times and a flicker frequency of 6 Hz. Hadamard carving is applied as described above followed by image reconstruction based on standard GI, CGI, and DNN-GI. Figure <ref type="figure" target="#fig_3">4</ref> shows the results obtained with the 3 methods for 3 different examples, i.e., a geometric shape and 2 simplified face objects (more results are shown in the Supplementary Materials). Image reconstruction quality is quantified by the structural similarity index measure (SSIM), indicated above each figure. CGI, using carved patterns, performs better than traditional GI due to the carved patterns that effectively set parts of the background area to zero.</p><p>The best results are obtained with the DNN-GI due to the additional noise reduction that is included as part of the network structure (see the Supplementary Materials). More importantly, whereas the straightforward GI completely fails at reconstructing an image, the DNN reconstruction applied after carving leads to high-quality images with an average ∼70% reduction of the total number patterns required. For reference, the standard GI approach (first column in Fig. <ref type="figure" target="#fig_2">3</ref>) required a rather prohibitive observation time for the full 256 pattern set of around 256 × 2 × (16/4) 2 /60 = 137 min for the digit "0" in row (A), whereas the CGI and DNN-GI approaches required a total of only 87 × 2/60 = 3 min.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusions</head><p>We have shown that it is possible to perform simple computational tasks that rely on brain-computer connectivity. The chosen specific computational task can be identified as a form of GI, including an adaptive feedback approach that allows to "carve" out low-signal illumination patterns and thus significantly reduce both illumination time and final image noise. The same approach could, of course, also be implemented using a standard detector. However, the emphasis here is on the possibility for the use of SSVEP recordings to establish an adaptive computational imaging scheme where the brain is used as the sensor for image reconstruction. This lays the foundations for future work where the brain-computer system can be used for alternative forms of computation, possibly extending also to other forms of computational imaging or also to other input channels to the brain such as the auditory system. As a further example of potential applications, we note that the GI protocol shown here is a form of nonexplicit (or nonconscious) information processing that could be compared to an explicit processing of the information whereby the participant is asked to directly evaluate the light intensities observed on the screen. Figure <ref type="figure">5</ref> shows the results of an experiment where we compare the imaging quality quantified using a standard metric as the SSIM when processing "nonconsciously" acquired data, i.e., data from the EEG, with explicit, "consciously" acquired data, i.e., by asking the participant to either speak out or type the More details are given in the Supplementary Materials. We systematically observed that the EEG and explicit readout give similar (SSIM) image reconstruction qualities. However, the EEG-reconstructed image deteriorates significantly in the second set of experiments, i.e., when simultaneously reading out the perceived intensity values. This work therefore shows that at least to some extent, the brain can be used as part of a computational imaging system. A first impression might be that the visual system is simply acting as a different kind of camera. However, the tension between conscious and nonconscious processing of the visual signals and the resulting degradation of the computationally retrieved images indicates that there is more to be investigated in this process. The degradation of the image retrieved from the EEG readout when an explicit (spoken or typed) readout is also acquired in the same experiment is an unexpected result. We do not believe that this is due to spurious effects related to the physical act of vocalizing or typing the readout for the simple reason that the explicit readout is performed during the 2-s rest time after the 4-s interval illumination time during which the EEG signal is acquired. We speculate that the EEG (nonexplicit) image degradation is instead related to changes in the neurological processing, i.e., the conscious information processing (for example, through an increased neural attention to the perceived light intensities in anticipation of needing to provide an explicit readout) interferes with the nonexplicit readout. This will require further investigation and offers the intriguing prospect that the computational imaging approach shown here and probably others, too, could form the basis of an additional tool for investigating information processing in the human brain.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 1 .Fig. 2 .</head><label>12</label><figDesc>Fig.1. The setup used for adaptive ghost imaging. A light projector illuminates an object cut out from a cardboard support. Transmitted light is diffused by a ground glass that is in contact with the cardboard support and illuminates a white, observation wall. This part of the setup is obscured from the observer by a wall. The distance of both the object and the observer from this secondary wall is ∼0.5 to 1 m. The EEG signal from the observer is recorded and processed on a computer.A B</figDesc><graphic coords="2,195.63,293.74,92.06,151.70" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>Downloaded from https://spj.science.org at University of Glasgow onMarch 10, 2023   </figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Standard ghost imaging results. (A) Inverted "L" shape (4 s/pattern illumination time; total acquisition [illumination] time of 84 s). (B) Inverted "L" shape (2 s/pattern illumination time; total acquisition time of 42 s). (C) Letter "T" (8 s illumination time; total acquisition time of 512 s). (D) Letter "T" (4 s illumination time; total acquisition time of 256 s). The columns, from left to right, show the ghost images that are reconstructed from the SSVEP fundamental (First H), second harmonic (Second H), third harmonic (Third H), fourth harmonic (Fourth H), and total energy (sum over all 4 harmonics). The last column shows the ground truth object shape. Each image is normalized to the "Sum of harmonics" total intensity (rescaling factors are shown above each image).</figDesc><graphic coords="3,69.01,355.63,460.94,327.38" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Fig. 4 .</head><label>4</label><figDesc>Fig. 4. Adaptive feedback ghost imaging results. The 4 columns indicate results (from left to right) using the standard GI approach, carved GI (CGI), DNN GI reconstruction, and the ground truth object. Row (A) for the number "0" with 87 patterns (total acquisition time of 174 s); row (B) for a smiley face with 74 patterns (total acquisition time of 148 s); and row (C) for a sad face with 76 patterns (total acquisition time of 152 s).</figDesc><graphic coords="4,316.65,211.47,51.26,51.02" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="5,164.89,93.80,370.46,251.30" type="bitmap" /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>Downloaded from https://spj.science.org at University of Glasgow on March 10, 2023 Wang and Faccio 2023 | https://doi.org/10.34133/icomputing.0014</p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1"><p>Downloaded from https://spj.science.org at University of Glasgow onMarch 10, 2023   </p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>Acknowledgments</head><p>The authors would like to thank <rs type="person">Lars Muckli</rs> for helpful discussions and suggestions. This research was approved by the <rs type="institution">University of Glasgow</rs> ethics approval committee, application no. <rs type="grantNumber">300210003</rs>. Funding: G.W. acknowledges the support of the <rs type="funder">China Scholarship Council</rs>. D.F. acknowledges support from the <rs type="funder">Royal Academy of Engineering Chair in Emerging Technologies programme</rs> and the <rs type="funder">UK Engineering and Physical Sciences Research Council</rs> (grant <rs type="grantNumber">EP/T00097X</rs>/). Author contributions: G.W. designed the experiments, collected data, and wrote the original draft. G.W. and D.F. contributed to drafting and/or revising the manuscript. Competing interests: The authors declare that they have no competing interests.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_WGjT2uq">
+					<idno type="grant-number">300210003</idno>
+				</org>
+				<org type="funding" xml:id="_xMFcTx5">
+					<idno type="grant-number">EP/T00097X</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Data Availability</head><p>Data acquired in this research are available from http://dx.doi. org/10.5525/gla.researchdata.1368.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Nonconscious versus conscious ghost imaging: (A) shows 5 repetitions of "standard" (full Hadamard pattern projection) ghost imaging of the digit "7" using only the EEG as a readout. The mean SSIM across the 5 repetitions is 0.72. (B) shows the case for concomitant EEG readout and conscious readout in the form of perceived intensity values evaluated by the participant in the range 0 to 15 and then typed into a keyboard (without shifting eye contact from the screen). The "conscious" processed information provides similar image quality to the EEG alone (mean SSIM = 0.70). However, the EEG reconstruction is now systematically worse and has a mean SSIM = 0.56, indicating an apparent interference between conscious processing of the data and the EEG readout from the visual cortex. Reference <ref type="bibr" target="#b40">[39]</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Supplementary Materials</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Neurotechnologies for human cognitive augmentation: Current state of the art and future prospects</title>
+		<author>
+			<persName><forename type="first">C</forename><surname>Cinel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Valeriani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Poli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Hum Neurosci</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page">13</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Brain computer interfacing: Applications and challenges</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">N</forename><surname>Abdulkader</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Atia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">M</forename><surname>Mostafa-Sami</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Egypt Inform J</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="213" to="230" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">50 years of the International Journal of Human-Computer Studies. Reflections on the past, present and future of human-centred technologies: Human augmentation: Past, present and future</title>
+		<author>
+			<persName><forename type="first">R</forename><surname>Raisamo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Rakkolainen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Majaranta</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Salminen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Rantala</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Farooq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Hum Comput Stud</title>
+		<imprint>
+			<biblScope unit="volume">131</biblScope>
+			<biblScope unit="page" from="131" to="143" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Single trial BCI classification accuracy improvement for the novel virtual sound movement-based spatial auditory paradigm</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Lelievre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Washizawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">M</forename><surname>Rutkowski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2013 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference</title>
+		<meeting><address><addrLine>Kaohsiung, Taiwan</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2013-10-29">2013 Oct 29-Nov 01</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Robot navigation using braincomputer interfaces</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vourvopoulos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Liarokapis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2012 IEEE 11th International Conference on Trust, Security and Privacy in Computing and Communications</title>
+		<imprint>
+			<date type="published" when="2012-06-25">2012 June 25-27</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">U</forename><forename type="middle">K</forename><surname>Liverpool</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Experiencing BCI control in a popular computer game</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Van De Laar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Gürkök</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Dp-O</forename><surname>Bos</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Poel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nijholt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Comput Intell AI Games</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="176" to="184" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">EEG-based brain-controlled mobile robots: A survey</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X-A</forename><surname>Fan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Liu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Hum Mach Sys</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="161" to="176" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Decoding semantic information from human electrocorticographic (ECoG) signals</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Degenhart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">P</forename><surname>Sudre</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Pomerleau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Tyler-Kabara</forename><surname>Ec</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annual Int Conf IEEE Eng Med Biol Soc</title>
+		<imprint>
+			<biblScope unit="page" from="6294" to="6298" />
+			<date type="published" when="2011">2011. 2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Brain-computer interfaces for speech communication</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">S</forename><surname>Brumberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Nieto-Castanon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">R</forename><surname>Kennedy</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">H</forename><surname>Guenther</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010">2010</date>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="page" from="367" to="379" />
+		</imprint>
+	</monogr>
+	<note>Speech Comm</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Brain-robot control interface: Development and application</title>
+		<author>
+			<persName><forename type="first">N</forename><surname>Prataksita</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y-T</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H-C</forename><surname>Chou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C-H</forename><surname>Kuo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2014 IEEE international symposium on bioelectronics and bioinformatics</title>
+		<imprint>
+			<publisher>IEEE ISBB</publisher>
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">Chung</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Taiwan</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Chapter 6-Brain-computer interfaces</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">R</forename><surname>Wolpaw</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Neurological rehabilitation, ser. Handbook of Clinical Neurology</title>
+		<editor>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Barnes</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">D</forename><forename type="middle">C</forename><surname>Good</surname></persName>
+		</editor>
+		<meeting><address><addrLine>Netherlands</addrLine></address></meeting>
+		<imprint>
+			<publisher>Elsevier</publisher>
+			<date type="published" when="2013">2013</date>
+			<biblScope unit="volume">110</biblScope>
+			<biblScope unit="page" from="67" to="74" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Brain-computer interfaces based on visual evoked potentials</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Gao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Hong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Jia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Eng Med Biol Mag</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="64" to="71" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Ales JM, Cottereau BR, Rossion B. The steady-state visual evoked potential in vision research: A review</title>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">M</forename><surname>Norcia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">G</forename><surname>Appelbaum</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Vis</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page">4</biblScope>
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Steady-state visually evoked potentials: Focus on essential paradigms and future perspectives</title>
+		<author>
+			<persName><forename type="first">F-B</forename><surname>Vialatte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Maurice</forename><forename type="middle">M</forename><surname>Dauwels</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Cichocki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Prog Neurobiol</title>
+		<imprint>
+			<biblScope unit="volume">90</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="418" to="438" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">A model based investigation of the period doubling behavior in human steady-state visual evoked potentials</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Tuncel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Başaklar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">Z</forename><surname>Ider</surname></persName>
+		</author>
+		<idno>Article 045030</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biomed Phys Eng Express</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Differential roles of frequency-following and frequency-doubling visual responses revealed by evoked neural harmonics</title>
+		<author>
+			<persName><forename type="first">Y-J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Grabowecky</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">A</forename><surname>Paller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Suzuki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Cogn Neurosci</title>
+		<imprint>
+			<biblScope unit="volume">23</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1875" to="1886" />
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Nonlinear origin of SSVEP spectra-A combined experimental and modeling study</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Labecki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Kus</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Brzozowska</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Stacewicz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">S</forename><surname>Bhattacharya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Suffczynski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Front Comput Neurosci</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page">129</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Ghost imaging lidar via sparsity constraints</title>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">Q</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">L</forename><surname>Gong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">R</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">D</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Han</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl Phys Lett</title>
+		<imprint>
+			<biblScope unit="volume">101</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page">141123</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Dong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ghost imaging based on deep learning. Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">6469</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Computational ghost imaging using deep learning</title>
+		<author>
+			<persName><forename type="first">T</forename><surname>Shimobaba</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Endo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Nishitsuji</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Takahashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Nagahama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Hasegawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hirayama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Kakue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Shiraki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Commun</title>
+		<imprint>
+			<biblScope unit="volume">413</biblScope>
+			<biblScope unit="page" from="147" to="151" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Ghost imaging using optical correlations</title>
+		<author>
+			<persName><forename type="first">P-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Toninelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gregory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Laser Photonics Rev</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">1700143</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">An introduction to ghost imaging: Quantum and classical</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Boyd</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Philos Trans R Soc A Math Phys Eng Sci</title>
+		<imprint>
+			<biblScope unit="volume">375</biblScope>
+			<date type="published" when="2017">2017. 2099. 20160233</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Ghost imaging</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Padgett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Aspden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Gibson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Edgar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Spalding</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Photonics News</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="38" to="45" />
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Computational ghost imaging</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Shapiro</surname></persName>
+		</author>
+		<idno>Article 061802</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev A</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Optical imaging by means of two-photon quantum entanglement</title>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">B</forename><surname>Pittman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Shih</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">V</forename><surname>Strekalov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">V</forename><surname>Sergienko</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev A</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="3429" to="R3432" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Correlated two-photon imaging with true thermal light</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">H</forename><surname>Zhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">H</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Lett</title>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="2354" to="2356" />
+			<date type="published" when="2005">2005</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Experimental x-ray ghost imaging</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Pelliccia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Scheel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><surname>Cantelli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">M</forename><surname>Paganin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev Lett</title>
+		<imprint>
+			<biblScope unit="volume">117</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">113902</biblScope>
+			<date type="published" when="2016">2016</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">1000 fps computational ghost imaging using LED-based structured illumination</title>
+		<author>
+			<persName><forename type="first">Z</forename><forename type="middle">H</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Chen</forename><forename type="middle">W</forename><surname>Penuelas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Padgett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Express</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="2427" to="2434" />
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Ultrahigh-speed color imaging with single-pixel detectors at low light level</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev Appl</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">34049</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Compressive sensing computational ghost imaging</title>
+		<author>
+			<persName><forename type="first">V</forename><surname>Katkovnik</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Astola</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Opt Soc Am A Opt Image Sci Vis</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1556" to="1567" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Normalized ghost imaging</title>
+		<author>
+			<persName><forename type="first">B</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">S</forename><surname>Welsh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">P</forename><surname>Edgar</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">H</forename><surname>Shapiro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Express</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">15</biblScope>
+			<biblScope unit="page" from="16892" to="16901" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Iterative denoising of ghost imaging</title>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">R</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">K</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">F</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">Z</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">F</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">J</forename><surname>Zhai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Express</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">20</biblScope>
+			<biblScope unit="page" from="24268" to="24275" />
+			<date type="published" when="2014">2014</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">Ghost imaging with the human eye</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Boccolini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fedrizzi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Faccio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Opt Express</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="9258" to="9265" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">All-optical naked-eye ghost imaging</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">2493</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Naked-eye ghost imaging via photoelectric feedback</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Tang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yuan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Xu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chin Opt Lett</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page">91101</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Improving the readability of timefrequency and time-scale representations by the reassignment method</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Auger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Flandrin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Signal Process</title>
+		<imprint>
+			<biblScope unit="volume">43</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1068" to="1089" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Algorithms for computing the timecorrected instantaneous frequency (reassigned) spectrogram, with applications</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Fulop</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Fitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Acoust Soc Am</title>
+		<imprint>
+			<biblScope unit="volume">119</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="360" to="371" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Beyond a Gaussian denoiser: Residual learning of deep CNN for image denoising</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Zuo</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Meng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Zhang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans Image Process</title>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="3142" to="3155" />
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">How many photons does it take to form an image?</title>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">D</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P-A</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gregory</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Padgett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Appl Phys Lett</title>
+		<imprint>
+			<biblScope unit="volume">116</biblScope>
+			<biblScope unit="issue">26</biblScope>
+			<biblScope unit="page">260504</biblScope>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

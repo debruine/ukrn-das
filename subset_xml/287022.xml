@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Numerical modeling of nonlinear photoelasticity</title>
+				<funder ref="#_ShfjR3t #_mJapv83">
+					<orgName type="full">unknown</orgName>
+				</funder>
+				<funder ref="#_6ypTdfa">
+					<orgName type="full">Department of Defense Basic Research Program for HBCU/MI</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName><forename type="first">Markus</forename><surname>Mehnert</surname></persName>
+							<email>markus.mehnert@fau.de</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Applied Mechanics</orgName>
+								<address>
+									<addrLine>Friedrich-Alexander University Erlangen-Nuremberg</addrLine>
+									<settlement>Erlangen</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">William</forename><surname>Oates</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department" key="dep1">Florida Center for Advanced Aero Propulsion (FCAAP)</orgName>
+								<orgName type="department" key="dep2">Department of Mechanical Engineering</orgName>
+								<orgName type="department" key="dep3">Florida A &amp; M</orgName>
+								<orgName type="institution">Florida State University</orgName>
+								<address>
+									<settlement>Tallahassee</settlement>
+									<region>Florida</region>
+									<country key="US">USA</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Paul</forename><surname>Steinmann</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Applied Mechanics</orgName>
+								<address>
+									<addrLine>Friedrich-Alexander University Erlangen-Nuremberg</addrLine>
+									<settlement>Erlangen</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff2">
+								<orgName type="department">Glasgow Computational Engineering Centre</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff3">
+								<orgName type="department">Institute of Applied Mechanics</orgName>
+								<address>
+									<addrLine>Friedrich-Alexander University Erlangen-Nuremberg</addrLine>
+									<postCode>91054</postCode>
+									<settlement>Erlangen</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Numerical modeling of nonlinear photoelasticity</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="MD5">452C60F28535513C3A32A244C3761DA3</idno>
+					<idno type="DOI">10.1002/nme.7177</idno>
+					<note type="submission">Received: 9 June 2022 Revised: 25 October 2022 Accepted: 17 November 2022</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T14:36+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>When molecular photo-switches, such as azobenzene or norbornadiene, are embedded into a sufficiently soft polymer matrix the resulting compound can undergo a mechanical deformation induced by light of a specific wavelength.</p><p>These photo-sensitive compounds have the potential to be applied as soft actuators without the need for hard wired electronics or a separate energy source. Such characteristics are especially attractive in the design of micro-scale robots but also other applications such as high-speed data transfer or the conversion of photonic energy into a mechanical response holds great promise. Despite these almost futuristic possibilities, photo-sensitive polymers have not yet experienced a sufficient attention in industrial applications. One important factor to increase the acceptance of this group of soft smart materials is the formulation of a rigorous constitutive modeling approach in combination with numerical simulation methods. Thus, in this contribution we present a photo-mechanical modeling approach, departing from the fundamentals published previously. We briefly introduce the necessary constitutive equations which are subsequently utilized in combination with the respective balance laws into a finite element implementation. Finally, the capabilities of the numerical solution approach are illustrated by a simple two-dimensional bench-mark example and subsequently extended to a more complex three-dimensional problem.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>INTRODUCTION</head><p>Polymers that are able to undergo deformations and changes in certain properties in response to external, non-mechanical stimuli form an exciting subclass of smart materials. While electro-or magneto-sensitive polymers are well investigated, <ref type="bibr" target="#b0">[1]</ref><ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref> the application of polymeric materials that respond to illumination with deformation (that does not correspond to thermal effects) is still noticeably underdeveloped. Nonetheless, these photo-sensitive polymers have extraordinary properties that render them promising candidates for the development of revolutionary actuator technologies. Especially intriguing is the possibility to operate them without a separate power source or hard wired connections. Furthermore, they can be controlled precisely by selecting the suitable polarization direction, wavelength, and intensity of the incident light. In certain cases, this even allows for the operation of such actuators through layers of material such as skin, thus enabling revolutionary medical procedures. <ref type="bibr" target="#b5">6</ref> The required building blocks for illumination technologies such as optics, lasers, and optical fibers have been well established for decades and are easily available. In the past, a wide range of polymers have been developed that respond to the illumination by light. <ref type="bibr" target="#b6">[7]</ref><ref type="bibr" target="#b7">[8]</ref><ref type="bibr" target="#b8">[9]</ref><ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref> Among these, different types of mechanical deformations such as volumetric changes, <ref type="bibr" target="#b11">12</ref> bending deformation, <ref type="bibr" target="#b12">13</ref> and contraction <ref type="bibr" target="#b13">14</ref> have been reported. It should be noted that the presented changes are reversible, meaning that given a sufficiently long time, the sample returns to its original configuration once the illuminating light source is removed. <ref type="bibr" target="#b14">15</ref> In order to achieve this mechanical response to a stimulation by light, photo-sensitive functional groups or fillers have to be incorporated into a tailored polymer matrix in combination with a functionalization process. This approach has been well-established and results in a transfer of the effects on the molecular level into a macroscopically visible response. <ref type="bibr" target="#b15">16</ref> An important factor to increase the popularity and usability of photo-sensitive materials is a proper modeling approach in order to fully analyze and harness the possibilities that these materials offer. First modeling concepts were presented, for example, by Tzou <ref type="bibr" target="#b16">[17]</ref><ref type="bibr" target="#b17">[18]</ref><ref type="bibr" target="#b18">[19]</ref> expanding a simple one-dimensional theory to the description of photostriction and photodeformation of two-dimensional distributed photostrictive optical actuator systems. However, these models are targeted primarily towards opto-piezoelectricity where large deformations are not considered. A polarization-dependent model incorporating photocontractions of polydomain nematic elastomers was developed by Corbet and Warner <ref type="bibr" target="#b19">20</ref> in which the deformation of the material was initially caused by light-induced director rotation. In their approach, the reduction of the local order parameter resulted in a strain recovery at higher light intensity resulting in nonmonotonic photostrains. An analytical investigation on the photomechanics of mono-and polydomain liquid crystal elastomers was presented by Dunn <ref type="bibr" target="#b20">21</ref> where the effects of geometric nonlinearities where implemented into an isotropic linear elastic material model. The results of this approach where compared both to real life data and a more complex finite-element implementation. More recently in a number of publications, Bin and Oates presented a unified material description for light induced deformation specifically tailored to the material response of azobenzene polymers. <ref type="bibr" target="#b21">[22]</ref><ref type="bibr" target="#b22">[23]</ref><ref type="bibr" target="#b23">[24]</ref> The general framework presented therein includes both the effects of dipole and quadrupole charge arrangements and is extended to include time-dependent material effects for large deformations. The comparison to material data gathered both from the literature and their own experiments showed an excellent agreement to the derived model. Very recently, Bai and Bhattacharya <ref type="bibr" target="#b24">25</ref> presented a continuum framework based on the free energy concept considering the effects of mechanical stresses on the nematic alignment and the resulting influence on the photo-sensitive characteristics of azobenzene doped liquid crystals elastomers.</p><p>The complex multi-physics problems arising from light-matter interaction may be approached using numerical simulations in form of a finite-element implementation. However, so far in the field of photo-mechanics only few implementations into finite-element codes have been realized. Most noticeably, Rahman and Nawaz derived a finite-element model used for the investigation of thin films, <ref type="bibr" target="#b25">[26]</ref><ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref> based on the concepts presented in Reference 19. In these works an existing finite element code capable of solving three-dimensional elasto-static eigenvalue problems, two-dimensional static structural systems and specific heat transfer applications was extended for the static analysis of photostrictive materials by four-noded quadrilateral elements that are used in combination with eight-noded brick elements for the simulation of the bulk material. However, the purely elastic material behavior in combination with the restriction to small deformations renders the derived FEM implementation rather limited and unsuited for the simulation of polymers such as polyimide-based azobenzene.</p><p>Consequently, in the current contribution we aim to present a photo-mechanical modeling approach, based on the theoretical framework published in Reference 29, that is capable of capturing large deformations. For this, the necessary constitutive expressions are presented together with their linearization. In combination with the respective balance equations a finite element implementation into the open source FEM library DEAL II <ref type="bibr" target="#b29">30,</ref><ref type="bibr" target="#b30">31</ref> is developed.</p><p>This contribution is structured as follows: following the introduction, the general modeling concept is established in Section 2. After this, the necessary balance laws and constitutive equations are presented in Sections 3 and 4. These are subsequently implemented into a finite-element code as presented in Section 5. For the purpose of illustrating the model capabilities, in Section 6 a parameter study using a simple, two-dimensional numerical example followed by a more complex three-dimensional application is presented . Finally, the work is closed by a summary and concluding remarks in Section 7.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">LIGHT-MATTER MODELING CONCEPT</head><p>Light-matter interaction in photo-sensitive polymers includes a wide range of complex effects, especially considering that molecular switches are frequently embedded into liquid crystal polymer structures. The modeling concept and its numerical implementation presented in this work are intended to serve as the base framework that can be extended to include various phenomena observed in photo-sensitive materials. This includes the viscous behavior of the polymeric backbone, time dependent switching of the light sensitive molecules, light absorption or scattering and liquid crystal domain formation. However, as a first step, we aim at implementing a simple, lean and easily modifiable approach that covers the very basic principle of the here considered light-matter interaction.</p><p>As sketched in Figure <ref type="figure" target="#fig_0">1</ref>, we consider a body as a composition of physical points. In the undeformed configuration  0 , the position of each physical point is described by the position vector X whereas the position of a physical point in the deformed configuration  t is specified by the position vector x. The nonlinear deformation map 𝝋 defines the relation between the position vectors such that x = 𝝋(X, t) at time t. We define the deformation gradient F as the gradient of the deformation map 𝝋(X, t) with respect to the material coordinates F(X, t) = ∇ X 𝝋(X, t) and its determinant as J(X, t) = det F(X, t) &gt; 0. These two quantities allow us to define the cofactor of the deformation gradient as cof F = JF -T where -T symbolizes the transposed inverse of F. Furthermore, we introduce the right and left Cauchy-Green tensors C and b as symmetric strain measures defined as C = F T ⋅ F and b = F ⋅ F T .</p><p>In the case of photo-sensitive polymers, we assume the presence of molecular photo-switches, such as azobenzene, 23 embedded in a (sufficiently soft) polymer matrix. The conformation of these photo-sensitive molecules is either characterized as the lower energy trans-or higher energy cis-state (cf. left side of Figure <ref type="figure" target="#fig_0">1</ref>). The effects of these two energetic states are modeled via the vector order parameters y t and y c , depicted in Figure <ref type="figure" target="#fig_0">1</ref> as homogenized quantities in form of the solid green and dashed red arrows. These represent the (volume-) averaged photo-sensitive molecules in the trans-and cis-state of a representative volume element. In order to satisfy the conservation of charge, the total amount of these molecule in the RVE is fixed. However, the number of molecules associated with either y t or y c are allowed to evolve due to energy conversion of the incident light. For the sake of concise representation, the trans-and cis-vectors are combined into the electronic order parameter y. Analogously to the mechanical case we can define the space gradient of the electronic order parameter as F ∶= ∇ X y(X, t). The reader should note the different fonts used for the mechanical and electronic quantities.</p><p>As laid out in Reference 22, the electro-magnetic field of a polarized oscillating light wave may be represented by its time averaged value. Thus, the behavior of the incident light is described by a time averaged electric field E that is defined as the negative spatial gradient of the time averaged scalar electric potential 𝜙 as E ∶= -∇ X 𝜙(X, t). The electric field in the undeformed configuration can be transformed into its counterpart in the deformed configuration using the deformation gradient through e = F -T ⋅ E. Following 32 the electric field is related to the electric displacement by D = 𝜀 0 JC -1 E + P were we introduce the electric permittivity of vacuum 𝜀 0 and the electric polarization P. These quantities can be transformed from the undeformed to the deformed configuration by d = J -1 F ⋅ D and p = J -1 F ⋅ P.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">BALANCE LAWS</head><p>In the following section we briefly recall the underlying balance laws that describe the behavior of the electric, electronic, and mechanical fields, which were presented in greater detail in Reference 29. In the context of this work, for the sake of brevity, we focus solely on the description in the undeformed configuration. We distinguish between the response in a material body  0 , the surrounding space  0 , and the interface 𝜕 0 between these two. In the simplest case, that is, a non-dissipative quasistatic material response, the balance laws may be derived from the Dirichlet principle as presented in Reference 29. The resulting balance laws are summarized in Equations (1a)-(1e).</p><p>DivD -𝑞 f 0 = 0 in  0 and</p><formula xml:id="formula_0">[[D]] ⋅ N = qf 0 at 𝜕 0 , (<label>1a</label></formula><formula xml:id="formula_1">) DivD = 0 in  0 ,<label>(1b)</label></formula><p>Div𝗣 + 𝗯 0 = 𝗴 0 in  0 and 𝗣 ⋅ N = 𝘁 0 at 𝜕 0 , (1c)</p><formula xml:id="formula_2">DivP + b 0 = 0 in  0 and -[[P]] ⋅ N = t 0 at 𝜕 0 , (<label>1d</label></formula><formula xml:id="formula_3">) DivP = 0 in  0 . (<label>1e</label></formula><formula xml:id="formula_4">)</formula><p>Equations ( <ref type="formula" target="#formula_0">1a</ref>) and (1b) represent the standard electric Gauss law describing the relation between the electric displacement D and the free charge density q f 0 . On the surface of the body jump conditions are imposed with the free surface charge density qf 0 . Equation (1c) governs the response of the electronic nominal (Piola-type) stress P in relation to the external electronic source density b 0 and the nominal internal source density g 0 , in form of an electronic displacement balance relation. It also contains the necessary boundary condition expressed in dependency on t 0 , an electronic force densities per unit area. The reader should be aware of the resemblance of Equation (1c) with the classical balance of linear momentum expressed in Equations ( <ref type="formula" target="#formula_0">1d</ref>) and (1e) governing the mechanical response of the material. In these equations the total Piola type stress P and the mechanical force densities per unit volume and unit area b 0 and t 0 are introduced.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">VARIATIONAL FORMULATION</head><p>Let us assume a conservative system that is described by the equations presented in (1a)-(1e) without the influence of further effects such as temperature or magnetic fields. Thus, we assume the existence of a free energy function Ψ(F, E, F, y) that depends on the current state of deformation, the electric field and the electronic order parameter and its gradient such that the mechanical Piola stress P, the electronic Piola-stress P, the electronic source density g 0 , and the electric polarization P may be expressed as</p><formula xml:id="formula_5">P = 𝜕 F Ψ and P = 𝜕 F Ψ and g 0 = 𝜕 y Ψ and P = -𝜕 E Ψ.<label>(2)</label></formula><p>The free energy function Ψ may be augmented by the contribution of the energy stored in the electric field itself resulting in the expression</p><formula xml:id="formula_6">Ω(F, E, F, y) = Ψ(F, E, F, y) - 1 2 𝜀 0 JC -1 ∶ [E ⊗ E].<label>(3)</label></formula><p>This gives the additional constitutive equation of the electric displacement D as</p><formula xml:id="formula_7">D = -𝜕 E Ω.<label>(4)</label></formula><p>As presented in detail in the Appendix, these constitutive equations can be used to derive the variational format of the work functional as</p><formula xml:id="formula_8">𝛿W = ∫  0 P ∶ ∇ X 𝛿𝝋dV + ∫  0 D ⋅ ∇ X 𝛿𝜙dV + ∫  0 P ∶ ∇ X 𝛿ydV + ∫  0 g 0 ⋅ 𝛿ydV -∫  0 b 0 ⋅ 𝛿𝝋dV -∫ 𝜕 0 t 0 ⋅ 𝛿𝝋dA -∫  0 b 0 ⋅ 𝛿ydV -∫ 𝜕 0 t 0 ⋅ 𝛿ydA + ∫  0 q f 0 𝛿𝜙dV + ∫ 𝜕 0 qf 0 𝛿𝜙dA. (<label>5</label></formula><formula xml:id="formula_9">)</formula><p>It should be noted that the contributions b 0 , b 0 , and g 0 are assumed to be known apriori and independent of the degrees of freedom (DOFs).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">DISCRETIZATION AND LINEARIZATION</head><p>The terms in above equation describing the photo-electro-mechanical response of the non-linear system can be solved using numerical methods, such as the finite-element method, which, in the context of the Newton-Raphson solution technique, requires the linearization of the respective internal contributions, from which a number of coupled terms result. For the sake of conciseness the details on the linearization of this expression can be found in the Appendix A.2. For the solution of the photo-mechanical problem, the domain of the body  0 is discretized into finite elements, on which the respective field variables are approximated using appropriate vector-valued shape functions N 𝛼 and scalar-valued shape functions N 𝛼 , that correspond to a respective degree-of-freedom 𝛼. This concept of vector-valued shape functions with scalar valued DOFs is a particularity of the open access finite-element library DEAL II that is used for the implementation of the photo-mechanical problem. Details on this can be found for example in the works of Bangerth. <ref type="bibr" target="#b29">30,</ref><ref type="bibr" target="#b30">31</ref> Thus, the displacement, its variation and their corresponding gradients can be expressed as</p><formula xml:id="formula_10">𝝋(X) ≈ ∑ 𝛼 𝜑 𝛼 N 𝛼 (X), 𝛿𝝋(X) ≈ ∑ 𝛼 𝛿𝜑 𝛼 N 𝛼 (X), ∇ X 𝝋(X) ≈ ∑ 𝛼 𝜑 𝛼 ∇ X N 𝛼 (X), ∇ X 𝛿𝝋(X) ≈ ∑ 𝛼 𝛿𝜑 𝛼 ∇ X N 𝛼 (X).<label>(6)</label></formula><p>Analogously, we can express the interpolation of the electric potential 𝜙, its variation and the corresponding gradients as</p><formula xml:id="formula_11">𝜙(X) ≈ ∑ 𝛼 𝜙 𝛼 N 𝛼 (X), 𝛿𝜙(X) ≈ ∑ 𝛼 𝛿𝜙 𝛼 N 𝛼 (X), ∇ X 𝜙(X) ≈ ∑ 𝛼 𝜙 𝛼 ∇ X N 𝛼 (X), ∇ X 𝛿𝜙(X) ≈ ∑ 𝛼 𝛿𝜙 𝛼 ∇ X N 𝛼 (X),<label>(7)</label></formula><p>while the formulation of the electronic order parameter reads</p><formula xml:id="formula_12">y(X) ≈ ∑ 𝛼 y 𝛼 N 𝛼 (X), 𝛿y(X) ≈ ∑ 𝛼 𝛿y 𝛼 N 𝛼 (X), ∇ X y(X) ≈ ∑ 𝛼 y 𝛼 𝜕N 𝛼 (X) 𝜕X , ∇ X 𝛿y(X) ≈ ∑ 𝛼 𝛿y 𝛼 𝜕N 𝛼 (X) 𝜕X . (<label>8</label></formula><formula xml:id="formula_13">)</formula><p>It should be noted that in the context of the current contribution the shape functions in the previous equations are all selected to be identical. This, however, is not generally necessary and can potentially change in future implementations. These approximations are inserted into the photo-electro-mechanical system, which leads to</p><formula xml:id="formula_14">𝛿W h = 𝛿𝜑 𝛼 [ ∫  0 P ∶ 𝜕N 𝛼 (X) 𝜕X dV ] -𝛿𝜑 𝛼 [ ∫ 𝜕 t 0 t 0 ⋅ N 𝛼 (X) dA + ∫  0 b 0 ⋅ N 𝛼 (X) dV ] + 𝛿𝜙 𝛼 [ ∫  0 D ⋅ 𝜕N 𝛼 (X) 𝜕X dV ] + 𝛿𝜙 𝛼 [ ∫ 𝜕 𝜚 0 ρf 0 N 𝛼 (X) dA ] + 𝛿y 𝛼 [ ∫  0 P ∶ 𝜕N 𝛼 (X) 𝜕X + g 0 ⋅ N 𝛼 (X) dV ] -𝛿𝜑 𝛼 [ ∫ 𝜕 t 0 t 0 ⋅ N 𝛼 (X) dA + ∫  0 b 0 ⋅ N 𝛼 (X) dV ] . (<label>9</label></formula><formula xml:id="formula_15">)</formula><p>This gives the form of the photo-mechanical system which is implemented into a finite-element code.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">NUMERICAL EXAMPLE</head><p>We will illustrate the capabilities of the presented finite-element implementation with two numerical examples. First, we study the bending of a two-dimensional slender beam of photo-sensitive material under illumination. Subsequently, the three-dimensional simulation of the deformation of a nocturnal flower is presented. In both cases, the selected light source is assumed to be polarized and monochromatic so that we only consider the transformation from the cis-to the trans-state. We assume that the photo-sensitive molecules in the trans-state reorient instantly to a plane perpendicular to the polarization direction of the light due to the Weigert effect. <ref type="bibr" target="#b21">22,</ref><ref type="bibr" target="#b32">33,</ref><ref type="bibr" target="#b33">34</ref> For the sake of simplicity, we neglect liquid crystal formation and thus the proposed energy function does not include terms depending on F, the spatial gradient of the electronic order parameter. Furthermore, we assume that all the switching molecules are initially in the cis-state and transform to the trans-state. Thus, the electronic order parameter is initially zero and increases with increasing electric field. During the numerical investigations presented hereafter, the overall number of photo-sensitive molecules remains constant but no further coupling between the two states is assumed. Thus, we restrict our computations to the solution of the electronic order parameter describing the trans-state, that is, y = y t . We assume the existence of a free energy function Ψ(F, E, F, y) that depends on the current state of deformation, the electric field and the electronic order parameter</p><formula xml:id="formula_16">Ψ(F, E, y) = E(F, E) + C(F, E, y) + W(F, y). (<label>10</label></formula><formula xml:id="formula_17">)</formula><p>The format of the terms E(F, E) and C(F, E, y) was presented in Reference 29 as</p><formula xml:id="formula_18">E(F, E) = - 1 2 𝜀 0 E ⋅ F -1 ⋅ cofF ⋅ E = - 1 2 𝜀 0 JC -1 ∶ [E ⊗ E], C(F, E, y) = w 0 y ⋅ cofF ⋅ [E × l],<label>(11)</label></formula><p>describing the energy stored in the electric field and the corresponding contribution of the electronic order parameter resulting in a combined Maxwell type contribution. Here we introduce l as the normalized direction of the light wave inducing the electric field. It should be noted that 𝜀 0 = 8.854 ⋅ 10 -12 C 2 N -1 m -2 is the permittivity of free space. The remaining part of the energy function W(F, y) consists of a classical elastic energy function W el (F), the form of which can be selected from the literature, and a coupling contribution W coupl (F, y) that leads to the desired macroscopic deformation of the material when it is illuminated by a light source. For the sake of simplicity, in the current case a Neo-Hookean type energy function is selected, <ref type="bibr" target="#b34">35</ref> that is,</p><formula xml:id="formula_19">W el (F) = 𝜇 2 [I 1 -dim] -𝜇 ln(J) + 𝜆 4 [J 2 -1 -2 ln(J)],<label>(12)</label></formula><p>where we have introduced the shear modulus 𝜇, the first mechanical invariant I 1 = I ∶ C and the first Lamé parameter 𝜆. The coupling between the electronic order parameter and the deformation is established by</p><formula xml:id="formula_20">W coupl (F, y) = d 1 I ∶ [y ⊗ y] + d 2 b ∶ [y ⊗ y].<label>(13)</label></formula><p>The term closely resembles the classical coupling invariants I 4 and I 5 for the formulation of an isotropic function depending on a tensorial and vectorial variable. <ref type="bibr" target="#b35">36</ref> From this energy function, the necessary mechanical, electric, and electronic quantities can be derived using the expressions found in (A1) which leads to</p><formula xml:id="formula_21">𝜕 F E(F, E) = -0.5𝜖 0 J [ F -T [ C -1 ∶ [E ⊗ E] ] + 𝜕C -1 𝜕F ∶ [E ⊗ E] ] , 𝜕 F C(F, E, y) = w 0 J [[ y ⋅ F -T ⋅ [E × l] ] F -T -F -T ⋅ [y ⊗ [E × l]] T ⋅ F -T ] , 𝜕 F W(F, y) = 𝜇[F -F -T ] + 𝜆 ln(J)F -T + 2d 2 F ⋅ [y ⊗ y].<label>(14)</label></formula><p>In (14.1) we need the definition of the derivative of C -1 with respect to F, which in index notation can be expressed as 37</p><formula xml:id="formula_22">𝜕C -1 AB 𝜕F CD = - [ C -1 AE C -1 BD + C -1 AD C -1 BE ] F CE . (<label>15</label></formula><formula xml:id="formula_23">)</formula><p>For the electronic and electric terms we find</p><formula xml:id="formula_24">g 0 ∶= 𝜕 y Ψ(F, E, y) = w 0 cofF ⋅ [ E × l ] + 2d 1 y + 2d 2 b ⋅ y, -D ∶= 𝜕 E Ψ (F, E, y) = w 0 y ⋅ cofF ⋅ [I × l] -𝜀 0 C -1 ⋅ E.<label>(16)</label></formula><p>Using these expressions, the linearizations required in Equation (A8) can be calculated. Due to their excessive length, these are given in the Appendix.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">Parameter study</head><p>The system presented in the previous section can be used for the simulation of a simple illustrative numerical example.</p><p>It should be noted that, by purpose, in the present work we do not refer to available experimental data for the material parameters. Rather, all parameters and their pertubations are selected arbitrarily with the sole purpose of illustrating the material behavior of the proposed system. We assume a two-dimensional sample of photo-sensitive material under the illumination of a polarized, monochromatic light source with variable intensity as depicted in the sketch in Figure <ref type="figure" target="#fig_2">2</ref>. Due to the symmetry of the geometry and the boundary conditions, this example can be reduced to a two-dimensional cross section in which the X-direction is identical to the thickness direction of the material. The sample has the dimensions 1 mm in the X-direction by 10 mm in the Y-direction with unit thickness in the Z-direction. We discretize the geometry using 160 rectangular elements with quadratic shape functions for all solution fields resulting in a system of 5067 DOFs. As boundary conditions, we assume that the displacement of the sample is fixed on the bottom edge. In this work we describe the effect of polarized light that penetrates a material, by an electric field that is oriented perpendicular to the direction of the light wave. In the following examples we assume that the light source is oriented in thickness-direction with an out-of-plane polarization which results in the orientation of the electronic order parameter in Y-direction. However, due to the reduction to two dimensions the electric field (which is physically oriented in the out-of-plane direction) has to be represented by an electric potential gradient in Y-direction. To this end, 𝜙 on the bottom and top edge of the sample is set to a specific value. The induced electric field is linearly scaled by the distance to the vertical edge resulting in a linearly decreasing electric field inside the material. By this, the electric field is only present to a specified depth inside the material, which we propose as a simple method of representing the penetration depth of the light into the material.</p><p>We will impose the electric potential, increasing it linearly in 20 load steps to a maximum value of 2 V. It should be noted that this way, the electric field representing the incident light deforms with the material which is a clear simplification of the actual experiment and results in physically problematic configurations especially when the deformation becomes extraordinarily large. However, in the scope of that has the aim of presenting an initial implementation of the model, this concept is adopted. The set of reference material parameters are summarized in Table <ref type="table">1</ref>.</p><p>Additionally, we assume that the material is nearly incompressible with a Poisson's ratio of 0.49 and that, initially, the light penetrates the sample uniformly to a depth of 0.5 mm which leads to a deformation as depicted in Figure <ref type="figure" target="#fig_2">2</ref>. The right plot in Figure <ref type="figure" target="#fig_2">2</ref> shows that the electronic order parameter is nonzero where the electric field is present, that is, within the depth of the material where an electric field is induced. Consequently, the sample deforms as the material contracts in direction of the incident light and simultaneously expands in lateral direction. As this expansion is constrained by the part of the material that is not effected by the light, the sample performs a bending motion.</p><p>Next, we will use this simple example for a parametric study on the role of the individual material parameters presented in Table <ref type="table">1</ref> and the penetration depth of the light. We define the penetration depth as the distance from the edge of the material sample to the level at which the electric field vanishes. Initially, the penetration depth will be changed from TA B L E 1 Summary of the reference material parameters of the modeling approach for a photo-sensitive polymeric material. 0.5 mm to different values between 0.25 and 1 mm. Additionally we investigate the case that the electric field is constant throughout the sample which is equivalent to a fully transparent material. The deformation is characterized by the displacement of the center point of the top edge of the sample presented in Figure <ref type="figure" target="#fig_4">3</ref>. The plot shows that the incident light can lead to different deformations depending on the penetration depth. If the material is completely transparent, that is, the light is penetrating the entire material with a constant electric field, the material deforms only in Y-direction. Thus, no bending takes place but only a stretch perpendicular to the direction of the non-mechanical field. In the other cases the geometry performs a bending motion in the positive X-direction. The displacement in X-direction, Y-direction and the displacement magnitude of this bending depends on the penetration depth of the incident light, whereby it takes its maximum value when the light penetrates the material to a depth of 1.0 mm. It should be noted that the relative increase in deformation is much larger between the penetration depth 0.5 and 0.75 mm compared to the increase between 0.25 and 0.5 mm. These observations suggest that by modifying the penetration depth, that is, the opacity of the material, the deformation can be significantly influenced.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Photomechanical material parameters</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>𝝁</head><p>Next, we assume a penetration depth of 0.5 mm and investigate the influence of the purely mechanical material parameter, that is, the elastic shear modulus 𝜇. The resulting deformation for the values 0.025, 0.05, 0.1, and 0.5 N/mm 2 is depicted in Figure <ref type="figure">4</ref>. The shear modulus strongly influences the response of the material as both plots in Figure <ref type="figure">4</ref> clearly show. Departing from the reference value of 0.05 N/mm 2 we can see that by reducing the shear modulus to 0.025 N/mm 2 , the bending increases significantly. On the other hand, an increase of the shear modulus by a factor 2 or even 10 results in a drastic reduction of the deformation which is to be expected. From this we can deduce that by reducing the stiffness of the underlying polymer a significant increase of the resulting deformation can be achieved. Now, the role of the electronic parameter d 1 is analyzed. While the remaining parameters 𝜇, d 2 , and w 0 are unchanged, the parameter d 1 will be set to -5, -1, -0.5 N/mm 4 (which is equal to the reference value), 0 and 0.1 N/mm 4 . Figure <ref type="figure">5</ref> shows the resulting deformation. Departing from the reference value of d 1 we can see that when the parameter is increased, the deformation increases and that even at a value of d 1 = 0 N/mm 4 the material deforms. This shows, that the resulting deformation does not depend solely on the expression including d 1 but on a combination of the terms containing the electronic order parameter.</p><p>Next, the influence of the coupling parameter d 2 is investigated. We assume that the other parameters remain as in the initial investigation while d 2 can take the values -5, -2, -1, 0, and 0.5 N/mm 4 . The resulting deformation of the material sample is presented in Figure <ref type="figure" target="#fig_3">6</ref>. The effect of the photo-mechanical coupling parameter on the resulting deformation is investigated departing from the case that d 2 is equal to zero, thus the energy contribution coupling the mechanical and the electronic field in Equation ( <ref type="formula" target="#formula_20">13</ref>) vanishes. In this case the deformation is a result of the energy contribution in Equation (11), that is, the coupling between the electronic order parameter and the electric field via the cofactor of the deformation gradient and the Maxwell type energy. When the value of d 2 is increased to a positive value, the resulting deformation decreases up to the point where the material deforms in the opposite direction. On the other hand, if d 2 takes a negative value, the deformation is decreased converging to the point where the deformation vanishes completely. Thus, this specific part of the energy function can be selected to manipulate the deformation based on a ground state established by the remaining material parameters 𝜇, w 0 , and d 1 . Finally, the effect of the electro-electronic coupling parameter w 0 is investigated. As before, the other material parameter are kept at the value of the initial example, whereas w 0 is set to -0.5, -1, -2, or -3 C/mm 3 . The deformation of the material sample is shown in the plots in Figure <ref type="figure">7</ref>. Compared to the deformation of the material sample with the reference parameters it can be seen that an increase of the magnitude of w 0 results in a larger deformation whereas a decrease leads to a smaller displacement, due to the respective change in the value of the electronic order parameter. Interestingly, a simple change of the sign of only the parameter w 0 does not result in a different deformation. However, if both the signs of w 0 and d 1 are changed, the bending direction is reversed. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2">Simulation of a nocturnal flower blossom</head><p>So far, the numerical calculations have been constrained to the two-dimensional case. In order to show the capabilities of our model in three-dimensional applications we will use the insights gathered in the preceding parameter study to simulate the blossom of a nocturnal flower, inspired by the work of Wani et al. that presented this visually appealing example in Reference 38. In contrast to regular flowers that open their blossom with an increase in the light intensity, the blossom of a nocturnal flower opens when the incident light reduces. While the underlying biological principles responsible for this movement in nature are different from the molecular switching taking place in photo-sensitive polymers, we can still use the presented model to replicate this motion to illustrate the capabilities of the numerical model.</p><p>In order to simulate the opening of a nocturnal flower we model one half of a flower petal depicted in Figure <ref type="figure" target="#fig_5">8</ref>. The thickness direction of the petal is oriented in Z-direction with the back surface of the petal at Z = 0, the cut surface at X = 0 has a normal oriented in (negative) X-direction and the the bottom surface at Y = 0 has a normal that is equal to the (negative) Y-direction. While the bottom and left surface of the model are straight, the surface from the tip of the petal to the bottom is captured by a curved spline. The distance from the bottom edge to the tip is 10 mm and the maximum distance from the left edge to the curved edge is 7.16 mm and, initially, as a reference we assume a thickness of the petal of 0.1 mm. The model is meshed using 140 hexahedral elements with quadratic shape functions for all solution fields which results in 10,815 DOFs * . In order to simulate the effect of the incident light an electric field is induced that is constant in a plane perpendicular to the Z-direction and that linearly decreases through the thickness of the material in order to simulate the decrease in light intensity. Therefore, we impose an electric potential along the curved side of the petal and either on the straight bottom surface or the cut surface. Thereby, an electric field is induced either in Y-direction or in X-direction inside the material which corresponds to the scenario that light with different polarization directions is used during the experiment. As shown for example in Reference 39, such a rotation of the polarization direction can lead to significant changes in the resulting deformation of the material. The potential is linearly increased over 100 load steps. As mechanical boundary conditions the displacement of the bottom surface and the cut surface of the petal are constrained in normal direction. Moreover, the displacement of the cell vertex located at X = 0, Y = 0, and Z = 0 is fixed in all directions. In order to simulate the opening motion of the flower, in the following, the induced electric field is oriented in X-direction by imposing the electric potential on the curved surface and the cut surface. A short clip of the flower model opening can be found in the supplemental material and Figure <ref type="figure">9</ref> illustrates the orientation of the electronic order parameter as arrows during the deformation of the flower petal. These indicate that the deformation exactly follows the orientation of   the electronic order parameter. Now, the influence of the thickness of the flower petal is investigated. For this, the initial thickness of 0.1 mm is increased to 0.2, 0.5, and 1 mm. We assume that in all cases the light can penetrate the material to 50% of the thickness. The resulting deformation is presented in the plots in Figure <ref type="figure" target="#fig_0">10</ref>.</p><p>The plot shows that the resulting deformation is significantly larger for the thinnest flower petal. This deformation can be further increased up to the point that the tip of the flower petal is on the same height as the bottom edge showing the robustness of the implementation.</p><p>Finally, the versatility of the system is shown by changing the orientation of the induced electric field. For this, the electric potential is now imposed on the curved surface and the bottom surface of the petal thus inducing an electric field in Y-direction. As before, we assume that the material is penetrated to a depth of 50% and that the light intensity decreases linearly. The resulting deformation of a single flower petal is depicted in Figure <ref type="figure" target="#fig_7">11</ref>. The reorientation of the electric field leads to a change in the bulging direction of the flower petal. This potentially enables us to simulate the influence of the polarization direction of the illuminating light source.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">CONCLUSION</head><p>Photo-sensitive polymers are promising candidates for revolutionary light-driven devices and applications in engineering. Thus it is an important and challenging task to understand the behavior of these smart materials. Even though it is crucial to perform intensified experimental work to gain a deeper knowledge of the material properties, in this article we employed the finite element method in order to computationally analyze the non-linear coupling behavior that photo-sensitive polymers exhibit under stimulation by light. Numerical examples are presented that illustrate the role of the individual material parameters. The variational formulation, the finite element implementation and the numerical examples presented in this article are intended as initial first steps towards a more refined and thus realistic modeling of photo-sensitive polymers.</p><p>-</p><formula xml:id="formula_25">∫  0 [DivP + b 0 -g 0 ] ⋅ 𝛿y dV + ∫ 𝜕 0 [N ⋅ P -t 0 ] ⋅ 𝛿𝝋dA + ∫ 𝜕 0 [ N ⋅ D + qf 0 ] 𝛿𝜙dA + ∫ 𝜕 0 [N ⋅ P -t 0 ] ⋅ 𝛿ydA. (A7)</formula><p>It should be noted that the contributions b 0 , b 0 , and g 0 are assumed to be known apriori and independent of the DOFs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.2 Discretization and linearization</head><p>The terms in Equations (A2) describing the photo-electro-mechanical response of the non-linear system can be solved using numerical methods, such as the finite-element method, which, in the context of the Newton-Raphson solution technique, requires the linearization of the respective internal contributions, from which a number of coupled terms result. Assuming given and constant b 0 , t 0 as well as b 0 , t 0 and q f 0 , qf 0 , the first four terms in Equation (A6) abbreviated as 𝛿 F W, 𝛿 E W, 𝛿 F W, and 𝛿 y W, contribute to the linearization as</p><formula xml:id="formula_26">Δ𝛿 F W = ∫  0 ∇ X 𝛿𝝋 ∶ 𝜕P 𝜕F ∶ ∇ X Δ𝝋 -∇ X 𝛿𝝋 ∶ 𝜕P 𝜕E ⋅ ∇ X Δ𝜙 dV + ∫  0 ∇ X 𝛿𝝋 ∶ 𝜕P 𝜕F ∶ ∇ X Δy + ∇ X 𝛿𝝋 ∶ 𝜕P 𝜕y ⋅ Δy dV, Δ𝛿 E W = ∫  0 ∇ X 𝛿𝜙 ⋅ 𝜕D 𝜕F ∶ ∇ X Δ𝝋 -∇ X 𝛿𝜙 ⋅ 𝜕D 𝜕E ⋅ ∇ X Δ𝜙 dV + ∫  0 ∇ X 𝛿𝜙 ⋅ 𝜕D 𝜕F ∶ ∇ X Δy + ∇ X 𝛿𝜙 ⋅ 𝜕D 𝜕y ⋅ Δy dV, Δ𝛿 F W = ∫  0 ∇ X 𝛿y ∶ 𝜕P 𝜕F ∶ ∇ X Δ𝝋 -∇ X 𝛿y ∶ 𝜕P 𝜕E ⋅ ∇ X Δ𝜙 dV + ∫  0 ∇ X 𝛿y ∶ 𝜕P 𝜕F ∶ ∇ X Δy + ∇ X 𝛿y ∶ 𝜕P 𝜕y ⋅ Δy dV, Δ𝛿 y W = ∫  0 𝛿y ⋅ 𝜕g 0 𝜕F ∶ ∇ X Δ𝝋 -𝛿y ⋅ 𝜕g 0 𝜕E ⋅ ∇ X Δ𝜙 dV + ∫  0 𝛿y ⋅ 𝜕g 0 𝜕F ∶ ∇ X Δy + 𝛿y ⋅ 𝜕g 0 𝜕y ⋅ Δy dV. (<label>A8</label></formula><formula xml:id="formula_27">)</formula><p>This expression is then discretized using the terms presented in Equations ( <ref type="formula" target="#formula_10">6</ref>)- (8).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.3 Second derivatives of the energy function</head><p>For the linearization of the coupled system given in Equations ( <ref type="formula" target="#formula_21">14</ref>) and ( <ref type="formula" target="#formula_24">16</ref>) a number of partial derivatives have to be calculated. For the purely mechanical terms we find</p><formula xml:id="formula_28">𝜕P 𝜕F = 𝜕 2 Ψ 𝜕F𝜕F = 𝜕 2 E(F, E) 𝜕F𝜕F + 𝜕 2 C(F, E, y) 𝜕F𝜕F + 𝜕 2 W(F, y) 𝜕F𝜕F . (<label>A9</label></formula><formula xml:id="formula_29">)</formula><p>In index notation the individual terms read </p><formula xml:id="formula_30">𝜕 2 E(F, E) 𝜕F mn 𝜕F pq = -0.5𝜀 0 JE i E j [ 𝜕C -1 ij 𝜕F pq F -T mn -C -1 ij F -1 np F -1 qm ] + 𝜀 0 JE i E j [ 𝜕C -1 in 𝜕F pq C -1 jk F mk + C -1 in 𝜕C -1 jk 𝜕F pq F mk + C -1 in C -1 jq 𝛿 mp ] -0.5𝜀 0 JE i E j C -1 ij F -T mn F -T pq + 𝜀 0 JE i E j C -1 in C -1 jk F mk F -T pq 𝜕 2 C(F, E, y) 𝜕F mn 𝜕F pq = w 0 JF -1 nm ⊗ [ [y i F -1 ji [𝜀 mnj E m l n ]]F -1 qp -F -1 ip [y j [𝜀 mni E m l n ]]F -</formula><formula xml:id="formula_31">+ w 0 J [[ 𝜕F -1 ji 𝜕F mn [y i [𝜀 mnj E m l n ]] ] F -1 pq + [ F -1 ji [y i [𝜀 mnj E m l n ]] ] 𝜕F -1 nm 𝜕F pq - 𝜕F -1 im 𝜕F np [y j [𝜀 mni E m l n ]]F -1 qj ] -F -1 im [ y j [𝜀 mnj E m l n ]] 𝜕F -1 nj 𝜕F pq ] 𝜕 2 W(F, y) 𝜕F mn 𝜕F pq = 𝜇𝛿 mp 𝛿 nq + [𝜇 -𝜆 log(J)]F -1 np F -1 qm + 𝜆F -1 nm F -1 qp + 2d 2 𝛿 mp E q E n . (A10)</formula><p>In order to express the above in symbolic notation, we introduce the operation A</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>24</head><p>T , a transposition that switches the position of the second and the fourth index of a fourth-order tensor A. Furthermore, we introduce the operation A * T in order to transform the term C -1 ik C -1 jk F mn from Equation (A10) into C -1 in C -1 jk F mk . This results in the following symbolic presentation In the above equation we have introduced the fourth-order identity tensor 1=𝛿 mp 𝛿 nq and the derivative of the inverted and transposed deformation gradient with respect to itself as 𝜕F -T 𝜕F = -F -1 np F -1 qm . Next, the purely electric terms can be calculated as the second derivative of the energy with respect to the electric field, that is, </p><formula xml:id="formula_32">𝜕 2 E(F, E) 𝜕F𝜕F = -0.5𝜀 0 J[E ⊗ E] ∶ [ 𝜕C -1 𝜕F ⊗ F -T -C -1 ⊗ [ F -T ⊗ F -T ] 24 T ] + 𝜀 0 J[E ⊗ E] ∶ ⎡ ⎢ ⎢ ⎢ ⎢ ⎣ ⎡ ⎢ ⎢ ⎣ [ 𝜕C -1 𝜕F ⊗ C -1 ] 24 T ∶ I ⊗ F ⎤ ⎥ ⎥ ⎦ * T + ⎡ ⎢ ⎢ ⎣ [ C -1 ⊗ 𝜕C -1 𝜕F ] 24 T ∶ I ⊗ F ⎤ ⎥ ⎥ ⎦ * T + [ [ C -1 ⊗ C -1 ] 24 T ∶ I ⊗ 𝜕F 𝜕F ] * T ⎤ ⎥ ⎥ ⎥ ⎦ -0.5𝜀 0 J[[E ⊗ E] ∶ C -1 ]F -T ⊗ F -T + 𝜀 0 J[E ⊗ E] ∶ [ [C -1 ⊗ C -1 ]</formula><formula xml:id="formula_33">𝜕D 𝜕E = - 𝜕 2 Ψ 𝜕E𝜕E = - 𝜕 2 E(F,</formula><formula xml:id="formula_34">𝜕F mn E q + 0 J [ [y r F -1 rk 𝜀 mjk l j ]F -1 pn -F -1 mk [y k 𝜀 rjn l j F -1 pr ] ] , 𝜕 2 Ψ 𝜕F𝜕E = -𝜀 0 𝜕C -1 𝜕F ⋅ E + Jw 0 [ [y ⋅ F -1 ⋅ [I × l]] ⊗ F -T -F -T ⋅ [y ⊗ [I × l]] ⋅ F -T ] . (A17)</formula><p>Analogously, the mechano-electronic terms defined as </p><formula xml:id="formula_35">𝜕</formula></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>F I G U R E 1</head><label>1</label><figDesc>Sketch of a body in the undeformed configuration  0 and deformed configuration  t under light induced deformation. The incident polarized light is characterized by the electric field E/e, electric displacement D/d, and electric polarization P/p in the undeformed/deformed configuration. The boundary of the body is labeled as 𝜕 0 in the undeformed configuration and as 𝜕 t in the deformed configuration.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>1 Note: 3 (</head><label>13</label><figDesc>Elastic shear modulus 𝜇 in N/mm 2 , photomechanical coupling parameters d 1 and d 2 in N/mm 4 , effective charge density bound to the electronic order parameter in C/mm 3 . F I G U R E 2 (Left) Sketch of the material sample under illumination by a light source with variable intensity. (Right) Deformation of the finite element model at an applied electric potential difference of 10 mV. The color mapping and the arrows refer to the magnitude and the orientation of the homogenized electronic order parameter. Left) Displacement of the center point of the top edge of the material sample in X-direction (dotted lines), Y-direction (dashed lines), and magnitude (solid lines) for various penetration depths. (Right) Deformed material samples. The coloring refers to the colors selected in the left plot.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>2 F</head><label>2</label><figDesc>I G U R E 4 (Left) Displacement of the center point of the top edge of the material sample in X-direction (dotted lines), Y-direction (dashed lines), and magnitude (solid lines) for various shear moduli. (Right) Deformed material samples. The coloring refers to the colors selected in the left plot.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>6 (</head><label>6</label><figDesc>U R E 5 (Left) Displacement of the center point of the top edge of the material sample in X-direction (dotted lines), Y-direction (dashed lines), and magnitude (solid lines) for various values of the electronic parameter d 1 . (Right) Deformed material samples. The coloring refers to the colors selected in the left plot. Left) Displacement of the center point of the top edge of the material sample in X-direction (dotted lines), Y-direction (dashed lines), and magnitude (solid lines) for various values of the photo-mechanical coupling parameter d 2 . (Right) Deformed material samples. The coloring refers to the colors selected in the left plot.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>3 F</head><label>3</label><figDesc>I G U R E 7 (Left) Displacement of the center point of the top edge of the material sample in X-direction (dotted lines), Y-direction (dashed lines), and magnitude (solid lines) for various values of the electro-electronic coupling parameter w 0 . (Right) Deformed material samples. The coloring refers to the colors selected in the left plot.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>F I G U R E 8 (</head><label>8</label><figDesc>Left) Model of one half of the flower petal meshed with 140 hexahedral elements. (Middle) Closed flower consisting of eight full flower petals arranged in form of a blossom at an imposed electric potential of 2 V. (Right) Open flower blossom at an imposed electric potential of 0.2 V. The color map refers to the displacement magnitude. F I G U R E 9 Deformed flower petal due to an electric field in X-direction at different electric field intensities. (Left) Resulting deformation at 0.14 V. (Middle) Deformation at 0.72 V. (Right) Deformation at 1.44 V. The color map refers to the displacement magnitude.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>F</head><label></label><figDesc>I G U R E 10 (Left) Displacement of the tip of the flower petal in Y-direction (dotted lines), Z-direction (dashed lines), and magnitude (solid lines) for various values of the material thickness. (Right) Deformed petals. The coloring refers to the deformation.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>F I G U R E 11</head><label>11</label><figDesc>Deformed flower petal due to an electric field in X-direction at different electric field intensities. (Left) Resulting deformation at 0.14 V. (Middle) Deformation at 0.72 V. (Right) Deformation at 1.44 V. The color map refers to the displacement magnitude.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>𝜕 2 C</head><label>2</label><figDesc>(F, E, y) 𝜕F𝜕F = +w 0 JF -T ⊗ [ [y ⋅ F -T ⋅ [E × l]]F -T -F -T ⋅ [y ⊗ [E × l]] T ⋅ F -T ] + w 0 J [[ 𝜕F -T 𝜕F ∶ [y ⊗ [E × l]] ] ⊗ F -T + [ F -T ∶ [y ⊗ [E × l]] ] 𝜕F -T 𝜕F -𝜕F -T 𝜕F ⋅ [y ⊗ [E × l]] T ⋅ F -T ] -F -T ⋅ [y ⊗ [E × l]] T ⋅ 𝜕F -T 𝜕F ] 𝜕 2 W(F, y) 𝜕F𝜕F = 𝜇1 -[𝜇 -𝜆 log(J)] 𝜕F -T 𝜕F + 𝜆F -T ⊗ F -T + 2d 2 [E ⊗ E]. (A11)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head></head><label></label><figDesc>Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/nme.7177 by University Of Glasgow, Wiley Online Library on [13/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</figDesc><table><row><cell></cell><cell>10970207, 2023, 7,</cell></row><row><cell>1</cell><cell>]</cell></row><row><cell>jq</cell><cell></cell></row></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1"><head></head><label></label><figDesc>The purely electronic terms can be calculated as the second derivative of the energy with respect to the electronic order parameter y as Finally, the mixed derivatives have to be calculated. The mechano-electric terms defined as</figDesc><table><row><cell>E) 𝜕E𝜕E 𝜕 2 E(F, E) This results in a second order tensor that reads 𝜕 2 Ψ 𝜕y = 𝜕 2 Ψ 𝜕y𝜕y = 𝜕y𝜕y + which results in 𝜕 2 Ψ 𝜕y m 𝜕y n = 𝜕 2 E(F, E) 𝜕y m 𝜕y n + 𝜕 2 C(F, E, y) -𝜕 2 C(F, E, y) 𝜕E𝜕E 𝜕 2 C(F, E, y) 𝜕y𝜕y + 𝜕y m 𝜕y n + 𝜕 2 W(F, y) -𝜕 2 W(F, y) 𝜕E𝜕E 𝜕 2 W(F, y) 𝜕y𝜕y , 𝜕y m 𝜕y n , = 2d 2 b mn -2w 0 𝛿 mn , 𝜕 2 Ψ 𝜕y𝜕y = 2d 2 b -2w 0 I. 𝜕 2 Ψ 𝜕F𝜕E = 𝜕P 𝜕E = 𝜕D 𝜕F = 𝜕 2 E(F, E) 𝜕F𝜕E + 𝜕 2 C(F, E, y) 𝜕F𝜕E + 𝜕 2 W(F, y) . 𝜕F𝜕E result in the expressions 𝜕 2 Ψ 𝜕F mn 𝜕E p = 𝜕 2 E(F, E) 𝜕F mn 𝜕E p + 𝜕 2 C(F, E, y) 𝜕F mn 𝜕E p + 𝜕 2 W(F, y) 𝜕F mn 𝜕E p , 𝜕E m 𝜕E 𝜕g 0 = -𝜀 0 𝜕C -1 pq</cell><cell>,</cell><cell>(A12) (A14) (A15) (A16)</cell></row></table><note><p>n = 𝜕 2 E(F, E) 𝜕E m 𝜕E n + 𝜕 2 C(F, E, y) 𝜕E m 𝜕E n + 𝜕 2 W(F, y) 𝜕E m 𝜕E n , = -𝜀 0 C -1 mn , 𝜕 2 Ψ 𝜕E𝜕E = -𝜀 0 C -1 . (A13)</p></note></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>10970207, 2023, 7, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/nme.7177 by University Of Glasgow, Wiley Online Library on [13/03/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><head>ACKNOWLEDGMENTS</head><p>M. Mehnert acknowledges the funding within the <rs type="projectName">DFG</rs> project No. <rs type="grantNumber">STE 544/52-2</rs> and <rs type="grantNumber">GRK2495/C</rs>. <rs type="person">William Oates</rs> greatly appreciates support from the <rs type="funder">Department of Defense Basic Research Program for HBCU/MI</rs> (<rs type="grantNumber">W911NF-19-S-0009</rs>). Open Access funding enabled and organized by Projekt DEAL.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funded-project" xml:id="_ShfjR3t">
+					<idno type="grant-number">STE 544/52-2</idno>
+					<orgName type="project" subtype="full">DFG</orgName>
+				</org>
+				<org type="funding" xml:id="_6ypTdfa">
+					<idno type="grant-number">GRK2495/C</idno>
+				</org>
+				<org type="funding" xml:id="_mJapv83">
+					<idno type="grant-number">W911NF-19-S-0009</idno>
+				</org>
+			</listOrg>
+
+			<div type="availability">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>DATA AVAILABILITY STATEMENT</head><p>The data that support the findings of this study are available from the corresponding author upon reasonable request. ENDNOTE * The reader should note that in the plots of the full blossom in Figure <ref type="figure">8</ref> the flower petals are depicted with an apparent finer mesh. This is due to the post processing performed in Paraview as a result of the quadratic shape functions.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX A.</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A.1 Variational formulation</head><p>Let us assume a conservative system that is described by the equations presented in (1a)-(1e) without the influence of further effects such as temperature or magnetic fields. Thus, we assume the existence of a free energy function Ψ(F, E, F, y) that depends on the current state of deformation, the electric field and the electronic order parameter and its gradient such that the mechanical Piola stress P, the electronic Piola-stress P, the electronic source density g 0 , and the electric polarization P may be expressed as P = 𝜕 F Ψ and P = 𝜕 F Ψ and g 0 = 𝜕 y Ψ and P = -𝜕 E Ψ.</p><p>(A1)</p><p>Based on this free energy function, we will show that system (1a)-(1e) is the stationary condition of the following functional</p><p>where the free energy function Ψ is augmented by the contribution of the energy stored in the electric field itself as</p><p>This gives the additional constitutive equation of the electric displacement D as</p><p>Using the constitutive equations, the variation of the functional in (A2) may be expressed in the form</p><p>which ultimately leads to the expression</p><p>The first three integrals on the right-hand side are transformed with the help of Gauss' theorem and integration by parts, resulting in</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Electroactive polymers: current capabilities and challenges</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bar-Cohen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the SPIE&apos;s 9th Annual International Symposium on Smart Structures and Materials</title>
+		<meeting>the SPIE&apos;s 9th Annual International Symposium on Smart Structures and Materials</meeting>
+		<imprint>
+			<publisher>International Society for Optics and Photonics</publisher>
+			<biblScope unit="volume">2002</biblScope>
+			<biblScope unit="page" from="1" to="7" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Bar-Cohen</surname></persName>
+		</author>
+		<title level="m">Electroactive Polymer (EAP) Actuators as Artificial Muscles: Reality, Potential, and Challenges</title>
+		<imprint>
+			<publisher>SPIE Press</publisher>
+			<date type="published" when="2004">2004</date>
+			<biblScope unit="volume">136</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Electromechanically active polymers</title>
+		<author>
+			<persName><forename type="first">F</forename><surname>Carpi</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/nme.7177by</idno>
+		<idno>13/03/2023</idno>
+		<ptr target="https://onlinelibrary.wiley.com/terms-and-conditions" />
+	</analytic>
+	<monogr>
+		<title level="m">See the Terms and Conditions</title>
+		<imprint>
+			<publisher>Wiley Online Library for rules of use</publisher>
+			<date type="published" when="2010">2010. 10970207. 2023</date>
+			<biblScope unit="volume">59</biblScope>
+			<biblScope unit="page" from="277" to="278" />
+		</imprint>
+		<respStmt>
+			<orgName>University Of Glasgow, Wiley Online Library</orgName>
+		</respStmt>
+	</monogr>
+	<note>OA articles are governed by the applicable Creative Commons License</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Magnetorheological elastomers: txperimental and modeling aspects</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bodelot</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Pössinger</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Danas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Triantafyllidis</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Bolzmacher</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mechanics of Composite and Multi-functional Materials</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="251" to="256" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Deformable magnetically saturated media. I. Field equations</title>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">A</forename><surname>Maugin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">C</forename><surname>Eringen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Math Phys</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="143" to="155" />
+			<date type="published" when="1972">1972</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Transdermal photopolymerization for minimally invasive implantation</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Elisseeff</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Anseth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Sims</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Mcintosh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Randolph</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Langer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proc Natl Acad Sci</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="3104" to="3107" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Photoresponsive polymeric materials</title>
+		<author>
+			<persName><forename type="first">O</forename><surname>Pieroni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Ciardelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Trends Polymer Sci</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="282" to="287" />
+			<date type="published" when="1995">1995</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Linear and nonlinear optical properties of photochromic molecules and materials</title>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Delaire</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Nakatani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem Rev</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1817" to="1846" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Photoalignment of liquid-crystal systems</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ichimura</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem Rev</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1847" to="1874" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Light-driven motion of liquids on a photoresponsive surface</title>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ichimura</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S-K</forename><surname>Oh</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nakagawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science</title>
+		<imprint>
+			<biblScope unit="volume">288</biblScope>
+			<biblScope unit="issue">5471</biblScope>
+			<biblScope unit="page" from="1624" to="1626" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Photoinduced motions in azo-containing polymers</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Natansohn</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Rochon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chem Rev</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="4139" to="4176" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Phase transition in polymer gels induced by visible light</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Suzuki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Tanaka</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">346</biblScope>
+			<biblScope unit="issue">6282</biblScope>
+			<biblScope unit="page" from="345" to="347" />
+			<date type="published" when="1990">1990</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Directed bending of a polymer film by light</title>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nakano</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Ikeda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">425</biblScope>
+			<biblScope unit="issue">6954</biblScope>
+			<biblScope unit="page" from="145" to="145" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Light-driven side-on nematic elastomer actuators</title>
+		<author>
+			<persName><forename type="first">M-H</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Keller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Brunet</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Mater</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">7-8</biblScope>
+			<biblScope unit="page" from="569" to="572" />
+			<date type="published" when="2003">2003</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A new opto-mechanical effect in solids</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Finkelmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Nishikawa</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Pereira</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Warner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev Lett</title>
+		<imprint>
+			<biblScope unit="volume">87</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">15501</biblScope>
+			<date type="published" when="2001">2001</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Polymers move in response to light</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Jiang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Kelch</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Lendlein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Mater</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1471" to="1475" />
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">A piezothermoelastic shell theory applied to active structures</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Tzou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Howard</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1992">1992</date>
+		</imprint>
+		<respStmt>
+			<orgName>Kentucky University Lexington Department of Mechanical Engineering</orgName>
+		</respStmt>
+	</monogr>
+	<note type="report_type">Technical report</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Piezothermoelasticity and precision control of piezoelectric systems: theory and finite element analysis</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Tzou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Ye</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1994">1994</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Nonlinear opto-electromechanics and photodeformation of optical actuators</title>
+		<author>
+			<persName><forename type="first">H</forename><surname>Tzou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Chou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Smart Mater Struct</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">230</biblScope>
+			<date type="published" when="1996">1996</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Nonlinear photoresponse of disordered elastomers</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Corbett</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Warner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Phys Rev Lett</title>
+		<imprint>
+			<biblScope unit="volume">96</biblScope>
+			<biblScope unit="issue">23</biblScope>
+			<biblScope unit="page">237802</biblScope>
+			<date type="published" when="2006">2006</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Photomechanics of mono-and polydomain liquid crystal elastomer films</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">L</forename><surname>Dunn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Appl Phys</title>
+		<imprint>
+			<biblScope unit="volume">102</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">13506</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Photomechanically coupled viscoelasticity of azobenzene polyimide polymer networks</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Roberts</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Worden</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Chowdhury</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Oates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Model Simul Mater Sci Eng</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page">55009</biblScope>
+			<date type="published" when="2017">2017</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">A unified material description for light induced deformation in azobenzene polymers</title>
+		<author>
+			<persName><forename type="first">J</forename><surname>Bin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">S</forename><surname>Oates</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Sci Rep</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="12" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Non-equilibrium thermodynamics and electromagnetics of azobenzene liquid crystal polymer networks</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Oates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Jonghoon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Shape Memory Polymers for Aerospace Applications: Novel Synthesis, Modeling, Characterization and Design</title>
+		<meeting><address><addrLine>Lancaster, PA</addrLine></address></meeting>
+		<imprint>
+			<publisher>DEStech Publications Inc</publisher>
+			<date type="published" when="2015">2015</date>
+			<biblScope unit="page">183</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Bhattacharya</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2002.04000</idno>
+		<title level="m">Photomechanical coupling in photoactive nematic elastomers</title>
+		<imprint>
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Finite element modeling analysis of photostrictively driven optical actuators for excitation of microdevices</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Nawaz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Smart Mater Struct</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page">115013</biblScope>
+			<date type="published" when="2011">2011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Finite element modeling of photostrictive optical actuators</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">E</forename><surname>Jackson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Mech Adv Mater Struct</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="114" to="121" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Finite element numerical analysis of deflection behavior in photostrictive actuators on overhanging and propped cantilever beam models</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Taylor</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Rahman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Molina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the ASME International Mechanical Engineering Congress and Exposition</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A geometrically exact continuum framework for light-matter interaction in photo-active polymers i. variational setting</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Mehnert</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Oates</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Steinmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Solids Struct</title>
+		<imprint>
+			<biblScope unit="volume">226</biblScope>
+			<biblScope unit="page">111073</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">ii -a general-purpose object-oriented finite element library</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Bangerth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Hartmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kanschat</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Deal</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans Math Softw (TOMS)</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">24</biblScope>
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">The deal. II Library, version 8.2</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Bangerth</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Heister</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Heltai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arch Numer Softw</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="issue">100</biblScope>
+			<biblScope unit="page" from="1" to="8" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Computational nonlinear electro-elasticity -getting started</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Steinmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Mechanics and Electrodynamics of Magneto-and Electro-elastic Materials</title>
+		<editor>
+			<persName><forename type="first">R</forename><forename type="middle">W</forename><surname>Ogden</surname></persName>
+		</editor>
+		<editor>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Steigmann</surname></persName>
+		</editor>
+		<imprint>
+			<publisher>Springer</publisher>
+			<biblScope unit="volume">2011</biblScope>
+			<biblScope unit="page" from="181" to="230" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Surface-mediated alignment of nematic liquid crystals with polarized laser light</title>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">M</forename><surname>Gibbons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">J</forename><surname>Shannon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S-T</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><forename type="middle">J</forename><surname>Swetlin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Nature</title>
+		<imprint>
+			<biblScope unit="volume">351</biblScope>
+			<biblScope unit="issue">6321</biblScope>
+			<biblScope unit="page" from="49" to="50" />
+			<date type="published" when="1991">1991</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Factors affecting in-plane and out-of-plane photoorientation of azobenzene side chains attached to liquid crystalline polymers induced by irradiation with linearly polarized light</title>
+		<author>
+			<persName><forename type="first">M</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Morino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Ichimura</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Macromolecules</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">17</biblScope>
+			<biblScope unit="page" from="6360" to="6371" />
+			<date type="published" when="2000">2000</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">Nonlinear Finite Element Methods</title>
+		<author>
+			<persName><forename type="first">P</forename><surname>Wriggers</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008">2008</date>
+			<publisher>Springer Science &amp; Business Media</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">A new representation theorem for isotropic functions: an answer to professor GF Smith&apos;s criticism of my papers on representations for isotropic functions</title>
+		<author>
+			<persName><forename type="first">C-C</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Arch Ration Mech Anal</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="166" to="197" />
+			<date type="published" when="1970">1970</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Numerical modelling of non-linear electroelasticity</title>
+		<author>
+			<persName><forename type="first">D</forename><surname>Vu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Steinmann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Possart</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int J Numer Methods Eng</title>
+		<imprint>
+			<biblScope unit="volume">70</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="685" to="704" />
+			<date type="published" when="2007">2007</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">An artificial nocturnal flower via humidity-gated photoactuation in liquid crystal networks</title>
+		<author>
+			<persName><forename type="first">O</forename><forename type="middle">M</forename><surname>Wani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Verpaalen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Priimagi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">P</forename><surname>Schenning</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Adv Mater</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">1805985</biblScope>
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Photomechanical bending mechanics of polydomain azobenzene liquid crystal polymer network films</title>
+		<author>
+			<persName><forename type="first">L</forename><surname>Cheng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Torres</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Min</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J Appl Phys</title>
+		<imprint>
+			<biblScope unit="volume">112</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page">13513</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

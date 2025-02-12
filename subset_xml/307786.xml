@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Lab on a Chip PAPER</title>
+				<funder ref="#_QFk5cB2">
+					<orgName type="full">Republic of Turkey Ministry of National Education</orgName>
+				</funder>
+				<funder ref="#_uvvHmQc #_GvZxqpN">
+					<orgName type="full">United Kingdom Research and Innovation Engineering and Physical Sciences Research Council</orgName>
+				</funder>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2023-10-06">06 October 2023</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Yunus</forename><surname>Aslan</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biomedical Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8LT</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Olivia</forename><surname>Mcgleish</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biomedical Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8LT</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName><forename type="first">Julien</forename><surname>Reboud</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biomedical Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8LT</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName><forename type="first">Jonathan</forename><forename type="middle">M</forename><surname>Cooper</surname></persName>
+							<email>jon.cooper@glasgow.ac.uk</email>
+							<affiliation key="aff0">
+								<orgName type="department">Division of Biomedical Engineering</orgName>
+								<orgName type="institution">University of Glasgow</orgName>
+								<address>
+									<postCode>G12 8LT</postCode>
+									<settlement>Glasgow</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Lab on a Chip PAPER</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2023-10-06">06 October 2023</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">67E73F153FF0838D9ADFCCCAF62E3136</idno>
+					<idno type="DOI">10.1039/d3lc00584d</idno>
+					<note type="submission">Received 5th July 2023, Accepted 6th October 2023</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.0" ident="GROBID" when="2024-08-21T12:08+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p>Although polydimethylsiloxane (PDMS) is a versatile and easy-to-use material for microfluidics, its inherent hydrophobicity often necessitates specific hydrophilic treatment to fabricate microchip architectures for generating double emulsions. These additional processing steps frequently lead to increased complexity, potentially creating barriers to the wider use of promising microfluidic techniques. Here we describe an alignment-free spatial hydrophilic PDMS patterning technique to produce devices for the creation of double emulsions using combinations of PDMS and PDMS/surfactant bilayers. The technique enables us to achieve selective patterning and alignment-free bonding, producing reliable and reproducible water-in-oilin-water W/O/W droplet emulsions. Our method involves processing devices in a vertical orientation, with the wetting transition contrast being achieved simply by imaging whilst adjusting the PDMS pouring speed (using a mobile phone, for example). We successfully obtain hydrophilic surfaces without distinguishable hydrophobic recovery using a range of surfactant concentrations. Droplet emulsions were produced with low coefficients of variation aligned with those generated with other, more complex, techniques (e.g. 3.8% and 3.1% for the inner and outer diameters, respectively). As a further example, the methods were also demonstrated for liposome production. In future we anticipate that the technique may be applied to other fields, including e.g. reagent delivery, DNA amplification, and encapsulated cell studies.</p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Double emulsions, such as water-in-oil-in-water (W/O/W) and oil-in-water-in-oil (O/W/O), can be created by the microfluidic partitioning of two miscible liquids by an immiscible one. <ref type="bibr" target="#b0">1</ref> The presence of the immiscible liquid between inner and outer liquids enables water or oil soluble substances to be entrapped, leading to a range of diverse microfluidics applications, including reagent delivery for (bio)chemical reactions, 2 artificial cell generation, <ref type="bibr" target="#b2">3</ref> fluorescence-activated cell sorting, <ref type="bibr" target="#b3">4</ref> enzyme screening, <ref type="bibr" target="#b4">5</ref> single cell genomic analysis, <ref type="bibr" target="#b5">6</ref> and real-time digital PCR/cell culture monitoring. <ref type="bibr" target="#b6">7</ref> Double emulsion production in planar microfluidic devices, such as T-junction and flow-focusing, generally requires channels possessing opposite (hydrophobic and hydrophilic) wetting properties. <ref type="bibr" target="#b7">8</ref> Polydimethylsiloxane (PDMS) is the most commonly used material for such devices due to its convenience in fabrication as well as its physical and chemical properties (e.g., cheap, transparent, and with processing advantages). <ref type="bibr" target="#b8">9</ref> However, the hydrophobic nature of PDMS requires selective and spatial hydrophilic treatment to create appropriate fluidic arrangements.</p><p>Previously, several solutions to engineer the wettability of PDMS for double emulsion generation have been shown in either pre-or post-chip sealing layers, including those created with plasma oxidation, <ref type="bibr" target="#b9">[10]</ref><ref type="bibr" target="#b10">[11]</ref><ref type="bibr" target="#b11">[12]</ref><ref type="bibr" target="#b12">[13]</ref> sol-gel deposition, <ref type="bibr" target="#b13">[14]</ref><ref type="bibr" target="#b14">[15]</ref><ref type="bibr" target="#b15">[16]</ref> layer-bylayer deposition, <ref type="bibr" target="#b16">17</ref> polymer coating, <ref type="bibr" target="#b17">18,</ref><ref type="bibr" target="#b18">19</ref> and surfactant use. <ref type="bibr" target="#b19">20</ref> For example, the selective plasma oxidation creates silanol groups altering surface properties from hydrophobic to hydrophilic. <ref type="bibr" target="#b20">21</ref> Oxidation is blocked by masking or covering regions of PDMS channel patterns resulting in specific regions having different wetting affinities when the full device is aligned and bonded. <ref type="bibr" target="#b9">10</ref> Alternatively, inlet blocking can be used to prevent plasma entering specific areas allowing blocked channels to remain hydrophobic while unblocked channels turn hydrophilic. <ref type="bibr" target="#b10">11</ref> The hydrophilic state of plasma treated PDMS can also be readily recovered by infusing PFDTES (1H,1H,2H,2H-perfluorodecyltriethoxysilane) while using compressed air to prevent liquid flow to undesired paths. <ref type="bibr" target="#b11">12</ref> Both methods are complex to implement, given the requirement for temporary gas sealing. In a similar process, but using sol-gel materials, <ref type="bibr" target="#b15">16</ref> fluid confinement for regional treatment can be achieved by flushing two liquids simultaneously into a channel generating a sharp affinity interface. However, these processes are linked to the fluidic design of the microchips and thus have limited flexibility. Other sol-gel coatings use photoreactive molecules to provide spatial hydrophilicity by grafting polyacrylic patches and exposing to ultraviolet (UV) light, allowing tailoring to different geometries. In these methods, molecules are attached covalently to the surface to modify the original properties, which can lead to limitations in stability.</p><p>Layer-by-layer deposition of polyelectrolytes <ref type="bibr" target="#b16">17</ref> can also be used for hydrophilic modification with polyallylamine hydrochloride (positively charged polyelectrolyte), NaCl (washing solution), and polysodium 4-styrenesulfonate (negatively charged) being flushed sequentially through the channel to obtain spatial wetting control.</p><p>Hydrophilic surfaces can be further obtained by deposition of the hydrophilic polymer polyvinyl alcohol (PVA). <ref type="bibr" target="#b18">19</ref> Flowing PVA solution into channels after plasma oxidation, with opposite airflow preventing flow in specific regions, can generate spatially selective wetting. Finally, bulk modification has been shown by embedding Pluronic surfactant into PDMS, <ref type="bibr" target="#b19">20</ref> with spatial modification being achieved by injecting oil or water into channel sections to maintain hydrophobicity or achieve hydrophilicity respectively.</p><p>Many of these methods require optimisation and care in fabrication. For example, plasma treatment is temporary and results in PDMS recovering its hydrophobicity, <ref type="bibr" target="#b21">22</ref> whilst careful spatial plasma exposure and alignment are needed as the device is irreversibly bonded once contact is made. For other methods, changes in surface chemistries are generally modified after filling sections of the device with solutions requiring the use of fluid control systems, demanding careful pressure or flow rate control. Some of these strategies contain labour intensive procedures (e.g., those using sol-gel). Furthermore, device damage may occur if coating solutions such as PVA reach undesired channel locations after plasma oxidation.</p><p>Here we present a process with minimal equipment that negates alignment issues and allows stable, spatial patterning. Our new method is based on the addition of a Fig. <ref type="figure">1</ref> Alignment-free wetting schematic for modification of microfluidic devices for double emulsion generation. A) Target replicate is shown for double emulsion generation containing two flow-focusing channels possessing different wettability properties. B) Fabrication steps from pouring into the mould to device bonding. 1) The SU-8 mould is placed vertically into a custom made PMMA holder using double-sided adhesive tape. Liquid PDMS is poured until the desired spatial position (controlled by 'zooming' into the hydrophobic/hydrophilic junction on a phone used for imaging and adjusting the PDMS pouring speed to achieve the desired height at the 65 mm width junction) and then placed on hot plate until hardened. 2) PDMS/Brij L4 mixture is poured over hardened PDMS, and the holder put on a hot plate for the second time. 3) The hardened PDMS replicate is peeled from the mould without breaking the top joint layer which serves as a "paperclip", indicated by 'v' in the inset below part B4), with plasma treatment applied to the polymer replicate. 4) The two facing layers are gently pressed together, by a few soft touches while ensuring the channels remain unblocked, which completes bonding. The inset below part B4) depicts before and after the pressing with the rectangular pattern representing the channels whilst the 'drop' shape represents an air trap following bonding.</p><p>surfactant to tune the wettability of PDMS from bulk. We demonstrate the concept using non-ionic surfactant Brij L4 (polyoxyethylene (4) lauryl ether) to combine basic spatial wettability from a 2-layer PDMS and PDMS/Brij L4 replicate for selective hydrophilicity with an alignment-free bonding strategy, as shown in Fig. <ref type="figure">1</ref>.</p><p>In detail, an SU-8 mould containing two flow-focusing designs Fig. <ref type="figure">1(A)</ref>, as commonly used for double emulsion formation, <ref type="bibr" target="#b22">23</ref> was oriented vertically and fixed at the centre of a plastic container (e.g., a hydrophobically coated PMMA box) using double-sided tape. PDMS was poured into the plastic container until the desired hydrophobic path length was achieved (for simplicity with verification using a mobile phone camera). The PDMS was then hardened on a hot plate after which the PDMS/Brij L4 mix was poured into the container filling to the mould height, completing the second layer. The mix was baked again until solid and the replicate and mould were removed with a blade, without damaging the channel structures, from the hydrophobically coated PMMA container. The top hardened joint layer was not cut, and the two layers are held together with a clip until bonded. Plasma treatment was applied to bond the layers, which can then be pressed together without requiring alignment. The device was placed in an oven overnight to achieve hydrophobic recovery of the plasma treated PDMS initial layer, creating a robust and stable device.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Experimental</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Mould fabrication</head><p>Standard soft lithography with glass coverslips as a replication master was used. <ref type="bibr" target="#b23">24</ref> The substrate was initially immersed in acetone, methanol, and isopropyl alcohol, and subsequently dried in a stream of nitrogen gas prior to baking for 15 minutes in an oven at 120 °C. Following surface preparation, samples were spin-coated with SU-3550 photoresist (30 s at 3000 rpm) and baked on a hot plate at 95 °C for 20 minutes. The pattern on the mask was transferred into the photoresist layer by UV exposure for 75 s (MA-6, SUSS MicroTec) after which the samples were post-exposure baked, 120 °C for 5 minutes, and then soaked in Microposit developer. To achieve hydrophobicity, silanisation of the mould was performed in a vacuum desiccator. One drop of trichloro(1H,1H-2H,2H perfluorooctyl)silane (Sigma Aldrich) was deposited onto a glass slide which was placed within the desiccator with the samples for 30 minutes. A similar process is applied to the PMMA container which enabled easy release of the replicate.</p><p>PDMS (Sylgard 184) was prepared by mixing base polymer using the manufacturer's ratio of 10 : 1. Non-ionic Brij(R) L4 (product no.: 235989-Sigma) was blended into prepared PDMS in desired % w/w ratios. PDMS was poured into a laser cut and glued PPMA container until a vertical height equal to the hydrophilic side junctions was achieved. Following curing on a hot plate (100 °C for 2 hours), PDMS blended with Brij L4 was poured until the PMMA cuboid was filled and cured again. A Diener oxygen plasma system was used to bond the PDMS and PDMS/Brij L4 layers together (90 W for 30 s) irreversibly. No sign of leakage was observed during experiments indicating successful bonding. Fluid access holes were created using a 1 mm biopsy punch. The device was cured overnight at 80 °C to drive hydrophobic uncured PDMS chains to migrate to the surface. <ref type="bibr" target="#b24">25</ref> Before use the device was flushed with water (30 minutes).</p><p>The developed device had a main microfluidic channel width of 100 μm. The smallest channel in the device was 65 μm. The creation of smaller channels may prove challenging to achieve due to increased difficulty in the vertical arrangement, if the vertical height of the mould is not maintained.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Contact angle measurement</head><p>The effect of mixed surfactants (0.25, 0.75, 1, and 1.5% w/w) on the contact angle was measured using the sessile drop method. <ref type="bibr" target="#b25">26</ref> Measurements were made over two weeks at different locations on the surface using a drop shape analysis system (DSA100 from KRÜSS Scientific) after 30 minutes water treatment and drying in a stream of nitrogen gas, Fig. <ref type="figure" target="#fig_0">2</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Droplet and liposome generation</head><p>Hexadecane (product no.: 296317-Sigma) and Span 80 (product no.: S6760-Sigma) were used as the continuous oil phase. Inner and outer phases were DI water and DI waterglycerol-Tween 20 (product no.: G5516-Sigma and P1379-Sigma) mix respectively. Liposomes were formed using 1,2-dioleoyl-sn-glycero-3-phosphocholine (DOPC, Avanti Polar Lipids) in chloroform solution (3 mg mL -1 ), including 1,2-dioleoyl-sn-glycero-3-phosphoethanolamine-N-(lissamine rhodamine B sulfonyl) (Rh-PE) in a 0.1% molar ratio. Chloroform was first evaporated by a nitrogen gas stream and dried under vacuum (1 hour). The lipids were diluted in oil (and sonicated) prior to use. The liquids were transferred to the PDMS device via syringes connected to fluid pumps. Droplet videos were recorded by a Zeiss Axio.A2 microscope equipped with a Phantom V1611 high-speed camera.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Results and discussion</head><p>Contact angle change PDMS modification with surfactants has been shown to render PDMS hydrophilic. <ref type="bibr" target="#b26">[27]</ref><ref type="bibr" target="#b27">[28]</ref><ref type="bibr" target="#b28">[29]</ref> The fabrication methods using surfactants enable simple hydrophilic replicate preparation as diffusion of molecules in the polymer matrix starts only when the surface interacts with water. <ref type="bibr" target="#b26">27</ref> Here non-ionic Brij L4 was chosen to create hydrophilic PDMS. Serial contact angle measurements were carried out for different mixtures of PDMS and Brij L4. Fig. <ref type="figure" target="#fig_0">2</ref>(A) illustrates the static contact angle of three concentrations (0.25%, 1%, and 1.5%) on the initial day. A distinguishable change for hydrophobic recovery was not identified over 2 weeks, Fig. <ref type="figure" target="#fig_0">2(B)</ref>. The maximum contact angle difference for the 0.25% concentration was θ ≈ 10.44°. The 1.5% concentration exhibited the lowest mean value of measured contact angle of θ ≈ 42.2°. No distinct differences between 0.75% and 1% could be seen. The maximum transmittance percentage difference was 7.3% across the visible light and near infrared range (400 to 800 nm) (Fig. <ref type="figure">S1 †</ref>); greater opacity occurred for increased concentrations. Additionally, the degassing process was insufficient at higher Brij L4 concentrations since the PDMS jellified. Assuming future applications require optical transparency and minimal swelling characteristics due to surfactant addition (Fig. <ref type="figure" target="#fig_1">S3</ref> †), double emulsion formation was performed using the 0.25% Brij L4 concentration even though hydrophilicity is reduced.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>W/O/W generation</head><p>The W/O/W emulsions were generated using DI-water as the inner phase, hexadecane with Span80 (2% w/v) as the middle phase, and DI water/glycerol (10% v/v) with Tween-20 (2% w/ v) mix as the outer phase. Droplet generation was achieved with two connected flow focusing channels. Both the inner water and the oil phase were supplied from the first junction, Fig. <ref type="figure" target="#fig_0">S2</ref>, † to form W/O droplets. The second junction was also supplied a water phase for generating W/O/W droplets. To ensure stable droplet formation, began by forming W/O droplets initially and then converted these droplets to W/O/W by feeding the second junction inlets with water, since oil can wet the hydrophilic section of the channel regularly during emulsion formation. Fig. <ref type="figure" target="#fig_1">3</ref> shows a formed double droplet emulsion at the second junction, a W/O/W droplet from a W/O. The water phase was encapsulated in oil at the first junction due to the hydrophobicity of the channel. At the second junction, which was hydrophilic, the oil stream cannot wet the walls of the channel and was therefore enclosed by the outer water stream and detached. The formation times, in milliseconds, are given in each image, with a white asterisk placed left of the droplet formed. In Fig. <ref type="figure" target="#fig_1">3</ref>, the formed water droplets are approximately 15% of the area of the pinched oil droplet emulsion.</p><p>Core and outer droplet sizes can be varied by changing the flow rate. <ref type="bibr" target="#b29">30</ref> The inner flow rate (Q in ) was varied between 0.5 μl min -1 to 5 μl min -1 , the middle flow rate (Q mid ) between 2.5 μl min -1 and 15 μl min -1 , and the outer flow rate  (Q out ) between 12 μl min -1 and 80 μl min -1 . In general, a low Q mid increases W/O size but reduces generation frequency at the first junction and thus encapsulation efficiency. By changing the encapsulated water volume and oil layer volume, we demonstrated control over the final size of the droplet. Fig. <ref type="figure" target="#fig_2">4</ref>(A) shows the oil phase cannot engulf the whole water volume as it undergoes detachment (white bracket) from the outer phase allowing the remaining W/O droplet to its volume into a subsequent droplet by breaking 7 times.</p><p>In addition, increasing Q mid and Q out enabled liquids to extend into the channel (forming a jet) as shown in the leftmost inset of Fig. <ref type="figure" target="#fig_2">4</ref>(B) image of a "single" core W/O/W emulsion. The core number (e.g., single, double, and triple) was changed by varying Q out , controlling the inner/outer volume relationship. Fig. <ref type="figure" target="#fig_2">4(B)</ref> shows that the variations in Q out impact mainly the outer volume and do not have a significant effect on the inner droplet volume, where flow rates were Q in = 2 μl min -1 and 2 μl min -1 &lt; Q out /Q mid &lt; 10 μl min -1 . This result is consistent with a previous study. <ref type="bibr" target="#b10">11</ref> To determine the size variance of generated droplets, consecutive droplets were analysed, recording the mean diameters following pinching off at a distance approximately equal to 200 μm from the second junction. This was performed for two given experimental cases: one by one encapsulation in Fig. <ref type="figure" target="#fig_1">3</ref> and split mode encapsulation in Fig. <ref type="figure" target="#fig_2">4(A)</ref>. The size distribution of the droplets is expressed in the form of coefficient of variation (CV), 100 × σ/d, where σ is the standard deviation and d is average droplet diameter where a CV &lt; 10% can be considered monodisperse. <ref type="bibr" target="#b30">31,</ref><ref type="bibr" target="#b31">32</ref> The histogram provided in Fig. <ref type="figure" target="#fig_4">5</ref>(A) shows one-by-one encapsulated droplets are monodisperse (CVs were 3.8% and 3.1% for the inner and outer diameter respectively). The histogram of split mode emulsions, Fig. <ref type="figure" target="#fig_4">5(B)</ref>, exhibits polydispersity with CV ≈ 13.8% for the inner diameter and the outer diameter CV ≈ 5.6% which has a thinner oil layer. Initial polydispersity is likely to come from the extended tip of oil during initial pinching off, which has less prominence on the CV, as well as from the last splitting, since a lower water volume can only be transferred then. A significant difference between the CVs of the inner and outer diameter could have arisen from the small volume of water. A similar case can be seen in Fig. <ref type="figure" target="#fig_0">S2</ref>, † with emulsions undergoing two splits, resulting in two emulsion populations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Liposome production</head><p>The technique can also be expanded to other multiphase systems, including liposome production. After collecting the produced emulsions, after ceasing flow, from the device in a tube and transferring a small volume to a glass slide, fluorescence imaging can be performed, Fig. <ref type="figure" target="#fig_5">6</ref>, opening possibilities in a wide range of applications.</p><p>The inset image in Fig. <ref type="figure" target="#fig_5">6</ref> demonstrates an example of successful emulsion transfer from the inner channels to the outlet and onto a glass slide. Across the image, emulsion droplets generally do not touch. However, two emulsion droplets do touch (indicated by the asterisk) and sustain their shape, showing that the surfactant protects against merging and thus indicates emulsion droplet stability. Fluorescence intensity across five arbitrarily chosen droplets at various locations are shown. Peaks in the graph provide the oil layer thickness while the non-fluorescing region between the peaks measures the inner diameter. CVs were 6.8% and 6.3% for the inner and outer droplets respectively (N = 25), since the droplet split number varied via flow rate arrangement.</p><p>Even though the fabrication presented is of benefit, presence of surfactants can increase the swelling characteristics of PDMS in water. Soaking the modified PDMS surfaces can lead to polymer chain rearrangement with the increase in hydrophilicity, which could lead to changes in the swelling characteristics. <ref type="bibr" target="#b28">29</ref> We measured the swelling characteristics of the device (see ESI †) and found no significant increase over 96 hours. However higher concentrations of the surfactant did lead to a higher percentage weight change, Fig. <ref type="figure" target="#fig_1">S3</ref>. † We note that the oligomer inside PDMS can reduce upon contact with the water phase as the surfactant can dissolve in water. In our experiments, we were able to form droplets over a period of weeks, in agreement with previous studies. <ref type="bibr" target="#b19">20</ref> Successful droplet formation over longer periods may depend on how long the device is exposed to water. The diffusion of surfactants into bare PDMS might also impact device performance over longer periods. We have estimated the diffusivity (see ESI †) based on contact angle changes over time and found that diffusion was slow in solidified PDMS. <ref type="bibr" target="#b32">[33]</ref><ref type="bibr" target="#b33">[34]</ref><ref type="bibr" target="#b34">[35]</ref> We further expect that any diffusion would not generate a significant initial impact on the production of droplets as the oil phase is constantly wetting the initial section of the device allowing the surface to adapt to the liquid phase properties.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conclusion</head><p>We have shown a simple alignment-free and selective hydrophilic patterning method using surfactant added to PDMS for double emulsion generation. The processing can be performed without a fluid dispensing system. The selective patterning is achieved by casting PDMS/Brij L4 mixture on hardened PDMS within a mould. Spatial control is achieved using a mobile phone camera and the standard alignment requirement is resolved by a paperclip like hardened PDMS/Brij layer. We demonstrate that the fabrication process allows formation of several different forms of W/O/W. A similar strategy can be used for formation of O/W/O droplets if the mould or liquid pouring process is reversed. We believe this process offers an opportunity for reliable production of multiple emulsions.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Author contributions</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Fig. 2</head><label>2</label><figDesc>Fig. 2 Contact angle (θ) for different concentrations of PDMS/Brij L4 mix and pure PDMS (0%). A) Measured contact angle of three different Brij L4 concentrations (% w/w: 0.25, 1, and 1.5, top to bottom) following fabrication, scale bars = 0.5 mm. B) Average daily contact angle across 14 days with standard deviation error bars (n = 3).</figDesc><graphic coords="4,98.42,45.01,398.56,213.68" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 3 W</head><label>3</label><figDesc>Fig. 3 W/O/W emulsion generation. The fabricated multiple emulsion device consisted of two connected flow focusing designs (see Fig. 1(A) and S2 † for full design). The oil phase was supplied from the side channels of the first junction with the water phase supplied from the middle channel. At the second junction, the water phase is supplied from the two side channels. Flow direction is depicted by the solid white arrow. A flowing W/O droplet is shown at different time intervals (the number in each image indicates the time in milliseconds, 1-4). White asterisks track a pinched W/O/W emulsion droplet. Scale bars = 100 μm.</figDesc><graphic coords="4,311.36,485.92,235.88,139.12" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Fig. 4</head><label>4</label><figDesc>Fig. 4 The inner and outer droplet volume change when varying flow rates. A) Increasing Q in generated larger water droplets which cannot encapsulate the whole W/O droplet during pinching, highlighted by the white bracket. Seven splits are shown with generation denoted by the droplet beside the split number (1)-(7). B) Relationship between Q out /Q mid and droplet volume. Increasing Q out affected oil droplet size and core numbers, where Q in = 2 μl min -1 . Asterisks indicate single, double, or triple droplet generation (*, **, and *** respectively). Scale bars = 100 μm. Error bars are standard deviation over 3 droplet measurements.</figDesc><graphic coords="5,68.66,461.99,458.10,203.07" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Yunus Aslan: conceptualisation, methodology, formal analysis, investigation, data curation, visualisation, writingoriginal draft, writingreview &amp; editing. Olivia McGleish: methodology, formal analysis, investigation, data curation, visualisation, writingoriginal draft, writingreview &amp; editing. Julien Reboud: supervision, writingreview &amp; editing. Jonathan M. Cooper: supervision, writingreview &amp; editing.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 5</head><label>5</label><figDesc>Fig. 5 Histogram of inner and outer droplet diameters of one by one and split mode encapsulated W/O/W emulsions of Fig. 3 and 4(A). A) One-by-one encapsulated droplets are monodisperse, where CVs are 3.8% and 3.1% for the inner and outer diameter respectively, N = 25. B) Split mode emulsions, Fig. 4(A), exhibits polydispersity, CV ≈ 13.8% (inner diameter) and CV ≈ 5.6% (outer diameter), N = 25.</figDesc><graphic coords="6,65.54,45.02,201.06,317.25" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Fig. 6</head><label>6</label><figDesc>Fig. 6 Fluorescence image of liposomes out of the device with profiles of 5 randomly selected liposomes (A)-(E) demonstrating fluorescence intensity changes across the dashed lines. Scale bar = 250 μm.</figDesc><graphic coords="6,50.34,474.01,231.57,190.60" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0"><head></head><label></label><figDesc></figDesc><graphic coords="2,58.68,329.67,478.02,285.45" type="bitmap" /></figure>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_0"><p>This journal is © The Royal Society of Chemistry 2023</p></note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div><p>Acknowledgements We are grateful to <rs type="person">Dr Fan Gao</rs> for training on fabrication techniques. This work was supported by the <rs type="funder">Republic of Turkey Ministry of National Education</rs> (<rs type="grantNumber">MoNE-1416/YLSY</rs>) and the <rs type="funder">United Kingdom Research and Innovation Engineering and Physical Sciences Research Council</rs> (<rs type="grantNumber">EP/P001114/1</rs> and <rs type="grantNumber">EP/T021020/1</rs>). All data associated with this work is available open access within the <rs type="institution">University of Glasgow</rs>'s repository Enlighten at https://dx.doi.org/10.5525/gla.researchdata.1505.</p></div>
+			</div>
+			<listOrg type="funding">
+				<org type="funding" xml:id="_QFk5cB2">
+					<idno type="grant-number">MoNE-1416/YLSY</idno>
+				</org>
+				<org type="funding" xml:id="_uvvHmQc">
+					<idno type="grant-number">EP/P001114/1</idno>
+				</org>
+				<org type="funding" xml:id="_GvZxqpN">
+					<idno type="grant-number">EP/T021020/1</idno>
+				</org>
+			</listOrg>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Conflicts of interest</head><p>There are no conflicts to declare.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">T</forename><surname>Vladisavljević</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Al Nuumani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">A</forename><surname>Nabavi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Micromachines</forename></persName>
+		</author>
+		<idno type="DOI">10.3390/mi8030075</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">8</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stucki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jusková</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Nuti</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Schmitt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Dittrich</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/smtd.202100331</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Small Methods</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page">2100331</biblScope>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Martino</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Demello</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rsfs.2016.0011</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Interface Focus</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2016">2016. 20160011</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">K</forename><forename type="middle">K</forename><surname>Brower</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Carswell-Crumpton</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Klemm</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Cruz</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">G K</forename><surname>Calhoun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Nichols</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">M</forename><surname>Fordyce</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/d0lc00261e</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="2062" to="2074" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><surname>Vallapurackal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Stucki</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">D</forename><surname>Liang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Klehr</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><forename type="middle">S</forename><surname>Dittrich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">R</forename><surname>Ward</surname></persName>
+		</author>
+		<idno type="DOI">10.1101/2021.09.20.460989</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Angew. Chem., Int. Ed</title>
+		<imprint>
+			<date type="published" when="2022">2022, 61, e202207328</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">W</forename><surname>Cowell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dobria</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">S</forename><surname>Han</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/acsami.1c22692</idno>
+	</analytic>
+	<monogr>
+		<title level="j">ACS Appl. Mater. Interfaces</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="20528" to="20537" />
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ding</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Sun</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Mu</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/adfm.201803559</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Adv. Funct. Mater</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">39</biblScope>
+			<biblScope unit="page">1803559</biblScope>
+			<date type="published" when="2018">2018</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">P</forename><surname>Jankowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Ogończyk</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Derzsi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Lisowski</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Garstecki</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10404-012-1078-4</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Microfluid. Nanofluid</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="597" to="604" />
+			<date type="published" when="2013">2013</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">E</forename><surname>Berthier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><forename type="middle">W K</forename><surname>Young</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Beebe</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c2lc20982a</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="1224" to="1237" />
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Gong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">S</forename><surname>Mc Nally</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Zeng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Gaule</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Anduix-Canto</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">N</forename><surname>Kulak</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">A</forename><surname>Bawazer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">J</forename><surname>Mcpherson</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">C</forename><surname>Meldrum</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Adv</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c6ra03225g</idno>
+		<imprint>
+			<date type="published" when="2016">2016</date>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="page" from="25927" to="25933" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">C</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>Sukovich</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Abate</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c5lc00626k</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">15</biblScope>
+			<biblScope unit="page" from="3163" to="3169" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">C</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Takahashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<idno type="DOI">10.3389/fbioe.2022.891213</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Front. Bioeng. Biotechnol</title>
+		<imprint>
+			<date type="published" when="2022">2022, 10, 891213</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">H</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">A</forename><surname>Piper</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Li</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/acs.analchem.1c01861</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Anal. Chem</title>
+		<imprint>
+			<biblScope unit="volume">93</biblScope>
+			<biblScope unit="issue">31</biblScope>
+			<biblScope unit="page" from="10955" to="10965" />
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Abate</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">T</forename><surname>Krummel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Marquez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Holtze</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Weitz</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/b813405g</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">12</biblScope>
+			<biblScope unit="page" from="2157" to="2160" />
+			<date type="published" when="2008">2008</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><surname>Thiele</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Abate</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Shum</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Bachtler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Förster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Weitz</surname></persName>
+		</author>
+		<idno type="DOI">10.1002/smll.201000798</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Small</title>
+		<imprint>
+			<biblScope unit="volume">6</biblScope>
+			<biblScope unit="issue">16</biblScope>
+			<biblScope unit="page" from="1723" to="1727" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">R</forename><surname>Abate</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Thiele</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Weinhart</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">A</forename><surname>Weitz</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c004124f</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page" from="1774" to="1776" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">A C</forename><surname>Bauer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Fischlechner</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Abell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">T S</forename><surname>Huck</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c004046k</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">14</biblScope>
+			<biblScope unit="page" from="1814" to="1819" />
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">L</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Jin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>You</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Xie</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Van Den Berg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C T</forename><surname>Eijkel</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Shui</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/acsami.9b03160</idno>
+	</analytic>
+	<monogr>
+		<title level="j">ACS Appl. Mater. Interfaces</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">18</biblScope>
+			<biblScope unit="page" from="16934" to="16943" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Trantidou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Elani</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Parsons</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">O</forename><surname>Ces</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/micronano.2016.91</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Microsyst. Nanoeng</title>
+		<imprint>
+			<date type="published" when="2017">2017, 3, 16091</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kamnerdsook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">E</forename><surname>Juntasaro</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Khemthongcharoen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Chanasakulniyom</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Sripumkhai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Pattamang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Promptmas</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><surname>Atthi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><surname>Jeamsaksiri</surname></persName>
+		</author>
+		<author>
+			<persName><surname>Adv</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/d1ra06887c</idno>
+		<imprint>
+			<biblScope unit="volume">2021</biblScope>
+			<biblScope unit="page" from="35653" to="35662" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><forename type="middle">H</forename><surname>Tan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">N</forename><forename type="middle">T</forename><surname>Nguyen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">C</forename><surname>Chua</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Kang</surname></persName>
+		</author>
+		<idno type="DOI">10.1063/1.3466882</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Biomicrofluidics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">32204</biblScope>
+			<date type="published" when="2010">2010</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><forename type="middle">G</forename><surname>Oyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Oyama</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Taguchi</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/d0lc00316f</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page" from="2354" to="2363" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">T</forename><surname>Chong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">S</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">J</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><forename type="middle">L</forename><surname>Han</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><forename type="middle">Y</forename><surname>Cui</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">J</forename><surname>Yan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><surname>Xu</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10404-015-1635-8</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Microfluid. Nanofluid</title>
+		<imprint>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="1071" to="1090" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">C</forename><surname>Mcdonald</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><forename type="middle">M</forename><surname>Whitesides</surname></persName>
+		</author>
+		<idno type="DOI">10.1021/ar010110q</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Acc. Chem. Res</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="491" to="499" />
+			<date type="published" when="2002">2002</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Pascual</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Kerdraon</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Q</forename><surname>Rezard</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">C</forename><surname>Jullien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Champougny</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c9sm01792e</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Soft Matter</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">45</biblScope>
+			<biblScope unit="page" from="9253" to="9260" />
+			<date type="published" when="2019">2019</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">Y</forename><surname>Kwok</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">W</forename><surname>Neumann</surname></persName>
+		</author>
+		<idno type="DOI">10.1016/S0001-8686(98)00087-6</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Adv. Colloid Interface Sci</title>
+		<imprint>
+			<biblScope unit="volume">81</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="167" to="249" />
+			<date type="published" when="1999">1999</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title/>
+		<author>
+			<persName><forename type="first">E</forename><surname>Holczer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Fürjes</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Microfluid</forename><surname>Nanofluid</surname></persName>
+		</author>
+		<idno type="DOI">10.1007/s10404-017-1916-5</idno>
+		<imprint>
+			<date type="published" when="2017">2017</date>
+			<biblScope unit="volume">21</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">M</forename><surname>Yao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Fang</surname></persName>
+		</author>
+		<idno type="DOI">10.1088/0960-1317/22/2/025012</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Micromech. Microeng</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">25012</biblScope>
+			<date type="published" when="2012">2012</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Fatona</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Reid</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">A</forename><surname>Brook</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><forename type="middle">M</forename><surname>Moran-Mirabal</surname></persName>
+		</author>
+		<idno type="DOI">10.1039/c5lc00741k</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Lab Chip</title>
+		<imprint>
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="issue">22</biblScope>
+			<biblScope unit="page" from="4322" to="4330" />
+			<date type="published" when="2015">2015</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jans</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Lölsberg</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Omidinia-Anarkoli</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Viermann</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Möller</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><forename type="middle">De</forename><surname>Laporte</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Wessling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J C</forename><surname>Kuehne</surname></persName>
+		</author>
+		<idno type="DOI">10.3390/polym11111887</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Polymers</title>
+		<imprint>
+			<date type="published" when="1887">2019, 11, 1887</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">S</forename><surname>Klooster</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Sahin</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">K</forename><surname>Schroën</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41598-019-44239-7</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Sci. Rep</title>
+		<imprint>
+			<date type="published" when="2019-09">2019, 9, 7820</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">L</forename><surname>Nan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">T</forename><surname>Mao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><forename type="middle">C</forename><surname>Shum</surname></persName>
+		</author>
+		<idno type="DOI">10.1038/s41378-023-00502-6</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Microsyst. Nanoeng</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page">24</biblScope>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J</forename><surname>Sedlack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paranjape</surname></persName>
+		</author>
+		<title level="m">Proceedings of the IEEE International Conference on Micro ElectroMechanical Systems (MEMS)</title>
+		<meeting>the IEEE International Conference on Micro ElectroMechanical Systems (MEMS)</meeting>
+		<imprint>
+			<date type="published" when="2020-01">2020. January</date>
+			<biblScope unit="volume">2020</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">J</forename><surname>O'brien</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><forename type="middle">J H</forename><surname>Sedlack</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Bhatia</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><forename type="middle">J</forename><surname>Jensen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Quintana-Puebla</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">M</forename><surname>Paranjape</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/JMEMS.2020.3010087</idno>
+	</analytic>
+	<monogr>
+		<title level="j">J. Microelectromech. Syst</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1216" to="1224" />
+			<date type="published" when="2020">2020</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title/>
+		<author>
+			<persName><forename type="first">T</forename><surname>Young</surname></persName>
+		</author>
+		<idno type="DOI">10.1098/rstl.1805.0005</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Philos. Trans. R. Soc., B</title>
+		<imprint>
+			<biblScope unit="volume">95</biblScope>
+			<biblScope unit="page" from="65" to="87" />
+			<date type="published" when="1805">1805</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
